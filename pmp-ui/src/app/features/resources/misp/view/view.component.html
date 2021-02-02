@@ -9,7 +9,7 @@
         [filtersAppliedFlag]="filtersApplied"
         (pageEvent)="pageEvent($event)"
       ></app-toolbar>
-      <app-table
+      <!-- <app-table
         *ngIf="misps && displayedColumns && actionButtons"
         [data]="misps"
         [displayedColumns]="displayedColumns"
@@ -17,7 +17,7 @@
         [sortData]="sortFilter"
         [noDataFlag]="noData"
         (sort)="getSortColumn($event)"
-      ></app-table>
+      ></app-table> -->
     </mat-card>
     </ng-container>
     <!-- <button mat-raised-button (click)="addColumn()"> Add column </button>
