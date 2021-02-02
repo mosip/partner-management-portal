@@ -160,7 +160,7 @@ export class SingleViewComponent implements OnDestroy {
       );
   }
 
-  changePage(location: string) {
+  changePage() {
     this.router.navigateByUrl(
       `pmp/resources/${this.masterdataType}/view`
     );
