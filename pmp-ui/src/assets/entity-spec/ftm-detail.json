@@ -1,0 +1,93 @@
+{
+  "auditEventIds": ["ADM-027", "ADM-049"],
+  "actionButtons": [
+    {
+      "buttonName": {
+        "eng": "Edit"
+      },
+      "actionURL": "",
+      "redirectURL": "pmp/resources/ftmdetails/single-view/$id",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "partnerEdit"
+    },
+    {
+      "buttonName": {
+        "eng": "Create Device"
+      },
+      "imagePath": "assets/images/add-icon.png",
+      "actionListType": "redirect",
+      "actionURL": "",
+      "redirectURL": "pmp/resources/ftmdetails/create",
+      "showIn": "Button",
+      "validations": ""
+    }
+  ],
+  "columnsToDisplay": [    
+    {
+      "name": "ftpChipDetailId",
+      "label": { "eng": "ID"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"
+    },
+    {
+      "name": "ftpProviderId",
+      "label": { "eng": "Partner Name"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "dropdown",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "partnerOrganizationName",
+      "label": { "eng": "Organization Name"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"
+    },
+    {
+      "name": "model",
+      "label": { "eng": "Model"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "make",
+      "label": { "eng": "Make"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    }
+  ],
+  "paginator": {
+    "totalEntries": null,
+    "pageSize": "10",
+    "pageSizeList": [10, 20, 30, 40, 50]
+  }
+}

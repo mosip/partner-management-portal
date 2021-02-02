@@ -1,0 +1,20 @@
+<div id="flex-single-view">
+  <div id="flex-container">
+    <div class="flex-header">
+      <app-mater-data-common-header
+        [masterDataName]="masterDataName"
+        [headerData]="headerData"
+      ></app-mater-data-common-header>
+    </div>
+    <div class="flex-body">
+      <app-mater-data-common-body
+        [primaryData]="primaryData"
+        [secondaryData]="secondaryData"
+        [fields]="fields"
+        [primaryLang]="primaryLang"
+        [secondaryLang]="secondaryLang"
+        [masterdataType]="masterdataType"
+      ></app-mater-data-common-body>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+{
+  "auditEventIds": ["ADM-027", "ADM-049"],
+  "actionButtons": [
+    {
+      "buttonName": {
+        "eng": "Edit"
+      },
+      "actionURL": "",
+      "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/single-view/$childid",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "drilldownEdit"
+    },
+    {
+      "buttonName": {
+        "eng": "Create Device"
+      },
+      "imagePath": "assets/images/add-icon.png",
+      "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/create",
+      "showIn": "Button",
+      "actionListType": "replaceIdRedirect",
+      "actionURL": ""
+    }
+  ],
+  "columnsToDisplay": [
+    {
+      "name": "id",
+      "label": { "eng": "ID"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"
+    },
+    {
+      "name": "deviceDetailId",
+      "label": { "eng": "Device Id"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"
+    },
+    {
+      "name": "swVersion",
+      "label": { "eng": "Version"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "swBinaryHash",
+      "label": { "eng": "BinaryHash"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "false",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "swCreateDateTime",
+      "label": { "eng": "CreatedDateTime"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "calendar",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "swExpiryDateTime",
+      "label": { "eng": "ExpiryDateTime"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "calendar",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
+    },
+    {
+      "name": "isItForRegistrationDevice",
+      "label": { "eng": "ForRegistrationDevice"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "dropdown",
+      "ismandatory": "true",
+      "showInListView": "false",
+      "showInSingleView": "false"
+    }
+  ],
+  "paginator": {
+    "totalEntries": null,
+    "pageSize": "10",
+    "pageSizeList": [10, 20, 30, 40, 50]
+  }
+}
