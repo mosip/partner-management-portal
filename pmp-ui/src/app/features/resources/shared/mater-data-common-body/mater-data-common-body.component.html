@@ -1,0 +1,62 @@
+<div class="flex-body">
+    <mat-card>
+        <mat-card-content class="forms-container" *ngFor="let field of fields; let i = index">
+          <p  class="mat-form1">
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
+              <input
+                #keyboardRef
+                #{{field.name}}
+                (keyup)="captureValue($event, field.name, 'primary')"
+                matInput
+                placeholder="{{
+                  field.label[primaryLang] | translate
+                }}"
+                [value]="primaryData[field.name]"
+                field.required
+              />
+            </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
+              <mat-select
+                [value]="primaryData[field.name]"
+                placeholder="{{ field.label[primaryLang] }}"
+              >
+                <mat-option
+                  *ngFor="let data of dropDownValues[field.name]"
+                  (onSelectionChange)="
+                    captureDropDownValue($event, field.name, 'primary')
+                  "
+                  [value]="data.fieldCode"
+                >
+                  {{ data.fieldValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'calendar'">
+              <input
+                matInput
+                [min]="minDate"
+                [matDatepicker]="picker"
+                (dateChange)="captureDatePickerValue($event, field.name, 'primary')"
+                placeholder="{{field.label[primaryLang] | translate}}"
+                [value]="primaryData[field.name]"
+                field.required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="action-buttons">
+        <button id="createButton" mat-raised-button (click)="submit()">
+        Save
+        </button>
+        <button mat-raised-button (click)="changePage()">
+        Cancel
+        </button>
+        </mat-card-actions>
+      
+    </mat-card>
+</div>

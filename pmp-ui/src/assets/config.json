@@ -1,0 +1,7 @@
+{
+    "primaryLangCode": "eng",
+    "secondaryLangCode": "ara",
+    "baseUrl": "https://dev.mosip.net/",
+    "adminUrl":"/",
+    "version":"v1/"
+} 

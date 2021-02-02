@@ -1,0 +1,178 @@
+{
+  "auditEventIds": ["ADM-028", "ADM-028"],
+  "actionButtons": [
+    {
+      "buttonName": {
+        "eng": "Publish policy"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "activatePolicy"
+    },
+    {
+      "buttonName": {
+        "eng": "Deactivate",
+        "ara": "الغاء تنشيط",
+        "fra": "désactiver"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "deactivatePolicy"
+    },
+    {
+      "buttonName": {
+        "eng": "Edit",
+        "ara": "تصحيح",
+        "fra": "modifier"
+      },
+      "actionURL": "",
+      "redirectURL": "/pmp/resources/authpolicy/single-view/$id",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "edit"
+    },
+    {
+      "buttonName": {
+        "eng": "Create Policy",
+        "ara": "إضافة مركز",
+        "fra": "Ajouter le centre"
+      },
+      "imagePath": "assets/images/add-icon.png",
+      "actionListType": "redirect",
+      "actionURL": "",
+      "redirectURL": "pmp/resources/authpolicy/create",
+      "showIn": "Button",
+      "validations": ""
+    }
+  ],
+  "columnsToDisplay": [
+     {
+      "name": "id",
+      "label": { "eng": "Policy ID"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"  
+    },
+    {
+      "name": "name",
+      "label": { "eng": "Policy Name"},
+      "sortOrder": "3",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"  
+    },
+    {
+      "name": "desc",
+      "label": { "eng": "Description"},
+      "sortOrder": "3",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"  
+    },
+    {
+      "name": "policyGroupName",
+      "label": { "eng": "Policy Group"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "dropdown",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"  
+    },
+    {
+      "name": "version",
+      "label": { "eng": "Policy Version"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "",
+      "showInSingleView": ""  
+    },
+    {
+      "name": "policyType",
+      "label": { "eng": "Policy Type"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "",
+      "showInSingleView": ""  
+    },
+    {
+      "name": "policies",
+      "label": { "eng": "Policies Data"},
+      "sortOrder": "3",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "false",
+      "showInSingleView": "true"  
+    },
+    {
+      "name": "isActive",
+      "showInListView": "true",
+      "label": { "eng": "IsActive"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": ""  
+    }
+],
+"paginator": {
+  "totalEntries": null,
+  "pageSize": "10",
+  "pageSizeList": [10, 20, 30, 40, 50]
+},
+"filterColumns": [
+  {
+    "filtername": "name",
+    "filterlabel": "Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "registrationcenters",
+    "fieldName": "name",
+    "methodCallName": ""
+  },  
+  {
+    "filtername": "isActive",
+    "filterlabel": "Status",
+    "filterType": "contains",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "true",
+    "datePicker": "false",
+    "apiName": "registrationcenters",
+    "fieldName": "isActive",
+    "methodCallName": ""
+  }
+]
+}

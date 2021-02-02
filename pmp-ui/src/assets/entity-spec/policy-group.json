@@ -1,0 +1,135 @@
+{
+  "auditEventIds": ["ADM-028", "ADM-028"],
+  "actionButtons": [
+    {
+      "buttonName": {
+        "eng": "Activate",
+        "ara": "تنشيط",
+        "fra": "déclencher"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "activatePolicy"
+    },
+    {
+      "buttonName": {
+        "eng": "Deactivate",
+        "ara": "الغاء تنشيط",
+        "fra": "désactiver"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "deactivatePolicy"
+    },
+    {
+      "buttonName": {
+        "eng": "Edit",
+        "ara": "تصحيح",
+        "fra": "modifier"
+      },
+      "actionURL": "",
+      "redirectURL": "/pmp/resources/policygroup/single-view/$id",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "edit"
+    },
+    {
+      "buttonName": {
+        "eng": "Create Policy Group",
+        "ara": "إضافة مركز",
+        "fra": "Ajouter le centre"
+      },
+      "imagePath": "assets/images/add-icon.png",
+      "actionListType": "redirect",
+      "actionURL": "",
+      "redirectURL": "pmp/resources/policygroup/create",
+      "showIn": "Button",
+      "validations": ""
+    }
+  ],
+  "columnsToDisplay": [
+    {
+      "name": "id",
+      "label": { "eng": "ID"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"  
+    },
+    {
+      "name": "name",
+      "label": { "eng": "Name"},
+      "sortOrder": "3",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true" 
+    },
+    {
+      "name": "desc",
+      "label": { "eng": "Description"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"  
+    },
+    {
+      "name": "isActive",
+      "label": { "eng": "IsActive"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"  
+    }
+],
+"paginator": {
+  "totalEntries": null,
+  "pageSize": "10",
+  "pageSizeList": [10, 20, 30, 40, 50]
+},
+"filterColumns": [
+  {
+    "filtername": "name",
+    "filterlabel": "Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "registrationcenters",
+    "fieldName": "name",
+    "methodCallName": ""
+  },  
+  {
+    "filtername": "isActive",
+    "filterlabel": "Status",
+    "filterType": "contains",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "true",
+    "datePicker": "false",
+    "apiName": "registrationcenters",
+    "fieldName": "isActive",
+    "methodCallName": ""
+  }
+]
+}
