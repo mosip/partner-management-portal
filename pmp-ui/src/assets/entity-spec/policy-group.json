@@ -49,6 +49,15 @@
       "redirectURL": "pmp/resources/policygroup/create",
       "showIn": "Button",
       "validations": ""
+    },
+    {
+      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "imagePath": "assets/images/filter.png",
+      "actionListType": "action",
+      "actionURL": { "case": "filter" },
+      "redirectURL": "",
+      "showIn": "Button",
+      "validations": ""
     }
   ],
   "columnsToDisplay": [
@@ -61,7 +70,7 @@
       "LinkURL": "",
       "inputType": "",
       "ismandatory": "",
-      "showInListView": "true",
+      "showInListView": "false",
       "showInSingleView": "false"  
     },
     {
@@ -117,18 +126,6 @@
     "datePicker": "false",
     "apiName": "registrationcenters",
     "fieldName": "name",
-    "methodCallName": ""
-  },  
-  {
-    "filtername": "isActive",
-    "filterlabel": "Status",
-    "filterType": "contains",
-    "fieldType": "input",
-    "autocomplete": "false",
-    "dropdown": "true",
-    "datePicker": "false",
-    "apiName": "registrationcenters",
-    "fieldName": "isActive",
     "methodCallName": ""
   }
 ]

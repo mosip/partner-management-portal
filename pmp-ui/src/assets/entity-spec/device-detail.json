@@ -43,7 +43,7 @@
       "LinkURL": "",
       "inputType": "",
       "ismandatory": "",
-      "showInListView": "true",
+      "showInListView": "false",
       "showInSingleView": "false"
     },
     {
@@ -55,8 +55,20 @@
       "LinkURL": "",
       "inputType": "dropdown",
       "ismandatory": "true",
-      "showInListView": "false",
+      "showInListView": "true",
       "showInSingleView": "true"
+    },
+    {
+      "name": "partnerOrganizationName",
+      "label": { "eng": "Organization Name"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "true",
+      "showInSingleView": "false"
     },
     {
       "name": "deviceTypeCode",
@@ -83,18 +95,6 @@
       "showInSingleView": "true"
     },
     {
-      "name": "model",
-      "label": { "eng": "Model"},
-      "sortOrder": "",
-      "showAsLink": "",
-      "linkType": "",
-      "LinkURL": "",
-      "inputType": "text",
-      "ismandatory": "true",
-      "showInListView": "true",
-      "showInSingleView": "true"
-    },
-    {
       "name": "make",
       "label": { "eng": "Make"},
       "sortOrder": "",
@@ -107,16 +107,16 @@
       "showInSingleView": "true"
     },
     {
-      "name": "partnerOrganizationName",
-      "label": { "eng": "Organization Name"},
+      "name": "model",
+      "label": { "eng": "Model"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
       "LinkURL": "",
-      "inputType": "",
-      "ismandatory": "",
-      "showInListView": "false",
-      "showInSingleView": "false"
+      "inputType": "text",
+      "ismandatory": "true",
+      "showInListView": "true",
+      "showInSingleView": "true"
     },
     {
       "name": "isItForRegistrationDevice",

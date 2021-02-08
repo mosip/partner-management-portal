@@ -35,15 +35,7 @@ export class ToolbarComponent extends MatPaginatorIntl implements OnInit {
   }
 
   actionEvent(buttonAction) {
-    console.log(buttonAction);
     if (buttonAction.actionListType === 'action') {
-      console.log(buttonAction.actionListType);
-      this.auditService.audit(9, 'ADM-082', {
-        buttonName: buttonAction.buttonName.eng,
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 2
-        ]
-      });
       this.openFilterDialog(buttonAction.actionURL);
     }
     if (buttonAction.actionListType === 'redirect') {

@@ -1,9 +1,6 @@
 import { ErrorComponent } from './error/error.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogComponent } from './dialog/dialog.component';
-import { TableComponent } from './table/table.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MaterialModule } from './material.module';
 import { MatPaginatorIntl } from '@angular/material';
@@ -12,36 +9,32 @@ import { HamburgerComponent } from '../shared/hamburger-menu/hamburger-menu.comp
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StatusPipe } from './pipes/status.pipe';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, I18nModule , ReactiveFormsModule, FormsModule],
   declarations: [
-    DialogComponent,
-    TableComponent,
-    ToolbarComponent,
     NotFoundComponent,
     HamburgerComponent,
     ErrorComponent,
     StatusPipe,
-    DateFormatPipe
+    DateFormatPipe,
+    DialogComponent
   ],
   exports: [
     I18nModule,
-    DialogComponent,
-    TableComponent,
-    ToolbarComponent,
     NotFoundComponent,
     MaterialModule,
     HamburgerComponent,
     ErrorComponent,
     StatusPipe,
-    DateFormatPipe
+    DateFormatPipe,
+    DialogComponent
   ],
   entryComponents: [DialogComponent],
   providers: [
     {
-      provide: MatPaginatorIntl,
-      useClass: ToolbarComponent
+      provide: MatPaginatorIntl
     }
   ]
 })

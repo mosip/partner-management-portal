@@ -33,7 +33,7 @@
       "LinkURL": "",
       "inputType": "",
       "ismandatory": "",
-      "showInListView": "true",
+      "showInListView": "false",
       "showInSingleView": "false"
     },
     {
@@ -61,8 +61,8 @@
       "showInSingleView": "false"
     },
     {
-      "name": "model",
-      "label": { "eng": "Model"},
+      "name": "make",
+      "label": { "eng": "Make"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -73,8 +73,8 @@
       "showInSingleView": "true"
     },
     {
-      "name": "make",
-      "label": { "eng": "Make"},
+      "name": "model",
+      "label": { "eng": "Model"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

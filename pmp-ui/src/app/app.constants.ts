@@ -141,13 +141,6 @@ export const ListViewIdKeyMapping = {
   policymapping: { idKey: 'id', auditEventId: 'ADM-069' },
 };
 
-export const FilterMapping = {
-  centers: {
-    specFileName: 'center',
-    apiName: 'registrationcenters'
-  }
-};
-
 export const keyboardMapping = {
   eng: 'en',
   fra: 'fr',
