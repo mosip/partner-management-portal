@@ -7,7 +7,12 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as appConstants from '../../app.constants';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FilterRequest } from 'src/app/core/models/filter-request.model';
 import { FilterValuesModel } from 'src/app/core/models/filter-values.model';
@@ -15,6 +20,8 @@ import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { FilterModel } from 'src/app/core/models/filter.model';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { TranslateService } from '@ngx-translate/core';
+import { OptionalFilterValuesModel } from 'src/app/core/models/optional-filter-values.model';
 
 @Component({
   selector: 'app-dialog',
@@ -34,8 +41,9 @@ export class DialogComponent implements OnInit {
   filterModel: FilterValuesModel;
   requestModel: RequestModel;
   options = [];
+  createUpdateSteps: any  = {};
   momentDate: any;
-
+  primaryLangCode: string;
   requiredError = false;
   rangeError = false;
   fieldName = '';
@@ -43,6 +51,8 @@ export class DialogComponent implements OnInit {
   cancelApplied = false;
 
   filterOptions: any = {};
+
+  holidayForm: FormGroup;
 
   constructor(
     public dialog: MatDialog,
@@ -52,8 +62,12 @@ export class DialogComponent implements OnInit {
     private dataStorageService: DataStorageService,
     private config: AppConfigService,
     private activatedRoute: ActivatedRoute,
-    private auditService: AuditService
-  ) {}
+    private auditService: AuditService,
+    private translate: TranslateService
+  ) {
+    this.primaryLangCode = this.config.getConfig().primaryLangCode;
+    this.translate.use(this.primaryLangCode);
+  }
 
   async ngOnInit() {
     this.input = this.data;
@@ -65,6 +79,10 @@ export class DialogComponent implements OnInit {
       ).filters;
       await this.getFilterMappings();
     }
+  }
+
+  get f() {
+    return this.holidayForm.controls;
   }
 
   onNoClick(): void {
@@ -81,7 +99,7 @@ export class DialogComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.routeParts = this.router.url.split('/')[3];
       const specFileName =
-        appConstants.FilterMapping[`${this.routeParts}`].specFileName;
+        appConstants.masterdataMapping[`${this.routeParts}`].specFileName;
       this.dataStorageService
         .getFiltersForListView(specFileName)
         .subscribe(response => {
@@ -409,13 +427,14 @@ export class DialogComponent implements OnInit {
       'unique',
       value === undefined || value === null ? '' : value
     );
+    let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
     this.filters = [this.filterModel];
     this.filtersRequest = new FilterRequest(
       this.filters,
       this.routeParts === 'blacklisted-words'
         ? 'all'
         : this.config.getConfig().primaryLangCode,
-      []
+      [optinalFilterObject]
     );
     this.requestModel = new RequestModel('', null, this.filtersRequest);
     console.log(this.requestModel);

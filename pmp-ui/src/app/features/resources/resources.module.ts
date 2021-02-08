@@ -36,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ToolbarComponent,
     DialogComponent
   ],
-  exports:[TableComponent, ToolbarComponent, DialogComponent]
+  exports:[TableComponent, ToolbarComponent, DialogComponent],
+  entryComponents: [DialogComponent]
 })
 export class ResourcesModule { }

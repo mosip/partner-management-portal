@@ -313,7 +313,6 @@ export class CommonService {
   }
 
   viewCertificate(data: any){
-    console.log("Request is:"+ data);
     this.dataService.viewCertificate(data).subscribe(response =>{
       if (!response['errors']) {
         this.showCertificate('activate', response.response.certificateData);
@@ -328,6 +327,10 @@ export class CommonService {
       }
       
     });
+  }
+
+  uploadCertificatepopup(data: any){
+    console.log("data>>>"+data);
   }
 
   activatePartner(data: any){

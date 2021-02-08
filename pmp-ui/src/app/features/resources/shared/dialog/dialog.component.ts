@@ -79,9 +79,10 @@ export class DialogComponent implements OnInit {
 
   getFilterMappings() {
     return new Promise((resolve, reject) => {
+      console.log("this.router.url.split('/')[3]>>>"+this.router.url.split('/')[3]);
       this.routeParts = this.router.url.split('/')[3];
       const specFileName =
-        appConstants.FilterMapping[`${this.routeParts}`].specFileName;
+        appConstants.masterdataMapping[`${this.routeParts}`].specFileName;
       this.dataStorageService
         .getFiltersForListView(specFileName)
         .subscribe(response => {

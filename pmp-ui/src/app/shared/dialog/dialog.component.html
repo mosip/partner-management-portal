@@ -1,6 +1,6 @@
 <!-- center filter -->
 <div class="filter" *ngIf="input.case === 'filter'">
-  <h2 class="filter-heading">Add Filters</h2>
+  <h2 class="filter-heading">{{ "filters.titleTxt" | translate }}</h2>
   <mat-divider></mat-divider>
   <form [formGroup]="filterGroup" (ngSubmit)="getFilterValuesOnSubmit()">
     <div class="flex-container">
@@ -12,7 +12,7 @@
                 <input
                   type="text"
                   matInput
-                  placeholder="{{ filter.filterlabel }}"
+                  placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                   formControlName="{{ filter.filtername }}"
                   (focus)="
                     getControlName(
@@ -38,6 +38,7 @@
                     ></mat-spinner>
                   </mat-option>
                   <mat-option
+                    style="font-size: x-small;height: 30px;"
                     *ngFor="let option of filterOptions[filter.filtername]"
                     [value]="option.fieldValue"
                   >
@@ -51,7 +52,7 @@
                     <input
                       matInput
                       [matDatepicker]="picker"
-                      placeholder="{{ filter.filterlabel }}"
+                      placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
                       (focus)="
                         getControlName(
@@ -70,7 +71,7 @@
                     <input
                       type="text"
                       matInput
-                      placeholder="{{ filter.filterlabel }}"
+                      placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
                       (focus)="
                         getControlName(
@@ -92,7 +93,7 @@
           </ng-container>
           <ng-container *ngSwitchCase="'true'">
             <mat-form-field>
-              <mat-label>{{ filter.filterlabel }}</mat-label>
+              <mat-label>{{ filter.filterlabel[primaryLangCode] }}</mat-label>
               <mat-select
                 formControlName="{{ filter.filtername }}"
                 (focus)="
@@ -112,6 +113,7 @@
                     ></mat-spinner>
                   </mat-option>
                   <mat-option
+                    style="font-size: x-small;"
                     *ngFor="let option of filterOptions[filter.filtername]"
                     [value]="option.fieldValue"
                   >
@@ -123,9 +125,17 @@
           </ng-container>
         </ng-container>
       </ng-container>
-      <mat-error *ngIf="requiredError">&nbsp; {{fieldName}}: {{'validationMessages.required' | translate}}</mat-error>
-      <mat-error *ngIf="rangeError">&nbsp; {{fieldName}}: {{'validationMessages.range' | translate}}</mat-error>
-      <mat-error *ngIf="!filterGroup.valid">&nbsp; {{'validationMessages.invalid' | translate}}</mat-error>
+      <mat-error *ngIf="requiredError"
+        >&nbsp; {{ fieldName }}:
+        {{ "validationMessages.required" | translate }}</mat-error
+      >
+      <mat-error *ngIf="rangeError"
+        >&nbsp; {{ fieldName }}:
+        {{ "validationMessages.range" | translate }}</mat-error
+      >
+      <mat-error *ngIf="!filterGroup.valid"
+        >&nbsp; {{ "validationMessages.invalid" | translate }}</mat-error
+      >
     </div>
     <div class="footer">
       <button
@@ -136,8 +146,8 @@
       >
         <img
           src="assets/images/refresh.png"
-          height="15px; width:14px;"
-        />&nbsp;Reset
+          height="15px; width:12px;"
+        />&nbsp;{{ "filters.footerButtons.resetTxt" | translate }}
       </button>
       <button
         mat-button
@@ -145,7 +155,7 @@
         (click)="onNoClick()"
         style="color: #FF4081; background-color: white;"
       >
-        Cancel
+        {{ "filters.footerButtons.cancelTxt" | translate }}
       </button>
       <button
         type="submit"
@@ -153,7 +163,7 @@
         class="footer-button"
         style="background-color:#FF4081; color:white;"
       >
-        Apply
+        {{ "filters.footerButtons.applyTxt" | translate }}
       </button>
     </div>
   </form>
@@ -189,6 +199,12 @@
 
 <!-- Message PopUp -->
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'">
+  <img
+    src="assets/images/icon_Suceess right.png"
+    height="45px"
+    width="45px"
+    class="success-img"
+   *ngIf="input.title === ('Success' || 'نجاح' || 'Succès')"   />
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
@@ -204,14 +220,27 @@
   </div>
 </div>
 
-<!-- <div *ngIf="input.case === 'MESSAGE'" style="padding: 10px;">
-  <h1 mat-dialog-title>{{ input.title }}</h1>
-  <div mat-dialog-content>
-    <p>{{ input.message }}</p>
+<div class="pop-up" *ngIf="input.case === 'ERROR'">
+  <div class="pop-up-header">
+    <b mat-dialog-title>{{ input.title }}</b>
+    <div mat-dialog-content>
+      <p>{{ input.message }}</p>
+    </div>
   </div>
-  <div mat-dialog-actions>
-    <span><button mat-button cdkFocusInitial (click)="onNoClick()">
-        {{ input.btnTxt }}
-      </button></span>
+</div>
+
+<div class="pop-up" *ngIf="input.case === 'STEPS-MESSAGE'">
+  <div class="pop-up-header">
+    <b mat-dialog-title>{{ createUpdateSteps.title }}</b>
+    <div mat-dialog-content>
+      <p>{{ input.message }}</p>
+    </div>
   </div>
-</div> -->
+  <div mat-dialog-actions class="pop-up-footer">
+    <span
+      ><button mat-button cdkFocusInitial (click)="dismiss()">
+        OK
+      </button></span
+    >
+  </div>
+</div>

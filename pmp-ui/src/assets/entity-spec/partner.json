@@ -9,7 +9,7 @@
       "redirectURL": "",
       "showIn": "Ellipsis",
       "validations": "",
-      "callBackFunction": "submitPartnerAPIKeyRequest"
+      "callBackFunction": "uploadCertificatepopup"
     },
     {
       "buttonName": {
@@ -28,7 +28,7 @@
     
     {
       "name": "id",
-      "showInListView": "true",
+      "showInListView": "false",
       "label": { "eng": "ID"},
       "sortOrder": "",
       "showAsLink": "",
