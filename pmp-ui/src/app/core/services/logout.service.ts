@@ -23,14 +23,14 @@ export class LogoutService {
 
   logout() {
     this.http
-      .delete(`${this.appService.getConfig().baseUrl}v1/authmanager/logout/user`, {
+      .delete(`${this.appService.getConfig().baseUrl}partnermanagement/v1/partners/logout/user`, {
         observe: 'response'
       })
       .subscribe(
         (res: HttpResponse<ResponseModel<LogoutResponse>>) => {
           if (res.body.response.status === 'Success') {
             this.redirectService.redirect(
-              window.location.origin + '/admin-ui/'
+              window.location.origin + '/pmp-ui/'
             );
           } else {
             window.alert(res.body.response.message);
