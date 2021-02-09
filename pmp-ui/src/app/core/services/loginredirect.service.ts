@@ -10,7 +10,7 @@ export class LoginRedirectService {
   constructor(private cookie: CookieService, private appService: AppConfigService) { }
 
   redirect(url: string) {
-  	console.log('uuid()>>>' + uuid()+'<<<uuid()>>>' + );
+  	console.log('uuid()>>>' + uuid()+'<<<url>>>' + url);
     const stateParam = uuid();
     this.cookie.set('state', stateParam, undefined, '/');
     console.log('returning false login redirect>>>' + stateParam);
