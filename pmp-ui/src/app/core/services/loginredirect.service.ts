@@ -10,9 +10,10 @@ export class LoginRedirectService {
   constructor(private cookie: CookieService, private appService: AppConfigService) { }
 
   redirect(url: string) {
+  	console.log('uuid()>>>' + uuid()+'<<<uuid()>>>' + );
     const stateParam = uuid();
     this.cookie.set('state', stateParam, undefined, '/');
-   // console.log('returning false login redirect' + stateParam);
-    window.location.href = `${this.appService.getConfig().baseUrl}v1/authmanager/login/` + btoa(url);
+    console.log('returning false login redirect>>>' + stateParam);
+    window.location.href = `${this.appService.getConfig().baseUrl}partnermanagement/v1/partners/login/` + btoa(url);
   }
 }
