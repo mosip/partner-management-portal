@@ -3,19 +3,28 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Manage Policy"
+        "en": "Manage Policy"
       },
       "actionURL": "",
       "redirectURL": "",
       "showIn": "Ellipsis",
       "validations": "",
       "callBackFunction": "ApproveorRejectPolicy"
+    },
+    {
+      "buttonName": { "en": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "imagePath": "assets/images/filter.png",
+      "actionListType": "action",
+      "actionURL": { "case": "filter" },
+      "redirectURL": "",
+      "showIn": "Button",
+      "validations": ""
     }
   ],
   "columnsToDisplay": [    
     {
       "name": "apikeyRequestId",
-      "label": { "eng": "API Key"},
+      "label": { "en": "API Key"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -27,7 +36,7 @@
     },
     {
       "name": "partnerId",
-      "label": { "eng": "Partner Name"},
+      "label": { "en": "Partner Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -39,7 +48,7 @@
     },
     {
       "name": "policyId",
-      "label": { "eng": "Policy Name"},
+      "label": { "en": "Policy Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -51,7 +60,7 @@
     },
     {
       "name": "requestDetail",
-      "label": { "eng": "Request Detail"},
+      "label": { "en": "Request Detail"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -63,7 +72,7 @@
     },
     {
       "name": "statusCode",
-      "label": { "eng": "Status"},
+      "label": { "en": "Status"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -78,5 +87,67 @@
     "totalEntries": null,
     "pageSize": "10",
     "pageSizeList": [10, 20, 30, 40, 50]
+  },
+  "filterColumns": [
+  {
+    "filtername": "apikeyRequestId",
+    "filterlabel": "API Key",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "apikeyRequestId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "partnerId",
+    "filterlabel": "Partner Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "partnerId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "policyId",
+    "filterlabel": "Policy Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "policyId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "requestDetail",
+    "filterlabel": "Request Detail",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "requestDetail",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "statusCode",
+    "filterlabel": "Status",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "statusCode",
+    "methodCallName": ""
   }
+  ]
 }

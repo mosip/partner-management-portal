@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Publish policy"
+        "en": "Publish policy"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate",
+        "en": "Deactivate",
         "ara": "الغاء تنشيط",
         "fra": "désactiver"
       },
@@ -25,7 +25,7 @@
     },
     {
       "buttonName": {
-        "eng": "Edit",
+        "en": "Edit",
         "ara": "تصحيح",
         "fra": "modifier"
       },
@@ -37,7 +37,7 @@
     },
     {
       "buttonName": {
-        "eng": "Create Policy",
+        "en": "Create Policy",
         "ara": "إضافة مركز",
         "fra": "Ajouter le centre"
       },
@@ -47,24 +47,33 @@
       "redirectURL": "pmp/resources/datasharepolicy/create",
       "showIn": "Button",
       "validations": ""
+    },
+    {
+      "buttonName": { "en": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "imagePath": "assets/images/filter.png",
+      "actionListType": "action",
+      "actionURL": { "case": "filter" },
+      "redirectURL": "",
+      "showIn": "Button",
+      "validations": ""
     }
   ],
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "Policy ID"},
+      "label": { "en": "Policy ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
       "LinkURL": "",
       "inputType": "",
       "ismandatory": "",
-      "showInListView": "true",
+      "showInListView": "false",
       "showInSingleView": "false"  
     },
     {
       "name": "name",
-      "label": { "eng": "Policy Name"},
+      "label": { "en": "Name"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -76,7 +85,7 @@
     },
     {
       "name": "desc",
-      "label": { "eng": "Description"},
+      "label": { "en": "Description"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -88,7 +97,7 @@
     },
     {
       "name": "policyGroupName",
-      "label": { "eng": "Policy Group"},
+      "label": { "en": "Policy Group"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -100,7 +109,7 @@
     },
     {
       "name": "version",
-      "label": { "eng": "Policy Version"},
+      "label": { "en": "Policy Version"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -112,7 +121,7 @@
     },
     {
       "name": "policyType",
-      "label": { "eng": "Policy Type"},
+      "label": { "en": "Policy Type"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -124,7 +133,7 @@
     },
     {
       "name": "policies",
-      "label": { "eng": "Policies Data"},
+      "label": { "en": "Policies Data"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -137,7 +146,7 @@
     {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "eng": "IsActive"},
+      "label": { "en": "IsActive"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -158,20 +167,32 @@
     "autocomplete": "false",
     "dropdown": "false",
     "datePicker": "false",
-    "apiName": "registrationcenters",
+    "apiName": "",
     "fieldName": "name",
     "methodCallName": ""
-  },  
+  },
   {
-    "filtername": "isActive",
-    "filterlabel": "Status",
-    "filterType": "contains",
+    "filtername": "desc",
+    "filterlabel": "Description",
+    "filterType": "equals",
     "fieldType": "input",
     "autocomplete": "false",
-    "dropdown": "true",
+    "dropdown": "false",
     "datePicker": "false",
-    "apiName": "registrationcenters",
-    "fieldName": "isActive",
+    "apiName": "",
+    "fieldName": "desc",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "policyGroupName",
+    "filterlabel": "Policy Group",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "policyGroupName",
     "methodCallName": ""
   }
 ]

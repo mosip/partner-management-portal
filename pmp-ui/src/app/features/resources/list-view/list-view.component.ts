@@ -189,8 +189,8 @@ export class ListViewComponent implements OnDestroy {
       }else{
         this.mapping = { apiName: 'partners/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
          idKey: 'id', headerName: `${routeParts}`};
-        this.headerName = `${routeParts}`.replace(/_/g, " ");
-        this.requestModel.request["partnerType"] = `${routeParts}`;
+        this.headerName = "Partner";
+        this.requestModel.request["partnerType"] = "all";
       }
 
       this.dataStorageService

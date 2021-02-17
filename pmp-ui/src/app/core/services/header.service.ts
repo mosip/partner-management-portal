@@ -8,6 +8,7 @@ export class HeaderService {
   private Username = '';
   private roles = 'ZONAL_ADMIN,GLOBAL_ADMIN,';
   private zone = '';
+  private languageCode = '';
 
   constructor() { }
 
@@ -39,5 +40,13 @@ export class HeaderService {
 
   getZone(): string {
     return this.zone;
+  }
+
+  setlanguageCode(languageCode: string) {
+    this.languageCode = languageCode;
+  }
+
+  getlanguageCode(): string {
+    return this.languageCode;
   }
 }

@@ -3,9 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Activate",
+        "en": "Activate",
         "ara": "تنشيط",
-        "fra": "déclencher"
+        "fr": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -15,9 +15,9 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate",
+        "en": "Deactivate",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -27,9 +27,9 @@
     },
     {
       "buttonName": {
-        "eng": "Approve",
+        "en": "Approve",
         "ara": "وقف التشغيل",
-        "fra": "mettre hors service"
+        "fr": "mettre hors service"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -39,9 +39,9 @@
     },
     {
       "buttonName": {
-        "eng": "Edit",
+        "en": "Edit",
         "ara": "تصحيح",
-        "fra": "modifier"
+        "fr": "modifier"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/misp/single-view/$id",
@@ -51,9 +51,9 @@
     },
     {
       "buttonName": {
-        "eng": "Create MISP",
+        "en": "Create MISP",
         "ara": "إضافة مركز",
-        "fra": "Ajouter le centre"
+        "fr": "Ajouter le centre"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -67,7 +67,7 @@
     {
         "name": "name",
         "showInListView": "true",
-        "label": { "eng": "Name", "ara": "اسم المركز", "fra": "Nom du centre" },
+        "label": { "en": "Name", "ara": "اسم المركز", "fr": "Nom du centre" },
         "sortOrder": "3",
         "showAsLink": "",
         "linkType": "",
@@ -76,7 +76,7 @@
     {
         "name": "address",
         "showInListView": "false",
-        "label": { "eng": "Address", "ara": "اسم المركز", "fra": "Nom du centre" },
+        "label": { "en": "Address", "ara": "اسم المركز", "fr": "Nom du centre" },
         "sortOrder": "",
         "showAsLink": "",
         "linkType": "",
@@ -85,7 +85,7 @@
     {
         "name": "contactNumber",
         "showInListView": "true",
-        "label": { "eng": "Phone.No", "ara": "اسم المركز", "fra": "Nom du centre" },
+        "label": { "en": "Phone.No", "ara": "اسم المركز", "fr": "Nom du centre" },
         "sortOrder": "",
         "showAsLink": "",
         "linkType": "",
@@ -94,7 +94,7 @@
     {
         "name": "emailId",
         "showInListView": "true",
-        "label": { "eng": "Email", "ara": "اسم المركز", "fra": "Nom du centre" },
+        "label": { "en": "Email", "ara": "اسم المركز", "fr": "Nom du centre" },
         "sortOrder": "",
         "showAsLink": "",
         "linkType": "",
@@ -103,7 +103,7 @@
      {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "eng": "IsActive", "ara": "اسم المركز", "fra": "Nom du centre" },
+      "label": { "en": "IsActive", "ara": "اسم المركز", "fr": "Nom du centre" },
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -112,7 +112,7 @@
     {
         "name": "status_code",
         "showInListView": "true",
-        "label": { "eng": "Status", "ara": "اسم المركز", "fra": "Nom du centre" },
+        "label": { "en": "Status", "ara": "اسم المركز", "fr": "Nom du centre" },
         "sortOrder": "3",
         "showAsLink": "",
         "linkType": "",
