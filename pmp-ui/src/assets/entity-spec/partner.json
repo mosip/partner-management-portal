@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Upload Certificate"
+        "en": "Upload Certificate"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,23 +13,31 @@
     },
     {
       "buttonName": {
-        "eng": "View Certificate",
+        "en": "View Certificate",
         "ara": "تنشيط",
-        "fra": "déclencher"
+        "fr": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
       "showIn": "Ellipsis",
       "validations": "",
       "callBackFunction": "viewCertificate"
+    },
+    {
+      "buttonName": { "en": "Filter", "ara": "تصفيه", "fr": "filtre" },
+      "imagePath": "assets/images/filter.png",
+      "actionListType": "action",
+      "actionURL": { "case": "filter" },
+      "redirectURL": "",
+      "showIn": "Button",
+      "validations": ""
     }
   ],
   "columnsToDisplay": [
-    
     {
       "name": "id",
       "showInListView": "false",
-      "label": { "eng": "ID"},
+      "label": { "en": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -38,7 +46,16 @@
     {
       "name": "name",
       "showInListView": "true",
-      "label": { "eng": "Name"},
+      "label": { "en": "Name"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": ""
+    },
+    {
+      "name": "partnerTypeCode",
+      "showInListView": "true",
+      "label": { "en": "Partner Type"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -47,7 +64,7 @@
     {
       "name": "emailId",
       "showInListView": "true",
-      "label": { "eng": "Email id"},
+      "label": { "en": "Email id"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -57,9 +74,9 @@
       "name": "policyGroupId",
       "showInListView": "true",
       "label": {
-        "eng": "Policy Group",
+        "en": "Policy Group",
         "ara": "نوع المركز",
-        "fra": "Type de centre"
+        "fr": "Type de centre"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -69,9 +86,18 @@
     {
       "name": "contactNo",
       "showInListView": "true",
-      "label": { "eng": "Contact Number", "ara": "حاله", "fra": "statut" },
+      "label": { "en": "Contact Number", "ara": "حاله", "fr": "statut" },
       "sortOrder": "",
       "showAsLink": "false",
+      "linkType": "",
+      "LinkURL": ""
+    },
+    {
+      "name": "approvalStatus",
+      "showInListView": "true",
+      "label": { "en": "Approval Status"},
+      "sortOrder": "",
+      "showAsLink": "",
       "linkType": "",
       "LinkURL": ""
     },
@@ -79,9 +105,9 @@
       "name": "policyName",
       "showInListView": "",
       "label": {
-        "eng": "PolicyName",
+        "en": "PolicyName",
         "ara": "عدد المستخدمين",
-        "fra": "Nombre d'utilisateurs"
+        "fr": "Nombre d'utilisateurs"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -92,9 +118,9 @@
       "name": "emailId",
       "showInListView": "",
       "label": {
-        "eng": "Email",
+        "en": "Email",
         "ara": "عدد الأجهزة",
-        "fra": "Nombre d'appareils"
+        "fr": "Nombre d'appareils"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -105,9 +131,9 @@
       "name": "status",
       "showInListView": "",
       "label": {
-        "eng": "Status",
+        "en": "Status",
         "ara": "عدد الآلات",
-        "fra": "Nombre de machines"
+        "fr": "Nombre de machines"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -118,9 +144,9 @@
       "name": "address",
       "showInListView": "",
       "label": {
-        "eng": "Address",
+        "en": "Address",
         "ara": "هاتف مُتَكَون",
-        "fra": "Téléphone Contact"
+        "fr": "Téléphone Contact"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -131,9 +157,9 @@
       "name": "apiKeyRequestStatus",
       "showInListView": "",
       "label": {
-        "eng": "Submit Request Status",
+        "en": "Submit Request Status",
         "ara": "هاتف مُتَكَون",
-        "fra": "Téléphone Contact"
+        "fr": "Téléphone Contact"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -145,5 +171,79 @@
     "totalEntries": null,
     "pageSize": "10",
     "pageSizeList": [10, 20, 30, 40, 50]
+  },
+  "filterColumns": [
+  {
+    "filtername": "name",
+    "filterlabel": "Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "name",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "partnerTypeCode",
+    "filterlabel": "Partner Type",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "partnerTypeCode",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "emailId",
+    "filterlabel": "Email",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "emailId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "policyGroupId",
+    "filterlabel": "Policy Group",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "policyGroupId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "contactNo",
+    "filterlabel": "Contact Number",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "contactNo",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "status",
+    "filterlabel": "Approval Status",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "status",
+    "methodCallName": ""
   }
+  ]
 }

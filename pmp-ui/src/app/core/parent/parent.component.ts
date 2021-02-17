@@ -46,9 +46,10 @@ export class ParentComponent implements OnInit, AfterViewInit {
     this.navItems = cloneObject(appConstants.navItems);
     let self = this;
     if (this.headerService.getRoles()) {
+      console.log("this.headerService.getlanguageCode>>>"+this.headerService.getlanguageCode());
       this.headerService.getRoles().split(",").forEach(function (value) {
         if(value.trim() == "PARTNER ADMIN"){
-          self.dataService.getPartnerType(value).subscribe(
+          /*self.dataService.getPartnerType(value).subscribe(
             response => {
               if (!response.errors || response.errors.length === 0) {
                 response.response.data.forEach(function (partnerDetail) {
@@ -65,7 +66,7 @@ export class ParentComponent implements OnInit, AfterViewInit {
                 });
               }
             }
-          );
+          );*/
           let newMenu = {
             displayName: 'Device Details',
             icon: './assets/images/home.svg',

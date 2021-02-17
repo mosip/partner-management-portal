@@ -3,9 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Activate",
+        "en": "Activate",
         "ara": "تنشيط",
-        "fra": "déclencher"
+        "fr": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -15,9 +15,9 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate",
+        "en": "Deactivate",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -27,9 +27,9 @@
     },
     {
       "buttonName": {
-        "eng": "Edit",
+        "en": "Edit",
         "ara": "تصحيح",
-        "fra": "modifier"
+        "fr": "modifier"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/policygroup/single-view/$id",
@@ -39,9 +39,9 @@
     },
     {
       "buttonName": {
-        "eng": "Create Policy Group",
+        "en": "Create Policy Group",
         "ara": "إضافة مركز",
-        "fra": "Ajouter le centre"
+        "fr": "Ajouter le centre"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -51,7 +51,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "en": "Filter", "ara": "تصفيه", "fr": "filtre" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -63,7 +63,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "ID"},
+      "label": { "en": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -75,7 +75,7 @@
     },
     {
       "name": "name",
-      "label": { "eng": "Name"},
+      "label": { "en": "Name"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -87,7 +87,7 @@
     },
     {
       "name": "desc",
-      "label": { "eng": "Description"},
+      "label": { "en": "Description"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -99,7 +99,7 @@
     },
     {
       "name": "isActive",
-      "label": { "eng": "IsActive"},
+      "label": { "en": "IsActive"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -124,8 +124,20 @@
     "autocomplete": "false",
     "dropdown": "false",
     "datePicker": "false",
-    "apiName": "registrationcenters",
+    "apiName": "",
     "fieldName": "name",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "desc",
+    "filterlabel": "Description",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "desc",
     "methodCallName": ""
   }
 ]

@@ -124,6 +124,20 @@ export class CommonService {
     });
   }
 
+  private approveData(type: string, data: any) {
+    const obj = {
+      case: 'CONFIRMATION',
+      title: "CONFIRMATION",
+      message: "Do you want to "+type+" the Make "+data.make+" ?",
+      yesBtnTxt: "Yes",
+      noBtnTxt: "No"
+    };
+    return this.dialog.open(DialogComponent, {
+      width: '750px',
+      data: obj
+    });
+  }
+
   private updateMisp(callingFunction: string, data: MispModel) {
     const request = new RequestModel(
       appConstants.registrationCenterCreateId,
@@ -152,6 +166,28 @@ export class CommonService {
       data
     );
     this.dataService.updatePolicyStatus(mapping, request).subscribe(
+      response => {
+        if (!response.errors || response.errors.length === 0) {
+          this.createMessage('success', callingFunction, request.request.name);
+          this.router.navigateByUrl(this.router.url);
+        } else {
+          this.createMessage('error', callingFunction);
+        }
+      },
+      error => this.createMessage('error', callingFunction)
+    );
+  }
+
+  private updateDetails(callingFunction: string, data: PolicyModel) {
+    const routeParts = this.router.url.split("/")[3];
+    let mapping = appConstants.masterdataMapping[`${routeParts}`];
+    let requestBody = {"approvalStatus": callingFunction, "id": data.id, "isItForRegistrationDevice": true};
+    const request = new RequestModel(
+      appConstants.registrationCenterCreateId,
+      null,
+      requestBody
+    );
+    this.dataService.updateDetails(mapping, request).subscribe(
       response => {
         if (!response.errors || response.errors.length === 0) {
           this.createMessage('success', callingFunction, request.request.name);
@@ -608,6 +644,62 @@ export class CommonService {
         this.updatePolicy('deactivate', policyObject);
       } else {
         this.auditService.audit(19, 'ADM-103', 'deactivate');
+      }
+    });
+  }
+
+  approve(data: any, url: string, idKey: string) {
+    if (this.router.url.indexOf('single-view') >= 0) {
+      this.auditService.audit(10, 'ADM-086', {
+        buttonName: 'approve',
+        masterdataName: this.router.url.split('/')[
+          this.router.url.split('/').length - 3
+        ]
+      });
+    } else {
+      this.auditService.audit(9, 'ADM-089', {
+        buttonName: 'approve',
+        masterdataName: this.router.url.split('/')[
+          this.router.url.split('/').length - 2
+        ]
+      });
+    }
+    this.approveData('Approve', data).afterClosed().subscribe(res => {
+      if (res) {
+        this.auditService.audit(18, 'ADM-100', 'approve');
+        const policyObject = data;
+        policyObject.status = true;
+        this.updateDetails('Activate', policyObject);
+      } else {
+        this.auditService.audit(19, 'ADM-101', 'approve');
+      }
+    });
+  }
+
+  reject(data: any, url: string, idKey: string) {
+    if (this.router.url.indexOf('single-view') >= 0) {
+      this.auditService.audit(10, 'ADM-086', {
+        buttonName: 'reject',
+        masterdataName: this.router.url.split('/')[
+          this.router.url.split('/').length - 3
+        ]
+      });
+    } else {
+      this.auditService.audit(9, 'ADM-089', {
+        buttonName: 'reject',
+        masterdataName: this.router.url.split('/')[
+          this.router.url.split('/').length - 2
+        ]
+      });
+    }
+    this.approveData('Reject', data).afterClosed().subscribe(res => {
+      if (res) {
+        this.auditService.audit(18, 'ADM-100', 'reject');
+        const policyObject = data;
+        policyObject.status = true;
+        this.updateDetails('De-activate', policyObject);
+      } else {
+        this.auditService.audit(19, 'ADM-101', 'reject');
       }
     });
   }

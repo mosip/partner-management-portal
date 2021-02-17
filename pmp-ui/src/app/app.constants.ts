@@ -54,8 +54,8 @@ export const navItems = [
   {
     displayName: 'Partner',
     icon: 'assets/images/support.svg',
-    route: '',
-    children: [],
+    route: '/pmp/resources/partner/view',
+    children: null,
     auditEventId: 'ADM-006',
     roles: ['PARTNER_ADMIN']
   }

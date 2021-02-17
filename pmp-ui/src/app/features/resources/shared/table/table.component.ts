@@ -139,18 +139,18 @@ export class TableComponent implements OnInit, OnChanges {
 
   ellipsisAction(data) {
     this.ellipsisList = [...this.buttonList];
-    if (data.isActive === true) {
+    if (data.isActive === true || data.active === true) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Activate') {
+        if (values.buttonName.eng === 'Activate' || values.buttonName.eng === 'Approve') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
       });
-    } else if (data.isActive === false) {
+    } else if (data.isActive === false || data.active === false) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Deactivate') {
+        if (values.buttonName.eng === 'Deactivate' || values.buttonName.eng === 'Reject') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
@@ -184,14 +184,14 @@ export class TableComponent implements OnInit, OnChanges {
   // text-decoration: none;
   // display: inline-block;
     }
-    if (columnValue === true && columnName === 'isActive') {
+    if (columnValue === true && (columnName === 'isActive' || columnName === 'active')) {
       myTableStyles.backgroundColor = '#C2F2DA';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
       myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
-    } else if (columnValue === false && columnName === 'isActive') {
+    } else if (columnValue === false && (columnName === 'isActive' || columnName === 'active')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
@@ -199,17 +199,25 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
-    if (columnValue === 'approved' && columnName === 'status_code') {
+    if ((columnValue == 'approved' || columnValue == 'Approved') && (columnName === 'status_code' || columnName === 'statusCode')) {
       myTableStyles.backgroundColor = '#C2F2DA';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
       myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
-    } else if (columnValue === 'Inprogress' && columnName === 'status_code') {
+    } else if ((columnValue == 'Inprogress' && columnName === 'status_code') || (columnValue === 'inProgress' && columnName === 'statusCode')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
+      myTableStyles.borderRadius = '7px';
+      myTableStyles.textTransform = 'uppercase';
+      return myTableStyles;
+    }else if (columnValue == 'Rejected' && columnName === 'statusCode') {
+      myTableStyles.backgroundColor = '#f13e3e';
+      myTableStyles.color = '#ffffff';
+      myTableStyles.padding = '5px';
+      myTableStyles.border = '1px solid #6d1a1a';
       myTableStyles.borderRadius = '7px';
       myTableStyles.textTransform = 'uppercase';
       return myTableStyles;

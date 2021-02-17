@@ -3,9 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Activate Partner",
+        "en": "Activate Partner",
         "ara": "تنشيط",
-        "fra": "déclencher"
+        "fr": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -15,9 +15,9 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate Partner",
+        "en": "Deactivate Partner",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -27,9 +27,9 @@
     },
     {
       "buttonName": {
-        "eng": "Approve ApikeyReq",
+        "en": "Approve ApikeyReq",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -39,9 +39,9 @@
     },
     {
       "buttonName": {
-        "eng": "Reject ApikeyReq",
+        "en": "Reject ApikeyReq",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -51,9 +51,9 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate APIKey",
+        "en": "Deactivate APIKey",
         "ara": "الغاء تنشيط",
-        "fra": "désactiver"
+        "fr": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -63,9 +63,9 @@
     },
     {
       "buttonName": {
-        "eng": "Activate APIKey",
+        "en": "Activate APIKey",
         "ara": "وقف التشغيل",
-        "fra": "mettre hors service"
+        "fr": "mettre hors service"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -74,7 +74,7 @@
       "callBackFunction": "activateAPIKeyStatus"
     },
     {
-      "buttonName": { "eng": "Change Policy", "ara": "تحرير", "fra": "réviser" },
+      "buttonName": { "en": "Change Policy", "ara": "تحرير", "fr": "réviser" },
       "actionURL": "",
       "redirectURL": "/pmp/resources/pmanager/single-view/$id",
       "showIn": "Ellipsis",
@@ -87,9 +87,9 @@
       "name": "partnerID",
       "showInListView": "True",
       "label": {
-        "eng": "partnerID",
+        "en": "partnerID",
         "ara": "اسم الجهاز",
-        "fra": "Nom de la Device"
+        "fr": "Nom de la Device"
       },
       "sortOrder": "3",
       "showAsLink": "",
@@ -100,9 +100,9 @@
       "name": "policyName",
       "showInListView": "true",
       "label": {
-        "eng": "policyName",
+        "en": "policyName",
         "ara": "نوع الجهاز",
-        "fra": "Type de Device"
+        "fr": "Type de Device"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -112,7 +112,7 @@
     {
       "name": "partnerStatus",
       "showInListView": "true",
-      "label": { "eng": "partnerStatus", "ara": "حاله", "fra": "statut" },
+      "label": { "en": "partnerStatus", "ara": "حاله", "fr": "statut" },
       "sortOrder": "",
       "showAsLink": "false",
       "linkType": "",
@@ -121,7 +121,7 @@
     {
       "name": "apikeyReqID",
       "showInListView": "",
-      "label": { "eng": "apikeyReqID", "ara": "عنوان", "fra": "Mac Adresse" },
+      "label": { "en": "apikeyReqID", "ara": "عنوان", "fr": "Mac Adresse" },
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -131,9 +131,9 @@
       "name": "apikeyReqIDStatus",
       "showInListView": "",
       "label": {
-        "eng": "apikeyReqIDStatus",
+        "en": "apikeyReqIDStatus",
         "ara": "الرقم التسلسلي",
-        "fra": "numéro"
+        "fr": "numéro"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -144,9 +144,9 @@
       "name": "partnerAPIKey",
       "showInListView": "",
       "label": {
-        "eng": "partnerAPIKey",
+        "en": "partnerAPIKey",
         "ara": "تعيين الحالة",
-        "fra": "Attribuer un statut"
+        "fr": "Attribuer un statut"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -157,9 +157,9 @@
       "name": "partnerAPIKeyStatus",
       "showInListView": "",
       "label": {
-        "eng": "partnerAPIKeyStatus",
+        "en": "partnerAPIKeyStatus",
         "ara": "الوقت الذي تم إنشاؤه",
-        "fra": "Temps créé"
+        "fr": "Temps créé"
       },
       "sortOrder": "",
       "showAsLink": "",

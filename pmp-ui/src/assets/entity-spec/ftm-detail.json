@@ -3,7 +3,27 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Edit"
+        "en": "Approve"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "approve"
+    },
+    {
+      "buttonName": {
+        "en": "Reject"
+      },
+      "actionURL": "",
+      "redirectURL": "",
+      "showIn": "Ellipsis",
+      "validations": "",
+      "callBackFunction": "reject"
+    },
+    {
+      "buttonName": {
+        "en": "Edit"
       },
       "actionURL": "",
       "redirectURL": "pmp/resources/ftmdetails/single-view/$id",
@@ -13,7 +33,7 @@
     },
     {
       "buttonName": {
-        "eng": "Create Device"
+        "en": "Create Device"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -21,12 +41,21 @@
       "redirectURL": "pmp/resources/ftmdetails/create",
       "showIn": "Button",
       "validations": ""
+    },
+    {
+      "buttonName": { "en": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "imagePath": "assets/images/filter.png",
+      "actionListType": "action",
+      "actionURL": { "case": "filter" },
+      "redirectURL": "",
+      "showIn": "Button",
+      "validations": ""
     }
   ],
   "columnsToDisplay": [    
     {
       "name": "ftpChipDetailId",
-      "label": { "eng": "ID"},
+      "label": { "en": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -38,7 +67,7 @@
     },
     {
       "name": "ftpProviderId",
-      "label": { "eng": "Partner Name"},
+      "label": { "en": "Partner Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -50,7 +79,7 @@
     },
     {
       "name": "partnerOrganizationName",
-      "label": { "eng": "Organization Name"},
+      "label": { "en": "Organization Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -62,7 +91,7 @@
     },
     {
       "name": "make",
-      "label": { "eng": "Make"},
+      "label": { "en": "Make"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -74,7 +103,7 @@
     },
     {
       "name": "model",
-      "label": { "eng": "Model"},
+      "label": { "en": "Model"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -83,11 +112,70 @@
       "ismandatory": "true",
       "showInListView": "true",
       "showInSingleView": "true"
+    },
+    {
+      "name": "active",
+      "showInListView": "true",
+      "label": { "en": "Approved Status"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": ""  
     }
   ],
   "paginator": {
     "totalEntries": null,
     "pageSize": "10",
     "pageSizeList": [10, 20, 30, 40, 50]
+  },
+    "filterColumns": [
+  {
+    "filtername": "ftpProviderId",
+    "filterlabel": "Partner Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "ftpProviderId",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "partnerOrganizationName",
+    "filterlabel": "Organization Name",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "partnerOrganizationName",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "make",
+    "filterlabel": "Make",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "make",
+    "methodCallName": ""
+  },
+  {
+    "filtername": "model",
+    "filterlabel": "Model",
+    "filterType": "equals",
+    "fieldType": "input",
+    "autocomplete": "false",
+    "dropdown": "false",
+    "datePicker": "false",
+    "apiName": "",
+    "fieldName": "model",
+    "methodCallName": ""
   }
+  ]
 }

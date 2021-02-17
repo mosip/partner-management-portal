@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Edit"
+        "en": "Edit"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/single-view/$childid",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "eng": "Create Device"
+        "en": "Create Device"
       },
       "imagePath": "assets/images/add-icon.png",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/create",
@@ -25,7 +25,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "ID"},
+      "label": { "en": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -37,7 +37,7 @@
     },
     {
       "name": "deviceDetailId",
-      "label": { "eng": "Device Id"},
+      "label": { "en": "Device Id"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -49,7 +49,7 @@
     },
     {
       "name": "swVersion",
-      "label": { "eng": "Version"},
+      "label": { "en": "Version"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -61,7 +61,7 @@
     },
     {
       "name": "swBinaryHash",
-      "label": { "eng": "BinaryHash"},
+      "label": { "en": "BinaryHash"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -73,7 +73,7 @@
     },
     {
       "name": "swCreateDateTime",
-      "label": { "eng": "CreatedDateTime"},
+      "label": { "en": "CreatedDateTime"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -85,7 +85,7 @@
     },
     {
       "name": "swExpiryDateTime",
-      "label": { "eng": "ExpiryDateTime"},
+      "label": { "en": "ExpiryDateTime"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -97,7 +97,7 @@
     },
     {
       "name": "isItForRegistrationDevice",
-      "label": { "eng": "ForRegistrationDevice"},
+      "label": { "en": "ForRegistrationDevice"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

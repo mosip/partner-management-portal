@@ -147,6 +147,12 @@ export class DataStorageService {
     );
   }
 
+  updateDetails(mapping: any, data: RequestModel): Observable<any> {
+    return this.http.patch(
+      this.BASE_URL +'partnermanagement/'+ 'v1/'+ mapping.apiName,
+      data
+    );
+  }
   updatePolicy(data: RequestModel): Observable<any> {
     return this.http.post("/policies/" +data.request.id ,data
     );
