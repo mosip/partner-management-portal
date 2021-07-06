@@ -73,7 +73,7 @@ export const viewFields = [];
 
 export const masterdataMapping = {
   policygroup: {
-    apiName: 'policies/policyGroup',
+    apiName: 'policymanager/policies/group',
     specFileName: 'policy-group',
     name: 'Policy Group',
     nameKey: 'titleName',
@@ -81,7 +81,7 @@ export const masterdataMapping = {
     headerName: 'Policy Group'
   },
   authpolicy: {
-    apiName: 'policies/policy',
+    apiName: 'policymanager/policies',
     specFileName: 'auth-policy',
     name: 'Auth Policy',
     nameKey: 'titleName',
@@ -89,7 +89,7 @@ export const masterdataMapping = {
     headerName: 'Auth Policy'
   },
   datasharepolicy: {
-    apiName: 'policies/policy',
+    apiName: 'policymanager/policies',
     specFileName: 'data-share-policy',
     name: 'Data Share Policy',
     nameKey: 'titleName',
@@ -97,7 +97,7 @@ export const masterdataMapping = {
     headerName: 'Data Share Policy'
   },
   devicedetails: {
-    apiName: 'partners/devicedetail',
+    apiName: 'partnermanager/devicedetail',
     specFileName: 'device-detail',
     name: 'Device Detail',
     nameKey: 'titleName',
@@ -105,7 +105,7 @@ export const masterdataMapping = {
     headerName: 'Device Detail'
   },
   ftmdetails: {
-    apiName: 'partners/ftpchipdetail',
+    apiName: 'partnermanager/ftpchipdetail',
     specFileName: 'ftm-detail',
     name: 'FTM Detail',
     nameKey: 'titleName',
@@ -113,7 +113,7 @@ export const masterdataMapping = {
     headerName: 'FTM Detail'
   },
   sbidetails: {
-    apiName: 'partners/securebiometricinterface',
+    apiName: 'partnermanager/securebiometricinterface',
     specFileName: 'sbi-detail',
     name: 'Device Detail',
     nameKey: 'titleName',
@@ -121,7 +121,7 @@ export const masterdataMapping = {
     headerName: 'Secure Biometric Interface'
   },
   policymapping: {
-    apiName: 'partners/partners/apikeyRequest',
+    apiName: 'partnermanager/partners/apikey/request',
     specFileName: 'policy-mapping',
     name: 'Partner Policy Mapping',
     nameKey: 'titleName',

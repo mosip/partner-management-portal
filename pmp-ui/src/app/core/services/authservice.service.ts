@@ -19,7 +19,7 @@ export class AuthService {
    token: string;
    roles: string[];
    isAuthenticated(): Observable<boolean> {
-    return this.http.get(`${this.appService.getConfig().baseUrl}partnermanagement/v1/partners/authorize/admin/validateToken`, { observe: 'response'}).
+    return this.http.get(`${this.appService.getConfig().baseUrl}v1/partnermanager/authorize/admin/validateToken`, { observe: 'response'}).
     pipe(map(res => res.status === 200),
     catchError(error => {
       console.log(error);

@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     console.log('SreenWidth', this.screenResize);
-    if (this.headerService.getUsername() !== '') {
+    /*if (this.headerService.getUsername() !== '') {
       this.dataService
       .getLoggedInUserZone(
         this.headerService.getUsername(),
@@ -55,6 +55,6 @@ export class HeaderComponent implements OnInit {
           this.zone = response.response.zoneName;
         }
       });
-    }
+    }*/
   }
 }

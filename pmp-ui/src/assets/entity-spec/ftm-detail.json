@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Approve"
+        "eng": "Approve"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "en": "Reject"
+        "eng": "Reject"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -23,7 +23,7 @@
     },
     {
       "buttonName": {
-        "en": "Edit"
+        "eng": "Edit"
       },
       "actionURL": "",
       "redirectURL": "pmp/resources/ftmdetails/single-view/$id",
@@ -33,7 +33,7 @@
     },
     {
       "buttonName": {
-        "en": "Create Device"
+        "eng": "Create Device"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -43,7 +43,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "en": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -55,7 +55,7 @@
   "columnsToDisplay": [    
     {
       "name": "ftpChipDetailId",
-      "label": { "en": "ID"},
+      "label": { "eng": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -67,7 +67,7 @@
     },
     {
       "name": "ftpProviderId",
-      "label": { "en": "Partner Name"},
+      "label": { "eng": "Partner Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -79,7 +79,7 @@
     },
     {
       "name": "partnerOrganizationName",
-      "label": { "en": "Organization Name"},
+      "label": { "eng": "Organization Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -91,7 +91,7 @@
     },
     {
       "name": "make",
-      "label": { "en": "Make"},
+      "label": { "eng": "Make"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -103,7 +103,7 @@
     },
     {
       "name": "model",
-      "label": { "en": "Model"},
+      "label": { "eng": "Model"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -116,7 +116,7 @@
     {
       "name": "active",
       "showInListView": "true",
-      "label": { "en": "Approved Status"},
+      "label": { "eng": "Approved Status"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
