@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Activate"
+        "eng": "Activate"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "en": "Deactivate"
+        "eng": "Deactivate"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -23,7 +23,7 @@
     },
     {
       "buttonName": {
-        "en": "Edit",
+        "eng": "Edit",
         "ara": "تصحيح",
         "fra": "modifier"
       },
@@ -35,7 +35,7 @@
     },
     {
       "buttonName": {
-        "en": "Create Policy",
+        "eng": "Create Policy",
         "ara": "إضافة مركز",
         "fra": "Ajouter le centre"
       },
@@ -47,7 +47,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "en": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -59,7 +59,7 @@
   "columnsToDisplay": [
      {
       "name": "id",
-      "label": { "en": "Policy ID"},
+      "label": { "eng": "Policy ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -71,7 +71,7 @@
     },
     {
       "name": "name",
-      "label": { "en": "Name"},
+      "label": { "eng": "Name"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -83,7 +83,7 @@
     },
     {
       "name": "desc",
-      "label": { "en": "Description"},
+      "label": { "eng": "Description"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -95,7 +95,7 @@
     },
     {
       "name": "policyGroupName",
-      "label": { "en": "Policy Group"},
+      "label": { "eng": "Policy Group"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -107,7 +107,7 @@
     },
     {
       "name": "version",
-      "label": { "en": "Policy Version"},
+      "label": { "eng": "Policy Version"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -119,7 +119,7 @@
     },
     {
       "name": "policyType",
-      "label": { "en": "Policy Type"},
+      "label": { "eng": "Policy Type"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -131,7 +131,7 @@
     },
     {
       "name": "policies",
-      "label": { "en": "Policies Data"},
+      "label": { "eng": "Policies Data"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -144,7 +144,7 @@
     {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "en": "IsActive"},
+      "label": { "eng": "IsActive"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Edit"
+        "eng": "Edit"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/single-view/$childid",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "en": "Create Device"
+        "eng": "Create SBI"
       },
       "imagePath": "assets/images/add-icon.png",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/create",
@@ -25,7 +25,19 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "en": "ID"},
+      "label": { "eng": "ID"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": "",
+      "inputType": "",
+      "ismandatory": "",
+      "showInListView": "false",
+      "showInSingleView": "false"
+    },
+    {
+      "name": "deviceDetailId",
+      "label": { "eng": "Device Id"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -36,20 +48,20 @@
       "showInSingleView": "false"
     },
     {
-      "name": "deviceDetailId",
-      "label": { "en": "Device Id"},
+      "name": "deviceProviderId",
+      "label": { "eng": "Partner Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
       "LinkURL": "",
-      "inputType": "",
-      "ismandatory": "",
+      "inputType": "dropdown",
+      "ismandatory": "false",
       "showInListView": "true",
       "showInSingleView": "false"
     },
     {
       "name": "swVersion",
-      "label": { "en": "Version"},
+      "label": { "eng": "Version"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -61,19 +73,19 @@
     },
     {
       "name": "swBinaryHash",
-      "label": { "en": "BinaryHash"},
+      "label": { "eng": "BinaryHash"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
       "LinkURL": "",
       "inputType": "text",
       "ismandatory": "true",
-      "showInListView": "false",
+      "showInListView": "true",
       "showInSingleView": "true"
     },
     {
       "name": "swCreateDateTime",
-      "label": { "en": "CreatedDateTime"},
+      "label": { "eng": "CreatedDateTime"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -85,7 +97,7 @@
     },
     {
       "name": "swExpiryDateTime",
-      "label": { "en": "ExpiryDateTime"},
+      "label": { "eng": "ExpiryDateTime"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -97,7 +109,7 @@
     },
     {
       "name": "isItForRegistrationDevice",
-      "label": { "en": "ForRegistrationDevice"},
+      "label": { "eng": "ForRegistrationDevice"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -106,6 +118,15 @@
       "ismandatory": "true",
       "showInListView": "false",
       "showInSingleView": "false"
+    },
+    {
+      "name": "isActive",
+      "showInListView": "true",
+      "label": { "eng": "Status"},
+      "sortOrder": "",
+      "showAsLink": "",
+      "linkType": "",
+      "LinkURL": ""  
     }
   ],
   "paginator": {

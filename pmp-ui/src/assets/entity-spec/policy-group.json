@@ -3,9 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Activate",
+        "eng": "Activate",
         "ara": "تنشيط",
-        "fr": "déclencher"
+        "fra": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -15,9 +15,9 @@
     },
     {
       "buttonName": {
-        "en": "Deactivate",
+        "eng": "Deactivate",
         "ara": "الغاء تنشيط",
-        "fr": "désactiver"
+        "fra": "désactiver"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -27,9 +27,9 @@
     },
     {
       "buttonName": {
-        "en": "Edit",
+        "eng": "Edit",
         "ara": "تصحيح",
-        "fr": "modifier"
+        "fra": "modifier"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/policygroup/single-view/$id",
@@ -39,9 +39,9 @@
     },
     {
       "buttonName": {
-        "en": "Create Policy Group",
+        "eng": "Create Policy Group",
         "ara": "إضافة مركز",
-        "fr": "Ajouter le centre"
+        "fra": "Ajouter le centre"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -51,7 +51,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "en": "Filter", "ara": "تصفيه", "fr": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -63,7 +63,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "en": "ID"},
+      "label": { "eng": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -75,7 +75,7 @@
     },
     {
       "name": "name",
-      "label": { "en": "Name"},
+      "label": { "eng": "Name"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -87,7 +87,7 @@
     },
     {
       "name": "desc",
-      "label": { "en": "Description"},
+      "label": { "eng": "Description"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -99,7 +99,7 @@
     },
     {
       "name": "isActive",
-      "label": { "en": "IsActive"},
+      "label": { "eng": "IsActive"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

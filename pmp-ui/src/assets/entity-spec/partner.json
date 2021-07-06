@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Upload Certificate"
+        "eng": "Upload Certificate"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,9 +13,9 @@
     },
     {
       "buttonName": {
-        "en": "View Certificate",
+        "eng": "View Certificate",
         "ara": "تنشيط",
-        "fr": "déclencher"
+        "fra": "déclencher"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -24,7 +24,7 @@
       "callBackFunction": "viewCertificate"
     },
     {
-      "buttonName": { "en": "Filter", "ara": "تصفيه", "fr": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -37,7 +37,7 @@
     {
       "name": "id",
       "showInListView": "false",
-      "label": { "en": "ID"},
+      "label": { "eng": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -46,7 +46,7 @@
     {
       "name": "name",
       "showInListView": "true",
-      "label": { "en": "Name"},
+      "label": { "eng": "Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -55,7 +55,7 @@
     {
       "name": "partnerTypeCode",
       "showInListView": "true",
-      "label": { "en": "Partner Type"},
+      "label": { "eng": "Partner Type"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -64,7 +64,7 @@
     {
       "name": "emailId",
       "showInListView": "true",
-      "label": { "en": "Email id"},
+      "label": { "eng": "Email id"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -74,9 +74,9 @@
       "name": "policyGroupId",
       "showInListView": "true",
       "label": {
-        "en": "Policy Group",
+        "eng": "Policy Group",
         "ara": "نوع المركز",
-        "fr": "Type de centre"
+        "fra": "Type de centre"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -86,7 +86,7 @@
     {
       "name": "contactNo",
       "showInListView": "true",
-      "label": { "en": "Contact Number", "ara": "حاله", "fr": "statut" },
+      "label": { "eng": "Contact Number", "ara": "حاله", "fra": "statut" },
       "sortOrder": "",
       "showAsLink": "false",
       "linkType": "",
@@ -95,7 +95,7 @@
     {
       "name": "approvalStatus",
       "showInListView": "true",
-      "label": { "en": "Approval Status"},
+      "label": { "eng": "Approval Status"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -105,9 +105,9 @@
       "name": "policyName",
       "showInListView": "",
       "label": {
-        "en": "PolicyName",
+        "eng": "PolicyName",
         "ara": "عدد المستخدمين",
-        "fr": "Nombre d'utilisateurs"
+        "fra": "Nombre d'utilisateurs"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -118,9 +118,9 @@
       "name": "emailId",
       "showInListView": "",
       "label": {
-        "en": "Email",
+        "eng": "Email",
         "ara": "عدد الأجهزة",
-        "fr": "Nombre d'appareils"
+        "fra": "Nombre d'appareils"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -131,9 +131,9 @@
       "name": "status",
       "showInListView": "",
       "label": {
-        "en": "Status",
+        "eng": "Status",
         "ara": "عدد الآلات",
-        "fr": "Nombre de machines"
+        "fra": "Nombre de machines"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -144,9 +144,9 @@
       "name": "address",
       "showInListView": "",
       "label": {
-        "en": "Address",
+        "eng": "Address",
         "ara": "هاتف مُتَكَون",
-        "fr": "Téléphone Contact"
+        "fra": "Téléphone Contact"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -157,9 +157,9 @@
       "name": "apiKeyRequestStatus",
       "showInListView": "",
       "label": {
-        "en": "Submit Request Status",
+        "eng": "Submit Request Status",
         "ara": "هاتف مُتَكَون",
-        "fr": "Téléphone Contact"
+        "fra": "Téléphone Contact"
       },
       "sortOrder": "",
       "showAsLink": "",
