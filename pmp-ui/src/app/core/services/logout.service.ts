@@ -23,7 +23,7 @@ export class LogoutService {
 
   logout() {
     this.http
-      .delete(`${this.appService.getConfig().baseUrl}partnermanagement/v1/partners/logout/user`, {
+      .delete(`${this.appService.getConfig().baseUrl}v1/partnermanager/logout/user`, {
         observe: 'response'
       })
       .subscribe(
