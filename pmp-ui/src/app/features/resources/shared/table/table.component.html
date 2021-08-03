@@ -6,8 +6,8 @@
         class="mat-header-cell table-header sticky-header"
       >
         <span class="columnName-sort-span"
-          ><span *ngIf="lang === 'en'">{{ columnName.label.en }}</span>
-          <span *ngIf="lang === 'fr'">{{ columnName.label.fr }}</span>
+          ><span *ngIf="lang === 'eng'">{{ columnName.label.eng }}</span>
+          <span *ngIf="lang === 'fra'">{{ columnName.label.fra }}</span>
           <span *ngIf="lang === 'ara'">{{ columnName.label.ara }}</span>
           <span (click)="sortColumn(columnName.name,i)"
             ><img *ngIf="sortIconTrackerArray[i] === 0"
@@ -52,8 +52,8 @@
           *ngFor="let button of ellipsisList"
           (click)="selectedRow(data, button)"
         >
-        <span *ngIf="lang === 'en'">{{ button.buttonName.en }}</span>
-        <span *ngIf="lang === 'fr'">{{ button.buttonName.fr }}</span>
+        <span *ngIf="lang === 'eng'">{{ button.buttonName.eng }}</span>
+        <span *ngIf="lang === 'fra'">{{ button.buttonName.fra }}</span>
         <span *ngIf="lang === 'ara'">{{ button.buttonName.ara }}</span>
         </button>
       </mat-menu>

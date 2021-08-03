@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-list-view',
@@ -44,10 +45,11 @@ export class ListViewComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private auditService: AuditService
+    private auditService: AuditService, 
+    private headerService: HeaderService
   ) {
     translateService
-      .getTranslation(appService.getConfig().primaryLangCode)
+      .getTranslation(this.headerService.getlanguageCode())
       .subscribe(response => {
         this.errorMessages = response.errorPopup;
       });
@@ -68,7 +70,7 @@ export class ListViewComponent implements OnDestroy {
       await this.loadBlacklistedWords();
     } else {
       await this.getMasterDataTypeValues(
-        this.appService.getConfig().primaryLangCode
+        this.headerService.getlanguageCode()
       );
     }
   }
@@ -96,7 +98,7 @@ export class ListViewComponent implements OnDestroy {
         this.mapping = appConstants.masterdataMapping[`${routeParts}`];
         this.headerName = appConstants.masterdataMapping[`${routeParts}`].headerName;
       }else{
-        this.mapping = { apiName: 'partners/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
+        this.mapping = { apiName: 'partnermanager/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
          idKey: 'id', headerName: `${routeParts}`};
         this.headerName = `${routeParts}`.replace(/_/g, " ");
       }
@@ -138,7 +140,7 @@ export class ListViewComponent implements OnDestroy {
     console.log(this.sortFilter);
     const filters = Utils.convertFilter(
       this.activatedRoute.snapshot.queryParams,
-      this.appService.getConfig().primaryLangCode
+      this.headerService.getlanguageCode()
     );
     filters.sort = this.sortFilter;
     const url = Utils.convertFilterToUrl(filters);
@@ -150,7 +152,7 @@ export class ListViewComponent implements OnDestroy {
   pageEvent(event: any) {
     const filters = Utils.convertFilter(
       this.activatedRoute.snapshot.queryParams,
-      this.appService.getConfig().primaryLangCode
+      this.headerService.getlanguageCode()
     );
     filters.pagination.pageFetch = event.pageSize;
     filters.pagination.pageStart = event.pageIndex;
@@ -187,7 +189,7 @@ export class ListViewComponent implements OnDestroy {
         this.mapping = appConstants.masterdataMapping[`${routeParts}`];
         this.headerName = appConstants.masterdataMapping[`${routeParts}`].headerName;
       }else{
-        this.mapping = { apiName: 'partners/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
+        this.mapping = { apiName: 'partnermanager/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
          idKey: 'id', headerName: `${routeParts}`};
         this.headerName = "Partner";
         this.requestModel.request["partnerType"] = "all";
@@ -206,7 +208,8 @@ export class ListViewComponent implements OnDestroy {
               this.noData = true;
             }
           } else {
-            this.dialog
+            this.noData = true;
+            /*this.dialog
               .open(DialogComponent, {
                 data: {
                   case: 'MESSAGE',
@@ -219,7 +222,7 @@ export class ListViewComponent implements OnDestroy {
               .afterClosed()
               .subscribe(result => {
                 console.log('dialog is closed from view component');
-              });
+              });*/
           }
           resolve(response);
         });

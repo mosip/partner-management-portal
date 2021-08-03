@@ -3,7 +3,7 @@
   "actionButtons": [
     {
       "buttonName": {
-        "en": "Edit"
+        "eng": "Edit"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/partner/single-view/$id",
@@ -13,7 +13,7 @@
     },
     {
       "buttonName": {
-        "en": "Add Contacts"
+        "eng": "Add Contacts"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -23,7 +23,7 @@
     },
     {
       "buttonName": {
-        "en": "Upload Certificate"
+        "eng": "Upload Certificate"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -33,7 +33,7 @@
     },
     {
       "buttonName": {
-        "en": "View Certificate",
+        "eng": "View Certificate",
         "ara": "تنشيط",
         "fra": "déclencher"
       },
@@ -45,7 +45,7 @@
     },
     {
       "buttonName": {
-        "en": "Device Detail"
+        "eng": "Device Detail"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicepartner/devicedetail/view/$id",
@@ -55,7 +55,7 @@
     },
     {
       "buttonName": {
-        "en": "Create Partner",
+        "eng": "Create Partner",
         "ara": "إضافة مركز",
         "fra": "Ajouter le centre"
       },
@@ -72,7 +72,7 @@
     {
       "name": "id",
       "showInListView": "true",
-      "label": { "en": "ID"},
+      "label": { "eng": "ID"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -81,7 +81,7 @@
     {
       "name": "name",
       "showInListView": "true",
-      "label": { "en": "Name"},
+      "label": { "eng": "Name"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -90,7 +90,7 @@
     {
       "name": "emailId",
       "showInListView": "true",
-      "label": { "en": "Email id"},
+      "label": { "eng": "Email id"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -100,7 +100,7 @@
       "name": "policyGroupId",
       "showInListView": "true",
       "label": {
-        "en": "Policy Group",
+        "eng": "Policy Group",
         "ara": "نوع المركز",
         "fra": "Type de centre"
       },
@@ -112,7 +112,7 @@
     {
       "name": "contactNo",
       "showInListView": "true",
-      "label": { "en": "Contact Number", "ara": "حاله", "fra": "statut" },
+      "label": { "eng": "Contact Number", "ara": "حاله", "fra": "statut" },
       "sortOrder": "",
       "showAsLink": "false",
       "linkType": "",
@@ -122,7 +122,7 @@
       "name": "policyName",
       "showInListView": "",
       "label": {
-        "en": "PolicyName",
+        "eng": "PolicyName",
         "ara": "عدد المستخدمين",
         "fra": "Nombre d'utilisateurs"
       },
@@ -135,7 +135,7 @@
       "name": "emailId",
       "showInListView": "",
       "label": {
-        "en": "Email",
+        "eng": "Email",
         "ara": "عدد الأجهزة",
         "fra": "Nombre d'appareils"
       },
@@ -148,7 +148,7 @@
       "name": "status",
       "showInListView": "",
       "label": {
-        "en": "Status",
+        "eng": "Status",
         "ara": "عدد الآلات",
         "fra": "Nombre de machines"
       },
@@ -161,7 +161,7 @@
       "name": "address",
       "showInListView": "",
       "label": {
-        "en": "Address",
+        "eng": "Address",
         "ara": "هاتف مُتَكَون",
         "fra": "Téléphone Contact"
       },
@@ -174,7 +174,7 @@
       "name": "apiKeyRequestStatus",
       "showInListView": "",
       "label": {
-        "en": "Submit Request Status",
+        "eng": "Submit Request Status",
         "ara": "هاتف مُتَكَون",
         "fra": "Téléphone Contact"
       },

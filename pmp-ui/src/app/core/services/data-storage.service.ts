@@ -135,21 +135,21 @@ export class DataStorageService {
 
   ApproveorRejectPolicyFunction(mapping: any, data: RequestModel): Observable<any> {
     return this.http.patch(
-      this.BASE_URL +'partnermanagement/'+ 'v1/pmpartners/pmpartners/PartnerAPIKeyRequests/'+data.request.apikeyRequestId,
+      this.BASE_URL+ 'v1/pmpartners/pmpartners/PartnerAPIKeyRequests/'+data.request.apikeyRequestId,
       data
     );
   }
 
   updatePolicyStatus(mapping: any, data: RequestModel): Observable<any> {
     return this.http.put(
-      this.BASE_URL +'partnermanagement/'+ 'v1/policies/policies/'+data.request.id,
+      this.BASE_URL+ 'v1/policymanager/policies/group/'+data.request.id,
       data
     );
   }
 
   updateDetails(mapping: any, data: RequestModel): Observable<any> {
     return this.http.patch(
-      this.BASE_URL +'partnermanagement/'+ 'v1/'+ mapping.apiName,
+      this.BASE_URL+ 'v1/'+ mapping.apiName,
       data
     );
   }
@@ -159,7 +159,7 @@ export class DataStorageService {
   }
 
   viewCertificate(data: any): Observable<any> {
-    return this.http.get(this.BASE_URL +'partnermanagement/'+ 'v1/partners/partners/getPartnerCertificate/' +  data.id );
+    return this.http.get(this.BASE_URL+ 'v1/partnermanager/partners/' +  data.id +'/certificate');
   }
 
   approveMisp(data: RequestModel): Observable<any> {
@@ -192,14 +192,14 @@ export class DataStorageService {
     let json = {"id": "string","metadata": {},"request": {"filters": [],"pagination": {"pageFetch": 10,"pageStart": 0},"sort": []},  "requesttime": "",
     "version": "string"}
     return this.http.post(
-      this.BASE_URL +'partnermanagement/'+ 'v1/partners/partners/partnerType/search',
+      this.BASE_URL+ 'v1/partnermanager/partners/partnerType/search',
       json
     );
   }
 
   getPartnerIdDetail(partnerId: any): Observable<any> {
     return this.http.get(
-      this.BASE_URL +'partnermanagement/'+ 'v1/partners/partners/' + partnerId
+      this.BASE_URL+ 'v1/partnermanager/partners/' + partnerId
     );
   }
 
@@ -240,7 +240,7 @@ export class DataStorageService {
       data.request["deviceProviderId"] = mapping.id;*/
     
     return this.http.post(
-      this.BASE_URL +'partnermanagement/'+ 'v1/' + mapping.apiName + '/search',
+      this.BASE_URL+ 'v1/' + mapping.apiName + '/search',
       data
     );
   }
@@ -268,21 +268,25 @@ export class DataStorageService {
     data: RequestModel
   ): Observable<any> {
     return this.http.post(
-      this.BASE_URL +'partnermanagement/'+ 'v1/' + type + '/filtervalues',
+      this.BASE_URL+ 'v1/' + type + '/filtervalues',
       data
     );
   }
 
   createData(type: string, data: RequestModel): Observable<any> {
+    let url = "";
+    if(type == "policymanager/policies/group"){
+      url = '/new';
+    }
     return this.http.post(
-      this.BASE_URL +'partnermanagement/'+ 'v1/' + type,
+      this.BASE_URL+ 'v1/' + type + url,
       data
     );
   }
 
   updateData(type: string, data: RequestModel): Observable<any> {
     return this.http.put(
-      this.BASE_URL +'partnermanagement/'+ 'v1/' + type,
+      this.BASE_URL+ 'v1/' + type ,
       data
     );
   }

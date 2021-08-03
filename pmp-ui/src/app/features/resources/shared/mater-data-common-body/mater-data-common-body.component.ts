@@ -127,7 +127,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
-      .getFiltersForAllDropDown('partners/partners', request)
+      .getFiltersForAllDropDown('partnermanager/partners', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });
@@ -139,7 +139,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
-      .getFiltersForAllDropDown('partners/devicedetail/deviceType', request)
+      .getFiltersForAllDropDown('partnermanager/devicedetail/deviceType', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });
@@ -151,7 +151,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
-      .getFiltersForAllDropDown('partners/devicedetail/deviceSubType', request)
+      .getFiltersForAllDropDown('partnermanager/devicedetail/deviceSubType', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });
@@ -163,7 +163,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
-      .getFiltersForAllDropDown('policies/policyGroup', request)
+      .getFiltersForAllDropDown('policymanager/policies/group', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });
@@ -218,14 +218,13 @@ export class MaterDataCommonBodyComponent implements OnInit {
       url = this.router.url.split('/')[3];
     }
     url = appConstants.masterdataMapping[url].apiName;
-    if(url === "policies/policyGroup"){
+    if(url === "policymanager/policies/group"){
       if(this.primaryData.id)
-        url = "policies/"+url+"/"+this.primaryData.id;
+        url = url+"/"+this.primaryData.id;
       else
-        url = "policies/"+url;
+        url = url;
     }
-    else if(url === "policies/policy"){
-      url = "policies/policies";
+    else if(url === "policymanager/policies"){
       this.primaryData["policies"] =  JSON.parse(this.primaryData["policies"]);
     }
     if(this.primaryData.id || this.primaryData.ftpChipDetailId){ 
@@ -262,7 +261,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
                 this.changePage();
               });
           }else {
-            this.showErrorPopup(response.errors[0].message);
+            if(response.errors.length > 0){
+              this.showErrorPopup(response.errors[0].message);
+            }else{
+              this.showErrorPopup(response.errors.message);
+            }
           }
       });
     }

@@ -47,6 +47,10 @@ export class HeaderService {
   }
 
   getlanguageCode(): string {
-    return this.languageCode;
+    if(this.languageCode){
+      return this.languageCode;
+    }else{
+      return "eng";
+    }
   }
 }
