@@ -3,7 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Edit"
+        "eng": "Edit",
+	"ara": "Edit_ara",
+	"fra": "Edit_fra"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/single-view/$childid",
@@ -13,7 +15,9 @@
     },
     {
       "buttonName": {
-        "eng": "Create SBI"
+        "eng": "Create SBI",
+	"ara": "Create SBI_ara",
+	"fra": "Create SBI_fra"
       },
       "imagePath": "assets/images/add-icon.png",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/create",
@@ -25,7 +29,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "ID"},
+      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -37,7 +41,7 @@
     },
     {
       "name": "deviceDetailId",
-      "label": { "eng": "Device Id"},
+      "label": { "eng": "Device Id","ara": "Device Id_ara","fra": "Device Id_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -49,7 +53,7 @@
     },
     {
       "name": "deviceProviderId",
-      "label": { "eng": "Partner Name"},
+      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -61,7 +65,7 @@
     },
     {
       "name": "swVersion",
-      "label": { "eng": "Version"},
+      "label": { "eng": "Version","ara": "Version_ara","fra": "Version_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -73,7 +77,7 @@
     },
     {
       "name": "swBinaryHash",
-      "label": { "eng": "BinaryHash"},
+      "label": { "eng": "BinaryHash","ara": "BinaryHash_ara","fra": "BinaryHash_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -85,7 +89,7 @@
     },
     {
       "name": "swCreateDateTime",
-      "label": { "eng": "CreatedDateTime"},
+      "label": { "eng": "CreatedDateTime","ara": "CreatedDateTime_ara","fra": "CreatedDateTime_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -97,7 +101,7 @@
     },
     {
       "name": "swExpiryDateTime",
-      "label": { "eng": "ExpiryDateTime"},
+      "label": { "eng": "ExpiryDateTime","ara": "ExpiryDateTime_ara","fra": "ExpiryDateTime_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -109,7 +113,7 @@
     },
     {
       "name": "isItForRegistrationDevice",
-      "label": { "eng": "ForRegistrationDevice"},
+      "label": { "eng": "ForRegistrationDevice","ara": "ForRegistrationDevice_ara","fra": "ForRegistrationDevice_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

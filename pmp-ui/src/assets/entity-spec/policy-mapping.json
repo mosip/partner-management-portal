@@ -3,7 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Manage Policy"
+        "eng": "Manage Policy",
+	"ara": "Manage Policy_ara",
+	"fra": "Manage Policy_fra"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -12,7 +14,7 @@
       "callBackFunction": "ApproveorRejectPolicy"
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -24,7 +26,7 @@
   "columnsToDisplay": [    
     {
       "name": "apikeyRequestId",
-      "label": { "eng": "API Key"},
+      "label": { "eng": "API Key","ara": "API Key_ara","fra": "API Key_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -36,7 +38,7 @@
     },
     {
       "name": "partnerId",
-      "label": { "eng": "Partner Name"},
+      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -48,7 +50,7 @@
     },
     {
       "name": "policyId",
-      "label": { "eng": "Policy Name"},
+      "label": { "eng": "Policy Name","ara": "Policy Name_ara","fra": "Policy Name_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -60,7 +62,7 @@
     },
     {
       "name": "requestDetail",
-      "label": { "eng": "Request Detail"},
+      "label": { "eng": "Request Detail","ara": "Request Detail_ara","fra": "Request Detail_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -72,7 +74,7 @@
     },
     {
       "name": "statusCode",
-      "label": { "eng": "Status"},
+      "label": { "eng": "Status","ara": "Status_ara","fra": "Status_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

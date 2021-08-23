@@ -3,7 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Upload Certificate"
+        "eng": "Upload Certificate",	
+	"ara": "Upload Certificate_ara",
+	"fra": "Upload Certificate_fra"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -14,8 +16,8 @@
     {
       "buttonName": {
         "eng": "View Certificate",
-        "ara": "تنشيط",
-        "fra": "déclencher"
+        "ara": "View Certificate_ara",
+        "fra": "View Certificate_fra"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -24,7 +26,7 @@
       "callBackFunction": "viewCertificate"
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -37,7 +39,7 @@
     {
       "name": "id",
       "showInListView": "false",
-      "label": { "eng": "ID"},
+      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -46,7 +48,7 @@
     {
       "name": "name",
       "showInListView": "true",
-      "label": { "eng": "Name"},
+      "label": { "eng": "Name","ara": "Name_ara","fra": "Name_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -55,7 +57,7 @@
     {
       "name": "partnerTypeCode",
       "showInListView": "true",
-      "label": { "eng": "Partner Type"},
+      "label": { "eng": "Partner Type","ara": "Partner Type_ara","fra": "Partner Type_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -64,7 +66,7 @@
     {
       "name": "emailId",
       "showInListView": "true",
-      "label": { "eng": "Email id"},
+      "label": { "eng": "Email id","ara": "Email id_ara","fra": "Email id_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -75,8 +77,8 @@
       "showInListView": "true",
       "label": {
         "eng": "Policy Group",
-        "ara": "نوع المركز",
-        "fra": "Type de centre"
+        "ara": "Policy Group_ara",
+        "fra": "Policy Group_fra"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -86,7 +88,7 @@
     {
       "name": "contactNo",
       "showInListView": "true",
-      "label": { "eng": "Contact Number", "ara": "حاله", "fra": "statut" },
+      "label": { "eng": "Contact Number", "ara": "Contact Number_ara", "fra": "Contact Number_fra" },
       "sortOrder": "",
       "showAsLink": "false",
       "linkType": "",
@@ -95,7 +97,7 @@
     {
       "name": "approvalStatus",
       "showInListView": "true",
-      "label": { "eng": "Approval Status"},
+      "label": { "eng": "Approval Status","ara": "Approval Status_ara","fra": "Approval Status_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -106,8 +108,8 @@
       "showInListView": "",
       "label": {
         "eng": "PolicyName",
-        "ara": "عدد المستخدمين",
-        "fra": "Nombre d'utilisateurs"
+        "ara": "PolicyName_ara",
+        "fra": "PolicyName_fra"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -119,8 +121,8 @@
       "showInListView": "",
       "label": {
         "eng": "Email",
-        "ara": "عدد الأجهزة",
-        "fra": "Nombre d'appareils"
+        "ara": "Email_ara",
+        "fra": "Email_fra"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -132,8 +134,8 @@
       "showInListView": "",
       "label": {
         "eng": "Status",
-        "ara": "عدد الآلات",
-        "fra": "Nombre de machines"
+        "ara": "Status_ara",
+        "fra": "Status_fra"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -145,8 +147,8 @@
       "showInListView": "",
       "label": {
         "eng": "Address",
-        "ara": "هاتف مُتَكَون",
-        "fra": "Téléphone Contact"
+        "ara": "Address_ara",
+        "fra": "Address_fra"
       },
       "sortOrder": "",
       "showAsLink": "",
@@ -158,8 +160,8 @@
       "showInListView": "",
       "label": {
         "eng": "Submit Request Status",
-        "ara": "هاتف مُتَكَون",
-        "fra": "Téléphone Contact"
+        "ara": "Submit Request Status_ara",
+        "fra": "Submit Request Status_fra"
       },
       "sortOrder": "",
       "showAsLink": "",

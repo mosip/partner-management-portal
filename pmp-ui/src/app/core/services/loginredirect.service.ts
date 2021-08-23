@@ -10,7 +10,9 @@ export class LoginRedirectService {
   constructor(private cookie: CookieService, private appService: AppConfigService) { }
 
   redirect(url: string) {
+    console.log("uuid()>>>"+uuid());
     const stateParam = uuid();
+    console.log("stateParam>>>"+stateParam);
     this.cookie.set('state', stateParam);
     window.location.href = `${this.appService.getConfig().baseUrl}v1/partnermanager/login/` + btoa(url);
   }

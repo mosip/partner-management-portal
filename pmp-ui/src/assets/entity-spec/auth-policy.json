@@ -3,7 +3,9 @@
   "actionButtons": [
     {
       "buttonName": {
-        "eng": "Activate"
+        "eng": "Activate",
+	"ara": "Activate_ara",
+	"fra": "Activate_fra"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -13,7 +15,9 @@
     },
     {
       "buttonName": {
-        "eng": "Deactivate"
+        "eng": "Deactivate",
+	"ara": "Deactivate_ara",
+	"fra": "Deactivate_fra"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -24,8 +28,8 @@
     {
       "buttonName": {
         "eng": "Edit",
-        "ara": "تصحيح",
-        "fra": "modifier"
+        "ara": "Edit_ara",
+        "fra": "Edit_fra"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/authpolicy/single-view/$id",
@@ -36,8 +40,8 @@
     {
       "buttonName": {
         "eng": "Create Policy",
-        "ara": "إضافة مركز",
-        "fra": "Ajouter le centre"
+        "ara": "Create Policy_ara",
+        "fra": "Create Policy_fra"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -47,7 +51,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "تصفيه", "fra": "filtre" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -59,7 +63,7 @@
   "columnsToDisplay": [
      {
       "name": "id",
-      "label": { "eng": "Policy ID"},
+      "label": { "eng": "Policy ID","ara": "Policy ID_ara","fra": "Policy ID_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -71,7 +75,7 @@
     },
     {
       "name": "name",
-      "label": { "eng": "Name"},
+      "label": { "eng": "Name","ara": "Name_ara","fra": "Name_fra"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -83,7 +87,7 @@
     },
     {
       "name": "desc",
-      "label": { "eng": "Description"},
+      "label": { "eng": "Description","ara": "Description_ara","fra": "Description_fra"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -95,7 +99,7 @@
     },
     {
       "name": "policyGroupName",
-      "label": { "eng": "Policy Group"},
+      "label": { "eng": "Policy Group","ara": "Policy Group_ara","fra": "Policy Group_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -107,7 +111,7 @@
     },
     {
       "name": "version",
-      "label": { "eng": "Policy Version"},
+      "label": { "eng": "Policy Version","ara": "Policy Version_ara","fra": "Policy Version_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -119,7 +123,7 @@
     },
     {
       "name": "policyType",
-      "label": { "eng": "Policy Type"},
+      "label": { "eng": "Policy Type","ara": "Policy Type_ara","fra": "Policy Type_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -131,7 +135,7 @@
     },
     {
       "name": "policies",
-      "label": { "eng": "Policies Data"},
+      "label": { "eng": "Policies Data","ara": "Policies Data_ara","fra": "Policies Data_fra"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -144,7 +148,7 @@
     {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "eng": "IsActive"},
+      "label": { "eng": "IsActive","ara": "IsActive_ara","fra": "IsActive_fra"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
