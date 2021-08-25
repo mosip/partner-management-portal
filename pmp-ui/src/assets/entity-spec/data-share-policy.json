@@ -5,7 +5,10 @@
       "buttonName": {
         "eng": "Publish policy",
 	"ara": "Publish policy_ara",
-	"fra": "Publish policy_fra"
+	"fra": "Publish policy_fra",
+	"hin": "Publish policy_hin",
+        "kan": "Publish policy_kan",
+	"tam": "Publish policy_tam"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -17,7 +20,10 @@
       "buttonName": {
         "eng": "Deactivate",
         "ara": "Deactivate_ara",
-        "fra": "Deactivate_fra"
+        "fra": "Deactivate_fra",
+	"hin": "Deactivate_hin",
+        "kan": "Deactivate_kan",
+	"tam": "Deactivate_tam"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -51,7 +57,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra","hin": "Filter_hin", "kan": "Filter_kan", "tam": "Filter_tam"},
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -63,7 +69,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "Policy ID","ara": "Policy ID_ara","fra": "Policy ID_fra"},
+      "label": { "eng": "Policy ID","ara": "Policy ID_ara","fra": "Policy ID_fra","hin": "Policy ID_hin", "kan": "Policy ID_kan", "tam": "Policy ID_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -75,7 +81,7 @@
     },
     {
       "name": "name",
-      "label": { "eng": "Name","ara": "Name_ara","fra": "Name_fra"},
+      "label": { "eng": "Name","ara": "Name_ara","fra": "Name_fra","hin": "Name_hin", "kan": "Name_kan", "tam": "Name_tam"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -87,7 +93,7 @@
     },
     {
       "name": "desc",
-      "label": { "eng": "Description","ara": "Description_ara","fra": "Description_fra"},
+      "label": { "eng": "Description","ara": "Description_ara","fra": "Description_fra","hin": "Description_hin", "kan": "Description_kan", "tam": "Description_tam"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -99,7 +105,7 @@
     },
     {
       "name": "policyGroupName",
-      "label": { "eng": "Policy Group","ara": "Policy Group_ara","fra": "Policy Group_fra"},
+      "label": { "eng": "Policy Group","ara": "Policy Group_ara","fra": "Policy Group_fra","hin": "Policy Group_hin", "kan": "Policy Group_kan", "tam": "Policy Group_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -111,7 +117,7 @@
     },
     {
       "name": "version",
-      "label": { "eng": "Policy Version","ara": "Policy Version_ara","fra": "Policy Version_fra"},
+      "label": { "eng": "Policy Version","ara": "Policy Version_ara","fra": "Policy Version_fra","hin": "Policy Version_hin", "kan": "Policy Version_kan", "tam": "Policy Version_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -123,7 +129,7 @@
     },
     {
       "name": "policyType",
-      "label": { "eng": "Policy Type","ara": "Policy Type_ara","fra": "Policy Type_fra"},
+      "label": { "eng": "Policy Type","ara": "Policy Type_ara","fra": "Policy Type_fra","hin": "Policy Type_hin", "kan": "Policy Type_kan", "tam": "Policy Type_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -135,7 +141,7 @@
     },
     {
       "name": "policies",
-      "label": { "eng": "Policies Data","ara": "Policies Data_ara","fra": "Policies Data_fra"},
+      "label": { "eng": "Policies Data","ara": "Policies Data_ara","fra": "Policies Data_fra","hin": "Policies Data_hin", "kan": "Policies Data_kan", "tam": "Policies Data_tam"},
       "sortOrder": "3",
       "showAsLink": "",
       "linkType": "",
@@ -148,7 +154,7 @@
     {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "eng": "IsActive","ara": "IsActive_ara","fra": "IsActive_fra"},
+      "label": { "eng": "IsActive","ara": "IsActive_ara","fra": "IsActive_fra","hin": "IsActive_hin", "kan": "IsActive_kan", "tam": "IsActive_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

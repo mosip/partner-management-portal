@@ -5,7 +5,10 @@
       "buttonName": {
         "eng": "Manage Policy",
 	"ara": "Manage Policy_ara",
-	"fra": "Manage Policy_fra"
+	"fra": "Manage Policy_fra",
+	"hin": "Manage Policy_hin",
+        "kan": "Manage Policy_kan",
+	"tam": "Manage Policy_tam"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -14,7 +17,7 @@
       "callBackFunction": "ApproveorRejectPolicy"
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra","hin": "Filter_hin", "kan": "Filter_kan", "tam": "Filter_tam"},
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -26,7 +29,7 @@
   "columnsToDisplay": [    
     {
       "name": "apikeyRequestId",
-      "label": { "eng": "API Key","ara": "API Key_ara","fra": "API Key_fra"},
+      "label": { "eng": "API Key","ara": "API Key_ara","fra": "API Key_fra","hin": "API Key_hin", "kan": "API Key_kan", "tam": "API Key_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -38,7 +41,7 @@
     },
     {
       "name": "partnerId",
-      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra"},
+      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra","hin": "Partner Name_hin", "kan": "Partner Name_kan", "tam": "Partner Name_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -50,7 +53,7 @@
     },
     {
       "name": "policyId",
-      "label": { "eng": "Policy Name","ara": "Policy Name_ara","fra": "Policy Name_fra"},
+      "label": { "eng": "Policy Name","ara": "Policy Name_ara","fra": "Policy Name_fra","hin": "Policy Name_hin", "kan": "Policy Name_kan", "tam": "Policy Name_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -62,7 +65,7 @@
     },
     {
       "name": "requestDetail",
-      "label": { "eng": "Request Detail","ara": "Request Detail_ara","fra": "Request Detail_fra"},
+      "label": { "eng": "Request Detail","ara": "Request Detail_ara","fra": "Request Detail_fra","hin": "Request Detail_hin", "kan": "Request Detail_kan", "tam": "Request Detail_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -74,7 +77,7 @@
     },
     {
       "name": "statusCode",
-      "label": { "eng": "Status","ara": "Status_ara","fra": "Status_fra"},
+      "label": { "eng": "Status","ara": "Status_ara","fra": "Status_fra","hin": "Status_hin", "kan": "Status_kan", "tam": "Status_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",

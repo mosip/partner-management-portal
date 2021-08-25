@@ -5,7 +5,10 @@
       "buttonName": {
         "eng": "Edit",
 	"ara": "Edit_ara",
-	"fra": "Edit_fra"
+	"fra": "Edit_fra",
+	"hin": "Edit_hin",
+        "kan": "Edit_kan",
+	"tam": "Edit_tam"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/single-view/$childid",
@@ -17,7 +20,10 @@
       "buttonName": {
         "eng": "Create SBI",
 	"ara": "Create SBI_ara",
-	"fra": "Create SBI_fra"
+	"fra": "Create SBI_fra",
+	"hin": "Create SBI_hin",
+        "kan": "Create SBI_kan",
+	"tam": "Create SBI_tam"
       },
       "imagePath": "assets/images/add-icon.png",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id/create",
@@ -29,7 +35,7 @@
   "columnsToDisplay": [
     {
       "name": "id",
-      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra"},
+      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra","hin": "ID_hin", "kan": "ID_kan", "tam": "ID_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -41,7 +47,7 @@
     },
     {
       "name": "deviceDetailId",
-      "label": { "eng": "Device Id","ara": "Device Id_ara","fra": "Device Id_fra"},
+      "label": { "eng": "Device Id","ara": "Device Id_ara","fra": "Device Id_fra","hin": "Device Id_hin", "kan": "Device Id_kan", "tam": "Device Id_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -53,7 +59,7 @@
     },
     {
       "name": "deviceProviderId",
-      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra"},
+      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra","hin": "Partner Name_hin", "kan": "Partner Name_kan", "tam": "Partner Name_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -65,7 +71,7 @@
     },
     {
       "name": "swVersion",
-      "label": { "eng": "Version","ara": "Version_ara","fra": "Version_fra"},
+      "label": { "eng": "Version","ara": "Version_ara","fra": "Version_fra","hin": "Version_hin", "kan": "Version_kan", "tam": "Version_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -77,7 +83,7 @@
     },
     {
       "name": "swBinaryHash",
-      "label": { "eng": "BinaryHash","ara": "BinaryHash_ara","fra": "BinaryHash_fra"},
+      "label": { "eng": "BinaryHash","ara": "BinaryHash_ara","fra": "BinaryHash_fra","hin": "BinaryHash_hin", "kan": "BinaryHash_kan", "tam": "BinaryHash_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -89,7 +95,7 @@
     },
     {
       "name": "swCreateDateTime",
-      "label": { "eng": "CreatedDateTime","ara": "CreatedDateTime_ara","fra": "CreatedDateTime_fra"},
+      "label": { "eng": "CreatedDateTime","ara": "CreatedDateTime_ara","fra": "CreatedDateTime_fra","hin": "CreatedDateTime", "kan": "CreatedDateTime_kan", "tam": "CreatedDateTime_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -101,7 +107,7 @@
     },
     {
       "name": "swExpiryDateTime",
-      "label": { "eng": "ExpiryDateTime","ara": "ExpiryDateTime_ara","fra": "ExpiryDateTime_fra"},
+      "label": { "eng": "ExpiryDateTime","ara": "ExpiryDateTime_ara","fra": "ExpiryDateTime_fra","hin": "ExpiryDateTime_hin", "kan": "ExpiryDateTime_kan", "tam": "ExpiryDateTime_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -113,7 +119,7 @@
     },
     {
       "name": "isItForRegistrationDevice",
-      "label": { "eng": "ForRegistrationDevice","ara": "ForRegistrationDevice_ara","fra": "ForRegistrationDevice_fra"},
+      "label": { "eng": "ForRegistrationDevice","ara": "ForRegistrationDevice_ara","fra": "ForRegistrationDevice_fra","hin": "ForRegistrationDevice_hin", "kan": "ForRegistrationDevice_kan", "tam": "ForRegistrationDevice_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
