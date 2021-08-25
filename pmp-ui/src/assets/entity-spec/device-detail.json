@@ -5,7 +5,10 @@
       "buttonName": {
         "eng": "Approve",
 	"ara": "Approve_ara",
-	"fra": "Approve_fra"
+	"fra": "Approve_fra",
+	"hin": "Approve_hin",
+        "kan": "Approve_kan",
+	"tam": "Approve_tam"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -17,7 +20,10 @@
       "buttonName": {
         "eng": "Reject",
 	"ara": "Reject_ara",
-	"fra": "Reject_fra"
+	"fra": "Reject_fra",
+	"hin": "Reject_hin",
+        "kan": "Reject_kan",
+	"tam": "Reject_tam"
       },
       "actionURL": "",
       "redirectURL": "",
@@ -29,7 +35,10 @@
       "buttonName": {
         "eng": "Edit",
 	"ara": "Edit_ara",
-	"fra": "Edit_fra"
+	"fra": "Edit_fra",
+	"hin": "Edit_hin",
+        "kan": "Edit_kan",
+	"tam": "Edit_tam"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/single-view/$id",
@@ -41,7 +50,10 @@
       "buttonName": {
         "eng": "SBI Details",
 	"ara": "SBI Details_ara",
-	"fra": "SBI Details_fra"
+	"fra": "SBI Details_fra",
+	"hin": "SBI Details_hin",
+        "kan": "SBI Details_kan",
+	"tam": "SBI Details_tam"
       },
       "actionURL": "",
       "redirectURL": "/pmp/resources/devicedetails/sbidetails/view/$id",
@@ -53,7 +65,10 @@
       "buttonName": {
         "eng": "Create Device",
 	"ara": "Create Device_ara",
-	"fra": "Create Device_fra"
+	"fra": "Create Device_fra",
+	"hin": "Create Device_hin",
+        "kan": "Create Device_kan",
+	"tam": "Create Device_tam"
       },
       "imagePath": "assets/images/add-icon.png",
       "actionListType": "redirect",
@@ -63,7 +78,7 @@
       "validations": ""
     },
     {
-      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra" },
+      "buttonName": { "eng": "Filter", "ara": "Filter_ara", "fra": "Filter_fra","hin": "Filter_hin", "kan": "Filter_kan", "tam": "Filter_tam"},
       "imagePath": "assets/images/filter.png",
       "actionListType": "action",
       "actionURL": { "case": "filter" },
@@ -75,7 +90,7 @@
   "columnsToDisplay": [    
     {
       "name": "id",
-      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra"},
+      "label": { "eng": "ID","ara": "ID_ara","fra": "ID_fra","hin": "ID_hin", "kan": "ID_kan", "tam": "ID_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -87,7 +102,7 @@
     },
     {
       "name": "deviceProviderId",
-      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra"},
+      "label": { "eng": "Partner Name","ara": "Partner Name_ara","fra": "Partner Name_fra","hin": "Partner Name_hin", "kan": "Partner Name_kan", "tam": "Partner Name_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -99,7 +114,7 @@
     },
     {
       "name": "partnerOrganizationName",
-      "label": { "eng": "Organization Name","ara": "Organization Name_ara","fra": "Organization Name_fra"},
+      "label": { "eng": "Organization Name","ara": "Organization Name_ara","fra": "Organization Name_fra","hin": "Organization Name_hin", "kan": "Organization Name_kan", "tam": "Organization Name_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -111,7 +126,7 @@
     },
     {
       "name": "deviceTypeCode",
-      "label": { "eng": "Device Type","ara": "Device Type_ara","fra": "Device Type_fra"},
+      "label": { "eng": "Device Type","ara": "Device Type_ara","fra": "Device Type_fra","hin": "Device Type_hin", "kan": "Device Type_kan", "tam": "Device Type_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -123,7 +138,7 @@
     },
     {
       "name": "deviceSubTypeCode",
-      "label": { "eng": "Device Sub Type","ara": "Device Sub Type_ara","fra": "Device Sub Type_fra"},
+      "label": { "eng": "Device Sub Type","ara": "Device Sub Type_ara","fra": "Device Sub Type_fra","hin": "Device Sub Type_hin", "kan": "Device Sub Type_kan", "tam": "Device Sub Type_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -135,7 +150,7 @@
     },
     {
       "name": "make",
-      "label": { "eng": "Make","ara": "Make_ara","fra": "Make_fra"},
+      "label": { "eng": "Make","ara": "Make_ara","fra": "Make_fra","hin": "Make_hin", "kan": "Make_kan", "tam": "Make_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -147,7 +162,7 @@
     },
     {
       "name": "model",
-      "label": { "eng": "Model","ara": "Model_ara","fra": "Model_fra"},
+      "label": { "eng": "Model","ara": "Model_ara","fra": "Model_fra","hin": "Model_hin", "kan": "Model_kan", "tam": "Model_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -159,7 +174,7 @@
     },
     {
       "name": "isItForRegistrationDevice",
-      "label": { "eng": "ForRegistrationDevice","ara": "ForRegistrationDevice_ara","fra": "ForRegistrationDevice_fra"},
+      "label": { "eng": "ForRegistrationDevice","ara": "ForRegistrationDevice_ara","fra": "ForRegistrationDevice_fra","hin": "ForRegistrationDevice_hin", "kan": "ForRegistrationDevice_kan", "tam": "ForRegistrationDevice_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
@@ -172,7 +187,7 @@
     {
       "name": "isActive",
       "showInListView": "true",
-      "label": { "eng": "Approved Status","ara": "Approved Status_ara","fra": "Approved Status_fra"},
+      "label": { "eng": "Approved Status","ara": "Approved Status_ara","fra": "Approved Status_fra","hin": "Approved Status_hin", "kan": "Approved Status_kan", "tam": "Approved Status_tam"},
       "sortOrder": "",
       "showAsLink": "",
       "linkType": "",
