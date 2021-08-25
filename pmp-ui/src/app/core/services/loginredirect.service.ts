@@ -10,13 +10,9 @@ export class LoginRedirectService {
   constructor(private cookie: CookieService, private appService: AppConfigService) { }
 
   redirect(url: string) {
-    console.log("uuid() new>>>"+uuid());
     const stateParam = uuid();
-    document.cookie = "state="+stateParam+"; Max-Age=${60*60*24}; SameSite=Strict";
-    console.log("this.cookie.get>>>"+this.cookie.get("state"));
-    this.cookie.set("state", stateParam);
-    window.location.href = `${this.appService.getConfig().baseUrl}v1/partnermanager/login/` + btoa(url);
-    document.cookie = "state="+stateParam+"; Max-Age=${60*60*24}; SameSite=Strict";
+    this.cookie.set('state', stateParam, undefined, '/');
+    window.location.href = `${this.appService.getConfig().baseUrl}v1/partnermanager/login/` + btoa(url);\
     console.log("after redirection>>>"+this.cookie.get("state"));
   }
 }
