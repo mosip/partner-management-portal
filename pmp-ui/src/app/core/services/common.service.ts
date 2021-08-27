@@ -72,20 +72,36 @@ export class CommonService {
     });
   }
 
-  private createMessage(type: string, listItem: string, data?: any) {
+  private createMessage(type: string, listItem: string, data?: any) {    
     let obj = {};
     if (type === 'success') {
-      obj = {
-        title: this.actionMessages[listItem]['success-title'],
-        message: this.actionMessages[listItem]['success-message'][0] + data + this.actionMessages[listItem]['success-message'][1],
-        btnTxt: this.actionMessages[listItem]['btnTxt']
-      };
+      if(this.actionMessages[listItem]){
+        obj = {
+          title: this.actionMessages[listItem]['success-title'],
+          message: this.actionMessages[listItem]['success-message'][0] + data + this.actionMessages[listItem]['success-message'][1],
+          btnTxt: this.actionMessages[listItem]['btnTxt']
+        };
+      }else{
+        obj = {
+          title: this.actionMessages.activate['success-title'],
+          message: data,
+          btnTxt: this.actionMessages.activate['btnTxt']
+        };
+      }      
     } else if (type === 'error') {
-      obj = {
-        title: this.actionMessages[listItem]['error-title'],
-        message: this.actionMessages[listItem]['error-message'],
-        btnTxt: this.actionMessages[listItem]['btnTxt']
-      };
+      if(this.actionMessages[listItem]){
+        obj = {
+          title: this.actionMessages[listItem]['error-title'],
+          message: this.actionMessages[listItem]['error-message'],
+          btnTxt: this.actionMessages[listItem]['btnTxt']
+        };
+      }else{
+        obj = {
+          title: this.actionMessages.activate['success-title'],
+          message: data,
+          btnTxt: this.actionMessages.activate['btnTxt']
+        };
+      }
     }
     this.showMessage(obj);
   }
@@ -125,10 +141,16 @@ export class CommonService {
   }
 
   private approveData(type: string, data: any) {
+    let message = "";
+    if(data.make){
+      message = "Do you want to "+type+" the Make "+data.make+" ?";
+    }else{
+      message = "Do you want to "+type+" the Version "+data.swVersion+" ?";
+    }
     const obj = {
       case: 'CONFIRMATION',
       title: "CONFIRMATION",
-      message: "Do you want to "+type+" the Make "+data.make+" ?",
+      message: message,
       yesBtnTxt: "Yes",
       noBtnTxt: "No"
     };
@@ -171,17 +193,48 @@ export class CommonService {
           this.createMessage('success', callingFunction, request.request.name);
           this.router.navigateByUrl(this.router.url);
         } else {
-          this.createMessage('error', callingFunction);
+          if(response.errors[0].message === "Cannot activate unpublished policy."){
+            this.dataService.publishPolicy(mapping, request).subscribe(
+              response => {
+                if (!response.errors || response.errors.length === 0) {
+                  this.createMessage('success', callingFunction, request.request.name);
+                  this.router.navigateByUrl(this.router.url);
+                } else {
+                  this.createMessage('error', callingFunction);
+                }
+              },
+              error => this.createMessage('error', callingFunction)
+            );
+          }else{
+            this.createMessage('error', callingFunction);
+          }          
         }
       },
       error => this.createMessage('error', callingFunction)
     );
   }
 
-  private updateDetails(callingFunction: string, data: PolicyModel) {
-    const routeParts = this.router.url.split("/")[3];
+  private updateDetails(callingFunction: any, data: PolicyModel) {
+    let routeParts = "";
+    if(this.router.url.split('/').length >= 6){
+      routeParts = this.router.url.split('/')[4];
+    }else{
+      routeParts = this.router.url.split('/')[3];
+    }
     let mapping = appConstants.masterdataMapping[`${routeParts}`];
-    let requestBody = {"approvalStatus": callingFunction, "id": data.id, "isItForRegistrationDevice": true};
+    let passParam = callingFunction;
+    let requestBody = null;
+    if(routeParts === "ftmdetails"){
+      if(callingFunction === "Activate"){
+        passParam = true;
+        requestBody = {"approvalStatus": passParam, [mapping.idKey] : data[mapping.idKey], "isItForRegistrationDevice": true}
+      }else if(callingFunction === "De-activate"){
+        passParam = false;
+        requestBody = {"approvalStatus": passParam, [mapping.idKey] : data[mapping.idKey], "isItForRegistrationDevice": true}
+      }      
+    }else{
+      requestBody = {"approvalStatus": passParam, [mapping.idKey] : data[mapping.idKey], "isItForRegistrationDevice": true};
+    }
     const request = new RequestModel(
       appConstants.registrationCenterCreateId,
       null,
@@ -190,7 +243,7 @@ export class CommonService {
     this.dataService.updateDetails(mapping, request).subscribe(
       response => {
         if (!response.errors || response.errors.length === 0) {
-          this.createMessage('success', callingFunction, request.request.name);
+          this.createMessage('success', callingFunction, response.response);
           this.router.navigateByUrl(this.router.url);
         } else {
           this.createMessage('error', callingFunction);
@@ -349,14 +402,14 @@ export class CommonService {
   }
 
   viewCertificate(data: any){
-    this.dataService.viewCertificate(data).subscribe(response =>{
-      if (!response['errors']) {
+    this.dataService.viewCertificate(data).subscribe(response =>{      
+      if(response.errors.length <= 0) {
         this.showCertificate('activate', response.response.certificateData);
       } else {
         let obj = {};
         obj = {
           title: 'Certificate',
-          message: response.errors.message,
+          message: response.errors[0].message,
           btnTxt: 'Ok'
         };
         this.showCertificateDetails(obj);
@@ -366,7 +419,8 @@ export class CommonService {
   }
 
   uploadCertificatepopup(data: any){
-    console.log("data>>>"+data);
+    var re = /view/gi;
+    this.router.navigateByUrl(this.router.url.replace(re, "upload/"+data.id));
   }
 
   activatePartner(data: any){
@@ -611,6 +665,7 @@ export class CommonService {
       if (res) {
         this.auditService.audit(18, 'ADM-100', 'activate');
         const policyObject = data;
+        policyObject.isActive = true;
         policyObject.status = true;
         this.updatePolicy('activate', policyObject);
       } else {

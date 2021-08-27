@@ -135,14 +135,34 @@ export class DataStorageService {
 
   ApproveorRejectPolicyFunction(mapping: any, data: RequestModel): Observable<any> {
     return this.http.patch(
-      this.BASE_URL+ 'v1/pmpartners/pmpartners/PartnerAPIKeyRequests/'+data.request.apikeyRequestId,
+      this.BASE_URL+ 'v1/partnermanager/partners/apikey/'+data.request.apikeyRequestId,
       data
     );
   }
 
   updatePolicyStatus(mapping: any, data: RequestModel): Observable<any> {
-    return this.http.put(
-      this.BASE_URL+ 'v1/policymanager/policies/group/'+data.request.id,
+    let url = ""
+    if(mapping.specFileName === "policy-group"){
+      return this.http.put(
+        this.BASE_URL+ 'v1/policymanager/policies/group/'+data.request.id,
+        data
+      );
+    }else{
+      if(data.request.status){
+        data.request.status = "Active"
+      }else{
+        data.request.status = "De-active"
+      }
+      return this.http.patch(
+        this.BASE_URL+ 'v1/policymanager/policies/'+data.request.id+'/group/'+data.request.policyGroupId,
+        data
+      );
+    }    
+  }
+
+  publishPolicy(mapping: any, data: RequestModel): Observable<any> {    
+    return this.http.post(
+      this.BASE_URL+ 'v1/policymanager/policies/'+data.request.id+'/group/'+data.request.policyGroupId+'/publish',
       data
     );
   }
@@ -284,7 +304,10 @@ export class DataStorageService {
     );
   }
 
-  updateData(type: string, data: RequestModel): Observable<any> {
+  updateData(type: string, data: RequestModel): Observable<any> {    
+    if(type === "policymanager/policies"){
+      type = type+"/"+data.request.id;
+    }
     return this.http.put(
       this.BASE_URL+ 'v1/' + type ,
       data
@@ -319,6 +342,26 @@ export class DataStorageService {
         centerId +
         '/status',
       {}
+    );
+  }
+
+  uploadCertificate(data: any, url : any): Observable<any> {
+    return this.http.post(
+      this.BASE_URL  + 'v1/partnermanager/partners/certificate/'+url+'upload',
+      data
+    );
+  }
+
+  getPartnerInfo(url : any): Observable<any> {
+    return this.http.get(
+      this.BASE_URL  + 'v1/'+url
+    );
+  }
+
+  requestAPIKey(url : any, data : any): Observable<any> {
+    return this.http.patch(
+      this.BASE_URL  + 'v1/'+url,
+      data
     );
   }
 }

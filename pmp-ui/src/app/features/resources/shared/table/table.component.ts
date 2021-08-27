@@ -155,6 +155,15 @@ export class TableComponent implements OnInit, OnChanges {
           this.ellipsisList.splice(index, 1);
         }
       });
+    } else if(data.statusCode === "approved" || data.statusCode === 'rejected'){
+      this.ellipsisList = [...this.buttonList];
+      this.ellipsisList.filter(values => {
+        if (values.buttonName.eng === 'Manage Policy') {
+          const index = this.ellipsisList.indexOf(values);
+          this.ellipsisList.splice(index, 1);
+        }
+      });
+
     }
   }
 

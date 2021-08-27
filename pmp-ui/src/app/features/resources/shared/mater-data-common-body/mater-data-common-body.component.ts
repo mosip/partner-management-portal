@@ -101,8 +101,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.pageName = "Device Details";        
         this.primaryData = {"deviceProviderId": "", "deviceSubTypeCode": "", "deviceTypeCode": "", "isItForRegistrationDevice": true, "make": "", "model": "", "partnerOrganizationName": ""};
         this.getPartnerDropdownValues("Device_Provider", "deviceProviderId");
-        this.getDeviceType("deviceTypeCode");
-        this.getDeviceSubType("deviceSubTypeCode");
+        this.getDeviceType("deviceTypeCode");        
       }
       else if(url === "datasharepolicy"){
         this.pageName = "Data Share Policy";        
@@ -114,6 +113,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.primaryData = {"name": "", "desc": "", "policies": {}, "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
+      else if(url === "policymapping"){
+        this.pageName = "Map Policy";
+        this.primaryData = {"partnerId":"","policyId":"", "requestDetail" :""};
+        this.getPartnerDropdownValues("Policy_Mapping", "partnerId");
+      }
     }else{
       if(url === "center-type"){
         this.pageName = "Center Type";
@@ -123,7 +127,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   getPartnerDropdownValues(partnerTypeCode, key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
-    let optinalFilterObject = new OptionalFilterValuesModel('partnerTypeCode', 'equals', partnerTypeCode);
+    let optinalFilterObject;
+    if(partnerTypeCode !== "Policy_Mapping"){
+      optinalFilterObject = new OptionalFilterValuesModel('partnerTypeCode', 'equals', partnerTypeCode);
+    }else{
+      optinalFilterObject = {};
+    }
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
@@ -145,14 +154,17 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
-  getDeviceSubType(key) {
-    const filterObject = new FilterValuesModel('name', 'unique', '');
+  getDeviceSubType(key, deviceType : any) {
+    const filterObject = new FilterValuesModel('deviceType', 'unique', deviceType);
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/devicedetail/deviceSubType', request)
-      .subscribe(response => {
+      .subscribe(response => {       
+        response.response.filters.forEach(element => {
+          element["fieldValue"] = element["fieldCode"];
+        });
         this.dropDownValues[key] = response.response.filters;
       });
   }
@@ -169,7 +181,23 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
-  captureValue(event: any, formControlName: string, type: string) {
+  getPolicy(key, partnerId : any) {
+    this.dataStorageService
+      .getPartnerInfo('partnermanager/partners/'+partnerId)
+      .subscribe(response => {
+        this.dataStorageService
+        .getPartnerInfo('policymanager/policies/active/group/'+response.response.policyGroup)
+        .subscribe(response => {
+          response.response.forEach(element => {
+            element["fieldValue"] = element["name"];
+            element["fieldCode"] = element["name"];
+          });
+          this.dropDownValues[key] = response.response;
+        });
+      });
+  }
+
+  captureValue(event: any, formControlName: string, type: string) {    
     if (type === 'primary') {
       this.primaryData[formControlName] = event.target.value;
     } else if (type === 'secondary') {
@@ -179,7 +207,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   captureDatePickerValue(event: any, formControlName: string, type: string) {
     let dateFormat = new Date(event.target.value);
-    let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
+    let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2) +"T00:00:00.000Z";
     if (type === 'primary') {
       this.primaryData[formControlName] = formattedDate;
     } else if (type === 'secondary') {
@@ -190,24 +218,17 @@ export class MaterDataCommonBodyComponent implements OnInit {
   captureDropDownValue(event: any, formControlName: string, type: string) {
     if (event.source.selected) {
       this.primaryData[formControlName] = event.source.value;
-    }
+      if(formControlName === "deviceTypeCode"){
+        this.getDeviceSubType("deviceSubTypeCode", event.source.value);
+      }else if(formControlName === "partnerId"){
+        this.getPolicy("policyId", event.source.value);
+      }
+    }    
   }
 
   submit() {
     let self = this;
     self.executeAPI();
-/*    for (var i = 0, len = self.fields.length; i < len; i++) {
-      if (self.fields[i].showInSingleView) {
-        if(self.fields[i].ismandatory){
-          if(!self.primaryData[self.fields[i].name]){
-            this.showErrorPopup(self.fields[i].label[this.primaryLang]+" is required");
-            break;
-          }else if(len = i+1){
-            self.executeAPI();
-          }
-        }
-      }
-    }*/
   }
 
   executeAPI(){
@@ -233,8 +254,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
         "",
         null,
         this.primaryData
-      );
-      this.dataStorageService.updateData(url, request).subscribe(response => {
+      );      
+      this.dataStorageService.updateData(url, request).subscribe(response => {        
         if (!response.errors || (response.errors.length == 0)) {
           let url = this.pageName+" Updated Successfully";
           this.showMessage(url)
@@ -246,13 +267,39 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.showErrorPopup(response.errors[0].message);
         }
       });
-    }else{
-      let request = new RequestModel(
-        "",
-        null,
-        this.primaryData
-      );
-      this.dataStorageService.createData(url, request).subscribe(response => {
+    }else{      
+      if(url === "partnermanager/partners/apikey/request"){
+        this.primaryData["policyName"] = this.primaryData["policyId"];
+        this.primaryData["useCaseDescription"] = this.primaryData["requestDetail"];
+        let request = new RequestModel(
+          "",
+          null,
+          this.primaryData
+        );
+        url = "partnermanager/partners/"+this.primaryData["partnerId"]+"/apikey/request";
+        this.dataStorageService.requestAPIKey(url, request).subscribe(response => {
+          if (!response.errors || (response.errors.length == 0)) {
+            let url = response.response.message;
+            this.showMessage(url)
+              .afterClosed()
+              .subscribe(() => {
+                this.changePage();
+              });
+          }else {
+            if(response.errors.length > 0){
+              this.showErrorPopup(response.errors[0].message);
+            }else{
+              this.showErrorPopup(response.errors.message);
+            }
+          }
+        });
+      }else{
+        let request = new RequestModel(
+          "",
+          null,
+          this.primaryData
+        );
+        this.dataStorageService.createData(url, request).subscribe(response => {
           if (!response.errors || (response.errors.length == 0)) {
             let url = this.pageName+" Created Successfully";
             this.showMessage(url)
@@ -267,7 +314,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
               this.showErrorPopup(response.errors.message);
             }
           }
-      });
+        });
+      }      
     }
   }
 
@@ -291,7 +339,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   showMessage(message: string) {
     console.log();
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '350px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: 'Success',
@@ -305,7 +353,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '350px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: 'Error',
