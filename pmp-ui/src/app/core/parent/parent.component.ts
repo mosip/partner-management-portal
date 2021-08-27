@@ -46,27 +46,8 @@ export class ParentComponent implements OnInit, AfterViewInit {
     this.navItems = cloneObject(appConstants.navItems);
     let self = this;
     if (this.headerService.getRoles()) {
-      console.log("this.headerService.getlanguageCode>>>"+this.headerService.getlanguageCode());
       this.headerService.getRoles().split(",").forEach(function (value) {
         if(value.trim() == "PARTNER ADMIN"){
-          /*self.dataService.getPartnerType(value).subscribe(
-            response => {
-              if (!response.errors || response.errors.length === 0) {
-                response.response.data.forEach(function (partnerDetail) {
-                  if(partnerDetail.partnerDescription != "Partner Admin"){
-                    let child = {
-                      displayName: partnerDetail.partnerDescription,
-                      icon: null,
-                      route: '/pmp/resources/'+partnerDetail.code+'/view',
-                      auditEventId: 'ADM-005',
-                      roles: ['PARTNER_ADMIN']
-                    }
-                    self.navItems[2].children.push(child);
-                  }
-                });
-              }
-            }
-          );*/
           let newMenu = {
             displayName: 'Device Details',
             icon: './assets/images/home.svg',
@@ -94,15 +75,15 @@ export class ParentComponent implements OnInit, AfterViewInit {
             roles: ['PARTNER_ADMIN']
           }
           self.navItems.push(newMenu);
-          /*newMenu = {
-            displayName: 'SBI Details',
+          newMenu = {
+            displayName: 'Upload CA Certificate',
             icon: './assets/images/home.svg',
-            route: '/pmp/resources/sbidetails/view',
+            route: '/pmp/resources/uploadcacert/upload',
             children: null,
             auditEventId: 'ADM-002',
             roles: ['PARTNER_ADMIN']
           }
-          self.navItems.push(newMenu);*/
+          self.navItems.push(newMenu);
         }else if(value.trim() == "DEVICE PROVIDER"){
           let newMenu = {
             displayName: 'Device Details',

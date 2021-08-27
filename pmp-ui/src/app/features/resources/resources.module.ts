@@ -7,6 +7,7 @@ import { ListViewComponent } from './list-view/list-view.component';
 import { SingleViewComponent } from './single-view/single-view.component';
 import { SubListViewComponent } from './sub-list-view/sub-list-view.component';
 import { SubSingleViewComponent } from './sub-single-view/sub-single-view.component';
+import { CertUploadComponent } from './cert-upload/cert-upload.component';
 import { MaterDataCommonHeaderComponent } from './shared/mater-data-common-header/mater-data-common-header.component';
 import { MaterDataCommonBodyComponent } from './shared/mater-data-common-body/mater-data-common-body.component';
 import { MaterDataCommonViewComponent } from './shared/mater-data-common-view/mater-data-common-view.component';
@@ -34,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SubSingleViewComponent,
     TableComponent,
     ToolbarComponent,
-    DialogComponent
+    DialogComponent,
+    CertUploadComponent
   ],
   exports:[TableComponent, ToolbarComponent, DialogComponent],
   entryComponents: [DialogComponent]
