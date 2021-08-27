@@ -129,11 +129,52 @@ export class MaterDataCommonBodyComponent implements OnInit {
     const filterObject = new FilterValuesModel('name', 'unique', '');
     let optinalFilterObject;
     if(partnerTypeCode !== "Policy_Mapping"){
-      optinalFilterObject = new OptionalFilterValuesModel('partnerTypeCode', 'equals', partnerTypeCode);
+      optinalFilterObject = [{
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": partnerTypeCode
+      }];
     }else{
-      optinalFilterObject = {};
+      optinalFilterObject = [
+       {
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": "Credential_Partner"
+      },
+      {
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": "Auth_Partner"
+      },
+    {
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": "Online_Verification_Partner"
+      },
+    {
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": "Manual_Adjudication"
+      },
+    {
+        "columnName": "partnerTypeCode",
+        "fromValue": "",
+        "toValue": "",
+        "type": "equals",
+        "value": "ABIS_Partner"
+      }];
     }
-    let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, optinalFilterObject);
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/partners', request)
@@ -188,11 +229,17 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.dataStorageService
         .getPartnerInfo('policymanager/policies/active/group/'+response.response.policyGroup)
         .subscribe(response => {
-          response.response.forEach(element => {
-            element["fieldValue"] = element["name"];
-            element["fieldCode"] = element["name"];
-          });
-          this.dropDownValues[key] = response.response;
+          if(response.errors.length > 0){
+            this.dropDownValues[key] = [];
+            this.showErrorPopup(response.errors[0].message);
+          }else{
+            response.response.forEach(element => {
+              element["fieldValue"] = element["name"];
+              element["fieldCode"] = element["name"];
+            });
+            this.dropDownValues[key] = response.response;
+          }
+          
         });
       });
   }
