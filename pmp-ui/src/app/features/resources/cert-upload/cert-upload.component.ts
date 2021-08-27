@@ -120,6 +120,7 @@ export class CertUploadComponent {
   showMessage(response){
     let data = {};
     let self = this;
+    let responseTemp = response;
     if(response.errors.length > 0){
       data = {
         case: 'MESSAGE',
@@ -140,9 +141,17 @@ export class CertUploadComponent {
       data
     });
     dialogRef.afterClosed().subscribe(response => {   
-      if(response.errors){
+      if(responseTemp.errors.length > 0){
+        
       }else{
-        location.reload();
+        let url = this.router.url.split('/')[3];
+        if(url === "uploadcacert"){
+          location.reload();
+        }else{
+          this.router.navigateByUrl(
+            `pmp/resources/${url}/view`
+          );
+        }
       }     
     });
   }
