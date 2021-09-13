@@ -180,12 +180,10 @@ export class TableComponent implements OnInit, OnChanges {
     };
     if (index === 0) {
       myTableStyles.color = '#0F2126';
-      myTableStyles.cursor = 'pointer';
       return myTableStyles;
     }
     if(this.linkColumnsOfTableData.find(x=>x===columnName)){
       myTableStyles.color = '#0F2126';
-      myTableStyles.cursor = 'pointer';
       return myTableStyles;
   // color: white;
   // padding: 14px 25px;

@@ -695,6 +695,7 @@ export class CommonService {
       if (res) {
         this.auditService.audit(18, 'ADM-102', 'deactivate');
         const policyObject = data;
+        policyObject.isActive = false;
         policyObject.status = false;
         this.updatePolicy('deactivate', policyObject);
       } else {
