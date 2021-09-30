@@ -73,6 +73,11 @@ jobs:
         
   sonar_analysis:
     runs-on: ubuntu-latest
+    env:
+      NAMESPACE: ${{ secrets. dev_namespace_docker_hub }}
+      SERVICE_NAME: pmp-ui
+      SERVICE_LOCATION: pmp-ui
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
