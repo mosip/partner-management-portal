@@ -196,14 +196,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if (columnValue === false && (columnName === 'isActive' || columnName === 'active')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
     if ((columnValue == 'approved' || columnValue == 'Approved') && (columnName === 'status_code' || columnName === 'statusCode')) {
@@ -211,14 +209,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if ((columnValue == 'Inprogress' && columnName === 'status_code') || (columnValue === 'inProgress' && columnName === 'statusCode')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
-      myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
+      myTableStyles.borderRadius = '7px'
       return myTableStyles;
     }else if (columnValue == 'Rejected' && columnName === 'statusCode') {
       myTableStyles.backgroundColor = '#f13e3e';
@@ -226,7 +222,6 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #6d1a1a';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
     if (columnValue === true && columnName === 'licensKeyStatus') {
@@ -234,14 +229,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if (columnValue === false && columnName === 'licensKeyStatus') {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
   }

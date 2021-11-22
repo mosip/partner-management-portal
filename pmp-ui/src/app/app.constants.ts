@@ -19,11 +19,11 @@ export const navItems = [
     route: '/pmp/home',
     children: null,
     auditEventId: 'ADM-002',
-    roles: ['GLOBAL_ADMIN']
+    roles: []
   },
   {
     displayName: 'menuItems.item2.title',
-    icon: 'assets/images/support.svg',
+    icon: 'assets/images/home.svg',
     route: '',
     children: [
       {
@@ -31,32 +31,72 @@ export const navItems = [
         icon: null,
         route: '/pmp/resources/policygroup/view',
         auditEventId: 'ADM-004',
-        roles: ['POLICYMANAGER', 'GLOBAL_ADMIN']
+        roles: ['POLICYMANAGER', 'PARTNER_ADMIN']
       },
       {
         displayName: 'menuItems.item2.subItem2',
         icon: null,
         route: '/pmp/resources/authpolicy/view',
         auditEventId: 'ADM-005',
-        roles: ['POLICYMANAGER', 'GLOBAL_ADMIN']
+        roles: ['POLICYMANAGER', 'PARTNER_ADMIN']
       },
       {
         displayName: 'menuItems.item2.subItem3',
         icon: null,
         route: '/pmp/resources/datasharepolicy/view',
         auditEventId: 'ADM-005',
-        roles: ['POLICYMANAGER', 'GLOBAL_ADMIN']
+        roles: ['POLICYMANAGER', 'PARTNER_ADMIN']
       },
     ],
     auditEventId: 'ADM-003',
-    roles: ['POLICYMANAGER', 'GLOBAL_ADMIN']
+    roles: ['POLICYMANAGER', 'PARTNER_ADMIN']
   },
   {
-    displayName: 'Partner',
-    icon: 'assets/images/support.svg',
+    displayName: 'menuItems.item3.title',
+    icon: 'assets/images/home.svg',
     route: '/pmp/resources/partner/view',
     children: null,
     auditEventId: 'ADM-006',
+    roles: ['PARTNER_ADMIN']
+  },
+  {
+    displayName: 'menuItems.item4.title',
+    icon: 'assets/images/home.svg',
+    route: '/pmp/resources/devicedetails/view',
+    children: null,
+    auditEventId: 'ADM-007',
+    roles: ['PARTNER_ADMIN', 'DEVICE_PROVIDER']
+  },
+  {
+    displayName: 'menuItems.item5.title',
+    icon: 'assets/images/home.svg',
+    route: '/pmp/resources/ftmdetails/view',
+    children: null,
+    auditEventId: 'ADM-008',
+    roles: ['PARTNER_ADMIN', 'FTM_PROVIDER']
+  },
+  {
+    displayName: 'menuItems.item6.title',
+    icon: 'assets/images/home.svg',
+    route: '/pmp/resources/sbidetails/view',
+    children: null,
+    auditEventId: 'ADM-009',
+    roles: ['PARTNER_ADMIN', 'DEVICE_PROVIDER']
+  },
+  {
+    displayName: 'menuItems.item7.title',
+    icon: 'assets/images/home.svg',
+    route: '/pmp/resources/policymapping/view',
+    children: null,
+    auditEventId: 'ADM-010',
+    roles: ['PARTNER_ADMIN', 'AUTH_PARTNER']
+  },
+  {
+    displayName: 'menuItems.item8.title',
+    icon: 'assets/images/home.svg',
+    route: '/pmp/resources/uploadcacert/upload',
+    children: null,
+    auditEventId: 'ADM-011',
     roles: ['PARTNER_ADMIN']
   }
 ];
@@ -115,7 +155,7 @@ export const masterdataMapping = {
   sbidetails: {
     apiName: 'partnermanager/securebiometricinterface',
     specFileName: 'sbi-detail',
-    name: 'Device Detail',
+    name: 'Secure Biometric Interface',
     nameKey: 'titleName',
     idKey: 'id',
     headerName: 'Secure Biometric Interface'
@@ -127,6 +167,14 @@ export const masterdataMapping = {
     nameKey: 'titleName',
     idKey: 'id',
     headerName: 'Partner Policy Mapping'
+  },
+  home: {
+    apiName: 'partnermanager/partners/apikey/request',
+    specFileName: 'home',
+    name: 'home',
+    nameKey: 'titleName',
+    idKey: 'id',
+    headerName: 'Policy Mapping'
   }
 };
 

@@ -46,11 +46,15 @@ export class AuthInterceptor implements HttpInterceptor {
       tap(
         event => {
           if (event instanceof HttpResponse) {
-            console.log(event);
             if (event.url.split('/').includes('validateToken')) {
               if (event.body.response) {
                 this.decoded = jwt_decode(event.body.response.token);
                 this.headerService.setlanguageCode(this.decoded["locale"]);
+                this.headerService.setEmailId(this.decoded["email"]);
+                this.headerService.setOrganizationName(this.decoded["organizationName"]);
+                this.headerService.setAddress(this.decoded["addressTest"]);
+                this.headerService.setContactNumber(this.decoded["phoneNumber"]);
+                this.headerService.setPartnerType(this.decoded["partnerType"]);                
                 this.headerService.setUsername(event.body.response.userId);
                 this.headerService.setRoles(event.body.response.role);
               }

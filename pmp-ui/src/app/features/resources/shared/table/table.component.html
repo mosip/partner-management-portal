@@ -38,10 +38,12 @@
         <span class="flex-display" [ngStyle]="tableStyle(i, data[item], item)"
            *ngIf="item !== 'isActive'"><span *ngIf="item !== 'active'">{{ data[item] }}</span><span *ngIf="item === 'active'"><span *ngIf="data[item] == true">{{'isActive.Active'|translate}}</span><span *ngIf="data[item] == false">{{'isActive.InActive'|translate}}</span></span></span><span *ngIf="item === 'isActive'"><span *ngIf="data[item] == true">{{'isActive.Active'|translate}}</span><span *ngIf="data[item] == false">{{'isActive.InActive'|translate}}</span></span>
       </td>
-      <td class="mat-cell mat-header-cell" *ngIf="buttonList.length>0" >
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
-          <mat-icon>more_vert</mat-icon>
-        </button>
+      <td class="mat-cell mat-header-cell" *ngIf="buttonList.length>0">
+        <span *ngIf="data['statusCode'] !== 'approved'">
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </span>
       </td>
       <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
         <button
