@@ -420,7 +420,13 @@ export class CommonService {
 
   uploadCertificatepopup(data: any){
     var re = /view/gi;
-    this.router.navigateByUrl(this.router.url.replace(re, "upload/"+data.id));
+    let id = "";
+    if(this.router.url.split('/').includes('ftmdetails')) {
+      id = data.ftpChipDetailId;
+    }else{
+      id = data.id;
+    }
+    this.router.navigateByUrl(this.router.url.replace(re, "upload/"+id));
   }
 
   activatePartner(data: any){
