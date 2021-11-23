@@ -52,7 +52,7 @@ export class TableComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.tableData = [...this.data];
     this.sortStatusArray = [];
-    this.partnerType = this.headerService.getPartnerType();
+    this.partnerType = this.headerService.getRoles();
     this.lang = this.headerService.getlanguageCode();
     const route = this.router.url.split('/')[3];
     this.imageSource = appConstants.ListViewIdKeyMapping[`${route}`]['imagePath'];
@@ -71,7 +71,7 @@ export class TableComponent implements OnInit, OnChanges {
         this.linkColumnsOfTableData.push(column['name'])
       }
     });
-
+    this.currentRoute = this.router.url.split('/')[3];
     this.setSortDirection();
   }
 
@@ -103,7 +103,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   getTableRowData(data: any, index: number, columnName: string) {
     const routeIndex = this.router.url.lastIndexOf('/');
-    this.currentRoute = this.router.url.slice(0, routeIndex);
+    this.currentRoute = this.router.url.slice(0, routeIndex);    
     const currentRouteType = this.router.url.split('/')[3];
     
     const id = appConstants.ListViewIdKeyMapping[`${currentRouteType}`];
@@ -144,10 +144,15 @@ export class TableComponent implements OnInit, OnChanges {
   ellipsisAction(data) {
     let self = this;
     this.buttonList.forEach(function (obj, i) {
-      if(self.partnerType !== "PARTNER_ADMIN"){
+      if(!self.partnerType.includes("PARTNER ADMIN")){
         if(obj["callBackFunction"] === "approve"){
           self.buttonList.splice(i, 1);
-        }else if(obj["callBackFunction"] === "reject"){
+        }
+      }
+    });
+    this.buttonList.forEach(function (obj, i) {
+      if(!self.partnerType.includes("PARTNER ADMIN")){
+        if(obj["callBackFunction"] === "reject"){
           self.buttonList.splice(i, 1);
         }
       }
@@ -156,7 +161,7 @@ export class TableComponent implements OnInit, OnChanges {
     if (data.isActive === true || data.active === true) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Activate' || values.buttonName.eng === 'Approve') {
+        if (values.buttonName.eng === 'Activate') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
@@ -164,7 +169,7 @@ export class TableComponent implements OnInit, OnChanges {
     } else if (data.isActive === false || data.active === false) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Deactivate' || values.buttonName.eng === 'Reject') {
+        if (values.buttonName.eng === 'Deactivate') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
