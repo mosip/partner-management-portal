@@ -41,9 +41,13 @@
       <td class="mat-cell mat-header-cell" *ngIf="buttonList.length>0">
         <span *ngIf="data['statusCode'] !== 'approved'">
           <span *ngIf="data['statusCode'] !== 'rejected'">
-            <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
-              <mat-icon>more_vert</mat-icon>
-            </button>
+            <span *ngIf="data['approvalStatus'] != 'approved'">
+              <span *ngIf="data['approvalStatus'] !== 'rejected'">
+                <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </span>
+            </span>
           </span>
         </span>
       </td>

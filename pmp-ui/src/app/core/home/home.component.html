@@ -25,12 +25,12 @@
 	      	<div class="col s4">EmailId</div>
       		<div class="col s8">{{partnerIdDetail.emailId}}</div>
 	    </div>
-	    <div class="row">
+	    <div class="row" *ngIf="partnerIdDetail.policyGroup">
 	      	<div class="col s4">Policy Group</div>
       		<div class="col s8">{{partnerIdDetail.policyGroup}}</div>
 	    </div>
 	    <div class="row">
-	      	<div class="col s4">Policy Type</div>
+	      	<div class="col s4">Partner Type</div>
       		<div class="col s8">{{partnerIdDetail.partnerType}}</div>
 	    </div>
 	    <div class="row">

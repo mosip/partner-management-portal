@@ -13,6 +13,7 @@ import * as appConstants from 'src/app/app.constants';
 import { CommonService } from 'src/app/core/services/common.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-table',
@@ -36,20 +37,23 @@ export class TableComponent implements OnInit, OnChanges {
   sortIconTrackerArray = new Array(15).fill(0);
   ellipsisList = [];
   imageSource: string;
+  partnerType: string;
 
   constructor(
+    private headerService: HeaderService,
     private router: Router,
     private appConfig: AppConfigService,
     private commonService: CommonService,
     private translate: TranslateService,
     private auditService: AuditService
   ) {
-   translate.use(appConfig.getConfig().primaryLangCode);
+   translate.use(this.headerService.getlanguageCode());
   }
   ngOnInit(): void {
     this.tableData = [...this.data];
     this.sortStatusArray = [];
-    this.lang = this.appConfig.getConfig().primaryLangCode;
+    this.partnerType = this.headerService.getPartnerType();
+    this.lang = this.headerService.getlanguageCode();
     const route = this.router.url.split('/')[3];
     this.imageSource = appConstants.ListViewIdKeyMapping[`${route}`]['imagePath'];
   }
@@ -138,6 +142,16 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   ellipsisAction(data) {
+    let self = this;
+    this.buttonList.forEach(function (obj, i) {
+      if(self.partnerType !== "PARTNER_ADMIN"){
+        if(obj["callBackFunction"] === "approve"){
+          self.buttonList.splice(i, 1);
+        }else if(obj["callBackFunction"] === "reject"){
+          self.buttonList.splice(i, 1);
+        }
+      }
+    });
     this.ellipsisList = [...this.buttonList];
     if (data.isActive === true || data.active === true) {
       this.ellipsisList = [...this.buttonList];
