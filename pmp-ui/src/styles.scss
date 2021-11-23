@@ -8,7 +8,9 @@
 :root {
   font-size: 16px;
 }
-
+.success-img {
+  margin: 16px 0 0 42%;
+}
 .spinner-placer {
   margin: 20% 0 0 40%;
 }
@@ -240,3 +242,4 @@ mat-keyboard-container {
   bottom: 0% !important;
   margin-left: 20% !important;
 }
+.mat-form-field-required-marker { color: red }

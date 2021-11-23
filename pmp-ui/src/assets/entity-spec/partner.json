@@ -308,7 +308,7 @@
 			"methodCallName": ""
 		},
 		{
-			"filtername": "status",
+			"filtername": "approvalStatus",
 			"filterlabel": "Approval Status",
 			"filterType": "equals",
 			"fieldType": "input",
@@ -316,7 +316,7 @@
 			"dropdown": "false",
 			"datePicker": "false",
 			"apiName": "",
-			"fieldName": "status",
+			"fieldName": "approvalStatus",
 			"methodCallName": ""
 		}
 	]
