@@ -98,6 +98,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.pageName = "SBI Details";        
         this.primaryData = {"deviceDetailId":this.router.url.split('/')[6],"swBinaryHash":"", "swCreateDateTime":"", "swExpiryDateTime":"", "swVersion":"","isItForRegistrationDevice":true};
         this.dropDownValues["isItForRegistrationDevice"] = [{fieldID: "True", fieldValue: "True", fieldCode: true},{fieldID: "False", fieldValue: "False", fieldCode: false}];
+        this.getDeviceDetails("deviceDetailId");
       }
       else if(url === "devicedetails"){
         this.pageName = "Device Details";        
@@ -181,6 +182,18 @@ export class MaterDataCommonBodyComponent implements OnInit {
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/devicedetail/deviceType', request)
+      .subscribe(response => {
+        this.dropDownValues[key] = response.response.filters;
+      });
+  }
+
+  getDeviceDetails(key) {
+    const filterObject = new FilterValuesModel('deviceProviderId', 'unique', '');
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    filterRequest["purpose"] = "REGISTRATION";
+    let request = new RequestModel('', null, filterRequest);
+    this.dataStorageService
+      .getFiltersForAllDropDown('partnermanager/devicedetail', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });

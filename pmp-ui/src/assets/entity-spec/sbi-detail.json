@@ -214,10 +214,15 @@
 			"showInSingleView": "false"
 		},
 		{
-			"name": "isActive",
+			"name": "approvalStatus",
 			"showInListView": "true",
 			"label": {
-				"eng": "Status"
+				"eng": "Approved Status",
+				"ara": "Approved Status_ara",
+				"fra": "Approved Status_fra",
+				"hin": "Approved Status_hin",
+				"kan": "Approved Status_kan",
+				"tam": "Approved Status_tam"
 			},
 			"sortOrder": "",
 			"showAsLink": "",
