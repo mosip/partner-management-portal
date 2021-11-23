@@ -54,7 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.headerService.setOrganizationName(this.decoded["organizationName"]);
                 this.headerService.setAddress(this.decoded["addressTest"]);
                 this.headerService.setContactNumber(this.decoded["phoneNumber"]);
-                this.headerService.setPartnerType(this.decoded["partnerType"]);                
+                this.headerService.setPartnerType(this.decoded["partnerType"]);
                 this.headerService.setUsername(event.body.response.userId);
                 this.headerService.setRoles(event.body.response.role);
               }
