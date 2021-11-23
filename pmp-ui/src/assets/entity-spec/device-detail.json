@@ -233,7 +233,7 @@
 			"showInSingleView": "false"
 		},
 		{
-			"name": "isActive",
+			"name": "approvalStatus",
 			"showInListView": "true",
 			"label": {
 				"eng": "Approved Status",
