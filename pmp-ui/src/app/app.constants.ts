@@ -89,7 +89,7 @@ export const navItems = [
     route: '/pmp/resources/policymapping/view',
     children: null,
     auditEventId: 'ADM-010',
-    roles: ['PARTNER_ADMIN', 'AUTH_PARTNER']
+    roles: ['PARTNER_ADMIN', 'AUTH_PARTNER', 'CREDENTIAL_PARTNER']
   },
   {
     displayName: 'menuItems.item8.title',
