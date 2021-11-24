@@ -24,6 +24,22 @@ export class DataStorageService {
     return this.http.get('./assets/entity-spec/policy.json');
   }
 
+  partnerEmailVerify(emailId: string): Observable<any> {
+    return this.http.put(
+      this.BASE_URL+ 'v1/partnermanager/partners/email/verify',
+      {"id": "string","metadata": {},"request": {"emailId": emailId},"requesttime": "","version": "string"}
+    );
+  }
+
+  partnerRegistration(data: RequestModel): Observable<any> {
+    return this.http.post(
+      this.BASE_URL+ 'v1/partnermanager/partners',
+      data
+    );
+  }
+
+  
+
   getImmediateChildren(
     locationCode: string,
     langCode: string
@@ -179,7 +195,11 @@ export class DataStorageService {
   }
 
   viewCertificate(data: any): Observable<any> {
-    return this.http.get(this.BASE_URL+ 'v1/partnermanager/partners/' +  data.id +'/certificate');
+    if(data.id){
+      return this.http.get(this.BASE_URL+ 'v1/partnermanager/partners/' +  data.id +'/certificate');
+    }else{
+      return this.http.get(this.BASE_URL+ 'v1/partnermanager/ftpchipdetail/getPartnerCertificate/' +  data.ftpChipDetailId );
+    }
   }
 
   approveMisp(data: RequestModel): Observable<any> {
@@ -278,7 +298,7 @@ export class DataStorageService {
     data: RequestModel
   ): Observable<any> {
     return this.http.post(
-      this.BASE_URL + appConstants.MASTERDATA_BASE_URL + type + '/filtervalues',
+      this.BASE_URL  + type + '/filtervalues',
       data
     );
   }
@@ -352,6 +372,13 @@ export class DataStorageService {
     );
   }
 
+  uploadFTMChipCertificate(data: any): Observable<any> {
+    return this.http.post(
+      this.BASE_URL  + 'v1/partnermanager/ftpchipdetail/uploadcertificate',
+      data
+    );
+  }
+
   getPartnerInfo(url : any): Observable<any> {
     return this.http.get(
       this.BASE_URL  + 'v1/'+url
@@ -362,6 +389,12 @@ export class DataStorageService {
     return this.http.patch(
       this.BASE_URL  + 'v1/'+url,
       data
+    );
+  }
+
+  getRoles(): Observable<any> {
+    return this.http.get(
+      this.BASE_URL  + 'v1/partnermanager/roles'
     );
   }
 }

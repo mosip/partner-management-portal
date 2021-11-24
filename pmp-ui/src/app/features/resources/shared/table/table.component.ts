@@ -13,6 +13,7 @@ import * as appConstants from 'src/app/app.constants';
 import { CommonService } from 'src/app/core/services/common.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-table',
@@ -36,20 +37,23 @@ export class TableComponent implements OnInit, OnChanges {
   sortIconTrackerArray = new Array(15).fill(0);
   ellipsisList = [];
   imageSource: string;
+  partnerType: string;
 
   constructor(
+    private headerService: HeaderService,
     private router: Router,
     private appConfig: AppConfigService,
     private commonService: CommonService,
     private translate: TranslateService,
     private auditService: AuditService
   ) {
-   translate.use(appConfig.getConfig().primaryLangCode);
+   translate.use(this.headerService.getlanguageCode());
   }
   ngOnInit(): void {
     this.tableData = [...this.data];
     this.sortStatusArray = [];
-    this.lang = this.appConfig.getConfig().primaryLangCode;
+    this.partnerType = this.headerService.getRoles();
+    this.lang = this.headerService.getlanguageCode();
     const route = this.router.url.split('/')[3];
     this.imageSource = appConstants.ListViewIdKeyMapping[`${route}`]['imagePath'];
   }
@@ -67,7 +71,7 @@ export class TableComponent implements OnInit, OnChanges {
         this.linkColumnsOfTableData.push(column['name'])
       }
     });
-
+    this.currentRoute = this.router.url.split('/')[3];
     this.setSortDirection();
   }
 
@@ -99,7 +103,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   getTableRowData(data: any, index: number, columnName: string) {
     const routeIndex = this.router.url.lastIndexOf('/');
-    this.currentRoute = this.router.url.slice(0, routeIndex);
+    this.currentRoute = this.router.url.slice(0, routeIndex);    
     const currentRouteType = this.router.url.split('/')[3];
     
     const id = appConstants.ListViewIdKeyMapping[`${currentRouteType}`];
@@ -138,11 +142,26 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   ellipsisAction(data) {
+    let self = this;
+    this.buttonList.forEach(function (obj, i) {
+      if(!self.partnerType.includes("PARTNER ADMIN")){
+        if(obj["callBackFunction"] === "approve"){
+          self.buttonList.splice(i, 1);
+        }
+      }
+    });
+    this.buttonList.forEach(function (obj, i) {
+      if(!self.partnerType.includes("PARTNER ADMIN")){
+        if(obj["callBackFunction"] === "reject"){
+          self.buttonList.splice(i, 1);
+        }
+      }
+    });
     this.ellipsisList = [...this.buttonList];
     if (data.isActive === true || data.active === true) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Activate' || values.buttonName.eng === 'Approve') {
+        if (values.buttonName.eng === 'Activate') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
@@ -150,7 +169,7 @@ export class TableComponent implements OnInit, OnChanges {
     } else if (data.isActive === false || data.active === false) {
       this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Deactivate' || values.buttonName.eng === 'Reject') {
+        if (values.buttonName.eng === 'Deactivate') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
@@ -180,12 +199,10 @@ export class TableComponent implements OnInit, OnChanges {
     };
     if (index === 0) {
       myTableStyles.color = '#0F2126';
-      myTableStyles.cursor = 'pointer';
       return myTableStyles;
     }
     if(this.linkColumnsOfTableData.find(x=>x===columnName)){
       myTableStyles.color = '#0F2126';
-      myTableStyles.cursor = 'pointer';
       return myTableStyles;
   // color: white;
   // padding: 14px 25px;
@@ -198,14 +215,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if (columnValue === false && (columnName === 'isActive' || columnName === 'active')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
     if ((columnValue == 'approved' || columnValue == 'Approved') && (columnName === 'status_code' || columnName === 'statusCode')) {
@@ -213,14 +228,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if ((columnValue == 'Inprogress' && columnName === 'status_code') || (columnValue === 'inProgress' && columnName === 'statusCode')) {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
-      myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
+      myTableStyles.borderRadius = '7px'
       return myTableStyles;
     }else if (columnValue == 'Rejected' && columnName === 'statusCode') {
       myTableStyles.backgroundColor = '#f13e3e';
@@ -228,7 +241,6 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #6d1a1a';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
     if (columnValue === true && columnName === 'licensKeyStatus') {
@@ -236,14 +248,12 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     } else if (columnValue === false && columnName === 'licensKeyStatus') {
       myTableStyles.backgroundColor = '#CECFD0';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #9C9F9F';
       myTableStyles.borderRadius = '7px';
-      myTableStyles.textTransform = 'uppercase';
       return myTableStyles;
     }
   }

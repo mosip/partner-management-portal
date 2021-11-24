@@ -12,13 +12,14 @@
                   field.label[primaryLang] | translate
                 }}"
                 [value]="primaryData[field.name]"
-                field.required
+                required
               />
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
+                required
               >
                 <mat-option
                   *ngFor="let data of dropDownValues[field.name]"
@@ -39,7 +40,7 @@
                 (dateChange)="captureDatePickerValue($event, field.name, 'primary')"
                 placeholder="{{field.label[primaryLang] | translate}}"
                 [value]="primaryData[field.name]"
-                field.required
+                required
               />
               <mat-datepicker-toggle
                 matSuffix

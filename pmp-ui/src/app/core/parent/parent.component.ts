@@ -44,68 +44,12 @@ export class ParentComponent implements OnInit, AfterViewInit {
     this.secondaryLang = this.appConfigService.getConfig()['secondaryLangCode'];
     this.translateService.use(this.primaryLang);
     this.navItems = cloneObject(appConstants.navItems);
-    let self = this;
+    let self = this;    
     if (this.headerService.getRoles()) {
-      this.headerService.getRoles().split(",").forEach(function (value) {
-        if(value.trim() == "PARTNER ADMIN"){
-          let newMenu = {
-            displayName: 'Device Details',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/devicedetails/view',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['PARTNER_ADMIN']
-          }
-          self.navItems.push(newMenu);
-          newMenu = {
-            displayName: 'FTM Details',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/ftmdetails/view',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['PARTNER_ADMIN']
-          }
-          self.navItems.push(newMenu);
-          newMenu = {
-            displayName: 'Partner Policy Mapping',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/policymapping/view',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['PARTNER_ADMIN']
-          }
-          self.navItems.push(newMenu);
-          newMenu = {
-            displayName: 'Upload CA Certificate',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/uploadcacert/upload',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['PARTNER_ADMIN']
-          }
-          self.navItems.push(newMenu);
-        }else if(value.trim() == "DEVICE PROVIDER"){
-          let newMenu = {
-            displayName: 'Device Details',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/devicedetails/view',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['DEVICE_PROVIDER']
-          }
-          self.navItems.push(newMenu);
-          /*newMenu = {
-            displayName: 'SBI Details',
-            icon: './assets/images/home.svg',
-            route: '/pmp/resources/sbidetails/view',
-            children: null,
-            auditEventId: 'ADM-002',
-            roles: ['PARTNER_ADMIN']
-          }
-          self.navItems.push(newMenu);*/
-        }
-      });  
-    }
+      this.dataService.getRoles().subscribe(({ response }) => {
+        console.log("response>>>"+response.roles);                   
+      });
+    }           
   }
 
   ngAfterViewInit() {

@@ -24,6 +24,7 @@ import { FilterRequest } from 'src/app/core/models/filter-request.model';
 import { FilterValuesModel } from 'src/app/core/models/filter-values.model';
 import * as appConstants from '../../../../app.constants';
 import { OptionalFilterValuesModel } from 'src/app/core/models/optional-filter-values.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mater-data-common-body',
@@ -70,6 +71,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -96,6 +98,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.pageName = "SBI Details";        
         this.primaryData = {"deviceDetailId":this.router.url.split('/')[6],"swBinaryHash":"", "swCreateDateTime":"", "swExpiryDateTime":"", "swVersion":"","isItForRegistrationDevice":true};
         this.dropDownValues["isItForRegistrationDevice"] = [{fieldID: "True", fieldValue: "True", fieldCode: true},{fieldID: "False", fieldValue: "False", fieldCode: false}];
+        this.getDeviceDetails("deviceDetailId");
       }
       else if(url === "devicedetails"){
         this.pageName = "Device Details";        
@@ -123,6 +126,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.pageName = "Center Type";
       }
     }
+    this.translateService
+      .getTranslation(this.primaryLang)
+      .subscribe(response => {
+        this.popupMessages = response;
+      });
   }
 
   getPartnerDropdownValues(partnerTypeCode, key) {
@@ -137,41 +145,25 @@ export class MaterDataCommonBodyComponent implements OnInit {
         "value": partnerTypeCode
       }];
     }else{
-      optinalFilterObject = [
-       {
-        "columnName": "partnerTypeCode",
+      optinalFilterObject = [{
+        "value": "",
+        "values": [          
+                   "Credential_Partner","Auth_Partner","Online_Verification_Partner","Manual_Adjudication","ABIS_Partner"
+        ],
         "fromValue": "",
         "toValue": "",
-        "type": "equals",
-        "value": "Credential_Partner"
+        "columnName": "partnerTypeCode",
+        "type": "in"
       },
       {
-        "columnName": "partnerTypeCode",
+        "value": "true",
+        "values": [         
+                   
+        ],
         "fromValue": "",
         "toValue": "",
-        "type": "equals",
-        "value": "Auth_Partner"
-      },
-    {
-        "columnName": "partnerTypeCode",
-        "fromValue": "",
-        "toValue": "",
-        "type": "equals",
-        "value": "Online_Verification_Partner"
-      },
-    {
-        "columnName": "partnerTypeCode",
-        "fromValue": "",
-        "toValue": "",
-        "type": "equals",
-        "value": "Manual_Adjudication"
-      },
-    {
-        "columnName": "partnerTypeCode",
-        "fromValue": "",
-        "toValue": "",
-        "type": "equals",
-        "value": "ABIS_Partner"
+        "columnName": "isActive",
+        "type": "equals"
       }];
     }
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, optinalFilterObject);
@@ -190,6 +182,18 @@ export class MaterDataCommonBodyComponent implements OnInit {
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/devicedetail/deviceType', request)
+      .subscribe(response => {
+        this.dropDownValues[key] = response.response.filters;
+      });
+  }
+
+  getDeviceDetails(key) {
+    const filterObject = new FilterValuesModel('deviceProviderId', 'unique', '');
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    filterRequest["purpose"] = "REGISTRATION";
+    let request = new RequestModel('', null, filterRequest);
+    this.dataStorageService
+      .getFiltersForAllDropDown('partnermanager/devicedetail', request)
       .subscribe(response => {
         this.dropDownValues[key] = response.response.filters;
       });
@@ -275,7 +279,26 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   submit() {
     let self = this;
-    self.executeAPI();
+    console.log("self.popupMessages>>>"+self.popupMessages);
+    let mandatoryFieldName = [];
+    let mandatoryFieldLabel = [];
+    for (let i = 0; i < self.fields.length; i++) {
+      if (self.fields[i].showInSingleView) {
+        if(self.fields[i].ismandatory === "true"){
+          mandatoryFieldName.push(self.fields[i].name);  
+          mandatoryFieldLabel.push(self.fields[i].label[self.primaryLang]);          
+        }
+      }
+    }
+    let len = mandatoryFieldName.length;
+    for (let i = 0; i < len; i++) {
+      if(!self.primaryData[mandatoryFieldName[i]]){
+        self.showErrorPopup(mandatoryFieldLabel[i]+self.popupMessages.genericerror.fieldNameValidation);
+        break;
+      }else if(len === (i+1)){
+        self.executeAPI();
+      }
+    }
   }
 
   executeAPI(){

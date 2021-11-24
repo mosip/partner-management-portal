@@ -420,7 +420,13 @@ export class CommonService {
 
   uploadCertificatepopup(data: any){
     var re = /view/gi;
-    this.router.navigateByUrl(this.router.url.replace(re, "upload/"+data.id));
+    let id = "";
+    if(this.router.url.split('/').includes('ftmdetails')) {
+      id = data.ftpChipDetailId;
+    }else{
+      id = data.id;
+    }
+    this.router.navigateByUrl(this.router.url.replace(re, "upload/"+id));
   }
 
   activatePartner(data: any){
@@ -695,6 +701,7 @@ export class CommonService {
       if (res) {
         this.auditService.audit(18, 'ADM-102', 'deactivate');
         const policyObject = data;
+        policyObject.isActive = false;
         policyObject.status = false;
         this.updatePolicy('deactivate', policyObject);
       } else {
