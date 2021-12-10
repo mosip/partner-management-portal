@@ -202,7 +202,7 @@
 			"methodCallName": ""
 		},
 		{
-			"filtername": "partnerId",
+			"filtername": "partnerName",
 			"filterlabel": "Partner Name",
 			"filterType": "equals",
 			"fieldType": "input",
@@ -210,11 +210,11 @@
 			"dropdown": "false",
 			"datePicker": "false",
 			"apiName": "",
-			"fieldName": "partnerId",
+			"fieldName": "partnerName",
 			"methodCallName": ""
 		},
 		{
-			"filtername": "policyId",
+			"filtername": "policyName",
 			"filterlabel": "Policy Name",
 			"filterType": "equals",
 			"fieldType": "input",
@@ -222,7 +222,7 @@
 			"dropdown": "false",
 			"datePicker": "false",
 			"apiName": "",
-			"fieldName": "policyId",
+			"fieldName": "policyName",
 			"methodCallName": ""
 		},
 		{

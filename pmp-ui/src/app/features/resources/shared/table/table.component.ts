@@ -223,26 +223,6 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.borderRadius = '7px';
       return myTableStyles;
     }
-    if ((columnValue == 'approved' || columnValue == 'Approved') && (columnName === 'status_code' || columnName === 'statusCode')) {
-      myTableStyles.backgroundColor = '#C2F2DA';
-      myTableStyles.padding = '5px';
-      myTableStyles.border = '1px solid #4AD991';
-      myTableStyles.borderRadius = '7px';
-      return myTableStyles;
-    } else if ((columnValue == 'Inprogress' && columnName === 'status_code') || (columnValue === 'inProgress' && columnName === 'statusCode')) {
-      myTableStyles.backgroundColor = '#CECFD0';
-      myTableStyles.padding = '5px';
-      myTableStyles.border = '1px solid #9C9F9F';
-      myTableStyles.borderRadius = '7px'
-      return myTableStyles;
-    }else if (columnValue == 'Rejected' && columnName === 'statusCode') {
-      myTableStyles.backgroundColor = '#f13e3e';
-      myTableStyles.color = '#ffffff';
-      myTableStyles.padding = '5px';
-      myTableStyles.border = '1px solid #6d1a1a';
-      myTableStyles.borderRadius = '7px';
-      return myTableStyles;
-    }
     if (columnValue === true && columnName === 'licensKeyStatus') {
       myTableStyles.backgroundColor = '#C2F2DA';
       myTableStyles.padding = '5px';

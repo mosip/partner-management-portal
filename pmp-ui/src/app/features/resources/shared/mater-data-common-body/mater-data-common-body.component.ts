@@ -108,12 +108,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
       }
       else if(url === "datasharepolicy"){
         this.pageName = "Data Share Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": {}, "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "authpolicy"){
         this.pageName = "Auth Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": {}, "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "policymapping"){
@@ -279,7 +279,6 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   submit() {
     let self = this;
-    console.log("self.popupMessages>>>"+self.popupMessages);
     let mandatoryFieldName = [];
     let mandatoryFieldLabel = [];
     for (let i = 0; i < self.fields.length; i++) {
@@ -324,8 +323,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         "",
         null,
         this.primaryData
-      );      
-      this.dataStorageService.updateData(url, request).subscribe(response => {        
+      ); 
+      this.dataStorageService.updateData(url, request).subscribe(response => { 
+        if(url === "policymanager/policies"){
+          this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
+        }       
         if (!response.errors || (response.errors.length == 0)) {
           let url = this.pageName+" Updated Successfully";
           this.showMessage(url)
@@ -370,6 +372,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.primaryData
         );
         this.dataStorageService.createData(url, request).subscribe(response => {
+          if(url === "policymanager/policies"){
+            this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
+          }
           if (!response.errors || (response.errors.length == 0)) {
             let url = this.pageName+" Created Successfully";
             this.showMessage(url)

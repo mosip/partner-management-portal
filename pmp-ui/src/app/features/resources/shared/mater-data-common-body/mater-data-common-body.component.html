@@ -15,6 +15,34 @@
                 required
               />
             </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] === '{}'">
+              <textarea
+                #keyboardRef
+                #{{field.name}}
+                (blur)="captureValue($event, field.name, 'primary')"
+                matInput
+                placeholder="{{
+                  field.label[primaryLang] | translate
+                }}"
+                [value]=""
+                required={{field.ismandatory}}
+                rows="3" cols="40"
+              ></textarea>
+            </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] !== '{}'">
+              <textarea
+                #keyboardRef
+                #{{field.name}}
+                (blur)="captureValue($event, field.name, 'primary')"
+                matInput
+                placeholder="{{
+                  field.label[primaryLang] | translate
+                }}"
+                [value]="primaryData[field.name]"
+                required={{field.ismandatory}}
+                rows="3" cols="40"
+              ></textarea>
+            </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
                 [value]="primaryData[field.name]"
