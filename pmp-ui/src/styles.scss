@@ -51,7 +51,8 @@ h3 {
 
 // common css
 #flex-single-view {
-  padding-top: 18px;
+  width:100%;
+  padding-top: 8px;
   overflow: hidden;
   .navigation {
     .material-icons {
@@ -87,17 +88,24 @@ h3 {
       position: relative;
     }
     .item1 {
+      width: 500px;
+      .item2 {
+        width: 400px;
+      }
+    }
+    .item1 {
       flex: 0.2;
       display: flex;
       align-items: center;
       .profile-img {
         img {
-          width: 100%;
+          width: 60%;
           height: auto;
         }
       }
     }
     .item2 {
+      width:250px;
       padding-left: 15px;
       padding-right: 15px;
       display: flex;
@@ -243,3 +251,18 @@ mat-keyboard-container {
   margin-left: 20% !important;
 }
 .mat-form-field-required-marker { color: red }
+
+.mat-card-actions, .mat-card-content, .mat-card-subtitle{
+  margin-bottom: 5px !important;
+}
+
+.mat-form-field-label{
+  font-size:13px !important; 
+}
+.mat-input-element{
+  font-size:13px !important; 
+}
+
+.mat-form-field{
+  font-size:13px !important; 
+}

@@ -186,7 +186,7 @@ export const ListViewIdKeyMapping = {
   devicedetails: { idKey: 'id', auditEventId: 'ADM-069' },
   ftmdetails: { idKey: 'ftpChipDetailId', auditEventId: 'ADM-069' },
   sbidetails: { idKey: 'id', auditEventId: 'ADM-069' },
-  policymapping: { idKey: 'id', auditEventId: 'ADM-069' },
+  policymapping: { idKey: 'apikeyRequestId', auditEventId: 'ADM-069' },
 };
 
 export const keyboardMapping = {

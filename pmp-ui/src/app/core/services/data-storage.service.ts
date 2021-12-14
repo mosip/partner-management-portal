@@ -386,7 +386,7 @@ export class DataStorageService {
   }
 
   requestAPIKey(url : any, data : any): Observable<any> {
-    return this.http.patch(
+    return this.http.post(
       this.BASE_URL  + 'v1/'+url,
       data
     );
@@ -395,6 +395,48 @@ export class DataStorageService {
   getRoles(): Observable<any> {
     return this.http.get(
       this.BASE_URL  + 'v1/partnermanager/roles'
+    );
+  }
+
+  getSbidetails(data: any): Observable<any> {
+    return this.http.post(
+      this.BASE_URL  + 'v1/partnermanager/securebiometricinterface/devicedetails/map/search',
+      data
+    );
+  }
+
+  mapSBIVersion(data: any): Observable<any> {
+    return this.http.put(
+      this.BASE_URL  + 'v1/partnermanager/securebiometricinterface/devicedetails/map',
+      data
+    );
+  }
+
+  unmapSBIVersion(data: any): Observable<any> {
+    return this.http.put(
+      this.BASE_URL  + 'v1/partnermanager/securebiometricinterface/devicedetails/map/remove',
+      data
+    );
+  }
+
+  getAPIKeydetails(data: any): Observable<any> {
+    return this.http.post(
+      this.BASE_URL  + 'v1/partnermanager/partners/apikey/search',
+      data
+    );
+  }
+
+  generateAPIKey(partnerId, data): Observable<any> {
+    return this.http.patch(
+      this.BASE_URL  + 'v1/partnermanager/partners/'+partnerId+'/generate/apikey',
+      data
+    );
+  }
+
+  deleteAPIKey(actualData, data): Observable<any> {
+    return this.http.patch(
+      this.BASE_URL  + 'v1/partnermanager/partners/'+actualData.partnerId+'/policy/'+actualData.policyId+'/apiKey/status',
+      data
     );
   }
 }

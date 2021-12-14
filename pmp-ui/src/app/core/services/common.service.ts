@@ -787,7 +787,8 @@ export class CommonService {
           this.router.navigateByUrl(this.router.url);
         } else {
           let obj = {
-            title: "",
+            case: 'MESSAGE',
+            title: 'Success',
             message: response.errors[0].message,
             btnTxt: "Ok"
           }
