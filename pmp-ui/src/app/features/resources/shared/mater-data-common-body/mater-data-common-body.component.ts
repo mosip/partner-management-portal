@@ -6,7 +6,7 @@ import {
   Input
 } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -25,6 +25,9 @@ import { FilterValuesModel } from 'src/app/core/models/filter-values.model';
 import * as appConstants from '../../../../app.constants';
 import { OptionalFilterValuesModel } from 'src/app/core/models/optional-filter-values.model';
 import { TranslateService } from '@ngx-translate/core';
+import { FilterModel } from 'src/app/core/models/filter.model';
+import { CenterRequest } from 'src/app/core/models/centerRequest.model';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-mater-data-common-body',
@@ -44,7 +47,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   copyPrimaryWord: any;
   copySecondaryWord: any;
 
-  @Input() primaryData: any;
+  @Input() primaryData: any = {};
   @Input() secondaryData: any;
   @Input() fields: any;
 
@@ -53,18 +56,25 @@ export class MaterDataCommonBodyComponent implements OnInit {
   @Input() masterdataType: any;
 
   dropDownValues = new Dropdown();
+  apiKeyLabel:string='';
+  sbiId:string='';
 
   languageNames = {
     ara: 'عربى',
     fra: 'French',
     eng: 'English'
   };
-  showSecondaryForm: boolean;
+  showSecondaryForm: boolean = false;
+  showSecondaryAPIPanel: boolean = false;
+  showSecondarySBIPanel: boolean = false;
   isCreateForm:boolean;
 
   primaryKeyboard: string;
   secondaryKeyboard: string;
   keyboardType: string;
+  listBelowSectionData:any;
+  fetchRequest = {} as CenterRequest;
+  subscribed: any;
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -72,9 +82,15 @@ export class MaterDataCommonBodyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private translateService: TranslateService,
-  ) { }
+    private headerService: HeaderService
+  ) { 
+  }
 
   ngOnInit() {
+    this.loadConfig();
+  }
+
+  loadConfig() {
     let url = "";
     this.isCreateForm = false;
     this.masterdataType = url;
@@ -82,7 +98,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
       url = this.router.url.split('/')[4];
     }else{
       url = this.router.url.split('/')[3];
-    }
+    }    
     if(!this.primaryData){
       this.isCreateForm = true;
       if(url === "policygroup"){
@@ -98,22 +114,22 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.pageName = "SBI Details";        
         this.primaryData = {"deviceDetailId":this.router.url.split('/')[6],"swBinaryHash":"", "swCreateDateTime":"", "swExpiryDateTime":"", "swVersion":"","isItForRegistrationDevice":true};
         this.dropDownValues["isItForRegistrationDevice"] = [{fieldID: "True", fieldValue: "True", fieldCode: true},{fieldID: "False", fieldValue: "False", fieldCode: false}];
-        this.getDeviceDetails("deviceDetailId");
+        this.getPartnerDropdownValues("Device_Provider", "providerId");
       }
       else if(url === "devicedetails"){
         this.pageName = "Device Details";        
         this.primaryData = {"deviceProviderId": "", "deviceSubTypeCode": "", "deviceTypeCode": "", "isItForRegistrationDevice": true, "make": "", "model": "", "partnerOrganizationName": ""};
         this.getPartnerDropdownValues("Device_Provider", "deviceProviderId");
-        this.getDeviceType("deviceTypeCode");        
+        this.getDeviceType("deviceTypeCode");     
       }
       else if(url === "datasharepolicy"){
         this.pageName = "Data Share Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": {}, "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "authpolicy"){
         this.pageName = "Auth Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": {}, "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "policymapping"){
@@ -121,17 +137,202 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.primaryData = {"partnerId":"","policyId":"", "requestDetail" :""};
         this.getPartnerDropdownValues("Policy_Mapping", "partnerId");
       }
-    }else{
-      if(url === "center-type"){
-        this.pageName = "Center Type";
-      }
     }
+    setTimeout(()=>{ 
+        this.loadSecondaryForm();
+    }, 500);
+
     this.translateService
       .getTranslation(this.primaryLang)
       .subscribe(response => {
         this.popupMessages = response;
       });
   }
+
+  loadSecondaryForm(){
+    console.log("loadSecondaryForm>>>"+JSON.stringify(this.primaryData));
+    let url = "";
+    if(this.router.url.split('/').length > 7){
+      url = this.router.url.split('/')[4];
+    }else{
+      url = this.router.url.split('/')[3];
+    }   
+    if(url === "devicedetails"){        
+      this.getSbidetails();   
+      this.getSbidetailFilterValues("sbiId");       
+    }
+    else if(url === "policymapping"){
+      this.getAPIKeydetails();
+    }
+  }
+
+  getSbidetailFilterValues(key){
+    if(this.router.url.includes("editable")){
+      this.showSecondaryForm = true;
+      this.showSecondarySBIPanel = true;
+    }
+    const filterObject = new FilterValuesModel('swVersion', 'unique', '');
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    let request = new RequestModel('', null, filterRequest);
+    this.dataStorageService
+      .getFiltersForAllDropDown('partnermanager/securebiometricinterface', request)
+      .subscribe(response => {
+        this.dropDownValues[key] = response.response.filters;
+      });
+  }
+
+  getSbidetails(){
+    let self = this;
+    const filterModel = new FilterModel(
+      "deviceDetailId",
+      "equals",
+      this.primaryData.id
+    );
+    this.fetchRequest.filters = [filterModel];
+    this.fetchRequest.languageCode = this.headerService.getlanguageCode();
+    this.fetchRequest.sort = [];
+    this.fetchRequest.pagination = { pageStart: 0, pageFetch: 10 };
+    const request = new RequestModel(
+      appConstants.registrationCenterCreateId,
+      null,
+      this.fetchRequest
+    );
+    this.dataStorageService
+      .getSbidetails(request)
+      .subscribe(
+        response => {
+          if (response.response) {
+            if (response.response.data) {
+              self.listBelowSectionData = response.response.data ? [...response.response.data] : [];
+              //console.log("response.response.data>>>"+response.response.data);
+            }
+          }
+        },
+        error => {
+          //this.displayMessage(this.popupMessages['errorMessages'][1]);
+        }
+      );
+  }
+
+  mapSBIVersion(){
+    let SBIData = {"deviceDetailId": this.primaryData.id,"sbiId": this.sbiId};  
+    let request = new RequestModel(
+      "",
+      null,
+      SBIData
+    ); 
+    this.dataStorageService.mapSBIVersion(request).subscribe(response => { 
+      if (!response.errors || (response.errors.length == 0)) {
+        this.showMessage(response.response)
+          .afterClosed()
+          .subscribe(() => {
+            this.sbiId = "";
+            this.getSbidetails();
+          });
+      }else{
+        this.showErrorPopup(response.errors[0].message);
+      }
+    });
+  }
+
+  unmapSBIVersion(data){
+    let SBIData = {"deviceDetailId": data.deviceDetailId,"sbiId": data.sbiId};  
+    let request = new RequestModel(
+      "",
+      null,
+      SBIData
+    ); 
+    this.dataStorageService.unmapSBIVersion(request).subscribe(response => { 
+      if (!response.errors || (response.errors.length == 0)) {
+        this.showMessage(response.response)
+          .afterClosed()
+          .subscribe(() => {
+            this.getSbidetails();
+          });
+      }else{
+        this.showErrorPopup(response.errors[0].message);
+      }
+    });
+    
+  }
+
+  getAPIKeydetails(){ 
+    if(this.router.url.includes("editable")){
+      this.showSecondaryForm = true;
+      this.showSecondaryAPIPanel = true;
+    }
+    const filterModel = new FilterModel(
+      "partnerId",
+      "equals",
+      this.primaryData.partnerId
+    );
+    this.fetchRequest.filters = [filterModel];
+    this.fetchRequest.languageCode = this.headerService.getlanguageCode();
+    this.fetchRequest.sort = [];
+    this.fetchRequest.pagination = { pageStart: 0, pageFetch: 10 };
+    this.fetchRequest.filters.push({columnName: "isActive", type: "equals", value: "true"});
+    const request = new RequestModel(
+      appConstants.registrationCenterCreateId,
+      null,
+      this.fetchRequest
+    );
+    this.dataStorageService
+      .getAPIKeydetails(request)
+      .subscribe(
+        response => {
+          if (response.response) {
+            if (response.response.data) {              
+              this.listBelowSectionData = response.response.data ? [...response.response.data] : [];
+            }
+          }
+        },
+        error => {
+          //this.displayMessage(this.popupMessages['errorMessages'][1]);
+        }
+      );
+  }
+
+  generateAPIKey(){
+    let APIKeyData = {"policyName": this.primaryData.policyName,"label": this.apiKeyLabel};  
+    let request = new RequestModel(
+      "",
+      null,
+      APIKeyData
+    ); 
+    this.dataStorageService.generateAPIKey(this.primaryData.partnerId, request).subscribe(response => { 
+      if (!response.errors || (response.errors.length == 0)) {
+        this.showMessage("APIKEY : "+response.response.apiKey)
+          .afterClosed()
+          .subscribe(() => {
+            this.apiKeyLabel = "";
+            this.getAPIKeydetails();
+          });
+      }else{
+        this.showErrorPopup(response.errors[0].message);
+      }
+    });
+  }
+
+  deleteAPIKey(data){
+    let APIKeyData = {"label": data.label,"status": "De-Active"};  
+    let request = new RequestModel(
+      "",
+      null,
+      APIKeyData
+    ); 
+    this.dataStorageService.deleteAPIKey(this.primaryData, request).subscribe(response => { 
+      if (!response.errors || (response.errors.length == 0)) {
+        this.showMessage(response.response)
+          .afterClosed()
+          .subscribe(() => {
+            this.getAPIKeydetails();
+          });
+      }else{
+        this.showErrorPopup(response.errors[0].message);
+      }
+    });    
+  }
+  
 
   getPartnerDropdownValues(partnerTypeCode, key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
@@ -248,11 +449,13 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
-  captureValue(event: any, formControlName: string, type: string) {    
+  captureValue(event: any, formControlName: string, type: string) { 
     if (type === 'primary') {
       this.primaryData[formControlName] = event.target.value;
     } else if (type === 'secondary') {
       this.secondaryData[formControlName] = event.target.value;
+    }else{
+      this[formControlName] = event.target.value;
     }
   }
 
@@ -266,20 +469,21 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }
   }
 
-  captureDropDownValue(event: any, formControlName: string, type: string) {
+  captureDropDownValue(event: any, formControlName: string, type: string) {      
     if (event.source.selected) {
       this.primaryData[formControlName] = event.source.value;
       if(formControlName === "deviceTypeCode"){
         this.getDeviceSubType("deviceSubTypeCode", event.source.value);
       }else if(formControlName === "partnerId"){
         this.getPolicy("policyId", event.source.value);
+      }else{
+        this[formControlName] = event.source.value;
       }
     }    
-  }
+  }  
 
   submit() {
     let self = this;
-    console.log("self.popupMessages>>>"+self.popupMessages);
     let mandatoryFieldName = [];
     let mandatoryFieldLabel = [];
     for (let i = 0; i < self.fields.length; i++) {
@@ -324,8 +528,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         "",
         null,
         this.primaryData
-      );      
-      this.dataStorageService.updateData(url, request).subscribe(response => {        
+      ); 
+      this.dataStorageService.updateData(url, request).subscribe(response => { 
+        if(url === "policymanager/policies"){
+          this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
+        }       
         if (!response.errors || (response.errors.length == 0)) {
           let url = this.pageName+" Updated Successfully";
           this.showMessage(url)
@@ -346,7 +553,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
           null,
           this.primaryData
         );
-        url = "partnermanager/partners/"+this.primaryData["partnerId"]+"/apikey/request";
+        url = "partnermanager/partners/"+this.primaryData["partnerId"]+"/policy/map";
         this.dataStorageService.requestAPIKey(url, request).subscribe(response => {
           if (!response.errors || (response.errors.length == 0)) {
             let url = response.response.message;
@@ -370,6 +577,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.primaryData
         );
         this.dataStorageService.createData(url, request).subscribe(response => {
+          if(url === "policymanager/policies"){
+            this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
+          }
           if (!response.errors || (response.errors.length == 0)) {
             let url = this.pageName+" Created Successfully";
             this.showMessage(url)
@@ -407,7 +617,6 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   showMessage(message: string) {
-    console.log();
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {

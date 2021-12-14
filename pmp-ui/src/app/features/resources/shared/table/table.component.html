@@ -40,17 +40,17 @@
       </td>
       <td class="mat-cell mat-header-cell" *ngIf="buttonList.length>0"> 
         <span *ngIf="this.currentRoute !== 'partner'">
-          <span *ngIf="data['statusCode'] !== 'approved'">
-            <span *ngIf="data['statusCode'] !== 'rejected'">
-              <span *ngIf="data['approvalStatus'] != 'approved'">
-                <span *ngIf="data['approvalStatus'] !== 'rejected'">
+          <!-- <span *ngIf="data['statusCode'] !== 'approved'">
+            <span *ngIf="data['statusCode'] !== 'rejected'"> -->
+              <!-- <span *ngIf="data['approvalStatus'] != 'approved'">
+                <span *ngIf="data['approvalStatus'] !== 'rejected'"> -->
                   <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
                     <mat-icon>more_vert</mat-icon>
                   </button>
-                </span>
-              </span>
-            </span>
-          </span>
+                <!-- </span>
+              </span> -->
+            <!-- </span>
+          </span> -->
         </span>
         <span *ngIf="this.currentRoute === 'partner'">
           <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">

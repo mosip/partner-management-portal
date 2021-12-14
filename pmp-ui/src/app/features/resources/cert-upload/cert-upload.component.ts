@@ -32,6 +32,7 @@ export class CertUploadComponent {
   fileName = "";
   fileData : any;
   showCancelBtn = true;
+  showCALabel = false;
   fetchRequest = {} as CenterRequest;
 
   constructor(
@@ -70,6 +71,7 @@ export class CertUploadComponent {
   initializeForm() {
     
     if(this.masterdataType === "uploadcacert"){
+      this.showCALabel = true;
       this.showCancelBtn = false;
     }
     
