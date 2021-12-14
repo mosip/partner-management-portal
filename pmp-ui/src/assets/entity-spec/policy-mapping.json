@@ -48,27 +48,24 @@
 			"redirectURL": "",
 			"showIn": "Button",
 			"validations": ""
+		},
+		{
+			"buttonName": {
+				"eng": "Edit",
+				"ara": "Edit_ara",
+				"fra": "Edit_fra",
+				"hin": "Edit_hin",
+				"kan": "Edit_kan",
+				"tam": "Edit_tam"
+			},
+			"actionURL": "",
+			"redirectURL": "/pmp/resources/policymapping/single-view/$id",
+			"showIn": "Ellipsis",
+			"validations": "",
+			"callBackFunction": "partnerEdit"
 		}
 	],
-	"columnsToDisplay": [{
-			"name": "apikeyRequestId",
-			"label": {
-				"eng": "API Key",
-				"ara": "API Key_ara",
-				"fra": "API Key_fra",
-				"hin": "API Key_hin",
-				"kan": "API Key_kan",
-				"tam": "API Key_tam"
-			},
-			"sortOrder": "",
-			"showAsLink": "",
-			"linkType": "",
-			"LinkURL": "",
-			"inputType": "",
-			"ismandatory": "",
-			"showInListView": "true",
-			"showInSingleView": "false"
-		},
+	"columnsToDisplay": [
 		{
 			"name": "partnerId",
 			"label": {
@@ -121,7 +118,7 @@
 			"showAsLink": "",
 			"linkType": "",
 			"LinkURL": "",
-			"inputType": "dropdown",
+			"inputType": "",
 			"ismandatory": "false",
 			"showInListView": "true",
 			"showInSingleView": "false"
@@ -140,7 +137,7 @@
 			"showAsLink": "",
 			"linkType": "",
 			"LinkURL": "",
-			"inputType": "dropdown",
+			"inputType": "",
 			"ismandatory": "false",
 			"showInListView": "true",
 			"showInSingleView": "false"
@@ -178,7 +175,7 @@
 			"showAsLink": "",
 			"linkType": "",
 			"LinkURL": "",
-			"inputType": "text",
+			"inputType": "",
 			"ismandatory": "false",
 			"showInListView": "true",
 			"showInSingleView": "false"
@@ -189,18 +186,7 @@
 		"pageSize": "10",
 		"pageSizeList": [10, 20, 30, 40, 50]
 	},
-	"filterColumns": [{
-			"filtername": "apikeyRequestId",
-			"filterlabel": "API Key",
-			"filterType": "equals",
-			"fieldType": "input",
-			"autocomplete": "false",
-			"dropdown": "false",
-			"datePicker": "false",
-			"apiName": "",
-			"fieldName": "apikeyRequestId",
-			"methodCallName": ""
-		},
+	"filterColumns": [
 		{
 			"filtername": "partnerName",
 			"filterlabel": "Partner Name",
@@ -235,18 +221,6 @@
 			"datePicker": "false",
 			"apiName": "",
 			"fieldName": "requestDetail",
-			"methodCallName": ""
-		},
-		{
-			"filtername": "statusCode",
-			"filterlabel": "Status",
-			"filterType": "equals",
-			"fieldType": "input",
-			"autocomplete": "false",
-			"dropdown": "false",
-			"datePicker": "false",
-			"apiName": "",
-			"fieldName": "statusCode",
 			"methodCallName": ""
 		}
 	]

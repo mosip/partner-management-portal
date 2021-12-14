@@ -210,7 +210,7 @@ export class TableComponent implements OnInit, OnChanges {
   // text-decoration: none;
   // display: inline-block;
     }
-    if (columnValue === true && (columnName === 'isActive' || columnName === 'active')) {
+    /*if (columnValue === true && (columnName === 'isActive' || columnName === 'active')) {
       myTableStyles.backgroundColor = '#C2F2DA';
       myTableStyles.padding = '5px';
       myTableStyles.border = '1px solid #4AD991';
@@ -235,6 +235,6 @@ export class TableComponent implements OnInit, OnChanges {
       myTableStyles.border = '1px solid #9C9F9F';
       myTableStyles.borderRadius = '7px';
       return myTableStyles;
-    }
+    }*/
   }
 }

@@ -1,7 +1,7 @@
 <div class="flex-body">
     <mat-card>
-        <mat-card-content class="forms-container" *ngFor="let field of fields; let i = index">
-          <p  class="mat-form1">
+        <mat-card-content class="forms-container">
+          <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
                 #keyboardRef
@@ -77,6 +77,73 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </p>
+        </mat-card-content>
+        <mat-divider *ngIf="showSecondaryForm && listBelowSectionData"></mat-divider>
+        <mat-card-content class="forms-container" *ngIf="showSecondaryForm && listBelowSectionData" style="padding-top: 20px;">
+            <table width="50%" *ngIf="showSecondaryAPIPanel">
+              <tr style="vertical-align: top;">
+                <td width="30%">
+                  <mat-form-field>
+                    <input
+                      #keyboardRef
+                      matInput
+                      placeholder="Label"
+                      [value]="apiKeyLabel"
+                      (keyup)="captureValue($event, 'apiKeyLabel', '')"
+                      required
+                    />
+                  </mat-form-field>
+                </td>
+                <td width="20%">
+                  <button id="createButton" mat-raised-button (click)="generateAPIKey()">
+                    Genrate
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <table width="50%" *ngIf="showSecondaryAPIPanel">
+              <tr *ngFor="let data of listBelowSectionData;">
+                <td width="35%" style="font-family: Roboto, sans-serif;
+    font-weight: 400;font-size: 13px;width: 450px;padding-left: 50px;padding-top: 10px;">{{data.label}}</td>
+                <td width="30%" style="padding-left: -50px;cursor: pointer;" (click)="deleteAPIKey(data)">x</td>
+              </tr>
+            </table>
+
+            <table width="50%" *ngIf="showSecondarySBIPanel">
+              <tr style="vertical-align: top;">
+                <td width="30%">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="SBIVersion"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let data of dropDownValues['sbiId']"
+                        (onSelectionChange)="
+                          captureDropDownValue($event, 'sbiId', '')
+                        "
+                        [value]="data.fieldCode"
+                      >
+                        {{ data.fieldValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td width="20%">
+                  <button id="createButton" mat-raised-button (click)="mapSBIVersion()">
+                    Map SBI
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <table width="50%" *ngIf="showSecondarySBIPanel">
+              <tr *ngFor="let data of listBelowSectionData;">
+                <td width="35%" style="font-family: Roboto, sans-serif;
+    font-weight: 400;font-size: 13px;width: 450px;padding-left: 50px;padding-top: 10px;">{{data.sbiId}}</td>
+                <td width="30%" style="padding-left: -50px;cursor: pointer;" (click)="unmapSBIVersion(data)">x</td>
+              </tr>
+            </table>
+
         </mat-card-content>
         <mat-card-actions class="action-buttons">
         <button id="createButton" mat-raised-button (click)="submit()">
