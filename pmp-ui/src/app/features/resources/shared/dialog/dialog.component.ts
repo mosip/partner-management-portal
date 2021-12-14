@@ -382,8 +382,9 @@ export class DialogComponent implements OnInit {
         this.activatedRoute.snapshot.queryParams,
         this.config.getConfig().primaryLangCode
       );
+      filters.pagination.pageStart = 0;
       filters.filters = this.existingFilters;
-      const url = Utils.convertFilterToUrl(filters);
+      let url = Utils.convertFilterToUrl(filters);
       this.dialog.closeAll();
       this.router.navigateByUrl(this.router.url.split('?')[0] + '?' + url);
     }
