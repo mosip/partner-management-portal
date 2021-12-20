@@ -19,7 +19,7 @@
           <div [formGroup]="createForm" class="primary-form" *ngIf="createForm"> 
             <mat-form-field>
               <mat-label>{{'uploadcertificate.partnerDomain' | translate}}</mat-label>
-              <mat-select formControlName="partnerDomain">
+              <mat-select formControlName="partnerDomain" required>
                 <mat-option
                   *ngFor="let data of partnerDomain"
                   [value]="data"
@@ -31,7 +31,7 @@
             <div class="custom-file-input">
               <input type="button" value="{{'uploadcertificate.chooseFile' | translate}}" class="browseInput">
               <input type="file" #fileInput (change)="onFileSelect($event)" placeholder="Upload file..." />
-              <input type="text" [value]="fileName" placeholder="{{'uploadcertificate.uploadYourFile' | translate}}">                
+              <input type="text" [value]="fileName" placeholder="{{'uploadcertificate.uploadYourFile' | translate}} *">                
             </div>
           </div>
         </mat-card-content>

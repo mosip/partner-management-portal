@@ -166,12 +166,13 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }
   }
 
-  getSbidetailFilterValues(key){
+  getSbidetailFilterValues(key){    
     if(this.router.url.includes("editable")){
       this.showSecondaryForm = true;
       this.showSecondarySBIPanel = true;
     }
     const filterObject = new FilterValuesModel('swVersion', 'unique', '');
+    //[{"value": "180522","fromValue": "","toValue": "","columnName": "providerId","type": "equals"}]
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
@@ -417,7 +418,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   getPolicyGroup(key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
-    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService

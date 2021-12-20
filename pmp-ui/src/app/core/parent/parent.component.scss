@@ -1,30 +1,43 @@
-@import "../../theme";
 @import "../../breakpoints";
 
 #parent-component {
-  
+  /* width */
   ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+    width: .8em;
   }
-  
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
   .mat-sidenav {
-    width: 211px;
+    width: 250px;
+    z-index: 10;
     @media (max-width: 600px) {
-      width: 180px;
-      font-size: 13px;
+      width: 140px;
+      font-size: 12px;
     }
   }
   .mat-sidenav-container {
-    background-color: #f0f0f0 !important;
-    height: calc(100vh - 80px);
+    background: #f0f0f0 0% 0% no-repeat padding-box;
+    opacity: 1;
+    height: calc(100vh - 53px);
     @media (max-width: 840px) {
       height: 100vh !important;
     }
 
-    .mat-sidenav-content {
-      margin-left: 220px !important;
-      margin-right: 20px !important;
+    .mat-sidenav-content {      
       display: flex;
       flex-direction: column;
       @media (max-width: 840px) {
@@ -33,8 +46,19 @@
       }
     }
   }
+  
+  .mat-sidenav-content-ltr {
+    margin-left: 255px !important;
+    margin-right: 30px !important;
+  }
+
+  .mat-sidenav-content-rtl {
+    margin-right: 255px !important;
+    margin-left: 30px !important;
+  }
+
   .mat-toolbar-single-row {
-    height: 80px;
+    height: 53px;
     @media (max-width: 600px) {
       height: 56px !important;
       padding: 0px !important;
@@ -55,4 +79,32 @@
       padding-top: 10vh;
     }
   }
+}
+
+app-view, app-rid-status, app-lost-rid-status, app-list-view, app-single-view, app-create, app-document-category-mapping, cert-upload{
+  margin-left: 30px !important;
+  margin-right: 30px !important;
+}
+
+/*mat-keyboard-container {
+    min-width: 30% !important;
+    margin-left: 29% !important;
+    max-width:29% !important;
+}
+
+mat-keyboard-key > button.mat-raised-button{
+  padding: 0 3px !important;
+  line-height: 12px !important;
+  font-size: 9px !important;
+}
+
+.mat-keyboard-wrapper{
+  padding: 5px 4px !important;
+}
+*/
+button.mat-button{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 150px !important;
 }
