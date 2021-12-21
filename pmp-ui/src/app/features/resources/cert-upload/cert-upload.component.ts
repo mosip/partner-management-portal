@@ -88,19 +88,29 @@ export class CertUploadComponent {
   onFileSelect(event) {
     let self = this;
     if (event.target.files.length > 0) {
+      self.fileName = "";
       const file = event.target.files[0];
-      self.createForm.get('certificateData').setValue(file);
-      self.fileName = file.name;
-      const fileReader: FileReader = new FileReader();
-      fileReader.onload = (event: Event) => {
-        self.fileData = fileReader.result; // This is valid
-      };
-      fileReader.readAsText(file);
+      if(this.getFileExtension(file.name) === "pem" || this.getFileExtension(file.name) === "cer"){      
+        self.createForm.get('certificateData').setValue(file);
+        self.fileName = file.name;
+        const fileReader: FileReader = new FileReader();
+        fileReader.onload = (event: Event) => {
+          self.fileData = fileReader.result; // This is valid
+        };
+        fileReader.readAsText(file); 
+      }else{
+        self.showErrorPopup("pem or cer format file only supported.");
+      }
     }
   }
 
+  getFileExtension(filename){
+    const extension = filename.split('.').pop();
+    return extension;
+  }
+
   submit(){
-        this.saveData();
+    this.saveData();
   }
 
   saveData(){

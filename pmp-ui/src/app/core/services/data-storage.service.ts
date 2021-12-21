@@ -5,10 +5,11 @@ import * as appConstants from '../../app.constants';
 import { RequestModel } from '../models/request.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { HeaderService } from '../services/header.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class DataStorageService {
-  constructor(private headerService: HeaderService, private http: HttpClient, private appService: AppConfigService) {}
+  constructor(private router: Router, private headerService: HeaderService, private http: HttpClient, private appService: AppConfigService) {}
 
   private BASE_URL = this.appService.getConfig().baseUrl;
 
@@ -150,30 +151,48 @@ export class DataStorageService {
   }
 
   ApproveorRejectPolicyFunction(mapping: any, data: RequestModel): Observable<any> {
-    return this.http.patch(
-      this.BASE_URL+ 'v1/partnermanager/partners/apikey/'+data.request.apikeyRequestId,
+    return this.http.put(
+      this.BASE_URL+ 'v1/partnermanager/partners/policy/'+data.request.apikeyRequestId,
       data
     );
   }
 
   updatePolicyStatus(mapping: any, data: RequestModel): Observable<any> {
-    let url = ""
-    if(mapping.specFileName === "policy-group"){
-      return this.http.put(
-        this.BASE_URL+ 'v1/policymanager/policies/group/'+data.request.id,
-        data
-      );
+    let url = "";
+    if(this.router.url.split('/').length > 7){
+      url = this.router.url.split('/')[4];
     }else{
+      url = this.router.url.split('/')[3];
+    }
+    if(mapping){
+      if(mapping.specFileName === "policy-group"){
+        return this.http.put(
+          this.BASE_URL+ 'v1/policymanager/policies/group/'+data.request.id,
+          data
+        );
+      }else{
+        if(data.request.status){
+          data.request.status = "Active"
+        }else{
+          data.request.status = "De-active"
+        }
+        return this.http.patch(
+          this.BASE_URL+ 'v1/policymanager/policies/'+data.request.id+'/group/'+data.request.policyGroupId,
+          data
+        );
+      }
+    }else if(url === "partner"){
       if(data.request.status){
         data.request.status = "Active"
       }else{
         data.request.status = "De-active"
       }
       return this.http.patch(
-        this.BASE_URL+ 'v1/policymanager/policies/'+data.request.id+'/group/'+data.request.policyGroupId,
+        this.BASE_URL+ 'v1/partnermanager/partners/'+data.request.id,
         data
       );
-    }    
+    }
+        
   }
 
   publishPolicy(mapping: any, data: RequestModel): Observable<any> {    

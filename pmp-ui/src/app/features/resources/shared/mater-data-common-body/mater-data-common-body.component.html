@@ -1,6 +1,6 @@
 <div class="flex-body">
     <mat-card>
-        <mat-card-content class="forms-container">
+        <mat-card-content class="forms-container" *ngIf="!hideContainer">
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
@@ -78,7 +78,7 @@
             </mat-form-field>
           </p>
         </mat-card-content>
-        <mat-divider *ngIf="showSecondaryForm"></mat-divider>
+        <mat-divider *ngIf="showSecondaryForm && !hideContainer"></mat-divider>
         <mat-card-content class="forms-container" *ngIf="showSecondaryForm" style="padding-top: 20px;">
             <table width="50%" *ngIf="showSecondaryAPIPanel">
               <tr style="vertical-align: top;">
