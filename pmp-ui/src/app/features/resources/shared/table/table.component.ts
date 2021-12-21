@@ -159,7 +159,6 @@ export class TableComponent implements OnInit, OnChanges {
     });
     this.ellipsisList = [...this.buttonList];
     if (data.isActive === true || data.active === true) {
-      this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
         if (values.buttonName.eng === 'Activate') {
           const index = this.ellipsisList.indexOf(values);
@@ -167,23 +166,42 @@ export class TableComponent implements OnInit, OnChanges {
         }
       });
     } else if (data.isActive === false || data.active === false) {
-      this.ellipsisList = [...this.buttonList];
       this.ellipsisList.filter(values => {
         if (values.buttonName.eng === 'Deactivate') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
       });
-    } else if(data.statusCode === "approved" || data.statusCode === 'rejected'){
-      this.ellipsisList = [...this.buttonList];
+    }else if(data.statusCode === "approved" || data.statusCode === 'rejected' || data.statusCode === 'InProgress'){
       this.ellipsisList.filter(values => {
-        if (values.buttonName.eng === 'Manage Policy') {
+        if(!self.partnerType.includes("PARTNER ADMIN")){
+          if (values.buttonName.eng === 'Manage Policy') {
+            const index = this.ellipsisList.indexOf(values);
+            this.ellipsisList.splice(index, 1);
+          }
+        }else if(self.partnerType.includes("PARTNER ADMIN") && data.statusCode === "approved"){
+          if (values.buttonName.eng === 'Manage Policy') {
+            const index = this.ellipsisList.indexOf(values);
+            this.ellipsisList.splice(index, 1);
+          }
+        }
+      });
+    }
+    if (data.approvalStatus === 'approved') {
+      this.ellipsisList.filter(values => {
+        if (values.buttonName.eng === 'Approve') {
           const index = this.ellipsisList.indexOf(values);
           this.ellipsisList.splice(index, 1);
         }
       });
-
-    }
+    }else if (data.approvalStatus === 'rejected') {
+      this.ellipsisList.filter(values => {
+        if (values.buttonName.eng === 'Reject') {
+          const index = this.ellipsisList.indexOf(values);
+          this.ellipsisList.splice(index, 1);
+        }
+      });
+    } 
   }
 
   tableStyle(index, columnValue, columnName) {

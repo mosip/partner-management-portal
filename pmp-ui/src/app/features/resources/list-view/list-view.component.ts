@@ -202,7 +202,7 @@ export class ListViewComponent implements OnDestroy {
             this.paginatorOptions.totalEntries = response.totalRecord;
             this.paginatorOptions.pageIndex = filters.pagination.pageStart;
             this.paginatorOptions.pageSize = filters.pagination.pageFetch;
-            if (response.data !== null) {
+            if (response.data) {
               this.masterData = response.data ? [...response.data] : [];
             } else {
               this.noData = true;
