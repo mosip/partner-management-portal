@@ -68,7 +68,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   showSecondaryAPIPanel: boolean = false;
   showSecondarySBIPanel: boolean = false;
   isCreateForm:boolean;
-
+  hideContainer:boolean = false;
   primaryKeyboard: string;
   secondaryKeyboard: string;
   keyboardType: string;
@@ -150,7 +150,6 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   loadSecondaryForm(){
-    console.log("loadSecondaryForm>>>"+JSON.stringify(this.primaryData));
     let url = "";
     if(this.router.url.split('/').length > 7){
       url = this.router.url.split('/')[4];
@@ -166,13 +165,17 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }
   }
 
-  getSbidetailFilterValues(key){
+  getSbidetailFilterValues(key){    
     if(this.router.url.includes("editable")){
       this.showSecondaryForm = true;
       this.showSecondarySBIPanel = true;
+      if(this.primaryData.approvalStatus === "approved")
+        this.hideContainer = true;
     }
     const filterObject = new FilterValuesModel('swVersion', 'unique', '');
-    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    const optionFilter = [{"value": this.primaryData.deviceProviderId,"values": [],"fromValue": "","toValue": "","columnName": "providerId","type": "equals"}]
+    //[{"value": "180522","fromValue": "","toValue": "","columnName": "providerId","type": "equals"}]
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, optionFilter);
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/securebiometricinterface', request)
@@ -260,6 +263,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
     if(this.router.url.includes("editable")){
       this.showSecondaryForm = true;
       this.showSecondaryAPIPanel = true;
+      if(this.primaryData.statusCode === "approved")
+        this.hideContainer = true;
     }
     const filterModel = new FilterModel(
       "partnerId",
@@ -417,7 +422,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   getPolicyGroup(key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
-    let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
+    let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
+    let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
     filterRequest["purpose"] = "REGISTRATION";
     let request = new RequestModel('', null, filterRequest);
     this.dataStorageService

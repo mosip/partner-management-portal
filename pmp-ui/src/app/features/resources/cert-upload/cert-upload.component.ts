@@ -26,7 +26,7 @@ export class CertUploadComponent {
   showSpinner = true;
   subscribed: any;
   masterdataType: string;
-  popupMessages = [];
+  popupMessages:any;
   createForm: FormGroup;
   partnerDomain = ["FTM","DEVICE", "AUTH"];
   fileName = "";
@@ -34,6 +34,7 @@ export class CertUploadComponent {
   showCancelBtn = true;
   showCALabel = false;
   fetchRequest = {} as CenterRequest;
+  uploadcertificate:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,7 +60,9 @@ export class CertUploadComponent {
     this.primaryLangCode = this.headerService.getlanguageCode();
     this.translate
       .getTranslation(this.primaryLangCode)
-      .subscribe(response => (this.popupMessages = response.singleView));
+      .subscribe(response => (
+        this.uploadcertificate  = response.uploadcertificate,
+        this.popupMessages = response.genericerror));
     this.activatedRoute.params.subscribe(response => {
       this.id = response.id;
       this.masterdataType = response.type;
@@ -85,19 +88,29 @@ export class CertUploadComponent {
   onFileSelect(event) {
     let self = this;
     if (event.target.files.length > 0) {
+      self.fileName = "";
       const file = event.target.files[0];
-      self.createForm.get('certificateData').setValue(file);
-      self.fileName = file.name;
-      const fileReader: FileReader = new FileReader();
-      fileReader.onload = (event: Event) => {
-        self.fileData = fileReader.result; // This is valid
-      };
-      fileReader.readAsText(file);
+      if(this.getFileExtension(file.name) === "pem" || this.getFileExtension(file.name) === "cer"){      
+        self.createForm.get('certificateData').setValue(file);
+        self.fileName = file.name;
+        const fileReader: FileReader = new FileReader();
+        fileReader.onload = (event: Event) => {
+          self.fileData = fileReader.result; // This is valid
+        };
+        fileReader.readAsText(file); 
+      }else{
+        self.showErrorPopup("pem or cer format file only supported.");
+      }
     }
   }
 
+  getFileExtension(filename){
+    const extension = filename.split('.').pop();
+    return extension;
+  }
+
   submit(){
-        this.saveData();
+    this.saveData();
   }
 
   saveData(){
@@ -136,24 +149,42 @@ export class CertUploadComponent {
         });      
       });      
     }else{
-      formData['partnerId'] = self.id;
-      formData['partnerDomain'] = self.createForm.get('partnerDomain').value;
-      formData['certificateData'] = self.fileData.replaceAll("\\n", "\n");
-      const primaryRequest = new RequestModel(
-        "",
-        null,
-        formData
-      );
+      if(!self.createForm.get('partnerDomain').value){
+        self.showErrorPopup(self.uploadcertificate.partnerDomain+self.popupMessages.fieldNameValidation);
+      }else if(!self.fileName){
+        self.showErrorPopup(self.uploadcertificate.chooseFile+self.popupMessages.fieldNameValidation);
+      }else{
+        console.log("this.mapping>>>"+JSON.stringify(this.mapping));
+        formData['partnerId'] = self.id;
+        formData['partnerDomain'] = self.createForm.get('partnerDomain').value;
+        formData['certificateData'] = self.fileData.replaceAll("\\n", "\n");
+        const primaryRequest = new RequestModel(
+          "",
+          null,
+          formData
+        );
+        if(this.masterdataType === "uploadcacert"){
+          url = "ca/";
+        }
+        self.dataStorageService.uploadCertificate(primaryRequest, url).subscribe(response => {
+          self.showMessage(response);
+        });
+      }     
+    }    
+  }
 
-      if(this.masterdataType === "uploadcacert"){
-        url = "ca/";
-      }
-
-      self.dataStorageService.uploadCertificate(primaryRequest, url).subscribe(response => {
-        self.showMessage(response);
+  showErrorPopup(message: string) {
+    this.dialog
+      .open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: 'Error',
+          message: message,
+          btnTxt: 'Ok'
+        },
+        disableClose: true
       });
-    }
-    
   }
 
   showMessage(response){

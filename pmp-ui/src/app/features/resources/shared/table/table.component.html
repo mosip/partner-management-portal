@@ -1,4 +1,4 @@
-<div class="container mat-elevation-z8">
+<div class="container">
   <table class="mat-table">
     <tr class="mat-row sticky-header">
       <th
@@ -41,12 +41,16 @@
       <td class="mat-cell mat-header-cell" *ngIf="buttonList.length>0"> 
         <span *ngIf="this.currentRoute !== 'partner'">
           <!-- <span *ngIf="data['statusCode'] !== 'approved'">
-            <span *ngIf="data['statusCode'] !== 'rejected'"> -->
+             -->
               <!-- <span *ngIf="data['approvalStatus'] != 'approved'">
                 <span *ngIf="data['approvalStatus'] !== 'rejected'"> -->
-                  <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
+                  <!-- <span *ngIf="data['isActive'] != true"> -->
+                    <span *ngIf="data['statusCode'] !== 'rejected'">
+                      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                    </span>
+                  <!--    -->
                 <!-- </span>
               </span> -->
             <!-- </span>

@@ -22,6 +22,7 @@ import { AllowedKycAttributes } from '../models/allowedkycattributes.model';
 })
 export class CommonService {
   actionMessages: any;
+  serverMessages: any;
   useCaseDescription : string = 'useCaseDescription';
   partnerSubmitReq : PartnerSubmitReq;
   createAuthPolicy : CreateAuthPolicy;
@@ -45,6 +46,7 @@ export class CommonService {
       .getTranslation(appService.getConfig().primaryLangCode)
       .subscribe(result => {
         this.actionMessages = result.actionMessages;
+        this.serverMessages = result.serverError;
       });
   }
 
@@ -92,13 +94,13 @@ export class CommonService {
       if(this.actionMessages[listItem]){
         obj = {
           title: this.actionMessages[listItem]['error-title'],
-          message: this.actionMessages[listItem]['error-message'],
+          message: this.serverMessages[data[0].errorCode],
           btnTxt: this.actionMessages[listItem]['btnTxt']
         };
       }else{
         obj = {
           title: this.actionMessages.activate['success-title'],
-          message: data,
+          message: this.serverMessages[data[0].errorCode],
           btnTxt: this.actionMessages.activate['btnTxt']
         };
       }
@@ -172,7 +174,7 @@ export class CommonService {
           this.createMessage('success', callingFunction, request.request.name);
           this.router.navigateByUrl(this.router.url);
         } else {
-          this.createMessage('error', callingFunction);
+          this.createMessage('error', callingFunction, response.errors);
         }
       },
       error => this.createMessage('error', callingFunction)
@@ -200,13 +202,13 @@ export class CommonService {
                   this.createMessage('success', callingFunction, request.request.name);
                   this.router.navigateByUrl(this.router.url);
                 } else {
-                  this.createMessage('error', callingFunction);
+                  this.createMessage('error', callingFunction, response.errors);
                 }
               },
-              error => this.createMessage('error', callingFunction)
+              error => this.createMessage('error', callingFunction, response.errors)
             );
           }else{
-            this.createMessage('error', callingFunction);
+            this.createMessage('error', callingFunction, response.errors);
           }          
         }
       },
@@ -253,54 +255,6 @@ export class CommonService {
     );
   }
 
-  private approveMisp(callingFunction: string, data: MispModel) {
-    const request = new RequestModel(
-      appConstants.registrationCenterCreateId,
-      null,
-      data
-    );
-    this.dataService.approveMisp(request).subscribe(
-      response => {
-        if (!(response['errors'].length != 0)) {
-          this.createMessage('success', 'decommission', data.name);
-          if (this.router.url.indexOf('single-view') >= 0) {
-            this.router.navigateByUrl('pmp/resources/misp/view');
-          } else {
-            this.router.navigateByUrl(this.router.url);
-          }
-        } else {
-          this.createMessage('error', 'decommission');
-        }
-      },
-      error => {
-        this.createMessage('error', 'decommission');
-      }
-    ); 
-  }
-
-  private mapDataToObject(data: any): MispModel {
-    const primaryObject = new MispModel(
-      data.name,
-      data.address,
-      data.contactNumber,
-      data.emailId,
-      data.isActive,
-      data.id,
-      data.mispStatus    
-    );
-    return primaryObject;
-  }
-
-  private mapDataToPolicyObject(data: any): PolicyModel {
-    const primaryObject = new PolicyModel(
-      data.name,
-      data.desc,
-      data.isActive,
-      data.id    
-    );
-    return primaryObject;
-  }
-
   edit(data: any, url: string, idKey: string) {
     this.auditService.audit(9, 'ADM-084', {
       buttonName: 'edit',
@@ -334,17 +288,6 @@ export class CommonService {
     this.router.navigateByUrl(url + '?editable=true');
   }
 
-  pmanagerEdit(data: any, url: string, idKey: string) {
-    this.auditService.audit(9, 'ADM-084', {
-      buttonName: 'edit',
-      masterdataName: this.router.url.split('/')[
-        this.router.url.split('/').length - 2
-      ]
-    });
-    url = url.replace('$id', data[idKey]);
-    this.router.navigateByUrl(url + '?editable=true');
-  }
-
   deviceDetail(data: any, url: string, idKey: string) {
     this.auditService.audit(9, 'ADM-084', {
       buttonName: 'edit',
@@ -354,29 +297,6 @@ export class CommonService {
     });
     url = url.replace('$id', data[idKey]);
     this.router.navigateByUrl(url);
-  }
-
-  drilldownEdit(data: any, url: string, idKey: string) {
-    this.auditService.audit(9, 'ADM-084', {
-      buttonName: 'edit',
-      masterdataName: this.router.url.split('/')[
-        this.router.url.split('/').length - 2
-      ]
-    });
-    url = url.replace('$id', this.router.url.split('/')[6]).replace('$childid', data[idKey]);
-    this.router.navigateByUrl(url + '?editable=true');
-  }
-
-  drilldownCreate(data: any, url: string, idKey: string) {
-    console.log("url>>>"+url);
-    /*this.auditService.audit(9, 'ADM-084', {
-      buttonName: 'edit',
-      masterdataName: this.router.url.split('/')[
-        this.router.url.split('/').length - 2
-      ]
-    });
-    url = url.replace('$id', data[idKey]);
-    this.router.navigateByUrl(url + '?editable=true');*/
   }
 
   submitPartnerAPIKeyRequest(data: any){
@@ -451,54 +371,10 @@ export class CommonService {
     });
   }
 
-  deactivatePartner(data: any){
+  activateAPIKeyStatus(data: any){
     this.partnerStatus = new PartnerStatus(
       //data.partnerStatus,
-      this.deactive
-    );
-    const request = new RequestModel(
-      appConstants.registrationUpdatePartnerId,
-      null,
-      this.partnerStatus
-    );
-    console.log("Request is:"+ request);
-    this.dataService.activatePartnerStatus(request , data.partnerID).subscribe(dataa =>{
-
-      if (!dataa['errors']) {
-        this.createMessage('success', 'activate', data.organizationName);
-      } else {
-        this.createMessage('error', 'activate');
-      }
-      
-    });
-  }
-
-  approvePartnerRequestStatus(data: any){
-    this.partnerStatus = new PartnerStatus(
-      //data.partnerStatus,
-      this.approved
-    );
-    const request = new RequestModel(
-      appConstants.registrationUpdatePartnerId,
-      null,
-      this.partnerStatus
-    );
-    console.log("Request is:"+ request);
-    this.dataService.approvePartnerRequest(request , data.apikeyReqID).subscribe(dataa =>{
-
-      if (!dataa['errors']) {
-        this.createMessage('success', 'activate', data.apikeyReqID);
-      } else {
-        this.createMessage('error', 'activate');
-      }
-      
-    });
-  }
-
-  rejectPartnerRequestStatus(data: any){
-    this.partnerStatus = new PartnerStatus(
-      //data.partnerStatus,
-      this.rejected
+      this.active
     );
     const request = new RequestModel(
       appConstants.registrationCenterCreateId,
@@ -506,10 +382,10 @@ export class CommonService {
       this.partnerStatus
     );
     console.log("Request is:"+ request);
-    this.dataService.approvePartnerRequest(request , data.apikeyReqID).subscribe(dataa =>{
+    this.dataService.deactivateAPIKey(request , data.partnerID, data.partnerAPIKey).subscribe(dataa =>{
 
       if (!dataa['errors']) {
-        this.createMessage('success', 'activate', data.apikeyReqID);
+        this.createMessage('success', 'activate', data.partnerAPIKey);
       } else {
         this.createMessage('error', 'activate');
       }
@@ -536,118 +412,6 @@ export class CommonService {
         this.createMessage('error', 'activate');
       }
       
-    });
-  }
-
-  activateAPIKeyStatus(data: any){
-    this.partnerStatus = new PartnerStatus(
-      //data.partnerStatus,
-      this.active
-    );
-    const request = new RequestModel(
-      appConstants.registrationCenterCreateId,
-      null,
-      this.partnerStatus
-    );
-    console.log("Request is:"+ request);
-    this.dataService.deactivateAPIKey(request , data.partnerID, data.partnerAPIKey).subscribe(dataa =>{
-
-      if (!dataa['errors']) {
-        this.createMessage('success', 'activate', data.partnerAPIKey);
-      } else {
-        this.createMessage('error', 'activate');
-      }
-      
-    });
-  }
-
-  approveRegistredMisp(data: any, url: string, idKey: string) {    
-    if (this.router.url.indexOf('single-view') >= 0) {
-      this.auditService.audit(10, 'ADM-085', {
-        buttonName: 'decommission',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 3
-        ]
-      });
-    } else {
-      this.auditService.audit(9, 'ADM-088', {
-        buttonName: 'decommission',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 2
-        ]
-      });
-    }
-    this.confirmationPopup('decommission', data.name).afterClosed().subscribe(res => {
-      if (res) {
-        this.auditService.audit(18, 'ADM-098', 'decommission');
-        const mispObject = this.mapDataToObject(data);        
-        mispObject.mispStatus ="approved"
-        console.log(mispObject);
-        this.approveMisp('decommission',mispObject);
-      } else {
-        this.auditService.audit(19, 'ADM-099', 'decommission');
-      }
-    });
-  }
-
-  activateMisp(data: any, url: string, idKey: string) {
-    if (this.router.url.indexOf('single-view') >= 0) {
-      this.auditService.audit(10, 'ADM-086', {
-        buttonName: 'activate',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 3
-        ]
-      });
-    } else {
-      this.auditService.audit(9, 'ADM-089', {
-        buttonName: 'activate',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 2
-        ]
-      });
-    }
-    this.confirmationPopup('activate', data.name).afterClosed().subscribe(res => {
-      if (res) {
-        this.auditService.audit(18, 'ADM-100', 'activate');
-        const mispObject = this.mapDataToObject(data);
-        mispObject.isActive = true;
-        mispObject.mispStatus ="Active"
-        console.log(mispObject);
-        this.updateMisp('activate', mispObject);
-      } else {
-        this.auditService.audit(19, 'ADM-101', 'activate');
-      }
-    });
-  }
-
-  deactivateMisp(data: any, url: string, idKey: string) {
-    if (this.router.url.indexOf('single-view') >= 0) {
-      console.log(this.router.url.split('/'));
-      this.auditService.audit(10, 'ADM-087', {
-        buttonName: 'deactivate',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 3
-        ]
-      });
-    } else {
-      this.auditService.audit(9, 'ADM-090', {
-        buttonName: 'deactivate',
-        masterdataName: this.router.url.split('/')[
-          this.router.url.split('/').length - 2
-        ]
-      });
-    }
-    this.confirmationPopup('deactivate', data.name).afterClosed().subscribe(res => {
-      if (res) {
-        this.auditService.audit(18, 'ADM-102', 'deactivate');
-        const mispObject = this.mapDataToObject(data);
-        mispObject.isActive = false;
-        mispObject.mispStatus = "De-Active";
-        console.log(mispObject);
-        this.updateMisp('deactivate', mispObject);
-      } else {
-        this.auditService.audit(19, 'ADM-103', 'deactivate');
-      }
     });
   }
 
@@ -778,8 +542,9 @@ export class CommonService {
       response => {
         if (!response.errors || response.errors.length === 0) {
           let obj = {
-            title: "",
-            message: request.request.apikeyRequestId+" Requested API key has been "+callingFunction,
+            case: 'MESSAGE',
+            title: 'Success',
+            message: response.response,
             btnTxt: "Ok"
           }
           this.showMessage(obj);
@@ -788,7 +553,7 @@ export class CommonService {
         } else {
           let obj = {
             case: 'MESSAGE',
-            title: 'Success',
+            title: 'Error',
             message: response.errors[0].message,
             btnTxt: "Ok"
           }
@@ -829,63 +594,4 @@ export class CommonService {
       }
     });
   }
-
-  createAuthPoliciesData(){
-    this.authPolicies = [
-      {authType: 'otp', authSubType: '', mandatory: true},
-      {authType: 'demo', authSubType: '', mandatory: false},
-      {authType: 'bio', authSubType: 'FINGER', mandatory: true},
-      {authType: 'bio', authSubType: 'IRIS', mandatory: false},
-      {authType: 'bio', authSubType: 'FACE', mandatory: false},
-      {authType: 'kyc', authSubType: '', mandatory: false}
-    ];
-  }
-
-  createAllowedKycAttributesData(){
-    this.allowedKycAttributes = [
-      {attributeName: 'fullName', required:true},
-      {attributeName: 'dateOfBirth', required:true},
-      {attributeName: 'gender', required:true},
-      {attributeName: 'phone', required:true},
-      {attributeName: 'email', required:true},
-      {attributeName: 'addressLine1', required:true},
-      {attributeName: 'addressLine2', required:true},
-      {attributeName: 'addressLine3', required:true},
-      {attributeName: 'location1', required:true},
-      {attributeName: 'location2', required:true},
-      {attributeName: 'location3', required:true},
-      {attributeName: 'postalCode', required:false},
-      {attributeName: 'photo', required:true}
-    ];
-  }
-
-  createAuthPolicys(data: any){
-    this.descr = data.desc;
-    this.createAuthPoliciesData();
-    console.log("authPolicies is:"+ this.authPolicies);
-    this.createAllowedKycAttributesData();
-    this.createAuthPolicy = new CreateAuthPolicy(
-      data.name,
-      this.descr,
-      this.authPolicies,
-      this.allowedKycAttributes
-    );
-    const request = new RequestModel(
-      appConstants.registrationCreatePartnerId,
-      null,
-      this.createAuthPolicy
-    );
-    console.log("Request is:"+ request);
-    this.dataService.submitAuthPolicyReq(request , data.id).subscribe(dataa =>{
-      console.log("Response: "+ dataa.response);
-      if (dataa['errors']) {
-        this.createMessage('success', 'activate', dataa.response.name);
-      } else {
-        //this.createMessage('error', 'activate');
-        this.createMessage('success', 'activate', dataa.response.name);
-      }
-      
-    });
-  }
-
 }
