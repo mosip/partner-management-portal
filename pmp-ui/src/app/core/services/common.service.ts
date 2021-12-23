@@ -134,7 +134,8 @@ export class CommonService {
       title: "CONFIRMATION",
       message: "Do you want to Approve the Partner ( "+data.partnerId+" ) to Policy ( "+data.policyId+" ) ?",
       yesBtnTxt: "Approve",
-      noBtnTxt: "Reject"
+      noBtnTxt: "Reject",
+      cancelBtnTxt: "Cancel"
     };
     return this.dialog.open(DialogComponent, {
       width: '750px',
@@ -586,7 +587,7 @@ export class CommonService {
         const policyObject = data;
         policyObject.status = "Approved";
         this.ApproveorRejectPolicyFunction('Approved', policyObject);
-      } else {
+      } else if(res == false) {
         this.auditService.audit(19, 'ADM-101', 'activate');
         const policyObject = data;
         policyObject.status = "Rejected";
