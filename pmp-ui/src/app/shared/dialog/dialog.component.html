@@ -237,6 +237,11 @@
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
+    <span *ngIf="input.cancelBtnTxt">
+      <button mat-button (click)="dismiss()">
+        {{ input.cancelBtnTxt }}
+      </button>
+    </span>
     <span
       ><button mat-button [mat-dialog-close]="!confirm">
         {{ input.noBtnTxt }}
