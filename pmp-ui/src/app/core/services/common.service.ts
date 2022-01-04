@@ -132,7 +132,7 @@ export class CommonService {
     const obj = {
       case: 'CONFIRMATION',
       title: "CONFIRMATION",
-      message: "Do you want to Approve the Partner ( "+data.partnerId+" ) to Policy ( "+data.policyId+" ) ?",
+      message: "Do you want to Approve the Partner ( "+data.partnerName+" ) to Policy ( "+data.policyName+" ) ?",
       yesBtnTxt: "Approve",
       noBtnTxt: "Reject",
       cancelBtnTxt: "Cancel"
