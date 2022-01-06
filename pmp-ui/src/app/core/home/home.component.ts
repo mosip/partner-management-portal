@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -17,14 +18,20 @@ import { CommonService } from 'src/app/core/services/common.service';
 })
 export class HomeComponent implements OnInit {
 	partnerIdDetail: any;
-  constructor(public dialog: MatDialog, private dataService: DataStorageService, private headerService: HeaderService, private auditService: AuditService, private router: Router, private commonService: CommonService) { }
+	labels:any;
+  constructor(public dialog: MatDialog, private dataService: DataStorageService, private headerService: HeaderService, private auditService: AuditService, private router: Router, private commonService: CommonService, private translateService : TranslateService) { }
 
  	ngOnInit() {
- 			
+
 	  	if (this.headerService.getRoles()) {  		
 				let partnerId = this.headerService.getUsername();
 				let primaryLang = this.headerService.getlanguageCode();
 				let self = this;
+				this.translateService
+	      .getTranslation(primaryLang)
+	      .subscribe(response => {
+	        this.labels = response["dashboard"];
+	      });
 	      this.dataService
 	      .partnerEmailVerify(this.headerService.getEmailId())
 	      .subscribe(({ response }) => {

@@ -37,6 +37,7 @@ export class ListViewComponent implements OnDestroy {
   filtersApplied = false;
   masterDataType: string;
   auditEventId: string[];
+  labels:any;
 
   constructor(
     private router: Router,
@@ -51,6 +52,7 @@ export class ListViewComponent implements OnDestroy {
     translateService
       .getTranslation(this.headerService.getlanguageCode())
       .subscribe(response => {
+        this.labels = response;
         this.errorMessages = response.errorPopup;
       });
     this.subscribed = router.events.subscribe(event => {
@@ -96,7 +98,7 @@ export class ListViewComponent implements OnDestroy {
       const routeParts = this.activatedRoute.snapshot.params.type;
       if(appConstants.masterdataMapping[`${routeParts}`]){
         this.mapping = appConstants.masterdataMapping[`${routeParts}`];
-        this.headerName = appConstants.masterdataMapping[`${routeParts}`].headerName;
+        this.headerName = appConstants.masterdataMapping[`${routeParts}`].headerName;        
       }else{
         this.mapping = { apiName: 'partnermanager/partners', specFileName: 'partner', name: 'Auth Partner', nameKey: 'titleName',
          idKey: 'id', headerName: `${routeParts}`};
@@ -163,6 +165,7 @@ export class ListViewComponent implements OnDestroy {
   }
 
   getMasterDataTypeValues(language: string) {
+    let self = this;
     return new Promise((resolve, reject) => {
       this.masterData = [];
       this.noData = false;
@@ -194,6 +197,21 @@ export class ListViewComponent implements OnDestroy {
         this.headerName = "Partner";
         this.requestModel.request["partnerType"] = "all";
       }
+
+      let appConstantsValue = appConstants.navItems;
+      appConstantsValue.forEach(element => {
+        if(element.children){
+          element.children.forEach(childelement => {
+            if (childelement.route.includes(routeParts)) {
+              self.headerName = self.labels[childelement.displayName.split('.')[0]][childelement.displayName.split('.')[1]][childelement.displayName.split('.')[2]];
+            }
+          });
+        }else{
+          if (element.route.includes(routeParts)) {
+            self.headerName = self.labels[element.displayName.split('.')[0]][element.displayName.split('.')[1]][element.displayName.split('.')[2]];
+          }
+        }
+      });
 
       this.dataStorageService
         .getDataByTypeAndId(this.mapping, this.requestModel)
