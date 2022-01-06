@@ -504,6 +504,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.getPolicy("policyId", event.source.value);
       }else{
         this[formControlName] = event.source.value;
+        if(formControlName === "policyId"){
+          this.primaryData["policyName"] = event.source.viewValue;
+        }
       }
     }    
   }  
@@ -571,8 +574,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         }
       });
     }else{      
-      if(url === "partnermanager/partners/apikey/request"){
-        this.primaryData["policyName"] = this.primaryData["policyId"];
+      if(url === "partnermanager/partners/apikey/request"){        
         this.primaryData["useCaseDescription"] = this.primaryData["requestDetail"];
         let request = new RequestModel(
           "",
