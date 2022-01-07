@@ -93,7 +93,7 @@ export class HeaderService {
 
   getlanguageCode(): string {
     if(this.languageCode){
-      return "ara"//this.languageCode;
+      return this.languageCode;
     }else{
       return "eng";
     }
