@@ -38,6 +38,7 @@ export class TableComponent implements OnInit, OnChanges {
   ellipsisList = [];
   imageSource: string;
   partnerType: string;
+  showapilistbutton:boolean = false;
 
   constructor(
     private headerService: HeaderService,
@@ -53,6 +54,9 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableData = [...this.data];
     this.sortStatusArray = [];
     this.partnerType = this.headerService.getRoles();
+    if(this.partnerType.includes("AUTH PARTNER") || this.partnerType.includes("CREDENTIAL PARTNER")){
+      this.showapilistbutton = true;
+    }
     this.lang = this.headerService.getlanguageCode();
     const route = this.router.url.split('/')[3];
     this.imageSource = appConstants.ListViewIdKeyMapping[`${route}`]['imagePath'];
@@ -172,18 +176,50 @@ export class TableComponent implements OnInit, OnChanges {
           this.ellipsisList.splice(index, 1);
         }
       });
-    }else if(data.statusCode === "approved" || data.statusCode === 'rejected' || data.statusCode === 'InProgress'){
-      this.ellipsisList.filter(values => {
+    }else if(data.statusCode === "approved" || data.statusCode === 'rejected' || data.statusCode === 'InProgress'){      
+      this.ellipsisList.forEach(values => {      
         if(!self.partnerType.includes("PARTNER ADMIN")){
+          if(self.partnerType.includes("AUTH PARTNER") && data.statusCode === "approved"){
+            if (values.buttonName.eng === 'Edit') {
+              const index = this.ellipsisList.indexOf(values);
+              this.ellipsisList.splice(index, 1);
+            }
+          }else if(self.partnerType.includes("CREDENTIAL PARTNER") && data.statusCode === "approved"){
+            if (values.buttonName.eng === 'Edit') {
+              const index = this.ellipsisList.indexOf(values);
+              this.ellipsisList.splice(index, 1);
+            }
+          }else if(self.partnerType.includes("AUTH PARTNER") && data.statusCode === "InProgress"){
+            if (values.buttonName.eng === 'Generate API Key') {
+              const index = this.ellipsisList.indexOf(values);
+              this.ellipsisList.splice(index, 1);
+            }
+          }else if(self.partnerType.includes("CREDENTIAL PARTNER") && data.statusCode === "InProgress"){
+            if (values.buttonName.eng === 'Generate API Key') {
+              const index = this.ellipsisList.indexOf(values);
+              this.ellipsisList.splice(index, 1);
+            }
+          }
           if (values.buttonName.eng === 'Manage Policy') {
             const index = this.ellipsisList.indexOf(values);
             this.ellipsisList.splice(index, 1);
-          }
-        }else if(self.partnerType.includes("PARTNER ADMIN") && data.statusCode === "approved"){
-          if (values.buttonName.eng === 'Manage Policy') {
-            const index = this.ellipsisList.indexOf(values);
-            this.ellipsisList.splice(index, 1);
-          }
+          }         
+        }else if(self.partnerType.includes("PARTNER ADMIN")){
+          if(data.statusCode === "approved"){
+            if (values.buttonName.eng === 'Manage Policy') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+          }else if(data.statusCode === "InProgress"){
+            if (values.buttonName.eng === 'Edit') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+            if (values.buttonName.eng === 'Manage Policy') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+          }          
         }
       });
     }

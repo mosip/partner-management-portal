@@ -75,6 +75,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
   listBelowSectionData:any;
   fetchRequest = {} as CenterRequest;
   subscribed: any;
+  displayedColumns: string[] = ['label', 'crDtimes', 'status', 'action'];
+  displayedSBIColumns: string[] = ['sbiId', 'action'];
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -124,12 +126,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
       }
       else if(url === "datasharepolicy"){
         this.pageName = "Data Share Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": "", "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "authpolicy"){
         this.pageName = "Auth Policy";        
-        this.primaryData = {"name": "", "desc": "", "policies": JSON.stringify({}), "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
+        this.primaryData = {"name": "", "desc": "", "policies": "", "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
         this.getPolicyGroup("policyGroupName");
       }
       else if(url === "policymapping"){
@@ -173,7 +175,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.hideContainer = true;
     }
     const filterObject = new FilterValuesModel('swVersion', 'unique', '');
-    const optionFilter = [{"value": this.primaryData.deviceProviderId,"values": [],"fromValue": "","toValue": "","columnName": "providerId","type": "equals"}]
+    const optionFilter = [{"value": this.primaryData.deviceProviderId,"values": [],"fromValue": "","toValue": "","columnName": "providerId","type": "equals"}, {"value": "true","values": [], "fromValue": "", "toValue": "","columnName": "isActive","type": "equals"}]
     //[{"value": "180522","fromValue": "","toValue": "","columnName": "providerId","type": "equals"}]
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, optionFilter);
     let request = new RequestModel('', null, filterRequest);
@@ -207,7 +209,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
           if (response.response) {
             if (response.response.data) {
               self.listBelowSectionData = response.response.data ? [...response.response.data] : [];
-              //console.log("response.response.data>>>"+response.response.data);
+            }else if (response.response.data === null){
+              self.listBelowSectionData = null;
             }
           }
         },
@@ -218,24 +221,30 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   mapSBIVersion(){
-    let SBIData = {"deviceDetailId": this.primaryData.id,"sbiId": this.sbiId};  
-    let request = new RequestModel(
-      "",
-      null,
-      SBIData
-    ); 
-    this.dataStorageService.mapSBIVersion(request).subscribe(response => { 
-      if (!response.errors || (response.errors.length == 0)) {
-        this.showMessage(response.response)
-          .afterClosed()
-          .subscribe(() => {
-            this.sbiId = "";
-            this.getSbidetails();
-          });
-      }else{
-        this.showErrorPopup(response.errors[0].message);
-      }
-    });
+    if(!this.sbiId){
+      this.showErrorPopup("SBIVersion"+this.popupMessages.genericerror.fieldNameValidation);
+    }else{
+      let SBIData = {"deviceDetailId": this.primaryData.id,"sbiId": this.sbiId};  
+      let request = new RequestModel(
+        "",
+        null,
+        SBIData
+      ); 
+      this.dataStorageService.mapSBIVersion(request).subscribe(response => { 
+        if (!response.errors || (response.errors.length == 0)) {
+          this.showMessage(response.response)
+            .afterClosed()
+            .subscribe(() => {
+              this.dropDownValues["sbiId"] = [];
+              this.sbiId = "";
+              this.getSbidetails();
+              this.getSbidetailFilterValues("sbiId");  
+            });
+        }else{
+          this.showErrorPopup(response.errors[0].message);
+        }
+      });
+    }
   }
 
   unmapSBIVersion(data){
@@ -275,7 +284,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     this.fetchRequest.languageCode = this.headerService.getlanguageCode();
     this.fetchRequest.sort = [];
     this.fetchRequest.pagination = { pageStart: 0, pageFetch: 10 };
-    this.fetchRequest.filters.push({columnName: "isActive", type: "equals", value: "true"});
+    this.fetchRequest.filters.push({columnName: "policyId", type: "equals", value: this.primaryData.policyId});
     const request = new RequestModel(
       appConstants.registrationCenterCreateId,
       null,
@@ -286,8 +295,15 @@ export class MaterDataCommonBodyComponent implements OnInit {
       .subscribe(
         response => {
           if (response.response) {
-            if (response.response.data) {              
+            if (response.response.data) {        
+              response.response.data.sort((a, b) => (a.isActive < b.isActive ? -1 : 1));
+              response.response.data.sort((a, b) => (a.crDtimes < b.crDtimes ? -1 : 1));      
+              response.response.data.forEach(element => {
+                element["crDtimes"] = new Date(element["crDtimes"]).toISOString().slice(0,10);
+              });
               this.listBelowSectionData = response.response.data ? [...response.response.data] : [];
+            }else if (response.response.data === null){
+              this.listBelowSectionData = null;
             }
           }
         },
@@ -298,24 +314,28 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   generateAPIKey(){
-    let APIKeyData = {"policyName": this.primaryData.policyName,"label": this.apiKeyLabel};  
-    let request = new RequestModel(
-      "",
-      null,
-      APIKeyData
-    ); 
-    this.dataStorageService.generateAPIKey(this.primaryData.partnerId, request).subscribe(response => { 
-      if (!response.errors || (response.errors.length == 0)) {
-        this.showMessage("APIKEY : "+response.response.apiKey)
-          .afterClosed()
-          .subscribe(() => {
-            this.apiKeyLabel = "";
-            this.getAPIKeydetails();
-          });
-      }else{
-        this.showErrorPopup(response.errors[0].message);
-      }
-    });
+    if(!this.apiKeyLabel){
+      this.showErrorPopup("Label"+this.popupMessages.genericerror.fieldNameValidation);
+    }else{
+      let APIKeyData = {"policyName": this.primaryData.policyName,"label": this.apiKeyLabel};  
+      let request = new RequestModel(
+        "",
+        null,
+        APIKeyData
+      ); 
+      this.dataStorageService.generateAPIKey(this.primaryData.partnerId, request).subscribe(response => { 
+        if (!response.errors || (response.errors.length == 0)) {
+          this.showMessage("APIKEY : "+response.response.apiKey)
+            .afterClosed()
+            .subscribe(() => {
+              this.apiKeyLabel = "";
+              this.getAPIKeydetails();
+            });
+        }else{
+          this.showErrorPopup(response.errors[0].message);
+        }
+      });
+    }    
   }
 
   deleteAPIKey(data){
@@ -446,7 +466,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
           }else{
             response.response.forEach(element => {
               element["fieldValue"] = element["name"];
-              element["fieldCode"] = element["name"];
+              element["fieldCode"] = element["id"];
             });
             this.dropDownValues[key] = response.response;
           }
@@ -484,6 +504,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.getPolicy("policyId", event.source.value);
       }else{
         this[formControlName] = event.source.value;
+        if(formControlName === "policyId"){
+          this.primaryData["policyName"] = event.source.viewValue;
+        }
       }
     }    
   }  
@@ -551,8 +574,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         }
       });
     }else{      
-      if(url === "partnermanager/partners/apikey/request"){
-        this.primaryData["policyName"] = this.primaryData["policyId"];
+      if(url === "partnermanager/partners/apikey/request"){        
         this.primaryData["useCaseDescription"] = this.primaryData["requestDetail"];
         let request = new RequestModel(
           "",

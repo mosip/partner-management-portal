@@ -2,6 +2,7 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import { LogoutService } from './../../core/services/logout.service';
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hamburger-menu',
@@ -16,11 +17,13 @@ export class HamburgerComponent implements OnInit {
   userName: string;
 
   dataList: any[];
+  buttonName:string="";
 
   constructor(
     private headerService: HeaderService,
     private logoutService: LogoutService,
-    private auditService: AuditService
+    private auditService: AuditService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -31,6 +34,12 @@ export class HamburgerComponent implements OnInit {
       this.userName = this.headerService.getUsername();
     }
     if (this.headerService.getRoles()) {
+      this.translateService
+      .getTranslation(this.headerService.getlanguageCode())
+      .subscribe(response => {
+        console.log("response.dashboard.Logout>>>"+response);
+        this.buttonName = response.dashboard.Logout;
+      });
       this.roleNameSubstr = this.headerService.getRoles();
       if (this.roleNameSubstr.indexOf(',') !== -1) {
         const roleNameSplit = this.headerService.getRoles().indexOf(',');

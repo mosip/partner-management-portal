@@ -78,9 +78,45 @@
             </mat-form-field>
           </p>
         </mat-card-content>
-        <mat-divider *ngIf="showSecondaryForm && !hideContainer"></mat-divider>
+        <mat-card-content class="forms-container" *ngIf="hideContainer">
+          <p  class="mat-form1" *ngFor="let field of fields; let i = index">
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
+              <input
+                #keyboardRef
+                #{{field.name}}
+                (keyup)="captureValue($event, field.name, 'primary')"
+                matInput
+                placeholder="{{
+                  field.label[primaryLang] | translate
+                }}"
+                [value]="primaryData[field.name]"
+                required
+                disabled=true
+              />
+            </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
+              <mat-select
+                [value]="primaryData[field.name]"
+                placeholder="{{ field.label[primaryLang] }}"
+                required
+                disabled=true
+              >
+                <mat-option
+                  *ngFor="let data of dropDownValues[field.name]"
+                  (onSelectionChange)="
+                    captureDropDownValue($event, field.name, 'primary')
+                  "
+                  [value]="data.fieldCode"
+                >
+                  {{ data.fieldValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+        </mat-card-content>
+        <mat-divider *ngIf="showSecondaryForm && hideContainer"></mat-divider>
         <mat-card-content class="forms-container" *ngIf="showSecondaryForm" style="padding-top: 20px;">
-            <table width="50%" *ngIf="showSecondaryAPIPanel">
+            <table width="100%" *ngIf="showSecondaryAPIPanel">
               <tr style="vertical-align: top;">
                 <td width="30%">
                   <mat-form-field>
@@ -96,20 +132,39 @@
                 </td>
                 <td width="20%">
                   <button id="createButton" mat-raised-button (click)="generateAPIKey()">
-                    Genrate
+                    Generate
                   </button>
+                </td>
+                <td width="50%">
                 </td>
               </tr>
             </table>
-            <table width="50%" *ngIf="showSecondaryAPIPanel">
-              <tr *ngFor="let data of listBelowSectionData;">
-                <td width="35%" style="font-family: Roboto, sans-serif;
-    font-weight: 400;font-size: 13px;width: 450px;padding-left: 50px;padding-top: 10px;">{{data.label}}</td>
-                <td width="30%" style="padding-left: -50px;cursor: pointer;" (click)="deleteAPIKey(data)">x</td>
-              </tr>
-            </table>
-
-            <table width="50%" *ngIf="showSecondarySBIPanel">
+            <div *ngIf="showSecondaryAPIPanel" style="width:100%">
+              <table *ngIf="listBelowSectionData" mat-table [dataSource]="listBelowSectionData" class="mat-elevation-z8" width="96%" style="margin-left: 3rem;">
+                <ng-container matColumnDef="label">
+                  <th mat-header-cell *matHeaderCellDef> Label </th>
+                  <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                </ng-container>
+                <ng-container matColumnDef="crDtimes">
+                  <th mat-header-cell *matHeaderCellDef> CreatedDate </th>
+                  <td mat-cell *matCellDef="let element"> {{element.crDtimes}} </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let element"> 
+                    <span *ngIf="element['isActive'] == true">{{'isActive.Active'|translate}}</span>
+                    <span *ngIf="element['isActive'] == false">{{'isActive.InActive'|translate}}</span>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element"><span *ngIf="element['isActive'] == true"><span style="cursor: pointer;" (click)="deleteAPIKey(element)">x</span></span></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+            <table width="100%" *ngIf="showSecondarySBIPanel">
               <tr style="vertical-align: top;">
                 <td width="30%">
                   <mat-form-field>
@@ -134,19 +189,28 @@
                     Map SBI
                   </button>
                 </td>
+                <td width="50%">
+                </td>
               </tr>
             </table>
-            <table width="50%" *ngIf="showSecondarySBIPanel">
-              <tr *ngFor="let data of listBelowSectionData;">
-                <td width="35%" style="font-family: Roboto, sans-serif;
-    font-weight: 400;font-size: 13px;width: 450px;padding-left: 50px;padding-top: 10px;">{{data.sbiId}}</td>
-                <td width="30%" style="padding-left: -50px;cursor: pointer;" (click)="unmapSBIVersion(data)">x</td>
-              </tr>
-            </table>
+            <div *ngIf="showSecondarySBIPanel" style="width:100%">
+              <table *ngIf="listBelowSectionData" mat-table [dataSource]="listBelowSectionData" class="mat-elevation-z8" width="96%" style="margin-left: 3rem;">
+                <ng-container matColumnDef="sbiId">
+                  <th mat-header-cell *matHeaderCellDef> SBI </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sbiId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element"> <span style="cursor: pointer;" (click)="unmapSBIVersion(element)">x</span></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedSBIColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedSBIColumns;"></tr>
+              </table>
+            </div>
 
         </mat-card-content>
         <mat-card-actions class="action-buttons">
-        <button id="createButton" mat-raised-button (click)="submit()">
+        <button id="createButton" mat-raised-button (click)="submit()" *ngIf="!hideContainer">
         Save
         </button>
         <button mat-raised-button (click)="changePage()">
