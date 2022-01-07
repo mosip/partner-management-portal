@@ -176,8 +176,8 @@ export class TableComponent implements OnInit, OnChanges {
           this.ellipsisList.splice(index, 1);
         }
       });
-    }else if(data.statusCode === "approved" || data.statusCode === 'rejected' || data.statusCode === 'InProgress'){
-      this.ellipsisList.filter(values => {
+    }else if(data.statusCode === "approved" || data.statusCode === 'rejected' || data.statusCode === 'InProgress'){      
+      this.ellipsisList.forEach(values => {      
         if(!self.partnerType.includes("PARTNER ADMIN")){
           if(self.partnerType.includes("AUTH PARTNER") && data.statusCode === "approved"){
             if (values.buttonName.eng === 'Edit') {
@@ -204,16 +204,22 @@ export class TableComponent implements OnInit, OnChanges {
             const index = this.ellipsisList.indexOf(values);
             this.ellipsisList.splice(index, 1);
           }         
-        }else if(self.partnerType.includes("PARTNER ADMIN") && data.statusCode === "approved"){
-          if (values.buttonName.eng === 'Manage Policy') {
-            const index = this.ellipsisList.indexOf(values);
-            this.ellipsisList.splice(index, 1);
-          }
         }else if(self.partnerType.includes("PARTNER ADMIN")){
-          if (values.buttonName.eng === 'Generate API Key') {
-            const index = this.ellipsisList.indexOf(values);
-            this.ellipsisList.splice(index, 1);
-          }
+          if(data.statusCode === "approved"){
+            if (values.buttonName.eng === 'Manage Policy') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+          }else if(data.statusCode === "InProgress"){
+            if (values.buttonName.eng === 'Edit') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+            if (values.buttonName.eng === 'Manage Policy') {
+              const index = self.ellipsisList.indexOf(values);
+              self.ellipsisList = self.ellipsisList.splice(index, 1);
+            }
+          }          
         }
       });
     }

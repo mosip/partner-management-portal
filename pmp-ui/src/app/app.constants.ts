@@ -23,7 +23,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item2.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/policy.png',
     route: '',
     children: [
       {
@@ -53,7 +53,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item3.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/Partners.png',
     route: '/pmp/resources/partner/view',
     children: null,
     auditEventId: 'ADM-006',
@@ -61,7 +61,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item4.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/biometric.png',
     route: '/pmp/resources/devicedetails/view',
     children: null,
     auditEventId: 'ADM-007',
@@ -69,7 +69,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item5.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/ftm.png',
     route: '/pmp/resources/ftmdetails/view',
     children: null,
     auditEventId: 'ADM-008',
@@ -77,7 +77,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item6.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/sbi.png',
     route: '/pmp/resources/sbidetails/view',
     children: null,
     auditEventId: 'ADM-009',
@@ -85,7 +85,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item7.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/partner-policy mapping.png',
     route: '/pmp/resources/policymapping/view',
     children: null,
     auditEventId: 'ADM-010',
@@ -93,7 +93,7 @@ export const navItems = [
   },
   {
     displayName: 'menuItems.item8.title',
-    icon: 'assets/images/home.svg',
+    icon: 'assets/images/certificate.png',
     route: '/pmp/resources/uploadcacert/upload',
     children: null,
     auditEventId: 'ADM-011',
