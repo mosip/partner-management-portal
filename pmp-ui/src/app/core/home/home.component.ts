@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 							  let request = new RequestModel(
 					        "",
 					        null,
-					        {"partnerId": this.headerService.getUsername(), "organizationName": this.headerService.getOrganizationName(), "address": this.headerService.getAddress(), "contactNumber": this.headerService.getContactNumber(), "emailId": this.headerService.getEmailId(), "partnerType": this.headerService.getPartnerType()}
+					        {"partnerId": this.headerService.getUsername(), "organizationName": this.headerService.getOrganizationName(), "address": this.headerService.getAddress(), "contactNumber": this.headerService.getContactNumber(), "emailId": this.headerService.getEmailId(), "partnerType": this.headerService.getPartnerType(), "langCode": this.headerService.getNotificationLanguage()}
 					      );   
 					      this.dataService
 						      .partnerRegistration(request)
