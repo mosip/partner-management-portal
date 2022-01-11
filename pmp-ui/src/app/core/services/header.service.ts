@@ -14,6 +14,7 @@ export class HeaderService {
   private address = '';
   private contactNumber = '';
   private partnerType = '';
+  private notificationLanguage = '';
 
   constructor() { }
 
@@ -69,6 +70,14 @@ export class HeaderService {
 
   getRoleCodes(): string {
     return this.roles;
+  }
+
+  setNotificationLanguage(notificationLanguage: string) {
+    this.notificationLanguage = notificationLanguage;
+  }
+
+  getNotificationLanguage() {
+    return this.notificationLanguage;
   }
 
   setZone(zone: string) {
