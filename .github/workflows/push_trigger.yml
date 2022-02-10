@@ -6,7 +6,9 @@ on:
     branches:
       - develop
       - 1.*
-  
+      - '!release-branch'
+      - release-1*
+      
 jobs:
   build-pmp-ui:
     runs-on: ubuntu-latest
