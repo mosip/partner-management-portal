@@ -15,6 +15,8 @@ import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { FilterModel } from 'src/app/core/models/filter.model';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog',
@@ -43,17 +45,23 @@ export class DialogComponent implements OnInit {
   cancelApplied = false;
 
   filterOptions: any = {};
+  primaryLangCode: string;
 
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private router: Router,
-    private dataStorageService: DataStorageService,
-    private config: AppConfigService,
-    private activatedRoute: ActivatedRoute,
-    private auditService: AuditService
-  ) {}
+    public router: Router,
+    public dataStorageService: DataStorageService,
+    public config: AppConfigService,
+    public activatedRoute: ActivatedRoute,
+    public auditService: AuditService,
+    public translate: TranslateService, 
+    public headerService: HeaderService
+  ) {
+    this.primaryLangCode = this.headerService.getlanguageCode();
+    this.translate.use(this.primaryLangCode);
+  }
 
   async ngOnInit() {
     this.input = this.data;
@@ -61,7 +69,7 @@ export class DialogComponent implements OnInit {
     if (this.input.case === 'filter') {
       this.existingFilters = Utils.convertFilter(
         this.activatedRoute.snapshot.queryParams,
-        this.config.getConfig().primaryLangCode
+        this.headerService.getlanguageCode()
       ).filters;
       await this.getFilterMappings();
     }
@@ -380,7 +388,7 @@ export class DialogComponent implements OnInit {
       this.auditService.audit(12, 'ADM-092', this.routeParts);
       const filters = Utils.convertFilter(
         this.activatedRoute.snapshot.queryParams,
-        this.config.getConfig().primaryLangCode
+        this.headerService.getlanguageCode()
       );
       filters.pagination.pageStart = 0;
       filters.filters = this.existingFilters;
@@ -421,7 +429,7 @@ export class DialogComponent implements OnInit {
       this.filters,
       this.routeParts === 'blacklisted-words'
         ? 'all'
-        : this.config.getConfig().primaryLangCode,
+        : this.headerService.getlanguageCode(),
       []
     );
     this.requestModel = new RequestModel('', null, this.filtersRequest);

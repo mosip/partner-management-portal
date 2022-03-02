@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
 import { HeaderService } from 'src/app/core/services/header.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { CenterRequest } from 'src/app/core/models/centerRequest.model';
 import { FilterModel } from 'src/app/core/models/filter.model';
 
@@ -37,16 +37,16 @@ export class CertUploadComponent {
   uploadcertificate:any;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private dataStorageService: DataStorageService,
-    private appService: AppConfigService,
-    private dialog: MatDialog,
-    private location: Location,
-    private router: Router,
-    private translate: TranslateService,
-    private auditService: AuditService, 
-    private headerService: HeaderService
+    public formBuilder: FormBuilder,
+    public activatedRoute: ActivatedRoute,
+    public dataStorageService: DataStorageService,
+    public appService: AppConfigService,
+    public dialog: MatDialog,
+    public location: Location,
+    public router: Router,
+    public translate: TranslateService,
+    public auditService: AuditService, 
+    public headerService: HeaderService
   ) {
     this.subscribed = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

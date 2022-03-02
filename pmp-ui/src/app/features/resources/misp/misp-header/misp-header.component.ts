@@ -4,7 +4,6 @@ import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { AppConfigService } from 'src/app/app-config.service';
 import { CommonService } from 'src/app/core/services/common.service';
 import { MispModel } from 'src/app/core/models/misp.model';
-import * as appConstants from '../../../../app.constants';
 
 @Component({
   selector: 'app-misp-header',
@@ -20,9 +19,9 @@ export class MispHeaderComponent implements OnInit {
   @Input() data: MispModel;
 
   constructor(
-    private dataSerice: DataStorageService,
-    private appService: AppConfigService,
-    private commonService: CommonService
+    public dataSerice: DataStorageService,
+    public appService: AppConfigService,
+    public commonService: CommonService
   ) {
     this.lang = appService.getConfig()['primaryLangCode'];
   }

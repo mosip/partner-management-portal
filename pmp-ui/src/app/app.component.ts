@@ -12,7 +12,7 @@ export class AppComponent {
 
   subscribed: any;
 
-  constructor(private router: Router) {
+  constructor(router: Router) {
     this.subscribed = router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);
     });

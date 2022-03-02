@@ -267,7 +267,13 @@
     height="45px"
     width="45px"
     class="success-img"
-   *ngIf="input.title === ('Success' || 'نجاح' || 'Succès')"   />
+   *ngIf="input.title === ('Success' || 'Success_ara' || 'Success_fra')"   />
+   <img
+    src="assets/images/cross.png"
+    height="45px"
+    width="45px"
+    class="success-img"
+   *ngIf="input.title === ('Error' || 'Error_ara' || 'Error_fra')"   />
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>

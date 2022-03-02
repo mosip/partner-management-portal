@@ -7,12 +7,7 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as appConstants from '../../app.constants';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FilterRequest } from 'src/app/core/models/filter-request.model';
 import { FilterValuesModel } from 'src/app/core/models/filter-values.model';
@@ -59,15 +54,15 @@ export class DialogComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private router: Router,
-    private dataStorageService: DataStorageService,
-    private config: AppConfigService,
-    private activatedRoute: ActivatedRoute,
-    private auditService: AuditService,
-    private translate: TranslateService, 
-    private headerService: HeaderService
+    public router: Router,
+    public dataStorageService: DataStorageService,
+    public config: AppConfigService,
+    public activatedRoute: ActivatedRoute,
+    public auditService: AuditService,
+    public translate: TranslateService, 
+    public headerService: HeaderService
   ) {
-    this.primaryLangCode = this.config.getConfig().primaryLangCode;
+    this.primaryLangCode = this.headerService.getlanguageCode();
     this.translate.use(this.primaryLangCode);
   }
 

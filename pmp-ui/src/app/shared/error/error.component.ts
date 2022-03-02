@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ErrorComponent implements OnInit {
 
   @Input() errorMessage: string;
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(public route: ActivatedRoute, public router: Router) {
     this.route.params.subscribe((message => this.errorMessage = message.errorMessage));
   }
 

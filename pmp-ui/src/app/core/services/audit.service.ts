@@ -10,9 +10,9 @@ import { AppConfigService } from 'src/app/app-config.service';
 })
 export class AuditService {
   constructor(
-    private headerService: HeaderService,
-    private http: HttpClient,
-    private appService: AppConfigService
+    public headerService: HeaderService,
+    public http: HttpClient,
+    public appService: AppConfigService
   ) {}
 
   audit(type: number, eventID: string, data?: any) {
@@ -179,7 +179,7 @@ export class AuditService {
   //  this.postAuditLog(auditObject);
   }
 
-  private postAuditLog(auditObject: AuditModel) {
+  public postAuditLog(auditObject: AuditModel) {
     const request = new RequestModel('', null, auditObject);
     this.http.post(this.appService.getConfig().baseUrl + 'auditmanager/audits', request);
   }

@@ -41,12 +41,12 @@ export class TableComponent implements OnInit, OnChanges {
   showapilistbutton:boolean = false;
 
   constructor(
-    private headerService: HeaderService,
-    private router: Router,
-    private appConfig: AppConfigService,
-    private commonService: CommonService,
-    private translate: TranslateService,
-    private auditService: AuditService
+    public headerService: HeaderService,
+    public router: Router,
+    public appConfig: AppConfigService,
+    public commonService: CommonService,
+    public translate: TranslateService,
+    public auditService: AuditService
   ) {
    translate.use(this.headerService.getlanguageCode());
   }

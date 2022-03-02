@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class DataStorageService {
-  constructor(private router: Router, private headerService: HeaderService, private http: HttpClient, private appService: AppConfigService) {}
+  constructor(public router: Router, public headerService: HeaderService, public http: HttpClient, public appService: AppConfigService) {}
 
-  private BASE_URL = this.appService.getConfig().baseUrl;
+  public BASE_URL = this.appService.getConfig().baseUrl;
 
   getCenterSpecificLabelsAndActions(): Observable<any> {
     return this.http.get('./assets/entity-spec/center.json');

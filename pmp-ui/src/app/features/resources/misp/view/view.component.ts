@@ -35,13 +35,13 @@ export class ViewComponent implements OnInit, OnDestroy {
   filtersApplied = false;
 
   constructor(
-    private mispService: MispService,
-    private appService: AppConfigService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
+    public mispService: MispService,
+    public appService: AppConfigService,
+    public activatedRoute: ActivatedRoute,
+    public router: Router,
     public dialog: MatDialog,
-    private translateService: TranslateService,
-    private auditService: AuditService
+    public translateService: TranslateService,
+    public auditService: AuditService
   ) {
     this.getMispConfigs();
     this.translateService.getTranslation(appService.getConfig().primaryLangCode).subscribe(response => {

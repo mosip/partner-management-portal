@@ -9,7 +9,7 @@ export class AppConfigService {
 
   appConfig: any;
 
-  constructor(private http: HttpClient, private headerService: HeaderService) { }
+  constructor(public http: HttpClient, public headerService: HeaderService) { }
 
   async loadAppConfig() {
     this.appConfig = await this.http.get('./assets/config.json').toPromise();

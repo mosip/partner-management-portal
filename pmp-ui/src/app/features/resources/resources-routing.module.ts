@@ -5,7 +5,6 @@ import { SingleViewComponent } from './single-view/single-view.component';
 import { CertUploadComponent } from './cert-upload/cert-upload.component';
 import { SubListViewComponent } from './sub-list-view/sub-list-view.component';
 import { SubSingleViewComponent } from './sub-single-view/sub-single-view.component';
-import { CanDeactivateGuardService } from 'src/app/core/services/can-deactivate-guard.service';
 import { RolesGuard } from 'src/app/core/services/roles.guard';
 
 const routes: Routes = [

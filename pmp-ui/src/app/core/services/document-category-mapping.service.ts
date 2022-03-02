@@ -14,9 +14,9 @@ import { URL } from 'src/app/app.constants';
 export class DocumentCategoryMappingService {
 
   primaryLang: any;
-  private BASE_URL: string;
+  public BASE_URL: string;
 
-  constructor(private http: HttpClient, private appConfigService: AppConfigService) {
+  constructor(public http: HttpClient, public appConfigService: AppConfigService) {
     this.primaryLang = appConfigService.getConfig()['primaryLangCode'];
     this.BASE_URL = appConfigService.getConfig().baseUrl;
   }

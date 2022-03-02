@@ -14,7 +14,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 @Injectable()
 export class AuthService {
 
-  constructor(private router: Router, private http: HttpClient, private appService: AppConfigService) { }
+  constructor(public router: Router, public http: HttpClient, public appService: AppConfigService) { }
    rolesString: string ;
    token: string;
    roles: string[];

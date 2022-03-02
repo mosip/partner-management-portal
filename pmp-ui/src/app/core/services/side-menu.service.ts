@@ -9,7 +9,7 @@ export class SideMenuService {
   public appDrawer: any;
   public currentUrl = new BehaviorSubject<string>(undefined);
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         console.log('Naviagtion', event.urlAfterRedirects);

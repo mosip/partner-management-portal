@@ -6,7 +6,7 @@ import { HeaderService } from './header.service';
 })
 export class RolesService {
 
-  constructor(private headerService: HeaderService) { }
+  constructor(public headerService: HeaderService) { }
 
   public checkRole(item: any): boolean {
     const userRoles = this.headerService.getRoleCodes().split(',');

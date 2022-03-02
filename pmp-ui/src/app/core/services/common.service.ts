@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { RequestModel } from '../models/request.model';
 import * as appConstants from '../../app.constants';
-import { CenterModel } from '../models/center.model';
+/*import { CenterModel } from '../models/center.model';*/
 import { AuditService } from './audit.service';
 import { MispModel } from '../models/misp.model';
 import { PolicyModel } from '../models/policy.model';
@@ -35,12 +35,12 @@ export class CommonService {
   rejected : string = "Rejected";
   descr: string;
   constructor(
-    private router: Router,
-    private dataService: DataStorageService,
-    private dialog: MatDialog,
-    private appService: AppConfigService,
-    private translate: TranslateService,
-    private auditService: AuditService
+    public router: Router,
+    public dataService: DataStorageService,
+    public dialog: MatDialog,
+    public appService: AppConfigService,
+    public translate: TranslateService,
+    public auditService: AuditService
   ) {
     translate
       .getTranslation(appService.getConfig().primaryLangCode)
@@ -50,7 +50,7 @@ export class CommonService {
       });
   }
 
-  private showMessage(data: any) {
+  public showMessage(data: any) {
     this.dialog.open(DialogComponent, {
       width: '350px',
       data: {
@@ -60,7 +60,7 @@ export class CommonService {
     });
   }
 
-  private confirmationPopup(type: string, data: any) {
+  public confirmationPopup(type: string, data: any) {
     const obj = {
       case: 'CONFIRMATION',
       title: this.actionMessages[type]['confirmation-title'],
@@ -74,7 +74,7 @@ export class CommonService {
     });
   }
 
-  private createMessage(type: string, listItem: string, data?: any) {    
+  public createMessage(type: string, listItem: string, data?: any) {    
     let obj = {};
     if (type === 'success') {
       if(this.actionMessages[listItem]){
@@ -108,7 +108,7 @@ export class CommonService {
     this.showMessage(obj);
   }
 
-  private showCertificateDetails(data: any) {
+  public showCertificateDetails(data: any) {
     this.dialog.open(DialogComponent, {
       width: '750px',
       data: {
@@ -118,7 +118,7 @@ export class CommonService {
     });
   }
 
-  private showCertificate(listItem: string, data?: any) {
+  public showCertificate(listItem: string, data?: any) {
     let obj = {};
     obj = {
       title: 'Certificate',
@@ -128,7 +128,7 @@ export class CommonService {
     this.showCertificateDetails(obj);
   }
 
-  private confirmationPolicy(type: string, data: any) {
+  public confirmationPolicy(type: string, data: any) {
     const obj = {
       case: 'CONFIRMATION',
       title: "CONFIRMATION",
@@ -143,7 +143,7 @@ export class CommonService {
     });
   }
 
-  private approveData(type: string, data: any) {
+  public approveData(type: string, data: any) {
     let message = "";
     if(data.make){
       message = "Do you want to "+type+" the Make "+data.make+" ?";
@@ -163,7 +163,7 @@ export class CommonService {
     });
   }
 
-  private updateMisp(callingFunction: string, data: MispModel) {
+  public updateMisp(callingFunction: string, data: MispModel) {
     const request = new RequestModel(
       appConstants.registrationCenterCreateId,
       null,
@@ -182,7 +182,7 @@ export class CommonService {
     );
   }
 
-  private updatePolicy(callingFunction: string, data: PolicyModel) {
+  public updatePolicy(callingFunction: string, data: PolicyModel) {
     const routeParts = this.router.url.split("/")[3];
     let mapping = appConstants.masterdataMapping[`${routeParts}`];
     const request = new RequestModel(
@@ -217,7 +217,7 @@ export class CommonService {
     );
   }
 
-  private updateDetails(callingFunction: any, data: PolicyModel) {
+  public updateDetails(callingFunction: any, data: PolicyModel) {
     let routeParts = "";
     if(this.router.url.split('/').length >= 6){
       routeParts = this.router.url.split('/')[4];
@@ -531,7 +531,7 @@ export class CommonService {
     });
   }
 
-  private ApproveorRejectPolicyFunction(callingFunction: string, data: PolicyModel) {
+  public ApproveorRejectPolicyFunction(callingFunction: string, data: PolicyModel) {
     const routeParts = this.router.url.split("/")[3];
     let mapping = appConstants.masterdataMapping[`${routeParts}`];
     const request = new RequestModel(

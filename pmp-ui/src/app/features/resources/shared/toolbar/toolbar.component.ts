@@ -21,9 +21,9 @@ export class ToolbarComponent extends MatPaginatorIntl implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private router: Router,
-    private appConfig: AppConfigService,
-    private auditService: AuditService
+    public router: Router,
+    public appConfig: AppConfigService,
+    public auditService: AuditService
   ) {
     super();
     this.itemsPerPageLabel = 'Show rows';
@@ -60,7 +60,7 @@ export class ToolbarComponent extends MatPaginatorIntl implements OnInit {
     }
   }
   openFilterDialog(action): void {
-    const dialogRef = this.dialog
+    this.dialog
       .open(DialogComponent, {
         data: action,
         width: '700px',

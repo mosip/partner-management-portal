@@ -15,10 +15,10 @@ import { AppConfigService } from 'src/app/app-config.service';
 })
 export class LogoutService {
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private redirectService: LoginRedirectService,
-    private appService: AppConfigService
+    public http: HttpClient,
+    public router: Router,
+    public redirectService: LoginRedirectService,
+    public appService: AppConfigService
   ) {}
 
   logout() {

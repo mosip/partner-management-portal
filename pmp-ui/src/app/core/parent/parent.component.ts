@@ -27,11 +27,11 @@ export class ParentComponent implements OnInit, AfterViewInit {
   primaryLang: string;
   secondaryLang: string;
 
-  constructor(private headerService: HeaderService, 
-              private sideMenuService: SideMenuService,
-              private translateService: TranslateService,
-              private appConfigService: AppConfigService,
-              private dataService: DataStorageService,
+  constructor(public headerService: HeaderService, 
+              public sideMenuService: SideMenuService,
+              public translateService: TranslateService,
+              public appConfigService: AppConfigService,
+              public dataService: DataStorageService,
               public rolesService: RolesService) {
     this.screenWidth = window.innerWidth;
     window.onresize = () => {
@@ -43,8 +43,7 @@ export class ParentComponent implements OnInit, AfterViewInit {
     this.primaryLang = this.appConfigService.getConfig()['primaryLangCode'];
     this.secondaryLang = this.appConfigService.getConfig()['secondaryLangCode'];
     this.translateService.use(this.primaryLang);
-    this.navItems = cloneObject(appConstants.navItems);
-    let self = this;    
+    this.navItems = cloneObject(appConstants.navItems);    
     if (this.headerService.getRoles()) {
       this.dataService.getRoles().subscribe(({ response }) => {
         console.log("response>>>"+response.roles);                   
