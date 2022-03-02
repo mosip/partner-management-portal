@@ -1,6 +1,6 @@
 <!-- center filter -->
 <div class="filter" *ngIf="input.case === 'filter'">
-  <h2 class="filter-heading">Add Filters</h2>
+  <h2 class="filter-heading">{{ "filters.titleTxt" | translate }}</h2>
   <mat-divider></mat-divider>
   <form [formGroup]="filterGroup" (ngSubmit)="getFilterValuesOnSubmit()">
     <div class="flex-container">
@@ -12,7 +12,7 @@
                 <input
                   type="text"
                   matInput
-                  placeholder="{{ filter.filterlabel }}"
+                  placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                   formControlName="{{ filter.filtername }}"
                   (focus)="
                     getControlName(
@@ -51,7 +51,7 @@
                     <input
                       matInput
                       [matDatepicker]="picker"
-                      placeholder="{{ filter.filterlabel }}"
+                      placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
                       (focus)="
                         getControlName(
@@ -70,7 +70,7 @@
                     <input
                       type="text"
                       matInput
-                      placeholder="{{ filter.filterlabel }}"
+                      placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
                       (focus)="
                         getControlName(
@@ -92,7 +92,7 @@
           </ng-container>
           <ng-container *ngSwitchCase="'true'">
             <mat-form-field>
-              <mat-label>{{ filter.filterlabel }}</mat-label>
+              <mat-label>{{ filter.filterlabel[primaryLangCode] }}</mat-label>
               <mat-select
                 formControlName="{{ filter.filtername }}"
                 (focus)="
@@ -137,7 +137,7 @@
         <img
           src="assets/images/refresh.png"
           height="15px; width:14px;"
-        />&nbsp;Reset
+        />&nbsp;{{ "filters.footerButtons.resetTxt" | translate }}
       </button>
       <button
         mat-button
@@ -145,7 +145,7 @@
         (click)="onNoClick()"
         style="color: #FF4081; background-color: white;"
       >
-        Cancel
+        {{ "filters.footerButtons.cancelTxt" | translate }}
       </button>
       <button
         type="submit"
@@ -153,7 +153,7 @@
         class="footer-button"
         style="background-color:#FF4081; color:white;"
       >
-        Apply
+        {{ "filters.footerButtons.applyTxt" | translate }}
       </button>
     </div>
   </form>

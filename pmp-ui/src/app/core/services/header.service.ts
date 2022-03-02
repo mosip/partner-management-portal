@@ -5,16 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class HeaderService {
 
-  private Username = '';
-  private roles = 'ZONAL_ADMIN,GLOBAL_ADMIN,';
-  private zone = '';
-  private languageCode = '';
-  private emailId = '';
-  private organizationName = '';
-  private address = '';
-  private contactNumber = '';
-  private partnerType = '';
-  private notificationLanguage = '';
+  public Username = '';
+  public roles = 'ZONAL_ADMIN,GLOBAL_ADMIN,';
+  public zone = '';
+  public languageCode = '';
+  public emailId = '';
+  public organizationName = '';
+  public address = '';
+  public contactNumber = '';
+  public partnerType = '';
+  public notificationLanguage = '';
 
   constructor() { }
 
@@ -102,7 +102,7 @@ export class HeaderService {
 
   getlanguageCode(): string {
     if(this.languageCode){
-      return this.languageCode;
+      return "ara";
     }else{
       return "eng";
     }

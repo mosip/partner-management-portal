@@ -20,10 +20,10 @@ export class HamburgerComponent implements OnInit {
   buttonName:string="";
 
   constructor(
-    private headerService: HeaderService,
-    private logoutService: LogoutService,
-    private auditService: AuditService,
-    private translateService: TranslateService
+    public headerService: HeaderService,
+    public logoutService: LogoutService,
+    public auditService: AuditService,
+    public translateService: TranslateService
   ) {}
 
   ngOnInit() {

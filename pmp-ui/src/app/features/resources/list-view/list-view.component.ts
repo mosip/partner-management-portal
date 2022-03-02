@@ -9,7 +9,7 @@ import { SortModel } from 'src/app/core/models/sort.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { MatDialog } from '@angular/material';
-import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+/*import { DialogComponent } from 'src/app/shared/dialog/dialog.component';*/
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
 import { HeaderService } from 'src/app/core/services/header.service';
@@ -40,14 +40,14 @@ export class ListViewComponent implements OnDestroy {
   labels:any;
 
   constructor(
-    private router: Router,
-    private dataStorageService: DataStorageService,
-    private appService: AppConfigService,
-    private activatedRoute: ActivatedRoute,
+    public router: Router,
+    public dataStorageService: DataStorageService,
+    public appService: AppConfigService,
+    public activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService: TranslateService,
-    private auditService: AuditService, 
-    private headerService: HeaderService
+    public translateService: TranslateService,
+    public auditService: AuditService, 
+    public headerService: HeaderService
   ) {
     translateService
       .getTranslation(this.headerService.getlanguageCode())

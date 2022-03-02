@@ -1,17 +1,10 @@
-import {
-    Component,
-    OnInit,
-    ViewEncapsulation,
-    ElementRef,
-    ViewChildren
-  } from '@angular/core';
+  import { Component, ViewEncapsulation, ElementRef, ViewChildren } from '@angular/core';
   import { Location } from '@angular/common';
   import { TranslateService } from '@ngx-translate/core';
   import { MatDialog } from '@angular/material/dialog';
   import { DataStorageService } from 'src/app/core/services/data-storage.service';
   import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
   import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-  import Utils from '../../../../app.utils';
   import * as appConstants from '../../../../app.constants';
   import { AppConfigService } from 'src/app/app-config.service';
   import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
@@ -22,13 +15,7 @@ import {
   import { CenterRequest } from 'src/app/core/models/centerRequest.model';
   import { FilterModel } from 'src/app/core/models/filter.model';
   import { Observable } from 'rxjs';
-  import { FilterRequest } from 'src/app/core/models/filter-request.model';
-  import { FilterValuesModel } from 'src/app/core/models/filter-values.model';
-  import {
-    MatKeyboardRef,
-    MatKeyboardComponent,
-    MatKeyboardService
-  } from 'ngx7-material-keyboard';
+  import { MatKeyboardRef, MatKeyboardComponent, MatKeyboardService } from 'ngx7-material-keyboard';
   import { AuditService } from 'src/app/core/services/audit.service';
   import * as mispSpecFile from '../../../../../assets/entity-spec/misp.json';
   
@@ -58,9 +45,9 @@ import {
   
     selectedField: HTMLElement;
   
-    private keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
+    public keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
     @ViewChildren('keyboardRef', { read: ElementRef })
-    private attachToElementMesOne: any;
+    public attachToElementMesOne: any;
   
     primaryKeyboard: string;
     secondaryKeyboard: string;
@@ -69,17 +56,17 @@ import {
     subscribed: any;
   
     constructor(
-      private location: Location,
-      private translateService: TranslateService,
-      private dataStorageService: DataStorageService,
-      private dialog: MatDialog,
-      private formBuilder: FormBuilder,
-      private appConfigService: AppConfigService,
-      private activatedRoute: ActivatedRoute,
-      private router: Router,
-      private mispService: MispService,
-      private keyboardService: MatKeyboardService,
-      private auditService: AuditService
+      public location: Location,
+      public translateService: TranslateService,
+      public dataStorageService: DataStorageService,
+      public dialog: MatDialog,
+      public formBuilder: FormBuilder,
+      public appConfigService: AppConfigService,
+      public activatedRoute: ActivatedRoute,
+      public router: Router,
+      public mispService: MispService,
+      public keyboardService: MatKeyboardService,
+      public auditService: AuditService
     ) {
       this.subscribed = router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -123,7 +110,7 @@ import {
     } 
   
     onCreate() {
-      let data = {};
+      /*let data = {};
       if (
         this.secondaryForm.controls.name.value === '' ||
         this.secondaryForm.controls.addressLine1.value === ''
@@ -154,7 +141,7 @@ import {
             noBtnTxt: this.popupMessages['edit'].noBtnText
           };
         }
-      }
+      }*/
 
       if (this.data.length === 0) {
         this.auditService.audit(18, 'ADM-104', 'create');

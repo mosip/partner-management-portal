@@ -32,10 +32,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public sideMenuService: SideMenuService,
-    private translateService: TranslateService,
-    private appConfigService: AppConfigService,
-    private headerService: HeaderService,
-    private dataService: DataStorageService
+    public translateService: TranslateService,
+    public appConfigService: AppConfigService,
+    public headerService: HeaderService,
+    public dataService: DataStorageService
   ) {
     // tslint:disable-next-line:no-string-literal
     translateService.use(appConfigService.getConfig()['primaryLangCode']);

@@ -6,16 +6,12 @@ import {
   Input
 } from '@angular/core';
 
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import {
-  MatKeyboardRef,
-  MatKeyboardComponent,
-  MatKeyboardService
-} from 'ngx7-material-keyboard';
+import { MatKeyboardRef, MatKeyboardComponent } from 'ngx7-material-keyboard';
 
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
@@ -29,15 +25,17 @@ import { FilterModel } from 'src/app/core/models/filter.model';
 import { CenterRequest } from 'src/app/core/models/centerRequest.model';
 import { HeaderService } from 'src/app/core/services/header.service';
 
+import * as Ajv from "ajv";
+
 @Component({
   selector: 'app-mater-data-common-body',
   templateUrl: './mater-data-common-body.component.html',
   styleUrls: ['./mater-data-common-body.component.scss']
 })
 export class MaterDataCommonBodyComponent implements OnInit {
-  private keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
+  public keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
   @ViewChildren('keyboardRef', { read: ElementRef })
-  private attachToElementMesOne: any;
+  public attachToElementMesOne: any;
   selectedField: HTMLElement;
   primaryForm: FormGroup;
   secondaryForm: FormGroup;
@@ -79,12 +77,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
   displayedSBIColumns: string[] = ['sbiId', 'action'];
 
   constructor(
-    private dataStorageService: DataStorageService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private translateService: TranslateService,
-    private headerService: HeaderService
+    public dataStorageService: DataStorageService,
+    public router: Router,
+    public formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    public translateService: TranslateService,
+    public headerService: HeaderService
   ) { 
   }
 
@@ -93,6 +91,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   loadConfig() {
+
+    let ajv = new Ajv.default({ allErrors: true });
+    let validate = ajv.compile({"properties":{"allowedKycAttributes":{"type":"array","additionalItems":false,"items":{"type":"object","properties":{"attributeName":{"type":"string"}},"required":["attributeName"],"additionalProperties":false}},"allowedAuthTypes":{"type":"array","additionalItems":false,"items":{"type":"object","properties":{"authType":{"type":"string"},"authSubType":{"type":"string"},"mandatory":{"type":"boolean"}},"required":["authType","mandatory"],"additionalProperties":false}},"authTokenType":{"type":"string","enum":["random","partner","policy"]}},"required":["authTokenType","allowedAuthTypes","allowedKycAttributes"],"additionalProperties":false});
+    let valid = validate({"dataSharePolicies":{"typeOfShare":"direct","validForInMinutes":"30","transactionsAllowed":"2","encryptionType":"Partner Based","shareDomain":"datashare-service","source":"ID Repository"},"shareableAttributes":[{"attributeName":"fullName","source":[{"attribute":"fullName","filter":[{"language":"eng"}]}],"encrypted":false},{"attributeName":"dateOfBirth","source":[{"attribute":"dateOfBirth"}],"encrypted":false,"format":"YYYY"},{"attributeName":"gender","source":[{"attribute":"gender"}],"encrypted":false},{"attributeName":"phone","source":[{"attribute":"phone"}],"encrypted":false},{"attributeName":"email","source":[{"attribute":"email"}],"encrypted":false},{"attributeName":"addressLine1","source":[{"attribute":"addressLine1"}],"encrypted":false},{"attributeName":"addressLine2","source":[{"attribute":"addressLine2"}],"encrypted":false},{"attributeName":"addressLine3","source":[{"attribute":"addressLine3"}],"encrypted":false},{"attributeName":"region","source":[{"attribute":"region"}],"encrypted":false},{"attributeName":"province","source":[{"attribute":"province"}],"encrypted":false},{"attributeName":"city","source":[{"attribute":"city"}],"encrypted":false},{"attributeName":"UIN","source":[{"attribute":"UIN"}],"encrypted":false},{"attributeName":"postalCode","source":[{"attribute":"postalCode"}],"encrypted":false},{"attributeName":"biometrics","group":"CBEFF","source":[{"attribute":"individualBiometrics","filter":[{"type":"Face"},{"type":"Finger","subType":["Left Thumb","Right Thumb"]}]}],"encrypted":true,"format":"extraction"}]});
+    if (!valid) console.log("validate.errors>>>"+JSON.stringify(validate.errors));
+    
     let url = "";
     this.isCreateForm = false;
     this.masterdataType = url;
@@ -477,7 +481,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   captureValue(event: any, formControlName: string, type: string) { 
     if (type === 'primary') {
+      let self = this;
       this.primaryData[formControlName] = event.target.value;
+      if(event.target.value.endsWith("}")){
+        this.primaryData[formControlName] = JSON.stringify(JSON.parse(self.primaryData[formControlName]), undefined, 4);
+      }        
     } else if (type === 'secondary') {
       this.secondaryData[formControlName] = event.target.value;
     }else{
@@ -486,12 +494,20 @@ export class MaterDataCommonBodyComponent implements OnInit {
   }
 
   captureDatePickerValue(event: any, formControlName: string, type: string) {
-    let dateFormat = new Date(event.target.value);
-    let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2) +"T00:00:00.000Z";
-    if (type === 'primary') {
-      this.primaryData[formControlName] = formattedDate;
-    } else if (type === 'secondary') {
-      this.secondaryData[formControlName] = formattedDate;
+    if(event.target.value){
+      let dateFormat = new Date(event.target.value);
+      let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2) +"T00:00:00.000Z";
+      if (type === 'primary') {
+        this.primaryData[formControlName] = formattedDate;
+      } else if (type === 'secondary') {
+        this.secondaryData[formControlName] = formattedDate;
+      }
+    }else{
+      if (type === 'primary') {
+        this.primaryData[formControlName] = "";
+      } else if (type === 'secondary') {
+        this.secondaryData[formControlName] = "";
+      }
     }
   }
 

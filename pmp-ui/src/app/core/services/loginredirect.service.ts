@@ -7,7 +7,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 @Injectable()
 export class LoginRedirectService {
 
-  constructor(private cookie: CookieService, private appService: AppConfigService) { }
+  constructor(public cookie: CookieService, public appService: AppConfigService) { }
 
   redirect(url: string) {
     const stateParam = uuid();

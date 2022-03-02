@@ -39,14 +39,14 @@ export class SubSingleViewComponent implements OnDestroy {
   popupMessages = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private dataStorageService: DataStorageService,
-    private appService: AppConfigService,
-    private dialog: MatDialog,
-    private location: Location,
-    private router: Router,
-    private translate: TranslateService,
-    private auditService: AuditService
+    public activatedRoute: ActivatedRoute,
+    public dataStorageService: DataStorageService,
+    public appService: AppConfigService,
+    public dialog: MatDialog,
+    public location: Location,
+    public router: Router,
+    public translate: TranslateService,
+    public auditService: AuditService
   ) {
     this.subscribed = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

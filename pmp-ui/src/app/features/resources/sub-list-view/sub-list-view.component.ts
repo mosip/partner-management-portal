@@ -38,13 +38,13 @@ export class SubListViewComponent implements OnDestroy {
   auditEventId: string[];
 
   constructor(
-    private router: Router,
-    private dataStorageService: DataStorageService,
-    private appService: AppConfigService,
-    private activatedRoute: ActivatedRoute,
+    public router: Router,
+    public dataStorageService: DataStorageService,
+    public appService: AppConfigService,
+    public activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService: TranslateService,
-    private auditService: AuditService
+    public translateService: TranslateService,
+    public auditService: AuditService
   ) {
     translateService
       .getTranslation(appService.getConfig().primaryLangCode)

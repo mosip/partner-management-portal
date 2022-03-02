@@ -27,12 +27,12 @@ export class AuthInterceptor implements HttpInterceptor {
   decoded: any;
 
   constructor(
-    private redirectService: LoginRedirectService,
-    private router: Router,
-    private headerService: HeaderService,
-    private dialog: MatDialog,
-    private translateService: TranslateService,
-    private appService: AppConfigService
+    public redirectService: LoginRedirectService,
+    public router: Router,
+    public headerService: HeaderService,
+    public dialog: MatDialog,
+    public translateService: TranslateService,
+    public appService: AppConfigService
   ) { }
   // function which will be called for all http calls
   intercept(

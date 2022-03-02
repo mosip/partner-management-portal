@@ -30,10 +30,10 @@ export class SideMenuComponent implements OnInit {
   isCollapsed: boolean = true;
 
   constructor(
-    private sideMenuService: SideMenuService,
-    private router: Router,
-    private location: Location,
-    private auditService: AuditService,
+    public sideMenuService: SideMenuService,
+    public router: Router,
+    public location: Location,
+    public auditService: AuditService,
     public rolesService: RolesService
   ) {
     router.events.subscribe(() => {

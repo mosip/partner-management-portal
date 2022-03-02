@@ -20,7 +20,7 @@ export class MaterDataCommonViewComponent implements OnInit {
   @Input() secondaryLang: string;
   @Input() masterdataType: any;
 
-  constructor(private translateService: TranslateService, private appConfigService: AppConfigService) {
+  constructor(public translateService: TranslateService, public appConfigService: AppConfigService) {
     // tslint:disable-next-line:no-string-literal
     this.primaryLang = appConfigService.getConfig()['primaryLangCode'];
     // tslint:disable-next-line:no-string-literal

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import * as appConstants from '../../app.constants';
+/*import * as appConstants from '../../app.constants';*/
 import { HeaderService } from './header.service';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
@@ -15,17 +15,17 @@ export class RolesGuard implements CanActivate {
 
   popupMessages: any;
 
-  constructor(private headerService: HeaderService,
-              private dialog: MatDialog,
-              private router: Router,
-              private appService: AppConfigService,
-              private translateService: TranslateService) { }
+  constructor(public headerService: HeaderService,
+              public dialog: MatDialog,
+              public router: Router,
+              public appService: AppConfigService,
+              public translateService: TranslateService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const x = appConstants.navItems.filter(item => state.url.indexOf(item.route) >= 0);
-    let flag = false;
+    /*const x = appConstants.navItems.filter(item => state.url.indexOf(item.route) >= 0);
+    let flag = false;*/
     return true;
     /*if (x[0].children) {
       const y = x[0].children.filter(item => state.url.indexOf(item.route) >= 0);
@@ -41,7 +41,7 @@ export class RolesGuard implements CanActivate {
     }*/
   }
 
-  private checkRole(roles: string[]): boolean {
+  public checkRole(roles: string[]): boolean {
     const userRoles = this.headerService.getRoleCodes().split(',');
     let flag = false;
     for (let i in roles) {
@@ -53,7 +53,7 @@ export class RolesGuard implements CanActivate {
     return flag;
   }
 
-  private getMessage() {
+  public getMessage() {
     return new Promise((resolve, reject) => {
       this.translateService.getTranslation(this.appService.getConfig()['primaryLangCode']).subscribe(response => {
         this.popupMessages = response['errorPopup']['unauthorized'];
@@ -62,7 +62,7 @@ export class RolesGuard implements CanActivate {
     })
   }
 
-  private async showMessage() {
+  public async showMessage() {
     await this.getMessage();
     console.log(this.popupMessages);
     this.dialog.open(DialogComponent, {

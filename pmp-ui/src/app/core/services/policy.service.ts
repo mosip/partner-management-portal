@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppConfigService } from 'src/app/app-config.service';
 import { RequestModel } from '../models/request.model';
 import { Observable } from 'rxjs';
-import { URL } from 'src/app/app.constants';
 
 const httpOptions = {
     headers:new HttpHeaders({})
@@ -15,9 +14,9 @@ const httpOptions = {
 
 export class PolicyService{
 
-    constructor(private http:HttpClient, private appService:AppConfigService){}
+    constructor(public http:HttpClient, public appService:AppConfigService){}
 
-    private BASE_URL = "https://dev.mosip.net/partnermanagement/v1/policies";
+    public BASE_URL = "https://dev.mosip.net/partnermanagement/v1/policies";
 
     getPolicyDetails(request: RequestModel): Observable<any> {    
         console.log("request>>>"+JSON.stringify(request));
