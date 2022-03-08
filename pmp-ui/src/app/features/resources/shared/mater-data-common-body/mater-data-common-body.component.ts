@@ -75,7 +75,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   subscribed: any;
   displayedColumns: string[] = ['label', 'crDtimes', 'status', 'action'];
   displayedSBIColumns: string[] = ['sbiId', 'action'];
-
+  setreadonly:boolean = false;
   constructor(
     public dataStorageService: DataStorageService,
     public router: Router,
@@ -95,7 +95,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     let ajv = new Ajv.default({ allErrors: true });
     let validate = ajv.compile({"properties":{"allowedKycAttributes":{"type":"array","additionalItems":false,"items":{"type":"object","properties":{"attributeName":{"type":"string"}},"required":["attributeName"],"additionalProperties":false}},"allowedAuthTypes":{"type":"array","additionalItems":false,"items":{"type":"object","properties":{"authType":{"type":"string"},"authSubType":{"type":"string"},"mandatory":{"type":"boolean"}},"required":["authType","mandatory"],"additionalProperties":false}},"authTokenType":{"type":"string","enum":["random","partner","policy"]}},"required":["authTokenType","allowedAuthTypes","allowedKycAttributes"],"additionalProperties":false});
     let valid = validate({"dataSharePolicies":{"typeOfShare":"direct","validForInMinutes":"30","transactionsAllowed":"2","encryptionType":"Partner Based","shareDomain":"datashare-service","source":"ID Repository"},"shareableAttributes":[{"attributeName":"fullName","source":[{"attribute":"fullName","filter":[{"language":"eng"}]}],"encrypted":false},{"attributeName":"dateOfBirth","source":[{"attribute":"dateOfBirth"}],"encrypted":false,"format":"YYYY"},{"attributeName":"gender","source":[{"attribute":"gender"}],"encrypted":false},{"attributeName":"phone","source":[{"attribute":"phone"}],"encrypted":false},{"attributeName":"email","source":[{"attribute":"email"}],"encrypted":false},{"attributeName":"addressLine1","source":[{"attribute":"addressLine1"}],"encrypted":false},{"attributeName":"addressLine2","source":[{"attribute":"addressLine2"}],"encrypted":false},{"attributeName":"addressLine3","source":[{"attribute":"addressLine3"}],"encrypted":false},{"attributeName":"region","source":[{"attribute":"region"}],"encrypted":false},{"attributeName":"province","source":[{"attribute":"province"}],"encrypted":false},{"attributeName":"city","source":[{"attribute":"city"}],"encrypted":false},{"attributeName":"UIN","source":[{"attribute":"UIN"}],"encrypted":false},{"attributeName":"postalCode","source":[{"attribute":"postalCode"}],"encrypted":false},{"attributeName":"biometrics","group":"CBEFF","source":[{"attribute":"individualBiometrics","filter":[{"type":"Face"},{"type":"Finger","subType":["Left Thumb","Right Thumb"]}]}],"encrypted":true,"format":"extraction"}]});
-    if (!valid) console.log("validate.errors>>>"+JSON.stringify(validate.errors));
+    if (!valid){}; /*console.log("validate.errors>>>"+JSON.stringify(validate.errors))*/
     
     let url = "";
     this.isCreateForm = false;
@@ -104,7 +104,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
       url = this.router.url.split('/')[4];
     }else{
       url = this.router.url.split('/')[3];
-    }    
+    }   
     if(!this.primaryData){
       this.isCreateForm = true;
       if(url === "policygroup"){
@@ -144,7 +144,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
         this.getPartnerDropdownValues("Policy_Mapping", "partnerId");
       }
     }
-    setTimeout(()=>{ 
+
+    setTimeout(()=>{
         this.loadSecondaryForm();
     }, 500);
 
@@ -155,6 +156,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
+
   loadSecondaryForm(){
     let url = "";
     if(this.router.url.split('/').length > 7){
@@ -162,11 +164,21 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }else{
       url = this.router.url.split('/')[3];
     }   
-    if(url === "devicedetails"){        
+    if(url === "devicedetails"){ 
+      if(this.primaryData.deviceProviderId){
+        this.setreadonly = true;  
+      }      
       this.getSbidetails();   
       this.getSbidetailFilterValues("sbiId");       
-    }
-    else if(url === "policymapping"){
+    }else if(url === "sbidetails"){ 
+      if(this.primaryData.providerId){
+        this.setreadonly = true;  
+      }       
+    }else if(url === "ftmdetails"){ 
+      if(this.primaryData.ftpProviderId){
+        this.setreadonly = true;  
+      }      
+    }else if(url === "policymapping"){
       this.getAPIKeydetails();
     }
   }

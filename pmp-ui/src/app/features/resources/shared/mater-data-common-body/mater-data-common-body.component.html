@@ -60,6 +60,24 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdownpartner'">
+              <mat-select
+                [value]="primaryData[field.name]"
+                placeholder="{{ field.label[primaryLang] }}"
+                required
+                disabled="{{setreadonly}}"
+              >
+                <mat-option
+                  *ngFor="let data of dropDownValues[field.name]"
+                  (onSelectionChange)="
+                    captureDropDownValue($event, field.name, 'primary')
+                  "
+                  [value]="data.fieldCode"
+                >
+                  {{ data.fieldValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'calendar'">
               <input
                 matInput
