@@ -99,7 +99,7 @@ export class CommonService {
         };
       }else{
         obj = {
-          title: this.actionMessages.activate['success-title'],
+          title: this.actionMessages.activate['error-title'],
           message: this.serverMessages[data[0].errorCode],
           btnTxt: this.actionMessages.activate['btnTxt']
         };
@@ -249,7 +249,7 @@ export class CommonService {
           this.createMessage('success', callingFunction, response.response);
           this.router.navigateByUrl(this.router.url);
         } else {
-          this.createMessage('error', callingFunction);
+          this.createMessage('error', callingFunction, response.errors);
         }
       },
       error => this.createMessage('error', callingFunction)
