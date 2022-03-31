@@ -11,7 +11,8 @@ export class LoginRedirectService {
 
   redirect(url: string) {
     const stateParam = uuid();
+    this.cookie.set('state', "");
     this.cookie.set('state', stateParam, undefined, '/');
-    window.location.href = `${this.appService.getConfig().baseUrl}v1/partnermanager/login/` + btoa(url);
+    window.location.href = `${this.appService.getConfig().baseUrl}v1/partnermanager/login/` + btoa(url)+"?state="+stateParam;
   }
 }
