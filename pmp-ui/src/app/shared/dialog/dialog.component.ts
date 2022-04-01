@@ -409,7 +409,7 @@ export class DialogComponent implements OnInit {
         let request = new RequestModel(
           "",
           null,
-          {"partnerId": this.headerService.getUsername(), "organizationName": this.headerService.getOrganizationName(), "address": this.headerService.getAddress(), "contactNumber": this.headerService.getContactNumber(), "emailId": this.headerService.getEmailId(), "partnerType": this.headerService.getPartnerType(), "policyGroup":url.split("&policyGroup=")[1].split(":")[0]}
+          {"partnerId": this.headerService.getUsername(), "organizationName": this.headerService.getOrganizationName(), "address": this.headerService.getAddress(), "contactNumber": this.headerService.getContactNumber(), "emailId": this.headerService.getEmailId(), "partnerType": this.headerService.getPartnerType(), "policyGroup":url.split("&policyGroup=")[1].split(":")[0], "langCode": this.headerService.getNotificationLanguage()}
         );   
         this.dataStorageService
           .partnerRegistration(request)
