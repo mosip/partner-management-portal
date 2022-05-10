@@ -17,9 +17,6 @@ export class AppConfigService {
   }
 
   getConfig() {
-    console.log('before getConfig new change>>>'+this.appConfig);
-  	this.appConfig = {'primaryLangCode':'eng'};
-    console.log('after getConfig>>>'+this.appConfig);
     return this.appConfig;
   }
 }
