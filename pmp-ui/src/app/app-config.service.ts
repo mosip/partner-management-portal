@@ -13,11 +13,12 @@ export class AppConfigService {
 
   async loadAppConfig() {
     this.appConfig = await this.http.get('./assets/config.json').toPromise();
+    this.appConfig["primaryLangCode"] = this.headerService.getUserPreferredLanguage();
   }
 
   getConfig() {
-    console.log('before getConfig>>>'+this.appConfig);
-  	this.appConfig["primaryLangCode"] = 'eng';
+    console.log('before getConfig new change>>>'+this.appConfig);
+  	this.appConfig = {'primaryLangCode':'eng'};
     console.log('after getConfig>>>'+this.appConfig);
     return this.appConfig;
   }
