@@ -16,7 +16,7 @@ export class AppConfigService {
   }
 
   getConfig() {
-  	this.appConfig["primaryLangCode"] = this.headerService.getlanguageCode();
+  	//this.appConfig["primaryLangCode"] = this.headerService.getlanguageCode();
     return this.appConfig;
   }
 }
