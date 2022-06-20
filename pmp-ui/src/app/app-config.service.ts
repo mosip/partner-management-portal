@@ -12,11 +12,11 @@ export class AppConfigService {
   constructor(public http: HttpClient, public headerService: HeaderService) { }
 
   async loadAppConfig() {
-    this.appConfig = await this.http.get('./assets/config.json').toPromise();
-    this.appConfig["primaryLangCode"] = this.headerService.getlanguageCode();
+    this.appConfig = await this.http.get('./assets/config.json').toPromise();    
   }
 
   getConfig() {
+    this.appConfig["primaryLangCode"] = this.headerService.getlanguageCode();
     return this.appConfig;
   }
 }
