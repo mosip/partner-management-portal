@@ -45,6 +45,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
@@ -62,6 +63,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdownpartner'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
@@ -114,6 +116,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
