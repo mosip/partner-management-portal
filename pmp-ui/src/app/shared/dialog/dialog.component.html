@@ -161,6 +161,7 @@
         type="submit"
         mat-button
         class="footer-button"
+        id="applyTxt"
         style="background-color:#FF4081; color:white;"
       >
         {{ "filters.footerButtons.applyTxt" | translate }}
@@ -210,7 +211,7 @@
   </div>
   <div mat-dialog-actions class="pop-up-footer">
     <span
-      ><button mat-button [mat-dialog-close]="!confirm">
+      ><button mat-button [mat-dialog-close]="!confirm" id="noBtnTxt">
         {{ input.noBtnTxt }}
       </button></span
     >
@@ -220,6 +221,7 @@
         mat-button
         [mat-dialog-close]="confirm"
         cdkFocusInitial
+        id="yesBtnTxt"
       >
         {{ input.yesBtnTxt }}
       </button></span
@@ -243,7 +245,7 @@
       </button>
     </span>
     <span
-      ><button mat-button [mat-dialog-close]="!confirm">
+      ><button mat-button [mat-dialog-close]="!confirm" id="noBtnTxt">
         {{ input.noBtnTxt }}
       </button></span
     >
@@ -253,6 +255,7 @@
         mat-button
         [mat-dialog-close]="confirm"
         cdkFocusInitial
+        id="confirmpopup"
       >
         {{ input.yesBtnTxt }}
       </button></span
@@ -282,7 +285,7 @@
   </div>
   <div mat-dialog-actions class="pop-up-footer">
     <span
-      ><button mat-button cdkFocusInitial (click)="dismiss()">
+      ><button mat-button cdkFocusInitial (click)="dismiss()" id="confirmmessagepopup">
         {{ input.btnTxt }}
       </button></span
     >
@@ -307,7 +310,7 @@
   </div>
   <div mat-dialog-actions class="pop-up-footer">
     <span
-      ><button mat-button cdkFocusInitial (click)="dismiss()">
+      ><button mat-button cdkFocusInitial (click)="dismiss()" id="dismiss">
         OK
       </button></span
     >
