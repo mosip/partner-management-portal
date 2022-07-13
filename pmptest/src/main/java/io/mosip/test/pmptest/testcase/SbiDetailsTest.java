@@ -57,11 +57,21 @@ public class SbiDetailsTest extends BaseClass {
 		Commons.filter(driver, By.xpath("//input[@placeholder='Version']"), data);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Edit0"));
-		Commons.enter(driver, By.xpath("//input[@placeholder='Expiry DateTime']"), "6/15/2052");
-
+		Commons.enter(driver, By.xpath("//input[@placeholder='Binary Hash']"), data+1);
 //Need to change these 2 Lines after Aravind Provide Id
 		Commons.click(driver, By.xpath("//button[@id='createButton']"));
 		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));
+		
+		Commons.click(driver, By.id("Filter"));
+		Commons.filter(driver, By.xpath("//input[@placeholder='Version']"), data);
+		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(driver, By.id("Reject0"));
+		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
 		
 		
 	}

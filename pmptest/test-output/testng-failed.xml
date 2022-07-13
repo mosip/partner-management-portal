@@ -4,25 +4,22 @@
   <test thread-count="5" name="Command line test(failed)">
     <groups>
       <run>
+        <exclude name="AP"/>
+        <exclude name="DP"/>
+        <exclude name="SD"/>
+        <exclude name="DD"/>
+        <exclude name="FD"/>
         <exclude name="PPM"/>
-        <exclude name="UFCC"/>
       </run>
     </groups>
     <classes>
-      <class name="io.mosip.test.pmptest.testcase.FtmDetailsTest">
+      <class name="io.mosip.test.pmptest.testcase.PolicyGroupTest">
         <methods>
-          <include name="ftmDetailsCRUD"/>
           <include name="setUp"/>
           <include name="tearDown"/>
-        </methods>
-      </class> <!-- io.mosip.test.pmptest.testcase.FtmDetailsTest -->
-      <class name="io.mosip.test.pmptest.testcase.DataSharePolicyTest">
-        <methods>
           <include name="PolicyGroupCRUD"/>
-          <include name="setUp"/>
-          <include name="tearDown"/>
         </methods>
-      </class> <!-- io.mosip.test.pmptest.testcase.DataSharePolicyTest -->
+      </class> <!-- io.mosip.test.pmptest.testcase.PolicyGroupTest -->
     </classes>
   </test> <!-- Command line test(failed) -->
 </suite> <!-- Failed suite [Command line suite] -->

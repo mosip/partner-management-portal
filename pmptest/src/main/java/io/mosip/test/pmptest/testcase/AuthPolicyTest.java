@@ -83,5 +83,10 @@ public class AuthPolicyTest extends BaseClass {
 		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
+		
+		
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
+		
 	}
 }

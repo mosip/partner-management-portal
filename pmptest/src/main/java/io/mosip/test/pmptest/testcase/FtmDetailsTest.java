@@ -53,9 +53,11 @@ public class FtmDetailsTest extends BaseClass {
 		Commons.filter(driver, By.id("make"), data);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Reject0"));
-
 		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
 
 	}
 }

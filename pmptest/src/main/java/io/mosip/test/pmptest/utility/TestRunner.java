@@ -36,7 +36,8 @@ public class TestRunner {
 				FtmDetailsTest.class,
 				PolicyGroupTest.class,
 				AuthPolicyTest.class,
-				DataSharePolicyTest.class
+				DataSharePolicyTest.class,
+				PartnerPolicyMappingTest.class
 				//UploadFtmCaCertTest.class
 				//BulkUploadTest.class
 				/*

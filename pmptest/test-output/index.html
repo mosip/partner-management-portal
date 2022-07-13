@@ -102,7 +102,7 @@
                     <div class="method-list-content passed suite-Command_line_suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Command_line_suite" title="io.mosip.test.pmptest.testcase.DeviceDetailsTest" class="method navigator-link" hash-for-method="deviceDetailsCRUD">deviceDetailsCRUD</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Command_line_suite" title="io.mosip.test.pmptest.testcase.AuthPolicyTest" class="method navigator-link" hash-for-method="PolicyGroupCRUD">PolicyGroupCRUD</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Command_line_suite -->
@@ -120,14 +120,14 @@
           <div class="suite-Command_line_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">io.mosip.test.pmptest.testcase.DeviceDetailsTest</span>
+              <span class="class-name">io.mosip.test.pmptest.testcase.AuthPolicyTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="deviceDetailsCRUD">
-                  </a> <!-- deviceDetailsCRUD -->
-                  <span class="method-name">deviceDetailsCRUD</span>
+                  <a name="PolicyGroupCRUD">
+                  </a> <!-- PolicyGroupCRUD -->
+                  <span class="method-name">PolicyGroupCRUD</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -143,10 +143,11 @@
 &lt;suite name=&quot;Command line suite&quot;&gt;
   &lt;groups&gt;
     &lt;run&gt;
-      &lt;exclude name=&quot;AP&quot;/&gt;
       &lt;exclude name=&quot;DP&quot;/&gt;
       &lt;exclude name=&quot;SD&quot;/&gt;
+      &lt;exclude name=&quot;DD&quot;/&gt;
       &lt;exclude name=&quot;FD&quot;/&gt;
+      &lt;exclude name=&quot;PPM&quot;/&gt;
       &lt;exclude name=&quot;PG&quot;/&gt;
     &lt;/run&gt;
   &lt;/groups&gt;
@@ -158,6 +159,7 @@
       &lt;class name=&quot;io.mosip.test.pmptest.testcase.PolicyGroupTest&quot;/&gt;
       &lt;class name=&quot;io.mosip.test.pmptest.testcase.AuthPolicyTest&quot;/&gt;
       &lt;class name=&quot;io.mosip.test.pmptest.testcase.DataSharePolicyTest&quot;/&gt;
+      &lt;class name=&quot;io.mosip.test.pmptest.testcase.PartnerPolicyMappingTest&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Command line test --&gt;
 &lt;/suite&gt; &lt;!-- Command line suite --&gt;
@@ -171,7 +173,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Command line test (6 classes)</span>
+                <span class="test-name">Command line test (7 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -182,10 +184,10 @@
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="test-group">
-              <span class="test-group-name">DD</span>
+              <span class="test-group-name">AP</span>
               <br/>
               <div class="method-in-group">
-                <span class="method-in-group-name">deviceDetailsCRUD</span>
+                <span class="method-in-group-name">PolicyGroupCRUD</span>
                 <br/>
               </div> <!-- method-in-group -->
             </div> <!-- test-group -->
@@ -207,14 +209,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'deviceDetailsCRUD')
-data.setCell(0, 2, 'io.mosip.test.pmptest.testcase.DeviceDetailsTest')
-data.setCell(0, 3, 39959);
+data.setCell(0, 1, 'PolicyGroupCRUD')
+data.setCell(0, 2, 'io.mosip.test.pmptest.testcase.AuthPolicyTest')
+data.setCell(0, 3, 35473);
 window.suiteTableData['Command_line_suite']= { tableData: data, tableDiv: 'times-div-Command_line_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 39 seconds</span>
+              <span class="suite-total-time">Total running time: 35 seconds</span>
               <div id="times-div-Command_line_suite">
               </div> <!-- times-div-Command_line_suite -->
             </div> <!-- times-div -->
@@ -229,7 +231,7 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Command_line_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">5 ignored methods</span>
+            <span class="header-content">6 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
@@ -247,9 +249,9 @@ return data;
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
             <div class="ignored-class-div">
-              <span class="ignored-class-name">io.mosip.test.pmptest.testcase.AuthPolicyTest</span>
+              <span class="ignored-class-name">io.mosip.test.pmptest.testcase.DeviceDetailsTest</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">PolicyGroupCRUD</span>
+                <span class="ignored-method-name">deviceDetailsCRUD</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -257,6 +259,13 @@ return data;
               <span class="ignored-class-name">io.mosip.test.pmptest.testcase.PolicyGroupTest</span>
               <div class="ignored-methods-div">
                 <span class="ignored-method-name">PolicyGroupCRUD</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">io.mosip.test.pmptest.testcase.PartnerPolicyMappingTest</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">ftmDetailsCRUD</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -275,18 +284,18 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">io.mosip.test.pmptest.testcase.DeviceDetailsTest</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">io.mosip.test.pmptest.testcase.AuthPolicyTest</div> <!-- chronological-class-name -->
               <div class="configuration-method before">
                 <span class="method-name">setUp</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">deviceDetailsCRUD</span>
-                <span class="method-start">12697 ms</span>
+                <span class="method-name">PolicyGroupCRUD</span>
+                <span class="method-start">7801 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">52666 ms</span>
+                <span class="method-start">43276 ms</span>
               </div> <!-- configuration-method after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

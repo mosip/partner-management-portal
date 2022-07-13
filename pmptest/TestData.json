@@ -1,7 +1,7 @@
 {
 	"identity": {
 		"BELOW_ARE_KEYWORDS_FOR_HELP": "Below Keys use to put in setExcludedGroups to exclude scenarios eg BL for blocklistedwordsCRUD to ignore this execution",
-		"ALL": "AP,DP,SD,DD,FD,PG",
+		"ALL": "AP,DP,SD,DD,FD,PG,PPM",
 		"1blocklistedwordsCRUD": "BL",
 		"2bulkUploadCRUD": "BU",
 		"3centerCRUD": "CTR",
@@ -18,7 +18,7 @@
 		"14machineTypesCRUD": "MT",
 		"15templateCRUD": "T",
 		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
-		"setExcludedGroups": "AP,DP,SD,FD,PG",
+		"setExcludedGroups": "AP,SD,DD,FD,PPM,PG",
 		"holidayDateCenter": "27/12/2022",
 		"holidayDate": "12/27/2022",
 		"loginlang": "eng",

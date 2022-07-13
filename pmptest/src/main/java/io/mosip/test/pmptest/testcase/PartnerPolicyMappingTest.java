@@ -42,14 +42,16 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 //Need to change this Line after Aravind Provide Id
 		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));
-		
-		
-		
 
 		Commons.click(driver, By.id("Filter"));
 		Commons.filter(driver, By.id("make"), data);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Approve0"));
+		
+		
+		
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
 		
 		
 		

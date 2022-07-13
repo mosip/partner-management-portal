@@ -40,7 +40,7 @@ public class DataSharePolicyTest extends BaseClass {
        Commons.click(driver, By.xpath("//button[@id='Create Policy']"));
        
 		
-		Commons.enter(driver, By.xpath("//input[@placeholder='Name']"), data);
+		Commons.enter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
 		Commons.enter(driver, By.xpath("//input[@placeholder='Description']"), data);
 		Commons.dropdown(driver, By.xpath("//mat-select[@id='policyGroupName']"));
 		
@@ -60,7 +60,7 @@ public class DataSharePolicyTest extends BaseClass {
 		
 		
 		Commons.click(driver, By.id("Filter"));
-		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data);
+		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Edit0"));
 		Commons.enter(driver, By.xpath("//input[@placeholder='Description']"), data);
@@ -70,12 +70,17 @@ public class DataSharePolicyTest extends BaseClass {
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
 		Commons.click(driver, By.id("Filter"));
-		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data);
+		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Activate0"));
 
 		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		
+		
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
 
 
 		
