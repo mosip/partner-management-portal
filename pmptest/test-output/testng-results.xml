@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="6" total="7" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2022-07-13T16:55:40 IST" name="Command line suite" finished-at="2022-07-13T16:56:24 IST" duration-ms="44004">
+    <groups>
+      <group name="AP">
+        <method signature="AuthPolicyTest.PolicyGroupCRUD()[pri:0, instance:io.mosip.test.pmptest.testcase.AuthPolicyTest@5495333e]" name="PolicyGroupCRUD" class="io.mosip.test.pmptest.testcase.AuthPolicyTest"/>
+      </group> <!-- AP -->
+    </groups>
+    <test started-at="2022-07-13T16:55:40 IST" name="Command line test" finished-at="2022-07-13T16:56:24 IST" duration-ms="44004">
+      <class name="io.mosip.test.pmptest.testcase.AuthPolicyTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:io.mosip.test.pmptest.testcase.AuthPolicyTest@5495333e]" started-at="2022-07-13T16:55:40 IST" name="setUp" finished-at="2022-07-13T16:55:48 IST" duration-ms="7800" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="PolicyGroupCRUD()[pri:0, instance:io.mosip.test.pmptest.testcase.AuthPolicyTest@5495333e]" started-at="2022-07-13T16:55:48 IST" name="PolicyGroupCRUD" finished-at="2022-07-13T16:56:23 IST" duration-ms="35473" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- PolicyGroupCRUD -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:io.mosip.test.pmptest.testcase.AuthPolicyTest@5495333e]" started-at="2022-07-13T16:56:23 IST" name="tearDown" finished-at="2022-07-13T16:56:24 IST" duration-ms="701" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- io.mosip.test.pmptest.testcase.AuthPolicyTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>

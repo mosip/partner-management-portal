@@ -1,0 +1,31 @@
+This Repository is used for Admin Portal Automation.
+
+How To run : 
+	First Build Jar
+	Place VM args- java  -Dpath=https://env.mosip.net/ -Duserid=user -Dpassword=pwd -jar nameofAdminJar.jar
+	Place jar in one folder along with src/main/resources files and folder and then run jar
+
+TestData Setup:
+	TestData.json
+		langcode:eng -- This is Admin login page language selection 
+		bulkwait:10000 -- This is Bulk upload wait
+	
+		Keep setExcludedGroups="" -- To run all the scenario mentioned below
+		Keep setExcludedGroups="BL,CT" -- To Exclude testcases execution based on below tags. 
+	
+Includes: Below Scenarios and their tags.
+		"blocklistedwordsCRUD": "BL",
+		"bulkUploadCRUD": "BU",
+		"centerCRUD": "CTR",
+		"centerTypeCRUD": "CT",
+		"deviceSpecCRUD": "DS",
+		"deviceCRUD": "D",
+		"deviceTypesCRUD": "DT",
+		"documentCategoriesCRUD": "DOC",
+		"documentTypesCRUD": "DOCT",
+		"dynamicFieldCRUD": "DF",
+		"holidaysCRUD": "H",
+		"machineSpecCRUD": "MS",
+		"machineCRUD": "M",
+		"machineTypesCRUD": "MT",
+		"templateCRUD": "T"
