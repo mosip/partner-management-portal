@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.mosip.test</groupId>
-  <artifactId>admintest</artifactId>
+  <artifactId>pmptest</artifactId>
   <version>1.2.1</version>
-  <name>admin-ui-automation</name>
-  <description>admin-ui-automation</description>
-  <url>https://github.com/mosip/admin-ui</url>
+  <name>pmp-ui-automation</name>
+  <description>pmp-ui-automation</description>
+  <url>https://github.com/mosip/Partner-management-portal</url>
 	
   <licenses>
           <license>
@@ -14,9 +14,9 @@
           </license>
   </licenses>
  	<scm>
-                <connection>scm:git:git://github.com/mosip/admin-ui.git</connection>
-                <developerConnection>scm:git:ssh://github.com:mosip/admin-ui.git</developerConnection>
-                <url>https://github.com/mosip/admin-ui</url>
+                <connection>scm:git:git://github.com/mosip/Partner-management-portal.git</connection>
+                <developerConnection>scm:git:ssh://github.com:mosip/Partner-management-portal.git</developerConnection>
+                <url>https://github.com/mosip/Partner-management-portal</url>
                 <tag>HEAD</tag>
         </scm>
 	<developers>
@@ -45,7 +45,7 @@
                <archive>
                   <manifest>
                      <addClasspath>true</addClasspath>
-                     <mainClass>io.mosip.test.admintest.utility.TestRunner</mainClass>
+                     <mainClass>io.mosip.test.pmptest.utility.TestRunner</mainClass>
                   </manifest>
                </archive>
             </configuration>

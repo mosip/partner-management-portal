@@ -5,7 +5,6 @@ import java.util.List;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
-import io.mosip.test.admintest.testcase.*;
 import io.mosip.test.pmptest.testcase.AuthPolicyTest;
 import io.mosip.test.pmptest.testcase.DataSharePolicyTest;
 import io.mosip.test.pmptest.testcase.DeviceDetailsTest;
@@ -39,12 +38,7 @@ public class TestRunner {
 				DataSharePolicyTest.class,
 				PartnerPolicyMappingTest.class
 				//UploadFtmCaCertTest.class
-				//BulkUploadTest.class
-				/*
-										 * ,FtmDetailsTest.class,SbiDetailsTest.class,PartnerPolicyMappingTest.class,
-										 * NILTest.class,PolicyGroupTest.class,,
-										 * DataSharePolicyTest.class
-										 */
+				
 		
 		});
 	//	testNg.addListener(tla);
