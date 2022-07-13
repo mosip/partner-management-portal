@@ -1,0 +1,56 @@
+{
+	"identity": {
+		"BELOW_ARE_KEYWORDS_FOR_HELP": "Below Keys use to put in setExcludedGroups to exclude scenarios eg BL for blocklistedwordsCRUD to ignore this execution",
+		"ALL": "BL,BU,CTR,CT,DS,D,DT,DOC,DOCT,DF,H,MS,M,MT,T,LGN,UFCC,DD",
+		"1blocklistedwordsCRUD": "BL",
+		"2bulkUploadCRUD": "BU",
+		"3centerCRUD": "CTR",
+		"4centerTypeCRUD": "CT",
+		"5deviceSpecCRUD": "DS",
+		"6deviceCRUD": "D",
+		"7deviceTypesCRUD": "DT",
+		"8documentCategoriesCRUD": "DOC",
+		"9documentTypesCRUD": "DOCT",
+		"10dynamicFieldCRUD": "DF",
+		"11holidaysCRUD": "H",
+		"12machineSpecCRUD": "MS",
+		"13machineCRUD": "M",
+		"14machineTypesCRUD": "MT",
+		"15templateCRUD": "T",
+		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
+		"setExcludedGroups": "BL,BU,CTR,CT,DS,D,DT,DOC,DOCT,DF,H,MS,M,MT,DD,T,LGN",
+		"holidayDateCenter": "27/12/2022",
+		"holidayDate": "12/27/2022",
+		"loginlang": "hin",
+		"jsonObjName": "identity",
+		"bulkwait": "10000",
+		"publicKey": "ZAEACwACAHIAIINxl2dEhLP4GpDMjUal1yT9UtduBlILZPKh2hszFGmqABAAFwALCAAAAQABAQDCHegKJ3vRn__8h1knXKiLA8qfO5LebzBlRO2tAcI3HvLyL9rPkVrXWYQ6wAn4VQk015C1hViU-7k752dYE5WUAUbgsxOHvvDPH1t72CNHNj9dyE86wGqR9AtK3yz0yf1IP_xgtWpiaQ2V9t2d3LtgPYWnRuPJbcl97nLXXL6PGfh1mRwsQUi94coEBPMZ9YLLOAFckPuDZt-lEcXIMkj8r0uNwAZUSEvGifTNWbLjC5BRlJBmvScIlptXqIwBaq2kSMVK2X1KbQ6TM8zkA_co4LEAIZfcpMgPn6RdW0yFtcx24HqrCY8v0DHregwoCPPpw8HvB-r5aR09mXG64zsJ",
+		"signPublicKey": "AAZABAAEAHIAAAAQABQACwgAAAEAAQEAr93rKokeZGIzcCtFX3iyCvwpmfnd9jz0nF__0bxWr0mH8Zs0rhlG6vKRagx31I4CdrLAECOwMZ0r7Y3utTqHqelQE3MJLtboKITOqYRpBkqHSm1jGaEb8a1E9yoJri3tZrBCrAShimrN_SbtS1uKbJUG3cuVuE0gtGLI1d5wMfS_4PSz3RwvZtGHisEb3zbV6SLcJkgcDeMbUD7P25SVJd1xrJybuGIgyeSZxOgLzy1P-qHCiOXiAO9o06fwyIhIYbeZYz5th4rq7Rb6mRK9EWFpLrLvBL0F6USiidl8qNCxxZZFUp3W5xFANVYfRvgLKI33zBYniZ7aTE8PgrYa2w",
+		"langcode": [
+			{
+				"language": "tam",
+				"value": "தமிழ்"
+			},
+			{
+				"language": "kan",
+				"value": "ಕನ್ನಡ"
+			},
+			{
+				"language": "hin",
+				"value": "hin"
+			},
+			{
+				"language": "eng",
+				"value": "English"
+			},
+			{
+				"language": "fra",
+				"value": "Français"
+			},
+			{
+				"language": "ara",
+				"value": "Arabic"
+			}
+		]
+	}
+}

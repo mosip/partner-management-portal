@@ -1,0 +1,58 @@
+{
+	"identity": {
+		"BELOW_ARE_KEYWORDS_FOR_HELP": "Below Keys use to put in setExcludedGroups to exclude scenarios eg BL for blocklistedwordsCRUD to ignore this execution",
+		"ALL": "AP,DP,SD,DD,FD,PG",
+		"1blocklistedwordsCRUD": "BL",
+		"2bulkUploadCRUD": "BU",
+		"3centerCRUD": "CTR",
+		"4centerTypeCRUD": "CT",
+		"5deviceSpecCRUD": "DS",
+		"6deviceCRUD": "D",
+		"7deviceTypesCRUD": "DT",
+		"8documentCategoriesCRUD": "DOC",
+		"9documentTypesCRUD": "DOCT",
+		"10dynamicFieldCRUD": "DF",
+		"11holidaysCRUD": "H",
+		"12machineSpecCRUD": "MS",
+		"13machineCRUD": "M",
+		"14machineTypesCRUD": "MT",
+		"15templateCRUD": "T",
+		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
+		"setExcludedGroups": "AP,DP,SD,FD,PG",
+		"holidayDateCenter": "27/12/2022",
+		"holidayDate": "12/27/2022",
+		"loginlang": "eng",
+		"jsonObjName": "identity",
+		"bulkwait": "10000",
+		"policyData": "{\"authTokenType\":\"policy\",\"allowedKycAttributes\":[{\"attributeName\":\"fullName\"},{\"attributeName\":\"gender\"},{\"attributeName\":\"residenceStatus\"},{\"attributeName\":\"dateOfBirth\"},{\"attributeName\":\"photo\"},{\"attributeName\":\"civilRegistryNumber\"},{\"attributeName\":\"birthCertificateNumber\"},{\"attributeName\":\"flagidcs\"},{\"attributeName\":\"listCountry\"},{\"attributeName\":\"placeOfBirth\"},{\"attributeName\":\"flagb\"},{\"attributeName\":\"passportNumber\"},{\"attributeName\":\"referenceResidencyNumber\"},{\"attributeName\":\"resOuPass\"}],\"allowedAuthTypes\":[{\"authSubType\":\"IRIS\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"FINGER\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"otp\",\"mandatory\":false},{\"authSubType\":\"FACE\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"otp-request\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"kyc\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"demo\",\"mandatory\":false}]}",
+		"dataSharepolicyData":"{\"shareableAttributes\":[{\"attributeName\":\"biometrics\",\"source\":[{\"attribute\":\"registration-client\\/NEW\\/individualBiometrics\",\"filter\":[{\"type\":\"Iris\"}]},{\"attribute\":\"CNIE\\/verification\\/biometrics\",\"filter\":[{\"type\":\"Finger\"}]},{\"attribute\":\"CNIE\\/verification\\/biometrics\",\"filter\":[{\"type\":\"Face\"}]}],\"encrypted\":true,\"format\":\"extraction\"}],\"dataSharePolicies\":{\"typeOfShare\":\"DataShare\",\"validForInMinutes\":\"30\",\"transactionsAllowed\":\"2\",\"encryptionType\":\"PartnerBased\",\"shareDomain\":\"datashare-service\",\"source\":\"PacketManager\"}}",
+		"publicKey": "ZAEACwACAHIAIINxl2dEhLP4GpDMjUal1yT9UtduBlILZPKh2hszFGmqABAAFwALCAAAAQABAQDCHegKJ3vRn__8h1knXKiLA8qfO5LebzBlRO2tAcI3HvLyL9rPkVrXWYQ6wAn4VQk015C1hViU-7k752dYE5WUAUbgsxOHvvDPH1t72CNHNj9dyE86wGqR9AtK3yz0yf1IP_xgtWpiaQ2V9t2d3LtgPYWnRuPJbcl97nLXXL6PGfh1mRwsQUi94coEBPMZ9YLLOAFckPuDZt-lEcXIMkj8r0uNwAZUSEvGifTNWbLjC5BRlJBmvScIlptXqIwBaq2kSMVK2X1KbQ6TM8zkA_co4LEAIZfcpMgPn6RdW0yFtcx24HqrCY8v0DHregwoCPPpw8HvB-r5aR09mXG64zsJ",
+		"signPublicKey": "AAZABAAEAHIAAAAQABQACwgAAAEAAQEAr93rKokeZGIzcCtFX3iyCvwpmfnd9jz0nF__0bxWr0mH8Zs0rhlG6vKRagx31I4CdrLAECOwMZ0r7Y3utTqHqelQE3MJLtboKITOqYRpBkqHSm1jGaEb8a1E9yoJri3tZrBCrAShimrN_SbtS1uKbJUG3cuVuE0gtGLI1d5wMfS_4PSz3RwvZtGHisEb3zbV6SLcJkgcDeMbUD7P25SVJd1xrJybuGIgyeSZxOgLzy1P-qHCiOXiAO9o06fwyIhIYbeZYz5th4rq7Rb6mRK9EWFpLrLvBL0F6USiidl8qNCxxZZFUp3W5xFANVYfRvgLKI33zBYniZ7aTE8PgrYa2w",
+		"langcode": [
+			{
+				"language": "tam",
+				"value": "தமிழ்"
+			},
+			{
+				"language": "kan",
+				"value": "ಕನ್ನಡ"
+			},
+			{
+				"language": "hin",
+				"value": "hin"
+			},
+			{
+				"language": "eng",
+				"value": "eng"
+			},
+			{
+				"language": "fra",
+				"value": "Français"
+			},
+			{
+				"language": "ara",
+				"value": "ara"
+			}
+		]
+	}
+}

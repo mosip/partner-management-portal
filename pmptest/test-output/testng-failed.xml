@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Command line suite]">
+  <test thread-count="5" name="Command line test(failed)">
+    <groups>
+      <run>
+        <exclude name="PPM"/>
+        <exclude name="UFCC"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="io.mosip.test.pmptest.testcase.FtmDetailsTest">
+        <methods>
+          <include name="ftmDetailsCRUD"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- io.mosip.test.pmptest.testcase.FtmDetailsTest -->
+      <class name="io.mosip.test.pmptest.testcase.DataSharePolicyTest">
+        <methods>
+          <include name="PolicyGroupCRUD"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- io.mosip.test.pmptest.testcase.DataSharePolicyTest -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [Command line suite] -->
