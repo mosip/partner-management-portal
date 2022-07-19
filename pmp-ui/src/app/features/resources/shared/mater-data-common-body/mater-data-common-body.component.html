@@ -55,6 +55,7 @@
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
+                  [id]="data.fieldCode"
                   [value]="data.fieldCode"
                 >
                   {{ data.fieldValue }}
@@ -74,6 +75,7 @@
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
+                  [id]="data.fieldCode"
                   [value]="data.fieldCode"
                 >
                   {{ data.fieldValue }}
@@ -127,6 +129,7 @@
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
+                  [id]="data.fieldCode"
                   [value]="data.fieldCode"
                 >
                   {{ data.fieldValue }}
@@ -198,6 +201,7 @@
                         (onSelectionChange)="
                           captureDropDownValue($event, 'sbiId', '')
                         "
+                        [id]="data.fieldCode"
                         [value]="data.fieldCode"
                       >
                         {{ data.fieldValue }}
