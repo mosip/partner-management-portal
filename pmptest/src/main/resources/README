@@ -1,4 +1,4 @@
-This Repository is used for Admin Portal Automation.
+This Repository is used for PMP Portal Automation.
 
 How To run : 
 	First Build Jar
@@ -8,24 +8,18 @@ How To run :
 TestData Setup:
 	TestData.json
 		langcode:eng -- This is Admin login page language selection 
-		bulkwait:10000 -- This is Bulk upload wait
+		bulkwait:10000 -- This is to upload wait
 	
 		Keep setExcludedGroups="" -- To run all the scenario mentioned below
 		Keep setExcludedGroups="BL,CT" -- To Exclude testcases execution based on below tags. 
 	
 Includes: Below Scenarios and their tags.
-		"blocklistedwordsCRUD": "BL",
-		"bulkUploadCRUD": "BU",
-		"centerCRUD": "CTR",
-		"centerTypeCRUD": "CT",
-		"deviceSpecCRUD": "DS",
-		"deviceCRUD": "D",
-		"deviceTypesCRUD": "DT",
-		"documentCategoriesCRUD": "DOC",
-		"documentTypesCRUD": "DOCT",
-		"dynamicFieldCRUD": "DF",
-		"holidaysCRUD": "H",
-		"machineSpecCRUD": "MS",
-		"machineCRUD": "M",
-		"machineTypesCRUD": "MT",
-		"templateCRUD": "T"
+		"1authPolicyCRUD": "AP",
+		"2dataSharePolicyCRUD": "DSP",
+		"3deviceDetailsCRUD": "DD",
+		"4ftmDetailsCRUD": "FD",
+		"5partnerPolicyMappingCRUD": "PPM",
+		"6policyGroupCRUD": "PG",
+		"7sbiDetailsCRUD": "SD",
+		"8uploadFtmCaCertCRUD": "UFCC",
+	
