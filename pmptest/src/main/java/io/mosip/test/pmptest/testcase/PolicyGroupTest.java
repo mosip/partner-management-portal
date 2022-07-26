@@ -30,7 +30,7 @@ import io.mosip.test.pmptest.utility.Commons;
 public class PolicyGroupTest extends BaseClass {
 
 	@Test(groups = "PG")
-	public void PolicyGroupCRUD() throws InterruptedException {
+	public void policyGroupCRUD() throws InterruptedException {
 		
 		Commons.click(driver, By.xpath("//span[contains(text(),'Policy')]"));
 

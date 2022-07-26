@@ -36,7 +36,7 @@ import io.mosip.test.pmptest.utility.JsonUtil;
 public class AuthPolicyTest extends BaseClass {
 
 	@Test(groups = "AP")
-	public void PolicyGroupCRUD() throws InterruptedException{
+	public void authPolicyCRUD() throws InterruptedException{
 		
 		Commons.click(driver, By.xpath("//span[contains(text(),'Policy')]"));
 

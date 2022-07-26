@@ -30,7 +30,7 @@ import io.mosip.test.pmptest.utility.Commons;
 public class SbiDetailsTest extends BaseClass {
 
 	@Test(groups = "SD")
-	public void ftmDetailsCRUD() throws InterruptedException {
+	public void sbiDetailsCRUD() throws InterruptedException {
 
 		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/sbidetails/view']"));
 		

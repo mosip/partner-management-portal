@@ -28,20 +28,17 @@ public class TestRunner {
 		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
 		testNg.setExcludedGroups(listExcludedGroups);
 		testNg.setTestClasses(new Class[] {
-				//PartnerPolicyMappingTest.class
-				
-				SbiDetailsTest.class,
-				DeviceDetailsTest.class, 
-				FtmDetailsTest.class,
-				PolicyGroupTest.class,
 				AuthPolicyTest.class,
 				DataSharePolicyTest.class,
-				PartnerPolicyMappingTest.class
-				//UploadFtmCaCertTest.class
+				DeviceDetailsTest.class, 
+				FtmDetailsTest.class,
+				PartnerPolicyMappingTest.class,
+				PolicyGroupTest.class,
+				SbiDetailsTest.class,
+				UploadFtmCaCertTest.class
 				
 		
 		});
-	//	testNg.addListener(tla);
 		testNg.run();
 		
 	}

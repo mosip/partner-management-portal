@@ -36,73 +36,30 @@ import io.mosip.test.pmptest.utility.JsonUtil;
 public class UploadFtmCaCertTest extends BaseClass {
 
 	@Test(groups = "UFCC")
-	public void UploadFtmCaCertCRUD() throws InterruptedException, AWTException {
+	public void uploadFtmCaCertCRUD() throws InterruptedException, AWTException {
 
 		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/uploadcacert/upload']"));
-		Commons.click(driver, By.xpath("//span[contains(text(),'Upload CA Certificate')]"));
-		Thread.sleep(30); 
 
-		Commons.dropdown(driver, By.xpath(
-				"/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/mat-form-field/div/div[1]/div/mat-select/div/div[1]/span"),
-				By.xpath("/html/body/div[2]/div[2]/div/div/div/mat-option[1]/span"));
-		Thread.sleep(30);
-         
-		
-		
-		Commons.click(driver,By.xpath("//div[@class='custom-file-input']"));
-		
-		
-		//Commons.click(driver, By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]"));
-		
-		driver.findElement(By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]")).sendKeys("D:\\Mosip_Automation_Test\\MOSIP_FUNCTIONAL_TESTS\\AdminUI\\admin-ui\\admintest\\certificate\\ftmca.cert");
-		
-		
-		
-		
-		
-		String filePath = System.getProperty("user.dir") + "\\certificate\\ftmca.cert";
-		//driver.findElement(By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]")).sendKeys(filePath);
-		
-		WebElement browse = driver.findElement(By.xpath("//*[@id=\"myDiv\"]/mat-card/mat-card-content/div/div/input[1]"));
-		Thread.sleep(300);
-		Commons.click(driver, By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]"));
-		Thread.sleep(300);
-		
-		browse.sendKeys("D:\\Mosip_Automation_Test\\MOSIP_FUNCTIONAL_TESTS\\AdminUI\\admin-ui\\admintest\\certificate\\ftmca.cert");
-		Thread.sleep(30);
-		
-		driver.findElement(By.xpath("//input[@placeholder='Upload Your File *']")).sendKeys("D:\\Mosip_Automation_Test\\MOSIP_FUNCTIONAL_TESTS\\AdminUI\\admin-ui\\admintest\\certificate\\ftmca.cert");
-		
-		
-		//Commons.click(driver, By.xpath("//input[@class='browseInput']"));
-		//Commons.enter(driver, By.xpath("//input[@class='browseInput']"), "D:\\Mosip_Automation_Test\\MOSIP_FUNCTIONAL_TESTS\\AdminUI\\admin-ui\\admintest\\certificate\\ftmca.cert");
-		
-		driver.get("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]");
-			driver.findElement(By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]")).click();
+		Commons.dropdown(driver, By.id("partnerDomain"), By.id("FTM"));
 
+		Commons.clickAction(driver, By.xpath("//*[@type='button']"));
 		
-		
-		
-		   StringSelection ss = new StringSelection(filePath);
-		   
-		   Commons.enter(driver, By.xpath("/html/body/app-root/app-parent/div/mat-sidenav-container/mat-sidenav-content/cert-upload/div/div/div[2]/mat-card/mat-card-content/div/div/input[1]"), filePath);
-		   Thread.sleep(200);
-			
-		   
-		   /*
-			 * Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-			 * 
-			 * Robot robot = new Robot();
-			 * 
-			 * robot.delay(250);
-			 * 
-			 * 
-			 * robot.keyPress(KeyEvent.VK_ENTER); robot.keyRelease(KeyEvent.VK_ENTER);
-			 * robot.keyPress(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_V);
-			 * robot.keyRelease(KeyEvent.VK_V); robot.delay(250);
-			 * robot.keyRelease(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_ENTER);
-			 * robot.delay(250); robot.keyRelease(KeyEvent.VK_ENTER); robot.delay(250);
-			 */
+		StringSelection ss = new StringSelection("D:\\ftm.cer");
+
+
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+		Robot robot = new Robot();
+
+		robot.delay(250);
+		robot.keyPress(KeyEvent.VK_ENTER); robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V); robot.delay(250);
+		robot.keyRelease(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_ENTER);
+		robot.delay(250); robot.keyRelease(KeyEvent.VK_ENTER); robot.delay(250);
+		Commons.click(driver, By.id("createButton"));
+
+
 
 	}
 }

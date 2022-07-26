@@ -8,6 +8,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -306,6 +308,13 @@ public class Commons {
 		    Commons.click(driver,By.id("confirmpopup")); 
 			Commons.click(driver, By.id("confirmmessagepopup")); 
 			logger.info("Click decommission and confirm");
+	}
+
+	public static void clickAction(WebDriver driver, By xpath) {
+		Actions action = new Actions(driver);
+		WebElement we=driver.findElement(By.xpath("//*[@type='button']"));
+		action.moveToElement(we).click().perform();
+		
 	}
 	
 	

@@ -30,8 +30,8 @@ import io.mosip.test.pmptest.utility.JsonUtil;
 
 public class DataSharePolicyTest extends BaseClass {
 
-	@Test(groups = "DP")
-	public void PolicyGroupCRUD() throws InterruptedException {
+	@Test(groups = "DSP")
+	public void dataSharePolicyCRUD() throws InterruptedException {
 		
 		Commons.click(driver, By.xpath("//span[contains(text(),'Policy')]"));
 

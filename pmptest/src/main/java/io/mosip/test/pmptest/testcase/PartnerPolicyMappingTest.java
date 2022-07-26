@@ -30,7 +30,7 @@ import io.mosip.test.pmptest.utility.Commons;
 public class PartnerPolicyMappingTest extends BaseClass {
 
 	@Test(groups = "PPM")
-	public void ftmDetailsCRUD() throws InterruptedException {
+	public void partnerPolicyMappingCRUD() throws InterruptedException {
 
 		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/policymapping/view']"));
 
