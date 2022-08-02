@@ -1,5 +1,10 @@
 package io.mosip.test.pmptest.utility;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,7 +28,16 @@ public class Commons {
 	  {
 		
 	
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmmss");
+	   LocalDateTime now = LocalDateTime.now();
+	   return dtf.format(now);
+	  }
+	
+	public static String getUnique()
+	  {
+		
+	
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");
 	   LocalDateTime now = LocalDateTime.now();
 	   return dtf.format(now);
 	  }
@@ -70,6 +84,7 @@ public class Commons {
 	     executor.executeScript("arguments[0].click();", driver.findElement(by));
 	     
 	  }}
+	
   
 	public static void enter(WebDriver driver, By by,String value) {
 		logger.info("Entering " + by +value);
@@ -98,9 +113,9 @@ public class Commons {
 		logger.info("Selecting DropDown Index Zero Value " + by );
 		  
 		 try {
-			 //Thread.sleep(500);
+			 Thread.sleep(500);
 			 click(driver,by);//REGION
-				//Thread.sleep(500);
+				Thread.sleep(500);
 			
 		   String att= driver.findElement(by).getAttribute("aria-owns");
 		   String[] list=att.split(" ");
@@ -141,15 +156,42 @@ public class Commons {
 			 e.getMessage();
 		 }
 	  }
+	//option[@value,'FTM_PROVIDER']
+	
+	public static void selOption(WebDriver driver, By by,String value)
+	  {
+		logger.info("Selecting DropDown By Value " + by +value );
+		  
+		 try {
+			 Thread.sleep(50);
+			 click(driver,by);
+				Thread.sleep(50);
+			   String val="'"+value +"'";
+			 //select/option[contains(text(),'FTM Provider')]
+			   String xpath="//select/option[contains(text(),"+val+"]";
+			   clickAction( driver,By.xpath(xpath));
+		    try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }catch(Exception e)
+		 
+		 {
+			 e.getMessage();
+		 }
+	  }
+	
 	
 	public static void dropdowncenter(WebDriver driver, By by,String value)
 	  {
 		logger.info("Selecting DropDown By Value " + by +value );
 		  
 		 try {
-			 Thread.sleep(500);
+			 Thread.sleep(50);
 			 click(driver,by);
-				Thread.sleep(500);
+				Thread.sleep(50);
 			   String val="'"+value +"'";
 		   
 		    click( driver,By.id(value));
@@ -170,9 +212,9 @@ public class Commons {
 	  {
 		logger.info("Selecting DropDown By Value " + by +value );
 		 try {  
-			 Thread.sleep(500);
+			 Thread.sleep(50);
 			 click(driver,by);
-			 Thread.sleep(500);
+			 Thread.sleep(50);
 		    click( driver,value);
 		  
 				Thread.sleep(500);
@@ -310,13 +352,64 @@ public class Commons {
 			logger.info("Click decommission and confirm");
 	}
 
-	public static void clickAction(WebDriver driver, By xpath) {
+	public static void clickAction(WebDriver driver, By by) {
 		Actions action = new Actions(driver);
-		WebElement we=driver.findElement(By.xpath("//*[@type='button']"));
+		WebElement we=driver.findElement(by);
 		action.moveToElement(we).click().perform();
 		
 	}
 	
+	
+	
+	
+	public static String getText(WebDriver driver, By by) {
+	String str=driver.findElement(by).getText();
+		return str;
+	}
+
+	public static void uploadPartnerCert(WebDriver driver, By by,String dropdwnVal,String folder,String str) {
+		// TODO Auto-generated method stub
+
+		Commons.dropdown(driver, by, By.id(dropdwnVal)
+				);
+
+		Commons.clickAction(driver, By.xpath("//*[@type='button']"));
+		
+		String filePath=null;;
+		try {
+			filePath = System.getProperty("user.dir") + folder+str ;
+		} catch (Exception e) {
+			
+			// TODO Auto-generated catch block;
+			e.printStackTrace();
+		}
+		  
+		
+		
+		StringSelection ss = new StringSelection(filePath);
+
+
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+		Robot robot;
+		try {
+			robot = new Robot();
+		
+		robot.delay(250);
+		robot.keyPress(KeyEvent.VK_ENTER); robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V); robot.delay(250);
+		robot.keyRelease(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_ENTER);
+		robot.delay(250); robot.keyRelease(KeyEvent.VK_ENTER); robot.delay(250);
+		Commons.click(driver, By.id("createButton"));
+		Commons.click(driver, By.id("confirmmessagepopup"));
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
 	
 	
 }

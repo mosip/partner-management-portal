@@ -40,7 +40,7 @@ public class DataSharePolicyTest extends BaseClass {
        Commons.click(driver, By.xpath("//button[@id='Create Policy']"));
        
 		
-		Commons.enter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
+		Commons.enter(driver, By.xpath("//input[@placeholder='Name']"), data);
 		Commons.enter(driver, By.xpath("//input[@placeholder='Description']"), data);
 		Commons.dropdown(driver, By.xpath("//mat-select[@id='policyGroupName']"));
 		
@@ -48,6 +48,7 @@ public class DataSharePolicyTest extends BaseClass {
 		try {
 			dataSharepolicyData = JsonUtil.JsonObjParsing(Commons.getTestData(),"dataSharepolicyData");
 			Commons.enter(driver, By.xpath("//textarea[@placeholder='Policies Data']"), dataSharepolicyData);
+			Thread.sleep(5000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,22 +56,20 @@ public class DataSharePolicyTest extends BaseClass {
 		
 		
 		Commons.click(driver, By.xpath("//button[@id='createButton']"));
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
+	
 		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));	
 		
 		
-		Commons.click(driver, By.id("Filter"));
-		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
+		Commons.filter(driver, By.id("name"), data);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Edit0"));
-		Commons.enter(driver, By.xpath("//input[@placeholder='Description']"), data);
+		Commons.enter(driver, By.xpath("//input[@placeholder='Name']"), data+1);
 		
 		
 		Commons.click(driver, By.xpath("//button[@id='createButton']"));
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
-		Commons.click(driver, By.id("Filter"));
-		Commons.filter(driver, By.xpath("//input[@placeholder='Name']"), data+2);
+		Commons.filter(driver, By.id("name"), data+1);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Activate0"));
 
@@ -79,8 +78,6 @@ public class DataSharePolicyTest extends BaseClass {
 		
 		
 		
-		Commons.click(driver, By.id("menuButton"));
-		Commons.click(driver, By.id("Logout"));
 
 
 		

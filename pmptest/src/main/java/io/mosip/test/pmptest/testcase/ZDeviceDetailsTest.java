@@ -28,35 +28,79 @@ import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
 import io.mosip.test.pmptest.utility.JsonUtil;
 
-public class FtmDetailsTest extends BaseClass {
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(FtmDetailsTest.class);
-	
-	@Test(groups = "FD",dataProvider = "data-provider-partner")
-	public void ftmDetailsCRUD(String cer) throws InterruptedException {
-		
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/ftmdetails/view']"));
+public class ZDeviceDetailsTest extends BaseClass {
+
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(ZDeviceDetailsTest.class);
+	@Test(groups = "DD",dataProvider = "data-provider-partner")
+	public void deviceDetailsCRUD(String cer) throws InterruptedException {
+
+		String dropdwnVal=cer.substring(0, cer.length()-4);
+		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/devicedetails/view']"));
 
 		Commons.click(driver, By.xpath("//button[@id='Create Device']"));
-		String dropdwnVal=cer.substring(0, cer.length()-4);
 		String registerCertKey;
 		try {
 			registerCertKey = JsonUtil.JsonObjParsing(Commons.getTestData(),"registerCertKey");
 
-			Commons.dropdown(driver, By.id("ftpProviderId"),dropdwnVal+"_Auto"+registerCertKey);
+			Commons.dropdown(driver, By.id("deviceProviderId"),dropdwnVal+"_Auto"+registerCertKey);
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		
+		/*
+		//Commons.dropdown(driver, By.id("deviceProviderId"));
+		Commons.dropdown(driver, By.id("deviceTypeCode"));
+		Commons.dropdown(driver, By.id("deviceSubTypeCode"));
 		Commons.enter(driver, By.xpath("//input[@placeholder='Make']"), data);
 		Commons.enter(driver, By.xpath("//input[@placeholder='Model']"), data);
 		Commons.click(driver, By.xpath("//button[@id='createButton']"));
+
+//Need to change this Line after Aravind Provide Id
 		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));
 
-	
+		Commons.click(driver, By.id("Filter"));
 		Commons.filter(driver, By.id("make"), data);
+		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(driver, By.id("Approve0"));
+
+//Need to change these 2 Lines after Aravind Provide Id
+		Commons.click(driver, By.xpath("//span[contains(text(),'Yes')]"));
+		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));
+
+		
+		Commons.filter(driver, By.id("make"), data);
+		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(driver, By.id("Edit0"));
+
+		Commons.dropdown(driver, By.xpath("//mat-select[@placeholder='SBIVersion']"));
+
+		Commons.click(driver, By.xpath("//button[@id='createButton']"));
+		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));  
+		Commons.click(driver, By.xpath("//span[contains(text(),'Cancel')]"));
+		
+		Commons.filter(driver, By.id("make"), data);
+		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(driver, By.id("Reject0"));
+		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		*/
+		
+		Commons.dropdown(driver, By.id("deviceTypeCode"),By.id("Face"));
+		Thread.sleep(3000);
+		Commons.dropdown(driver, By.id("deviceSubTypeCode"),By.id("Full face"));
+		Commons.enter(driver, By.xpath("//input[@placeholder='Make']"), data);
+		Commons.enter(driver, By.xpath("//input[@placeholder='Model']"), data);
+		Commons.click(driver, By.xpath("//button[@id='createButton']"));
+
+//Need to change this Line after Aravind Provide Id
+		Commons.click(driver, By.xpath("//span[contains(text(),'Ok')]"));
+
+		Commons.click(driver, By.id("Filter"));
+		Commons.filter(driver, By.id("make"), data);
+
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Edit0"));
 		Commons.enter(driver, By.xpath("//input[@placeholder='Model']"), data + 1);
@@ -99,7 +143,6 @@ public class FtmDetailsTest extends BaseClass {
 		
 		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-		
 
 	}
 }

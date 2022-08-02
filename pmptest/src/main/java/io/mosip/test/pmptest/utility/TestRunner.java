@@ -7,10 +7,11 @@ import org.testng.TestNG;
 
 import io.mosip.test.pmptest.testcase.AuthPolicyTest;
 import io.mosip.test.pmptest.testcase.DataSharePolicyTest;
-import io.mosip.test.pmptest.testcase.DeviceDetailsTest;
+import io.mosip.test.pmptest.testcase.ZDeviceDetailsTest;
 import io.mosip.test.pmptest.testcase.FtmDetailsTest;
 import io.mosip.test.pmptest.testcase.PartnerPolicyMappingTest;
 import io.mosip.test.pmptest.testcase.PolicyGroupTest;
+import io.mosip.test.pmptest.testcase.RegisterTest;
 import io.mosip.test.pmptest.testcase.SbiDetailsTest;
 import io.mosip.test.pmptest.testcase.UploadFtmCaCertTest;
 
@@ -27,17 +28,15 @@ public class TestRunner {
 		
 		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
 		testNg.setExcludedGroups(listExcludedGroups);
+		testNg.setPreserveOrder(true);
 		testNg.setTestClasses(new Class[] {
 				AuthPolicyTest.class,
 				DataSharePolicyTest.class,
-				DeviceDetailsTest.class, 
-				FtmDetailsTest.class,
 				PartnerPolicyMappingTest.class,
 				PolicyGroupTest.class,
-				SbiDetailsTest.class,
-				UploadFtmCaCertTest.class
+				UploadFtmCaCertTest.class,	RegisterTest.class,FtmDetailsTest.class,
 				
-		
+				SbiDetailsTest.class,ZDeviceDetailsTest.class
 		});
 		testNg.run();
 		

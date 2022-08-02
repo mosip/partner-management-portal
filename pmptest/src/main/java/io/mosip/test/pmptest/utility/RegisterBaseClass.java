@@ -39,7 +39,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class BaseClass {
+public class RegisterBaseClass {
 	protected WebDriver driver;
 	protected Map<String, Object> vars;
 	protected JavascriptExecutor js;
@@ -73,72 +73,57 @@ public class BaseClass {
 		driver.manage().window().maximize();
 		Thread.sleep(500);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		//driver.findElement(By.linkText("Admin")).click();
-		String language1 = null;
-		try {
-			//String loginlang = JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang");
-			language1 = Commons.getFieldData("langcode");
-
-			System.out.println(language1);
-			if(!language1.equals("sin"))
-			{Commons.click(driver, By.xpath("//*[@id='kc-locale-dropdown']"));
-			String var = "//li/a[contains(text(),'" + language1 + "')]";
-			Commons.click(driver, By.xpath(var));
-			}
+		
+		/*
+		 * String language1 = null; try { //String loginlang =
+		 * JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang"); language1 =
+		 * Commons.getFieldData("langcode");
+		 * 
+		 * System.out.println(language1); if(!language1.equals("sin"))
+		 * {Commons.click(driver, By.xpath("//*[@id='kc-locale-dropdown']")); String var
+		 * = "//li/a[contains(text(),'" + language1 + "')]"; Commons.click(driver,
+		 * By.xpath(var)); }
+		 */
 //			
 //			if(!language1.equals("sin"))
 //			{Commons.click(driver, By.xpath("//*[@class='kc-dropdown']"));
 //			String var = "//*[@class='kc-dropdown-item']/a[contains(text(),'" + language1 + "')]";
 //			Commons.click(driver, By.xpath(var));
 //			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		driver.findElement(By.id("username")).sendKeys(userid);
-		driver.findElement(By.id("password")).sendKeys(password);
-		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
+		/*
+		 * } catch (Exception e) { e.getMessage(); }
+		 * driver.findElement(By.id("username")).sendKeys(userid);
+		 * driver.findElement(By.id("password")).sendKeys(password);
+		 * driver.findElement(By.xpath("//input[@name=\'login\']")).click();
+		 */
 
 	}
 
 	@AfterMethod
 	public void tearDown() {
 		//Once we will get the logout id we are going to use[TODO]
-		Commons.click(driver, By.id("menuButton"));
-		Commons.click(driver, By.id("Logout"));
 		driver.quit();
 	}
 
 	@DataProvider(name = "data-provider")
 	public Object[] dpMethod() {
-		String listFilename[] = readFolderJsonList("\\ca_cert\\");
+		String listFilename[] = readFolderJsonList();
 		String s[][] = null;
 		String temp[] = null;
-//		for (int count = 0; count < listFilename.length; count++) {
-//			listFilename[count] = listFilename[count].replace(".pem", "");
-//			listFilename[count] = listFilename[count].replace(".cer", "");
-//		}
-
-		return listFilename;
-	}
-	@DataProvider(name = "data-provider-partner")
-	public Object[] dpMethodpart() {
-		String listFilename[] = readFolderJsonList("\\partner_cert\\");
-		String s[][] = null;
-		String temp[] = null;
-//		for (int count = 0; count < listFilename.length; count++) {
-//			listFilename[count] = listFilename[count].replace(".pem", "");
-//			listFilename[count] = listFilename[count].replace(".cer", "");
-//		}
+		for (int count = 0; count < listFilename.length; count++) {
+			//listFilename[count] = listFilename[count].replace(".pem", "");
+			//listFilename[count] = listFilename[count].replace(".cer", "");
+		}
 
 		return listFilename;
 	}
 
-	public static String[] readFolderJsonList(String str) {
+	public static String[] readFolderJsonList() {
 		String contents[] = null;
 		try {
 			//String langcode = JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang");
 				
-			File directoryPath = new File(System.getProperty("user.dir") + str);
+			File directoryPath = new File(System.getProperty("user.dir") + "\\partner_cert\\");
 
 			if (directoryPath.exists()) {
 
@@ -153,5 +138,4 @@ public class BaseClass {
 		}
 		return contents;
 	}
-	
-	}
+}
