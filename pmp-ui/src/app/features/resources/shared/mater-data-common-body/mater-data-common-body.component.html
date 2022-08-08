@@ -4,6 +4,7 @@
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
@@ -17,6 +18,7 @@
             </mat-form-field>
             <mat-form-field style="width:950px" *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] === '{}'">
               <textarea
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (blur)="captureValue($event, field.name, 'primary')"
@@ -31,6 +33,7 @@
             </mat-form-field>
             <mat-form-field style="width:950px" *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] !== '{}'">
               <textarea
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (blur)="captureValue($event, field.name, 'primary')"
@@ -84,6 +87,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'calendar'">
               <input
+                id="{{field.name}}"
                 matInput
                 [min]="minDate"
                 [matDatepicker]="picker"
@@ -104,6 +108,7 @@
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
@@ -145,6 +150,7 @@
                 <td width="30%">
                   <mat-form-field>
                     <input
+                      id="apiKeyLabel"
                       #keyboardRef
                       matInput
                       placeholder="Label"
@@ -155,7 +161,7 @@
                   </mat-form-field>
                 </td>
                 <td width="20%">
-                  <button id="createButton" mat-raised-button (click)="generateAPIKey()">
+                  <button id="generateAPIKey" mat-raised-button (click)="generateAPIKey()">
                     Generate
                   </button>
                 </td>
