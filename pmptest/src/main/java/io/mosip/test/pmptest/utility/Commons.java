@@ -50,6 +50,17 @@ public class Commons {
 		Commons.click(driver, By.id("applyTxt")); 
 	}
 	
+	public  static void filter(WebDriver driver, By by1,By by2,String data1,String data2) {
+		logger.info("Inside Filter " + by1 + data1);
+		logger.info("Inside Filter " + by2 + data2);
+		Commons.click(driver, By.id("Filter")); 
+	
+		Commons.enter(driver, by1, data1);
+
+		Commons.enter(driver, by2, data2);
+		Commons.click(driver, By.id("applyTxt")); 
+	}
+	
 	public  static void filterCenter(WebDriver driver, By by,String data) {
 		logger.info("Inside filterCenter " + by + data);
 		Commons.click(driver, By.id("Filter")); 
@@ -101,9 +112,11 @@ public class Commons {
 				}
 			}catch (StaleElementReferenceException sere) {
 				// simply retry finding the element in the refreshed DOM
+				driver.findElement(by).clear();
 				driver.findElement(by).sendKeys(value);
 			}
 			catch (TimeoutException toe) {
+				driver.findElement(by).clear();
 				driver.findElement(by).sendKeys(value);
 				System.out.println( "Element identified by " + by.toString() + " was not clickable after 20 seconds");
 			} }
@@ -367,12 +380,17 @@ public class Commons {
 		return str;
 	}
 
-	public static void uploadPartnerCert(WebDriver driver, By by,String dropdwnVal,String folder,String str) {
+	public static void uploadPartnerCert(WebDriver driver, By by,String orgName,String folder,String str) {
 		// TODO Auto-generated method stub
 
-		Commons.dropdown(driver, by, By.id(dropdwnVal)
+		Commons.dropdown(driver, by, By.id(orgName)
 				);
-
+try {
+	Thread.sleep(5000);
+} catch (InterruptedException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+}
 		Commons.clickAction(driver, By.xpath("//*[@type='button']"));
 		
 		String filePath=null;;
@@ -383,18 +401,11 @@ public class Commons {
 			// TODO Auto-generated catch block;
 			e.printStackTrace();
 		}
-		  
-		
-		
 		StringSelection ss = new StringSelection(filePath);
-
-
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-
 		Robot robot;
 		try {
-			robot = new Robot();
-		
+		robot = new Robot();
 		robot.delay(250);
 		robot.keyPress(KeyEvent.VK_ENTER); robot.keyRelease(KeyEvent.VK_ENTER);
 		robot.keyPress(KeyEvent.VK_CONTROL); robot.keyPress(KeyEvent.VK_V);
@@ -407,9 +418,5 @@ public class Commons {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
-	
-	
 }

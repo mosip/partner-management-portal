@@ -5,15 +5,19 @@ import java.util.List;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
-import io.mosip.test.pmptest.testcase.AuthPolicyTest;
-import io.mosip.test.pmptest.testcase.DataSharePolicyTest;
-import io.mosip.test.pmptest.testcase.ZDeviceDetailsTest;
-import io.mosip.test.pmptest.testcase.FtmDetailsTest;
-import io.mosip.test.pmptest.testcase.PartnerPolicyMappingTest;
-import io.mosip.test.pmptest.testcase.PolicyGroupTest;
-import io.mosip.test.pmptest.testcase.RegisterTest;
-import io.mosip.test.pmptest.testcase.SbiDetailsTest;
-import io.mosip.test.pmptest.testcase.UploadFtmCaCertTest;
+import io.mosip.test.pmptest.testcase.PartnerLoginAuthCredTest;
+import io.mosip.test.pmptest.testcase.PartnerRegisterAuthCredTest;
+import io.mosip.test.pmptest.testcase.PartnerRegisterFTMTest;
+import io.mosip.test.pmptest.testcase.PartnerRegisterSbiDeviceTest;
+import io.mosip.test.pmptest.testcase.AdminAuthPolicyTest;
+import io.mosip.test.pmptest.testcase.AdminDataSharePolicyTest;
+import io.mosip.test.pmptest.testcase.AdminDeviceDetailsTest;
+import io.mosip.test.pmptest.testcase.AdminFtmDetailsTest;
+import io.mosip.test.pmptest.testcase.AdminPartnerPolicyMappingTest;
+import io.mosip.test.pmptest.testcase.AdminPolicyGroupTest;
+import io.mosip.test.pmptest.testcase.TBD;
+import io.mosip.test.pmptest.testcase.AdminSbiDetailsTest;
+import io.mosip.test.pmptest.testcase.AdminUploadCaCertTest;
 
 
 public class TestRunner {
@@ -28,15 +32,21 @@ public class TestRunner {
 		
 		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
 		testNg.setExcludedGroups(listExcludedGroups);
-		testNg.setPreserveOrder(true);
+		//testNg.setPreserveOrder(true);
 		testNg.setTestClasses(new Class[] {
-				AuthPolicyTest.class,
-				DataSharePolicyTest.class,
-				PartnerPolicyMappingTest.class,
-				PolicyGroupTest.class,
-				UploadFtmCaCertTest.class,	RegisterTest.class,FtmDetailsTest.class,
+				AdminAuthPolicyTest.class,
+				AdminDataSharePolicyTest.class,
+				AdminDeviceDetailsTest.class,
+				AdminFtmDetailsTest.class,
+				AdminPartnerPolicyMappingTest.class,
+				AdminPolicyGroupTest.class,
+				AdminSbiDetailsTest.class,
+				AdminUploadCaCertTest.class,
+				PartnerLoginAuthCredTest.class,
+				PartnerRegisterAuthCredTest.class,
+				PartnerRegisterFTMTest.class,
+				PartnerRegisterSbiDeviceTest.class
 				
-				SbiDetailsTest.class,ZDeviceDetailsTest.class
 		});
 		testNg.run();
 		

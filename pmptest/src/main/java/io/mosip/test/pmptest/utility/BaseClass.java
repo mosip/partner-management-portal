@@ -54,6 +54,13 @@ public class BaseClass {
 		this.langcode = Commons.getFieldData("langcode");
 	}
 
+	@BeforeSuite
+	public void report()
+	{
+		 ExtentReportUtil.ExtentSetting();
+			
+			
+	}
 	@BeforeMethod
 	public void setUp() throws InterruptedException {
 		System.out.println(System.getProperty("user.dir"));
@@ -63,8 +70,6 @@ public class BaseClass {
 //		ChromeOptions options = new ChromeOptions();
 //		options.addArguments("--headless");
 //		driver = new ChromeDriver(options);
-		
-		
 		
 		driver = new ChromeDriver();
 		js = (JavascriptExecutor) driver;
@@ -94,6 +99,7 @@ public class BaseClass {
 		} catch (Exception e) {
 			e.getMessage();
 		}
+		
 		driver.findElement(By.id("username")).sendKeys(userid);
 		driver.findElement(By.id("password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
@@ -108,36 +114,43 @@ public class BaseClass {
 		driver.quit();
 	}
 
-	@DataProvider(name = "data-provider")
-	public Object[] dpMethod() {
+	@DataProvider(name = "data-provider-ca")
+	public Object[] caDataProvider() {
 		String listFilename[] = readFolderJsonList("\\ca_cert\\");
-		String s[][] = null;
-		String temp[] = null;
-//		for (int count = 0; count < listFilename.length; count++) {
-//			listFilename[count] = listFilename[count].replace(".pem", "");
-//			listFilename[count] = listFilename[count].replace(".cer", "");
-//		}
-
 		return listFilename;
 	}
 	@DataProvider(name = "data-provider-partner")
-	public Object[] dpMethodpart() {
+	public Object[] partnerDataProvider() {
 		String listFilename[] = readFolderJsonList("\\partner_cert\\");
-		String s[][] = null;
-		String temp[] = null;
-//		for (int count = 0; count < listFilename.length; count++) {
-//			listFilename[count] = listFilename[count].replace(".pem", "");
-//			listFilename[count] = listFilename[count].replace(".cer", "");
-//		}
 
 		return listFilename;
 	}
 
+	@DataProvider(name = "data-provider-FTM")
+	public Object[] ftmDataProvider() {
+		String listFilename[] = readFolderJsonList("\\ftm_cert\\");
+
+		return listFilename;
+	}
+	
+	@DataProvider(name = "data-provider-DEVICE-SBI")
+	public Object[] deviceSbiDataProvider() {
+		String listFilename[] = readFolderJsonList("\\device_sbi_cert\\");
+
+		return listFilename;
+	}
+	
+	
+	@DataProvider(name = "data-provider-AUTH")
+	public Object[] authDataProvider() {
+		String listFilename[] = readFolderJsonList("\\auth_cert\\");
+
+		return listFilename;
+	}
+	
 	public static String[] readFolderJsonList(String str) {
 		String contents[] = null;
 		try {
-			//String langcode = JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang");
-				
 			File directoryPath = new File(System.getProperty("user.dir") + str);
 
 			if (directoryPath.exists()) {

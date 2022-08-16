@@ -163,6 +163,19 @@
     <version>2.12.5</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>4.3.3</version>
+    
+</dependency>
+
+  <dependency>
+         <groupId>com.aventstack</groupId>
+         <artifactId>extentreports</artifactId>
+         <version>3.1.5</version>
+      </dependency>
 
       <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner 
          <dependency> <groupId>org.junit.platform</groupId> <artifactId>junit-platform-runner</artifactId> 

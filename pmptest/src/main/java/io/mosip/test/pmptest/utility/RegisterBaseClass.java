@@ -53,18 +53,19 @@ public class RegisterBaseClass {
 	public void setLangcode(String langcode) throws Exception {
 		this.langcode = Commons.getFieldData("langcode");
 	}
+	@BeforeSuite
+	public void report()
+	{
+		 ExtentReportUtil.ExtentSetting();
+			
+			
+	}
 
 	@BeforeMethod
 	public void setUp() throws InterruptedException {
 		System.out.println(System.getProperty("user.dir"));
 		String configFilePath = System.getProperty("user.dir") + "\\chromedriver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", configFilePath);
-		
-//		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless");
-//		driver = new ChromeDriver(options);
-		
-		
 		
 		driver = new ChromeDriver();
 		js = (JavascriptExecutor) driver;
@@ -74,54 +75,69 @@ public class RegisterBaseClass {
 		Thread.sleep(500);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		
-		/*
-		 * String language1 = null; try { //String loginlang =
-		 * JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang"); language1 =
-		 * Commons.getFieldData("langcode");
-		 * 
-		 * System.out.println(language1); if(!language1.equals("sin"))
-		 * {Commons.click(driver, By.xpath("//*[@id='kc-locale-dropdown']")); String var
-		 * = "//li/a[contains(text(),'" + language1 + "')]"; Commons.click(driver,
-		 * By.xpath(var)); }
-		 */
-//			
-//			if(!language1.equals("sin"))
-//			{Commons.click(driver, By.xpath("//*[@class='kc-dropdown']"));
-//			String var = "//*[@class='kc-dropdown-item']/a[contains(text(),'" + language1 + "')]";
-//			Commons.click(driver, By.xpath(var));
-//			}
-		/*
-		 * } catch (Exception e) { e.getMessage(); }
-		 * driver.findElement(By.id("username")).sendKeys(userid);
-		 * driver.findElement(By.id("password")).sendKeys(password);
-		 * driver.findElement(By.xpath("//input[@name=\'login\']")).click();
-		 */
 
 	}
 
 	@AfterMethod
 	public void tearDown() {
-		//Once we will get the logout id we are going to use[TODO]
+		Commons.click(driver, By.id("menuButton"));
+		Commons.click(driver, By.id("Logout"));
 		driver.quit();
 	}
 
-	@DataProvider(name = "data-provider")
-	public Object[] dpMethod() {
-		String listFilename[] = readFolderJsonList();
-		String s[][] = null;
-		String temp[] = null;
-		for (int count = 0; count < listFilename.length; count++) {
-			//listFilename[count] = listFilename[count].replace(".pem", "");
-			//listFilename[count] = listFilename[count].replace(".cer", "");
-		}
+//	@DataProvider(name = "data-provider-partner")
+//	public Object[] dpMethod() {
+//		String listFilename[] = readFolderJsonList();
+//		
+//		return listFilename;
+//	}
+	
+	@DataProvider(name = "data-provider-FTM")
+	public Object[] ftmDataProvider() {
+		String listFilename[] = readFolderJsonList("\\ftm_cert\\");
+
+		return listFilename;
+	}
+	
+	@DataProvider(name = "data-provider-DEVICE-SBI")
+	public Object[] deviceSbiDataProvider() {
+		String listFilename[] = readFolderJsonList("\\device_sbi_cert\\");
+
+		return listFilename;
+	}
+	
+	
+	@DataProvider(name = "data-provider-AUTH")
+	public Object[] authDataProvider() {
+		String listFilename[] = readFolderJsonList("\\auth_cert\\");
 
 		return listFilename;
 	}
 
+	
+	public static String[] readFolderJsonList(String str) {
+		String contents[] = null;
+		try {
+			File directoryPath = new File(System.getProperty("user.dir") + str);
+
+			if (directoryPath.exists()) {
+
+				contents = directoryPath.list();
+				System.out.println("List of files and directories in the specified directory:");
+				for (int i = 0; i < contents.length; i++) {
+					System.out.println(contents[i]);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contents;
+	}
+	
+
 	public static String[] readFolderJsonList() {
 		String contents[] = null;
 		try {
-			//String langcode = JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang");
 				
 			File directoryPath = new File(System.getProperty("user.dir") + "\\partner_cert\\");
 
