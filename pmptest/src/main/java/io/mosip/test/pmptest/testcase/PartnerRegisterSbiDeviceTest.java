@@ -82,7 +82,7 @@ public class PartnerRegisterSbiDeviceTest extends RegisterBaseClass {
 		
 		Commons.click(driver, By.id("uploadCertificate"));
 		
-		if(dropdwnVal.contentEquals("CREDENTIAL")) Commons.uploadPartnerCert(driver,By.id("partnerDomain"),"AUTH","\\partner_cert\\",cer);
+		if(dropdwnVal.contentEquals("CREDENTIAL")) Commons.uploadPartnerCert(driver,By.id("partnerDomain"),"AUTH","\\auth_cert\\",cer);
 		else Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\device_sbi_cert\\",cer);
 
 			

@@ -135,23 +135,23 @@ public class RegisterBaseClass {
 	}
 	
 
-	public static String[] readFolderJsonList() {
-		String contents[] = null;
-		try {
-				
-			File directoryPath = new File(System.getProperty("user.dir") + "\\partner_cert\\");
-
-			if (directoryPath.exists()) {
-
-				contents = directoryPath.list();
-				System.out.println("List of files and directories in the specified directory:");
-				for (int i = 0; i < contents.length; i++) {
-					System.out.println(contents[i]);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return contents;
-	}
+//	public static String[] readFolderJsonList() {
+//		String contents[] = null;
+//		try {
+//				
+//			File directoryPath = new File(System.getProperty("user.dir") + "\\partner_cert\\");
+//
+//			if (directoryPath.exists()) {
+//
+//				contents = directoryPath.list();
+//				System.out.println("List of files and directories in the specified directory:");
+//				for (int i = 0; i < contents.length; i++) {
+//					System.out.println(contents[i]);
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return contents;
+//	}
 }

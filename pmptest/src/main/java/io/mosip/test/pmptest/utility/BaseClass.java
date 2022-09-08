@@ -44,7 +44,7 @@ public class BaseClass {
 	protected Map<String, Object> vars;
 	protected JavascriptExecutor js;
 	protected String langcode;
-	protected String envPath = System.getProperty("path");
+	public String envPath = System.getProperty("path");
 	protected String userid = System.getProperty("userid");
 	protected String password = System.getProperty("password");
 	protected String data = Commons.appendDate;
@@ -119,12 +119,12 @@ public class BaseClass {
 		String listFilename[] = readFolderJsonList("\\ca_cert\\");
 		return listFilename;
 	}
-	@DataProvider(name = "data-provider-partner")
-	public Object[] partnerDataProvider() {
-		String listFilename[] = readFolderJsonList("\\partner_cert\\");
-
-		return listFilename;
-	}
+//	@DataProvider(name = "data-provider-partner")
+//	public Object[] partnerDataProvider() {
+//		String listFilename[] = readFolderJsonList("\\partner_cert\\");
+//
+//		return listFilename;
+//	}
 
 	@DataProvider(name = "data-provider-FTM")
 	public Object[] ftmDataProvider() {

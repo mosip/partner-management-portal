@@ -16,6 +16,7 @@ import io.mosip.test.pmptest.testcase.AdminFtmDetailsTest;
 import io.mosip.test.pmptest.testcase.AdminPartnerPolicyMappingTest;
 import io.mosip.test.pmptest.testcase.AdminPolicyGroupTest;
 import io.mosip.test.pmptest.testcase.TBD;
+import io.mosip.test.pmptest.testcase.apicall;
 import io.mosip.test.pmptest.testcase.AdminSbiDetailsTest;
 import io.mosip.test.pmptest.testcase.AdminUploadCaCertTest;
 
@@ -45,7 +46,7 @@ public class TestRunner {
 				PartnerLoginAuthCredTest.class,
 				PartnerRegisterAuthCredTest.class,
 				PartnerRegisterFTMTest.class,
-				PartnerRegisterSbiDeviceTest.class
+				PartnerRegisterSbiDeviceTest.class,apicall.class
 				
 		});
 		testNg.run();

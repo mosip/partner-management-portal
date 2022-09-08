@@ -68,7 +68,7 @@ public class AdminAuthPolicyTest extends BaseClass {
 		Commons.click(driver, By.id("confirmmessagepopup"));
 		
 		
-		Commons.filter(driver, By.id("desc"), data); 
+		Commons.filter(driver, By.id("name"), "AUTH"+data); 
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Edit0"));
 		Commons.enter(driver, By.id("desc"), data+1);
@@ -78,7 +78,7 @@ public class AdminAuthPolicyTest extends BaseClass {
 		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
 
 		
-		Commons.filter(driver, By.id("desc"), data+1); 
+		Commons.filter(driver, By.id("name"), "AUTH"+data); 
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Activate0"));
 

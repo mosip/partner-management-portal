@@ -58,7 +58,7 @@ public class AdminFtmDetailsTest extends BaseClass {
 		Commons.click(driver, By.id("Upload Certificate0"));
 	
 		
-		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\partner_cert\\",cer);
+		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\ftm_cert\\",cer);
 
 		Commons.filter(driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
 
