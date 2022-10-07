@@ -7,19 +7,32 @@ How To run :
 
 TestData Setup:
 	TestData.json
-		langcode:eng -- This is Admin login page language selection 
+		langcode:eng -- This is PMP login page language selection 
 		bulkwait:10000 -- This is to upload wait
 	
 		Keep setExcludedGroups="" -- To run all the scenario mentioned below
 		Keep setExcludedGroups="BL,CT" -- To Exclude testcases execution based on below tags. 
 	
 Includes: Below Scenarios and their tags.
-		"1authPolicyCRUD": "AP",
-		"2dataSharePolicyCRUD": "DSP",
-		"3deviceDetailsCRUD": "DD",
-		"4ftmDetailsCRUD": "FD",
-		"5partnerPolicyMappingCRUD": "PPM",
-		"6policyGroupCRUD": "PG",
-		"7sbiDetailsCRUD": "SD",
-		"8uploadFtmCaCertCRUD": "UFCC",
+
+		"BELOW_ARE_KEYWORDS_FOR_HELP": "Below Keys use to put in setExcludedGroups to exclude scenarios eg BL for blocklistedwordsCRUD to ignore this execution",
+		"ALL": "AP,DSP,DD,FD,PPM,PG,SD,UFCC,PLAC,RAC,RFTM,RSD",
+		"1AdminAuthPolicyTest.class": "groups = AP, dependsOnGroups = PG , Parameters = DSP,DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
+		"2AdminDataSharePolicyTest.class":"groups = DSP, dependsOnGroups = AP, Parameters= DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
+		"3AdminDeviceDetailsTest.class":"groups = DD, dependsOnGroups = SD,AP Parameters= FD,PPM,PLAC,RAC,RFTM ",
+		"4AdminFtmDetailsTest.class":"groups = FD, dependsOnGroups = RFTM ",
+		"5AdminPartnerPolicyMappingTest.class":"groups = PPM, dependsOnGroups = RAC ",
+		"6AdminPolicyGroupTest.class":"groups = PG, dependsOnGroups = UFCC ",
+		"7AdminSbiDetailsTest.class":"groups = SD, dependsOnGroups = RSD ",
+		"8AdminUploadCaCertTest.class":"groups = UFCC, dependsOnGroups =  ",
+		"9PartnerLoginAuthCredTest.class":"groups = PLAC, dependsOnGroups = PPM ",
+		"10PartnerRegisterAuthCredTest.class":"groups = RAC, dependsOnGroups = UFCC,DSP ",
+		"11PartnerRegisterFTMTest.class":"groups = RFTM, dependsOnGroups = UFCC ",
+		"12PartnerRegisterSbiDeviceTest.class":"groups = RSD, dependsOnGroups = UFCC,DSP ",
+
+Used to Kill exe: 		
+		"Kill Chrome exe": "taskkill /F /IM chrome.exe",
+		"Kill driver exe":"taskkill /F /IM chromedriver.exe",
+		
+		
 	
