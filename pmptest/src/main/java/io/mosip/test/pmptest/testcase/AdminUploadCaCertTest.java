@@ -25,12 +25,12 @@ public class AdminUploadCaCertTest extends BaseClass {
 		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/uploadcacert/upload']"));
 		
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
-		String orgName=cer.substring(0, cer.length()-4);
+		
 		
 
 		
 		  ExtentReportUtil.test1 = ExtentReportUtil.reports
-                  .createTest("UploadFtmCaCertTest : " + dropdwnVal + " Orgname : " + orgName);
+                  .createTest("UploadFtmCaCertTest : " + dropdwnVal );
 		
 		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\ca_cert\\",cer);
 		 ExtentReportUtil.reports.flush();
