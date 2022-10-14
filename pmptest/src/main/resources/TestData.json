@@ -20,7 +20,7 @@
 		
 		
 		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
-		"setExcludedGroups": "AP,DSP,DD,FD,PPM,PG,SD,UFCC,PLAC,RAC,RFTM,RSD",
+		"setExcludedGroups": "",
 		"holidayDateCenter": "27/12/2022",
 		"holidayDate": "12/27/2022",
 		"loginlang": "eng",
@@ -51,7 +51,7 @@
 			},
 			{
 				"language": "eng",
-				"value": "eng"
+				"value": "English"
 			},
 			{
 				"language": "fra",
@@ -59,7 +59,7 @@
 			},
 			{
 				"language": "ara",
-				"value": "ara"
+				"value": "Arabic"
 			}
 		]
 	}

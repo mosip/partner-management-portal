@@ -42,7 +42,7 @@ public class AdminPartnerPolicyMappingTest extends BaseClass {
 
 
 		
-		Commons.filter(driver, By.id("policyName"),By.id("partnerName"), "AUTH"+data,orgName);
+		Commons.filter(driver, By.id("requestDetail"),By.id("partnerName"), data,orgName);
 		Commons.click(driver, By.id("ellipsis-button0"));
 		Commons.click(driver, By.id("Manage Policy0"));
 		
