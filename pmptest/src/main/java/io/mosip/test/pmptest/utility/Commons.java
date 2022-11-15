@@ -22,7 +22,7 @@ import org.testng.Assert;
 public class Commons {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Commons.class);
 
-	public static String appendDate="Z"+getDateTime();
+	public static String appendDate="a"+getDateTime();
 	
 	public static String getDateTime()
 	  {
