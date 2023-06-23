@@ -24,6 +24,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
 import io.mosip.test.pmptest.utility.JsonUtil;
@@ -41,58 +43,60 @@ public class AdminDeviceDetailsTest extends BaseClass {
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);
 		
+		test=extent.createTest("AdminDeviceDetailsTest", "verify Login");
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/devicedetails/view']"));
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Approve0"));
+		//Commons.click(test,driver, By.id("Activate0"));
 		
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/devicedetails/view']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Edit0"));
+		//Commons.enter(test,driver, By.xpath("//input[@id='model']"), data + 1);
+		
 
-		Commons.filter(driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
-
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Approve0"));
-		//Commons.click(driver, By.id("Activate0"));
+		Commons.dropdown(test,driver, By.id("SBIVersion")); 
 		
-		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-		
-		Commons.filter(driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
-
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Edit0"));
-		//Commons.enter(driver, By.xpath("//input[@id='model']"), data + 1);
-		
-
-		Commons.dropdown(driver, By.id("SBIVersion")); 
-		
-		Commons.click(driver, By.xpath("//button[@id='mapSBIVersion']"));
-		Commons.click(driver, By.id("confirmmessagepopup"));
+		Commons.click(test,driver, By.xpath("//button[@id='mapSBIVersion']"));
+		Commons.click(test,driver, By.id("confirmmessagepopup"));
 		
 		/*
-		Commons.filter(driver, By.id("make"), data);
+		Commons.filter(test,driver, By.id("make"), data);
 		
-		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("ellipsis-button0"));
 		
-		Commons.click(driver, By.id("Upload Certificate0"));
+		Commons.click(test,driver, By.id("Upload Certificate0"));
 	
 		
 		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\partner_cert\\",cer);
 
-		Commons.filter(driver, By.id("make"), data);
+		Commons.filter(test,driver, By.id("make"), data);
 
-		Commons.click(driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("ellipsis-button0"));
 
-		Commons.click(driver, By.id("View Certificate0"));
+		Commons.click(test,driver, By.id("View Certificate0"));
 
 		String cert=Commons.getText(driver,By.xpath("//p"));
 		logger.info(cert);
-		Commons.click(driver, By.id("confirmmessagepopup"));		
+		Commons.click(test,driver, By.id("confirmmessagepopup"));		
 	*/
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/devicedetails/view']"));
-		Commons.filter(driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
-
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Reject0"));
-		
-		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/devicedetails/view']"));
+		Commons.filter(test,driver, By.id("make"),By.id("partnerOrganizationName"), data,orgName);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Reject0"));
+		test.log(Status.INFO, "Click on reject");
+		Commons.click(test,driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
 
 	}

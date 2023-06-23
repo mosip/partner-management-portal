@@ -212,7 +212,11 @@
 
 <!-- you still need to have a dependency for preferred version of
   Selenium/WebDriver. That should be 3.3.1 or above -->
-  
+  <dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>5.2.0</version>
+</dependency>
   
      <dependency>
         <groupId>org.testng</groupId>
@@ -220,6 +224,11 @@
         <version>7.1.0</version>
         
     </dependency>
+    <dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>5.0.9</version>
+</dependency>
     
     <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 <dependency>

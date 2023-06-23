@@ -24,9 +24,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
-import io.mosip.test.pmptest.utility.ExtentReportUtil;
 import io.mosip.test.pmptest.utility.RealTimeReport;
 import org.testng.annotations.Listeners;
 
@@ -35,47 +36,51 @@ public class AdminPolicyGroupTest extends BaseClass {
 
 	@Test(groups = "PG",dependsOnGroups = "UFCC")
 	public void adminPolicyGroupTest() throws InterruptedException {
-		  ExtentReportUtil.test1 = ExtentReportUtil.reports
-                  .createTest("PolicyGroupTest : " );
+		 
+
+		test=extent.createTest("AdminPolicyGroupTest", "verify Login");
+		Commons.click(test,driver, By.id("policymenugroup"));
+
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/policygroup/view']"));
+		Commons.click(test,driver, By.xpath("//button[@id='Create Policy Group']"));
+		
+		Commons.enter(test,driver, By.id("name"), data);
+		Commons.enter(test,driver, By.id("desc"), data);
+		Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		
+		
+		
+		Commons.filter(test,driver, By.id("name"), data);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Edit0"));
+		test.log(Status.INFO, "Click on edit");
+		Commons.enter(test,driver, By.id("desc"), data + 1);
+		Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 
 		
-		Commons.click(driver, By.id("policymenugroup"));
-
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/policygroup/view']"));
-		Commons.click(driver, By.xpath("//button[@id='Create Policy Group']"));
-		
-		Commons.enter(driver, By.id("name"), data);
-		Commons.enter(driver, By.id("desc"), data);
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-		
-		
-		
-		
-		Commons.filter(driver, By.id("name"), data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Edit0"));
-		Commons.enter(driver, By.id("desc"), data + 1);
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-
-		
 		
 
-		Commons.filter(driver, By.id("name"), data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Deactivate0"));
-		Commons.click(driver, By.id("confirmpopup"));
-		Commons.click(driver, By.id("confirmmessagepopup"));
+		Commons.filter(test,driver, By.id("name"), data);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Deactivate0"));
+		test.log(Status.INFO, "Click on deactive");
+		Commons.click(test,driver, By.id("confirmpopup"));
+		Commons.click(test,driver, By.id("confirmmessagepopup"));
 		
 	
-		Commons.filter(driver, By.id("name"), data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Activate0"));
-		Commons.click(driver, By.id("confirmpopup"));
-		Commons.click(driver, By.id("confirmmessagepopup"));
+		Commons.filter(test,driver, By.id("name"), data);
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Activate0"));
+		test.log(Status.INFO, "Click on activate");
+		Commons.click(test,driver, By.id("confirmpopup"));
+		Commons.click(test,driver, By.id("confirmmessagepopup"));
 		
-		 ExtentReportUtil.reports.flush();
+		
 		
 	}
 }

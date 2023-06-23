@@ -24,6 +24,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
 import io.mosip.test.pmptest.utility.JsonUtil;
@@ -39,33 +41,42 @@ public class AdminSbiDetailsTest extends BaseClass {
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);
 		
-
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/sbidetails/view']"));
+		test=extent.createTest("AdminSbiDetailsTest", "verify Login");
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/sbidetails/view']"));
 	
-		//Commons.filter(driver, By.id("swVersion"),By.id("providerId"), data,orgName);
-		Commons.filter(driver, By.id("swVersion"),data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Reject0"));
+		//Commons.filter(test,driver, By.id("swVersion"),By.id("providerId"), data,orgName);
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("swVersion"),data);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Reject0"));
+		test.log(Status.INFO, "Click on reject");
 
+		Commons.click(test,driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("swVersion"),data);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Edit0"));
+		test.log(Status.INFO, "Click on edit");
+		Commons.enter(test,driver, By.xpath("//input[@id='swBinaryHash']"), data+1);
 
-		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
-		
-		Commons.filter(driver, By.id("swVersion"),data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Edit0"));
-		Commons.enter(driver, By.xpath("//input[@id='swBinaryHash']"), data+1);
-
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-		
-		
-		Commons.filter(driver, By.id("swVersion"),data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Approve0"));
-		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("swVersion"),data);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Approve0"));
+		test.log(Status.INFO, "Click on approve");
+		Commons.click(test,driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
 		
 	

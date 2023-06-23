@@ -24,6 +24,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
 import io.mosip.test.pmptest.utility.JsonUtil;
@@ -36,48 +38,54 @@ public class AdminDataSharePolicyTest extends BaseClass {
 	@Test(groups = "DSP",dependsOnGroups = "AP")
 	public void adminDataSharePolicyTest() throws InterruptedException {
 		
-		Commons.click(driver, By.id("policymenugroup"));
+		test=extent.createTest("AdminDataSharePolicyTest", "verify Login");
+		Commons.click(test,driver, By.id("policymenugroup"));
 
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/datasharepolicy/view']"));
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/datasharepolicy/view']"));
 		
-       Commons.click(driver, By.xpath("//button[@id='Create Policy']"));
+       Commons.click(test,driver, By.xpath("//button[@id='Create Policy']"));
        
 		
-		Commons.enter(driver, By.id("name"), "DS"+data);
-		Commons.enter(driver, By.id("desc"), data);
-		Commons.dropdown(driver, By.xpath("//mat-select[@id='policyGroupName']"),data);
-		
+		Commons.enter(test,driver, By.id("name"), "DS"+data);
+		Commons.enter(test,driver, By.id("desc"), data);
+		Thread.sleep(3000);
+		Commons.dropdown(test,driver, By.xpath("//mat-select[@id='policyGroupName']"),data);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Dropdoen selected");
 		String dataSharepolicyData;
 		try {
 			dataSharepolicyData = JsonUtil.JsonObjParsing(Commons.getTestData(),"dataSharepolicyData");
-			Commons.enter(driver, By.id("policies"), dataSharepolicyData);
+			Commons.enter(test,driver, By.id("policies"), dataSharepolicyData);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
+		Thread.sleep(3000);
+		Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
 	
-		Commons.click(driver, By.id("confirmmessagepopup"));
+		Commons.click(test,driver, By.id("confirmmessagepopup"));
+		
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("desc"), data);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Edit0"));
+		Commons.enter(test,driver, By.id("desc"), data+1);
 		
 		
-		Commons.filter(driver, By.id("desc"), data);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Edit0"));
-		Commons.enter(driver, By.id("desc"), data+1);
-		
-		
-		Commons.click(driver, By.xpath("//button[@id='createButton']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
-		
-		Commons.filter(driver, By.id("desc"), data+1);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Activate0"));
-
-		Commons.click(driver, By.xpath("//button[@id='confirmpopup']"));
-		Commons.click(driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("desc"), data+1);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Activate0"));
+       Thread.sleep(3000);
+		Commons.click(test,driver, By.xpath("//button[@id='confirmpopup']"));
+		Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 		
 		
 		

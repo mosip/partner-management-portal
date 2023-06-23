@@ -34,6 +34,12 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -48,30 +54,32 @@ public class BaseClass {
 	protected String userid = System.getProperty("userid");
 	protected String password = System.getProperty("password");
 	protected String data = Commons.appendDate;
-
+	public static ExtentSparkReporter html;
+    public static    ExtentReports extent;
+    public static    ExtentTest test;
 
 	public void setLangcode(String langcode) throws Exception {
 		this.langcode = Commons.getFieldData("langcode");
 	}
 
-	@BeforeSuite
-	public void report()
-	{
-		 ExtentReportUtil.ExtentSetting();
-			
-			
-	}
+@BeforeMethod
+	
+    public void set() {
+        extent=ExtentReportManager.getReports();
+
+}
 	@BeforeMethod
-	public void setUp() throws InterruptedException {
-		System.out.println(System.getProperty("user.dir"));
-		String configFilePath = System.getProperty("user.dir") + "\\chromedriver\\chromedriver.exe";
-		System.setProperty("webdriver.chrome.driver", configFilePath);
+	public void setUp() throws Exception {
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
+		if(headless.equalsIgnoreCase("yes")) {
+			options.addArguments("--headless=new");
+		}
+		;
+		driver=new ChromeDriver(options);
 		
-//		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless");
-//		driver = new ChromeDriver(options);
-		
-		driver = new ChromeDriver();
+		//driver = new ChromeDriver(options);
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
 		driver.get(envPath);
@@ -86,9 +94,9 @@ public class BaseClass {
 
 			System.out.println(language1);
 			if(!language1.equals("sin"))
-			{Commons.click(driver, By.xpath("//*[@id='kc-locale-dropdown']"));
+			{Commons.click(test,driver, By.xpath("//*[@id='kc-locale-dropdown']"));
 			String var = "//li/a[contains(text(),'" + language1 + "')]";
-			Commons.click(driver, By.xpath(var));
+			Commons.click(test,driver, By.xpath(var));
 			}
 //			
 //			if(!language1.equals("sin"))
@@ -107,11 +115,12 @@ public class BaseClass {
 	}
 
 	@AfterMethod
-	public void tearDown() {
+	public void tearDown() throws InterruptedException {
 		//Once we will get the logout id we are going to use[TODO]
-		Commons.click(driver, By.id("menuButton"));
-		Commons.click(driver, By.id("Logout"));
+		Commons.click(test,driver, By.id("menuButton"));
+		Commons.click(test,driver, By.id("Logout"));
 		driver.quit();
+		extent.flush();
 	}
 
 	@DataProvider(name = "data-provider-ca")

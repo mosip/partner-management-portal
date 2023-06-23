@@ -24,6 +24,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import io.mosip.test.pmptest.utility.BaseClass;
 import io.mosip.test.pmptest.utility.Commons;
 import io.mosip.test.pmptest.utility.RealTimeReport;
@@ -38,16 +40,19 @@ public class AdminPartnerPolicyMappingTest extends BaseClass {
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);
 		
-		Commons.click(driver, By.xpath("//a[@href='#/pmp/resources/policymapping/view']"));
+		test=extent.createTest("AdminPartnerPolicyMappingTest", "verify Login");
+		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/policymapping/view']"));
 
 
+		Thread.sleep(3000);
+		Commons.filter(test,driver, By.id("requestDetail"),By.id("partnerName"), data,orgName);
+		Thread.sleep(3000);
+		test.log(Status.INFO, "Click on filter");
+		Commons.click(test,driver, By.id("ellipsis-button0"));
+		Commons.click(test,driver, By.id("Manage Policy0"));
 		
-		Commons.filter(driver, By.id("requestDetail"),By.id("partnerName"), data,orgName);
-		Commons.click(driver, By.id("ellipsis-button0"));
-		Commons.click(driver, By.id("Manage Policy0"));
+		Commons.click(test,driver, By.id("confirmpopup"));
 		
-		Commons.click(driver, By.id("confirmpopup"));
-		
-		Commons.click(driver, By.id("confirmmessagepopup"));
+		Commons.click(test,driver, By.id("confirmmessagepopup"));
 	}
 }
