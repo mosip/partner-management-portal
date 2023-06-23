@@ -140,3 +140,105 @@
 .mat-form-field{
   padding:10px;
 }
+
+.container {
+   height: 105px;
+   padding: 2rem;
+   border: dashed 1px #FF4081;
+   background-color: #f1b5c9;
+   position: relative;
+   display: flex;
+   border-radius: 5px;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
+   margin-left: 8px;
+   margin-top: 10px;
+}
+.container input {
+   opacity: 0;
+   position: absolute;
+   z-index: 2;
+   width: 100%;
+   height: 100%;
+   top: 0;
+   left: 0;
+}
+ .container label {
+    color: #FF4081;
+    width: 148px;
+    height: 44px;
+    border-radius: 5px;
+    background: #FFFFFF;
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    /*display: flex;*/
+    font-size: 12px;
+    font-weight: 200;
+}
+.container h3 {
+   font-size: 16px;
+   color: #FF4081;
+   padding-left: 3px;
+   padding-top: 7px;
+   font-weight: 600;
+}
+
+.fileover {
+   animation: shake 1s;
+   animation-iteration-count: infinite;
+}
+.files-list {
+   margin-top: 1.5rem;
+}
+ .files-list .single-file {
+   display: flex;
+   padding: 0.5rem;
+   justify-content: space-between;
+   align-items: center;
+   border: dashed 1px #FF4081;
+   margin-bottom: 1rem;
+   display: flex;
+   flex-grow: 1;
+   margin-left: 8px;
+}
+.files-list .single-file .preview {
+   display: flex;
+   margin-left: 0.5rem;
+   cursor: pointer;
+   align-self: flex-end;
+}
+ .files-list .single-file .delete {
+   display: flex;
+   margin-left: 0.5rem;
+   cursor: pointer;
+   align-self: flex-end;
+}
+ .files-list .single-file .name {
+   font-size: 14px;
+   font-weight: 500;
+   color: #353f4a;
+   margin: 0;
+}
+ .files-list .single-file .size {
+   font-size: 12px;
+   font-weight: 500;
+   color: #a4a4a4;
+   margin: 0;
+   margin-bottom: 0.25rem;
+}
+ .files-list .single-file .info {
+   width: 100%;
+}
+
+.preview-heading{
+  color: #505050;
+  font-weight: 600;
+}
+
+.labelfileupload {
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 8px;
+  color: rgba(0, 0, 0, 0.54);
+}
