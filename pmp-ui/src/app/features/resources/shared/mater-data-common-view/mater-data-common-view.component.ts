@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from 'src/app/app-config.service';
 import { HeaderModel } from 'src/app/core/models/header.model';
@@ -9,7 +9,7 @@ import { HeaderModel } from 'src/app/core/models/header.model';
   styleUrls: ['./mater-data-common-view.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MaterDataCommonViewComponent implements OnInit {
+export class MaterDataCommonViewComponent{
 
   @Input() masterDataName: string;
   @Input() headerData: HeaderModel;
@@ -26,10 +26,6 @@ export class MaterDataCommonViewComponent implements OnInit {
     // tslint:disable-next-line:no-string-literal
     this.secondaryLang = appConfigService.getConfig()['secondaryLangCode'];
     translateService.use(this.primaryLang);
-  }
-
-  ngOnInit() {
-    
   }
 
 }
