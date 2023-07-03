@@ -340,7 +340,7 @@ export class CommonService {
   }
 
   uploadCertificatepopup(data: any){
-    var re = /view/gi;
+    let re = /view/gi;
     let id = "";
     if(this.router.url.split('/').includes('ftmdetails')) {
       id = data.ftpChipDetailId;
