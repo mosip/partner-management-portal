@@ -16,8 +16,6 @@ export class HeaderService {
   public partnerType = '';
   public notificationLanguage = '';
 
-  constructor() { }
-
   setOrganizationName(organizationName: string) {
     this.organizationName = organizationName;
   }
