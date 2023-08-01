@@ -16,7 +16,7 @@ public class ExtentReportManager {
 		if(extent==null) {
 			extent=new ExtentReports();
 			extent=new ExtentReports();
-			Filepath=System.getProperty("user.dir")+"/Reports/"+"admin-ui-report-"+Commons.appendDate+".html";
+			Filepath=System.getProperty("user.dir")+"/Reports/"+"pmp-ui-report-"+Commons.appendDate+".html";
 			html=new ExtentSparkReporter(Filepath);
 			  extent.attachReporter(html);
 		}

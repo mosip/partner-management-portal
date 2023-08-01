@@ -18,6 +18,7 @@ import org.json.simple.JSONObject;
 
 import io.mosip.testrig.pmpui.authentication.fw.util.RestClient;
 import io.mosip.testrig.pmpui.kernel.util.CommonLibrary;
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.kernel.util.KernelAuthentication;
 import io.restassured.response.Response;
 
@@ -69,9 +70,9 @@ public class BaseTestCaseFunc {
 	public static List<String> getLanguageList() {
 		logger.info("We have created a Config Manager. Beginning to read properties!");
 
-		environment = System.getProperty("env.user");
+		environment = ConfigManager.getiam_apienvuser();
 		logger.info("Environemnt is  ==== :" + environment);
-		ApplnURI = System.getProperty("env.endpoint");
+		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
 		logger.info("Application URI ======" + ApplnURI);
 
 		logger.info("Configs from properties file are set.");
@@ -118,9 +119,9 @@ public class BaseTestCaseFunc {
 
 		environment = System.getProperty("env.user");
 		logger.info("Environemnt is  ==== :" + environment);
-		ApplnURI = System.getProperty("env.endpoint");
+		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
 		logger.info("Application URI ======" + ApplnURI);
-		ApplnURIForKeyCloak = System.getProperty("env.keycloak");
+		ApplnURIForKeyCloak = ConfigManager.getIAMUrl();
 		logger.info("Application URI ======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);

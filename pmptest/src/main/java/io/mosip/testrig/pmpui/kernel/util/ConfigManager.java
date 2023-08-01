@@ -23,6 +23,9 @@ public class ConfigManager {
 //	private static String MOSIP_MOBILE_CLIENT_ID = "mpartner_default_mobile_client_id";
 //	private static String MOSIP_MOBILE_CLIENT_SECRET = "mpartner_default_mobile_secret";
 //
+	private static String IAM_ADMINPORTAL_PATH = "PmpPortalPath";
+	private static String IAM_APIENVUSER = "apiEnvUser";
+	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
 	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
 	private static String MOSIP_IDREPO_CLIENT_ID = "mosip_idrepo_client_id";
 	private static String MOSIP_IDREPO_APP_ID = "mosip_idrepo_app_id";
@@ -176,6 +179,9 @@ public class ConfigManager {
 	private static String iam_realm_id;
 	private static String iam_users_to_create;
 	private static String iam_users_password;
+	private static String iam_adminportal_path;
+	private static String iam_apienvuser;
+	private static String iam_apiinternalendpoint;
 //	private static String authDemoServicePort;
 //	private static String authDemoServiceBaseUrl;
 //
@@ -212,6 +218,19 @@ public class ConfigManager {
 //		resident_app_id = getValueForKey(MOSIP_RESIDENT_APP_ID);
 //		mpartner_mobile_client_id = getValueForKey(MOSIP_MOBILE_CLIENT_ID);
 //		mpartner_mobile_client_secret = getValueForKey(MOSIP_MOBILE_CLIENT_SECRET);
+		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
+				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
+				: System.getenv(IAM_ADMINPORTAL_PATH);
+		
+		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
+		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null
+				? propsKernel.getProperty(IAM_APIENVUSER)
+				: System.getenv(IAM_APIENVUSER);
+		logger.info("apienvuser from config manager::" + iam_apienvuser);
+		iam_apiinternalendpoint = System.getenv(IAM_APIINTERNALENDPOINT) == null
+				? propsKernel.getProperty(IAM_APIINTERNALENDPOINT)
+				: System.getenv(IAM_APIINTERNALENDPOINT);
+		logger.info("apiinternalendpoint from config manager::" + iam_apiinternalendpoint);
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
 		idrepo_client_id = getValueForKey(MOSIP_IDREPO_CLIENT_ID);
 		idrepo_app_id = getValueForKey(MOSIP_IDREPO_APP_ID);
@@ -260,6 +279,22 @@ public class ConfigManager {
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
 		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
 		logger.info("keycloakendpoint from config manager::" + iam_external_url);
+		
+		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
+		logger.info("keycloakendpoint from config manager::" + iam_external_url);
+		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
+				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
+				: System.getenv(IAM_ADMINPORTAL_PATH);
+		
+		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
+		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null
+				? propsKernel.getProperty(IAM_APIENVUSER)
+				: System.getenv(IAM_APIENVUSER);
+		logger.info("apienvuser from config manager::" + iam_apienvuser);
+		iam_apiinternalendpoint = System.getenv(IAM_APIINTERNALENDPOINT) == null
+				? propsKernel.getProperty(IAM_APIINTERNALENDPOINT)
+				: System.getenv(IAM_APIINTERNALENDPOINT);
+		logger.info("apiinternalendpoint from config manager::" + iam_apiinternalendpoint);
 //
 		iam_realm_id = getValueForKey(IAM_REALM_ID);
 		iam_users_to_create = getValueForKey(IAM_USERS_TO_CREATE);
@@ -412,6 +447,15 @@ public class ConfigManager {
 //
 	public static String getidRepoAppId() {
 		return idrepo_app_id;
+	}
+	public static String getiam_adminportal_path() {
+		return iam_adminportal_path;
+	}
+	public static String getiam_apienvuser() {
+		return iam_apienvuser;
+	}
+	public static String getiam_apiinternalendpoint() {
+		return iam_apiinternalendpoint;
 	}
 //
 //	public static String getRegprocClientSecret() {

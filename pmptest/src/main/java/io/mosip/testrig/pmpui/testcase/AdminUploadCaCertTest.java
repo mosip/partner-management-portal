@@ -8,11 +8,10 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpui.utility.BaseClass;
 import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.RealTimeReport;
-import io.mosip.testrig.pmpui.utility.Reporter;
 
 import org.testng.annotations.Listeners;
 
-@Listeners(value=Reporter.class)
+
 public class AdminUploadCaCertTest extends BaseClass {
 	
 	@Test(groups = "UFCC",dataProvider = "data-provider-ca")

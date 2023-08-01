@@ -124,8 +124,8 @@ public class Commons extends BaseClass {
 			System.out.println( "Element identified by " + by.toString() + " was not clickable after 20 seconds");
 		} catch (Exception e) {
 			try {
-				test.fail(e.getMessage(), MediaEntityBuilder.createScreenCaptureFromBase64String(Screenshot.ClickScreenshot(driver)).build());
-			} catch (IOException e1) {
+				test.fail(e.getMessage());
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -133,7 +133,20 @@ public class Commons extends BaseClass {
 			executor.executeScript("arguments[0].click();", driver.findElement(by));
 
 		}}
-	
+	public  static void clickWebelement(ExtentTest test,WebDriver driver, By by) throws IOException, InterruptedException {
+		logger.info("Clicking " + by );
+		
+		try {
+			(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(by));
+			Thread.sleep(500);
+			WebElement checkbox= driver.findElement(by);
+		    js.executeScript("arguments[0].click();", checkbox);
+			Thread.sleep(500);
+		}catch (StaleElementReferenceException sere) {
+			// simply retry finding the element in the refreshed DOM
+			driver.findElement(by).click();
+		}
+		}
 	
   
 	public static void enter(ExtentTest test,WebDriver driver, By by,String value) {
@@ -261,8 +274,8 @@ public class Commons extends BaseClass {
 				Thread.sleep(50);
 			   String val="'"+value +"'";
 			 //select/option[contains(text(),'FTM Provider')]
-			   String xpath="//select/option[contains(text(),"+val+"]";
-			   clickAction(test,driver,By.xpath(xpath));
+			  // String xpath="//select/option[contains(text(),"+val+"]";
+			   //clickAction(test,driver,By.xpath(xpath));
 		    try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {

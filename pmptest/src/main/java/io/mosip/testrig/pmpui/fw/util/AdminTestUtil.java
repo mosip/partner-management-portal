@@ -230,9 +230,10 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 	 public static void initialize() {
 		 String adminuser="";
 	    	if (initialized == false) {
+	    		ConfigManager.init();
 	        	BaseTestCaseFunc.initialize();
 	    		// Initializing or setting up execution
-	    		ConfigManager.init(); //Langauge Independent
+	    		 //Langauge Independent
 	    		
 	        	// Generate Keycloak Users
 	        	KeycloakUserManager.createUsers();
