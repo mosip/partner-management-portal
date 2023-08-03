@@ -44,6 +44,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   disableForms: boolean;
   copyPrimaryWord: any;
   copySecondaryWord: any;
+  searchResult: any[] = [];
 
   @Input() primaryData: any = {};
   @Input() secondaryData: any;
@@ -419,9 +420,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   getDeviceType(key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
+    console.log("filterObject" + filterObject);
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
     filterRequest["purpose"] = "REGISTRATION";
+    console.log("filterRequest" + filterRequest);
     let request = new RequestModel('', null, filterRequest);
+    console.log("request" + request);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/devicedetail/deviceType', request)
       .subscribe(response => {
@@ -456,8 +460,19 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
+  onKey(value) {
+    this.searchResult = this.search(value);
+  }
+
+  search(value: string) {
+    let filter = value.toLowerCase();
+    console.log("seachAPITriger" + filter);
+    console.log(this.dropDownValues.partnerTypeCode.primary);
+    return this.dropDownValues.partnerTypeCode.primary.filter(option => option.fieldCode.toLowerCase().startsWith(filter));
+  }
+
   getPolicyGroup(key) {
-    const filterObject = new FilterValuesModel('name', 'unique', '');
+    const filterObject = new FilterValuesModel('id', 'unique', '');
     let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
     filterRequest["purpose"] = "REGISTRATION";
@@ -465,7 +480,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
     this.dataStorageService
       .getFiltersForAllDropDown('policymanager/policies/group', request)
       .subscribe(response => {
-        this.dropDownValues[key] = response.response.filters;
+        if(response.response.filters)   
+        this.searchResult = response.response.filters.sort((a, b) => (a.id && b.id) ? a.id.localeCompare(b.id) : 0);
+        this.dropDownValues.partnerTypeCode.primary = response.response.filters.sort((a, b) => (a.id && b.id) ? a.id.localeCompare(b.id) : 0);        
       });
   }
 
