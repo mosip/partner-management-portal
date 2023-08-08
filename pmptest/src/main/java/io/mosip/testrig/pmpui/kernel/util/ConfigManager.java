@@ -208,6 +208,7 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
+		logger.info(TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
 
 //		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
