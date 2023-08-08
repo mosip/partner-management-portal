@@ -7,10 +7,11 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.TestRunner;
 public class ConfigManager {
 
-	private static final Logger logger = Logger.getLogger(ConfigManager.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Commons.class);
 	
 //	private static String MOSIP_PMS_CLIENT_SECRET = "mosip_pms_client_secret";
 //	private static String MOSIP_PMS_CLIENT_ID = "mosip_pms_client_id";
@@ -208,8 +209,9 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
-		logger.info(TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
+				logger.info("file location"+System.getProperty("user.dir") + "/" + "config/Kernel.properties");
+		logger.info("file location"+TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
+		propsKernel = getproperty(System.getProperty("user.dir") + "/" + "config/Kernel.properties");
 
 //		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
 //		pms_client_id = getValueForKey(MOSIP_PMS_CLIENT_ID);
