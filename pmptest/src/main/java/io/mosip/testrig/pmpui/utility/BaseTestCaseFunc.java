@@ -12,8 +12,8 @@ import java.util.Properties;
 
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 
 import io.mosip.testrig.pmpui.authentication.fw.util.RestClient;
@@ -25,21 +25,22 @@ import io.restassured.response.Response;
 //import org.apache.log4j.Logger;
 
 public class BaseTestCaseFunc {
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Commons.class);
 	private static String zoneMappingRequest = "config/Authorization/zoneMappingRequest.json";
-	protected static Logger logger = Logger.getLogger(BaseTestCaseFunc.class);
+	
 	public static String environment;
 	public static List<String> languageList = new ArrayList<>();
 	public static String ApplnURI;
 	public static String ApplnURIForKeyCloak;
 	public static String testLevel;
 	public static Properties props = getproperty(
-			TestRunner.getResourcePath() + "/" + "config/application.properties");
+			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
+			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/Kernel.properties");
 	public static Properties propsMap = getproperty(
-			TestRunner.getResourcePath() + "/" + "config/valueMapping.properties");
+			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
-			TestRunner.getGlobalResourcePath() + "/" + "config/bioValue.properties");
+			TestRunner.getGlobalResourcePath() + "/" + "PmpTestResource/config/bioValue.properties");
 	public static String SEPRATOR = "";
 	public static String currentModule = "pmpui";
 	public final static String COOKIENAME = "Authorization";
@@ -79,7 +80,9 @@ public class BaseTestCaseFunc {
 		if (!languageList.isEmpty()) {
 			return languageList;
 		}
+		
 		String url = ApplnURI + props.getProperty("preregLoginConfigUrl");
+		logger.info("preregLoginConfigUrl" + url);
 		Response response = RestClient.getRequest(url, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 		org.json.JSONObject responseJson = new org.json.JSONObject(response.asString());
 		org.json.JSONObject responseValue = (org.json.JSONObject) responseJson.get("response");
@@ -104,7 +107,7 @@ public class BaseTestCaseFunc {
 	}
 	
 	public static void initialize() {
-		PropertyConfigurator.configure(getLoggerPropertyConfig());
+		//PropertyConfigurator.configure(getLoggerPropertyConfig());
 		kernelAuthLib = new KernelAuthentication();
 		kernelCmnLib = new CommonLibrary();
 		queries = kernelCmnLib.readProperty("adminQueries");
@@ -162,11 +165,11 @@ public class BaseTestCaseFunc {
 		request.put("langCode", BaseTestCaseFunc.getLanguageList().get(0));
 		request.put("isActive","true");
 		actualrequest.put("request", request);
-		logger.info(actualrequest);
+		logger.info(actualrequest.toJSONString());
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
 		logger.info(user + "Mapped to" + zone + "Zone");
-		logger.info(response);
+		logger.info(response.toString());
 	}
 	public static void mapZone(String user) {
 		String token = kernelAuthLib.getTokenByRole("globalAdmin");
@@ -176,6 +179,6 @@ public class BaseTestCaseFunc {
 		map.put("userId", user);
 		Response response = RestClient.patchRequestWithCookieAndQueryParm(url, map, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
-		logger.info(response);
+		logger.info(response.toString());
 	}
 }

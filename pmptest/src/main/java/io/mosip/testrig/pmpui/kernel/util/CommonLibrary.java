@@ -17,23 +17,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
-import io.mosip.testrig.pmpui.utility.TestRunner;
 import io.mosip.testrig.pmpui.kernel.service.ApplicationLibrary;
+import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpui.utility.Commons;
+import io.mosip.testrig.pmpui.utility.TestRunner;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 
 public class CommonLibrary extends BaseTestCaseFunc {
-	private static Logger logger = Logger.getLogger(CommonLibrary.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(CommonLibrary.class);
 	private ApplicationLibrary applicationLibrary = new ApplicationLibrary();
 	
 	
 	public String getResourcePath() {
-		return TestRunner.getGlobalResourcePath() + "/";
+		return TestRunner.getGlobalResourcePath() + "/PmpTestResource/";
 	}
 	
 	public String getResourcePathForKernel() {
-		return TestRunner.getResourcePath() + "/";
+		return TestRunner.getResourcePath() + "/PmpTestResource/";
 	}
 	
 	

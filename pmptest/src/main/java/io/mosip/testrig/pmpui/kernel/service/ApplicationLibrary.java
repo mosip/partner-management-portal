@@ -2,8 +2,8 @@ package io.mosip.testrig.pmpui.kernel.service;
 
 import javax.ws.rs.core.MediaType;
 
-import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpui.kernel.util.CommonLibrary;
+import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
 import io.restassured.response.Response;
 
 public class ApplicationLibrary extends BaseTestCaseFunc {

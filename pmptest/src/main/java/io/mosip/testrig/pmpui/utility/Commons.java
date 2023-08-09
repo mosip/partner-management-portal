@@ -564,7 +564,8 @@ try {
 		
 		String filePath=null;;
 		try {
-			filePath = System.getProperty("user.dir") + folder+str ;
+			filePath = TestRunner.getResourcePath() + "/" + "PmpTestResource" + folder+str ;
+			logger.info("uploadPartnerCertold"+filePath);
 		} catch (Exception e) {
 			
 			// TODO Auto-generated catch block;
@@ -604,7 +605,8 @@ try {
 		
 		String filePath=null;;
 		try {
-			filePath = System.getProperty("user.dir") + folder+str ;
+			filePath = TestRunner.getResourcePath() + "/" + "PmpTestResource" + folder+str ;
+			logger.info("uploadPartnerCertold"+filePath);
 	   Commons.enter(test, driver, By.id("fileInput"), filePath);
 		} catch (Exception e) {
 			

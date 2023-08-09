@@ -1,9 +1,7 @@
 package io.mosip.testrig.pmpui.utility;
 
 import org.testng.ITestContext;
-
 import org.testng.ITestListener;
-
 import org.testng.ITestResult;
 
 public class RealTimeReport implements ITestListener{
