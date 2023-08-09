@@ -3,7 +3,6 @@ package io.mosip.testrig.pmpui.kernel.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -18,7 +17,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.google.common.collect.ImmutableMap;
 
 //import io.mosip.kernel.core.util.StringUtils;
 

@@ -11,9 +11,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
 
-//import com.aspose.cells.Workbook;
-import com.aventstack.extentreports.ExtentTest;
-
 
 
 public class Screenshot  {

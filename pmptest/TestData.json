@@ -20,11 +20,11 @@
 		
 		
 		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
-		"setExcludedGroups": "DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
+		"setExcludedGroups": "DSP,DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
 		"holidayDateCenter": "27/12/2022",
 		"holidayDate": "12/27/2022",
 		"loginlang": "sin",
-		"preappend" :"00",
+		"preappend" :"000",
 		"jsonObjName": "identity",
 		"bulkwait": "10000",
 	    "sbivalidDate":"12/27/2022",

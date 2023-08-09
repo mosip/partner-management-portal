@@ -1,12 +1,11 @@
 package io.mosip.testrig.pmpui.utility;
 
 import java.io.File;
-import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
 import io.mosip.testrig.pmpui.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmpui.testcase.AdminAuthPolicyTest;
 import io.mosip.testrig.pmpui.testcase.AdminDataSharePolicyTest;
@@ -20,7 +19,6 @@ import io.mosip.testrig.pmpui.testcase.PartnerLoginAuthCredTest;
 import io.mosip.testrig.pmpui.testcase.PartnerRegisterAuthCredTest;
 import io.mosip.testrig.pmpui.testcase.PartnerRegisterFTMTest;
 import io.mosip.testrig.pmpui.testcase.PartnerRegisterSbiDeviceTest;
-import io.mosip.testrig.pmpui.testcase.TBD;
 import io.mosip.testrig.pmpui.testcase.apicall;
 
 
@@ -33,8 +31,12 @@ public class TestRunner {
 	static TestNG testNg;
 	
 	public static void main(String[] args) throws Exception {
+		
+		if (checkRunType().equalsIgnoreCase("JAR")) {
+			ExtractResource.removeOldMosipTestTestResource();
+			ExtractResource.extractResourceFromJar();
+		}
 		AdminTestUtil.initialize();
-	
 		testNg=new TestNG();
 		
 		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");

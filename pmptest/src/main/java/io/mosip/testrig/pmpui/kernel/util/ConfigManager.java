@@ -209,10 +209,10 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
-				logger.info("file location"+System.getProperty("user.dir") + "/" + "config/Kernel.properties");
-		logger.info("file location"+TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
-		propsKernel = getproperty(System.getProperty("user.dir") + "/" + "config/Kernel.properties");
+		logger.info("file location"+TestRunner.getResourcePath() + "/" + "PmpTestResource/config/Kernel.properties");
 
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "PmpTestResource/config/Kernel.properties");
+		
 //		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
 //		pms_client_id = getValueForKey(MOSIP_PMS_CLIENT_ID);
 //		pms_app_id = getValueForKey(MOSIP_PMS_APP_ID);

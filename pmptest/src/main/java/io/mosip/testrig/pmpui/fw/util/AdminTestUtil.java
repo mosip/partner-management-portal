@@ -1,12 +1,8 @@
 package io.mosip.testrig.pmpui.fw.util;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import javax.ws.rs.core.MediaType;
@@ -22,7 +18,6 @@ import io.mosip.testrig.pmpui.kernel.util.KernelAuthentication;
 import io.mosip.testrig.pmpui.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
 import io.restassured.response.Response;
-import org.apache.commons.lang.RandomStringUtils;
 
 public class AdminTestUtil extends BaseTestCaseFunc  {
 

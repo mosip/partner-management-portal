@@ -3,15 +3,14 @@ package io.mosip.testrig.pmpui.testcase;
 
 import static org.testng.Assert.assertEquals;
 
-import org.json.JSONObject;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpui.utility.BaseClass;
 import io.mosip.testrig.pmpui.utility.RealTimeReport;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 @Listeners(RealTimeReport.class)
 public class apicall extends BaseClass{

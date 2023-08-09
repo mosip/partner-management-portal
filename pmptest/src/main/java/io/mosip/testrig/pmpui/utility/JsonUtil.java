@@ -1,22 +1,19 @@
 package io.mosip.testrig.pmpui.utility;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
-import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtil {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(JsonUtil.class);
@@ -127,7 +124,7 @@ public class JsonUtil {
 
         try {
             
-                File f = new File(System.getProperty("user.dir") + "\\"+document);
+                File f = new File(TestRunner.getResourcePath() + "/" + "PmpTestResource/"+document);
 
                 if (f.exists()) {
                     InputStream is = new FileInputStream(f);
