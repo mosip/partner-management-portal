@@ -25,7 +25,7 @@ import io.restassured.response.Response;
 //import org.apache.log4j.Logger;
 
 public class BaseTestCaseFunc {
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Commons.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseTestCaseFunc.class);
 	private static String zoneMappingRequest = "config/Authorization/zoneMappingRequest.json";
 	
 	public static String environment;
@@ -34,13 +34,13 @@ public class BaseTestCaseFunc {
 	public static String ApplnURIForKeyCloak;
 	public static String testLevel;
 	public static Properties props = getproperty(
-			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/application.properties");
+			TestRunner.getResourcePath() + "/" + "resources/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/Kernel.properties");
+			TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
 	public static Properties propsMap = getproperty(
-			TestRunner.getResourcePath() + "/" + "PmpTestResource/config/valueMapping.properties");
+			TestRunner.getResourcePath() + "/" + "resources/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
-			TestRunner.getGlobalResourcePath() + "/" + "PmpTestResource/config/bioValue.properties");
+			TestRunner.getGlobalResourcePath() + "/" + "resources/config/bioValue.properties");
 	public static String SEPRATOR = "";
 	public static String currentModule = "pmpui";
 	public final static String COOKIENAME = "Authorization";

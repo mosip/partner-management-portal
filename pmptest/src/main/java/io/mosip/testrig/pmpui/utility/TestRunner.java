@@ -32,10 +32,10 @@ public class TestRunner {
 	
 	public static void main(String[] args) throws Exception {
 		
-		if (checkRunType().equalsIgnoreCase("JAR")) {
-			ExtractResource.removeOldMosipTestTestResource();
-			ExtractResource.extractResourceFromJar();
-		}
+//		if (checkRunType().equalsIgnoreCase("JAR")) {
+//			ExtractResource.removeOldMosipTestTestResource();
+//			ExtractResource.extractResourceFromJar();
+//		}
 		AdminTestUtil.initialize();
 		testNg=new TestNG();
 		

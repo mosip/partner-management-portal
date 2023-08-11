@@ -145,7 +145,7 @@ public class BaseClass {
 	public static String[] readFolderJsonList(String str) {
 		String contents[] = null;
 		try {
-			File directoryPath = new File(TestRunner.getResourcePath() + "/" + "PmpTestResource" + str);
+			File directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources" + str);
 
 			if (directoryPath.exists()) {
 
