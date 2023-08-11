@@ -2,7 +2,7 @@
 <configuration>
 
 	<property name="LOG_PATTERN" value="%d %p [%t] %c{5} : %m%n" />
-	<property name="APP_LOG_ROOT" value="PmpTestResource/logs"/>
+	<property name="APP_LOG_ROOT" value="resources/logs"/>
 
 	<appender name="applicationLogAutomation" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${APP_LOG_ROOT}/AutomationLogs.log</file>

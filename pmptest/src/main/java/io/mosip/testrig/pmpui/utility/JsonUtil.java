@@ -124,7 +124,7 @@ public class JsonUtil {
 
         try {
             
-                File f = new File(TestRunner.getResourcePath() + "/" + "PmpTestResource/"+document);
+                File f = new File(TestRunner.getResourcePath() + "/" + "resources/"+document);
 
                 if (f.exists()) {
                     InputStream is = new FileInputStream(f);

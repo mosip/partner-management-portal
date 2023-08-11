@@ -30,11 +30,11 @@ public class CommonLibrary extends BaseTestCaseFunc {
 	
 	
 	public String getResourcePath() {
-		return TestRunner.getGlobalResourcePath() + "/PmpTestResource/";
+		return TestRunner.getGlobalResourcePath() + "/resources/";
 	}
 	
 	public String getResourcePathForKernel() {
-		return TestRunner.getResourcePath() + "/PmpTestResource/";
+		return TestRunner.getResourcePath() + "/resources/";
 	}
 	
 	

@@ -85,9 +85,9 @@ public class ExtractResource {
 	private static boolean copyFilesFromJarToOutsideResource(String path) {
 		try {
 			File resourceFile = new File(TestRunner.jarUrl).getParentFile();
-			File destinationFile = new File(resourceFile.getAbsolutePath() + "/PmpTestResource/" + path);
+			File destinationFile = new File(resourceFile.getAbsolutePath() + "/resources/" + path);
 			LOGGER.info("resourceFile " + TestRunner.jarUrl);
-			LOGGER.info("destinationFile " + resourceFile.getAbsolutePath() + "/PmpTestResource/" + path);
+			LOGGER.info("destinationFile " + resourceFile.getAbsolutePath() + "/resources/" + path);
 			org.apache.commons.io.FileUtils.copyInputStreamToFile(TestRunner.class.getResourceAsStream("/" + path),
 					destinationFile);
 			return true;
