@@ -11,7 +11,7 @@ import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.TestRunner;
 public class ConfigManager {
 
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Commons.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(ConfigManager.class);
 	
 //	private static String MOSIP_PMS_CLIENT_SECRET = "mosip_pms_client_secret";
 //	private static String MOSIP_PMS_CLIENT_ID = "mosip_pms_client_id";
