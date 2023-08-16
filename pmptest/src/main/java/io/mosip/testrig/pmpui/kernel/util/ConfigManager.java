@@ -280,8 +280,13 @@ public class ConfigManager {
 		master_db_user = getValueForKey(MASTER_DB_USER);
 		master_db_pass = getValueForKey(MASTER_DB_PASS);
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
-		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
-		logger.info("keycloakendpoint from config manager::" + iam_external_url);
+		
+		
+		iam_external_url = System.getenv(IAM_EXTERNAL_URL) == null
+				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+				: System.getenv(IAM_EXTERNAL_URL);
+		logger.info("iam_external_url::" + iam_external_url);
+		
 		
 		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
 		logger.info("keycloakendpoint from config manager::" + iam_external_url);
@@ -638,10 +643,7 @@ public class ConfigManager {
 	}
 //
 //	// from docker env getting only host url
-	public static String getIAMUrl() {
-		logger.info("keycloak url from ENV::: " + System.getenv(IAM_EXTERNAL_URL) + "/auth");
-		logger.info("keycloak url from Property::: " + System.getProperty(IAM_EXTERNAL_URL) + "/auth");
-		logger.info("keycloak url from Config::: " + propsKernel.getProperty(IAM_EXTERNAL_URL) + "/auth");
+	public static String getiam_external_url() {
 		logger.info("keycloak url is:::" + iam_external_url + "/auth");
 		return iam_external_url + "/auth";
 	}
@@ -649,6 +651,8 @@ public class ConfigManager {
 	public static String getIAMRealmId() {
 		return iam_realm_id;
 	}
+	
+	
 //
 	public static String getIAMUsersToCreate() {
 		return iam_users_to_create;

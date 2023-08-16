@@ -124,7 +124,7 @@ public class BaseTestCaseFunc {
 		logger.info("Environemnt is  ==== :" + environment);
 		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
 		logger.info("Application URI ======" + ApplnURI);
-		ApplnURIForKeyCloak = ConfigManager.getIAMUrl();
+		ApplnURIForKeyCloak = ConfigManager.getiam_external_url();
 		logger.info("Application URI ======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);
