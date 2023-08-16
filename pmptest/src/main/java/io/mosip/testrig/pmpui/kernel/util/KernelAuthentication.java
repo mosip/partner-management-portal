@@ -9,6 +9,7 @@ import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
 import io.restassured.response.Response;
 
 public class KernelAuthentication extends io.mosip.testrig.pmpui.utility.BaseTestCaseFunc {
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(KernelAuthentication.class);
 	private String authRequest="/config/Authorization/request.json";
 	private String authInternalRequest="config/Authorization/internalAuthRequest.json";
 	public String zonemapCookie = null;

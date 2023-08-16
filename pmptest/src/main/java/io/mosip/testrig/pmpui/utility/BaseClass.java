@@ -40,7 +40,7 @@ public class BaseClass {
 	public static ExtentSparkReporter html;
     public static    ExtentReports extent;
     public static    ExtentTest test;
-
+    private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseClass.class);
 	public void setLangcode(String langcode) throws Exception {
 		this.langcode = Commons.getFieldData("langcode");
 	}

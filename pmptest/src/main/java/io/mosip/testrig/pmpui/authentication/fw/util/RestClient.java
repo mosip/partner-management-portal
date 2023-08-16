@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import io.mosip.testrig.pmpui.authentication.fw.precon.JsonPrecondtion;
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -13,7 +14,7 @@ import io.restassured.response.Response;
 
 public class RestClient {
 
-	private static final Logger RESTCLIENT_LOGGER = Logger.getLogger(RestClient.class);
+	private static final org.slf4j.Logger RESTCLIENT_LOGGER= org.slf4j.LoggerFactory.getLogger(RestClient.class);
 	private static RestAssuredConfig config = RestAssured.config()
 			.httpClient(HttpClientConfig.httpClientConfig().setParam("http.connection.timeout", 500000)
 					.setParam("http.socket.timeout", 500000).setParam("http.connection-manager.timeout", 500000));
@@ -57,7 +58,7 @@ public class RestClient {
 				.contentType(contentHeader).cookie(cookieName, cookieValue).accept(acceptHeader).log().all().when()
 				.patch(url).then().log().all().extract().response();
 		RESTCLIENT_LOGGER.info(postResponse.asString());
-		RESTCLIENT_LOGGER.info(postResponse.time());
+		RESTCLIENT_LOGGER.info("postResponse.time ="+postResponse.time());
 		return postResponse;
 	}
 }

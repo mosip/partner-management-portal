@@ -23,7 +23,7 @@ import io.mosip.testrig.pmpui.testcase.apicall;
 
 
 public class TestRunner {
-	private static final Logger logger = Logger.getLogger(TestRunner.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(TestRunner.class);
 	public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	static TestListenerAdapter tla = new TestListenerAdapter();
 

@@ -21,7 +21,7 @@ import io.restassured.response.Response;
 
 public class AdminTestUtil extends BaseTestCaseFunc  {
 
-	private static final Logger logger = Logger.getLogger(AdminTestUtil.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(RestClient.class);
 	public static String token;
 	public static String user;
 	public static String tokenRoleIdRepo = "idrepo";
@@ -151,7 +151,7 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 		requestJson.put("requesttime", generateCurrentUTCTimeStamp());
 		requestJson.put("version", "v1");
 		
-		logger.info(requestJson);
+		logger.info("requestJson="+requestJson);
 		return requestJson.toString();
     }
 	

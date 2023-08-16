@@ -18,10 +18,12 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
+import io.mosip.testrig.pmpui.utility.BaseTestCaseFunc;
+
 //import io.mosip.kernel.core.util.StringUtils;
 
 public class S3Adapter {
-	private static final Logger logger = Logger.getLogger(S3Adapter.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(S3Adapter.class);
 
 	private AmazonS3 connection = null;
 
