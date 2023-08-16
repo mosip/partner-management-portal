@@ -28,7 +28,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;
 	public static String passwordCred;
 	
-	private static final Logger logger = Logger.getLogger(KeycloakUserManager.class);
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
 	public static Properties propsKernel = getproperty(TestRunner.getResourcePath() + "/"+"config/Kernel.properties");
 
@@ -91,14 +91,14 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			// Create user (requires manage-users role)
 			Response response = null;
 				response = usersRessource.create(user);
- 				logger.info(response);
+				logger.info("response ="+response);
 			logger.info("Repsonse: %s %s%n"+ response.getStatus()+ response.getStatusInfo());
 			if (response.getStatus()==409) {
 				break;
 			}
 			
 		
-			logger.info(response.getLocation());
+			logger.info("response ="+response.getLocation());
 			String userId = CreatedResponseUtil.getCreatedId(response);
 			logger.info("User created with userId: %s%n"+ userId);
 

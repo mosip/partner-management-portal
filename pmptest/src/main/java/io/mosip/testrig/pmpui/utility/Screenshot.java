@@ -14,6 +14,7 @@ import org.openqa.selenium.io.FileHandler;
 
 
 public class Screenshot  {
+	 private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(Screenshot.class);
 
 	public static String  ClickScreenshot(WebDriver driver) throws IOException {
 		TakesScreenshot ss=(TakesScreenshot)driver;

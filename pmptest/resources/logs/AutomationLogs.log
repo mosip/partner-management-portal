@@ -1,0 +1,14 @@
+2023-08-16 10:31:19,569 ERROR [main] i.m.t.p.u.BaseTestCaseFunc : Exception D:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes\resources\config\application.properties (The system cannot find the path specified)
+2023-08-16 10:31:19,572 ERROR [main] i.m.t.p.u.BaseTestCaseFunc : Exception D:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes\resources\config\Kernel.properties (The system cannot find the path specified)
+2023-08-16 10:31:19,573 ERROR [main] i.m.t.p.u.BaseTestCaseFunc : Exception D:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes\resources\config\valueMapping.properties (The system cannot find the path specified)
+2023-08-16 10:31:19,573 ERROR [main] i.m.t.p.u.BaseTestCaseFunc : Exception D:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes\resources\config\bioValue.properties (The system cannot find the path specified)
+2023-08-16 10:31:19,589 INFO [main] i.m.t.p.u.Commons : file locationD:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes/resources/config/Kernel.properties
+2023-08-16 10:31:19,590 ERROR [main] i.m.t.p.u.Commons : Exception D:\GItAuto\pmp121\partner-management-portal\pmptest\target\classes\resources\config\Kernel.properties (The system cannot find the path specified)
+2023-08-16 10:31:19,591 INFO [main] i.m.t.p.u.Commons : adminportal_path from config manager::null
+2023-08-16 10:31:19,591 INFO [main] i.m.t.p.u.Commons : apienvuser from config manager::null
+2023-08-16 10:31:19,591 INFO [main] i.m.t.p.u.Commons : apiinternalendpoint from config manager::null
+2023-08-16 10:31:19,592 INFO [main] i.m.t.p.u.Commons : keycloakendpoint from config manager::null
+2023-08-16 10:31:19,592 INFO [main] i.m.t.p.u.Commons : keycloakendpoint from config manager::null
+2023-08-16 10:31:19,592 INFO [main] i.m.t.p.u.Commons : adminportal_path from config manager::null
+2023-08-16 10:31:19,592 INFO [main] i.m.t.p.u.Commons : apienvuser from config manager::null
+2023-08-16 10:31:19,592 INFO [main] i.m.t.p.u.Commons : apiinternalendpoint from config manager::null
