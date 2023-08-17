@@ -224,7 +224,6 @@ public class ConfigManager {
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
-		
 		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
 		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null
 				? propsKernel.getProperty(IAM_APIENVUSER)
@@ -281,15 +280,17 @@ public class ConfigManager {
 		master_db_pass = getValueForKey(MASTER_DB_PASS);
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
 		
-		
 		iam_external_url = System.getenv(IAM_EXTERNAL_URL) == null
 				? propsKernel.getProperty(IAM_EXTERNAL_URL)
 				: System.getenv(IAM_EXTERNAL_URL);
-		logger.info("iam_external_url::" + iam_external_url);
+		System.out.println("env from doc" +System.getenv(IAM_EXTERNAL_URL));
+		System.out.println("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
+		logger.info("iam_external_url config manager init::" + iam_external_url);
+//		
 		
+//		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
+//		logger.info("keycloakendpoint from config manager init::" + iam_external_url);
 		
-		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
-		logger.info("keycloakendpoint from config manager::" + iam_external_url);
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
@@ -299,6 +300,7 @@ public class ConfigManager {
 				? propsKernel.getProperty(IAM_APIENVUSER)
 				: System.getenv(IAM_APIENVUSER);
 		logger.info("apienvuser from config manager::" + iam_apienvuser);
+		
 		iam_apiinternalendpoint = System.getenv(IAM_APIINTERNALENDPOINT) == null
 				? propsKernel.getProperty(IAM_APIINTERNALENDPOINT)
 				: System.getenv(IAM_APIINTERNALENDPOINT);
@@ -644,7 +646,7 @@ public class ConfigManager {
 //
 //	// from docker env getting only host url
 	public static String getiam_external_url() {
-		logger.info("keycloak url is:::" + iam_external_url + "/auth");
+		logger.info("keycloak url extarnal:::" + iam_external_url + "/auth");
 		return iam_external_url + "/auth";
 	}
 //
