@@ -120,11 +120,11 @@ public class BaseTestCaseFunc {
 		getOSType();
 		logger.info("We have created a Config Manager. Beginning to read properties!");
 
-		environment = System.getProperty("env.user");
-		logger.info("Environemnt is  ==== :" + environment);
+		environment = ConfigManager.getiam_apienvuser();
+		logger.info("Environemnt is from baseTestCase ==== :" + environment);
 		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
 		logger.info("Application URI ======" + ApplnURI);
-		ApplnURIForKeyCloak = ConfigManager.getiam_external_url();
+		ApplnURIForKeyCloak = ConfigManager.getIAMUrl();
 		logger.info("Application URI ======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);

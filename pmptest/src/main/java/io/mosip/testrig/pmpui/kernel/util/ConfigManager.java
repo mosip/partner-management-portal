@@ -25,6 +25,7 @@ public class ConfigManager {
 //	private static String MOSIP_MOBILE_CLIENT_SECRET = "mpartner_default_mobile_secret";
 //
 	private static String IAM_ADMINPORTAL_PATH = "PmpPortalPath";
+	private static String IAM_EXTERNAL_URL = "keycloak-external-url";
 	private static String IAM_APIENVUSER = "apiEnvUser";
 	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
 	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
@@ -90,7 +91,6 @@ public class ConfigManager {
 	private static String MASTER_DB_PASS = "postgresql-password";
 	private static String MASTER_DB_SCHEMA = "master_db_schema";
 //
-	private static String IAM_EXTERNAL_URL = "keycloak-external-url";
 	private static String IAM_REALM_ID = "keycloak-realm-id";
 	private static String IAM_USERS_TO_CREATE = "iam-users-to-create";
 	private static String IAM_USERS_PASSWORD = "iam-users-password";
@@ -280,12 +280,12 @@ public class ConfigManager {
 		master_db_pass = getValueForKey(MASTER_DB_PASS);
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
 		
-		iam_external_url = System.getenv(IAM_EXTERNAL_URL) == null
-				? propsKernel.getProperty(IAM_EXTERNAL_URL)
-				: System.getenv(IAM_EXTERNAL_URL);
-		logger.info("env from doc" +System.getenv(IAM_EXTERNAL_URL));
-		logger.info("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
-		logger.info("iam_external_url config manager init::" + iam_external_url);
+//		iam_external_url = System.getenv(IAM_EXTERNAL_URL) == null
+//				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+//				: System.getenv(IAM_EXTERNAL_URL);
+//		logger.info("env from doc" +System.getenv(IAM_EXTERNAL_URL));
+//		logger.info("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
+//		logger.info("iam_external_url config manager init::" + iam_external_url);
 //		
 		
 //		iam_external_url = getValueForKey(IAM_EXTERNAL_URL);
@@ -294,6 +294,14 @@ public class ConfigManager {
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
+		
+		iam_external_url =System.getenv(IAM_EXTERNAL_URL) == null
+				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+				: System.getenv(IAM_EXTERNAL_URL);
+		logger.info("env from doc" +System.getenv(IAM_EXTERNAL_URL));
+		logger.info("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
+		
+		
 		
 		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
 		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null
@@ -645,8 +653,16 @@ public class ConfigManager {
 	}
 //
 //	// from docker env getting only host url
-	public static String getiam_external_url() {
-		logger.info("keycloak url extarnal:::" + iam_external_url + "/auth");
+//	public static String getiam_external_url() {
+//		logger.info("keycloak url extarnal:::" + iam_external_url + "/auth");
+//		return iam_external_url + "/auth";
+//	}
+	
+	public static String getIAMUrl() {
+		logger.info("keycloak url from ENV::: " + System.getenv(IAM_EXTERNAL_URL) + "/auth");
+		logger.info("keycloak url from Property::: " + System.getProperty(IAM_EXTERNAL_URL) + "/auth");
+		logger.info("keycloak url from Config::: " + propsKernel.getProperty(IAM_EXTERNAL_URL) + "/auth");
+		logger.info("keycloak url is:::" + iam_external_url + "/auth");
 		return iam_external_url + "/auth";
 	}
 //
