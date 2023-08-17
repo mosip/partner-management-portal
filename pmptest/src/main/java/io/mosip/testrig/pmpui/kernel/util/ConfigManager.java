@@ -451,6 +451,10 @@ public class ConfigManager {
 	public static String getiam_apiinternalendpoint() {
 		return iam_apiinternalendpoint;
 	}
+	
+	public static String getIAMUrl() {
+		return iamExternalURL;
+	}
 //
 //	public static String getRegprocClientSecret() {
 //		return regproc_client_secret;
@@ -646,13 +650,13 @@ public class ConfigManager {
 		return propsKernel.getProperty("roles." + userId);
 	}
 	
-	public static String getIAMUrl() {
-		logger.info("keycloak url from ENV::: " + System.getenv(IAM_EXTERNAL_URL) + "/auth");
-		logger.info("keycloak url from Property::: " + System.getProperty(IAM_EXTERNAL_URL) + "/auth");
-		logger.info("keycloak url from Config::: " + propsKernel.getProperty(IAM_EXTERNAL_URL) + "/auth");
-		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
-		return iamExternalURL + "/auth";
-	}
+//	public static String getIAMUrl() {
+//		logger.info("keycloak url from ENV::: " + System.getenv(IAM_EXTERNAL_URL) + "/auth");
+//		logger.info("keycloak url from Property::: " + System.getProperty(IAM_EXTERNAL_URL) + "/auth");
+//		logger.info("keycloak url from Config::: " + propsKernel.getProperty(IAM_EXTERNAL_URL) + "/auth");
+//		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
+//		return iamExternalURL + "/auth";
+//	}
 
 	private static Properties getproperty(String path) {
 		Properties prop = new Properties();
