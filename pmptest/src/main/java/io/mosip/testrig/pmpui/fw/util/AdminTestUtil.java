@@ -226,6 +226,8 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 		 String adminuser="";
 	    	if (initialized == false) {
 	    		ConfigManager.init();
+	    		
+	    		
 	        	BaseTestCaseFunc.initialize();
 	    		// Initializing or setting up execution
 	    		 //Langauge Independent
