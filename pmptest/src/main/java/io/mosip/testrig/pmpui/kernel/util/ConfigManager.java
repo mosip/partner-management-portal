@@ -283,8 +283,8 @@ public class ConfigManager {
 		iam_external_url = System.getenv(IAM_EXTERNAL_URL) == null
 				? propsKernel.getProperty(IAM_EXTERNAL_URL)
 				: System.getenv(IAM_EXTERNAL_URL);
-		System.out.println("env from doc" +System.getenv(IAM_EXTERNAL_URL));
-		System.out.println("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
+		logger.info("env from doc" +System.getenv(IAM_EXTERNAL_URL));
+		logger.info("env from kernal"+System.getProperty(IAM_EXTERNAL_URL));
 		logger.info("iam_external_url config manager init::" + iam_external_url);
 //		
 		
