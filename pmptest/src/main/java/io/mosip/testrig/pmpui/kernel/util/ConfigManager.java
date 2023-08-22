@@ -201,9 +201,9 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
-		logger.info("file location"+TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+		logger.info("file location"+System.getProperty("user.dir") + "/" + "resources/config/Kernel.properties");
 
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+		propsKernel = getproperty(System.getProperty("user.dir") + "/" + "resources/config/Kernel.properties");
 		
 		iamExternalURL = getValueForKey(IAM_EXTERNAL_URL);
 		
@@ -453,7 +453,9 @@ public class ConfigManager {
 	}
 	
 	public static String getIAMUrl() {
+		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
 		return iamExternalURL;
+		
 	}
 //
 //	public static String getRegprocClientSecret() {
