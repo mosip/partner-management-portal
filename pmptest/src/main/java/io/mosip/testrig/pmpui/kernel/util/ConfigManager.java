@@ -453,7 +453,9 @@ public class ConfigManager {
 	}
 	
 	public static String getIAMUrl() {
+		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
 		return iamExternalURL;
+		
 	}
 //
 //	public static String getRegprocClientSecret() {

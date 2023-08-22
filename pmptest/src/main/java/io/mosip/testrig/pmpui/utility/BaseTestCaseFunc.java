@@ -123,9 +123,9 @@ public class BaseTestCaseFunc {
 		environment = ConfigManager.getiam_apienvuser();
 		logger.info("Environemnt is from baseTestCase ==== :" + environment);
 		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
-		logger.info("Application URI ======" + ApplnURI);
+		logger.info("Application URI end point ======" + ApplnURI);
 		ApplnURIForKeyCloak = ConfigManager.getIAMUrl();
-		logger.info("Application URI ======" + ApplnURIForKeyCloak);
+		logger.info("Application URI  key clock======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);
 		// languageList =Arrays.asList(System.getProperty("env.langcode").split(","));

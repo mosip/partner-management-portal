@@ -91,7 +91,8 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			// Create user (requires manage-users role)
 			Response response = null;
 				response = usersRessource.create(user);
-				logger.info("response ="+response);
+			
+				logger.info("response for create user ="+response);
 			logger.info("Repsonse: %s %s%n"+ response.getStatus()+ response.getStatusInfo());
 			if (response.getStatus()==409) {
 				break;
