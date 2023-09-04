@@ -61,7 +61,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	}
 
 	public static void createUsers() {
-		
+		try {
 		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
@@ -133,6 +133,11 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 					.add((availableRoles.isEmpty() ? allRoles : availableRoles));
 			
 			//passwordIndex ++;
+		}
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
