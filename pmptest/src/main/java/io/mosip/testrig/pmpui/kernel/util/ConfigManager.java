@@ -205,8 +205,11 @@ public class ConfigManager {
 
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
 		
-		iamExternalURL = getValueForKey(IAM_EXTERNAL_URL);
+		iamExternalURL =System.getenv(IAM_EXTERNAL_URL) == null
+				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+				: System.getenv(IAM_EXTERNAL_URL)+"/auth";
 		
+		logger.info("iamExternalURL form config =" + iamExternalURL);
 //		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
 //		pms_client_id = getValueForKey(MOSIP_PMS_CLIENT_ID);
 //		pms_app_id = getValueForKey(MOSIP_PMS_APP_ID);

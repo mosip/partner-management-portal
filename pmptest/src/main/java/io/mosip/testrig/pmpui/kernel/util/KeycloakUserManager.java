@@ -39,7 +39,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	key=KeycloakBuilder.builder().serverUrl(ConfigManager.getIAMUrl()).realm(ConfigManager.getIAMRealmId())
 				.grantType(OAuth2Constants.CLIENT_CREDENTIALS).clientId(ConfigManager.getAutomationClientId()).clientSecret(ConfigManager.getAutomationClientSecret())
 				.build();
-	logger.info(ConfigManager.getIAMUrl());
+	logger.info("ConfigManager.getIAMUrl()"+ConfigManager.getIAMUrl());
 	logger.info(key.toString() + key.realms());
 		}catch(Exception e)
 		{
