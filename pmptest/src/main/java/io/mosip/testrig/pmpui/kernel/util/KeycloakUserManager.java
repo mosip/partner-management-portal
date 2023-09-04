@@ -39,7 +39,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	key=KeycloakBuilder.builder().serverUrl(ConfigManager.getIAMUrl()).realm(ConfigManager.getIAMRealmId())
 				.grantType(OAuth2Constants.CLIENT_CREDENTIALS).clientId(ConfigManager.getAutomationClientId()).clientSecret(ConfigManager.getAutomationClientSecret())
 				.build();
-	logger.info(ConfigManager.getIAMUrl());
+	logger.info("ConfigManager.getIAMUrl()"+ConfigManager.getIAMUrl());
 	logger.info(key.toString() + key.realms());
 		}catch(Exception e)
 		{
@@ -61,7 +61,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	}
 
 	public static void createUsers() {
-		
+		try {
 		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
@@ -133,6 +133,11 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 					.add((availableRoles.isEmpty() ? allRoles : availableRoles));
 			
 			//passwordIndex ++;
+		}
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	

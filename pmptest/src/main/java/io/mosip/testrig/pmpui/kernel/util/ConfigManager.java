@@ -205,8 +205,12 @@ public class ConfigManager {
 
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
 		
-		iamExternalURL = getValueForKey(IAM_EXTERNAL_URL);
+		iamExternalURL =System.getenv(IAM_EXTERNAL_URL) == null
+				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+				: System.getenv(IAM_EXTERNAL_URL);
 		
+		//logger.info("iamExternalURL=" + iamExternalURL);
+		logger.info("iamExternalURL from getIAMUrl() =" + getIAMUrl());
 //		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
 //		pms_client_id = getValueForKey(MOSIP_PMS_CLIENT_ID);
 //		pms_app_id = getValueForKey(MOSIP_PMS_APP_ID);
@@ -453,8 +457,7 @@ public class ConfigManager {
 	}
 	
 	public static String getIAMUrl() {
-		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
-		return iamExternalURL+ "/auth";
+		return iamExternalURL+"/auth";
 		
 	}
 //
@@ -652,13 +655,6 @@ public class ConfigManager {
 		return propsKernel.getProperty("roles." + userId);
 	}
 	
-//	public static String getIAMUrl() {
-//		logger.info("keycloak url from ENV::: " + System.getenv(IAM_EXTERNAL_URL) + "/auth");
-//		logger.info("keycloak url from Property::: " + System.getProperty(IAM_EXTERNAL_URL) + "/auth");
-//		logger.info("keycloak url from Config::: " + propsKernel.getProperty(IAM_EXTERNAL_URL) + "/auth");
-//		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
-//		return iamExternalURL + "/auth";
-//	}
 
 	private static Properties getproperty(String path) {
 		Properties prop = new Properties();
