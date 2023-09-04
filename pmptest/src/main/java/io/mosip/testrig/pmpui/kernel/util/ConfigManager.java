@@ -206,7 +206,7 @@ public class ConfigManager {
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
 		
 		iamExternalURL =System.getenv(IAM_EXTERNAL_URL) == null
-				? propsKernel.getProperty(IAM_EXTERNAL_URL)
+				? propsKernel.getProperty(IAM_EXTERNAL_URL)+"/auth"
 				: System.getenv(IAM_EXTERNAL_URL)+"/auth";
 		
 		logger.info("iamExternalURL form config =" + iamExternalURL);
@@ -456,8 +456,7 @@ public class ConfigManager {
 	}
 	
 	public static String getIAMUrl() {
-		logger.info("keycloak url is:::" + iamExternalURL + "/auth");
-		return iamExternalURL+ "/auth";
+		return iamExternalURL;
 		
 	}
 //
