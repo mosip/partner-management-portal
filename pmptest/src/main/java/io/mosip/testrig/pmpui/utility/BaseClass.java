@@ -111,6 +111,7 @@ public class BaseClass {
 	@DataProvider(name = "data-provider-ca")
 	public Object[] caDataProvider() {
 		String listFilename[] = readFolderJsonList("\\ca_cert\\");
+		logger.info("listFilename ca cert="+listFilename);
 		return listFilename;
 	}
 //	@DataProvider(name = "data-provider-partner")
@@ -123,14 +124,14 @@ public class BaseClass {
 	@DataProvider(name = "data-provider-FTM")
 	public Object[] ftmDataProvider() {
 		String listFilename[] = readFolderJsonList("\\ftm_cert\\");
-
+		logger.info("listFilename ftm cert="+listFilename);
 		return listFilename;
 	}
 	
 	@DataProvider(name = "data-provider-DEVICE-SBI")
 	public Object[] deviceSbiDataProvider() {
 		String listFilename[] = readFolderJsonList("\\device_sbi_cert\\");
-
+		logger.info("listFilename device sbi cert="+listFilename);
 		return listFilename;
 	}
 	
@@ -138,7 +139,7 @@ public class BaseClass {
 	@DataProvider(name = "data-provider-AUTH")
 	public Object[] authDataProvider() {
 		String listFilename[] = readFolderJsonList("\\auth_cert\\");
-
+		logger.info("listFilename auth cert="+listFilename);
 		return listFilename;
 	}
 	
