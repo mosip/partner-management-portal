@@ -654,7 +654,7 @@ public class ConfigManager {
 	}
 
 	public static String getRolesForUser(String userId) {
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
 		return propsKernel.getProperty("roles." + userId);
 	}
 	
