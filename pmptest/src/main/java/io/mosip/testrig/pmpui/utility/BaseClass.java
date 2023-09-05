@@ -110,7 +110,7 @@ public class BaseClass {
 
 	@DataProvider(name = "data-provider-ca")
 	public Object[] caDataProvider() {
-		String listFilename[] = readFolderJsonList("\\ca_cert\\");
+		String listFilename[] = readFolderJsonList("//ca_cert//");
 		logger.info("listFilename ca cert="+listFilename);
 		return listFilename;
 	}
