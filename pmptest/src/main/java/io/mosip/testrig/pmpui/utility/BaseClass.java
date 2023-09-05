@@ -146,7 +146,7 @@ public class BaseClass {
 		String contents[] = null;
 		try {
 			File directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources" + str);
-
+logger.info("file directory for "+directoryPath);
 			if (directoryPath.exists()) {
 
 				contents = directoryPath.list();
