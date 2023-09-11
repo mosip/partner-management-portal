@@ -420,12 +420,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   getDeviceType(key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
-    console.log("filterObject" + filterObject);
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, []);
     filterRequest["purpose"] = "REGISTRATION";
-    console.log("filterRequest" + filterRequest);
     let request = new RequestModel('', null, filterRequest);
-    console.log("request" + request);
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/devicedetail/deviceType', request)
       .subscribe(response => {
@@ -466,8 +463,6 @@ export class MaterDataCommonBodyComponent implements OnInit {
 
   search(value: string) {
     let filter = value.toLowerCase();
-    console.log("seachAPITriger" + filter);
-    console.log(this.dropDownValues.partnerTypeCode.primary);
     return this.dropDownValues.partnerTypeCode.primary.filter(option => option.fieldCode.toLowerCase().startsWith(filter));
   }
 
