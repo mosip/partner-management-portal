@@ -44,6 +44,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
   disableForms: boolean;
   copyPrimaryWord: any;
   copySecondaryWord: any;
+  searchResult: any[] = [];
 
   @Input() primaryData: any = {};
   @Input() secondaryData: any;
@@ -374,6 +375,14 @@ export class MaterDataCommonBodyComponent implements OnInit {
     });    
   }
   
+  onKey(value) {
+    this.searchResult = this.search(value);
+  }
+
+  search(value: string) {
+    let filter = value.toLowerCase();
+    return this.dropDownValues.partnerTypeCode.primary.filter(option => option.fieldCode.toLowerCase().startsWith(filter));
+  }
 
   getPartnerDropdownValues(partnerTypeCode, key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
@@ -413,7 +422,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/partners', request)
       .subscribe(response => {
-        this.dropDownValues[key] = response.response.filters;
+         if(response.response.filters)   
+        this.searchResult = response.response.filters.sort((a, b) => (a.name && b.name) ? a.id.localeCompare(b.name) : 0);
+        this.dropDownValues.partnerTypeCode.primary = response.response.filters.sort((a, b) => (a.name && b.name) ? a.name.localeCompare(b.name) : 0);
       });
   }
 

@@ -73,8 +73,9 @@
                 required
                 disabled="{{setreadonly}}"
               >
+              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="example-input"  >
                 <mat-option
-                  *ngFor="let data of dropDownValues[field.name]"
+                  *ngFor="let data of searchResult"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
