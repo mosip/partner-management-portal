@@ -121,10 +121,18 @@ public class JsonUtil {
     public static String  readJsonFileText(String document) {
         
         String jsonTxt = null;
+        File f=null;
 
         try {
+        	
+        
+        	if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
+        		f = new File(TestRunner.getResourcePath() + "/" + "resources/"+document);
+    		} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
+
             
-                File f = new File(TestRunner.getResourcePath() + "/" + "resources/"+document);
+    	         f = new File(System.getProperty("user.dir") + System.getProperty("path.config")+ "/"+document);
+    		}
 
                 if (f.exists()) {
                     InputStream is = new FileInputStream(f);
