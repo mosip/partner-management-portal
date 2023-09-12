@@ -26,7 +26,7 @@ import io.restassured.response.Response;
 
 public class BaseTestCaseFunc {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseTestCaseFunc.class);
-	private static String zoneMappingRequest = "config/Authorization/zoneMappingRequest.json";
+	private static String zoneMappingRequest = "/config/Authorization/zoneMappingRequest.json";
 	
 	public static String environment;
 	public static List<String> languageList = new ArrayList<>();
@@ -34,13 +34,53 @@ public class BaseTestCaseFunc {
 	public static String ApplnURIForKeyCloak;
 	public static String testLevel;
 	public static Properties props = getproperty(
-			TestRunner.getResourcePath() + "/" + "resources/config/application.properties");
+			TestRunner.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+			TestRunner.getResourcePath() + "/config/Kernel.properties");
 	public static Properties propsMap = getproperty(
-			TestRunner.getResourcePath() + "/" + "resources/config/valueMapping.properties");
+			TestRunner.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
-			TestRunner.getGlobalResourcePath() + "/" + "resources/config/bioValue.properties");
+			TestRunner.getGlobalResourcePath() + "/config/bioValue.properties"); 
+			
+/*	
+	public static Properties props;
+	public static Properties propsKernel;
+	public static Properties propsMap ;
+	public static Properties propsBio;
+	public static Properties getProps() {
+		return props;
+	}
+
+	public static void setProps(Properties props) {
+		 getproperty(TestRunner.getResourcePath() + "/" + "resources/config/application.properties");
+		BaseTestCaseFunc.props = props;
+	}
+
+	public static Properties getPropsKernel() {
+		return propsKernel;
+	}
+
+	public static void setPropsKernel(Properties propsKernel) {
+		BaseTestCaseFunc.propsKernel = propsKernel;
+	}
+
+	public static Properties getPropsMap() {
+		return propsMap;
+	}
+
+	public static void setPropsMap(Properties propsMap) {
+		BaseTestCaseFunc.propsMap = propsMap;
+	}
+
+	public static Properties getPropsBio() {
+		return propsBio;
+	}
+
+	public static void setPropsBio(Properties propsBio) {
+		BaseTestCaseFunc.propsBio = propsBio;
+	}
+	
+	*/
 	public static String SEPRATOR = "";
 	public static String currentModule = "pmpui";
 	public final static String COOKIENAME = "Authorization";

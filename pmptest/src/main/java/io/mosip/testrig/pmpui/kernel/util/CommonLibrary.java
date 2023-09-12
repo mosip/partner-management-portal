@@ -30,11 +30,26 @@ public class CommonLibrary extends BaseTestCaseFunc {
 	
 	
 	public String getResourcePath() {
-		return TestRunner.getGlobalResourcePath() + "/resources/";
+		if(TestRunner.checkRunType().equals("JAR")) {
+			return TestRunner.getGlobalResourcePath() + "/resources/";
+		}else if(TestRunner.checkRunType().equals("IDE")) {
+			return TestRunner.getResourcePath();
+		}
+		return null;
 	}
 	
 	public String getResourcePathForKernel() {
-		return TestRunner.getResourcePath() + "/resources/";
+		String kernelpath=null;
+		if(TestRunner.checkRunType().equals("JAR")) {
+			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+
+			kernelpath = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties").toString();
+			}else if(TestRunner.checkRunType().equals("IDE")){
+				logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/Kernel.properties");
+
+				kernelpath = (TestRunner.getResourcePath() + "/config/Kernel.properties").toString();
+			}
+		return kernelpath;
 	}
 	
 	
@@ -67,9 +82,7 @@ public class CommonLibrary extends BaseTestCaseFunc {
 	public Map<String, String> readProperty(String propertyFileName) {
 		Properties prop = new Properties();
 		try {
-			logger.info("propertyFileName:  " + propertyFileName + "Path :" + getResourcePathForKernel() + "config/" + propertyFileName + ".properties");
-			logger.info("propertyFileName:  " + propertyFileName + "Path :" + getResourcePathForKernel() + "config/" + propertyFileName + ".properties");
-			File propertyFile = new File(getResourcePathForKernel() + "config/" + propertyFileName + ".properties");
+			File propertyFile = new File( getResourcePathForKernel());
 			prop.load(new FileInputStream(propertyFile));
 
 		} catch (IOException e) {

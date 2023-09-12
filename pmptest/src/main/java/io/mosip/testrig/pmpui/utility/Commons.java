@@ -355,11 +355,11 @@ public class Commons extends BaseClass {
 	}
 	
 	
-	
-	public static String getJsonData()
-	{
-		return JsonUtil.readJsonFileText("PolicyData.json");
-	}
+//	
+//	public static String getJsonData()
+//	{
+//		return JsonUtil.readJsonFileText("PolicyData.json");
+//	}
 	
 	
 	

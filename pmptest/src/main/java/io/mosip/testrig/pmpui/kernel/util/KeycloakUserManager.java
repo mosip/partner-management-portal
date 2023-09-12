@@ -62,22 +62,16 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 	public static void createUsers() {
 		try {
-		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
+		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate());
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
 			UserRepresentation user = new UserRepresentation();
 			
-			if (needsToBeCreatedUser.equals("globaladmin")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			}
-			else if(needsToBeCreatedUser.equals("masterdata-220005")){
-				moduleSpecificUser = needsToBeCreatedUser;
-				
-			}
 			
-			else {
+			
+			
 				moduleSpecificUser = BaseTestCaseFunc.currentModule+"-"+ needsToBeCreatedUser;
-			}
+			
 			
 			logger.info(moduleSpecificUser);
 			user.setEnabled(true);

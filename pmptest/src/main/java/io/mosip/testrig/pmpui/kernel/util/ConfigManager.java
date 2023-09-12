@@ -201,9 +201,10 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
-		logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+	
+		logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/Kernel.properties");
 
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/Kernel.properties");
 		
 		
 		

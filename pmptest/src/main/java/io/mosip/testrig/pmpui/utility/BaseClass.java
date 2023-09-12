@@ -145,8 +145,20 @@ public class BaseClass {
 	
 	public static String[] readFolderJsonList(String str) {
 		String contents[] = null;
+		File directoryPath=null;
 		try {
-			File directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources" + str);
+			
+			if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
+				directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources" + str);
+			} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
+				directoryPath= new File(System.getProperty("user.dir") + System.getProperty("path.config")+"/"+str);
+			
+			
+			}
+			
+			
+			
+			
 logger.info("file directory for "+directoryPath);
 			if (directoryPath.exists()) {
 
