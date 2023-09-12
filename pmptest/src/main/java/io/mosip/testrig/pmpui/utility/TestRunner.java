@@ -75,10 +75,12 @@ public class TestRunner {
     
 	public static String getResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
-			return new File(jarUrl).getParentFile().getAbsolutePath();
+			return new File(jarUrl).getParentFile().getAbsolutePath()+"/resources/";
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
-			String path = new File(TestRunner.class.getClassLoader().getResource("").getPath()).getAbsolutePath()
-					.toString();
+	        String path = System.getProperty("user.dir") + System.getProperty("path.config");
+
+		//	String path = new File(TestRunner.class.getClassLoader().getResource("").getPath()).getAbsolutePath()
+	//				.toString();
 			if (path.contains("test-classes"))
 				path = path.replace("test-classes", "classes");
 			return path;
