@@ -40,7 +40,7 @@ public class BaseTestCaseFunc {
 	public static Properties propsMap = getproperty(
 			TestRunner.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
-			TestRunner.getGlobalResourcePath() + "/config/bioValue.properties"); 
+			TestRunner.getResourcePath() + "/config/bioValue.properties"); 
 			
 /*	
 	public static Properties props;

@@ -1,8 +1,10 @@
 package io.mosip.testrig.pmpui.fw.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.ws.rs.core.MediaType;
@@ -233,7 +235,14 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 	    		 //Langauge Independent
 	    		
 	        	// Generate Keycloak Users
+	        	HashMap<String, List<String>> attrmap=new HashMap<String, List<String>>();
+				List<String> list=new ArrayList<String>();
+				String val= "11000000";
+				list.add(val);
+				attrmap.put("individualId",list);
 	        	KeycloakUserManager.createUsers();
+	        	//String user=BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName");
+	        //	KeycloakUserManager.createUsers(user,"mosip123","roles", attrmap);
 	        	BaseTestCaseFunc.mapUserToZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"),"CSB");
 	    		BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"));	
 	    		initialized = true;

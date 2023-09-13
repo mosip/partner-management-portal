@@ -240,14 +240,15 @@ public class Commons extends BaseClass {
 		logger.info("Selecting DropDown By Value " + by +value );
 		  
 		 try {
-			 Thread.sleep(50);
+			 Thread.sleep(500);
 			 click(test,driver,by);
-				Thread.sleep(50);
+				Thread.sleep(500);
 			   String val="'"+value +"'";
 		   
 		    click(test,driver,By.id(value));
 		    try {
-				Thread.sleep(50);
+				Thread.sleep(500);
+			
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -564,7 +565,7 @@ try {
 		
 		String filePath=null;;
 		try {
-			filePath = TestRunner.getResourcePath() + "/" + "resources" + folder+str ;
+			filePath = TestRunner.getResourcePath() + "/" + folder+str ;
 			logger.info("uploadPartnerCertold"+filePath);
 		} catch (Exception e) {
 			
@@ -605,7 +606,7 @@ try {
 		
 		String filePath=null;;
 		try {
-			filePath = TestRunner.getResourcePath() + "/" + "resources" + folder+str ;
+			filePath = TestRunner.getResourcePath() + "/" + folder+str ;
 			logger.info("uploadPartnerCertold"+filePath);
 	   Commons.enter(test, driver, By.id("fileInput"), filePath);
 		} catch (Exception e) {
@@ -629,6 +630,17 @@ try {
 		e.printStackTrace();
 	}
 	return preappend;
+	  }
+	public static int getSplitdigit() 
+	  {
+	String splitdigit = null;
+	try {
+		splitdigit = JsonUtil.JsonObjParsing(getTestData(),"splitdigit");
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return Integer.parseInt(splitdigit);
 	  }
 }
 

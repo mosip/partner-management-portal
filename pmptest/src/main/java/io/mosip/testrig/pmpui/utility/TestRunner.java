@@ -75,7 +75,7 @@ public class TestRunner {
     
 	public static String getResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
-			return new File(jarUrl).getParentFile().getAbsolutePath()+"/resources/";
+			return new File(jarUrl).getParentFile().getAbsolutePath().toString()+"/resources/";
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
 	        String path = System.getProperty("user.dir") + System.getProperty("path.config");
 
