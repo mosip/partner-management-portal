@@ -36,25 +36,25 @@ public class BaseClass {
 	protected String userid = KeycloakUserManager.moduleSpecificUser;
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
-	protected String data = Commons.appendDate;
+	protected String data = Commons.appendDate.substring(0, Commons.getSplitdigit());
 	public static ExtentSparkReporter html;
-    public static    ExtentReports extent;
-    public static    ExtentTest test;
-    private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseClass.class);
+	public static    ExtentReports extent;
+	public static    ExtentTest test;
+	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseClass.class);
 	public void setLangcode(String langcode) throws Exception {
 		this.langcode = Commons.getFieldData("langcode");
 	}
 
-@BeforeMethod
-	
-    public void set() {
-        extent=ExtentReportManager.getReports();
+	@BeforeMethod
 
-}
+	public void set() {
+		extent=ExtentReportManager.getReports();
+
+	}
 	@BeforeMethod
 	public void setUp() throws Exception {
 		Reporter.log("BaseClass",true);
-		   test=extent.createTest(env,getCommitId());
+		test=extent.createTest(env,getCommitId());
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
@@ -63,7 +63,7 @@ public class BaseClass {
 		}
 		;
 		driver=new ChromeDriver(options);
-		
+
 		//driver = new ChromeDriver(options);
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
@@ -83,16 +83,16 @@ public class BaseClass {
 			String var = "//li/a[contains(text(),'" + language1 + "')]";
 			Commons.click(test,driver, By.xpath(var));
 			}
-//			
-//			if(!language1.equals("sin"))
-//			{Commons.click(driver, By.xpath("//*[@class='kc-dropdown']"));
-//			String var = "//*[@class='kc-dropdown-item']/a[contains(text(),'" + language1 + "')]";
-//			Commons.click(driver, By.xpath(var));
-//			}
+			//			
+			//			if(!language1.equals("sin"))
+			//			{Commons.click(driver, By.xpath("//*[@class='kc-dropdown']"));
+			//			String var = "//*[@class='kc-dropdown-item']/a[contains(text(),'" + language1 + "')]";
+			//			Commons.click(driver, By.xpath(var));
+			//			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
+
 		driver.findElement(By.id("username")).sendKeys(userid);
 		driver.findElement(By.id("password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
@@ -114,12 +114,12 @@ public class BaseClass {
 		logger.info("listFilename ca cert="+listFilename);
 		return listFilename;
 	}
-//	@DataProvider(name = "data-provider-partner")
-//	public Object[] partnerDataProvider() {
-//		String listFilename[] = readFolderJsonList("\\partner_cert\\");
-//
-//		return listFilename;
-//	}
+	//	@DataProvider(name = "data-provider-partner")
+	//	public Object[] partnerDataProvider() {
+	//		String listFilename[] = readFolderJsonList("\\partner_cert\\");
+	//
+	//		return listFilename;
+	//	}
 
 	@DataProvider(name = "data-provider-FTM")
 	public Object[] ftmDataProvider() {
@@ -127,39 +127,39 @@ public class BaseClass {
 		logger.info("listFilename ftm cert="+listFilename);
 		return listFilename;
 	}
-	
+
 	@DataProvider(name = "data-provider-DEVICE-SBI")
 	public Object[] deviceSbiDataProvider() {
 		String listFilename[] = readFolderJsonList("//device_sbi_cert");
 		logger.info("listFilename device sbi cert="+listFilename);
 		return listFilename;
 	}
-	
-	
+
+
 	@DataProvider(name = "data-provider-AUTH")
 	public Object[] authDataProvider() {
 		String listFilename[] = readFolderJsonList("//auth_cert//");
 		logger.info("listFilename auth cert="+listFilename);
 		return listFilename;
 	}
-	
+
 	public static String[] readFolderJsonList(String str) {
 		String contents[] = null;
 		File directoryPath=null;
 		try {
-			
+
 			if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
-				directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources" + str);
+				directoryPath = new File(TestRunner.getResourcePath() + "/"  + str);
 			} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
 				directoryPath= new File(System.getProperty("user.dir") + System.getProperty("path.config")+"/"+str);
-			
-			
+
+
 			}
-			
-			
-			
-			
-logger.info("file directory for "+directoryPath);
+
+
+
+
+			logger.info("file directory for "+directoryPath);
 			if (directoryPath.exists()) {
 
 				contents = directoryPath.list();
@@ -173,19 +173,19 @@ logger.info("file directory for "+directoryPath);
 		}
 		return contents;
 	}
-	 private String getCommitId(){
-		 
-	    	Properties properties = new Properties();
-			try (InputStream is = ExtentReportManager.class.getClassLoader().getResourceAsStream("git.properties")) {
-				properties.load(is);
-				
-				return "Commit Id is: " + properties.getProperty("git.commit.id.abbrev") + " & Branch Name is:" + properties.getProperty("git.branch");
+	private String getCommitId(){
 
-			} catch (IOException e) {
-//				logger.error(e.getStackTrace());
-				return "";
-			}
-			
-	    }
-	
+		Properties properties = new Properties();
+		try (InputStream is = ExtentReportManager.class.getClassLoader().getResourceAsStream("git.properties")) {
+			properties.load(is);
+
+			return "Commit Id is: " + properties.getProperty("git.commit.id.abbrev") + " & Branch Name is:" + properties.getProperty("git.branch");
+
+		} catch (IOException e) {
+			//				logger.error(e.getStackTrace());
+			return "";
+		}
+
 	}
+
+}

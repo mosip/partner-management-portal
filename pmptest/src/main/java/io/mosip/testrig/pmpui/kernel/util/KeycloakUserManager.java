@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
@@ -135,6 +136,60 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		}
 	}
 	
+	
+	
+	public static void createUsers(String userid, String pwd, String rolenum, Map<String, List<String>> map) {
+		Keycloak keycloakInstance = getKeycloakInstance();
+		UserRepresentation user = new UserRepresentation();
+		user.setEnabled(true);
+		user.setUsername(userid);
+		user.setFirstName(userid);
+		user.setLastName(userid);
+		user.setEmail("automation" + moduleSpecificUser + "@automationlabs.com");
+		if (map != null)
+			user.setAttributes(map);
+		RealmResource realmResource = null;
+
+		realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
+
+		UsersResource usersRessource = realmResource.users();
+
+		try (Response response = usersRessource.create(user)) {
+
+		//	if (response.getStatus() == 409) {
+
+			//} else {
+
+				String userId = CreatedResponseUtil.getCreatedId(response);
+			
+				CredentialRepresentation passwordCred = new CredentialRepresentation();
+
+				passwordCred.setTemporary(false);
+				passwordCred.setType(CredentialRepresentation.PASSWORD);
+
+				passwordCred.setValue(pwd);
+
+				UserResource userResource = usersRessource.get(userId);
+				userResource.resetPassword(passwordCred);
+
+				List<RoleRepresentation> allRoles = realmResource.roles().list();
+				List<RoleRepresentation> availableRoles = new ArrayList<>();
+				List<String> toBeAssignedRoles = List.of(propsKernel.getProperty(rolenum).split(","));
+				for (String role : toBeAssignedRoles) {
+					if (allRoles.stream().anyMatch((r -> r.getName().equalsIgnoreCase(role)))) {
+						if (allRoles.stream().filter(r->r.getName().equals(role)).findFirst().isPresent())
+							availableRoles.add(allRoles.stream().filter(r->r.getName().equals(role)).findFirst().get());
+					
+				}
+				userResource.roles().realmLevel() //
+						.add((availableRoles.isEmpty() ? allRoles : availableRoles));
+
+		//	}
+		} }catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+	}
 	public static void removeUser() {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();

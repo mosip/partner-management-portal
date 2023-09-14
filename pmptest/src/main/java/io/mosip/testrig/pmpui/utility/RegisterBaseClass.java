@@ -38,7 +38,7 @@ public class RegisterBaseClass {
 	protected String userid = KeycloakUserManager.moduleSpecificUser;
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
-	protected String data = Commons.appendDate;
+	protected String data = Commons.appendDate.substring(0, Commons.getSplitdigit());
 	public static ExtentSparkReporter html;
     public static    ExtentReports extent;
     public static    ExtentTest test;
@@ -148,7 +148,7 @@ public class RegisterBaseClass {
 	public static String[] readFolderJsonList(String str) {
 		String contents[] = null;
 		try {
-			File directoryPath = new File(TestRunner.getResourcePath() + "/" + "resources/"+ str);
+			File directoryPath = new File(TestRunner.getResourcePath() + "/"+ str);
 logger.info("readFolderJsonList"+directoryPath);
 			if (directoryPath.exists()) {
 

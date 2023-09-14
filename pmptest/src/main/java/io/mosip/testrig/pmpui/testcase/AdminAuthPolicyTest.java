@@ -27,7 +27,7 @@ public class AdminAuthPolicyTest extends BaseClass {
 		Commons.enter(test,driver, By.id("name"), "AUTH"+data);
 		Commons.enter(test,driver, By.id("desc"), data);
 		Thread.sleep(3000);
-		Commons.dropdownbyid(test,driver, By.xpath("//mat-select[@id='policyGroupName']"),data);
+		Commons.dropdownbyid(test,driver, By.id("policyGroupName"),data);
 		test.log(Status.INFO, "dropdown selected");
 		
 		
