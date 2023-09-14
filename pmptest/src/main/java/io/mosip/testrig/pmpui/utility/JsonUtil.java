@@ -127,7 +127,7 @@ public class JsonUtil {
         	
         
         	if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
-        		f = new File(TestRunner.getResourcePath() + "/" + "resources/"+document);
+        		f = new File(TestRunner.getResourcePath() + "/" +document);
     		} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
 
             
