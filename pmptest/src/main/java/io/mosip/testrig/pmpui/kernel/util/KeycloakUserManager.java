@@ -31,7 +31,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
-	public static Properties propsKernel = getproperty(TestRunner.getResourcePath() + "/"+"resources/config/Kernel.properties");
+	public static Properties propsKernel = getproperty(TestRunner.getResourcePath() + "/"+"config/Kernel.properties");
 
 	private static Keycloak getKeycloakInstance() {
 		 Keycloak key=null;
