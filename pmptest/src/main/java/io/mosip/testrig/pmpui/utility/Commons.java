@@ -30,7 +30,7 @@ public class Commons extends BaseClass {
 	  {
 		
 	
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmmss");
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HHmmss");
 	   LocalDateTime now = LocalDateTime.now();
 	   return dtf.format(now);
 	  }
