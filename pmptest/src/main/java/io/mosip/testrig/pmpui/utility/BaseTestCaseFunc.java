@@ -36,7 +36,7 @@ public class BaseTestCaseFunc {
 	public static Properties props = getproperty(
 			TestRunner.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			TestRunner.getResourcePath() + "/config/Kernel.properties");
+			TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 	public static Properties propsMap = getproperty(
 			TestRunner.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(

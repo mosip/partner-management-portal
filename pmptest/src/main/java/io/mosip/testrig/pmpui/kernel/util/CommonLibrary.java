@@ -41,13 +41,13 @@ public class CommonLibrary extends BaseTestCaseFunc {
 	public String getResourcePathForKernel() {
 		String kernelpath=null;
 		if(TestRunner.checkRunType().equals("JAR")) {
-			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "config/Kernel.properties");
+			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename());
 
-			kernelpath = TestRunner.getResourcePath() + "/" + "config/Kernel.properties".toString();
+			kernelpath = TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename().toString();
 			}else if(TestRunner.checkRunType().equals("IDE")){
-				logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/Kernel.properties");
+				logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
-				kernelpath = (TestRunner.getResourcePath() + "/config/Kernel.properties").toString();
+				kernelpath = (TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename()).toString();
 			}
 		return kernelpath;
 	}
