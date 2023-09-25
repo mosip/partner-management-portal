@@ -37,7 +37,7 @@ public class TestRunner {
 //			ExtractResource.extractResourceFromJar();
 //		}
 		AdminTestUtil.initialize();
-		testNg=new TestNG();
+	/*	testNg=new TestNG();
 		
 		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
 		testNg.setExcludedGroups(listExcludedGroups);
@@ -56,10 +56,55 @@ public class TestRunner {
 				PartnerRegisterFTMTest.class,
 				PartnerRegisterSbiDeviceTest.class,apicall.class
 				
+		});*/
+//		testNg.run();
+		startTestRunner();
+	}
+	
+	public static void startTestRunner() throws Exception {
+		File homeDir = null;
+	//	TestNG runner = new TestNG();
+testNg=new TestNG();
+		
+		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
+		testNg.setExcludedGroups(listExcludedGroups);
+		testNg.setTestClasses(new Class[] {
+				AdminAuthPolicyTest.class,
+				AdminDataSharePolicyTest.class,
+				AdminDeviceDetailsTest.class,
+				AdminFtmDetailsTest.class,
+				AdminPartnerPolicyMappingTest.class,
+				AdminPolicyGroupTest.class,
+				AdminSbiDetailsTest.class,
+				AdminUploadCaCertTest.class,
+				PartnerLoginAuthCredTest.class,
+				PartnerRegisterAuthCredTest.class,
+				PartnerRegisterFTMTest.class,
+				PartnerRegisterSbiDeviceTest.class,apicall.class
+				
 		});
+		
+		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
+		testNg.setOutputDirectory("testng-report");
+		System.getProperties().setProperty("emailable.report2.name", "PMPUI" + "-"
+				+ System.getProperty("env.user") + System.currentTimeMillis() + "-report.html");
+		
+		
 		testNg.run();
 		
+	//	MockSMTPListener mockSMTPListener = new MockSMTPListener();
+	//	mockSMTPListener.bTerminate = true;
+
+		System.exit(0);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public static String getGlobalResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
 			return new File(jarUrl).getParentFile().getAbsolutePath().toString();
@@ -93,6 +138,13 @@ public class TestRunner {
 			return "JAR";
 		else
 			return "IDE";
+	}
+	public static String GetKernalFilename(){
+		String path = System.getProperty("env.user");
+	
+		String kernalpath="Kernel_"+path+".properties";
+		return kernalpath;
+		
 	}
 
 }

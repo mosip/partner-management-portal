@@ -202,9 +202,9 @@ public class ConfigManager {
 	public static void init() {
 		// Loading Kernel property
 	
-		logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/Kernel.properties");
+		logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/Kernel.properties");
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 		
 		
 		
@@ -655,7 +655,7 @@ public class ConfigManager {
 	}
 
 	public static String getRolesForUser(String userId) {
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/Kernel.properties");
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/"+TestRunner.GetKernalFilename());
 		return propsKernel.getProperty("roles." + userId);
 	}
 	
