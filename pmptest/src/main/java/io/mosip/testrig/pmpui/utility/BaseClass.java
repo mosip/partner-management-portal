@@ -102,8 +102,8 @@ public class BaseClass {
 	@AfterMethod
 	public void tearDown() throws InterruptedException {
 		//Once we will get the logout id we are going to use[TODO]
-		Commons.click(test,driver, By.id("menuButton"));
-		Commons.click(test,driver, By.id("Logout"));
+//		Commons.click(test,driver, By.id("menuButton"));
+//		Commons.click(test,driver, By.id("Logout"));
 		driver.quit();
 		extent.flush();
 	}

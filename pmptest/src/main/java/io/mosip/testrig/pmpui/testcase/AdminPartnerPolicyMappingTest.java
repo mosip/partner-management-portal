@@ -23,9 +23,9 @@ public class AdminPartnerPolicyMappingTest extends BaseClass {
 		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/policymapping/view']"));
 
 
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		Commons.filter(test,driver, By.id("requestDetail"),By.id("partnerName"), data,orgName);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		test.log(Status.INFO, "Click on filter");
 		Commons.click(test,driver, By.id("ellipsis-button0"));
 		Commons.click(test,driver, By.id("Manage Policy0"));
