@@ -32,7 +32,7 @@ RUN groupadd -g ${container_user_gid} ${container_user_group} \
 USER ${container_user_uid}:${container_user_gid}
 
 COPY --chown=${container_user_uid}:${container_user} --chmod=771 ./entrypoint.sh ${work_dir}/entrypoint.sh
-COPY --chown=${container_user}:${container_user} ./build_files/ ${work_dir}
+COPY --chown=${container_user}:${container_user} ./src/main/resources/ ${work_dir}
 
 # set working directory
 WORKDIR ${work_dir}
