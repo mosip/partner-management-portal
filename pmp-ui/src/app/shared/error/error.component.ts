@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -6,14 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })
-export class ErrorComponent implements OnInit {
+export class ErrorComponent{
 
   @Input() errorMessage: string;
   constructor(public route: ActivatedRoute, public router: Router) {
     this.route.params.subscribe((message => this.errorMessage = message.errorMessage));
-  }
-
-  ngOnInit() {
   }
 
 }

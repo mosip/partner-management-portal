@@ -35,6 +35,7 @@ export class CertUploadComponent {
   showCALabel = false;
   fetchRequest = {} as CenterRequest;
   uploadcertificate:any;
+  files: any[] = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -101,6 +102,11 @@ export class CertUploadComponent {
       }else{
         self.showErrorPopup("pem or cer format file only supported.");
       }
+    }
+
+    for (const item of event.target.files) {
+      this.files.splice(0, 1);
+      this.files.push(item);
     }
   }
 
