@@ -144,10 +144,11 @@ testNg=new TestNG();
 		String kernalpath=null;
 	if(System.getProperty("env.user")==null) {
 		 kernalpath="Kernel.properties";
-		
+
 	}else {
 		 kernalpath="Kernel_"+path+".properties";
 	}
 	return kernalpath;
 	}
+
 }

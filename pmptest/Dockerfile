@@ -1,4 +1,4 @@
-FROM openjdk:11-jre
+FROM selenium/standalone-chrome:latest
 
 ARG SOURCE
 ARG COMMIT_HASH
