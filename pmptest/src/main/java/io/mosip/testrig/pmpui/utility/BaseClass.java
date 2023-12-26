@@ -55,13 +55,20 @@ public class BaseClass {
 	public void setUp() throws Exception {
 		Reporter.log("BaseClass",true);
 		test=extent.createTest(env,getCommitId());
-		WebDriverManager.chromedriver().setup();
-		ChromeOptions options = new ChromeOptions();
+		if(System.getProperty("os.name").equalsIgnoreCase("Linux")) {
+			String configFilePath ="/usr/bin/chromedriver";
+			System.setProperty("webdriver.chrome.driver", configFilePath);
+		}else {
+			WebDriverManager.chromedriver().setup();
+		}
+		
+		
+     	ChromeOptions options = new ChromeOptions();
 		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
 		if(headless.equalsIgnoreCase("yes")) {
-			options.addArguments("--headless=new");
+			options.addArguments("--headless", "--disable-gpu", "--window-size=1920x1080");
+			
 		}
-		;
 		driver=new ChromeDriver(options);
 
 		//driver = new ChromeDriver(options);
