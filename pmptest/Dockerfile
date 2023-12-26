@@ -37,5 +37,6 @@ COPY --chown=${container_user_uid}:${container_user} ./target/*.jar ${work_dir}
 
 # set working directory
 WORKDIR ${work_dir}
-
+ 
+ 
 ENTRYPOINT ["/bin/bash", "-c", "./entrypoint.sh"]
