@@ -19,7 +19,7 @@
 		</triggeringPolicy>
 	</appender>
 
-	<logger name="io.mosip.test.admintest" level="INFO" additivity="false">
+	<logger name="io.mosip.testrig.pmpui" level="INFO" additivity="false">
 		<appender-ref ref="applicationLogAutomation" />
 	</logger>
 

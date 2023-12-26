@@ -3,6 +3,8 @@ package io.mosip.testrig.pmpui.kernel.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -140,6 +142,8 @@ public class ConfigManager {
 //	private static String threadCount;
 //	private static String langselect;
 //
+	private static String serviceNotDeployedList;
+	private static String enableDebug;
 	private static String db_port;
 	private static String db_domain;
 	private static String hibernate_connection_driver_class;
@@ -513,6 +517,10 @@ public class ConfigManager {
 //		return automation_app_id;
 //	}
 //
+	public static Boolean IsDebugEnabled() {
+		return enableDebug.equalsIgnoreCase("yes");
+	}
+//
 	public static String getS3Host() {
 		return s3_host;
 	}
@@ -659,6 +667,24 @@ public class ConfigManager {
 		return propsKernel.getProperty("roles." + userId);
 	}
 	
+	public static boolean isInServiceNotDeployedList(String stringToFind) {
+		synchronized (serviceNotDeployedList) {
+			if (serviceNotDeployedList.isBlank())
+				return false;
+			List<String> serviceNotDeployed = Arrays.asList(serviceNotDeployedList.split(","));
+			if (ConfigManager.IsDebugEnabled())
+				logger.info("serviceNotDeployedList:  " + serviceNotDeployedList + ", serviceNotDeployed : " + serviceNotDeployed
+						+ ", stringToFind : " + stringToFind);
+			for (String string : serviceNotDeployed) {
+				if (string.equalsIgnoreCase(stringToFind))
+					return true;
+				else if(stringToFind.toLowerCase().contains(string.toLowerCase())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	private static Properties getproperty(String path) {
 		Properties prop = new Properties();

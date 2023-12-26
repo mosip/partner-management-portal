@@ -1,6 +1,8 @@
 package io.mosip.testrig.pmpui.utility;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.testng.TestListenerAdapter;
@@ -63,47 +65,37 @@ public class TestRunner {
 	
 	public static void startTestRunner() throws Exception {
 		File homeDir = null;
-	//	TestNG runner = new TestNG();
-testNg=new TestNG();
-		
-		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
-		testNg.setExcludedGroups(listExcludedGroups);
-		testNg.setTestClasses(new Class[] {
-				AdminAuthPolicyTest.class,
-				AdminDataSharePolicyTest.class,
-				AdminDeviceDetailsTest.class,
-				AdminFtmDetailsTest.class,
-				AdminPartnerPolicyMappingTest.class,
-				AdminPolicyGroupTest.class,
-				AdminSbiDetailsTest.class,
-				AdminUploadCaCertTest.class,
-				PartnerLoginAuthCredTest.class,
-				PartnerRegisterAuthCredTest.class,
-				PartnerRegisterFTMTest.class,
-				PartnerRegisterSbiDeviceTest.class,apicall.class
-				
-		});
+		TestNG runner = new TestNG();
+		List<String> suitefiles = new ArrayList<String>();
+		String os = System.getProperty("os.name");
+		if (checkRunType().contains("IDE") || os.toLowerCase().contains("windows") == true) {
+			homeDir = new File(getResourcePath() + "/testngFile");
+ 
+		} else {
+			homeDir = new File(getResourcePath() + "/testngFile");
+ 
+		}
+ 
+		for (File file : homeDir.listFiles()) {
+			if (file.getName().toLowerCase() != null) {
+				suitefiles.add(file.getAbsolutePath());
+			}
+		}
+ 
+		runner.setTestSuites(suitefiles);
+
 		
 		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
-		testNg.setOutputDirectory("testng-report");
-		System.getProperties().setProperty("emailable.report2.name", "PMPUI" + "-"
-				+ System.getProperty("env.user") + System.currentTimeMillis() + "-report.html");
-		
-		
-		testNg.run();
-		
-	//	MockSMTPListener mockSMTPListener = new MockSMTPListener();
-	//	mockSMTPListener.bTerminate = true;
+		runner.setOutputDirectory("testng-report");
+		System.getProperties().setProperty("emailable.report2.name", "PMPUI-" + BaseTestCaseFunc.environment + "-"
+				+ "-run-" + System.currentTimeMillis() + "-report.html");
 
+		runner.run();
+		
+ 
 		System.exit(0);
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	
 	public static String getGlobalResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
