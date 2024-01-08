@@ -17,6 +17,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from 'src/app/app-config.service';
 import jwt_decode from "jwt-decode";
+import * as appConstants from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,13 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.headerService.setUsername(event.body.response.userId);
                 this.headerService.setRoles(event.body.response.role);
                 this.headerService.setNotificationLanguage(this.decoded["langCode"]);
+              }
+              if (
+                event.body.errors !== null &&
+                (event.body.errors[0]['errorCode'] ===
+                  appConstants.AUTH_ERROR_CODE[0] || event.body.errors[0]['errorCode'] === appConstants.AUTH_ERROR_CODE[1])
+              ) {
+                this.redirectService.redirect(window.location.href);
               }
             }
           }
