@@ -124,14 +124,14 @@ public class RegisterBaseClass {
 	
 	@DataProvider(name = "data-provider-FTM")
 	public Object[] ftmDataProvider() {
-		String listFilename[] = readFolderJsonList("\\ftm_cert\\");
+		String listFilename[] = readFolderJsonList("//ftm_cert//");
 
 		return listFilename;
 	}
 	
 	@DataProvider(name = "data-provider-DEVICE-SBI")
 	public Object[] deviceSbiDataProvider() {
-		String listFilename[] = readFolderJsonList("\\device_sbi_cert\\");
+		String listFilename[] = readFolderJsonList("//device_sbi_cert//");
 
 		return listFilename;
 	}
@@ -139,7 +139,7 @@ public class RegisterBaseClass {
 	
 	@DataProvider(name = "data-provider-AUTH")
 	public Object[] authDataProvider() {
-		String listFilename[] = readFolderJsonList("\\auth_cert\\");
+		String listFilename[] = readFolderJsonList("//auth_cert//");
 
 		return listFilename;
 	}

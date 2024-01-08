@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +40,7 @@ public class BaseClass {
 	public static ExtentSparkReporter html;
 	public static    ExtentReports extent;
 	public static    ExtentTest test;
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseClass.class);
+	private static final Logger logger = Logger.getLogger(BaseClass.class);
 	public void setLangcode(String langcode) throws Exception {
 		this.langcode = Commons.getFieldData("langcode");
 	}
@@ -55,23 +55,30 @@ public class BaseClass {
 	public void setUp() throws Exception {
 		Reporter.log("BaseClass",true);
 		test=extent.createTest(env,getCommitId());
+
+		logger.info("Start set up");
 		if(System.getProperty("os.name").equalsIgnoreCase("Linux")) {
-			String configFilePath ="/usr/bin/chromedriver";
-			System.setProperty("webdriver.chrome.driver", configFilePath);
+			
+			if(JsonUtil.JsonObjParsing(Commons.getTestData(),"Docker").equals("yes")) {
+				logger.info("Docker start");
+				String configFilePath ="/usr/bin/chromedriver";
+				System.setProperty("webdriver.chrome.driver", configFilePath);
+			}else {
+				WebDriverManager.chromedriver().setup();
+			}
 		}else {
 			WebDriverManager.chromedriver().setup();
+			logger.info("window chrome driver start");
 		}
-		
-		
-     	ChromeOptions options = new ChromeOptions();
+		ChromeOptions options = new ChromeOptions();
 		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
 		if(headless.equalsIgnoreCase("yes")) {
-			options.addArguments("--headless", "--disable-gpu", "--window-size=1920x1080");
+			logger.info("Running is headless mode");
+			options.addArguments("--headless", "--disable-gpu","--no-sandbox", "--window-size=1920x1080","--disable-dev-shm-usage");
 			
+
 		}
 		driver=new ChromeDriver(options);
-
-		//driver = new ChromeDriver(options);
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
 		driver.get(envPath);
@@ -109,8 +116,8 @@ public class BaseClass {
 	@AfterMethod
 	public void tearDown() throws InterruptedException {
 		//Once we will get the logout id we are going to use[TODO]
-//		Commons.click(test,driver, By.id("menuButton"));
-//		Commons.click(test,driver, By.id("Logout"));
+		//		Commons.click(test,driver, By.id("menuButton"));
+		//		Commons.click(test,driver, By.id("Logout"));
 		driver.quit();
 		extent.flush();
 	}

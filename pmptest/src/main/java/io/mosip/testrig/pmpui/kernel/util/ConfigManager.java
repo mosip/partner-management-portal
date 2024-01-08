@@ -95,6 +95,7 @@ public class ConfigManager {
 //	
 //	private static String PACKET_UTILITY_BASE_URL = "packetUtilityBaseUrl";
 	private static String REPORT_EXPIRATION_IN_DAYS = "reportExpirationInDays";
+	private static String SERVICES_NOT_DEPLOYED = "servicesNotDeployed";
 //	private static String pms_client_secret;
 //	private static String pms_client_id;
 //	private static String pms_app_id;
@@ -285,7 +286,10 @@ public class ConfigManager {
 		master_db_user = getValueForKey(MASTER_DB_USER);
 		master_db_pass = getValueForKey(MASTER_DB_PASS);
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
-		
+		serviceNotDeployedList = System.getenv(SERVICES_NOT_DEPLOYED) == null
+				? propsKernel.getProperty(SERVICES_NOT_DEPLOYED)
+				: System.getenv(SERVICES_NOT_DEPLOYED);
+		propsKernel.setProperty(SERVICES_NOT_DEPLOYED, serviceNotDeployedList);
 		
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
@@ -310,6 +314,7 @@ public class ConfigManager {
 				? propsKernel.getProperty(MOSIP_ADMIN_CLIENT_SECRET)
 				: System.getenv(MOSIP_ADMIN_CLIENT_SECRET);
 //
+		logger.info("admin_client_secret="+admin_client_secret);
 		propsKernel.setProperty(MOSIP_ADMIN_CLIENT_SECRET, admin_client_secret);
 //
 //		authDemoServicePort = System.getenv(AUTH_DEMO_SERVICE_PORT) == null
