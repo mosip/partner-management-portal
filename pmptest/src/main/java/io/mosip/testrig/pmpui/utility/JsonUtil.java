@@ -137,7 +137,7 @@ public class JsonUtil {
                 if (f.exists()) {
                     InputStream is = new FileInputStream(f);
                     jsonTxt = IOUtils.toString(is, "UTF-8");
-                    System.out.println(jsonTxt);
+                   
                     logger.info("readJsonFileText");
             }
         } catch (Exception e) {
