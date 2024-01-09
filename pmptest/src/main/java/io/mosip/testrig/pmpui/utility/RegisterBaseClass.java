@@ -81,6 +81,8 @@ public class RegisterBaseClass {
 				
 
 			}
+			
+			
 			driver=new ChromeDriver(options);
 			js = (JavascriptExecutor) driver;
 			vars = new HashMap<String, Object>();
