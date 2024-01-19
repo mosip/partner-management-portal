@@ -82,6 +82,7 @@ public class BaseClass {
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
 		driver.get(envPath);
+		logger.info("launch url --"+envPath);
 		driver.manage().window().maximize();
 		Thread.sleep(500);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
