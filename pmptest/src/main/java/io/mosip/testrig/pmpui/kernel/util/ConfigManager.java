@@ -668,8 +668,8 @@ public class ConfigManager {
 	}
 
 	public static String getRolesForUser(String userId) {
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "resources/config/"+TestRunner.GetKernalFilename());
-		return propsKernel.getProperty("roles." + userId);
+		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename());
+		return propsKernel.getProperty("roles");
 	}
 	
 	public static boolean isInServiceNotDeployedList(String stringToFind) {
