@@ -23,7 +23,7 @@ public class AdminUploadCaCertTest extends BaseClass {
 		
 		
 		
-		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\ca_cert\\",cer);
+		Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"//ca_cert//",cer);
 		
 		
 		 

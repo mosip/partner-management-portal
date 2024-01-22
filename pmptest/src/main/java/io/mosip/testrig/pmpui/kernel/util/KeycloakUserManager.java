@@ -61,18 +61,24 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		return prop;
 	}
 
-	public static void createUsers() {
-		try {
-		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate());
+public static void createUsers() {
+		
+		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
 			UserRepresentation user = new UserRepresentation();
 			
+			if (needsToBeCreatedUser.equals("globaladmin")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			}
+			else if(needsToBeCreatedUser.equals("masterdata-220005")){
+				moduleSpecificUser = needsToBeCreatedUser;
+				
+			}
 			
-			
-			
+			else {
 				moduleSpecificUser = BaseTestCaseFunc.currentModule+"-"+ needsToBeCreatedUser;
-			
+			}
 			
 			logger.info(moduleSpecificUser);
 			user.setEnabled(true);
@@ -86,15 +92,14 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			// Create user (requires manage-users role)
 			Response response = null;
 				response = usersRessource.create(user);
-			
-				logger.info("response for create user ="+response);
+ 			
 			logger.info("Repsonse: %s %s%n"+ response.getStatus()+ response.getStatusInfo());
 			if (response.getStatus()==409) {
 				break;
 			}
 			
 		
-			logger.info("response ="+response.getLocation());
+			
 			String userId = CreatedResponseUtil.getCreatedId(response);
 			logger.info("User created with userId: %s%n"+ userId);
 
@@ -128,11 +133,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 					.add((availableRoles.isEmpty() ? allRoles : availableRoles));
 			
 			//passwordIndex ++;
-		}
-		}
-		catch(Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	

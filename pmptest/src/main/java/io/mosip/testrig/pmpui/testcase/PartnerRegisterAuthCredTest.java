@@ -59,8 +59,8 @@ public class PartnerRegisterAuthCredTest extends RegisterBaseClass {
 		
 		Commons.click(test,driver, By.id("uploadCertificate"));
 		test.log(Status.INFO, "Click on uploadcertificate");
-		if(dropdwnVal.contentEquals("CREDENTIAL")) Commons.uploadPartnerCert(driver,By.id("partnerDomain"),"AUTH","\\auth_cert\\",cer);
-		else Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"\\auth_cert\\",cer);
+		if(dropdwnVal.contentEquals("CREDENTIAL")) Commons.uploadPartnerCert(driver,By.id("partnerDomain"),"AUTH","//auth_cert//",cer);
+		else Commons.uploadPartnerCert(driver,By.id("partnerDomain"),dropdwnVal,"//auth_cert//",cer);
 
 			
 		Commons.click(test,driver, By.id("viewCertificate"));

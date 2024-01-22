@@ -59,20 +59,37 @@ public class RegisterBaseClass {
 		Reporter.log("BaseClass",true);
 		   test=extent.createTest(env,getCommitId());
 		 
-		WebDriverManager.chromedriver().setup();
-		ChromeOptions options = new ChromeOptions();
-		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
-		if(headless.equalsIgnoreCase("yes")) {
-			options.addArguments("--headless=new");
-		}
-		
-		driver = new ChromeDriver(options);
-		js = (JavascriptExecutor) driver;
-		vars = new HashMap<String, Object>();
-		driver.get(envPath);
-		driver.manage().window().maximize();
-		Thread.sleep(500);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		   logger.info("Start set up");
+			if(System.getProperty("os.name").equalsIgnoreCase("Linux")) {
+				
+				if(JsonUtil.JsonObjParsing(Commons.getTestData(),"Docker").equals("yes")) {
+					logger.info("Docker start");
+					String configFilePath ="/usr/bin/chromedriver";
+					System.setProperty("webdriver.chrome.driver", configFilePath);
+				}else {
+					WebDriverManager.chromedriver().setup();
+				}
+			}else {
+				WebDriverManager.chromedriver().setup();
+				logger.info("window chrome driver start");
+			}
+			ChromeOptions options = new ChromeOptions();
+			String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
+			if(headless.equalsIgnoreCase("yes")) {
+				logger.info("Running is headless mode");
+				options.addArguments("--headless", "--disable-gpu","--no-sandbox", "--window-size=1920x1080","--disable-dev-shm-usage");
+				
+
+			}
+			
+			
+			driver=new ChromeDriver(options);
+			js = (JavascriptExecutor) driver;
+			vars = new HashMap<String, Object>();
+			driver.get(envPath);
+			driver.manage().window().maximize();
+			Thread.sleep(500);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		
 
 	}
@@ -124,14 +141,14 @@ public class RegisterBaseClass {
 	
 	@DataProvider(name = "data-provider-FTM")
 	public Object[] ftmDataProvider() {
-		String listFilename[] = readFolderJsonList("\\ftm_cert\\");
+		String listFilename[] = readFolderJsonList("//ftm_cert//");
 
 		return listFilename;
 	}
 	
 	@DataProvider(name = "data-provider-DEVICE-SBI")
 	public Object[] deviceSbiDataProvider() {
-		String listFilename[] = readFolderJsonList("\\device_sbi_cert\\");
+		String listFilename[] = readFolderJsonList("//device_sbi_cert//");
 
 		return listFilename;
 	}
@@ -139,7 +156,7 @@ public class RegisterBaseClass {
 	
 	@DataProvider(name = "data-provider-AUTH")
 	public Object[] authDataProvider() {
-		String listFilename[] = readFolderJsonList("\\auth_cert\\");
+		String listFilename[] = readFolderJsonList("//auth_cert//");
 
 		return listFilename;
 	}
