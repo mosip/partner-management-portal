@@ -96,8 +96,8 @@ public class RegisterBaseClass {
 
 	@AfterMethod
 	public void tearDown() throws InterruptedException {
-		Commons.click(test,driver, By.id("menuButton"));
-		Commons.click(test,driver, By.id("Logout"));
+	//	Commons.click(test,driver, By.id("menuButton"));
+	//	Commons.click(test,driver, By.id("Logout"));
 		driver.quit();
 		extent.flush();
 	}
