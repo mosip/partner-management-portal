@@ -99,6 +99,42 @@ public class ConfigManager {
 //	private static String pms_client_secret;
 //	private static String pms_client_id;
 //	private static String pms_app_id;
+	
+	
+	private static String HolidayDateCenter = "holidayDateCenter";
+	private static String HolidayDate = "holidayDate";
+	private static String Preappend = "preappend";
+	private static String Splitdigit = "splitdigit";
+	private static String JsonObjName = "jsonObjName";
+	private static String Bulkwait = "bulkwait";
+	private static String SbivalidDate = "sbivalidDate";
+	private static String PublicKey = "publicKey";
+	private static String SignPublicKey = "signPublicKey";
+	private static String Headless = "headless";
+	private static String Docker = "docker";
+	private static String Langcode = "langcode";
+	private static String SbiexpiryDate = "sbiexpiryDate";//loginlang
+	private static String Loginlang = "loginlang";
+	private static String PolicyData = "policyData";//loginlang
+	private static String DataSharepolicyData = "dataSharepolicyData";
+	
+	
+	private static String loginlang;
+	private static String langcode;
+	private static String docker;
+	private static String headless;
+	private static String signPublicKey;
+	private static String publicKey;
+	private static String sbivalidDate;
+	private static String bulkwait;
+	private static String sbiexpiryDate;
+	private static String jsonObjName;
+	private static String splitdigit;
+	private static String preappend;
+	private static String holidayDate;
+	private static String holidayDateCenter;
+	private static String policyData;
+	private static String dataSharepolicyData;
 //
 //	private static String resident_client_secret;
 //	private static String resident_client_id;
@@ -356,6 +392,105 @@ public class ConfigManager {
 		
 		//enableDebug threadCount  langselect
 
+		holidayDateCenter =System.getenv(HolidayDateCenter) == null ? propsKernel.getProperty(HolidayDateCenter) : System.getenv(HolidayDateCenter);
+		propsKernel.setProperty(HolidayDateCenter, holidayDateCenter);
+		
+		holidayDate =System.getenv(HolidayDate) == null ? propsKernel.getProperty(HolidayDate) : System.getenv(HolidayDate);
+		propsKernel.setProperty(HolidayDate, holidayDate);
+		
+		preappend =System.getenv(Preappend) == null ? propsKernel.getProperty(Preappend) : System.getenv(Preappend);
+		propsKernel.setProperty(Preappend, preappend);
+		
+		splitdigit =System.getenv(Splitdigit) == null ? propsKernel.getProperty(Splitdigit) : System.getenv(Splitdigit);
+		propsKernel.setProperty(Splitdigit, splitdigit);
+		
+		jsonObjName =System.getenv(JsonObjName) == null ? propsKernel.getProperty(JsonObjName) : System.getenv(JsonObjName);
+		propsKernel.setProperty(JsonObjName, jsonObjName);
+		
+		bulkwait =System.getenv(Bulkwait) == null ? propsKernel.getProperty(Bulkwait) : System.getenv(Bulkwait);
+		propsKernel.setProperty(Bulkwait, bulkwait);
+		
+		
+		
+		sbivalidDate =System.getenv(SbivalidDate) == null ? propsKernel.getProperty(SbivalidDate) : System.getenv(SbivalidDate);
+		propsKernel.setProperty(SbivalidDate, sbivalidDate);
+		
+		sbiexpiryDate =System.getenv(SbiexpiryDate) == null ? propsKernel.getProperty(SbiexpiryDate) : System.getenv(SbiexpiryDate);
+		propsKernel.setProperty(SbiexpiryDate, sbiexpiryDate);
+		
+		publicKey =System.getenv(PublicKey) == null ? propsKernel.getProperty(PublicKey) : System.getenv(PublicKey);
+		propsKernel.setProperty(PublicKey, publicKey);
+		
+		signPublicKey =System.getenv(SignPublicKey) == null ? propsKernel.getProperty(SignPublicKey) : System.getenv(SignPublicKey);
+		propsKernel.setProperty(SignPublicKey, signPublicKey);
+		
+		headless =System.getenv(Headless) == null ? propsKernel.getProperty(Headless) : System.getenv(Headless);
+		propsKernel.setProperty(Headless, headless);
+		
+		docker =System.getenv(Docker) == null ? propsKernel.getProperty(Docker) : System.getenv(Docker);
+		propsKernel.setProperty(Docker, docker);
+		
+		langcode =System.getenv(Langcode) == null ? propsKernel.getProperty(Langcode) : System.getenv(Langcode);
+		propsKernel.setProperty(Langcode, langcode);
+		
+		loginlang =System.getenv(Loginlang) == null ? propsKernel.getProperty(Loginlang) : System.getenv(Loginlang);
+		propsKernel.setProperty(Loginlang, loginlang);
+		
+		policyData =System.getenv(PolicyData) == null ? propsKernel.getProperty(PolicyData) : System.getenv(PolicyData);
+		propsKernel.setProperty(PolicyData, policyData);
+		
+		dataSharepolicyData =System.getenv(DataSharepolicyData) == null ? propsKernel.getProperty(DataSharepolicyData) : System.getenv(DataSharepolicyData);
+		propsKernel.setProperty(DataSharepolicyData, dataSharepolicyData);
+
+	}
+	public static String getpolicyData() {
+		return policyData;
+	}
+	public static String getdataSharepolicyData() {
+		return dataSharepolicyData;
+	}
+	public static String getloginlang() {
+		return loginlang;
+	}
+	public static String getlangcode() {
+		return langcode;
+	}
+	public static String getdocker() {
+		return docker;
+	}
+	public static String getheadless() {
+		return headless;
+	}
+	public static String getsignPublicKey() {
+		return signPublicKey;
+	}
+	public static String getpublicKey() {
+		return publicKey;
+	}
+	public static String getsbivalidDate() {
+		return sbivalidDate;
+	}
+	public static String getsbiexpiryDate() {
+		return sbiexpiryDate;
+	}
+	
+	public static String getbulkwait() {
+		return bulkwait;
+	}
+	public static String getjsonObjName() {
+		return jsonObjName;
+	}
+	public static String getsplitdigit() {
+		return splitdigit;
+	}
+	public static String getpreappend() {
+		return preappend;
+	}
+	public static String getholidayDate() {
+		return holidayDate;
+	}
+	public static String getholidayDateCenter() {
+		return holidayDateCenter;
 	}
 
 //	public static String getAuthDemoServicePort() {

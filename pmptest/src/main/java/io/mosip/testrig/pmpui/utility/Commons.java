@@ -24,6 +24,8 @@ import org.testng.Assert;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
+
 public class Commons extends BaseClass {
 	private static final Logger logger = Logger.getLogger(Commons.class);
 	public static String appendDate=getPreAppend()+getDateTime();
@@ -365,21 +367,9 @@ public class Commons extends BaseClass {
 	
 	
 	
-	public static String getFieldData(String idfield) throws Exception
-	{
-		return	JsonUtil.JsonObjSimpleParsing(getTestData(), idfield);
 	
-	}
 
-	public static void clickSpan(ExtentTest test,WebDriver driver,String key) throws Exception {
-		
-		String val=Commons.getFieldData(key);
-		String var="//span[contains(text(),'"+ val+ "')]";
-		  Commons.click(test,driver,By.xpath(var)); 
-		  logger.info("clickSpan" + var );
-		
-	}
-
+	
 	public static void deactivate(ExtentTest test,WebDriver driver) throws InterruptedException {
 		
 		Commons.click(test,driver,By.id("ellipsis-button0"));
@@ -625,7 +615,7 @@ try {
 	  {
 	String preappend = null;
 	try {
-		preappend = JsonUtil.JsonObjParsing(getTestData(),"preappend");
+		preappend = ConfigManager.getpreappend();
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -636,7 +626,7 @@ try {
 	  {
 	String splitdigit = null;
 	try {
-		splitdigit = JsonUtil.JsonObjParsing(getTestData(),"splitdigit");
+		splitdigit = ConfigManager.getsplitdigit();
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

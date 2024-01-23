@@ -15,6 +15,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
+
 public class JsonUtil {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(JsonUtil.class);
 
@@ -117,7 +119,26 @@ public class JsonUtil {
         return list;
 
     }
-    
+public static String JsonObjArrayListParsing2(String a) throws Exception {
+		
+
+		JSONArray jsonArray = new JSONArray(a);
+
+
+
+		for (int i = 0, size = jsonArray.length(); i < size; i++) {
+			JSONObject idItem = jsonArray.getJSONObject(i);
+			String lang = idItem.getString("language");
+			String val = idItem.getString("value");
+			if (lang.equals(ConfigManager.getloginlang())) {
+				return val;
+			}
+
+		}
+		return "";
+
+
+	}
     public static String  readJsonFileText(String document) {
         
         String jsonTxt = null;

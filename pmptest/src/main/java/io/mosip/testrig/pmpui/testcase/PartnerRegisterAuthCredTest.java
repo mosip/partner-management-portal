@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.JsonUtil;
 import io.mosip.testrig.pmpui.utility.RealTimeReport;
@@ -107,8 +108,8 @@ public class PartnerRegisterAuthCredTest extends RegisterBaseClass {
 					
 					Commons.enter(test,driver, By.xpath("//input[@id='swVersion']"), data);
 					Commons.enter(test,driver, By.xpath("//input[@id='swBinaryHash']"), data);
-					Commons.enter(test,driver, By.xpath("//input[@id='swCreateDateTime']"), JsonUtil.JsonObjParsing(Commons.getTestData(),"sbivalidDate"));
-					Commons.enter(test,driver, By.xpath("//input[@id='swExpiryDateTime']"), JsonUtil.JsonObjParsing(Commons.getTestData(),"sbiexpiryDate"));
+					Commons.enter(test,driver, By.xpath("//input[@id='swCreateDateTime']"),ConfigManager.getsbivalidDate());
+					Commons.enter(test,driver, By.xpath("//input[@id='swExpiryDateTime']"), ConfigManager.getsbiexpiryDate());
 					Commons.click(test,driver, By.xpath("//button[@id='createButton']"));
 					Commons.click(test,driver, By.xpath("//button[@id='confirmmessagepopup']"));
 					Thread.sleep(3000);

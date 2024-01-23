@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.utility.BaseClass;
 import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.JsonUtil;
@@ -33,7 +34,7 @@ public class AdminAuthPolicyTest extends BaseClass {
 		
 		String policyData;
 		try {
-			policyData = JsonUtil.JsonObjParsing(Commons.getTestData(),"policyData");
+			policyData = ConfigManager.getpolicyData();
 			Commons.enter(test,driver, By.id("policies"), policyData);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
