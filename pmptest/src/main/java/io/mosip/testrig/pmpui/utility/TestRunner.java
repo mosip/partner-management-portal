@@ -91,20 +91,20 @@ public class TestRunner {
 			List<XmlClass> classes = new ArrayList<>();
 			String[] Scenarioname=ConfigManager.gettestcases().split(",");
 			for(String test:Scenarioname) {
-				if(test.equals("AdminAuthPolicyTest")) {
+				if(test.equals("adminAuthPolicyTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
 				}
 
-				if(test.equals("AdminDataSharePolicyTest")) {
+				if(test.equals("adminDataSharePolicyTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
 					classes.add(AdminDataSharePolicyTest);
 				}
 
-				if(test.equals("AdminDeviceDetailsTest")) {
+				if(test.equals("adminDeviceDetailsTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
@@ -114,13 +114,13 @@ public class TestRunner {
 					classes.add(AdminDataSharePolicyTest);
 				}
 
-				if(test.equals("AdminFtmDetailsTest")) {
+				if(test.equals("adminFtmDetailsTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(PartnerRegisterFTMTest);
 					classes.add(AdminFtmDetailsTest);
 				}
 
-				if(test.equals("AdminPartnerPolicyMappingTest")) {
+				if(test.equals("adminPartnerPolicyMappingTest")) {
 					classes.add(PartnerRegisterAuthCredTest);
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
@@ -130,12 +130,12 @@ public class TestRunner {
 				}
 					
 
-				if(test.equals("AdminPolicyGroupTest")) {
+				if(test.equals("adminPolicyGroupTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 				}
 
-				if(test.equals("AdminSbiDetailsTest")) {
+				if(test.equals("adminSbiDetailsTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
@@ -144,11 +144,11 @@ public class TestRunner {
 					classes.add(AdminSbiDetailsTest);
 				}
 
-				if(test.equals("AdminUploadCaCertTest"))
+				if(test.equals("adminUploadCaCertTest"))
 					classes.add(AdminUploadCaCertTest);
 
 
-				if(test.equals("PartnerLoginAuthCredTest")) {
+				if(test.equals("partnerLoginAuthCredTest")) {
 					classes.add(PartnerRegisterAuthCredTest);
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
@@ -157,18 +157,18 @@ public class TestRunner {
 					classes.add(AdminPartnerPolicyMappingTest);
 					classes.add(PartnerLoginAuthCredTest);
 				}
-				if(test.equals("PartnerRegisterAuthCredTest")) {
+				if(test.equals("partnerRegisterAuthCredTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
 					classes.add(AdminDataSharePolicyTest);
 					classes.add(PartnerRegisterAuthCredTest);
 				}
-				if(test.equals("PartnerRegisterFTMTest")) {
+				if(test.equals("partnerRegisterFTMTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(PartnerRegisterFTMTest);
 				}
-				if(test.equals("PartnerRegisterSbiDeviceTest")) {
+				if(test.equals("partnerRegisterSbiDeviceTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
 					classes.add(AdminAuthPolicyTest);
