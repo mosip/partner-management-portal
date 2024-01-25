@@ -178,14 +178,14 @@ export class ListViewComponent implements OnDestroy {
       if (filters.filters.length > 0) {
         this.filtersApplied = true;
       }
-      this.sortFilter = filters.sort;
+      /*this.sortFilter = filters.sort;
       if(this.sortFilter.length == 0){
         if(routeParts != "policymapping"){
           this.sortFilter.push({"sortType":"desc","sortField":"isActive"});
         }else if(routeParts == "policymapping"){
           this.sortFilter.push({"sortType":"desc","sortField":"statusCode"});
         }     
-      }
+      }*/
       this.requestModel = new RequestModel(null, null, filters);
 
       if(appConstants.masterdataMapping[`${routeParts}`]){
