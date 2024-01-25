@@ -120,6 +120,7 @@ public class Commons extends BaseClass {
 			driver.findElement(by).click();
 		}
 		catch (TimeoutException toe) {
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
 			driver.findElement(by).click();
 			try {
 				Thread.sleep(500);
@@ -178,6 +179,8 @@ public class Commons extends BaseClass {
 			driver.findElement(by).sendKeys(value);
 		}
 		catch (TimeoutException toe) {
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+
 			driver.findElement(by).clear();
 			driver.findElement(by).sendKeys(value);
 			System.out.println( "Element identified by " + by.toString() + " was not clickable after 20 seconds");
