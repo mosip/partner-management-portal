@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,7 +18,7 @@ import io.mosip.testrig.pmpui.utility.RealTimeReport;
 public class AdminAuthPolicyTest extends BaseClass {
 
 	@Test(groups = {"AP"},dependsOnGroups = "PG")
-	public void adminAuthPolicyTest() throws InterruptedException{
+	public void adminAuthPolicyTest() throws InterruptedException, IOException{
 	
 		test=extent.createTest("AdminAuthPolicyTest", "verify Login");
 		Commons.click(test,driver, By.id("policymenugroup"));

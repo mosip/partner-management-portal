@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -13,7 +15,7 @@ public class AdminFtmDetailsTest extends BaseClass {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(AdminFtmDetailsTest.class);
 	
 	@Test(groups = {"FD"},dataProvider = "data-provider-FTM",dependsOnGroups = "RFTM")
-	public void adminFtmDetailsTest(String cer) throws InterruptedException {
+	public void adminFtmDetailsTest(String cer) throws InterruptedException, IOException {
 		
 		test=extent.createTest("AdminFtmDetailsTest", "verify Login");
 		Commons.click(test,driver, By.xpath("//a[@href='#/pmp/resources/ftmdetails/view']"));

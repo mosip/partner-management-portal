@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
 import java.awt.AWTException;
+import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
@@ -19,7 +20,7 @@ import io.mosip.testrig.pmpui.utility.RegisterBaseClass;
 public class PartnerRegisterSbiDeviceTest extends RegisterBaseClass {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(PartnerRegisterSbiDeviceTest.class);
 	@Test(groups = "RSD",dataProvider = "data-provider-DEVICE-SBI" , dependsOnGroups = {"UFCC","DSP"})
-	public void partnerRegisterSbiDeviceTest(String cer) throws InterruptedException, AWTException{
+	public void partnerRegisterSbiDeviceTest(String cer) throws InterruptedException, AWTException, IOException{
 		String datetime=Commons.getDateTime();
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);

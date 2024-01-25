@@ -20,14 +20,8 @@ public class Screenshot  {
 		TakesScreenshot ss=(TakesScreenshot)driver;
 		File so=ss.getScreenshotAs(OutputType.FILE);
 		String path=null;
-
-		if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
-			path = TestRunner.getResourcePath()+"/Screenshots/"+System.currentTimeMillis()+".png";
-		} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
-
-
-			path = System.getProperty("user.dir") + System.getProperty("path.config")+ "/Screenshots/"+System.currentTimeMillis()+".png";
-		}File des=new File(path);
+		path = TestRunner.getResourcePath()+ "/Screenshots/"+System.currentTimeMillis()+".png";
+		File des=new File(path);
 		FileHandler.copy(so, des);
 		FileInputStream fis=new FileInputStream(path);
 		byte[] bytes =IOUtils.toByteArray(fis);

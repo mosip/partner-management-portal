@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -14,7 +16,7 @@ import io.mosip.testrig.pmpui.utility.RealTimeReport;
 public class AdminPolicyGroupTest extends BaseClass {
 
 	@Test(groups = "PG",dependsOnGroups = "UFCC")
-	public void adminPolicyGroupTest() throws InterruptedException {
+	public void adminPolicyGroupTest() throws InterruptedException, IOException {
 		 
 
 		test=extent.createTest("AdminPolicyGroupTest", "verify Login");

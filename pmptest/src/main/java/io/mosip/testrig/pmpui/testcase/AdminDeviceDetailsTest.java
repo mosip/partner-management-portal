@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,7 +18,7 @@ public class AdminDeviceDetailsTest extends BaseClass {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(AdminDeviceDetailsTest.class);
 	@Test(groups = "DD",dataProvider = "data-provider-DEVICE-SBI",dependsOnGroups = {"SD","AP"})
 	
-	public void adminDeviceDetailsTest(String cer) throws InterruptedException {
+	public void adminDeviceDetailsTest(String cer) throws InterruptedException, IOException {
 
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);
