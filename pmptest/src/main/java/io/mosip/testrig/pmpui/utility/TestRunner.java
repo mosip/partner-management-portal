@@ -89,8 +89,8 @@ public class TestRunner {
 			XmlClass PartnerRegisterSbiDeviceTest= new XmlClass("io.mosip.testrig.pmpui.testcase.PartnerRegisterSbiDeviceTest");
 
 			List<XmlClass> classes = new ArrayList<>();
-			String[] a=ConfigManager.gettestcases().split(",");
-			for(String test:a) {
+			String[] Scenarioname=ConfigManager.gettestcases().split(",");
+			for(String test:Scenarioname) {
 				if(test.equals("AdminAuthPolicyTest")) {
 					classes.add(AdminUploadCaCertTest);
 					classes.add(AdminPolicyGroupTest);
