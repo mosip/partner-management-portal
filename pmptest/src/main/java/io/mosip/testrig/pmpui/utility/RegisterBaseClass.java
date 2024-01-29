@@ -90,6 +90,7 @@ public class RegisterBaseClass {
 
 	@AfterMethod
 	public void tearDown() throws InterruptedException {
+
 		driver.quit();
 		extent.flush();
 	}

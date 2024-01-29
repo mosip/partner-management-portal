@@ -4,7 +4,9 @@ on:
   release:
     types: [published]
   pull_request:
-    types: [opened]
+
+    types: [opened, reopened, synchronize]
+
   push:
     branches:
       - '!release-branch'
@@ -72,6 +74,7 @@ jobs:
       GPG_SECRET: ${{ secrets.GPG_SECRET }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
+
   build-pmptest-local:
     needs: build-maven-pmptest
     runs-on: ubuntu-latest
@@ -132,12 +135,15 @@ jobs:
 
   build-dockers-pmptest:
     needs: build-pmptest-local
+
     strategy:
       matrix:
         include:
           - SERVICE_LOCATION: 'pmptest'
             SERVICE_NAME: 'pmptest'
+
             BUILD_ARTIFACT: 'pmptest-local'
+
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -151,7 +157,9 @@ jobs:
       RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
   sonar_analysis:
+
     needs: build-pmptest-local
+
     if: "${{  github.event_name != 'pull_request' }}"
     uses: mosip/kattu/.github/workflows/maven-sonar-analysis.yml@master
     with:
