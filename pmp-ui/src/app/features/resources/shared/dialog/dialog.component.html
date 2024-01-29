@@ -14,6 +14,7 @@
                   matInput
                   placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                   formControlName="{{ filter.filtername }}"
+                  id="{{filter.filtername}}"
                   (focus)="
                     getControlName(
                       filter,
@@ -28,7 +29,7 @@
                   "
                   [matAutocomplete]="auto"
                 />
-                <mat-autocomplete #auto="matAutocomplete">
+                <mat-autocomplete #auto="matAutocomplete" id="{{filter.filtername}}">
                   <mat-option
                     *ngIf="filterOptions[filter.filtername]?.length === 0"
                   >
@@ -53,6 +54,7 @@
                       [matDatepicker]="picker"
                       placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
+                      id="{{filter.filtername}}"
                       (focus)="
                         getControlName(
                           filter,
@@ -72,6 +74,7 @@
                       matInput
                       placeholder="{{ filter.filterlabel[primaryLangCode] }}"
                       formControlName="{{ filter.filtername }}"
+                      id="{{filter.filtername}}"
                       (focus)="
                         getControlName(
                           filter,
@@ -95,6 +98,7 @@
               <mat-label>{{ filter.filterlabel[primaryLangCode] }}</mat-label>
               <mat-select
                 formControlName="{{ filter.filtername }}"
+                id="{{filter.filtername}}"
                 (focus)="
                   getControlName(
                     filter,
@@ -133,6 +137,7 @@
         mat-button
         class="footer-button"
         style="color: #FF4081; border: inherit"
+        id="reset"
       >
         <img
           src="assets/images/refresh.png"
@@ -144,6 +149,7 @@
         class="footer-button"
         (click)="onNoClick()"
         style="color: #FF4081; background-color: white;"
+        id="cancel"
       >
         {{ "filters.footerButtons.cancelTxt" | translate }}
       </button>
@@ -152,6 +158,7 @@
         mat-button
         class="footer-button"
         style="background-color:#FF4081; color:white;"
+        id="applyTxt"
       >
         {{ "filters.footerButtons.applyTxt" | translate }}
       </button>
@@ -180,6 +187,7 @@
         mat-button
         [mat-dialog-close]="confirm"
         cdkFocusInitial
+        id="confirmpopup"
       >
         {{ input.yesBtnTxt }}
       </button></span
@@ -197,7 +205,7 @@
   </div>
   <div mat-dialog-actions class="pop-up-footer">
     <span
-      ><button mat-button cdkFocusInitial (click)="dismiss()">
+      ><button mat-button cdkFocusInitial (click)="dismiss()" id="confirmmessagepopup">
         {{ input.btnTxt }}
       </button></span
     >
