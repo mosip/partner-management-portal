@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
 import java.awt.AWTException;
+import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
@@ -12,7 +13,7 @@ import io.mosip.testrig.pmpui.utility.Commons;
 public class AdminUploadCaCertTest extends BaseClass {
 	
 	@Test(groups = "UFCC",dataProvider = "data-provider-ca")
-	public void adminUploadCaCertTest(String cer) throws InterruptedException, AWTException {
+	public void adminUploadCaCertTest(String cer) throws InterruptedException, AWTException, IOException {
 
 		
 		

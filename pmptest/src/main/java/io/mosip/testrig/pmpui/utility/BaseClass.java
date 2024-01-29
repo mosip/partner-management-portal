@@ -41,9 +41,7 @@ public class BaseClass {
 	public static    ExtentReports extent;
 	public static    ExtentTest test;
 	private static final Logger logger = Logger.getLogger(BaseClass.class);
-	public void setLangcode(String langcode) throws Exception {
-		this.langcode = Commons.getFieldData("langcode");
-	}
+	
 
 	@BeforeMethod
 
@@ -57,25 +55,23 @@ public class BaseClass {
 		test=extent.createTest(env,getCommitId());
 
 		logger.info("Start set up");
-		if(System.getProperty("os.name").equalsIgnoreCase("Linux")) {
-			
-			if(JsonUtil.JsonObjParsing(Commons.getTestData(),"Docker").equals("yes")) {
-				logger.info("Docker start");
-				String configFilePath ="/usr/bin/chromedriver";
-				System.setProperty("webdriver.chrome.driver", configFilePath);
-			}else {
-				WebDriverManager.chromedriver().setup();
-			}
+		if(System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes") ) {
+
+
+			logger.info("Docker start");
+			String configFilePath ="/usr/bin/chromedriver";
+			System.setProperty("webdriver.chrome.driver", configFilePath);
+
 		}else {
 			WebDriverManager.chromedriver().setup();
 			logger.info("window chrome driver start");
 		}
 		ChromeOptions options = new ChromeOptions();
-		String headless=JsonUtil.JsonObjParsing(Commons.getTestData(),"headless");
+		String headless=ConfigManager.getheadless();
 		if(headless.equalsIgnoreCase("yes")) {
 			logger.info("Running is headless mode");
 			options.addArguments("--headless", "--disable-gpu","--no-sandbox", "--window-size=1920x1080","--disable-dev-shm-usage");
-			
+
 
 		}
 		driver=new ChromeDriver(options);
@@ -89,21 +85,17 @@ public class BaseClass {
 		//driver.findElement(By.linkText("Admin")).click();
 		String language1 = null;
 		try {
-			//String loginlang = JsonUtil.JsonObjParsing(Commons.getTestData(),"loginlang");
-			language1 = Commons.getFieldData("langcode");
 
+			language1 = ConfigManager.getloginlang();
+			String loginlang = null;
 			System.out.println(language1);
-			if(!language1.equals("sin"))
-			{Commons.click(test,driver, By.xpath("//*[@id='kc-locale-dropdown']"));
-			String var = "//li/a[contains(text(),'" + language1 + "')]";
-			Commons.click(test,driver, By.xpath(var));
+			if(!language1.equals("sin")) {
+				loginlang = JsonUtil.JsonObjArrayListParsing2(ConfigManager.getlangcode());
+				Commons.click(test,driver, By.xpath("//*[@id='kc-locale-dropdown']"));
+				String var = "//li/a[contains(text(),'" + loginlang + "')]";
+				Commons.click(test,driver, By.xpath(var));
 			}
-			//			
-			//			if(!language1.equals("sin"))
-			//			{Commons.click(driver, By.xpath("//*[@class='kc-dropdown']"));
-			//			String var = "//*[@class='kc-dropdown-item']/a[contains(text(),'" + language1 + "')]";
-			//			Commons.click(driver, By.xpath(var));
-			//			}
+
 		} catch (Exception e) {
 			e.getMessage();
 		}

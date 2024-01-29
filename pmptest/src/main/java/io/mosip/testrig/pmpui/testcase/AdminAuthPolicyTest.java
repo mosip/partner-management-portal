@@ -1,11 +1,14 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.utility.BaseClass;
 import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.JsonUtil;
@@ -15,7 +18,7 @@ import io.mosip.testrig.pmpui.utility.RealTimeReport;
 public class AdminAuthPolicyTest extends BaseClass {
 
 	@Test(groups = {"AP"},dependsOnGroups = "PG")
-	public void adminAuthPolicyTest() throws InterruptedException{
+	public void adminAuthPolicyTest() throws InterruptedException, IOException{
 	
 		test=extent.createTest("AdminAuthPolicyTest", "verify Login");
 		Commons.click(test,driver, By.id("policymenugroup"));
@@ -33,7 +36,7 @@ public class AdminAuthPolicyTest extends BaseClass {
 		
 		String policyData;
 		try {
-			policyData = JsonUtil.JsonObjParsing(Commons.getTestData(),"policyData");
+			policyData = ConfigManager.getpolicyData();
 			Commons.enter(test,driver, By.id("policies"), policyData);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,11 +1,14 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.utility.BaseClass;
 import io.mosip.testrig.pmpui.utility.Commons;
 import io.mosip.testrig.pmpui.utility.JsonUtil;
@@ -15,7 +18,7 @@ import io.mosip.testrig.pmpui.utility.RealTimeReport;
 public class AdminDataSharePolicyTest extends BaseClass {
 
 	@Test(groups = "DSP",dependsOnGroups = "AP")
-	public void adminDataSharePolicyTest() throws InterruptedException {
+	public void adminDataSharePolicyTest() throws InterruptedException, IOException {
 		
 		test=extent.createTest("AdminDataSharePolicyTest", "verify Login");
 		Commons.click(test,driver, By.id("policymenugroup"));
@@ -33,7 +36,7 @@ public class AdminDataSharePolicyTest extends BaseClass {
 		test.log(Status.INFO, "Dropdoen selected");
 		String dataSharepolicyData;
 		try {
-			dataSharepolicyData = JsonUtil.JsonObjParsing(Commons.getTestData(),"dataSharepolicyData");
+			dataSharepolicyData =ConfigManager.getdataSharepolicyData();
 			Commons.enter(test,driver, By.id("policies"), dataSharepolicyData);
 			Thread.sleep(500);
 		} catch (Exception e) {

@@ -20,9 +20,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
+
+import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 
 public class Commons extends BaseClass {
 	private static final Logger logger = Logger.getLogger(Commons.class);
@@ -68,9 +71,15 @@ public class Commons extends BaseClass {
 
 	}
 
-	public  static void filter(ExtentTest test,WebDriver driver, By by1,By by2,String data1,String data2) throws InterruptedException {
+
+	public  static void filter(ExtentTest test,WebDriver driver, By by1,By by2,String data1,String data2) throws InterruptedException, IOException {
 		logger.info("Inside Filter " + by1 + data1);
 		logger.info("Inside Filter " + by2 + data2);
+
+		Commons.click(test,driver, By.id("Filter")); 
+
+		Commons.enter( test,driver, by1, data1);
+
 
 		Commons.click(test,driver, By.id("Filter")); 
 		Thread.sleep(1000);
@@ -103,7 +112,7 @@ public class Commons extends BaseClass {
 
 		}
 	}
-	public  static void click(ExtentTest test,WebDriver driver, By by) {
+	public  static void click(ExtentTest test,WebDriver driver, By by) throws IOException {
 		logger.info("Clicking " + by );
 		try {
 			(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(by));
@@ -111,10 +120,13 @@ public class Commons extends BaseClass {
 			driver.findElement(by).click();
 			Thread.sleep(2000);
 		}catch (StaleElementReferenceException sere) {
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+
 			// simply retry finding the element in the refreshed DOM
 			driver.findElement(by).click();
 		}
 		catch (TimeoutException toe) {
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
 			driver.findElement(by).click();
 			try {
 				Thread.sleep(500);
@@ -144,13 +156,17 @@ public class Commons extends BaseClass {
 			js.executeScript("arguments[0].click();", checkbox);
 			Thread.sleep(500);
 		}catch (StaleElementReferenceException sere) {
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+
 			// simply retry finding the element in the refreshed DOM
 			driver.findElement(by).click();
 		}
 	}
 
 
-	public static void enter(ExtentTest test,WebDriver driver, By by,String value) {
+
+	public static void enter(ExtentTest test,WebDriver driver, By by,String value) throws IOException {
+
 		logger.info("Entering " + by +value);
 		//value="10";
 		try {
@@ -164,11 +180,19 @@ public class Commons extends BaseClass {
 				e.printStackTrace();
 			}
 		}catch (StaleElementReferenceException sere) {
+
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+
+
 			// simply retry finding the element in the refreshed DOM
 			driver.findElement(by).clear();
 			driver.findElement(by).sendKeys(value);
 		}
 		catch (TimeoutException toe) {
+
+			Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+
+
 			driver.findElement(by).clear();
 			driver.findElement(by).sendKeys(value);
 			System.out.println( "Element identified by " + by.toString() + " was not clickable after 20 seconds");
@@ -357,30 +381,10 @@ public class Commons extends BaseClass {
 	}
 
 
-	//	
-	//	public static String getJsonData()
-	//	{
-	//		return JsonUtil.readJsonFileText("PolicyData.json");
-	//	}
 
 
+	public static void deactivate(ExtentTest test,WebDriver driver) throws InterruptedException, IOException {
 
-	public static String getFieldData(String idfield) throws Exception
-	{
-		return	JsonUtil.JsonObjSimpleParsing(getTestData(), idfield);
-
-	}
-
-	public static void clickSpan(ExtentTest test,WebDriver driver,String key) throws Exception {
-
-		String val=Commons.getFieldData(key);
-		String var="//span[contains(text(),'"+ val+ "')]";
-		Commons.click(test,driver,By.xpath(var)); 
-		logger.info("clickSpan" + var );
-
-	}
-
-	public static void deactivate(ExtentTest test,WebDriver driver) throws InterruptedException {
 
 		Commons.click(test,driver,By.id("ellipsis-button0"));
 		Commons.click(test,driver, By.id("Deactivate0")); 
@@ -392,7 +396,7 @@ public class Commons extends BaseClass {
 
 	}
 
-	public static void activate(ExtentTest test,WebDriver driver) throws InterruptedException {
+	public static void activate(ExtentTest test,WebDriver driver) throws InterruptedException, IOException {
 
 		Commons.click(test,driver,By.id("ellipsis-button0"));
 		Commons.click(test,driver, By.id("Activate0")); 
@@ -489,7 +493,9 @@ public class Commons extends BaseClass {
 		}
 	}
 
-	public static void create(ExtentTest test,WebDriver driver) throws InterruptedException {
+
+	public static void create(ExtentTest test,WebDriver driver) throws InterruptedException, IOException {
+
 
 		Commons.click(test,driver, By.xpath("//button[@id='createButton']")); 
 		Commons.click(test,driver, By.id("confirmmessagepopup")); 
@@ -497,7 +503,9 @@ public class Commons extends BaseClass {
 		logger.info("Click create");
 
 	}
-	public static void createRes(ExtentTest test,WebDriver driver) throws InterruptedException {
+
+	public static void createRes(ExtentTest test,WebDriver driver) throws InterruptedException, IOException {
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -514,7 +522,9 @@ public class Commons extends BaseClass {
 
 	}
 
-	public static void decommission(ExtentTest test,WebDriver driver) throws InterruptedException {
+
+	public static void decommission(ExtentTest test,WebDriver driver) throws InterruptedException, IOException {
+
 		Commons.click(test,driver,By.id("ellipsis-button0"));
 		Commons.click(test,driver,By.id("Decommission0"));
 
@@ -551,7 +561,7 @@ public class Commons extends BaseClass {
 		return str;
 	}
 
-	public static void uploadPartnerCertold(WebDriver driver, By by,String orgName,String folder,String str) throws InterruptedException {
+	public static void uploadPartnerCertold(WebDriver driver, By by,String orgName,String folder,String str) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
 
 		Commons.dropdown(test,driver, by, By.id(orgName)
@@ -592,7 +602,10 @@ public class Commons extends BaseClass {
 		}
 	}
 
-	public static void uploadPartnerCert(WebDriver driver, By by,String orgName,String folder,String str) throws InterruptedException {
+
+	public static void uploadPartnerCert(WebDriver driver, By by,String orgName,String folder,String str) throws InterruptedException, IOException {
+
+
 		// TODO Auto-generated method stub
 
 		Commons.dropdown(test,driver, by, By.id(orgName)
@@ -625,7 +638,9 @@ public class Commons extends BaseClass {
 	{
 		String preappend = null;
 		try {
-			preappend = JsonUtil.JsonObjParsing(getTestData(),"preappend");
+
+			preappend = ConfigManager.getpreappend();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -636,7 +651,9 @@ public class Commons extends BaseClass {
 	{
 		String splitdigit = null;
 		try {
-			splitdigit = JsonUtil.JsonObjParsing(getTestData(),"splitdigit");
+
+			splitdigit = ConfigManager.getsplitdigit();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

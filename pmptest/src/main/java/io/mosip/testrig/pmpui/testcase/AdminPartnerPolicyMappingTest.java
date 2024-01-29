@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpui.testcase;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -14,7 +16,7 @@ import io.mosip.testrig.pmpui.utility.RealTimeReport;
 public class AdminPartnerPolicyMappingTest extends BaseClass {
 
 	@Test(groups = "PPM",dependsOnGroups = "RAC",dataProvider = "data-provider-AUTH" )
-	public void adminPartnerPolicyMappingTest(String cer) throws InterruptedException {
+	public void adminPartnerPolicyMappingTest(String cer) throws InterruptedException, IOException {
 
 		String dropdwnVal=cer.substring(0, cer.indexOf("_", 0));
 		String orgName=cer.substring(0, cer.length()-4);
