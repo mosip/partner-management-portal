@@ -23,10 +23,15 @@ ARG container_user_gid=1001
 # Set working directory for the user
 ENV work_dir=/home/${container_user}/
 
+ARG KUBECTL_VERSION=1.22.9
+
 # install packages and create user
 RUN groupadd -g ${container_user_gid} ${container_user_group} \
     && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/bash -m ${container_user} -d ${work_dir} \
-    && chown -R ${container_user}:${container_user} /home/${container_user}/
+    && chown -R ${container_user}:${container_user} /home/${container_user}/  \
+    && curl -LO "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+    && chmod +x kubectl \
+    && mv kubectl /usr/local/bin/
 
 # Switch to the specified user for the subsequent commands
 USER ${container_user_uid}:${container_user_gid}
