@@ -95,7 +95,7 @@ export class HeaderService {
   }
 
   setlanguageCode(languageCode: string) {
-    this.languageCode = languageCode;
+    this.languageCode = "tam";
   }
 
   getlanguageCode(): string {
