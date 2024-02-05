@@ -375,15 +375,6 @@ export class MaterDataCommonBodyComponent implements OnInit {
     });    
   }
   
-  onKey(value) {
-    this.searchResult = this.search(value);
-  }
-
-  search(value: string) {
-    let filter = value.toLowerCase();
-    return this.dropDownValues.partnerTypeCode.primary.filter(option => option.fieldCode.toLowerCase().startsWith(filter));
-  }
-
   getPartnerDropdownValues(partnerTypeCode, key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
     let optinalFilterObject;
