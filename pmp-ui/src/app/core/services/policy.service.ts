@@ -16,7 +16,7 @@ export class PolicyService{
 
     constructor(public http:HttpClient, public appService:AppConfigService){}
 
-    public BASE_URL = "https://api-internal.dev2.mosip.net/partnermanagement/v1/policies";
+    public BASE_URL = "https://dev..mosip.net/partnermanagement/v1/policies";
 
     getPolicyDetails(request: RequestModel): Observable<any> {    
         console.log("request>>>"+JSON.stringify(request));

@@ -132,12 +132,12 @@ export class MaterDataCommonBodyComponent implements OnInit {
       else if(url === "datasharepolicy"){
         this.pageName = "Data Share Policy";        
         this.primaryData = {"name": "", "desc": "", "policies": "", "policyGroupName": "", "policyType": "DataShare", "version": "1.1"};
-        this.getPolicyGroup("policyGroupName");
+        this.getPolicyGroup();
       }
       else if(url === "authpolicy"){
         this.pageName = "Auth Policy";        
         this.primaryData = {"name": "", "desc": "", "policies": "", "policyGroupName": "", "policyType": "Auth", "version": "1.1"};
-        this.getPolicyGroup("policyGroupName");
+        this.getPolicyGroup();
       }
       else if(url === "policymapping"){
         this.pageName = "Map Policy";
