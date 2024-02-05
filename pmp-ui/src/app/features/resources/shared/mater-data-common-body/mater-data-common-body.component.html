@@ -49,14 +49,17 @@
                 placeholder="{{ field.label[primaryLang] }}"
                 required
               >
+              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="search-input">
                 <mat-option
-                  *ngFor="let data of dropDownValues[field.name]"
+                  *ngFor="let data of searchResult"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
-                  [value]="data.fieldCode"
+                  panelMaxHeight="500px"
+                  [id]="data.fieldValue"
+                  [value]="data.fieldValue"
                 >
-                  {{ data.fieldValue }}
+                  {{ data.fieldCode }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
