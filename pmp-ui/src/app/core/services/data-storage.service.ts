@@ -134,7 +134,7 @@ export class DataStorageService {
 
   createMisp(data: RequestModel): Observable<any> {    
     return this.http.post(
-      "https://dev.mosip.net/partnermanagement/v1/misps/misps",data
+      "https://api-internal.dev2.mosip.net/partnermanagement/v1/misps/misps",data
     );
   }
   createPolicy(data: RequestModel): Observable<any> {

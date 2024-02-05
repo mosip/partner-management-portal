@@ -466,7 +466,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     return this.dropDownValues.partnerTypeCode.primary.filter(option => option.fieldCode.toLowerCase().startsWith(filter));
   }
 
-  getPolicyGroup(key) {
+  getPolicyGroup() {
     const filterObject = new FilterValuesModel('id', 'unique', '');
     let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
     let filterRequest = new FilterRequest([filterObject], this.primaryLang, [optinalFilterObject]);
