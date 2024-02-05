@@ -53,9 +53,9 @@
                 placeholder="{{ field.label[primaryLang] }}"
                 required
               >
-              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="example-input"  >
+              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="search-input"  >
                 <mat-option
-                  *ngFor="let data of searchResult.slice(0,15)"
+                  *ngFor="let data of searchResult"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
