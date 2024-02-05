@@ -1,7 +1,7 @@
 {
     "primaryLangCode": "eng",
     "secondaryLangCode": "ara",
-    "baseUrl": "https://dev..mosip.net/",
+    "baseUrl": "https://dev.mosip.net/",
     "pmpUrl":"/",
     "version":"v1/"
 } 

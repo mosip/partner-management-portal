@@ -11,7 +11,7 @@ export class MispService {
 
   constructor(public http: HttpClient, public appService: AppConfigService) { }
 
-  public BASE_URL = "https://dev..mosip.net/partnermanagement/v1/misps";
+  public BASE_URL = "https://dev.mosip.net/partnermanagement/v1/misps";
 
   getRegistrationMispDetails(request: RequestModel): Observable<any> {    
     return this.http.get(this.BASE_URL +"/misps");;
