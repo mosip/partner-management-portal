@@ -95,7 +95,7 @@
 			"showAsLink": "",
 			"linkType": "",
 			"LinkURL": "",
-			"inputType": "dropdown",
+			"inputType": "dropdownpartner",
 			"ismandatory": "true",
 			"showInListView": "false",
 			"showInSingleView": "true"
@@ -174,7 +174,8 @@
 			"inputType": "text",
 			"ismandatory": "true",
 			"showInListView": "true",
-			"showInSingleView": "true"
+			"showInSingleView": "true",
+			"maxLength": 4000
 		},
 		{
 			"name": "statusCode",
