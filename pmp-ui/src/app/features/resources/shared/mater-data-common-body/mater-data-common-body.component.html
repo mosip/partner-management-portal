@@ -8,6 +8,7 @@
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
                 matInput
+                [maxLength]="field.maxLength"
                 placeholder="{{
                   field.label[primaryLang] | translate
                 }}"
@@ -35,6 +36,7 @@
                 #{{field.name}}
                 (blur)="captureValue($event, field.name, 'primary')"
                 matInput
+                [maxLength]="field.maxLength"
                 placeholder="{{
                   field.label[primaryLang] | translate
                 }}"
