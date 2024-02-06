@@ -149,7 +149,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     setTimeout(()=>{
         this.loadSecondaryForm();
     }, 500);
-
+    this.primaryLang = this.headerService.getlanguageCode();
     this.translateService
       .getTranslation(this.primaryLang)
       .subscribe(response => {
@@ -605,7 +605,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
         }       
         if (!response.errors || (response.errors.length == 0)) {
-          let url = this.pageName+" Updated Successfully";
+          let url = this.pageName+" "+this.popupMessages.generickeys.updatedSuccessfully;
           this.showMessage(url)
             .afterClosed()
             .subscribe(() => {
@@ -651,7 +651,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
             this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
           }
           if (!response.errors || (response.errors.length == 0)) {
-            let url = this.pageName+" Created Successfully";
+            let url = this.pageName+" "+this.popupMessages.generickeys.createdSuccessfully;
             this.showMessage(url)
               .afterClosed()
               .subscribe(() => {
@@ -693,7 +693,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         case: 'MESSAGE',
         title: 'Success',
         message: message,
-        btnTxt: 'Ok'
+        btnTxt: this.popupMessages.generickeys.ok
       }
     });
     return dialogRef;
@@ -707,7 +707,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
           case: 'MESSAGE',
           title: 'Error',
           message: message,
-          btnTxt: 'Ok'
+          btnTxt: this.popupMessages.generickeys.ok
         },
         disableClose: true
       });

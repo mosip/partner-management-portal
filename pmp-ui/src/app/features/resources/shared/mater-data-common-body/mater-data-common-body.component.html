@@ -1,5 +1,5 @@
 <div class="flex-body">
-    <mat-card>
+    <mat-card *ngIf="popupMessages">
         <mat-card-content class="forms-container" *ngIf="!hideContainer">
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
@@ -248,10 +248,10 @@
         </mat-card-content>
         <mat-card-actions class="action-buttons">
         <button id="createButton" mat-raised-button (click)="submit()" *ngIf="!hideContainer">
-        Save
+        {{ popupMessages["generickeys"]["save"] | translate }}
         </button>
         <button mat-raised-button (click)="changePage()">
-        Cancel
+        {{ popupMessages["generickeys"]["cancel"] | translate }}
         </button>
         </mat-card-actions>
       

@@ -460,6 +460,11 @@
     "fieldValidation": "This field is required_kan",
     "fieldNameValidation": " is required_kan"
   },
+  "generickeys":{
+    "save":"Save_kan",
+    "cancel":"Cancel_kan",
+    "detailView":"Detail View_kan"
+  },
   "serverError": {
     "PMS_COR_001": "ಇನ್‌ಪುಟ್ ಪ್ಯಾರಾಮೀಟರ್ ಕಾಣೆಯಾಗಿದೆ",
     "PMS_PRT_002": "ನೀತಿ ಗುಂಪು ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ",

@@ -460,6 +460,16 @@
     "fieldValidation": "This field is required_tam",
     "fieldNameValidation": " is required_tam"
   },
+  "generickeys":{
+    "save":"Save_tam",
+    "cancel":"Cancel_tam",
+    "detailView":"Detail View_tam",
+    "ok":"Ok_tam",
+    "updatedSuccessfully":"Updated Successfully_tam",
+    "createdSuccessfully":"Created Successfully_tam",
+    "success":"Success_tam",
+    "error":"Error_tam"
+  },
   "serverError": {
     "PMS_COR_001": "உள்ளீட்டு அளவுரு இல்லை",
     "PMS_PRT_002": " கொள்கை குழு இல்லை",
