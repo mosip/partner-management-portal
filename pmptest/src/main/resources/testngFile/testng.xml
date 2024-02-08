@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="	PMP-UI-AUTOMATION-RUN">
+	
+	<test  name="PMP-UI-AUTOMATION-RUN"  preserve-order="true">
+	
+		<classes>
+			<class name="io.mosip.testrig.pmpui.testcase.AdminAuthPolicyTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminDataSharePolicyTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminDeviceDetailsTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminFtmDetailsTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminPartnerPolicyMappingTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminPolicyGroupTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminSbiDetailsTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.AdminUploadCaCertTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.apicall" />
+			<class name="io.mosip.testrig.pmpui.testcase.PartnerLoginAuthCredTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.PartnerRegisterAuthCredTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.PartnerRegisterFTMTest" />
+			<class name="io.mosip.testrig.pmpui.testcase.PartnerRegisterSbiDeviceTest" />
+		</classes>
+	</test>
+		<listeners>
+		
+	
+
+		<listener
+			  class-name="io.mosip.testrig.pmpui.utility.EmailableReport" />
+			
+	</listeners>
+
+</suite>
