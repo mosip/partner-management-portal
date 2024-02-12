@@ -80,7 +80,7 @@ public class ConfigManager {
 	//	private static String KM_DB_SCHEMA = "km_db_schema";
 	//
 	private static String MASTER_DB_USER = "db-su-user";
-	private static String MASTER_DB_PASS = "postgresql-password";
+	private static String MASTER_DB_PASS = "postgres-password";
 	private static String MASTER_DB_SCHEMA = "master_db_schema";
 	//
 	private static String IAM_REALM_ID = "keycloak-realm-id";
