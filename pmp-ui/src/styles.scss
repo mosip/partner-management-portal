@@ -14,7 +14,9 @@ html {
   font-size: 14px;
 }
 .success-img {
-  margin: 16px 0 0 42%;
+  /*margin: 16px 0 0 42%;*/
+  position: fixed;
+  left: 50%;
 }
 .spinner-placer {
   margin: 20% 0 0 40%;
