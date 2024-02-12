@@ -199,18 +199,20 @@
 <!-- Message PopUp -->
 
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'">
-  <img
-    src="assets/images/icon_Suceess right.png"
-    height="45px"
-    width="45px"
-    class="success-img"
-   *ngIf="input.title === 'Success' || input.title === 'النجاح' || input.title === 'Succès'|| input.title === 'सफलता' || input.title === 'ಯಶಸ್ಸು' || input.title === 'வெற்றி'"   />
-   <img
-    src="assets/images/cross.png"
-    height="45px"
-    width="45px"
-    class="success-img"
-   *ngIf="input.title === 'Error' || input.title === 'خطأ' || input.title === 'Erreur'|| input.title === 'त्रुटि' || input.title === 'ತಪ್ಪು' || input.title === 'பிழை'"   />
+  <div class="pop-up-header">
+    <img
+      src="assets/images/icon_Suceess right.png"
+      height="45px"
+      width="45px"
+      class="success-img"
+     *ngIf="input.title === 'Success' || input.title === 'النجاح' || input.title === 'Succès'|| input.title === 'सफलता' || input.title === 'ಯಶಸ್ಸು' || input.title === 'வெற்றி'"   />
+    <img
+      src="assets/images/cross.png"
+      height="45px"
+      width="45px"
+      class="success-img"
+     *ngIf="input.title === 'Error' || input.title === 'خطأ' || input.title === 'Erreur'|| input.title === 'त्रुटि' || input.title === 'ತಪ್ಪು' || input.title === 'பிழை'"   />
+  </div>
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
