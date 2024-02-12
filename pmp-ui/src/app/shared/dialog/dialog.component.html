@@ -252,16 +252,15 @@
     height="45px"
     width="45px"
     class="success-img"
-   *ngIf="input.title === 'Success'"   />
+   *ngIf="input.title === 'Success' || input.title === 'النجاح' || input.title === 'Succès'|| input.title === 'सफलता' || input.title === 'ಯಶಸ್ಸು' || input.title === 'வெற்றி'"   />
    <img
     src="assets/images/cross.png"
     height="45px"
     width="45px"
     class="success-img"
-   *ngIf="input.title === 'Error'"   />
+   *ngIf="input.title === 'Error' || input.title === 'خطأ' || input.title === 'Erreur'|| input.title === 'त्रुटि' || input.title === 'ತಪ್ಪು' || input.title === 'பிழை'"   />
   <div class="pop-up-header">
-    <b mat-dialog-title *ngIf="input.title === 'Success'">{{ translateValue["generickeys"]["success"] | translate }}</b>
-    <b mat-dialog-title *ngIf="input.title === 'Error'">{{ translateValue["generickeys"]["error"] | translate }}</b>
+    <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
       <p>{{ input.message }}</p>
     </div>
@@ -276,6 +275,12 @@
 </div>
 
 <div class="pop-up" *ngIf="input.case === 'ERROR'">
+  <img
+    src="assets/images/cross.png"
+    height="45px"
+    width="45px"
+    class="success-img"
+   *ngIf="input.title === 'Error' || input.title === 'خطأ' || input.title === 'Erreur'|| input.title === 'त्रुटि' || input.title === 'ತಪ್ಪು' || input.title === 'பிழை'"   />
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
