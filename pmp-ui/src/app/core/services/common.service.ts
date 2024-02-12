@@ -16,6 +16,7 @@ import { PartnerStatus } from '../models/partnerstatus.model';
 import { CreateAuthPolicy } from '../models/createauthpolicy.model';
 import { AuthPolicies } from '../models/authpolicies.model';
 import { AllowedKycAttributes } from '../models/allowedkycattributes.model';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,10 +41,11 @@ export class CommonService {
     public dialog: MatDialog,
     public appService: AppConfigService,
     public translate: TranslateService,
-    public auditService: AuditService
+    public auditService: AuditService,
+    public headerService: HeaderService
   ) {
     translate
-      .getTranslation(appService.getConfig().primaryLangCode)
+      .getTranslation(this.headerService.getlanguageCode())
       .subscribe(result => {
         this.actionMessages = result.actionMessages;
         this.serverMessages = result.serverError;
@@ -146,16 +148,16 @@ export class CommonService {
   public approveData(type: string, data: any) {
     let message = "";
     if(data.make){
-      message = "Do you want to "+type+" the Make "+data.make+" ?";
+      message = this.actionMessages[type]['confirmation-message'][0]+ this.actionMessages[type]['confirmation-message'][1] + data.make+" ?";
     }else{
-      message = "Do you want to "+type+" the Version "+data.swVersion+" ?";
+      message = this.actionMessages[type]['confirmation-message'][0]+ this.actionMessages[type]['confirmation-message'][2] + data.swVersion+" ?";
     }
     const obj = {
       case: 'CONFIRMATION',
-      title: "CONFIRMATION",
+      title: this.actionMessages[type]['confirmation-title'],
       message: message,
-      yesBtnTxt: "Yes",
-      noBtnTxt: "No"
+      yesBtnTxt: this.actionMessages[type]['yesBtnTxt'],
+      noBtnTxt: this.actionMessages[type]['noBtnTxt']
     };
     return this.dialog.open(DialogComponent, {
       width: '750px',
