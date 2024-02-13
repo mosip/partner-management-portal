@@ -47,7 +47,7 @@
                   <!-- <span *ngIf="data['isActive'] != true"> -->
                     <span *ngIf="data['statusCode'] !== 'rejected'">
                       <span *ngIf="data['statusCode'] !== 'approved'">
-                        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" id="ellipsis-button{{i}}" (click)="ellipsisAction(data)">
                           <mat-icon>more_vert</mat-icon>
                         </button>
                       </span>
@@ -56,7 +56,7 @@
                     <span *ngIf="showapilistbutton === true">
                       <span *ngIf="data['statusCode'] !== 'rejected'">
                         <span *ngIf="data['statusCode'] === 'approved'">
-                          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+                          <button mat-icon-button [matMenuTriggerFor]="menu" id="ellipsis-button{{i}}" (click)="ellipsisAction(data)">
                             <mat-icon>more_vert</mat-icon>
                           </button>
                         </span>
@@ -69,7 +69,7 @@
           </span> -->
         </span>
         <span *ngIf="this.currentRoute === 'partner'">
-          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="ellipsisAction(data)">
+          <button mat-icon-button [matMenuTriggerFor]="menu" id="ellipsis-button{{i}}" (click)="ellipsisAction(data)">
             <mat-icon>more_vert</mat-icon>
           </button>
         </span>
@@ -79,6 +79,7 @@
           mat-menu-item
           *ngFor="let button of ellipsisList"
           (click)="selectedRow(data, button)"
+          id={{button.buttonName.eng}}{{i}}
         >
         <span>{{ button.buttonName[lang] }}</span>
         </button>

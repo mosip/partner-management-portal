@@ -4,6 +4,7 @@
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
@@ -17,6 +18,7 @@
             </mat-form-field>
             <mat-form-field style="width:950px" *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] === '{}'">
               <textarea
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (blur)="captureValue($event, field.name, 'primary')"
@@ -31,6 +33,7 @@
             </mat-form-field>
             <mat-form-field style="width:950px" *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] !== '{}'">
               <textarea
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (blur)="captureValue($event, field.name, 'primary')"
@@ -45,6 +48,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
@@ -62,6 +66,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdownpartner'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
@@ -80,6 +85,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'calendar'">
               <input
+                id="{{field.name}}"
                 matInput
                 [min]="minDate"
                 [matDatepicker]="picker"
@@ -100,6 +106,7 @@
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
               <input
+                id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
@@ -114,6 +121,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
+                id="{{field.name}}"
                 [value]="primaryData[field.name]"
                 placeholder="{{ field.label[primaryLang] }}"
                 required
@@ -139,6 +147,7 @@
                 <td width="30%">
                   <mat-form-field>
                     <input
+                      id="apiKeyLabel"
                       #keyboardRef
                       matInput
                       placeholder="Label"
@@ -149,7 +158,7 @@
                   </mat-form-field>
                 </td>
                 <td width="20%">
-                  <button id="createButton" mat-raised-button (click)="generateAPIKey()">
+                  <button id="generateAPIKey" mat-raised-button (click)="generateAPIKey()">
                     Generate
                   </button>
                 </td>
@@ -188,6 +197,7 @@
                   <mat-form-field>
                     <mat-select
                       placeholder="SBIVersion"
+                      id="SBIVersion"
                       required
                     >
                       <mat-option
@@ -203,7 +213,7 @@
                   </mat-form-field>
                 </td>
                 <td width="20%">
-                  <button id="createButton" mat-raised-button (click)="mapSBIVersion()">
+                  <button id="mapSBIVersion" mat-raised-button (click)="mapSBIVersion()">
                     Map SBI
                   </button>
                 </td>

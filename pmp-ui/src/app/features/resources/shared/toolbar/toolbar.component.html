@@ -6,6 +6,7 @@
         *ngFor="let button of buttonList; index as i"
         [ngStyle]="{ margin: '10px'}"
         (click)="actionEvent(button)"
+        id={{button.buttonName.eng}}
         [ngClass]="{
           'button-style': button.buttonName.eng != 'Filter',
           'filter-button-style': button.buttonName.eng === 'Filter'
