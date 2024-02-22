@@ -141,8 +141,7 @@
 			"inputType": "dropdown",
 			"ismandatory": "true",
 			"showInListView": "true",
-			"showInSingleView": "true",
-			"maxLength": 5120
+			"showInSingleView": "true"
 		},
 		{
 			"name": "version",
@@ -180,7 +179,8 @@
 			"inputType": "",
 			"ismandatory": "",
 			"showInListView": "",
-			"showInSingleView": ""
+			"showInSingleView": "",
+			"maxLength": 5120
 		},
 		{
 			"name": "policies",
