@@ -457,8 +457,9 @@
     "InActive": "INACTIVE_fra"
   },
   "genericerror": {
-    "fieldValidation": "This field is required_fra",
-    "fieldNameValidation": " is required_fra"
+    "fieldValidation": "Ce champ est requis",
+    "fieldNameValidation": " est requis",
+    "invalidJson": "Format JSON non valide pour les données des règles"
   },
   "serverError": {
     "PMS_COR_001": "Paramètre d'entrée manquant",

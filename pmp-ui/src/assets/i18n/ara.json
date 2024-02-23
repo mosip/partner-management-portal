@@ -457,8 +457,9 @@
     "InActive": "INACTIVE_ara"
   },
   "genericerror": {
-    "fieldValidation": "This field is required_ara",
-    "fieldNameValidation": " is required_ara"
+    "fieldValidation": "هذه الخانة مطلوبه",
+    "fieldNameValidation": " مطلوب",
+    "invalidJson": "تنسيق JSON غير صالح لبيانات السياسات"
   },
   "serverError": {
     "PMS_COR_001": "معلمة الإدخال مفقود",
