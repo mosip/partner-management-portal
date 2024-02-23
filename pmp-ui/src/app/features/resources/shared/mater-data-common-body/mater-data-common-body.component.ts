@@ -591,7 +591,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         url = url;
     }
     else if(url === "policymanager/policies"){
-      this.primaryData["policies"] =  JSON.parse(this.primaryData["policies"]);
+      try {
+        this.primaryData["policies"] = JSON.parse(this.primaryData["policies"]);
+      } catch (error) {
+        this.showErrorPopup(this.popupMessages.genericerror.invalidJson);
+    }
     }
     if(this.primaryData.id || this.primaryData.ftpChipDetailId){ 
       this.primaryData["isItForRegistrationDevice"] = true;
