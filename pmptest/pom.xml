@@ -461,7 +461,7 @@
 <dependency>
     <groupId>org.json</groupId>
     <artifactId>json</artifactId>
-    <version>20210307</version>
+    <version>20231013</version>
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
@@ -615,7 +615,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20230227</version>
+			<version>20231013</version>
 		</dependency>
 		<dependency>
 			<groupId>org.keycloak</groupId>
