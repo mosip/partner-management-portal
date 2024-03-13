@@ -612,7 +612,8 @@
     "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
     "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
     "KER-PCM-004": "Les dates des certificats ne sont pas valides.",
-    "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917"
+    "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
+    "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg"
   },
   "generickeys":{
     "save": "Enregistrer",
