@@ -35,6 +35,7 @@ export class CommonService {
   approved : string = "Approved";
   rejected : string = "Rejected";
   descr: string;
+  langJson:any;
   constructor(
     public router: Router,
     public dataService: DataStorageService,
@@ -49,6 +50,7 @@ export class CommonService {
       .subscribe(result => {
         this.actionMessages = result.actionMessages;
         this.serverMessages = result.serverError;
+        this.langJson = result;
       });
   }
 
@@ -248,7 +250,8 @@ export class CommonService {
     this.dataService.updateDetails(mapping, request).subscribe(
       response => {
         if (!response.errors || response.errors.length === 0) {
-          this.createMessage('success', callingFunction, response.response);
+          let successMessage = this.langJson.successMessages.sbi[callingFunction]
+          this.createMessage('success', callingFunction, successMessage);
           this.router.navigateByUrl(this.router.url);
         } else {
           this.createMessage('error', callingFunction, response.errors);
@@ -325,14 +328,14 @@ export class CommonService {
   }
 
   viewCertificate(data: any){
-    this.dataService.viewCertificate(data).subscribe(response =>{      
+    this.dataService.viewCertificate(data).subscribe(response =>{   
       if(response.errors.length <= 0) {
         this.showCertificate('activate', response.response.certificateData);
       } else {
         let obj = {};
         obj = {
-          title: 'Certificate',
-          message: response.errors[0].message,
+          title: this.langJson.generickeys.certificate,
+          message: this.serverMessages[response.errors[0].errorCode],
           btnTxt: 'Ok'
         };
         this.showCertificateDetails(obj);
