@@ -55,17 +55,15 @@
                 placeholder="{{ field.label[primaryLang] }}"
                 required
               >
-              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="search-input"  >
                 <mat-option
-                  *ngFor="let data of searchResult"
+                  *ngFor="let data of dropDownValues[field.name]"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
-                  panelMaxHeight="500px"
-                  [id]="data.fieldValue"
-                  [value]="data.fieldValue"
+                  [id]="data.fieldCode"
+                  [value]="data.fieldCode"
                 >
-                  {{ data.fieldCode }}
+                  {{ data.fieldValue }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -77,9 +75,8 @@
                 required
                 disabled="{{setreadonly}}"
               >
-              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="search-input">
                 <mat-option
-                  *ngFor="let data of  searchResult"
+                  *ngFor="let data of  dropDownValues[field.name]"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
