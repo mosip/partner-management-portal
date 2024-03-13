@@ -184,7 +184,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }
   }
 
-  getSbidetailFilterValues(key){    
+  getSbidetailFilterValues(key){  
     if(this.router.url.includes("editable")){
       this.showSecondaryForm = true;
       this.showSecondarySBIPanel = true;
@@ -619,8 +619,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.showErrorPopup(response.errors[0].message);
         }
       });
-    }else{      
-      if(url === "partnermanager/partners/apikey/request"){        
+    }else{ 
+      if(url === "partnermanager/partners/apikey/request"){       
         this.primaryData["useCaseDescription"] = this.primaryData["requestDetail"];
         let request = new RequestModel(
           "",
@@ -637,14 +637,15 @@ export class MaterDataCommonBodyComponent implements OnInit {
                 this.changePage();
               });
           }else {
+            let errorMessage = this.popupMessages.serverError[response.errors[0].errorCode]
             if(response.errors.length > 0){
-              this.showErrorPopup(response.errors[0].message);
+              this.showErrorPopup(errorMessage);
             }else{
               this.showErrorPopup(response.errors.message);
             }
           }
         });
-      }else{
+      }else{   
         let request = new RequestModel(
           "",
           null,
@@ -662,9 +663,16 @@ export class MaterDataCommonBodyComponent implements OnInit {
                 this.changePage();
               });
           }else {
-            if(response.errors.length > 0){
-              this.showErrorPopup(response.errors[0].message);
+            let errorMessage
+            let policyName = response.errors[0].message.split(':')[1]
+            if(policyName){
+              errorMessage = this.popupMessages.serverError[response.errors[0].errorCode] + policyName
             }else{
+              errorMessage = this.popupMessages.serverError[response.errors[0].errorCode]
+            }
+            if(response.errors.length > 0){
+              this.showErrorPopup(errorMessage);
+            }else{  
               this.showErrorPopup(response.errors.message);
             }
           }
@@ -695,7 +703,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
       width: '550px',
       data: {
         case: 'MESSAGE',
-        title: 'Success',
+        title: this.popupMessages.generickeys.success,
         message: message,
         btnTxt: this.popupMessages.generickeys.ok
       }
@@ -709,7 +717,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
         width: '550px',
         data: {
           case: 'MESSAGE',
-          title: 'Error',
+          title: this.popupMessages.generickeys.error,
           message: message,
           btnTxt: this.popupMessages.generickeys.ok
         },

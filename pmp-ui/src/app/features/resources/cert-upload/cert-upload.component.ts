@@ -36,6 +36,7 @@ export class CertUploadComponent {
   fetchRequest = {} as CenterRequest;
   uploadcertificate:any;
   files: any[] = [];
+  langJson:any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -61,9 +62,11 @@ export class CertUploadComponent {
     this.primaryLangCode = this.headerService.getlanguageCode();
     this.translate
       .getTranslation(this.primaryLangCode)
-      .subscribe(response => (
-        this.uploadcertificate  = response.uploadcertificate,
-        this.popupMessages = response.genericerror));
+      .subscribe(response => {
+        this.uploadcertificate  = response.uploadcertificate;
+        this.popupMessages = response.genericerror;
+        this.langJson = response;
+      });
     this.activatedRoute.params.subscribe(response => {
       this.id = response.id;
       this.masterdataType = response.type;
@@ -100,7 +103,7 @@ export class CertUploadComponent {
         };
         fileReader.readAsText(file); 
       }else{
-        self.showErrorPopup("pem or cer format file only supported.");
+        self.showErrorPopup(this.uploadcertificate.supportedDoc);
       }
     }
 
@@ -185,7 +188,7 @@ export class CertUploadComponent {
         width: '550px',
         data: {
           case: 'MESSAGE',
-          title: 'Error',
+          title: this.langJson.generickeys.error,
           message: message,
           btnTxt: 'Ok'
         },
@@ -200,16 +203,16 @@ export class CertUploadComponent {
     if(response.errors.length > 0){
       data = {
         case: 'MESSAGE',
-        title: "Failure !",
-        message: response.errors[0].message,
+        title: this.langJson.generickeys.failure,
+        message: this.langJson.serverError[response.errors[0].errorCode],
         btnTxt: "DONE"
       };
     }else{
       data = {
         case: 'MESSAGE',
-        title: "Success",
-        message: response.response.status,
-        btnTxt: "DONE"
+        title: this.langJson.generickeys.success,
+        message: this.langJson.generickeys.updatedSuccessfully,
+        btnTxt: this.langJson.generickeys.ok
       };
     }
     const dialogRef = self.dialog.open(DialogComponent, {
