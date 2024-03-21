@@ -15,7 +15,7 @@
   import { CenterRequest } from 'src/app/core/models/centerRequest.model';
   import { FilterModel } from 'src/app/core/models/filter.model';
   import { Observable } from 'rxjs';
-  import { MatKeyboardRef, MatKeyboardComponent, MatKeyboardService } from 'ngx7-material-keyboard';
+  import { MatKeyboardRef, MatKeyboardComponent, MatKeyboardService } from '@ngx-material-keyboard/core';
   import { AuditService } from 'src/app/core/services/audit.service';
   import * as mispSpecFile from '../../../../../assets/entity-spec/misp.json';
   
