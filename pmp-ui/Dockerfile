@@ -46,8 +46,6 @@ RUN apt-get -y update \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
 && mkdir -p /var/run/nginx /var/tmp/nginx \
 && chown -R ${container_user}:${container_user} /home/${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${base_path}/assets/i18n ${base_path}/assets/entity-spec
-&& chown -R ${container_user}:${container_user} 
-&& chown -R ${container_user}:${container_user} 
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
