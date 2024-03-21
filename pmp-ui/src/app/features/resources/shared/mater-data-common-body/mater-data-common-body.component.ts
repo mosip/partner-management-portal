@@ -413,8 +413,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     this.dataStorageService
       .getFiltersForAllDropDown('partnermanager/partners', request)
       .subscribe(response => {
-        if(response.response.filters)
-        this.dropDownValues.partnerTypeCode.primary = response.response.filters.sort((a, b) => (a.name && b.name) ? a.name.localeCompare(b.name) : 0);
+        this.dropDownValues[key] = response.response.filters;      
       });
   }
 

@@ -61,6 +61,7 @@
                     captureDropDownValue($event, field.name, 'primary')
                   "
                   [value]="data.fieldCode"
+                  [id]="data.fieldValue"
                 >
                   {{ data.fieldValue }}
                 </mat-option>
@@ -74,13 +75,13 @@
                 required
                 disabled="{{setreadonly}}"
               >
-              <input placeholder="Search..." matInput type="text" (keyup)="onKey($event.target.value)" class="search-input">
                 <mat-option
-                  *ngFor="let data of  searchResult"
+                  *ngFor="let data of  dropDownValues[field.name]"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
                   [value]="data.fieldCode"
+                  [id]="data.fieldValue"
                 >
                   {{ data.fieldValue }}
                 </mat-option>
@@ -136,6 +137,7 @@
                     captureDropDownValue($event, field.name, 'primary')
                   "
                   [value]="data.fieldCode"
+                  [id]="data.fieldValue"
                 >
                   {{ data.fieldValue }}
                 </mat-option>
@@ -209,6 +211,7 @@
                           captureDropDownValue($event, 'sbiId', '')
                         "
                         [value]="data.fieldCode"
+                        [id]="data.fieldValue"
                       >
                         {{ data.fieldValue }}
                       </mat-option>
