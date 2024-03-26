@@ -53,7 +53,7 @@ public class PartnerRegisterFTMTest extends RegisterBaseClass {
 		Commons.click(test,driver, By.xpath("//input[@type='submit']"));
 		
 		if(!(dropdwnVal.contains("DEVICE") ||  dropdwnVal.contains("FTM") ))
-			{Commons.dropdown(test,driver, By.id("mat-select-0"),data);
+			{Commons.dropdown(test,driver, By.id("mat-input-0"),data);
 		Commons.click(test,driver, By.id("applyTxt"));
 		Commons.click(test,driver, By.id("/pmp/resources/policymapping/view"));	
 		Commons.click(test,driver, By.id("/pmp/home"));
