@@ -41,6 +41,7 @@
                     style="font-size: x-small;height: 30px;"
                     *ngFor="let option of filterOptions[filter.filtername]"
                     [value]="option.fieldValue"
+                    [id]="option.fieldValue"
                   >
                     {{ option.fieldValue | status }}
                   </mat-option>
