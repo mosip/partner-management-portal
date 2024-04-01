@@ -437,7 +437,7 @@ export class DialogComponent implements OnInit {
     this.requestModel = new RequestModel('', null, this.filtersRequest);
     console.log(this.requestModel);
     this.dataStorageService
-      .getFiltersForAllMaterDataTypes(apitype, this.requestModel)
+      .getFiltersForAllMasterDataTypes(apitype, this.requestModel)
       .subscribe(response => {
         console.log(response);
         this.filterOptions[controlName] = [...response.response.filters];

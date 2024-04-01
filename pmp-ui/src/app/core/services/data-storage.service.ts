@@ -312,7 +312,7 @@ export class DataStorageService {
     return this.http.get(`./assets/entity-spec/${filename}.json`);
   }
 
-  getFiltersForAllMaterDataTypes(
+  getFiltersForAllMasterDataTypes(
     type: string,
     data: RequestModel
   ): Observable<any> {
