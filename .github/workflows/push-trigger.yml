@@ -20,7 +20,7 @@ on:
 
 jobs:
   build-maven-pmp-ui:
-    uses: mosip/kattu/.github/workflows/npm-build.yml@master
+    uses: mosip/kattu/.github/workflows/npm-build.yml@develop
     with:
       SERVICE_LOCATION: pmp-ui
       BUILD_ARTIFACT: pmp-ui
