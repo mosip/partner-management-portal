@@ -11,7 +11,7 @@ import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { MatKeyboardRef, MatKeyboardComponent } from 'ngx7-material-keyboard';
+import { MatKeyboardRef, MatKeyboardComponent } from '@ngx-material-keyboard/core';
 
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
@@ -28,11 +28,11 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import * as Ajv from "ajv";
 
 @Component({
-  selector: 'app-mater-data-common-body',
-  templateUrl: './mater-data-common-body.component.html',
-  styleUrls: ['./mater-data-common-body.component.scss']
+  selector: 'app-master-data-common-body',
+  templateUrl: './master-data-common-body.component.html',
+  styleUrls: ['./master-data-common-body.component.scss']
 })
-export class MaterDataCommonBodyComponent implements OnInit {
+export class MasterDataCommonBodyComponent implements OnInit {
   public keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
   @ViewChildren('keyboardRef', { read: ElementRef })
   public attachToElementMesOne: any;

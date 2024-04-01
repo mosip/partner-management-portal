@@ -4,12 +4,12 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { HeaderModel } from 'src/app/core/models/header.model';
 
 @Component({
-  selector: 'app-mater-data-common-view',
-  templateUrl: './mater-data-common-view.component.html',
-  styleUrls: ['./mater-data-common-view.component.scss'],
+  selector: 'app-master-data-common-view',
+  templateUrl: './master-data-common-view.component.html',
+  styleUrls: ['./master-data-common-view.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MaterDataCommonViewComponent implements OnInit {
+export class MasterDataCommonViewComponent implements OnInit {
 
   @Input() masterDataName: string;
   @Input() headerData: HeaderModel;

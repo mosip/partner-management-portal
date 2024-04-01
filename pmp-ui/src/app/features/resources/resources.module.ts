@@ -8,9 +8,9 @@ import { SingleViewComponent } from './single-view/single-view.component';
 import { SubListViewComponent } from './sub-list-view/sub-list-view.component';
 import { SubSingleViewComponent } from './sub-single-view/sub-single-view.component';
 import { CertUploadComponent } from './cert-upload/cert-upload.component';
-import { MaterDataCommonHeaderComponent } from './shared/mater-data-common-header/mater-data-common-header.component';
-import { MaterDataCommonBodyComponent } from './shared/mater-data-common-body/mater-data-common-body.component';
-import { MaterDataCommonViewComponent } from './shared/mater-data-common-view/mater-data-common-view.component';
+import { MasterDataCommonHeaderComponent } from './shared/master-data-common-header/master-data-common-header.component';
+import { MasterDataCommonBodyComponent } from './shared/master-data-common-body/master-data-common-body.component';
+import { MasterDataCommonViewComponent } from './shared/master-data-common-view/master-data-common-view.component';
 import { TableComponent } from './shared/table/table.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { DialogComponent } from './shared/dialog/dialog.component';
@@ -26,9 +26,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   declarations: [
-    MaterDataCommonHeaderComponent,
-    MaterDataCommonBodyComponent,
-    MaterDataCommonViewComponent,
+    MasterDataCommonHeaderComponent,
+    MasterDataCommonBodyComponent,
+    MasterDataCommonViewComponent,
     ListViewComponent,
     SingleViewComponent,
     SubListViewComponent,
