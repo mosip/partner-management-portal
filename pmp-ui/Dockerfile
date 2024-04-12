@@ -1,26 +1,28 @@
 # base image
 FROM nginx
 
+# can be passed during Docker build as build time environment variable for mosip user level change.
+ARG container_user=mosip
+ARG container_user_group=mosip
+ARG container_user_uid=1001
+ARG container_user_gid=1001
+
+# can be passed during Docker build as build time environment for label related addition to docker.
 ARG SOURCE
 ARG COMMIT_HASH
 ARG COMMIT_ID
 ARG BUILD_TIME
-LABEL source=${SOURCE}
-LABEL commit_hash=${COMMIT_HASH}
-LABEL commit_id=${COMMIT_ID}
-LABEL build_time=${BUILD_TIME}
-
 ENV base_path=/usr/share/nginx/html
 
 ENV i18n_path=${base_path}/assets/i18n
 
 ENV entity_spec_path=${base_path}/assets/entity-spec
 
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
-ARG container_user=mosip
-ARG container_user_group=mosip
-ARG container_user_uid=1001
-ARG container_user_gid=1001
+# can be passed during Docker build as build time environment for label.
+LABEL source=${SOURCE}
+LABEL commit_hash=${COMMIT_HASH}
+LABEL commit_id=${COMMIT_ID}
+LABEL build_time=${BUILD_TIME}
 
 # set working directory for the user
 WORKDIR /home/${container_user}
