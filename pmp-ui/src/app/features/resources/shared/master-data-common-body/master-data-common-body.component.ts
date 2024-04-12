@@ -28,11 +28,11 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import * as Ajv from "ajv";
 
 @Component({
-  selector: 'app-mater-data-common-body',
-  templateUrl: './mater-data-common-body.component.html',
-  styleUrls: ['./mater-data-common-body.component.scss']
+  selector: 'app-master-data-common-body',
+  templateUrl: './master-data-common-body.component.html',
+  styleUrls: ['./master-data-common-body.component.scss']
 })
-export class MaterDataCommonBodyComponent implements OnInit {
+export class MasterDataCommonBodyComponent implements OnInit {
   public keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
   @ViewChildren('keyboardRef', { read: ElementRef })
   public attachToElementMesOne: any;
