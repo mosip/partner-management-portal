@@ -46,7 +46,7 @@ export class DialogComponent implements OnInit {
 
   filterOptions: any = {};
   primaryLangCode: string;
-
+  sitealignment = 'ltr';
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
@@ -65,7 +65,9 @@ export class DialogComponent implements OnInit {
 
   async ngOnInit() {
     this.input = this.data;
-    console.log(this.input);
+    if(this.primaryLangCode === "ara"){
+      this.sitealignment = 'rtl';
+    }
     if (this.input.case === 'filter') {
       this.existingFilters = Utils.convertFilter(
         this.activatedRoute.snapshot.queryParams,
@@ -435,7 +437,7 @@ export class DialogComponent implements OnInit {
     this.requestModel = new RequestModel('', null, this.filtersRequest);
     console.log(this.requestModel);
     this.dataStorageService
-      .getFiltersForAllMaterDataTypes(apitype, this.requestModel)
+      .getFiltersForAllMasterDataTypes(apitype, this.requestModel)
       .subscribe(response => {
         console.log(response);
         this.filterOptions[controlName] = [...response.response.filters];

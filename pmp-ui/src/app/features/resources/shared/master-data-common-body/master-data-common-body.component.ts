@@ -11,7 +11,7 @@ import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { RequestModel } from 'src/app/core/models/request.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { MatKeyboardRef, MatKeyboardComponent } from 'ngx7-material-keyboard';
+import { MatKeyboardRef, MatKeyboardComponent } from '@ngx-material-keyboard/core';
 
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
@@ -28,11 +28,11 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import * as Ajv from "ajv";
 
 @Component({
-  selector: 'app-mater-data-common-body',
-  templateUrl: './mater-data-common-body.component.html',
-  styleUrls: ['./mater-data-common-body.component.scss']
+  selector: 'app-master-data-common-body',
+  templateUrl: './master-data-common-body.component.html',
+  styleUrls: ['./master-data-common-body.component.scss']
 })
-export class MaterDataCommonBodyComponent implements OnInit {
+export class MasterDataCommonBodyComponent implements OnInit {
   public keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
   @ViewChildren('keyboardRef', { read: ElementRef })
   public attachToElementMesOne: any;
@@ -148,7 +148,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     setTimeout(()=>{
         this.loadSecondaryForm();
     }, 500);
-
+    this.primaryLang = this.headerService.getlanguageCode();
     this.translateService
       .getTranslation(this.primaryLang)
       .subscribe(response => {
@@ -183,7 +183,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
     }
   }
 
-  getSbidetailFilterValues(key){    
+  getSbidetailFilterValues(key){  
     if(this.router.url.includes("editable")){
       this.showSecondaryForm = true;
       this.showSecondarySBIPanel = true;
@@ -456,6 +456,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
       });
   }
 
+
   getPolicyGroup(key) {
     const filterObject = new FilterValuesModel('name', 'unique', '');
     let optinalFilterObject = new OptionalFilterValuesModel('isActive', 'equals', 'true');
@@ -577,7 +578,11 @@ export class MaterDataCommonBodyComponent implements OnInit {
         url = url;
     }
     else if(url === "policymanager/policies"){
-      this.primaryData["policies"] =  JSON.parse(this.primaryData["policies"]);
+      try {
+        this.primaryData["policies"] = JSON.parse(this.primaryData["policies"]);
+      } catch (error) {
+        this.showErrorPopup(this.popupMessages.genericerror.invalidJson);
+    }
     }
     if(this.primaryData.id || this.primaryData.ftpChipDetailId){ 
       this.primaryData["isItForRegistrationDevice"] = true;
@@ -591,7 +596,7 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
         }       
         if (!response.errors || (response.errors.length == 0)) {
-          let url = this.pageName+" Updated Successfully";
+          let url = this.pageName+" "+this.popupMessages.generickeys.updatedSuccessfully;
           this.showMessage(url)
             .afterClosed()
             .subscribe(() => {
@@ -601,8 +606,8 @@ export class MaterDataCommonBodyComponent implements OnInit {
           this.showErrorPopup(response.errors[0].message);
         }
       });
-    }else{      
-      if(url === "partnermanager/partners/apikey/request"){        
+    }else{ 
+      if(url === "partnermanager/partners/apikey/request"){       
         this.primaryData["useCaseDescription"] = this.primaryData["requestDetail"];
         let request = new RequestModel(
           "",
@@ -619,14 +624,15 @@ export class MaterDataCommonBodyComponent implements OnInit {
                 this.changePage();
               });
           }else {
+            let errorMessage = this.popupMessages.serverError[response.errors[0].errorCode]
             if(response.errors.length > 0){
-              this.showErrorPopup(response.errors[0].message);
+              this.showErrorPopup(errorMessage);
             }else{
               this.showErrorPopup(response.errors.message);
             }
           }
         });
-      }else{
+      }else{   
         let request = new RequestModel(
           "",
           null,
@@ -637,16 +643,23 @@ export class MaterDataCommonBodyComponent implements OnInit {
             this.primaryData["policies"] =  JSON.stringify(this.primaryData["policies"]);
           }
           if (!response.errors || (response.errors.length == 0)) {
-            let url = this.pageName+" Created Successfully";
+            let url = this.pageName+" "+this.popupMessages.generickeys.createdSuccessfully;
             this.showMessage(url)
               .afterClosed()
               .subscribe(() => {
                 this.changePage();
               });
           }else {
-            if(response.errors.length > 0){
-              this.showErrorPopup(response.errors[0].message);
+            let errorMessage
+            let policyName = response.errors[0].message.split(':')[1]
+            if(policyName){
+              errorMessage = this.popupMessages.serverError[response.errors[0].errorCode] + policyName
             }else{
+              errorMessage = this.popupMessages.serverError[response.errors[0].errorCode]
+            }
+            if(response.errors.length > 0){
+              this.showErrorPopup(errorMessage);
+            }else{  
               this.showErrorPopup(response.errors.message);
             }
           }
@@ -677,9 +690,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
       width: '550px',
       data: {
         case: 'MESSAGE',
-        title: 'Success',
+        title: this.popupMessages.generickeys.success,
         message: message,
-        btnTxt: 'Ok'
+        btnTxt: this.popupMessages.generickeys.ok
       }
     });
     return dialogRef;
@@ -691,9 +704,9 @@ export class MaterDataCommonBodyComponent implements OnInit {
         width: '550px',
         data: {
           case: 'MESSAGE',
-          title: 'Error',
+          title: this.popupMessages.generickeys.error,
           message: message,
-          btnTxt: 'Ok'
+          btnTxt: this.popupMessages.generickeys.ok
         },
         disableClose: true
       });

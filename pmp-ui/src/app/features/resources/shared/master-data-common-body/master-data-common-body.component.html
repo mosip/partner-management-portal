@@ -1,5 +1,5 @@
 <div class="flex-body">
-    <mat-card>
+    <mat-card *ngIf="popupMessages">
         <mat-card-content class="forms-container" *ngIf="!hideContainer">
           <p  class="mat-form1" *ngFor="let field of fields; let i = index">
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'text'">
@@ -9,12 +9,16 @@
                 #{{field.name}}
                 (keyup)="captureValue($event, field.name, 'primary')"
                 matInput
+                [maxLength]="field.maxLength"
                 placeholder="{{
                   field.label[primaryLang] | translate
                 }}"
                 [value]="primaryData[field.name]"
                 required
               />
+              <mat-hint *ngIf="field.maxLength === primaryData[field.name].length">
+                {{'validationMessages.max-limit'|translate}}
+              </mat-hint>
             </mat-form-field>
             <mat-form-field style="width:950px" *ngIf="field.showInSingleView === 'true' && field.inputType === 'textarea' && primaryData[field.name] === '{}'">
               <textarea
@@ -36,8 +40,9 @@
                 id="{{field.name}}"
                 #keyboardRef
                 #{{field.name}}
-                (blur)="captureValue($event, field.name, 'primary')"
+                (keyup)="captureValue($event, field.name, 'primary')"
                 matInput
+                [maxLength]="field.maxLength"
                 placeholder="{{
                   field.label[primaryLang] | translate
                 }}"
@@ -45,6 +50,9 @@
                 required={{field.ismandatory}}
                 rows="7" cols="40"
               ></textarea>
+              <mat-hint *ngIf="field.maxLength === primaryData[field.name].length">
+                {{'validationMessages.max-limit'|translate}}
+              </mat-hint>
             </mat-form-field>
             <mat-form-field *ngIf="field.showInSingleView === 'true' && field.inputType === 'dropdown'">
               <mat-select
@@ -74,7 +82,7 @@
                 disabled="{{setreadonly}}"
               >
                 <mat-option
-                  *ngFor="let data of dropDownValues[field.name]"
+                  *ngFor="let data of  dropDownValues[field.name]"
                   (onSelectionChange)="
                     captureDropDownValue($event, field.name, 'primary')
                   "
@@ -243,10 +251,10 @@
         </mat-card-content>
         <mat-card-actions class="action-buttons">
         <button id="createButton" mat-raised-button (click)="submit()" *ngIf="!hideContainer">
-        Save
+        {{ popupMessages["generickeys"]["save"] | translate }}
         </button>
         <button mat-raised-button (click)="changePage()">
-        Cancel
+        {{ popupMessages["generickeys"]["cancel"] | translate }}
         </button>
         </mat-card-actions>
       

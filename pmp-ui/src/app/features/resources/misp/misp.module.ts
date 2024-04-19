@@ -9,7 +9,7 @@ import { MaterialModule } from 'src/app/shared/material.module';
 import { MispHeaderComponent } from './misp-header/misp-header.component';
 import { I18nModule } from '../../../../app/i18n.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatKeyboardModule } from 'ngx7-material-keyboard';
+import { MatKeyboardModule } from '@ngx-material-keyboard/core';
 
 
 @NgModule({

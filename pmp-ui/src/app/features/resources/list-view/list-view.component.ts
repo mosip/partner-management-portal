@@ -8,7 +8,7 @@ import { PaginationModel } from 'src/app/core/models/pagination.model';
 import { SortModel } from 'src/app/core/models/sort.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginatorIntl } from '@angular/material';
 /*import { DialogComponent } from 'src/app/shared/dialog/dialog.component';*/
 import { TranslateService } from '@ngx-translate/core';
 import { AuditService } from 'src/app/core/services/audit.service';
@@ -47,7 +47,8 @@ export class ListViewComponent implements OnDestroy {
     public dialog: MatDialog,
     public translateService: TranslateService,
     public auditService: AuditService, 
-    public headerService: HeaderService
+    public headerService: HeaderService,
+    private paginator: MatPaginatorIntl
   ) {
     translateService
       .getTranslation(this.headerService.getlanguageCode())
@@ -64,6 +65,12 @@ export class ListViewComponent implements OnDestroy {
 
   async initializeComponent() {
     await this.loadData();
+    this.paginator.itemsPerPageLabel = this.labels['paginatorIntl'].itemsPerPageLabel;
+    const originalGetRangeLabel = this.paginator.getRangeLabel;
+      this.paginator.getRangeLabel = (page: number, size: number, len: number) => {
+        return originalGetRangeLabel(page, size, len)
+            .replace('of', this.labels['paginatorIntl'].of);
+    }; 
     if (this.activatedRoute.snapshot.params.type !== this.masterDataType) {
       this.masterDataType = this.activatedRoute.snapshot.params.type;
       this.auditService.audit(3, this.auditEventId[0], this.masterDataType);

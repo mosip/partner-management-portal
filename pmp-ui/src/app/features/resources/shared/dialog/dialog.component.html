@@ -1,4 +1,5 @@
 <!-- center filter -->
+<div dir="{{sitealignment}}">
 <div class="filter" *ngIf="input.case === 'filter'">
   <h2 class="filter-heading">{{ "filters.titleTxt" | translate }}</h2>
   <mat-divider></mat-divider>
@@ -196,7 +197,22 @@
 </div>
 
 <!-- Message PopUp -->
+
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'">
+  <div class="pop-up-header">
+    <img
+      src="assets/images/icon_Suceess right.png"
+      height="45px"
+      width="45px"
+      class="success-img"
+     *ngIf="input.title === 'Success' || input.title === 'خطأ' || input.title === 'Succès'|| input.title === 'सफलता' || input.title === 'ಯಶಸ್ಸು' || input.title === 'வெற்றி'"   />
+    <img
+      src="assets/images/cross.png"
+      height="45px"
+      width="45px"
+      class="success-img"
+     *ngIf="input.title === 'Error' || input.title === 'خطأ' || input.title === 'Erreur'|| input.title === 'त्रुटि' || input.title === 'ತಪ್ಪು' || input.title === 'பிழை'"   />
+  </div>
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
@@ -212,6 +228,22 @@
   </div>
 </div>
 
+<!-- <div class="pop-up" *ngIf="input.case === 'MESSAGE'">
+  <div class="pop-up-header">
+    <b mat-dialog-title>{{ input.title }}</b>
+    <div mat-dialog-content>
+      <p>{{ input.message }}</p>
+    </div>
+  </div>
+  <div mat-dialog-actions class="pop-up-footer">
+    <span
+      ><button mat-button cdkFocusInitial (click)="dismiss()" id="confirmmessagepopup">
+        {{ input.btnTxt }}
+      </button></span
+    >
+  </div>
+</div> -->
+
 <!-- <div *ngIf="input.case === 'MESSAGE'" style="padding: 10px;">
   <h1 mat-dialog-title>{{ input.title }}</h1>
   <div mat-dialog-content>
@@ -223,3 +255,4 @@
       </button></span>
   </div>
 </div> -->
+</div>

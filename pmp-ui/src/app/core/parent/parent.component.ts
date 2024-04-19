@@ -26,6 +26,7 @@ export class ParentComponent implements OnInit, AfterViewInit {
   navItems: NavItem[];
   primaryLang: string;
   secondaryLang: string;
+  sitealignment = 'ltr';
 
   constructor(public headerService: HeaderService, 
               public sideMenuService: SideMenuService,
@@ -40,8 +41,11 @@ export class ParentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.primaryLang = this.appConfigService.getConfig()['primaryLangCode'];
+    this.primaryLang = this.headerService.getlanguageCode();
     this.secondaryLang = this.appConfigService.getConfig()['secondaryLangCode'];
+    if(this.primaryLang === "ara"){
+      this.sitealignment = 'rtl';
+    }
     this.translateService.use(this.primaryLang);
     this.navItems = cloneObject(appConstants.navItems);    
     if (this.headerService.getRoles()) {
