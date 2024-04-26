@@ -4,8 +4,10 @@ on:
   release:
     types: [published]
   pull_request:
-
     types: [opened, reopened, synchronize]
+    paths: 
+      - 'pmp-ui/**'
+      - 'pmptest/**'    
 
   push:
     branches:
@@ -17,6 +19,9 @@ on:
       - 1.1.*
       - MOSIP*
       - 1.2.*
+    paths: 
+      - 'pmp-ui/**'
+      - 'pmptest/**'    
 
 jobs:
   build-maven-pmp-ui:
