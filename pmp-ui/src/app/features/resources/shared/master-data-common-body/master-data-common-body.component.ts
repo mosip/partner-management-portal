@@ -626,8 +626,7 @@ export class MasterDataCommonBodyComponent implements OnInit {
         url = "partnermanager/partners/"+this.primaryData["partnerId"]+"/policy/map";
         this.dataStorageService.requestAPIKey(url, request).subscribe(response => {
           if (!response.errors || (response.errors.length == 0)) {
-            let url = response.response.message;
-            this.showMessage(url)
+            this.showMessage(this.popupMessages.policy.updatedSuccessfully)
               .afterClosed()
               .subscribe(() => {
                 this.changePage();
