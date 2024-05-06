@@ -14,7 +14,6 @@
 			<class name="io.mosip.testrig.pmpui.testcase.AdminPolicyGroupTest" />
 			<class name="io.mosip.testrig.pmpui.testcase.AdminSbiDetailsTest" />
 			<class name="io.mosip.testrig.pmpui.testcase.AdminUploadCaCertTest" />
-			<class name="io.mosip.testrig.pmpui.testcase.apicall" />
 			<class name="io.mosip.testrig.pmpui.testcase.PartnerLoginAuthCredTest" />
 			<class name="io.mosip.testrig.pmpui.testcase.PartnerRegisterAuthCredTest" />
 			<class name="io.mosip.testrig.pmpui.testcase.PartnerRegisterFTMTest" />
