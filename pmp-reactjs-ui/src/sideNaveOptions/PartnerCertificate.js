@@ -3,8 +3,8 @@ import { useState } from "react";
 export const PartnerCertificate = (props) => {
 
     return (
-        <div className="flex gap-x-5 items-center mt-4">
-            <div className={`h-5 w-1 ${props.selectIcon ? 'bg-tory-blue' : null} rounded-e-xl`}></div>
+        <div className="flex gap-x-5 items-center mt-4 pl-1">
+            <div className={`h-6 w-1 ${props.selectIcon ? 'bg-tory-blue' : null} rounded-e-lg`}></div>
             <div className="h-10 p-3 rounded-md shadow-md">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
