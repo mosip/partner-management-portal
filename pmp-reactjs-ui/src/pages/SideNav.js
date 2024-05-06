@@ -8,7 +8,7 @@ import { SBIInformation } from '../sideNaveOptions/SBIInformation';
 import { PartnerProfile } from '../sideNaveOptions/PartnerProfile';
 
 function SideNav() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [activeIcon, setActiveIcon] = useState(false);
 
 
