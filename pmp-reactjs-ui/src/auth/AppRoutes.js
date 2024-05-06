@@ -2,8 +2,8 @@ import { createHashRouter, RouterProvider, Navigate, redirect } from 'react-rout
 import GuardedRoute from './GuardedRoute.js';
 
 import MainLayout from '../pages/MainLayout.js';
-import NewPage from '../pages/NewPage.js';
 import Dashboard from '../pages/Dashboard.js';
+import PartnerCertificate from '../pages/PartnerCertificate.js';
 
 function AppRoutes() {
   const router = createHashRouter([
