@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const ManagePartnerProfile = (props) => {
+export const PartnerProfile = (props) => {
 
     return (
         <div className="flex gap-x-5 items-center mt-4">
@@ -17,7 +17,7 @@ export const ManagePartnerProfile = (props) => {
 
             </div>
             <p className={`duration-200 text-nowrap font-semibold text-xs`}>
-                Manage Partner Profile
+                Partner Profile
             </p>
         </div>
     )

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function NewPage() {
+function PartnerCertificatesList() {
     const navigate = useNavigate();
 
     const moveToHome = () => {
@@ -9,9 +9,23 @@ function NewPage() {
 
     return (
         <div className=" flex-col w-screen p-5 bg-anti-flash-white h-full font-inter">
-            <div className="flex-col ml-4">
-                <h1 className="font-bold text-md text-blue-900">Partner Certificate</h1>
-                <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">Home</p>
+            <div className="flex-col ml-1">
+                <div className="flex space-x-4">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="22.765" height="14.416" viewBox="0 0 22.765 17.416" className="mt-5">
+                        <path
+                            id="keyboard_backspace_FILL0_wght200_GRAD0_opsz24"
+                            d="M168-676.306l-8-8,8-8,1.067,1.067-6.18,6.18h18.671v1.507H162.887l6.18,6.18Z"
+                            transform="translate(-159.293 693.015)" stroke="#000" stroke-width="1.5" />
+                    </svg>
+
+                    <div className="flex-col mt-4">
+                        <h1 className="font-bold text-md text-blue-900">Partner Certificate</h1>
+                        <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">Home</p>
+                    </div>
+                </div>
+
                 <ul className="min-w-3.5 bg-white mt-3 rounded-lg shadow-md p-5 mr-8 pb-20">
                     <li className="rounded-lg shadow-lg border">
                         <div className="flex p-5 items-center bg-slate-100 justify-between">
@@ -84,7 +98,7 @@ function NewPage() {
                     </li>
                 </ul>
             </div>
-            <hr className="w-[81.5rem] h-px ml-7 mt-9 bg-gray-200 border-0 "/>
+            <hr className="w-[81.5rem] h-px ml-7 mt-9 bg-gray-200 border-0 " />
             <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
                 <div>
                     <p>2024 © MOSIP - All rights reserved.</p>
@@ -99,4 +113,4 @@ function NewPage() {
     );
 }
 
-export default NewPage;
+export default PartnerCertificatesList;

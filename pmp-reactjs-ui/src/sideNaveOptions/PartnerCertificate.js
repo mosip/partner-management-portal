@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const ManagePartnerCertificate = (props) => {
+export const PartnerCertificate = (props) => {
 
     return (
         <div className="flex gap-x-5 items-center mt-4">
@@ -16,7 +16,7 @@ export const ManagePartnerCertificate = (props) => {
                 </svg>
             </div>
             <p className={`duration-200 text-nowrap font-semibold text-xs`}>
-                Manage Partner Certificate
+                Partner Certificate
             </p>
         </div>
     )

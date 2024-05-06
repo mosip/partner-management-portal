@@ -2,7 +2,7 @@ import { createHashRouter, RouterProvider, Navigate, redirect } from 'react-rout
 import GuardedRoute from './GuardedRoute.js';
 
 import MainLayout from '../pages/MainLayout.js';
-import NewPage from '../pages/NewPage.js';
+import PartnerCertificatesList from '../pages/PartnerCertificate.js'; 
 import Dashboard from '../pages/Dashboard.js';
 
 function AppRoutes() {
@@ -20,8 +20,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><Dashboard/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'partnerCertificate',
-          element: <GuardedRoute><MainLayout><PartnerCertificate/></MainLayout></GuardedRoute>,
+          path: 'PartnerCertificatesList',
+          element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
         }
       ],
     },

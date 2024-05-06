@@ -4,8 +4,8 @@ function Dashboard() {
 
   const navigate = useNavigate();
 
-  const partnerCertificate = () => {
-    navigate('/partnermanagement/partnerCertificate')
+  const PartnerCertificatesList = () => {
+    navigate('/partnermanagement/PartnerCertificatesList')
   };
 
   return (
@@ -65,7 +65,7 @@ function Dashboard() {
               </p>
             </div>
           </div>
-          <div onClick={() => partnerCertificate()} className="w-[19.625rem] h-72 p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+          <div onClick={() => PartnerCertificatesList()} className="w-[19.625rem] h-72 p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
             <div className="flex justify-center mb-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

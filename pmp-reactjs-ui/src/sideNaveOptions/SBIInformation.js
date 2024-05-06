@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const ManageSBIInformation = (props) => {
+export const SBIInformation = (props) => {
 
     return (
         <div className="flex gap-x-5 items-center mt-4">
@@ -27,7 +27,7 @@ export const ManageSBIInformation = (props) => {
 
             </div>
             <p className={`duration-200 text-nowrap font-semibold text-xs`}>
-                Manage SBI Information
+                SBI Information
             </p>
         </div>
     )

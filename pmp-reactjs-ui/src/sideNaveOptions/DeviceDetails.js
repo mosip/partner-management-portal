@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const ManageDeviceDetails = (props) => {
+export const DeviceDetails = (props) => {
 
   return (
     <div className="flex gap-x-5 items-center mt-4">
@@ -19,7 +19,7 @@ export const ManageDeviceDetails = (props) => {
 
       </div>
       <p className={`duration-200 text-nowrap font-semibold text-xs`}>
-        Manage Device Details
+        Device Details
       </p>
     </div>
   )
