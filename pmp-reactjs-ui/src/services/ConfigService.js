@@ -2,9 +2,9 @@ import HttpService from "./HttpService.js";
 
 export const loadAppConfig = async () => {
     try {
-        const resp = await HttpService.get("/api/configs");
-        const appConfig = resp.data.response;
-        localStorage.setItem('appConfig', JSON.stringify(appConfig));
+        //const resp = await HttpService.get("/api/configs");
+        //const appConfig = resp.data.response;
+        //localStorage.setItem('appConfig', JSON.stringify(appConfig));
     } catch (err) {
         console.log("unable to load configs: " + err);
     }
