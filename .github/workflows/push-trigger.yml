@@ -36,9 +36,7 @@ jobs:
             NPM_BUILD: true
             BUILD_ARTIFACT: 'pmp-ui'
           - SERVICE_LOCATION: 'pmp-reactjs-ui'
-            SERVICE_NAME: 'pmp-reactjs-ui'
-            NPM_BUILD: true
-            BUILD_ARTIFACT: 'pmp-reactjs-ui'            
+            SERVICE_NAME: 'pmp-reactjs-ui'          
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
