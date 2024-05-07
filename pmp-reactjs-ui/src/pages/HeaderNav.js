@@ -14,7 +14,7 @@ function HeaderNav() {
         window.location.href = `/api/logout/user?redirecturi=` + btoa(window.location.href);
     }
     return (
-        <nav className="flex justify-between w-screen h-16 font-inter">
+        <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_3px_8px_0px] relative">
             <div className="px-5 xl:px-12">
                 <div className=" flex-1 justify-evenly mt-6 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="14" viewBox="0 0 22 14">

@@ -4,9 +4,9 @@ import '../index.css';
 
 function MainLayout({ children }) {
     return (
-        <div className="flex">
+        <div className="flex w-full">
             <SideNav></SideNav>
-            <div>
+            <div className='w-full'>
                 < HeaderNav></HeaderNav>
                 {children}
             </div>
