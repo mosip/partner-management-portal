@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const PartnerProfile = (props) => {
+export const MenuItemPartnerProfile = (props) => {
 
     const [activeIcon, setActiveIcon] = useState(false);
 

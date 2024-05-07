@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import mosip_icon from '../../src/mosip_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
-import { Home } from '../sideNaveOptions/Home';
-import { PartnerCertificate } from '../sideNaveOptions/PartnerCertificate';
-import { DeviceDetails } from '../sideNaveOptions/DeviceDetails';
-import { SBIInformation } from '../sideNaveOptions/SBIInformation';
-import { PartnerProfile } from '../sideNaveOptions/PartnerProfile';
+import { MenuItemHome } from '../sideNaveOptions/MenuItemHome';
+import { MenuItemPartnerCertificate } from '../sideNaveOptions/MenuItemPartnerCertificate';
+import { MenuItemDeviceDetails } from '../sideNaveOptions/MenuItemdeviceDetails';
+import { MenuItemSBIInformation } from '../sideNaveOptions/MenuItemSBIInformation';
+import { MenuItemPartnerProfile } from '../sideNaveOptions/MenuItemPartnerProfile';
 
 function SideNav() {
     const [open, setOpen] = useState(false);
-    const [activeIcon, setActiveIcon] = useState(false);
-
 
     return (
         <div className="flex font-inter">
@@ -23,19 +21,19 @@ function SideNav() {
                 </div>
                 <ul className="mt-5 items-center">
                     <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <Home />
+                        <MenuItemHome />
                     </li>
                     <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <PartnerCertificate />
+                        <MenuItemPartnerCertificate />
                     </li>
                     <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <DeviceDetails />
+                        <MenuItemDeviceDetails />
                     </li>
                     <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <SBIInformation />
+                        <MenuItemSBIInformation />
                     </li>
                     <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <PartnerProfile />
+                        <MenuItemPartnerProfile />
                     </li>
                 </ul>
             </div>

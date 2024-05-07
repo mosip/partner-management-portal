@@ -4,7 +4,7 @@ export const SBIInformation = (props) => {
 
     const [activeIcon, setActiveIcon] = useState(false);
 
-    const SBIInformation = () => {
+    const MenuItemSBIInformation = () => {
         setActiveIcon(!activeIcon);
     };
 

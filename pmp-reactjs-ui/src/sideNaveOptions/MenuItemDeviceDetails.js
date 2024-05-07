@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const DeviceDetails = (props) => {
+export const MenuItemDeviceDetails = (props) => {
 
   const [activeIcon, setActiveIcon] = useState(false);
 

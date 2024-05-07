@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Home = (props) => {
+export const MenuItemHome = (props) => {
 
     const [activeIcon, setActiveIcon] = useState(false);
     const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const PartnerCertificate = (props) => {
+export const MenuItemPartnerCertificate = (props) => {
 
     const [activeIcon, setActiveIcon] = useState(false);
 

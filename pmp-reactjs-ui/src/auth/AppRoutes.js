@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
+import { createHashRouter, RouterProvider, redirect } from 'react-router-dom';
 import GuardedRoute from './GuardedRoute.js';
 
 import MainLayout from '../pages/MainLayout.js';
