@@ -1,53 +1,15 @@
 import { useState } from 'react';
-import mosip_icon from '../pages/mosip_icon.svg';
+import mosip_icon from '../../src/mosip_icon.svg';
+import side_menu_title from '../../src/side_menu_title.svg';
 import { Home } from '../sideNaveOptions/Home';
-import { ManagePartnerCertificate } from '../sideNaveOptions/ManagePartnerCertificate';
-import { ManageDeviceDetails } from '../sideNaveOptions/ManageDeviceDetails';
-import { ManageSBIInformation } from '../sideNaveOptions/ManageSBIInformation';
-import { ManagePartnerProfile } from '../sideNaveOptions/ManagePartnerProfile';
+import { PartnerCertificate } from '../sideNaveOptions/PartnerCertificate';
+import { DeviceDetails } from '../sideNaveOptions/DeviceDetails';
+import { SBIInformation } from '../sideNaveOptions/SBIInformation';
+import { PartnerProfile } from '../sideNaveOptions/PartnerProfile';
 
 function SideNav() {
     const [open, setOpen] = useState(false);
     const [activeIcon, setActiveIcon] = useState(false);
-
-    const Options = [
-        {
-            id: 0,
-            component: 'Home',
-            status: true,
-        },
-        {
-            id: 1,
-            component: 'ManagePartnerCertificate',
-            status: false,
-        },
-        {
-            id: 2,
-            component: 'ManageDeviceDetails',
-            status: false,
-        },
-        {
-            id: 3,
-            component: 'ManageSBIInformation',
-            status: false,
-        },
-        {
-            id: 4,
-            component: 'ManagePartnerProfile',
-            status: false,
-        }
-    ]
-
-    const activeTheIcon = (id) => {
-        for (let i = 0; i > Options.length; i++) {
-            if (i === id) {
-                Options[id].status = true;
-            }
-            else {
-                Options[id].status = false;
-            }
-        }
-    };
 
 
     return (
@@ -56,25 +18,24 @@ function SideNav() {
                 <div className={`flex h-16 gap-x-4 items-center pl-8 ${open ? 'shadow-md' : 'shadow-sm'}`}>
                     <img src={mosip_icon}/>
                     <div className={`${!open && 'scale-0'} items-center duration-300`}>
-                        <h1 className="text-black origin-left font-bold">MOSIP</h1>
-                        <p className="text-black origin-left font-semibold text-xs text-nowrap">Partner Management Portal</p>
+                        <img src={side_menu_title}/>
                     </div>
                 </div>
                 <ul className="mt-5 items-center">
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <Home selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <Home />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <ManagePartnerCertificate selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <PartnerCertificate />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <ManageDeviceDetails selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <DeviceDetails />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <ManageSBIInformation selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <SBIInformation />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <ManagePartnerProfile selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <PartnerProfile />
                     </li>
                 </ul>
             </div>

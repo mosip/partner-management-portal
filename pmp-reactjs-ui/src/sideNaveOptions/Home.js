@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = (props) => {
 
+    const [activeIcon, setActiveIcon] = useState(false);
+    const navigate = useNavigate();
+    const Home = () => {
+        navigate('/partnermanagement')
+        setActiveIcon(!activeIcon);
+    };
+
     return (
-        <div className="flex gap-x-5 items-center mt-4 font-inter">
-            <div className={`h-5 w-1 ${props.selectIcon ? 'bg-tory-blue' : null} rounded-e-xl`}></div>
+        <div className="flex gap-x-5 items-center mt-4 font-inter pl-1" onClick={Home}>
+            <div className={`h-6 w-1 ${activeIcon ? 'bg-tory-blue' : null} rounded-e-md`}></div>
             <div className="h-10 p-3 rounded-md shadow-md">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +21,7 @@ export const Home = (props) => {
                     <path id="home_FILL0_wght300_GRAD0_opsz24"
                         d="M181.8-797.818h4.015v-6.929h6.369v6.929H196.2v-10.494l-7.2-5.269-7.2,5.269Zm-1.8,1.749v-13.118l9-6.581,9,6.581v13.118h-7.615V-803h-2.769v6.929ZM189-805.7Z"
                         transform="translate(-180.001 815.767)"
-                        fill={props.selectIcon ? "#1447b2" : "#7a7e82"}
+                        fill={activeIcon ? "#1447b2" : "#7a7e82"}
                     />
                 </svg>
             </div>
