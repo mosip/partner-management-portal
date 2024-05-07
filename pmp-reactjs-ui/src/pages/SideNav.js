@@ -22,20 +22,20 @@ function SideNav() {
                     </div>
                 </div>
                 <ul className="mt-5 items-center">
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <Home selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <Home />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <PartnerCertificate selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <PartnerCertificate />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <DeviceDetails selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <DeviceDetails />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <SBIInformation selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <SBIInformation />
                     </li>
-                    <li onClick={() => setActiveIcon(!activeIcon)} className="flex items-center gap-x-4 duration-700 cursor-pointer">
-                        <PartnerProfile selectIcon={activeIcon} />
+                    <li className="flex items-center gap-x-4 duration-700 cursor-pointer">
+                        <PartnerProfile />
                     </li>
                 </ul>
             </div>
