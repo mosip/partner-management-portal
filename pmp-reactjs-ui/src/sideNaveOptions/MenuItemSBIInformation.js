@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export const SBIInformation = (props) => {
+export const MenuItemSBIInformation = (props) => {
 
     const [activeIcon, setActiveIcon] = useState(false);
 
-    const MenuItemSBIInformation = () => {
+    const SBIInformation = () => {
         setActiveIcon(!activeIcon);
     };
 

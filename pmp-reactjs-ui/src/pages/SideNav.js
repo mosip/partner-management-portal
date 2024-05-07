@@ -3,7 +3,7 @@ import mosip_icon from '../../src/mosip_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 import { MenuItemHome } from '../sideNaveOptions/MenuItemHome';
 import { MenuItemPartnerCertificate } from '../sideNaveOptions/MenuItemPartnerCertificate';
-import { MenuItemDeviceDetails } from '../sideNaveOptions/MenuItemdeviceDetails';
+import { MenuItemDeviceDetails } from '../sideNaveOptions/MenuItemDeviceDetails';
 import { MenuItemSBIInformation } from '../sideNaveOptions/MenuItemSBIInformation';
 import { MenuItemPartnerProfile } from '../sideNaveOptions/MenuItemPartnerProfile';
 
