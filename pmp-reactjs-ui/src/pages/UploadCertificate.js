@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function UploadCertificate({closePopup}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedDomainType, setSelectedDomainType] = useState("");
+    const [uploading, setUploading] = useState(false);
+    const [fileName, setFileName] = useState('');
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -11,9 +15,30 @@ function UploadCertificate({closePopup}) {
         console.log("Cancel button clicked");
         closePopup();
     };
+    const clickOnSubmit = () => {
+        console.log("Submit button clicked");
+        setUploadSuccess(!uploadSuccess);
+        if (uploadSuccess) {
+            closePopup();
+        }
+    };
     const selectDomainType = (option) => {
         setSelectedDomainType(option);
         openDropdown();
+    };
+    const cancelUpload = () => {
+        setFileName("");
+        setUploading(false);
+        console.log(`Selected file: ${fileName}`)
+    };
+    const removeUpload = () => {
+        setFileName("");
+        setUploading(false);
+        console.log(`Selected file: ${fileName}`)
+    };
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+        setUploadSuccess(false);
     };
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -21,9 +46,13 @@ function UploadCertificate({closePopup}) {
             const fileName = file.name;
             const fileExtension = fileName.split('.').pop().toLowerCase();
             if (fileExtension === 'cer' || fileExtension === 'pem') {
-                console.log(`Selected file: ${fileName}`);
+                setUploading(true);
+                setFileName(fileName);
+                setTimeout(() => {
+                    setUploading(false);
+                }, 3000);
             } else {
-                alert('Please select a file with .cer or .pem extension.');
+                setErrorMsg("Please select a file with .cer or .pem extension.");
             }
         }
     };
@@ -68,8 +97,66 @@ function UploadCertificate({closePopup}) {
                         </div>
                     </form>
                     <div className="flex items-center justify-center w-full h-36 p-4 border-2 border-blue-300 rounded-lg bg-blue-50 bg-opacity-25 text-center cursor-pointer relative">
-                        <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
+                        {uploading && (
                             <div className="flex flex-col items-center justify-center mb-2 cursor-pointer">
+                                <svg className="w-10 h-10" viewBox="0 0 100 100">
+                                    <circle
+                                        className="text-gray-200 bg-white stroke-current"
+                                        strokeWidth="10"
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="transparent"
+                                    ></circle>
+                                    <circle
+                                        className="text-blue-700 stroke-current"
+                                        strokeWidth="10"
+                                        strokeLinecap="round"
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="transparent"
+                                        strokeDasharray="251.2" 
+                                        strokeDashoffset="calc(251.2 - (251.2 * 70) / 100)"
+                                    ></circle>
+                                </svg>
+                                <h5 className="text-gray-800 text-sm">
+                                    We're uploading your certificate...
+                                </h5>
+                                <p className="text-sm font-semibold text-blue-700" onClick={cancelUpload}>
+                                    Cancel
+                                </p>
+                            </div>
+                        )}
+                        {!uploading && fileName === '' && (
+                            <div className="flex flex-col items-center justify-center mb-2 cursor-pointer">
+                                <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="28.75"
+                                        height="39.26"
+                                        viewBox="0 0 36.754 47.255"
+                                        >
+                                        <path
+                                            id="upload_file_FILL0_wght200_GRAD0_opsz24"
+                                            d="M217.064-801.227h2.625V-813.55l5.513,5.513,1.858-1.873-8.684-8.684-8.684,8.684,1.873,1.858,5.5-5.5Zm-12.823,8.482a4.107,4.107,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
+                                            transform="translate(-200 840)"
+                                            fill="#1347b2"
+                                        />
+                                    </svg>
+                                    <h5 className="text-gray-700 text-sm">
+                                    Please tap to select the certificate
+                                    </h5>
+                                    <p className="text-sm text-gray-400">
+                                    Only .cer or .pem certificate formats are allowed for upload
+                                    </p>
+                                </label>
+                                <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
+                            </div>
+                        )}
+                        {!uploading && fileName && (
+                            <div className="flex flex-col items-center justify-center mb-2 cursor-pointer">
+                                <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="28.75"
@@ -77,27 +164,78 @@ function UploadCertificate({closePopup}) {
                                     viewBox="0 0 36.754 47.255"
                                     >
                                     <path
-                                        id="upload_file_FILL0_wght200_GRAD0_opsz24"
-                                        d="M217.064-801.227h2.625V-813.55l5.513,5.513,1.858-1.873-8.684-8.684-8.684,8.684,1.873,1.858,5.5-5.5Zm-12.823,8.482a4.107,4.107,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
+                                        id="description_FILL0_wght200_GRAD0_opsz24"
+                                        d="M209.188-801.934h18.377v-2.625H209.188Zm0-10.5h18.377v-2.625H209.188Zm-4.948,19.69a4.108,4.108,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
                                         transform="translate(-200 840)"
-                                        fill="#1347b2"
+                                        fill="#1447b2"
                                     />
                                 </svg>
-                                <h5 className="text-gray-700 text-sm">
-                                Please tap to select the certificate
+                                </label>
+                                <h5 className="text-gray-800 text-sm">
+                                    {fileName}
                                 </h5>
-                                <p className="text-sm text-gray-400">
-                                Only .cer or .pem certificate formats are allowed for upload
+                                <p className="text-sm font-semibold text-blue-700" onClick={removeUpload}>
+                                    Remove
                                 </p>
                             </div>
-                        </label>
-                        <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
+                        )}
                     </div>
                 </div>
                 <div className="border-gray-200 border-opacity-50 border-t"></div>
-                <div className="p-4 flex justify-end">
-                    <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold" onClick={clickOnCancel}>Cancel</button>
-                    <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Upload</button>
+                <div className="p-4 flex justify-end relative">
+                    <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>Cancel</button>
+                    {(!uploading && fileName && selectedDomainType != "") ? (
+                        <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? "Close": "Submit"}</button>   
+                    ) : (
+                        <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Submit</button>
+                    )}
+                    { uploadSuccess && (
+                        <div className="fixed inset-0 flex mt-[122px] justify-center">
+                            <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
+                                <p className="text-sm font-semibold text-white break-words">
+                                    Partner certificate for partnerType is uploaded successfully.
+                                </p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16.828"
+                                    height="16.828"
+                                    viewBox="0 0 16.828 16.828"
+                                    onClick={() => setUploadSuccess(false)}
+                                    >
+                                    <path
+                                        id="close_FILL0_wght400_GRAD0_opsz48"
+                                        d="M 23.27308082580566 25.05710983276367 L 22.91953086853027 24.70355033874512 L 17.35000038146973 19.13401985168457 L 11.7804708480835 24.70355033874512 L 11.42691993713379 25.05710983276367 L 11.0733699798584 24.70355033874512 L 9.996450424194336 23.62663078308105 L 9.642889976501465 23.27308082580566 L 9.996450424194336 22.91953086853027 L 15.56597995758057 17.35000038146973 L 9.996450424194336 11.7804708480835 L 9.642889976501465 11.42691993713379 L 9.996450424194336 11.07336044311523 L 11.07338047027588 9.996439933776855 L 11.42693042755127 9.642889976501465 L 11.78048038482666 9.996450424194336 L 17.35000038146973 15.5659704208374 L 22.91953086853027 9.996450424194336 L 23.27308082580566 9.642889976501465 L 23.62663078308105 9.996450424194336 L 24.70355033874512 11.0733699798584 L 25.05710983276367 11.42691993713379 L 24.70355033874512 11.7804708480835 L 19.13401985168457 17.35000038146973 L 24.70355033874512 22.91953086853027 L 25.05710983276367 23.27308082580566 L 24.70355033874512 23.62663078308105 L 23.62663078308105 24.70355033874512 L 23.27308082580566 25.05710983276367 Z"
+                                        transform="translate(-8.936 -8.936)"
+                                        fill="#fff"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        
+                    )}
+                    { !uploadSuccess && errorMsg && (
+                        <div className="fixed inset-0 flex mt-[122px] justify-center">
+                            <div className="bg-moderate-red md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
+                                <p className="text-sm font-semibold text-white break-words">
+                                    {errorMsg}
+                                </p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16.828"
+                                    height="16.828"
+                                    viewBox="0 0 16.828 16.828"
+                                    onClick={cancelErrorMsg}
+                                    >
+                                    <path
+                                        id="close_FILL0_wght400_GRAD0_opsz48"
+                                        d="M 23.27308082580566 25.05710983276367 L 22.91953086853027 24.70355033874512 L 17.35000038146973 19.13401985168457 L 11.7804708480835 24.70355033874512 L 11.42691993713379 25.05710983276367 L 11.0733699798584 24.70355033874512 L 9.996450424194336 23.62663078308105 L 9.642889976501465 23.27308082580566 L 9.996450424194336 22.91953086853027 L 15.56597995758057 17.35000038146973 L 9.996450424194336 11.7804708480835 L 9.642889976501465 11.42691993713379 L 9.996450424194336 11.07336044311523 L 11.07338047027588 9.996439933776855 L 11.42693042755127 9.642889976501465 L 11.78048038482666 9.996450424194336 L 17.35000038146973 15.5659704208374 L 22.91953086853027 9.996450424194336 L 23.27308082580566 9.642889976501465 L 23.62663078308105 9.996450424194336 L 24.70355033874512 11.0733699798584 L 25.05710983276367 11.42691993713379 L 24.70355033874512 11.7804708480835 L 19.13401985168457 17.35000038146973 L 24.70355033874512 22.91953086853027 L 25.05710983276367 23.27308082580566 L 24.70355033874512 23.62663078308105 L 23.62663078308105 24.70355033874512 L 23.27308082580566 25.05710983276367 Z"
+                                        transform="translate(-8.936 -8.936)"
+                                        fill="#fff"
+                                    />
+                                </svg>
+                            </div>
+                        </div>  
+                    )}
                 </div>
             </div>
         </div>

@@ -11,6 +11,8 @@ module.exports = {
         ...theme('colors'),
         'anti-flash-white': '#F1F3F6',
         'tory-blue': '#1447b2',
+        'fruit-salad': '#589D4C',
+        'moderate-red': '#B43F3F'
       }),
       fontFamily: {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],
