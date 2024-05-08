@@ -13,6 +13,7 @@ function PartnerCertificatesList() {
     const closePopup = () => {
         console.log("Popup closed");
         setShowPopup(false);
+        window.location.reload();
     };
 
     const moveToHome = () => {
