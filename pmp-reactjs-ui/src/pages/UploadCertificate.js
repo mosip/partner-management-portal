@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import HttpService from '../services/HttpService';
 
 function UploadCertificate({closePopup}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -7,6 +8,7 @@ function UploadCertificate({closePopup}) {
     const [fileName, setFileName] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+    const [certificateData, setCertificateData] = useState("");
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -15,11 +17,30 @@ function UploadCertificate({closePopup}) {
         console.log("Cancel button clicked");
         closePopup();
     };
-    const clickOnSubmit = () => {
-        console.log("Submit button clicked");
-        setUploadSuccess(!uploadSuccess);
+    const clickOnSubmit = async () => {
         if (uploadSuccess) {
             closePopup();
+        } else {
+            let request = {
+                request: {
+                    partnerId: "abc",
+                    certificateData: certificateData,
+                    partnerDomain: selectedDomainType,
+                },
+            }
+            try {
+                const response = await HttpService.post('/api/partners/certificate/upload', request)
+                const resData = response.data.response;
+                if (response.data.errors && response.data.errors.length > 0) {
+                    const errorMessage = response.data.errors[0].message;
+                    setErrorMsg(errorMessage);
+                } else {
+                    setUploadSuccess(true);
+                }
+            } catch (err) {
+                setErrorMsg(err);
+                console.log("upload certificate error: ",err);
+            }
         }
     };
     const selectDomainType = (option) => {
@@ -46,11 +67,18 @@ function UploadCertificate({closePopup}) {
             const fileName = file.name;
             const fileExtension = fileName.split('.').pop().toLowerCase();
             if (fileExtension === 'cer' || fileExtension === 'pem') {
-                setUploading(true);
-                setFileName(fileName);
-                setTimeout(() => {
-                    setUploading(false);
-                }, 3000);
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const fileData = e.target.result;
+                    setUploading(true);
+                    setFileName(fileName);
+                    setCertificateData(fileData);
+                    console.log(`Certificate data: ${fileData}`)
+                    setTimeout(() => {
+                        setUploading(false);
+                    }, 3000);
+                }
+                reader.readAsText(file);
             } else {
                 setErrorMsg("Please select a file with .cer or .pem extension.");
             }
