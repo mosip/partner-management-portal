@@ -69,7 +69,7 @@ function UploadCertificate({closePopup}) {
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Type</label>
                             <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" 
-                                value={"Device Provider"} disabled />
+                                value={"Authentication Partner"} disabled />
                         </div>
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Domain Type<span className="text-red-500">*</span></label>
@@ -83,13 +83,11 @@ function UploadCertificate({closePopup}) {
                                 {isDropdownOpen && (
                                     <div className="absolute z-50 top-10 left-0 w-full">
                                         <div class="z-10 border border-gray-400 bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 1")}>Domain Type 1</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("DEVICE")}>DEVICE</a>
                                             <div className="border-gray-100 border-t mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 2")}>Domain Type 2</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("FTM")}>FTM</a>
                                             <div className="border-t border-gray-100 mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 3")}>Domain Type 3</a>
-                                            <div className="border-t border-gray-100 mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 4")}>Domain Type 4</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("AUTH")}>AUTH</a>
                                         </div>
                                     </div>
                                 )}
