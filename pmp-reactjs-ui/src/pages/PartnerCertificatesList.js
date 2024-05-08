@@ -1,7 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import UploadCertificate from "./UploadCertificate";
 
 function PartnerCertificatesList() {
     const navigate = useNavigate();
+    const [showPopup, setShowPopup] = useState(false);
+
+    const uploadCertificate = () => {
+        setShowPopup(!showPopup);
+    };
+
+    const closePopup = () => {
+        console.log("Popup closed");
+        setShowPopup(false);
+        window.location.reload();
+    };
 
     const moveToHome = () => {
         navigate('/partnermanagement')
@@ -44,7 +57,10 @@ function PartnerCertificatesList() {
                                     <p className="font-medium text-xs text-gray-400">Only .cer or .pem certificate formats are allowed for upload</p>
                                 </div>
                             </div>
-                            <button className="bg-tory-blue h-9 w-28 text-white text-sm font-medium rounded-md">Upload</button>
+                            <button className="bg-tory-blue h-9 w-28 text-white text-sm font-medium rounded-md" onClick={uploadCertificate}>Upload</button>
+                            {showPopup && (
+                                <UploadCertificate closePopup={closePopup}/>
+                            )}
                         </div>
                         <div className="flex items-center p-5 bg-white">
                             <div className="flex-col">

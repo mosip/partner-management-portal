@@ -69,11 +69,11 @@ function UploadCertificate({closePopup}) {
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Type</label>
                             <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" 
-                                value={"Device Provider"} disabled />
+                                value={"Authentication Partner"} disabled />
                         </div>
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Domain Type<span className="text-red-500">*</span></label>
-                            <div className="relative">
+                            <div className="relative z-10">
                                 <button onClick={openDropdown} class="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-400 rounded-md text-md text-start text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
                                     <span>{selectedDomainType || "Enter Device Type"}</span>
                                     <svg class="w-3 h-2 ml-3 transform rotate-0 text-gray-500 text-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -83,13 +83,11 @@ function UploadCertificate({closePopup}) {
                                 {isDropdownOpen && (
                                     <div className="absolute z-50 top-10 left-0 w-full">
                                         <div class="z-10 border border-gray-400 bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 1")}>Domain Type 1</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("DEVICE")}>DEVICE</a>
                                             <div className="border-gray-100 border-t mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 2")}>Domain Type 2</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("FTM")}>FTM</a>
                                             <div className="border-t border-gray-100 mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 3")}>Domain Type 3</a>
-                                            <div className="border-t border-gray-100 mx-2"></div>
-                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("Domain Type 4")}>Domain Type 4</a>
+                                            <a className="block px-4 py-2 text-base text-blue-950" onClick={() => selectDomainType("AUTH")}>AUTH</a>
                                         </div>
                                     </div>
                                 )}
@@ -184,7 +182,7 @@ function UploadCertificate({closePopup}) {
                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                 <div className="p-4 flex justify-end relative">
                     <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>Cancel</button>
-                    {(!uploading && fileName && selectedDomainType != "") ? (
+                    {(!uploading && fileName && selectedDomainType !== "") ? (
                         <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? "Close": "Submit"}</button>   
                     ) : (
                         <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Submit</button>
