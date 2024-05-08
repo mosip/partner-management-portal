@@ -182,7 +182,7 @@ function UploadCertificate({closePopup}) {
                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                 <div className="p-4 flex justify-end relative">
                     <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>Cancel</button>
-                    {(!uploading && fileName && selectedDomainType != "") ? (
+                    {(!uploading && fileName && selectedDomainType !== "") ? (
                         <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? "Close": "Submit"}</button>   
                     ) : (
                         <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Submit</button>
