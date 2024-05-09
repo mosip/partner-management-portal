@@ -9,25 +9,11 @@ function PartnerCertificatesList() {
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
 
-    var dateAndMonth = new Date().getDate()+ '-' + new Date().getMonth();
-    var expiryYear = parseInt(new Date().getFullYear()) +1;
+    var dateAndMonth = new Date().getDate() + '-' + new Date().getMonth();
+    var expiryYear = parseInt(new Date().getFullYear()) + 1;
 
     const expiryDate = [dateAndMonth, expiryYear].join('-');
     const uploadDate = [expiryDate + ' ' + new Date().toLocaleTimeString('en-GB')];
-
-    const uploadCertificate = () => {
-        setShowPopup(!showPopup);
-    };
-
-    const closePopup = () => {
-        console.log("Popup closed");
-        setShowPopup(false);
-        window.location.reload();
-    };
-
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
 
     const certificatesData = [
         {
@@ -45,6 +31,20 @@ function PartnerCertificatesList() {
             expiryDt: "-"
         }
     ];
+
+    const uploadCertificate = () => {
+        setShowPopup(!showPopup);
+    };
+
+    const closePopup = () => {
+        console.log("Popup closed");
+        setShowPopup(false);
+        window.location.reload();
+    };
+
+    const moveToHome = () => {
+        navigate('/partnermanagement')
+    };
 
 
     return (
