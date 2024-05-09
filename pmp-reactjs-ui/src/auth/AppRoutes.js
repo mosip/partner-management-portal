@@ -20,7 +20,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><Dashboard/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'partnerCertificate',
+          path: 'partnercertificate',
           element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
         }
       ],
