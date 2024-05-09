@@ -130,10 +130,9 @@ function PartnerCertificatesList() {
                                                                     stroke="#1447b2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                                             </svg>
                                                         </div>
-                                                    </div>
-                                                )}
+                                                    </div>)}
                                             </div>
-                                            <button className="text-xs p-3 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center">
+                                            <button onClick={uploadCertificate} className="text-xs p-3 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center">
                                                 Re-Upload
                                             </button>
                                         </div>
