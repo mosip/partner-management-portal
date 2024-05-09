@@ -5,8 +5,32 @@ import UploadCertificate from "./UploadCertificate";
 function PartnerCertificatesList() {
 
     const [activeBtn, setActiveBtn] = useState(false);
+
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
+
+    var dateAndMonth = new Date().getDate() + '-' + new Date().getMonth();
+    var expiryYear = parseInt(new Date().getFullYear()) + 1;
+
+    const expiryDate = [dateAndMonth, expiryYear].join('-');
+    const uploadDate = [expiryDate + ' ' + new Date().toLocaleTimeString('en-GB')];
+
+    const certificatesData = [
+        {
+            partnerId: 0,
+            partnerType: "Authentication Partner",
+            isCertificateAvailable: true,
+            uploadDt: uploadDate,
+            expiryDt: expiryDate
+        },
+        {
+            partnerId: 1,
+            partnerType: "FTM Chip Provider",
+            isCertificateAvailable: false,
+            uploadDt: "-",
+            expiryDt: "-"
+        }
+    ];
 
     const uploadCertificate = () => {
         setShowPopup(!showPopup);
@@ -21,23 +45,6 @@ function PartnerCertificatesList() {
     const moveToHome = () => {
         navigate('/partnermanagement')
     };
-
-    const certificatesData = [
-        {
-            partnerId: 0,
-            partnerType: "Authentication Partner",
-            isCertificateAvailable: true,
-            validFrom: "",
-            expiryDt: ""
-        },
-        {
-            partnerId: 1,
-            partnerType: "FTM Chip Provider",
-            isCertificateAvailable: false,
-            validFrom: "",
-            expiryDt: ""
-        }
-    ];
 
 
     return (
@@ -95,40 +102,42 @@ function PartnerCertificatesList() {
                                     {partner.isCertificateAvailable
                                         ? <div className=" flex space-x-4">
                                             <div className="flex-col">
-                                                <button onClick={() => setActiveBtn(!activeBtn)} className={`flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-blue-700'} text-xs px-2 py-2 text-blue-700 border border-blue-700 font-semibold rounded-lg text-center`}>
+                                                <button onClick={() => setActiveBtn(!activeBtn)} className={`flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-blue-700'} text-xs px-2 py-2 mr-1 text-blue-700 border border-blue-700 font-semibold rounded-lg text-center`}>
                                                     Download
                                                     <svg
-                                                        xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white': null} ml-2`}
+                                                        xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ml-2`}
                                                         width="10" height="8" viewBox="0 0 10 8">
                                                         <path id="Polygon_8"
                                                             data-name="Polygon 8"
                                                             d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
-                                                            transform="translate(10 8) rotate(180)" fill= {`${activeBtn ? '#ffff' : '#1447b2'}`}/>
+                                                            transform="translate(10 8) rotate(180)" fill={`${activeBtn ? '#ffff' : '#1447b2'}`} />
                                                     </svg>
 
                                                 </button>
 
                                                 {activeBtn && (
-                                                    <div className="absolute w-fix py-2 px-1 mr-2 right-32 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border">
+                                                    <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
                                                         <div className="flex items-center border-b-2 justify-between cursor-pointer">
                                                             <a href="#" className="block px-4 py-2 text-xs font-semibold text-gray-900">Original Certificate</a>
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
-                                                                width="13px" height="13px" viewBox="0 0 24 24"
-                                                                fill="none">
-                                                                <path d="M20 15V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18L4 15M8 11L12 15M12 15L16 11M12 15V3"
-                                                                    stroke="#1447b2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                                width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
+                                                                <path id="download_FILL0_wght300_GRAD0_opsz24"
+                                                                    d="M187.634-768.511l-4.345-4.345,1.073-1.1,2.509,2.509V-780H188.4v8.549l2.509-2.509,1.073,1.1Zm-5.793,3.777a1.776,1.776,0,0,1-1.305-.534,1.776,1.776,0,0,1-.534-1.305v-2.76h1.527v2.76a.3.3,0,0,0,.1.215.3.3,0,0,0,.215.1h11.586a.3.3,0,0,0,.215-.1.3.3,0,0,0,.1-.215v-2.76h1.527v2.76a1.776,1.776,0,0,1-.534,1.305,1.776,1.776,0,0,1-1.305.534Z"
+                                                                    transform="translate(-180.001 779.999)" fill="#1447b2" />
                                                             </svg>
+
                                                         </div>
                                                         <div className="flex items-center cursor-pointer">
                                                             <a href="#" className="block px-4 py-2 text-xs font-semibold text-gray-900">MOSIP Signed Certificate</a>
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
-                                                                width="13px" height="13px" viewBox="0 0 24 24"
-                                                                fill="none">
-                                                                <path d="M20 15V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18L4 15M8 11L12 15M12 15L16 11M12 15V3"
-                                                                    stroke="#1447b2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                                width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
+                                                                <path id="download_FILL0_wght300_GRAD0_opsz24"
+                                                                    d="M187.634-768.511l-4.345-4.345,1.073-1.1,2.509,2.509V-780H188.4v8.549l2.509-2.509,1.073,1.1Zm-5.793,3.777a1.776,1.776,0,0,1-1.305-.534,1.776,1.776,0,0,1-.534-1.305v-2.76h1.527v2.76a.3.3,0,0,0,.1.215.3.3,0,0,0,.215.1h11.586a.3.3,0,0,0,.215-.1.3.3,0,0,0,.1-.215v-2.76h1.527v2.76a1.776,1.776,0,0,1-.534,1.305,1.776,1.776,0,0,1-1.305.534Z"
+                                                                    transform="translate(-180.001 779.999)" fill="#1447b2" />
                                                             </svg>
+
                                                         </div>
                                                     </div>)}
                                             </div>
@@ -151,11 +160,11 @@ function PartnerCertificatesList() {
                                     </div>
                                     <div className="flex-col ml-12">
                                         <p className="font-medium text-xs text-gray-400">Expiry Date</p>
-                                        <p className="font-bold text-sm text-red-950">-</p>
+                                        <p className="font-semibold text-sm text-red-950">{partner.expiryDt}</p>
                                     </div>
                                     <div className="flex-col ml-36">
                                         <p className="font-medium text-xs text-gray-400">Time of Upload</p>
-                                        <p className="font-bold text-sm text-red-950">-</p>
+                                        <p className="font-semibold text-sm text-red-950">{partner.uploadDt}</p>
                                     </div>
                                 </div>
                             </li>
@@ -164,7 +173,7 @@ function PartnerCertificatesList() {
                     )}
                 </ul>
             </div>
-            <hr className="w-[81.5rem] h-px ml-7 mt-9 bg-gray-200 border-0 " />
+            <hr className="h-px ml-7 mt-9 bg-gray-200 border-0 " />
             <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
                 <div>
                     <p>2024 © MOSIP - All rights reserved.</p>
