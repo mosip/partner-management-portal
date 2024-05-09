@@ -5,7 +5,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const partnerCertificatesList = () => {
-    navigate('/partnermanagement/partnerCertificate')
+    navigate('/partnermanagement/partnercertificate')
   };
 
   return (
