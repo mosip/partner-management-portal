@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import HttpService from "../services/HttpService";
+import {formatDate} from "../utils/AppUtils"
 
 function PartnerCertificatesList() {
 
@@ -57,18 +58,6 @@ function PartnerCertificatesList() {
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
-    };
-
-    const formatDate = (dateString, format) => {
-        if (!dateString) return '-';
-        const date = new Date(dateString);
-        if (format === 'dateTime') {
-            return date.toLocaleString();
-        } else if (format === 'date') {
-            return date.toLocaleDateString();
-        } else {
-            return '-';
-        }
     };
 
     return (

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import HttpService from '../services/HttpService';
+import { formatDate } from '../utils/AppUtils';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -122,18 +123,6 @@ function UploadCertificate({ closePopup, partnerData }) {
             setFormattedDate(formatted);
         }
     }, [partnerData.uploadDt]);
-
-    const formatDate = (dateString, format) => {
-        if (!dateString) return '-';
-        const date = new Date(dateString);
-        if (format === 'dateTime') {
-            return date.toLocaleString();
-        } else if (format === 'date') {
-            return date.toLocaleDateString();
-        } else {
-            return '-';
-        }
-    };
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
