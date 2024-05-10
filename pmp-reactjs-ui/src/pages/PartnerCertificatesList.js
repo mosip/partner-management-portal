@@ -20,9 +20,11 @@ function PartnerCertificatesList() {
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = () => {
+    const closePopup = (reload) => {
         setShowPopup(false);
-        window.location.reload();
+        if (reload) {
+            window.location.reload();
+        }
     };
 
     const moveToHome = () => {
