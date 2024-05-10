@@ -143,15 +143,15 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <hr class="h-px ml-7 mt-7 bg-gray-200 border-0" />
-      <div class="flex mt-7 ml-7 justify-between text-sm text-gray-400">
+      <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
+      <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
         <div>
           <p>2024 © MOSIP - All rights reserved.</p>
         </div>
-        <div class="flex justify-between">
-          <p class="mr-7">Documentation</p>
-          <p class="mr-7">MOSIP Community</p>
-          <p class="mr-7">Contact Us</p>
+        <div className="flex justify-between">
+          <p className="mr-7">Documentation</p>
+          <p className="mr-7">MOSIP Community</p>
+          <p className="mr-7">Contact Us</p>
         </div>
       </div>
     </div>
