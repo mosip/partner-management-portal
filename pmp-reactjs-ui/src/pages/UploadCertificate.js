@@ -139,7 +139,7 @@ function UploadCertificate({ closePopup, partnerData }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg mt-5`}>
                 {!dataLoaded && (
-                    <div className="flex items-center justify-center h-4/5">
+                    <div className="flex items-center justify-center h-full">
 
                         <div role="status" className="flex items-center">
                             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -213,7 +213,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             ></circle>
                                         </svg>
                                         <h5 className="text-gray-800 text-sm">
-                                            We're uploading your certificate...
+                                            Selecting the file...
                                         </h5>
                                         <p className="text-sm font-semibold text-blue-700" onClick={cancelUpload}>
                                             Cancel
