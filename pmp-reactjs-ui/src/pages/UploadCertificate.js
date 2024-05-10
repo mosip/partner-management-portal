@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HttpService from '../services/HttpService';
 
-function UploadCertificate({closePopup}) {
+function UploadCertificate({closePopup, partnerData}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedDomainType, setSelectedDomainType] = useState("");
     const [uploading, setUploading] = useState(false);
@@ -9,12 +9,12 @@ function UploadCertificate({closePopup}) {
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [certificateData, setCertificateData] = useState("");
+    const [formattedDate, setFormattedDate] = useState("");
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
     const clickOnCancel = () => {
-        console.log("Cancel button clicked");
         closePopup();
     };
     const clickOnSubmit = async () => {
@@ -23,7 +23,7 @@ function UploadCertificate({closePopup}) {
         } else {
             let request = {
                 request: {
-                    partnerId: "abc",
+                    partnerId: partnerData.partnerId,
                     certificateData: certificateData,
                     partnerDomain: selectedDomainType,
                 },
@@ -34,12 +34,14 @@ function UploadCertificate({closePopup}) {
                 if (response.data.errors && response.data.errors.length > 0) {
                     const errorMessage = response.data.errors[0].message;
                     setErrorMsg(errorMessage);
+                } else if (resData === null) {
+                    setErrorMsg("Unable to upload partner certificate");
                 } else {
                     setUploadSuccess(true);
                 }
             } catch (err) {
                 setErrorMsg(err);
-                console.log("upload certificate error: ",err);
+                console.log("Unable to upload partner certificate: ",err);
             }
         }
     };
@@ -47,15 +49,22 @@ function UploadCertificate({closePopup}) {
         setSelectedDomainType(option);
         openDropdown();
     };
+    const getDefaultDomainType = () => {
+        if (partnerData.partnerType === "Device Provider") {
+            return "DEVICE";
+        } else if (partnerData.partnerType === "FTM Chip Provider") {
+            return "FTM";
+        } else {
+            return "AUTH";
+        }
+    };
     const cancelUpload = () => {
         setFileName("");
         setUploading(false);
-        console.log(`Selected file: ${fileName}`)
     };
     const removeUpload = () => {
         setFileName("");
         setUploading(false);
-        console.log(`Selected file: ${fileName}`)
     };
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -73,7 +82,6 @@ function UploadCertificate({closePopup}) {
                     setUploading(true);
                     setFileName(fileName);
                     setCertificateData(fileData);
-                    console.log(`Certificate data: ${fileData}`)
                     setTimeout(() => {
                         setUploading(false);
                     }, 3000);
@@ -84,11 +92,26 @@ function UploadCertificate({closePopup}) {
             }
         }
     };
+
+    useEffect(() => {
+        if (partnerData.isCertificateAvailable) {
+            const dateString = partnerData.uploadDt.toString();
+            const formatted = formatUploadDate(dateString);
+            setFormattedDate(formatted);
+        }
+    }, [partnerData.uploadDt]);
+
+    const formatUploadDate = (dateString) => {
+        const [datePart, timePart] = dateString.split(' ');
+        const [day, month, year] = datePart.split('-');
+        return `${day}/${month}/${year}`;
+    };
+
     return(
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white md:w-[400px] w-[60%] mx-auto h-[500px] mt-5 rounded-lg shadow-lg">
+            <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg mt-5`}>
                 <div className="px-4 py-3">
-                    <h3 className="text-md font-bold text-gray-900">Upload Partner Certificate</h3>
+                    <h3 className="text-md font-bold text-gray-900">{partnerData.isCertificateAvailable ? "Re-Upload Partner Certificate" : "Upload Partner Certificate"}</h3>
                     <p className="text-sm text-gray-600">Please select the fields and upload certificate.</p>
                 </div>
                 <div className="border-gray-200 border-opacity-75 border-t"></div>
@@ -97,14 +120,14 @@ function UploadCertificate({closePopup}) {
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Type</label>
                             <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" 
-                                value={"Authentication Partner"} disabled />
+                                value={partnerData.partnerType} disabled />
                         </div>
                         <div className="mb-4">
                             <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Domain Type<span className="text-red-500">*</span></label>
                             <div className="relative z-10">
                                 <button onClick={openDropdown} class="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-400 rounded-md text-md text-start text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
-                                    <span>{selectedDomainType || "Enter Device Type"}</span>
-                                    <svg class="w-3 h-2 ml-3 transform rotate-0 text-gray-500 text-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <span>{selectedDomainType || getDefaultDomainType()}</span>
+                                    <svg class={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -206,11 +229,14 @@ function UploadCertificate({closePopup}) {
                             </div>
                         )}
                     </div>
+                    {partnerData.isCertificateAvailable && (
+                        <p className="text-sm text-gray-800 text-center mt-1">Last certificate was uploaded on {formattedDate}</p>
+                    )}
                 </div>
                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                 <div className="p-4 flex justify-end relative">
                     <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>Cancel</button>
-                    {(!uploading && fileName && selectedDomainType !== "") ? (
+                    {(!uploading && fileName) ? (
                         <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? "Close": "Submit"}</button>   
                     ) : (
                         <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Submit</button>
