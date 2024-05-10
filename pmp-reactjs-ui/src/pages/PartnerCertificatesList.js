@@ -43,6 +43,8 @@ function PartnerCertificatesList() {
                         setcertificatesData(resData);
                         console.log('Response data:', resData);
                     }
+                }else{
+                    setErrorMsg("Response is null");
                 }
                 setDataLoaded(true);
             } catch (err) {
