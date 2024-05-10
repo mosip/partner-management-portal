@@ -8,7 +8,7 @@ function PartnerCertificatesList() {
 
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
-
+    const [selectedPartnerData, setSelectedPartnerData] = useState(null);
     var dateAndMonth = new Date().getDate() + '-' + new Date().getMonth();
     var expiryYear = parseInt(new Date().getFullYear()) + 1;
 
@@ -32,12 +32,12 @@ function PartnerCertificatesList() {
         }
     ];
 
-    const uploadCertificate = () => {
+    const clickOnUpload = (partner) => {
         setShowPopup(!showPopup);
+        setSelectedPartnerData(partner);
     };
 
     const closePopup = () => {
-        console.log("Popup closed");
         setShowPopup(false);
         window.location.reload();
     };
@@ -141,15 +141,15 @@ function PartnerCertificatesList() {
                                                         </div>
                                                     </div>)}
                                             </div>
-                                            <button onClick={uploadCertificate} className="text-xs p-3 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center">
+                                            <button onClick={() => clickOnUpload(partner)} className="text-xs p-3 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center">
                                                 Re-Upload
                                             </button>
                                         </div>
-                                        : <button onClick={uploadCertificate} className="bg-tory-blue h-9 w-28 text-white text-sm font-medium rounded-md">
+                                        : <button onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-9 w-28 text-white text-sm font-medium rounded-md">
                                             Upload
                                         </button>}
                                     {showPopup && (
-                                        <UploadCertificate closePopup={closePopup} />
+                                        <UploadCertificate closePopup={closePopup} partnerData={selectedPartnerData}/>
                                     )}
                                 </div>
                                 <hr className="border" />
