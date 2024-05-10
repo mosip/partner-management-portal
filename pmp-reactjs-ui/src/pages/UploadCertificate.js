@@ -74,7 +74,6 @@ function UploadCertificate({ closePopup, partnerData }) {
 
     useEffect(() => {
         let intervalId;
-    
         if (uploading) {
             intervalId = setInterval(() => {
                 setRotation(rotation => (rotation + 1) % 360);
@@ -83,7 +82,6 @@ function UploadCertificate({ closePopup, partnerData }) {
             clearInterval(intervalId);
             setRotation(0);
         }
-    
         return () => clearInterval(intervalId);
     }, [uploading]);
 
