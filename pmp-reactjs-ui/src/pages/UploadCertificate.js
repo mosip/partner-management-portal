@@ -288,7 +288,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
                                     <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
                                         <p className="text-sm font-semibold text-white break-words">
-                                            Partner certificate for partnerType is uploaded successfully.
+                                            Partner certificate for {partnerData.partnerType} is uploaded successfully.
                                         </p>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
