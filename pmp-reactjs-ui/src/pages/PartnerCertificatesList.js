@@ -186,7 +186,7 @@ function PartnerCertificatesList() {
 
                                                     <div className="flex-col p-3 items-center">
                                                         <h6 className={`text-sm text-gray-600 ${partner.isCertificateAvailable ? 'font-bold' : 'font-medium'}`}>
-                                                            {partner.isCertificateAvailable ? "Certificate Name Goes Here.CER" : "Please upload partner certificate here"}
+                                                            {partner.isCertificateAvailable ? partner.certificateName : "Please upload partner certificate here"}
                                                         </h6>
                                                         <p className="font-medium text-xs text-gray-400">{partner.isCertificateAvailable ? null : "Only .cer or .pem certificate formats are allowed for upload"}</p>
                                                     </div>
