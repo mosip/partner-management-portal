@@ -1,5 +1,5 @@
 import HeaderNav from './HeaderNav.js';
-import SideNav from './SideNav.js';
+import SideNav from '../nav/SideNav.js';
 import '../index.css';
 
 function MainLayout({ children }) {

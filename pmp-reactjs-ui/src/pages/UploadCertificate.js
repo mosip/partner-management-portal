@@ -108,7 +108,7 @@ function UploadCertificate({ closePopup, partnerData }) {
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [partnerData.uploadDt]);
+    }, [partnerData.certificateUploadDate]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
