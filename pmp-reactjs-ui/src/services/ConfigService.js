@@ -1,4 +1,4 @@
-import HttpService from "./HttpService.js";
+//import HttpService from "./HttpService.js";
 
 export const loadAppConfig = async () => {
     try {
