@@ -31,6 +31,46 @@ function PartnerCertificatesList() {
         navigate('/partnermanagement')
     };
 
+    const getOriginalCertificate = () => {
+        setErrorMsg("The process of downloading the original certificate is in progress.")
+    }
+
+    const getMosipSignedCertificate = async (partner) => {
+        try {
+            const response = await HttpService.get('/api/partners/' + partner.partnerId + '/certificate');
+            if (response != null) {
+                const responseData = response.data;
+                if (responseData.errors && responseData.errors.length > 0) {
+                    const errorMessage = responseData.errors[0].message;
+                    setErrorMsg(errorMessage);
+                    console.error('Error:', errorMessage);
+                } else {
+                    const resData = responseData.response;
+                    console.log('Response data:', resData);
+                    const blob = new Blob([resData.certificateData], { type: 'application/x-x509-ca-cert' });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'mosip_signed_certificate.cer';
+
+                    document.body.appendChild(link);
+                    link.click();
+
+                    // Cleanup
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(link);
+                }
+
+            } else {
+                setErrorMsg("There is some error in fetching the mosip signed certificate. Try again later!");
+            }
+
+        } catch (err) {
+            console.error('Error fetching certificate:', err);
+            setErrorMsg(err);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -81,7 +121,7 @@ function PartnerCertificatesList() {
                 <>
                     {errorMsg && (
                         <div className="absolute flex justify-end w-full max-w-7xl">
-                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
+                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
                                 <div>
                                     <p className="text-xs font-semibold text-white break-words">
                                         {errorMsg}
@@ -201,7 +241,7 @@ function PartnerCertificatesList() {
                                                             {activeBtn && (
                                                                 <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
                                                                     <div className="flex items-center border-b-2 justify-between cursor-pointer">
-                                                                        <a href="#" className="block px-4 py-2 text-xs font-semibold text-gray-900">Original Certificate</a>
+                                                                        <a onClick={() => getOriginalCertificate()} className="block px-4 py-2 text-xs font-semibold text-gray-900">Original Certificate</a>
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
@@ -212,7 +252,7 @@ function PartnerCertificatesList() {
 
                                                                     </div>
                                                                     <div className="flex items-center cursor-pointer">
-                                                                        <a href="#" className="block px-4 py-2 text-xs font-semibold text-gray-900">MOSIP Signed Certificate</a>
+                                                                        <a onClick={() => getMosipSignedCertificate(partner)} className="block px-4 py-2 text-xs font-semibold text-gray-900">MOSIP Signed Certificate</a>
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
