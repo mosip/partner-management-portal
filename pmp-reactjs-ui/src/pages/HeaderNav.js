@@ -1,5 +1,6 @@
 import profileIcon from '../profile_icon.png';
 import { useState } from 'react';
+import { getUserProfile } from '../services/UserProfileService.js';
 
 function HeaderNav() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,7 +33,7 @@ function HeaderNav() {
                         </svg>
                     </div>
 
-                    <h2 className="text-xs font-bold text-gray-600 ml-1">Organisation Name</h2>
+                    <h2 className="text-xs font-bold text-gray-600 ml-1">{getUserProfile().orgName}</h2>
                 </div>
                 <div className="flex items-center">
                     <button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent"
