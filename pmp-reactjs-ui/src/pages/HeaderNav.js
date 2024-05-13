@@ -2,7 +2,7 @@ import profileIcon from '../profile_icon.png';
 import { useState } from 'react';
 import { getUserProfile } from '../services/UserProfileService.js';
 
-function HeaderNav() {
+function HeaderNav({open, setOpen}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -16,6 +16,11 @@ function HeaderNav() {
     }
     return (
         <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_3px_8px_0px] relative">
+            <div className="p-6 cursor-pointer" onClick={() => setOpen(!open)}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 22 14">
+                    <path id="menu_FILL0_wght300_GRAD0_opsz24" d="M140-691.384v-1.863h22v1.863Zm0-6.068v-1.863h22v1.863Zm0-6.068v-1.863h22v1.863Z" transform="translate(-140.001 705.384)" fill="#071121" />
+                </svg>
+            </div>
             <div className="px-5 xl:px-12">
                 <div className=" flex-1 justify-evenly mt-6 cursor-pointer">
                     &nbsp;

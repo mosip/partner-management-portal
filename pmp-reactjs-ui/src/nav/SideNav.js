@@ -4,10 +4,9 @@ import { SideNavMenuItem } from './SideNavMenuItem';
 import mosip_icon from '../../src/mosip_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 
-function SideNav() {
+function SideNav({open}) {
     const location = useLocation();
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
     const [activeIcon, setActiveIcon] = useState("");
     let selectedPath = location.pathname;
 
@@ -56,26 +55,21 @@ function SideNav() {
     };
     return (
         <div className="flex font-inter">
-            <div className={`${open ? "w-60" : "w-20 "} flex-col h-screen relative duration-400`}>
-                <div className={`flex pl-5 gap-x-4 h-16 items-center justify-evenly ${open ? 'shadow-md' : 'shadow-sm'}`}>
-                    <div className="flex gap-x-1 items-center">
-                        <img className="flex" src={mosip_icon} />
-                        <div className={`${!open && 'scale-0'} items-center duration-300`}>
+            <div className={`${open ? "w-64" : "w-20 "} flex-col h-screen relative duration-500`}>
+                <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
+                    <div className="flex items-center space-x-4 pl-5">
+                        <img src={mosip_icon} />
+                        <div className={`${!open && 'scale-0'} duration-700`}>
                             <img src={side_menu_title} />
                         </div>
                     </div>
-                    <div className="mt-2 cursor-pointer" onClick={() => setOpen(!open)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 22 14">
-                            <path id="menu_FILL0_wght300_GRAD0_opsz24" d="M140-691.384v-1.863h22v1.863Zm0-6.068v-1.863h22v1.863Zm0-6.068v-1.863h22v1.863Z" transform="translate(-140.001 705.384)" fill="#071121" />
-                        </svg>
-                    </div>
                 </div>
-                <ul>
+                <ul className="mt-7 space-y-5">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title='Home' id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
-                        <SideNavMenuItem title='Partner Type Selection' id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title='Partner Type Request' id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showOrganisationUsers()}>
                         <SideNavMenuItem title='Organisation Users' id='organisationUsers' isExpanded={open} activeIcon={activeIcon} />
