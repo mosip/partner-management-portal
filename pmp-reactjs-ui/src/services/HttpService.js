@@ -13,14 +13,16 @@ HttpService.interceptors.response.use((response) => { // block to handle success
     if (!getUserProfile()) {
       const resp = response.data.response;
       const userData = jwtDecode(resp.token);
-      //console.log(userData);
+      //console.log(resp);
       setUserProfile({
         "userName": userData.preferred_username,
         "firstName": userData.given_name,
         "lastName": userData.family_name,
         "email": userData.email,
         "orgName": userData.organizationName,
-        "partnerType": userData.partnerType
+        "partnerType": userData.partnerType,
+        "langCode": resp.langCode,
+        "roles": resp.role
       });
     }
   }
