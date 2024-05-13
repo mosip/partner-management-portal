@@ -120,7 +120,7 @@ function PartnerCertificatesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="absolute flex justify-end w-full max-w-7xl">
+                        <div className="flex justify-end max-w-7xl">
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
                                 <div>
                                     <p className="text-xs font-semibold text-white break-words">
