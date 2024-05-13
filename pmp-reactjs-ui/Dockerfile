@@ -8,9 +8,6 @@ RUN npm run build
 
 FROM nginx
 
-RUN apt-get -y update \
-    && apt-get install -y curl npm wget unzip zip
-
 ARG SOURCE
 ARG COMMIT_HASH
 ARG COMMIT_ID
@@ -19,6 +16,12 @@ LABEL source=${SOURCE}
 LABEL commit_hash=${COMMIT_HASH}
 LABEL commit_id=${COMMIT_ID}
 LABEL build_time=${BUILD_TIME}
+
+ENV base_path=/usr/share/nginx/html
+
+ENV i18n_path=${base_path}/public/i18n
+
+ENV entity_spec_path=${base_path}/public/entity-spec
 
 # can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user=mosip
@@ -32,48 +35,44 @@ ARG container_user_uid=1001
 # can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_gid=1001
 
-# can be passed during Docker build as build time environment for artifactory URL
-ARG artifactory_url
-
-# environment variable to pass artifactory url, at docker runtime
-ENV artifactory_url_env=${artifactory_url}
-
-ENV nginx_dir=/usr/share/nginx
-
-ENV work_dir=${nginx_dir}/html
-
-ENV i18n_path=${work_dir}/locales
+# install packages and create user
+RUN apt-get -y update \
+&& apt-get install -y unzip wget \
+&& groupadd -g ${container_user_gid} ${container_user_group} \
+&& useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
+&& mkdir -p /var/run/nginx /var/tmp/nginx \
+&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx
 
 # set working directory for the user
 WORKDIR /home/${container_user}
 
-# install packages and create user
-RUN groupadd -g ${container_user_gid} ${container_user_group} \
-    && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
-    && mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
-    && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path}
+ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 
-ADD configure_start.sh configure_start.sh
+ADD default.conf /etc/nginx/conf.d/
 
-RUN chmod +x configure_start.sh
+# can be passed during Docker build as build time environment for artifactory URL
+ARG artifactory_url
+# environment variable to pass artifactory url, at docker runtime
+ENV artifactory_url_env=${artifactory_url}
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-
-# copy build files to nginx html directory
-COPY --from=build_pmp_reactjs_ui /build  ${work_dir}
-
-RUN chown -R ${container_user}:${container_user} /home/${container_user}
+# install the needed packages including wget and a unzip library 
+#RUN apt-get update -y && apt-get install -y wget && apt-get install -y unzip
 
 # change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${work_dir}
+RUN chown -R ${container_user}:${container_user} ${base_path}/public/i18n
+RUN chown -R ${container_user}:${container_user} ${base_path}/public/entity-spec
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
 
-EXPOSE 3000
+EXPOSE 8080
 
-ENTRYPOINT [ "./configure_start.sh" ]
-
-CMD echo "starting nginx" ; \
+#get the pmp i18n bundle zip from artifactory
+CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
+    wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-entity-spec-bundle.zip -O "${entity_spec_path}"/pmp-entity-spec-bundle.zip ; \
+    cd ${entity_spec_path} ; \
+    unzip -o pmp-entity-spec-bundle.zip ; \
+    cd ${i18n_path} ; \
+    unzip -o pmp-i18n-bundle.zip ; \
     nginx ; \
     sleep infinity
