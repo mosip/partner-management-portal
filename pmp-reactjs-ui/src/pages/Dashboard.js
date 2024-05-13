@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { getUserProfile } from '../services/UserProfileService.js';
 
 function Dashboard() {
 
@@ -12,7 +13,7 @@ function Dashboard() {
     <div className="w-full p-5 bg-anti-flash-white h-fit font-inter">
       <div className="mb-7 mt-4 ml-5 text-xl font-semibold tracking-tight text-gray-700">
         <p >
-          Welcome User,
+          Welcome {getUserProfile().firstName} {getUserProfile().lastName},
         </p>
       </div>
       <div className="flex mt-2 ml-7 flex-wrap">
