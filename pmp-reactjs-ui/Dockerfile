@@ -46,7 +46,7 @@ RUN apt-get -y update \
 # set working directory for the user
 WORKDIR /home/${container_user}
 
-ADD ./nginx.conf /etc/nginx/nginx.conf
+ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 ADD default.conf /etc/nginx/conf.d/
 
