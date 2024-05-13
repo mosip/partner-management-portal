@@ -8,6 +8,7 @@ function PartnerCertificatesList() {
 
     const [activeBtn, setActiveBtn] = useState(false);
 
+
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
