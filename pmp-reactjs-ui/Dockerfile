@@ -70,5 +70,5 @@ EXPOSE 3000
 CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
     cd ${i18n_path} ; \
     unzip -o pmp-i18n-bundle.zip ; \
-    nginx ; \
+    nginx -t ; \
     sleep infinity
