@@ -2,7 +2,6 @@ import HeaderNav from './HeaderNav.js';
 import SideNav from '../nav/SideNav.js';
 import '../index.css';
 import { useState } from 'react';
-import { useState } from 'react';
 
 function MainLayout({ children }) {
     
@@ -10,7 +9,6 @@ function MainLayout({ children }) {
 
     return (
         <div className="flex w-full">
-            <SideNav open={open}></SideNav>
             <SideNav open={open}></SideNav>
             <div className='w-full'>
                 <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
