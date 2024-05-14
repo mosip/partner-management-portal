@@ -67,7 +67,7 @@ RUN chown -R ${container_user}:${container_user} ${base_path}/entity-spec
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
 
-EXPOSE 8080
+EXPOSE 3000
 
 #get the pmp i18n bundle zip from artifactory
 CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
