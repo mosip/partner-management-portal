@@ -1,0 +1,15 @@
+{
+    "dashboard" : {
+        "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
+        "partnerTypeRequest": "Demande de type de partenaire",
+        "partnerTypeRequestDesc": "Demande de type de partenaire.",
+        "organisationUsers": "Utilisateurs de l'organisation",
+        "organisationUsersDesc": "Approuvez ou rejetez les demandes d’enregistrement de nouveaux utilisateurs de la même organisation.",
+        "partnerCertificate": "Certificat de partenaire",
+        "partnerCertificateDesc": "Téléchargez, téléchargez à nouveau, téléchargez et affichez les détails du certificat.",
+        "policies": "Stratégies",
+        "policiesDesc": "Demandez et gérez vos polices.",
+        "authenticationServices": "Services d'authentification",
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "dashboard" : {
+        "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
+        "partnerTypeRequest": "طلب نوع الشريك",
+        "partnerTypeRequestDesc": "طلب نوع الشريك.",
+        "organisationUsers": "مستخدمو المنظمة",
+        "organisationUsersDesc": "الموافقة على طلبات تسجيل المستخدمين الجدد أو رفضها من نفس المؤسسة.",
+        "partnerCertificate": "شهادة الشريك",
+        "partnerCertificateDesc": "تحميل الشهادة وإعادة تحميلها وتنزيلها وعرض تفاصيل الشهادة.",
+        "policies": "سياسات",
+        "policiesDesc": "طلب وإدارة السياسات الخاصة بك.",
+        "authenticationServices": "خدمات المصادقة",
+        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API"
+    }
+}

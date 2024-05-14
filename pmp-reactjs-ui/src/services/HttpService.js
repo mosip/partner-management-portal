@@ -21,7 +21,7 @@ HttpService.interceptors.response.use((response) => { // block to handle success
         "email": userData.email,
         "orgName": userData.organizationName,
         "partnerType": userData.partnerType,
-        "langCode": resp.langCode,
+        "langCode": userData.locale,
         "roles": resp.role
       });
     }
