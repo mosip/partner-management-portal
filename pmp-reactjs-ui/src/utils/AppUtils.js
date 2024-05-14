@@ -23,6 +23,30 @@ export const getPartnerTypeDescription = (partnerType) => {
         else if (partnerType === "Auth_Partner") {
             return "Authentication Partner"
         }
+        else if (partnerType === "Credential_Partner") {
+            return "Credential Partner"
+        }
+        else if (partnerType === "Online_Verification_Partner") {
+            return "Online Verification Partner"
+        }
+        else if (partnerType === "ABIS_Partner") {
+            return "ABIS Partner"
+        }
+        else if (partnerType === "MISP_Partner") {
+            return "MISP Partner"
+        }
+        else if (partnerType === "SDK_Partner") {
+            return "SDK Partner"
+        }
+        else if (partnerType === "Print_Partner") {
+            return "Print Partner"
+        }
+        else if (partnerType === "Internal_Partner") {
+            return "Internal Partner"
+        }
+        else if (partnerType === "Manual_Adjudication") {
+            return "Manual Adjudication"
+        }
     }
 }
 
