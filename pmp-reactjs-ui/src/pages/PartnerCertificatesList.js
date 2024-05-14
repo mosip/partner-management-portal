@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import HttpService from "../services/HttpService";
-import {formatDate} from "../utils/AppUtils"
+import {formatDate, getPartnerTypeDescription, handleMouseClickForDropdown} from "../utils/AppUtils"
 
 function PartnerCertificatesList() {
 
@@ -15,6 +15,12 @@ function PartnerCertificatesList() {
     const [certificatesData, setcertificatesData] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setActiveBtn(false));
+        return clickOutSideDropdown;
+    }, [dropdownRef]);
 
     const clickOnUpload = (partner) => {
         setShowPopup(!showPopup);
@@ -27,6 +33,13 @@ function PartnerCertificatesList() {
             window.location.reload();
         }
     };
+
+    const getPartnerType = (partnerTypeCode) => {
+        if (partnerTypeCode) {
+            const partnerTypeDesc = getPartnerTypeDescription(partnerTypeCode);
+            return partnerTypeDesc;
+        }
+    }
 
     const moveToHome = () => {
         navigate('/partnermanagement')
@@ -240,9 +253,9 @@ function PartnerCertificatesList() {
                                                             </button>
 
                                                             {activeBtn && (
-                                                                <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
+                                                                <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700" ref={dropdownRef}>
                                                                     <div className="flex items-center border-b-2 justify-between cursor-pointer">
-                                                                        <a onClick={() => getOriginalCertificate()} className="block px-4 py-2 text-xs font-semibold text-gray-900">Original Certificate</a>
+                                                                        <button onClick={() => getOriginalCertificate()} className="block px-4 py-2 text-xs font-semibold text-gray-900">Original Certificate</button>
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
@@ -253,7 +266,7 @@ function PartnerCertificatesList() {
 
                                                                     </div>
                                                                     <div className="flex items-center cursor-pointer">
-                                                                        <a onClick={() => getMosipSignedCertificate(partner)} className="block px-4 py-2 text-xs font-semibold text-gray-900">MOSIP Signed Certificate</a>
+                                                                        <button onClick={() => getMosipSignedCertificate(partner)} className="block px-4 py-2 text-xs font-semibold text-gray-900">MOSIP Signed Certificate</button>
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
@@ -280,7 +293,7 @@ function PartnerCertificatesList() {
                                             <div className="flex items-center p-5 bg-white">
                                                 <div className="flex-col">
                                                     <p className="font-medium text-xs text-gray-400">Partner Type</p>
-                                                    <p className="font-semibold text-sm text-red-950">{partner.partnerType}</p>
+                                                    <p className="font-semibold text-sm text-red-950">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
                                                 <div className="flex-col ml-12">
                                                     <p className="font-medium text-xs text-gray-400">Expiry Date</p>

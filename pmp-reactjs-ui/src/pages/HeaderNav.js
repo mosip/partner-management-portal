@@ -1,9 +1,17 @@
 import profileIcon from '../profile_icon.png';
-import { useState } from 'react';
 import { getUserProfile } from '../services/UserProfileService.js';
+import { useState, useRef, useEffect } from 'react';
+import { handleMouseClickForDropdown } from '../utils/AppUtils.js';
 
 function HeaderNav({open, setOpen}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
+        return clickOutSideDropdown;
+    }, [dropdownRef]);
+
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -40,7 +48,7 @@ function HeaderNav({open, setOpen}) {
 
                     <h2 className="text-xs font-bold text-gray-600 ml-1">{getUserProfile().orgName}</h2>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center" ref={dropdownRef}>
                     <button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent"
                         onClick={openDropdown}>
                         <img className="h-11 w-10 rounded-full" src={profileIcon} alt="" />
@@ -55,11 +63,11 @@ function HeaderNav({open, setOpen}) {
                     </svg>
                     {isDropdownOpen && (
                         <div className=" absolute top-14 right-10 z-10 w-40 h-33 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none">
-                            <a href="#" className="block px-4 py-2 text-sm text-gray-900">Partner Profile</a>
+                            <button className="block px-4 py-2 text-sm text-gray-900">Partner Profile</button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <a href="#" className="block px-4 py-2 text-sm text-gray-900">Change Password</a>
+                            <button className="block px-4 py-2 text-sm text-gray-900">Change Password</button>
                             <div className="border-t border-gray-100 mx-2"></div>
-                            <a href="#" className="block px-4 py-2 text-sm text-red-700" onClick={logout}>Logout</a>
+                            <button className="block px-4 py-2 text-sm text-red-700" onClick={logout}>Logout</button>
                         </div>
                     )}
                 </div>
