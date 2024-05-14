@@ -48,7 +48,7 @@ export const getPartnerTypeDescription = (partnerType) => {
     }
 }
 
-export const handleOutsideClick = (ref, callback) => {
+export const handleMouseClickForDropdown = (ref, callback) => {
     const handleClickOutside = (event) => {
         if (ref.current && !ref.current.contains(event.target)) {
             callback();

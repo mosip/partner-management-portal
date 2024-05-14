@@ -1,14 +1,14 @@
 import profileIcon from '../profile_icon.png';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useState, useRef, useEffect } from 'react';
-import { handleOutsideClick } from '../utils/AppUtils.js';
+import { handleMouseClickForDropdown } from '../utils/AppUtils.js';
 
 function HeaderNav({open, setOpen}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        const clickOutSideDropdown = handleOutsideClick(dropdownRef, () => setIsDropdownOpen(false));
+        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
         return clickOutSideDropdown;
     }, [dropdownRef]);
 

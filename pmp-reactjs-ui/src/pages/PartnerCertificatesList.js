@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import HttpService from "../services/HttpService";
-import {formatDate, getPartnerTypeDescription, handleOutsideClick} from "../utils/AppUtils"
+import {formatDate, getPartnerTypeDescription, handleMouseClickForDropdown} from "../utils/AppUtils"
 
 function PartnerCertificatesList() {
 
@@ -18,7 +18,7 @@ function PartnerCertificatesList() {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        const clickOutSideDropdown = handleOutsideClick(dropdownRef, () => setActiveBtn(false));
+        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setActiveBtn(false));
         return clickOutSideDropdown;
     }, [dropdownRef]);
 
