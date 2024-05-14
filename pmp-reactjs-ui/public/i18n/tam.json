@@ -1,0 +1,15 @@
+{
+    "dashboard" : {
+        "welcomeMsg": "வரவேற்பு {{firstName}} {{lastName}}",
+        "partnerTypeRequest": "கூட்டாளர் வகை கோரிக்கை",
+        "partnerTypeRequestDesc": "கூட்டாளர் வகைக்கான கோரிக்கை.",
+        "organisationUsers": "அமைப்பின் பயனர்கள்",
+        "organisationUsersDesc": "அதே நிறுவனத்திடமிருந்து புதிய பயனர் பதிவு கோரிக்கைகளை ஏற்கவும் அல்லது நிராகரிக்கவும்.",
+        "partnerCertificate": "கூட்டாளர் சான்றிதழ்",
+        "partnerCertificateDesc": "சான்றிதழ் பதிவேற்றம், மறு பதிவேற்றம், பதிவிறக்கம் மற்றும் சான்றிதழ் விவரங்களைப் பார்க்கவும்.",
+        "policies": "கொள்கைகள்",
+        "policiesDesc": "உங்கள் கொள்கைகளைக் கேட்டு நிர்வகிக்கவும்.",
+        "authenticationServices": "அங்கீகார சேவைகள்",
+        "authenticationServicesDesc": "டிசைனர்கள் மற்றும் API விசை அடிப்படையிலான அங்கீகாரத்திற்கான OIDC கிளையண்ட் உருவாக்கம் / API விசை உருவாக்கத்தைக் கோரவும்"
+    }
+}

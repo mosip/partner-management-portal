@@ -1,9 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
+import { useTranslation } from "react-i18next";
+import { useEffect } from 'react';
 
 function Dashboard() {
-
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const langCode = getUserProfile().langCode;
+    if (langCode != null) {
+      i18n.changeLanguage(langCode);
+    }
+  }, [i18n]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/partnerCertificate')
@@ -13,7 +22,7 @@ function Dashboard() {
     <div className="w-full p-5 bg-anti-flash-white h-fit font-inter">
       <div className="mb-7 mt-4 ml-5 text-xl font-semibold tracking-tight text-gray-700">
         <p >
-          Welcome {getUserProfile().firstName} {getUserProfile().lastName},
+        {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })},
         </p>
       </div>
       <div className="flex mt-2 ml-7 flex-wrap">
@@ -35,10 +44,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Partner Type Selection
+              {t('dashboard.partnerTypeRequest')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Add / Manage new partner type
+              {t('dashboard.partnerTypeRequestDesc')}
             </p>
           </div>
         </div>
@@ -60,11 +69,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Organisation Users
+              {t('dashboard.organisationUsers')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Upload and re-upload partner certificate, download MOSIP signed
-              certificate.
+              {t('dashboard.organisationUsersDesc')}
             </p>
           </div>
         </div>
@@ -86,10 +94,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-              Partner Certificate
+              {t('dashboard.partnerCertificate')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Add new SBI info, view, edit and deactivate saved SBI info.
+              {t('dashboard.partnerCertificateDesc')}
             </p>
           </div>
         </div>
@@ -111,10 +119,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Policy Selection
+              {t('dashboard.policies')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Add new device, view, edit and deactivate saved devices.
+              {t('dashboard.policiesDesc')}
             </p>
           </div>
         </div>
@@ -136,10 +144,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Authentication Services
+              {t('dashboard.authenticationServices')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Add / Manage new partner type
+              {t('dashboard.authenticationServicesDesc')}
             </p>
           </div>
         </div>
