@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import HttpService from '../services/HttpService';
-import { formatDate } from '../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription } from '../utils/AppUtils';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -53,14 +53,22 @@ function UploadCertificate({ closePopup, partnerData }) {
             }
         }
     };
+
+    const getPartnerType = (partner) => {
+        if (partner.partnerType) {
+            const partnerTypeDesc = getPartnerTypeDescription(partner.partnerType);
+            return partnerTypeDesc;
+        }
+    }
+
     const selectDomainType = (option) => {
         setSelectedDomainType(option);
         openDropdown();
     };
     const setDefaultDomainType = () => {
-        if (partnerData.partnerType === "Device Provider") {
+        if (partnerData.partnerType === "Device_Provider") {
             setSelectedDomainType("DEVICE");
-        } else if (partnerData.partnerType === "FTM Chip Provider") {
+        } else if (partnerData.partnerType === "FTM_Provider") {
             setSelectedDomainType("FTM");
         } else {
             setSelectedDomainType("AUTH");
@@ -108,7 +116,7 @@ function UploadCertificate({ closePopup, partnerData }) {
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [partnerData.certificateUploadDate]);
+    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -138,7 +146,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 <div className="mb-4">
                                     <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Type</label>
                                     <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                        value={partnerData.partnerType} disabled />
+                                        value={getPartnerType(partnerData)} disabled />
                                 </div>
                                 <div className="mb-4">
                                     <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Domain Type<span className="text-red-500">*</span></label>
@@ -152,11 +160,20 @@ function UploadCertificate({ closePopup, partnerData }) {
                                         {isDropdownOpen && (
                                             <div className="absolute z-50 top-10 left-0 w-full">
                                                 <div className="z-10 border border-gray-400 bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                                    <a className="block px-4 py-2 text-base text-blue-950 hover:bg-gray-100" onClick={() => selectDomainType("DEVICE")}>DEVICE</a>
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                        ${selectedDomainType === "DEVICE" ?  'bg-gray-100' : 'hover:bg-gray-100'}`} 
+                                                        onClick={() => selectDomainType("DEVICE")}>DEVICE
+                                                    </button>
                                                     <div className="border-gray-100 border-t mx-2"></div>
-                                                    <a className="block px-4 py-2 text-base text-blue-950  hover:bg-gray-100" onClick={() => selectDomainType("FTM")}>FTM</a>
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                        ${selectedDomainType === "FTM" ?  'bg-gray-100' : 'hover:bg-gray-100'}`} 
+                                                        onClick={() => selectDomainType("FTM")}>FTM
+                                                    </button>
                                                     <div className="border-t border-gray-100 mx-2"></div>
-                                                    <a className="block px-4 py-2 text-base text-blue-950  hover:bg-gray-100" onClick={() => selectDomainType("AUTH")}>AUTH</a>
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                        ${selectedDomainType === "AUTH" ?  'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                        onClick={() => selectDomainType("AUTH")}>AUTH
+                                                    </button>
                                                 </div>
                                             </div>
                                         )}

@@ -58,9 +58,9 @@ function SideNav({open}) {
             <div className={`${open ? "w-64" : "w-20 "} flex-col h-screen relative duration-500`}>
                 <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
                     <div className="flex items-center space-x-4 pl-5">
-                        <img src={mosip_icon} />
+                        <img src={mosip_icon} alt=""/>
                         <div className={`${!open && 'scale-0'} duration-700`}>
-                            <img src={side_menu_title} />
+                            <img src={side_menu_title} alt=""/>
                         </div>
                     </div>
                 </div>
