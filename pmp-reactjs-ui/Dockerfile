@@ -50,7 +50,7 @@ ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 ADD default.conf /etc/nginx/conf.d/
 
-ADD build ${base_path}
+ADD ./build ${base_path}
 
 # can be passed during Docker build as build time environment for artifactory URL
 ARG artifactory_url
