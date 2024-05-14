@@ -19,9 +19,9 @@ LABEL build_time=${BUILD_TIME}
 
 ENV base_path=/usr/share/nginx/html
 
-ENV i18n_path=${base_path}/public/i18n
+ENV i18n_path=${base_path}/i18n
 
-ENV entity_spec_path=${base_path}/public/entity-spec
+ENV entity_spec_path=${base_path}/entity-spec
 
 # can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user=mosip
@@ -50,6 +50,8 @@ ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 ADD default.conf /etc/nginx/conf.d/
 
+ADD build ${base_path}
+
 # can be passed during Docker build as build time environment for artifactory URL
 ARG artifactory_url
 # environment variable to pass artifactory url, at docker runtime
@@ -59,8 +61,8 @@ ENV artifactory_url_env=${artifactory_url}
 #RUN apt-get update -y && apt-get install -y wget && apt-get install -y unzip
 
 # change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${base_path}/public/i18n
-RUN chown -R ${container_user}:${container_user} ${base_path}/public/entity-spec
+RUN chown -R ${container_user}:${container_user} ${base_path}/i18n
+RUN chown -R ${container_user}:${container_user} ${base_path}/entity-spec
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
