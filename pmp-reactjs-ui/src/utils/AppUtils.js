@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
     const date = new Date(dateString);
@@ -50,16 +48,14 @@ export const getPartnerTypeDescription = (partnerType) => {
     }
 }
 
-export const useOutsideClick = (ref, callback) => {
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
-                callback();
-            }
+export const handleOutsideClick = (ref, callback) => {
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            callback();
         }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [ref, callback]);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
 };

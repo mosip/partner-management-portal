@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import HttpService from "../services/HttpService";
-import {formatDate, getPartnerTypeDescription, useOutsideClick} from "../utils/AppUtils"
+import {formatDate, getPartnerTypeDescription, handleOutsideClick} from "../utils/AppUtils"
 
 function PartnerCertificatesList() {
 
@@ -17,7 +17,10 @@ function PartnerCertificatesList() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const dropdownRef = useRef(null);
 
-    useOutsideClick(dropdownRef, () => setActiveBtn(false));
+    useEffect(() => {
+        const clickOutSideDropdown = handleOutsideClick(dropdownRef, () => setActiveBtn(false));
+        return clickOutSideDropdown;
+    }, [dropdownRef]);
 
     const clickOnUpload = (partner) => {
         setShowPopup(!showPopup);
