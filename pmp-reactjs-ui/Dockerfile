@@ -1,4 +1,4 @@
-FROM node:21.7.1-alpine as build_pmp_reactjs_ui
+FROM node:12.18.4-alpine as build_pmp_reactjs_ui
 
 COPY package*.json ./
 RUN npm install
