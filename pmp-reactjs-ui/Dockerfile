@@ -38,8 +38,8 @@ RUN apt-get -y update \
 && apt-get install -y unzip wget \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
-&& mkdir -p /var/run/nginx /var/tmp/nginx \
-&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx /var/cache/nginx /var/log/nginx
+&& mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path}\
+&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path}
 
 # set working directory for the user
 WORKDIR /home/${container_user}
@@ -59,7 +59,10 @@ ENV artifactory_url_env=${artifactory_url}
 #RUN apt-get update -y && apt-get install -y wget && apt-get install -y unzip
 
 # change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${base_path}/i18n
+RUN chown -R ${container_user}:${container_user} /home/${container_user}
+
+# change permissions of file inside working dir
+RUN chown -R ${container_user}:${container_user} ${base_path}
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
@@ -70,5 +73,6 @@ EXPOSE 3000
 CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
     cd ${i18n_path} ; \
     unzip -o pmp-i18n-bundle.zip ; \
-    nginx -t ; \
+    nginx ; \
     sleep infinity
+
