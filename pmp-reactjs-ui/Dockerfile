@@ -38,8 +38,8 @@ RUN apt-get -y update \
 && apt-get install -y unzip wget \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
-&& mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path}\
-&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx/ /var/log/nginx/
+&& mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
+&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx /var/log/nginx
 
 # set working directory for the user
 WORKDIR /home/${container_user}
@@ -73,6 +73,4 @@ EXPOSE 3000
 CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
     cd ${i18n_path} ; \
     unzip -o pmp-i18n-bundle.zip ; \
-    nginx ; \
-    sleep infinity
-
+    nginx -g 'daemon off;'
