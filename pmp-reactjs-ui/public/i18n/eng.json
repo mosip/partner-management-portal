@@ -10,6 +10,31 @@
         "policies": "Policies",
         "policiesDesc": "Request and Manage your policies.",
         "authenticationServices": "Authentication Services",
-        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications"
+        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
+        "mosipRights": "All rights reserved.",
+        "documentation": "Documentation",
+        "mosipCommunity": "MOSIP Community",
+        "contactUs": "Contact Us"
+    },
+    "header": {
+        "partnerProfile": "Partner Profile",
+        "changePassword": "Change Password",
+        "logout": "Logout"
+    },
+    "partnerCertificatesList": {
+        "loading": "Loading",
+        "home": "Home",
+        "partnerCertificate": "Partner Certificate",
+        "noPartnerTypesAreMapped": "No partner types are mapped to your user id",
+        "uploadPartnerCertificate": "Please upload partner certificate here",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats are allowed for upload",
+        "download": "Download",
+        "originalCertificate": "Original Certificate",
+        "mosipSignedCertificate": "MOSIP Signed Certificate",
+        "reUpload": "Re-Upload",
+        "upload": "Upload",
+        "partnerType": "Partner Type",
+        "expiryDate": "Expiry Date",
+        "timeOfUpload": "Time of Upload"
     }
 }

@@ -1,4 +1,4 @@
-FROM node:21.7.1-alpine as build_pmp_reactjs_ui
+FROM node:12.18.4-alpine as build_pmp_reactjs_ui
 
 COPY package*.json ./
 RUN npm install
@@ -38,15 +38,13 @@ RUN apt-get -y update \
 && apt-get install -y unzip wget \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
-&& mkdir -p /var/run/nginx /var/tmp/nginx \
-&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx /var/cache/nginx /var/log/nginx
+&& mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
+&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx /var/log/nginx
 
 # set working directory for the user
 WORKDIR /home/${container_user}
 
 ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
-
-ADD default.conf /etc/nginx/conf.d/
 
 COPY --from=build_pmp_reactjs_ui /build ${base_path}
 
@@ -59,7 +57,10 @@ ENV artifactory_url_env=${artifactory_url}
 #RUN apt-get update -y && apt-get install -y wget && apt-get install -y unzip
 
 # change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${base_path}/i18n
+RUN chown -R ${container_user}:${container_user} /home/${container_user}
+
+# change permissions of file inside working dir
+RUN chown -R ${container_user}:${container_user} ${base_path}
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
@@ -70,5 +71,4 @@ EXPOSE 3000
 CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
     cd ${i18n_path} ; \
     unzip -o pmp-i18n-bundle.zip ; \
-    nginx ; \
-    sleep infinity
+    nginx -g 'daemon off;'

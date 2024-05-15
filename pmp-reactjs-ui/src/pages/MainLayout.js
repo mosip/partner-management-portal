@@ -1,11 +1,20 @@
 import HeaderNav from './HeaderNav.js';
 import SideNav from '../nav/SideNav.js';
 import '../index.css';
-import { useState } from 'react';
+import { getUserProfile } from '../services/UserProfileService.js';
+import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 
 function MainLayout({ children }) {
-    
+    const { i18n } = useTranslation();
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const langCode = getUserProfile().langCode;
+        if (langCode != null) {
+          i18n.changeLanguage(langCode);
+        }
+      }, [i18n]);
 
     return (
         <div className="flex w-full">
