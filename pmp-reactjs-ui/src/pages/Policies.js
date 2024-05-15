@@ -5,6 +5,8 @@ function Policies() {
 
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
+  const [viewOpt, setViewOpt] = useState(false);
+
   const navigate = useNavigate();
 
   const moveToHome = () => {
@@ -12,12 +14,35 @@ function Policies() {
   };
 
   const titles = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
-  const filterTitles = ["Partner Id", "Partner Type", "Partner Name", "Status"];
+  const filterTitles = [
+    { "header": "Partner Type", "placeHolder": "Select Partner Type" },
+    { "header": "Policy Group", "placeHolder": "Select Policy Group" },
+    { "header": "Policy Name", "placeHolder": "Select Policy Name" },
+    { "header": "Status", "placeHolder": "Approved" }
+  ];
+
+  const tableValues = [
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Pending for Approval", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+  ];
+
+  for (let i = 0; i < tableValues.length; i++) {
+    if (tableValues[i].status === "Approved") {
+
+    }
+  }
 
   return (
     <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
       <div className="flex-col ml-1">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-5">
           <div className="flex space-x-4">
             <svg onClick={() => moveToHome()} className="mt-5 cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +86,7 @@ function Policies() {
 
               <hr className="h-px mx-3 bg-gray-200 border-0" />
 
-              <div className="flex items-center justify-center p-36">
+              <div className="flex items-center justify-center p-24">
                 <div className="flex-col items-center">
                   <svg xmlns="http://www.w3.org/2000/svg"
                     width="273" height="132" viewBox="0 0 273 132">
@@ -87,16 +112,18 @@ function Policies() {
                       </g>
                     </g>
                   </svg>
-                  <button type="button" className="text-white mt-8 ml-16 bg-tory-blue rounded-md text-sm px-5 py-3">
+                  <button type="button" className="text-white mt-8 ml-16 bg-tory-blue rounded-md text-xs px-5 py-3">
                     Request Policy
                   </button>
                 </div>
               </div>
             </div>
             :
-            <div className="bg-white w-full mt-3 rounded-lg shadow-lg">
+            <><div className="bg-white w-full mt-3 rounded-tlg shadow-lg">
               <div className="flex justify-between pl-5 pt-5 pr-2 items-center">
-                <p className=" font-bold text-blue-900 text-sm ml-4">List of Policies (147)</p>
+                <p className=" font-bold text-blue-900 text-md ml-4">
+                  List of Policies (147)
+                </p>
                 <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'} h-9 w-32 text-xs px-2 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center`}>
                   Filter
                   <svg
@@ -112,23 +139,30 @@ function Policies() {
 
               <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
               {filter &&
-                <div className="flex py-3 w-full bg-gray-50 gap-x-9 font-semibold text-xs ml-8">
-                  {filterTitles.map((filterHead, index) => {
+                <div className="flex flex-wrap py-3 bg-gray-50 font-semibold text-xs pl-5">
+                  <div className="m-3">
+                    <h3 className="text-xs font-semibold text-tory-blue mb-2">Partner ID</h3>
+                    <input type="text"
+                      className="text-start border border-gray-800 text-gray-900 text-xs font-medium rounded-sm shadow-sm w-72 h-8 p-2.5"
+                      placeholder=" Enter Partner ID" />
+                  </div>
+                  {filterTitles.map((filter, index) => {
                     return (
-                      <div key={index}>
-                        <h3>{filterHead}</h3>
-                        <input type="text" className="text-start border border-black-800 text-gray-900 text-xs rounded-md w-64 p-2.5" placeholder= {filterHead} />
+                      <div key={index} className="m-2">
+                        <h3 className="text-xs font-semibold text-tory-blue mb-2">{filter.header}</h3>
+                        <select className="border border-gray-800 text-gray-400 text-xs font-medium rounded-sm w-72 h-8 pl-2.5 focus:none">
+                          <option selected>{`${filter.placeHolder}`}</option>
+                          <option></option>
+                        </select>
                       </div>
-                    )
+                    );
                   })}
-
-                </div>
-              }
+                </div>}
 
               <div className="flex ml-5 text-xs gap-x-10 font-normal text-gray-500 items-center">
                 {titles.map((header, index) => {
                   return (
-                    <div key={index} className="flex items-center gap-x-2 m-1">
+                    <div key={index} className="flex items-center gap-x-1 m-1">
                       <h6 className="p-3">{header}</h6>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +177,7 @@ function Policies() {
                             transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
                         </g>
                       </svg>
-                    </div>)
+                    </div>);
                 })}
 
                 <div className="flex gap-x-24 ml-24">
@@ -166,10 +200,52 @@ function Policies() {
                   <h6 className="ml-28">Action</h6>
                 </div>
               </div>
+              <div className="flex-col ml-5 text-xs font-semibold text-gray-800 items-center justify-evenly">
+                {tableValues.map((partner, index) => {
+                  return (
+                    <div key={index}>
+                      <hr className="h-px bg-gray-200 border-0 mr-5" />
+                      <div className="flex items-center ml-1  p-1">
+                        <p className="w-28 ml-2 mr-9">P88424932</p>
+                        <p className="w-28 mr-12">{partner.Ptype}</p>
+                        <p className="w-28 mr-12">Banking</p>
+                        <p className="w-28 mr-12">{partner.PolicyName}</p>
+                        <p className="w-28 mr-9">31/05/2023</p>
+                        <div className="flex">
+                          <div className="flex justify-between w-80 ml-16 pl-6 items-center">
+                            <div className="bg-green-200 px-3 py-1 font-semibold justify-center text-green-600 text-xs rounded-md">
+                              {partner.status}
+                            </div>
+                            <div className="flex-col pb-2">
+                              <p onClick={() => setViewOpt(!viewOpt)} className="font-bold text-2xl text-gray-500 cursor-pointer">
+                                ...
+                              </p>
+                              {viewOpt &&
+                                <button className="absolute px-7 py-2 bg-white shadow-md rounded-sm">
+                                  View
+                                </button>}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr className="bg-gray-200 border-0 mr-5" />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
+              <div className="flex justify-between bg-white h-9 w-full mt-0.5 p-8 rounded-b-md shadow-lg">
+                <div></div>
+                <div></div>
+                <div className="flex items-center gap-x-3">
+                  <h6 className="text-gray-500 text-xs">Items per Page</h6>
+                  <p className="p-2 text-xs border border-blue-400 text-blue-400">8</p>
+                </div>
+              </div>
+            </>
           }
-          <hr className="h-px ml-7 mt-9 bg-gray-200 border-0 " />
-          <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
+          <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
+          <div className="flex mt-7 ml-7 text-sm text-gray-400">
             <div>
               <p>2024 © MOSIP - All rights reserved.</p>
             </div>
