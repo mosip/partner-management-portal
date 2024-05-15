@@ -1,18 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { useEffect } from 'react';
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-
-  useEffect(() => {
-    const langCode = getUserProfile().langCode;
-    if (langCode != null) {
-      i18n.changeLanguage(langCode);
-    }
-  }, [i18n]);
+  const { t } = useTranslation();
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/partnerCertificate')
@@ -42,10 +34,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Partner Type Request
+              {t('dashboard.partnerTypeRequest')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Request for Partner Type
+              {t('dashboard.partnerTypeRequestDesc')}
             </p>
           </div>
         </div>
@@ -64,7 +56,7 @@ function Dashboard() {
               {t('dashboard.organisationUsers')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Approve or reject new user registration requests from same organisation.
+              {t('dashboard.organisationUsersDesc')}
             </p>
           </div>
         </div>
@@ -89,7 +81,7 @@ function Dashboard() {
               {t('dashboard.partnerCertificate')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Certificate upload, re-upload, download and view certificate details.
+              {t('dashboard.partnerCertificateDesc')}
             </p>
           </div>
         </div>
@@ -109,10 +101,10 @@ function Dashboard() {
           </div>
           <div>
             <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-              Policies
+              {t('dashboard.policies')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Request and Manage your policies.
+              {t('dashboard.policiesDesc')}
             </p>
           </div>
         </div>
@@ -132,7 +124,7 @@ function Dashboard() {
               {t('dashboard.authenticationServices')}
             </h5>
             <p className="mb-3 text-xs font-normal text-gray-400">
-              Request OIDC Client creation / API key generation for eSignet and API key based authentications
+              {t('dashboard.authenticationServicesDesc')}
             </p>
           </div>
         </div>
@@ -140,12 +132,12 @@ function Dashboard() {
       <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
       <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
         <div>
-          <p>2024 © MOSIP - All rights reserved.</p>
+          <p>2024 © MOSIP - {t('dashboard.mosipRights')}</p>
         </div>
         <div className="flex justify-between">
-          <p className="mr-7">Documentation</p>
-          <p className="mr-7">MOSIP Community</p>
-          <p className="mr-7">Contact Us</p>
+          <p className="mr-7">{t('dashboard.documentation')}</p>
+          <p className="mr-7">{t('dashboard.mosipCommunity')}</p>
+          <p className="mr-7">{t('dashboard.contactUs')}</p>
         </div>
       </div>
     </div>

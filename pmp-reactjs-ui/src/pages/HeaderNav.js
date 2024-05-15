@@ -2,8 +2,10 @@ import profileIcon from '../profile_icon.png';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useState, useRef, useEffect } from 'react';
 import { handleMouseClickForDropdown } from '../utils/AppUtils.js';
+import { useTranslation } from 'react-i18next';
 
 function HeaderNav({open, setOpen}) {
+    const { t } = useTranslation();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -63,11 +65,11 @@ function HeaderNav({open, setOpen}) {
                     </svg>
                     {isDropdownOpen && (
                         <div className=" absolute top-14 right-10 z-10 w-40 h-33 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none">
-                            <button className="block px-4 py-2 text-sm text-gray-900">Partner Profile</button>
+                            <button className="block px-4 py-2 text-sm text-gray-900 text-left">{t('header.partnerProfile')}</button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <button className="block px-4 py-2 text-sm text-gray-900">Change Password</button>
+                            <button className="block px-4 py-2 text-sm text-gray-900 text-left">{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>
-                            <button className="block px-4 py-2 text-sm text-red-700" onClick={logout}>Logout</button>
+                            <button className="block px-4 py-2 text-sm text-red-700 text-left" onClick={logout}>{t('header.logout')}</button>
                         </div>
                     )}
                 </div>

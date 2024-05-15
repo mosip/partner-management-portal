@@ -10,6 +10,31 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et gérez vos polices.",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API"
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "mosipRights": "Tous droits réservés.",
+        "documentation": "Documentation",
+        "mosipCommunity": "Communauté MOSIP",
+        "contactUs": "Contactez-nous"
+    },
+    "header": {
+        "partnerProfile": "Profil du partenaire",
+        "changePassword": "Changer le mot de passe",
+        "logout": "Se déconnecter"
+    },
+    "partnerCertificatesList": {
+        "loading": "chargement",
+        "home": "Maison",
+        "partnerCertificate": "Certificat de partenaire",
+        "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
+        "uploadPartnerCertificate": "Veuillez télécharger le certificat de partenaire ici",
+        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
+        "download": "Télécharger",
+        "originalCertificate": "Certificat original",
+        "mosipSignedCertificate": "Certificat signé MOSIP",
+        "reUpload": "Re-télécharger",
+        "upload": "Télécharger",
+        "partnerType": "Type de partenaire",
+        "expiryDate": "Date d'expiration",
+        "timeOfUpload": "Heure de téléchargement"
     }
 }
