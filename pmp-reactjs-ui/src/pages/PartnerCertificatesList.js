@@ -117,7 +117,7 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className=" flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
+        <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
             {!dataLoaded && (
                 <div className="flex items-center justify-center h-4/5">
 

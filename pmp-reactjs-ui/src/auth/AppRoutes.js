@@ -2,7 +2,8 @@ import { createHashRouter, RouterProvider, redirect } from 'react-router-dom';
 import GuardedRoute from './GuardedRoute.js';
 
 import MainLayout from '../pages/MainLayout.js';
-import PartnerCertificatesList from '../pages/PartnerCertificatesList.js'; 
+import PartnerCertificatesList from '../pages/PartnerCertificatesList.js';
+import Policies from '../pages/Policies.js';
 import Dashboard from '../pages/Dashboard.js';
 
 function AppRoutes() {
@@ -22,6 +23,10 @@ function AppRoutes() {
         {
           path: 'partnercertificate',
           element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies',
+          element: <GuardedRoute><MainLayout><Policies/></MainLayout></GuardedRoute>,
         }
       ],
     },

@@ -46,7 +46,7 @@ function SideNav({open}) {
         setActiveIcon("organisationUsers");
     };
     const showPolicies = () => {
-        //navigate('/partnermanagement/policies');
+        navigate('/partnermanagement/policies');
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
