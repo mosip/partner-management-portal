@@ -10,6 +10,31 @@
         "policies": "سياسات",
         "policiesDesc": "طلب وإدارة السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
-        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API"
+        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
+        "mosipRights": "كل الحقوق محفوظة.",
+        "documentation": "توثيق",
+        "mosipCommunity": "مجتمع MOSIP",
+        "contactUs": "اتصل بنا"
+    },
+    "header": {
+        "partnerProfile": "الملف التعريفي للشريك",
+        "changePassword": "تغيير كلمة المرور",
+        "logout": "تسجيل خروج"
+    },
+    "partnerCertificatesList": {
+        "loading": "تحميل",
+        "home": "بيت",
+        "partnerCertificate": "شهادة الشريك",
+        "noPartnerTypesAreMapped": "لم يتم تعيين أي أنواع شركاء لمعرف المستخدم الخاص بك",
+        "uploadPartnerCertificate": "يرجى تحميل شهادة الشريك هنا",
+        "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
+        "download": "تحميل",
+        "originalCertificate": "الشهادة الأصلية",
+        "mosipSignedCertificate": "شهادة موقعة من MOSIP",
+        "reUpload": "إعادة التحميل",
+        "upload": "رفع",
+        "partnerType": "نوع الشريك",
+        "expiryDate": "تاريخ الانتهاء",
+        "timeOfUpload": "وقت التحميل"
     }
 }
