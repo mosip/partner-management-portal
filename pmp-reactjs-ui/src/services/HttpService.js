@@ -3,9 +3,34 @@ import { loginRedirect } from './LoginRedirectService.js';
 import { jwtDecode } from 'jwt-decode';
 import { setUserProfile, getUserProfile } from './UserProfileService.js';
 
-const HttpService = axios.create({
-  withCredentials: true
+let HttpService;
+
+if (process.env.NODE_ENV !== 'production') {
+  HttpService = axios.create({
+    withCredentials: true
+  });
+} else {
+  HttpService = axios.create({
+    withCredentials: true,
+    baseURL: process.env.REACT_APP_API_BASE_URL
+  })
+}
+
+// Add a request interceptor
+HttpService.interceptors.request.use(function (request) {
+  // Do something before request is sent
+  if (process.env.NODE_ENV === 'production') {
+    const originalRequest = request.url;
+    console.log(originalRequest);
+    request.url = originalRequest.replace("/api", "");
+    console.log(request.url);
+  }
+  return request;
+}, function (error) {
+  // Do something with request error
+  loginRedirect(window.location.href);
 });
+
 
 HttpService.interceptors.response.use((response) => { // block to handle success case
   const originalRequest = response.config;
