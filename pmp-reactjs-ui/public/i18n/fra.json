@@ -35,6 +35,41 @@
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
         "expiryDate": "Date d'expiration",
-        "timeOfUpload": "Heure de téléchargement"
+        "timeOfUpload": "Heure de téléchargement",
+        "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
+        "errorWhileDownloadingCertificate": "Une erreur s'est produite lors de la récupération du certificat signé par mosip. Réessayez plus tard!",
+        "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!"
+    },
+    "uploadCertificate": {
+        "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
+        "reUploadPartnerCertificate": "Re-télécharger le certificat de partenaire",
+        "selectFieldsMsg": "Veuillez sélectionner les champs et télécharger le certificat.",
+        "partnerTypeLabel": "Type de partenaire",
+        "partnerDomainTypeLabel": "Type de domaine partenaire",
+        "selectingFile": "Sélection du fichier...",
+        "cancel": "Annuler",
+        "selectCertificate": "Veuillez appuyer pour sélectionner le certificat", 
+        "certificateFormat": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
+        "remove": "Retirer",
+        "close": "Fermer",
+        "submit": "Soumettre",
+        "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléchargé avec succès.",
+        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
+        "fileUploadError": "Veuillez sélectionner un fichier avec l'extension .cer ou .pem.",
+        "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
+        "errorWhileUploadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!"
+    },
+    "partnerTypes": {
+        "deviceProvider": "Fournisseur d'appareil",
+        "ftmProvider": "Fournisseur FTM",
+        "authPartner": "Partenaire d'authentification",
+        "credentialPartner": "Partenaire d'identification",
+        "onlineVerficationPartner": "Partenaire de vérification en ligne",
+        "abisPartner": "Partenaire ABIS",
+        "mispPartner": "Partenaire MISP",
+        "sdkPartner": "Partenaire SDK",
+        "printPartner": "Partenaire d'impression",
+        "internalPartner": "Partenaire interne",
+        "manualAdjudication": "Arbitrage manuelle"
     }
 }

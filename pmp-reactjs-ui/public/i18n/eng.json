@@ -35,6 +35,41 @@
         "upload": "Upload",
         "partnerType": "Partner Type",
         "expiryDate": "Expiry Date",
-        "timeOfUpload": "Time of Upload"
+        "timeOfUpload": "Time of Upload",
+        "errorMsgForOriginalCertificate": "This feature is under development.",
+        "errorWhileDownloadingCertificate": "There is some error in fetching the mosip signed certificate. Try again later!",
+        "errorInCertificateList": "There is some error in fetching the certificates. Try again later!"
+    },
+    "uploadCertificate": {
+        "uploadPartnerCertificate": "Upload Partner Certificate",
+        "reUploadPartnerCertificate": "Re-Upload Partner Certificate",
+        "selectFieldsMsg": "Please select the fields and upload certificate.",
+        "partnerTypeLabel": "Partner Type",
+        "partnerDomainTypeLabel": "Partner Domain Type",
+        "selectingFile": "Selecting the file...",
+        "cancel": "Cancel",
+        "selectCertificate": "Please tap to select the certificate", 
+        "certificateFormat": "Only .cer or .pem certificate formats are allowed for upload",
+        "remove": "Remove",
+        "close": "Close",
+        "submit": "Submit",
+        "successMsg": "Partner certificate for {{partnerType}} is uploaded successfully.",
+        "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
+        "fileUploadError": "Please select a file with .cer or .pem extension.",
+        "unableToUploadCertificate": "Unable to upload partner certificate",
+        "errorWhileUploadingCertificate": "There is some error in uploading the certificate. Try again later!"
+    },
+    "partnerTypes": {
+        "deviceProvider": "Device Provider",
+        "ftmProvider": "FTM Provider",
+        "authPartner": "Authentication Partner",
+        "credentialPartner": "Credential Partner",
+        "onlineVerficationPartner": "Online Verification Partner",
+        "abisPartner": "ABIS Partner",
+        "mispPartner": "MISP Partner",
+        "sdkPartner": "SDK Partner",
+        "printPartner": "Print Partner",
+        "internalPartner": "Internal Partner",
+        "manualAdjudication": "Manual Adjudication"
     }
 }
