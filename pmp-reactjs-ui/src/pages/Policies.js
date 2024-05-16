@@ -1,24 +1,27 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Policies() {
 
-  const [isData, setIsData] = useState(true);
-  const [filter, setFilter] = useState(false);
-  const [viewOpt, setViewOpt] = useState(false);
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const moveToHome = () => {
     navigate('/partnermanagement')
   };
 
+  const [isData, setIsData] = useState(true);
+  const [filter, setFilter] = useState(false);
+  const [statusBg, setStatusBg] = useState('');
+  const [viewOpt, setViewOpt] = useState(false);
+
   const titles = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
   const filterTitles = [
-    { "header": "Partner Type", "placeHolder": "Select Partner Type" },
-    { "header": "Policy Group", "placeHolder": "Select Policy Group" },
-    { "header": "Policy Name", "placeHolder": "Select Policy Name" },
-    { "header": "Status", "placeHolder": "Approved" }
+    { "header": t('policies.partnerType'), "placeHolder": t('policies.selectPartnerType') },
+    { "header": t('policies.policyGroup'), "placeHolder": t('policies.selectPolicyGroup') },
+    { "header": t('policies.partnerName'), "placeHolder": t('policies.selectPolicyName') },
+    { "header": t('policies.status'), "placeHolder": t('policies.approved') }
   ];
 
   const tableValues = [
@@ -33,14 +36,18 @@ function Policies() {
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
   ];
 
-  for (let i = 0; i < tableValues.length; i++) {
-    if (tableValues[i].status === "Approved") {
-
-    }
-  }
+  const [prev, setPrev] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [next, setNext] = useState('');                         // 
+  const recordsPerPage = 8;
+  const lastIndex = currentPage * recordsPerPage;               //      This  part related to Pagination logic
+  const firstIndex = lastIndex - recordsPerPage;                 //     Related functions are bottom
+  const records = tableValues.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(tableValues.length / recordsPerPage)
+  const numbers = [...Array(nPage + 1).keys()].slice(1)          //
 
   return (
-    <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
+    <div className="flex-col w-full p-5 bg-anti-flash-white font-inter">
       <div className="flex-col ml-1">
         <div className="flex justify-between mb-5">
           <div className="flex space-x-4">
@@ -54,15 +61,16 @@ function Policies() {
             </svg>
 
             <div className="flex-col mt-4">
-              <h1 className="font-bold text-md text-blue-900">Request a Policy</h1>
+              <h1 className="font-bold text-md text-blue-900">{t('policies.requestAPolicy')}</h1>
               <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
-                Home</p>
+                {t('policies.home')}
+              </p>
             </div>
           </div>
 
           {isData ?
             <button type="button" className="text-sm px-5 h-10 text-white bg-tory-blue rounded-md">
-              Request Policy
+              {t('policies.requestPolicyBtn')}
             </button>
             : null
           }
@@ -74,13 +82,13 @@ function Policies() {
             <div className="bg-white w-full mt-3 rounded-lg shadow-lg items-center">
               <div className="flex justify-between p-3 text-xs font-normal text-gray-500">
                 <div className="flex gap-x-48">
-                  <h6 className="ml-5">Partner ID</h6>
-                  <h6>Partner Type</h6>
-                  <h6>Policy Name</h6>
+                  <h6 className="ml-5">{t('policies.partnerId')}</h6>
+                  <h6>{t('policies.partnerType')}</h6>
+                  <h6>{t('policies.policyName')}</h6>
                 </div>
                 <div className='flex space-x-20 mr-6'>
-                  <h6>Status</h6>
-                  <h6>Action</h6>
+                  <h6>{t('policies.status')}</h6>
+                  <h6>{t('policies.action')}</h6>
                 </div>
               </div>
 
@@ -113,7 +121,7 @@ function Policies() {
                     </g>
                   </svg>
                   <button type="button" className="text-white mt-8 ml-16 bg-tory-blue rounded-md text-xs px-5 py-3">
-                    Request Policy
+                    {t('policies.requestPolicyBtn')}
                   </button>
                 </div>
               </div>
@@ -122,10 +130,10 @@ function Policies() {
             <><div className="bg-white w-full mt-3 rounded-tlg shadow-lg">
               <div className="flex justify-between pl-5 pt-5 pr-2 items-center">
                 <p className=" font-bold text-blue-900 text-md ml-4">
-                  List of Policies (147)
+                  {t('policies.listOfPolicies')}
                 </p>
                 <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'} h-9 w-32 text-xs px-2 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center`}>
-                  Filter
+                  {t('policies.filterBtn')}
                   <svg
                     xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ml-2`}
                     width="10" height="8" viewBox="0 0 10 8">
@@ -141,10 +149,10 @@ function Policies() {
               {filter &&
                 <div className="flex flex-wrap py-3 bg-gray-50 font-semibold text-xs pl-5">
                   <div className="m-3">
-                    <h3 className="text-xs font-semibold text-tory-blue mb-2">Partner ID</h3>
+                    <h3 className="text-xs font-semibold text-tory-blue mb-2">{t('policies.partnerId')}</h3>
                     <input type="text"
                       className="text-start border border-gray-800 text-gray-900 text-xs font-medium rounded-sm shadow-sm w-72 h-8 p-2.5"
-                      placeholder=" Enter Partner ID" />
+                      placeholder={t('policies.enterPartnerID')} />
                   </div>
                   {filterTitles.map((filter, index) => {
                     return (
@@ -201,19 +209,19 @@ function Policies() {
                 </div>
               </div>
               <div className="flex-col ml-5 text-xs font-semibold text-gray-800 items-center justify-evenly">
-                {tableValues.map((partner, index) => {
+                {records.map((partner, index) => {
                   return (
                     <div key={index}>
                       <hr className="h-px bg-gray-200 border-0 mr-5" />
-                      <div className="flex items-center ml-1  p-1">
-                        <p className="w-28 ml-2 mr-9">P88424932</p>
-                        <p className="w-28 mr-12">{partner.Ptype}</p>
-                        <p className="w-28 mr-12">Banking</p>
-                        <p className="w-28 mr-12">{partner.PolicyName}</p>
-                        <p className="w-28 mr-9">31/05/2023</p>
+                      <div className="flex items-center ml-3 p-1 gap-x-9">
+                        <p className="w-28">P88424932</p>
+                        <p className="w-32">{partner.Ptype}</p>
+                        <p className="w-32">Banking</p>
+                        <p className="w-28">{partner.PolicyName}</p>
+                        <p className="w-28">31/05/2023</p>
                         <div className="flex">
                           <div className="flex justify-between w-80 ml-16 pl-6 items-center">
-                            <div className="bg-green-200 px-3 py-1 font-semibold justify-center text-green-600 text-xs rounded-md">
+                            <div className={`bg-green-200 text-green-600 px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
                               {partner.status}
                             </div>
                             <div className="flex-col pb-2">
@@ -221,9 +229,9 @@ function Policies() {
                                 ...
                               </p>
                               {viewOpt &&
-                                <button className="absolute px-7 py-2 bg-white shadow-md rounded-sm">
+                                <div className="absolute font-medium px-7 py-2 bg-white shadow-md rounded-sm text-xs">
                                   View
-                                </button>}
+                                </div>}
                             </div>
                           </div>
                         </div>
@@ -234,31 +242,75 @@ function Policies() {
                 })}
               </div>
             </div>
-              <div className="flex justify-between bg-white h-9 w-full mt-0.5 p-8 rounded-b-md shadow-lg">
+              <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
                 <div></div>
-                <div></div>
+                <nav>
+                  <ul className="flex gap-x-4 items-center">
+                    <li className={`cursor-pointer font-bold ${prev}`}>
+                      <p className='page-link'
+                        onClick={prevPage}>{'<'}</p>
+                    </li>
+                    {
+                      numbers.map((n, i) => (
+                        <li key={i} className='cursor-pointer'>
+                          <p className={`text-xs font-semibold px-2 py-1 ${currentPage === n ? "bg-tory-blue text-white rounded-md" : "text-blue-600"}`}
+                            onClick={() => changeCurrPage(n)}>
+                            {n} </p>
+                        </li>
+                      ))
+                    }
+                    <li className={`cursor-pointer font-bold ${next}`}>
+                      <p className='page-link'
+                        onClick={nextPage}>{'>'}</p>
+                    </li>
+                  </ul>
+                </nav>
                 <div className="flex items-center gap-x-3">
-                  <h6 className="text-gray-500 text-xs">Items per Page</h6>
-                  <p className="p-2 text-xs border border-blue-400 text-blue-400">8</p>
+                  <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
+                  <p className="p-1 text-xs border-2 border-indigo-400 text-indigo-600 font-bold">
+                    {records.length}
+                  </p>
                 </div>
               </div>
             </>
           }
           <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
-          <div className="flex mt-7 ml-7 text-sm text-gray-400">
+          <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
             <div>
-              <p>2024 © MOSIP - All rights reserved.</p>
+              <p>2024 © MOSIP - {t('footer.allRightsReserved')} </p>
             </div>
             <div className="flex justify-between">
-              <p className="mr-7">Documentation</p>
-              <p className="mr-7">MOSIP Community</p>
-              <p className="mr-7">Contact Us</p>
+              <p className="mr-7">{t('footer.documentation')}</p>
+              <p className="mr-7">{t('footer.mosipCommunity')}</p>
+              <p className="mr-7">{t('footer.contactUs')}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   )
+
+  function prevPage() {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1)
+    }
+    setPrev('border-2 border-blue-500 px-0.5 text-blue-500')
+    setNext('')
+  }
+
+  function changeCurrPage(id) {
+    setCurrentPage(id)
+    setPrev('')
+    setNext('')
+  }
+
+  function nextPage() {
+    if (currentPage !== nPage) {
+      setCurrentPage(currentPage + 1)
+    }
+    setNext('border-2 border-blue-500 px-0.5 text-blue-500')
+    setPrev('')
+  }
 }
 
 export default Policies;

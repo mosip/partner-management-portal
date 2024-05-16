@@ -21,6 +21,12 @@
         "changePassword": "Change Password",
         "logout": "Logout"
     },
+    "footer": {
+        "allRightsReserved": "All rights reserved.",
+        "documentation": "Documentation",
+        "mosipCommunity": "MOSIP Community",
+        "contactUs": "Contact Us"
+    },
     "partnerCertificatesList": {
         "loading": "Loading",
         "home": "Home",
@@ -71,5 +77,24 @@
         "printPartner": "Print Partner",
         "internalPartner": "Internal Partner",
         "manualAdjudication": "Manual Adjudication"
+    },
+    "policies": {
+        "requestAPolicy": "Request a Policy",
+        "home": "Home",
+        "requestPolicyBtn": "Request Policy",
+        "listOfPolicies": "List of Policies",
+        "filterBtn": "Filter",
+        "partnerId": "Partner ID",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "status": "Status",
+        "action": "Action",
+        "enterPartnerID": "Enter Partner ID",
+        "selectPartnerType": "Select Partner Type",
+        "selectPolicyGroup": "Select Policy Group",
+        "selectPolicyName": "Select Policy Name",
+        "approved": "Approved",
+        "itemsPerPage": "Items per Page"
     }
 }

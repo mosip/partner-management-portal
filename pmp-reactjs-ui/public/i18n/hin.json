@@ -11,5 +11,11 @@
         "policiesDesc": "अपनी नीतियों का अनुरोध करें और प्रबंधित करें।",
         "authenticationServices": "प्रमाणीकरण सेवाएँ",
         "authenticationServicesDesc": "अनुरोध OIDC क्लाइंट निर्माण / API डिज़ाइनर्स के लिए कुंजी निर्माण और API कुंजी आधारित प्रमाणीकरण"
+    },
+    "footer": {
+        "allRightsReserved": "सर्वाधिकार सुरक्षित।",
+        "documentation": "प्रलेखन",
+        "mosipCommunity": "एमओसिप समुदाय",
+        "contactUs": "संपर्क करें"
     }
 }
