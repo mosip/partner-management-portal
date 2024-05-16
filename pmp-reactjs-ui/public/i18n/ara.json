@@ -35,6 +35,41 @@
         "upload": "رفع",
         "partnerType": "نوع الشريك",
         "expiryDate": "تاريخ الانتهاء",
-        "timeOfUpload": "وقت التحميل"
+        "timeOfUpload": "وقت التحميل",
+        "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
+        "errorWhileDownloadingCertificate": "يوجد خطأ ما في جلب شهادة mosip الموقعة. حاول مرة أخرى في وقت لاحق!",
+        "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!"
+    },
+    "uploadCertificate": {
+        "uploadPartnerCertificate": "تحميل شهادة الشريك",
+        "reUploadPartnerCertificate": "إعادة تحميل شهادة الشريك",
+        "selectFieldsMsg": "الرجاء تحديد الحقول وتحميل الشهادة.",
+        "partnerTypeLabel": "نوع الشريك",
+        "partnerDomainTypeLabel": "نوع نطاق الشريك",
+        "selectingFile": "تحديد الملف...",
+        "cancel": "يلغي",
+        "selectCertificate": "الرجاء الضغط لتحديد الشهادة", 
+        "certificateFormat": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
+        "remove": "يزيل",
+        "close": "يغلق",
+        "submit": "يُقدِّم",
+        "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
+        "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
+        "fileUploadError": "الرجاء تحديد ملف بامتداد .cer أو .pem.",
+        "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
+        "errorWhileUploadingCertificate": "هناك خطأ ما في تحميل الشهادة. حاول مرة أخرى في وقت لاحق!"
+    },
+    "partnerTypes": {
+        "deviceProvider": "مزود الجهاز",
+        "ftmProvider": "مزود FTM",
+        "authPartner": "شريك المصادقة",
+        "credentialPartner": "شريك الاعتماد",
+        "onlineVerficationPartner": "شريك التحقق عبر الإنترنت",
+        "abisPartner": "شريك ABIS",
+        "mispPartner": "شريك MISP",
+        "sdkPartner": "شريك SDK",
+        "printPartner": "شريك الطباعة",
+        "internalPartner": "الشريك الداخلي",
+        "manualAdjudication": "التحكيم اليدوي"
     }
 }
