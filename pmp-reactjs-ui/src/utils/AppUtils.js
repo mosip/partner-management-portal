@@ -10,40 +10,40 @@ export const formatDate = (dateString, format) => {
     }
 };
 
-export const getPartnerTypeDescription = (partnerType) => {
+export const getPartnerTypeDescription = (partnerType, t) => {
     if (partnerType) {
         if (partnerType === "Device_Provider") {
-            return "Device Provider"
+            return t('partnerTypes.deviceProvider');
         }
         else if (partnerType === "FTM_Provider") {
-            return "FTM Provider"
+            return t('partnerTypes.ftmProvider');
         }
         else if (partnerType === "Auth_Partner") {
-            return "Authentication Partner"
+            return t('partnerTypes.authPartner');
         }
         else if (partnerType === "Credential_Partner") {
-            return "Credential Partner"
+            return t('partnerTypes.credentialPartner');
         }
         else if (partnerType === "Online_Verification_Partner") {
-            return "Online Verification Partner"
+            return t('partnerTypes.onlineVerficationPartner');
         }
         else if (partnerType === "ABIS_Partner") {
-            return "ABIS Partner"
+            return t('partnerTypes.abisPartner');
         }
         else if (partnerType === "MISP_Partner") {
-            return "MISP Partner"
+            return t('partnerTypes.mispPartner');
         }
         else if (partnerType === "SDK_Partner") {
-            return "SDK Partner"
+            return t('partnerTypes.sdkPartner');
         }
         else if (partnerType === "Print_Partner") {
-            return "Print Partner"
+            return t('partnerTypes.printPartner');
         }
         else if (partnerType === "Internal_Partner") {
-            return "Internal Partner"
+            return t('partnerTypes.internalPartner');
         }
         else if (partnerType === "Manual_Adjudication") {
-            return "Manual Adjudication"
+            return t('partnerTypes.manualAdjudication');
         }
     }
 }
