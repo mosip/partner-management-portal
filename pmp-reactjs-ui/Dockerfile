@@ -36,6 +36,8 @@ ARG container_user_gid=1001
 # install packages and create user
 RUN apt-get -y update \
 && apt-get install -y unzip wget \
+&& touch /run/nginx.pid \
+&& chown -R api-gatway:api-gatway /run/nginx.pid /cache/nginx \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
 && mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
