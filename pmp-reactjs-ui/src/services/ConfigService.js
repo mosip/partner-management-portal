@@ -5,7 +5,7 @@ export const loadAppConfig = async () => {
         //const resp = await HttpService.get("/api/configs");
         //const appConfig = resp.data.response;
         //localStorage.setItem('appConfig', JSON.stringify(appConfig));
-        console.log("process.env.REACT_APP_API_BASE_URL " + process.env.REACT_APP_API_BASE_URL);
+        console.log("window._env_.REACT_APP_API_BASE_URL " + window._env_.REACT_APP_API_BASE_URL);
     } catch (err) {
         console.log("unable to load configs: " + err);
     }
