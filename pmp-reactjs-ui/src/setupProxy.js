@@ -3,12 +3,12 @@ module.exports = function (app) {
     app.use(
         '/api',
         createProxyMiddleware({
-            target: process.env.REACT_APP_PROXY_HOST,
+            target: process.env.NODE_ENV !== "production" ? process.env.REACT_APP_API_BASE_URL : window.origin + process.env.REACT_APP_API_BASE_URL,
             changeOrigin: false,
-            secure: process.env.REACT_APP_PROXY_HOST_SECURE,
+            secure: process.env.NODE_ENV !== "production" ? false : true,
             pathRewrite: {
                 "^/api": ""
-              }
+            }
         })
     );
 };
