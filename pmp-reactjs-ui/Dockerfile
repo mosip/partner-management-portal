@@ -1,5 +1,14 @@
 FROM node:12.18.4-alpine as build_pmp_reactjs_ui
 
+ARG REACT_APP_ENV
+ENV REACT_APP_ENV $REACT_APP_ENV
+
+ARG REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL $REACT_APP_API_BASE_URL
+
+ARG REACT_APP_API_BASE_URL_SECURE
+ENV REACT_APP_API_BASE_URL_SECURE $REACT_APP_API_BASE_URL_SECURE
+
 COPY package*.json ./
 RUN npm install
 #Copy the working directory
@@ -36,11 +45,11 @@ ARG container_user_gid=1001
 # install packages and create user
 RUN apt-get -y update \
 && apt-get install -y unzip wget \
+&& touch /var/run/nginx.pid \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
 && mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
-&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx /var/log/nginx
-
+&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx /var/log/nginx /var/run/nginx.pid
 # set working directory for the user
 WORKDIR /home/${container_user}
 

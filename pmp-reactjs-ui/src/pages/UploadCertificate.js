@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import HttpService from '../services/HttpService';
 import { formatDate, getPartnerTypeDescription } from '../utils/AppUtils';
+import { useTranslation } from 'react-i18next';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -13,6 +14,7 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [certificateData, setCertificateData] = useState("");
     const [formattedDate, setFormattedDate] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
+    const { t } = useTranslation();
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -42,13 +44,13 @@ function UploadCertificate({ closePopup, partnerData }) {
                         setErrorMsg(errorMessage);
                     } else if (resData === null) {
                         setUploadFailure(true);
-                        setErrorMsg("Unable to upload partner certificate");
+                        setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
                     } else {
                         setUploadSuccess(true);
                     }
                 } else {
                     setUploadFailure(true);
-                    setErrorMsg("There is some error in uploading the certificate. Try again later!");
+                    setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -61,7 +63,7 @@ function UploadCertificate({ closePopup, partnerData }) {
 
     const getPartnerType = (partner) => {
         if (partner.partnerType) {
-            const partnerTypeDesc = getPartnerTypeDescription(partner.partnerType);
+            const partnerTypeDesc = getPartnerTypeDescription(partner.partnerType, t);
             return partnerTypeDesc;
         }
     }
@@ -111,7 +113,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                 reader.readAsText(file);
             } else {
                 setUploadFailure(true);
-                setErrorMsg("Please select a file with .cer or .pem extension.");
+                setErrorMsg(t('uploadCertificate.fileUploadError'));
             }
         }
     };
@@ -135,7 +137,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
                                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                             </svg>
-                            <p className="ml-3">Loading</p>
+                            <p className="ml-3">{t('partnerCertificatesList.loading')}</p>
                         </div>
 
                     </div>
@@ -143,19 +145,19 @@ function UploadCertificate({ closePopup, partnerData }) {
                 {dataLoaded && (
                     <>
                         <div className="px-4 py-3">
-                            <h3 className="text-md font-bold text-gray-900">{partnerData.isCertificateAvailable ? "Re-Upload Partner Certificate" : "Upload Partner Certificate"}</h3>
-                            <p className="text-sm text-gray-600">Please select the fields and upload certificate.</p>
+                            <h3 className="text-md font-bold text-gray-900">{partnerData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
+                            <p className="text-sm text-gray-600">{t('uploadCertificate.selectFieldsMsg')}</p>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="p-4">
+                        <div className="p-3">
                             <form>
                                 <div className="mb-4">
-                                    <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Type</label>
+                                    <label className="block text-indigo-950 text-md font-semibold mb-2">{t('uploadCertificate.partnerTypeLabel')}</label>
                                     <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                         value={getPartnerType(partnerData)} disabled />
                                 </div>
                                 <div className="mb-4">
-                                    <label className="block text-indigo-950 text-md font-semibold mb-2">Partner Domain Type<span className="text-red-500">*</span></label>
+                                    <label className="block text-indigo-950 text-md font-semibold mb-2">{t('uploadCertificate.partnerDomainTypeLabel')}<span className="text-red-500">*</span></label>
                                     <div className="relative z-10">
                                         <button onClick={openDropdown} className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-400 rounded-md text-md text-start text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
                                             <span>{selectedDomainType || setDefaultDomainType()}</span>
@@ -194,10 +196,10 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                                         </svg>
                                         <h5 className="text-gray-800 text-sm">
-                                            Selecting the file...
+                                            {t('uploadCertificate.selectingFile')}
                                         </h5>
                                         <p className="text-sm font-semibold text-blue-700" onClick={cancelUpload}>
-                                            Cancel
+                                            {t('uploadCertificate.cancel')}
                                         </p>
                                     </div>
                                 )}
@@ -218,10 +220,10 @@ function UploadCertificate({ closePopup, partnerData }) {
                                                 />
                                             </svg>
                                             <h5 className="text-gray-700 text-sm">
-                                                Please tap to select the certificate
+                                                {t('uploadCertificate.selectCertificate')}
                                             </h5>
                                             <p className="text-sm text-gray-400">
-                                                Only .cer or .pem certificate formats are allowed for upload
+                                                {t('uploadCertificate.certificateFormat')}
                                             </p>
                                         </label>
                                         <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
@@ -248,28 +250,28 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             {fileName}
                                         </h5>
                                         <p className="text-sm font-semibold text-blue-700" onClick={removeUpload}>
-                                            Remove
+                                            {t('uploadCertificate.remove')}
                                         </p>
                                     </div>
                                 )}
                             </div>
                             {partnerData.isCertificateAvailable && (
-                                <p className="text-sm text-gray-800 text-center mt-1">Last certificate was uploaded on {formattedDate}</p>
+                                <p className="text-sm text-gray-800 text-center mt-1">{t('uploadCertificate.lastcertificateUploadDate', {date: formattedDate})}</p>
                             )}
                         </div>
                         <div className="border-gray-200 border-opacity-50 border-t"></div>
                         <div className="p-4 flex justify-end relative">
-                            <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>Cancel</button>
+                            <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                             {(!uploading && fileName) ? (
-                                <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? "Close" : "Submit"}</button>
+                                <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                             ) : (
-                                <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">Submit</button>
+                                <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">{t('uploadCertificate.submit')}</button>
                             )}
                             {uploadSuccess && !uploadFailure && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
                                     <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
                                         <p className="text-sm font-semibold text-white break-words">
-                                            Partner certificate for {getPartnerType(partnerData)} is uploaded successfully.
+                                            {t('uploadCertificate.successMsg', {partnerType: getPartnerType(partnerData)})}
                                         </p>
                                         <svg
                                             className="cursor-pointer"

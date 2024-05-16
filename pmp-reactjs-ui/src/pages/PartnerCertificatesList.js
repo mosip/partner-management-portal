@@ -37,7 +37,7 @@ function PartnerCertificatesList() {
 
     const getPartnerType = (partnerTypeCode) => {
         if (partnerTypeCode) {
-            const partnerTypeDesc = getPartnerTypeDescription(partnerTypeCode);
+            const partnerTypeDesc = getPartnerTypeDescription(partnerTypeCode, t);
             return partnerTypeDesc;
         }
     }
@@ -47,7 +47,7 @@ function PartnerCertificatesList() {
     };
 
     const getOriginalCertificate = () => {
-        setErrorMsg("This feature is under development.")
+        setErrorMsg(t('partnerCertificatesList.errorMsgForOriginalCertificate'))
     }
 
     const getMosipSignedCertificate = async (partner) => {
@@ -77,7 +77,7 @@ function PartnerCertificatesList() {
                 }
 
             } else {
-                setErrorMsg("There is some error in fetching the mosip signed certificate. Try again later!");
+                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
             }
 
         } catch (err) {
@@ -102,7 +102,7 @@ function PartnerCertificatesList() {
                         console.log('Response data:', resData);
                     }
                 } else {
-                    setErrorMsg("There is some error in fetching the certificates. Try again later!");
+                    setErrorMsg(t('partnerCertificatesList.errorInCertificateList'));
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -111,7 +111,7 @@ function PartnerCertificatesList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");

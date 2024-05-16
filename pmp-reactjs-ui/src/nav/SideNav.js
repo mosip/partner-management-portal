@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import mosip_icon from '../../src/mosip_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
+import { useTranslation } from 'react-i18next';
 
 function SideNav({open}) {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeIcon, setActiveIcon] = useState("");
     let selectedPath = location.pathname;
+    const { t } = useTranslation();
 
     useEffect(() => {
         console.log(selectedPath);
@@ -66,22 +68,22 @@ function SideNav({open}) {
                 </div>
                 <ul className="mt-7 space-y-5">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
-                        <SideNavMenuItem title='Home' id='home' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('partnerCertificatesList.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
-                        <SideNavMenuItem title='Partner Type Request' id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('dashboard.partnerTypeRequest')} id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showOrganisationUsers()}>
-                        <SideNavMenuItem title='Organisation Users' id='organisationUsers' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('dashboard.organisationUsers')} id='organisationUsers' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()}>
-                        <SideNavMenuItem title='Partner Certificate' id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showPolicies()}>
-                        <SideNavMenuItem title='Policies' id='policies' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
-                        <SideNavMenuItem title='Authentication Services' id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                 </ul>
             </div>
