@@ -21,6 +21,12 @@
         "changePassword": "تغيير كلمة المرور",
         "logout": "تسجيل خروج"
     },
+    "footer": {
+        "allRightsReserved": "كل الحقوق محفوظة.",
+        "documentation": "توثيق",
+        "mosipCommunity": "مجتمع موسيب",
+        "contactUs": "اتصل بنا"
+    },
     "partnerCertificatesList": {
         "loading": "تحميل",
         "home": "بيت",

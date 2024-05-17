@@ -11,5 +11,11 @@
         "policiesDesc": "ನಿಮ್ಮ ನೀತಿಗಳನ್ನು ವಿನಂತಿಸಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ.",
         "authenticationServices": "ದೃಢೀಕರಣ ಸೇವೆಗಳು",
         "authenticationServicesDesc": "ಡಿಸೈನರ್‌ಗಳು ಮತ್ತು API ಕೀ ಆಧಾರಿತ ದೃಢೀಕರಣಕ್ಕಾಗಿ OIDC ಕ್ಲೈಂಟ್ ರಚನೆ / API ಕೀ ಉತ್ಪಾದನೆಯನ್ನು ವಿನಂತಿಸಿ"
+    },
+    "footer": {
+        "allRightsReserved": "ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+        "documentation": "ದಾಖಲೀಕರಣ",
+        "mosipCommunity": "MOSIP ಸಮುದಾಯ",
+        "contactUs": "ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ"
     }
 }

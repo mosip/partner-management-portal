@@ -21,6 +21,12 @@
         "changePassword": "Changer le mot de passe",
         "logout": "Se déconnecter"
     },
+    "footer": {
+        "allRightsReserved": "Tous droits réservés.",
+        "documentation": "Documentation",
+        "mosipCommunity": "Communauté MOSIP",
+        "contactUs": "Contactez-nous"
+    },
     "partnerCertificatesList": {
         "loading": "chargement",
         "home": "Maison",
