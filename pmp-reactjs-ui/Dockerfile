@@ -5,6 +5,11 @@ ENV NODE_ENV production
 ARG REACT_APP_API_BASE_URL
 ENV REACT_APP_API_BASE_URL $REACT_APP_API_BASE_URL
 
+# Set the environment variable as a placeholder for PUBLIC_URL
+ARG pmpNewUIPublicUrl
+ENV PMP_NEW_UI_PUBLIC_URL=$pmpNewUIPublicUrl
+ENV PUBLIC_URL=_PUBLIC_URL_
+
 COPY package*.json ./
 RUN npm install
 #Copy the working directory
@@ -49,6 +54,10 @@ RUN apt-get -y update \
 # set working directory for the user
 WORKDIR /home/${container_user}
 
+ADD configure_start.sh configure_start.sh
+
+RUN chmod +x configure_start.sh
+
 ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build_pmp_reactjs_ui /build ${base_path}
@@ -72,8 +81,8 @@ USER ${container_user_uid}:${container_user_gid}
 
 EXPOSE 3000
 
-#get the pmp i18n bundle zip from artifactory
-CMD wget -q --show-progress "${artifactory_url_env}"/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O "${i18n_path}"/pmp-i18n-bundle.zip ; \
-    cd ${i18n_path} ; \
-    unzip -o pmp-i18n-bundle.zip ; \
-    nginx -g 'daemon off;'
+ENTRYPOINT [ "./configure_start.sh" ]
+
+CMD echo "starting nginx" ; \
+    nginx ; \
+    sleep infinity

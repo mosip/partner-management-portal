@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   HttpService = axios.create({
     withCredentials: true,
-    baseURL: process.env.REACT_APP_API_BASE_URL
+    baseURL: window._env_.REACT_APP_API_BASE_URL
   })
 }
 
