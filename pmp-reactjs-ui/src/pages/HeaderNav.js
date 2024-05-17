@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { handleMouseClickForDropdown } from '../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 
-function HeaderNav({open, setOpen}) {
+function HeaderNav({ open, setOpen }) {
     const { t } = useTranslation();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -22,7 +22,12 @@ function HeaderNav({open, setOpen}) {
         // if (cachedAppConfig)
         // console.log(cachedAppConfig['sbiPorts']);
         localStorage.clear();
-        window.location.href = `/api/logout/user?redirecturi=` + btoa(window.location.href);
+        if (process.env.NODE_ENV !== 'production') {
+            window.location.href = `/api/logout/user?redirecturi=` + btoa(window.location.href);
+        } else {
+            window.location.href = `/logout/user?redirecturi=` + btoa(window.location.href);
+        }
+
     }
     return (
         <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_3px_8px_0px] relative">

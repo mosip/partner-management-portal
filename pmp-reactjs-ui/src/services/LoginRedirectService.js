@@ -8,10 +8,18 @@ export const loginRedirect = (url) => {
     cookies.set('state', stateParam, {
         path: '/'
     });
-    let url1 = `/api/login/` +
+    let url1 ='';
+    if (process.env.NODE_ENV !== 'production') {
+        url1 = `/api/login/` +
         btoa(url) +
         '?state=' +
         stateParam;
+    } else {
+        url1 = `/login/` +
+        btoa(url) +
+        '?state=' +
+        stateParam;
+    }    
     console.log(url1);
     window.location.href = url1;
 }
