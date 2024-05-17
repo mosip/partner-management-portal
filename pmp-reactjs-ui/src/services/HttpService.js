@@ -22,13 +22,17 @@ HttpService.interceptors.request.use(function (request) {
   if (process.env.NODE_ENV === 'production') {
     const originalRequest = request.url;
     console.log(originalRequest);
-    request.url = originalRequest.replace("/api", "");
+    if (originalRequest.includes("/api")) {
+      request.url = originalRequest.replace("/api", "");
+    }
     console.log(request.url);
   }
   return request;
 }, function (error) {
   // Do something with request error
-  loginRedirect(window.location.href);
+  console.log("request interceptor");
+  console.log(error);
+  //loginRedirect(window.location.href);
 });
 
 
@@ -56,6 +60,8 @@ HttpService.interceptors.response.use((response) => { // block to handle success
   const originalRequest = error.config;
   if (error.response.status === 401 && originalRequest.url.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
     // Redirect to any unauthorised route to avoid infinite loop...
+    console.log("response interceptor");
+    console.log(error);
     loginRedirect(window.location.href);
   }
 });
