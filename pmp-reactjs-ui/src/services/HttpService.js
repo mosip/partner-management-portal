@@ -32,12 +32,14 @@ HttpService.interceptors.request.use(function (request) {
   // Do something with request error
   console.log("request interceptor");
   console.log(error);
-  //loginRedirect(window.location.href);
+  loginRedirect(window.location.href);
+  return Promise.reject(error);
 });
 
 
 HttpService.interceptors.response.use((response) => { // block to handle success case
   const originalRequest = response.config;
+  console.log("interceptor: "+ originalRequest.url);
   if (originalRequest.url.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
     if (!getUserProfile()) {
       const resp = response.data.response;
@@ -63,6 +65,7 @@ HttpService.interceptors.response.use((response) => { // block to handle success
     console.log("response interceptor");
     console.log(error);
     loginRedirect(window.location.href);
+    return Promise.reject(error);
   }
 });
 
