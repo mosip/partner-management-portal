@@ -13,7 +13,6 @@ function Policies() {
 
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [statusBg, setStatusBg] = useState('');
   const [viewOpt, setViewOpt] = useState(false);
 
   const titles = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
@@ -27,19 +26,37 @@ function Policies() {
   const tableValues = [
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Pending for Approval", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Pending for Approval", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Deactivated", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
   ];
+
+  function bgOfStatus(status) {
+    if (status === "Approved") {
+      return ("bg-[#D1FADF] text-[#155E3E]")
+    }
+    else if (status === "Rejected") {
+      return ("bg-[#FAD6D1] text-[#5E1515]")
+    }
+    else if (status === "Pending for Approval") {
+      return ("bg-[#FEF1C6] text-[#6D1C00]")
+    }
+    else if (status === "Deactivated") {
+      return ("bg-[#EAECF0] text-[#525252]")
+    }
+  }
 
   const [prev, setPrev] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [next, setNext] = useState(false);                         // 
-  const recordsPerPage = 4;
+  const recordsPerPage = 8;
   const lastIndex = currentPage * recordsPerPage;                 //      This  part related to Pagination logic
   const firstIndex = lastIndex - recordsPerPage;                  //     Related functions are bottom
   const records = tableValues.slice(firstIndex, lastIndex);
@@ -190,7 +207,7 @@ function Policies() {
 
                 <div className="flex gap-x-24 ml-24">
                   <div className="flex items-center gap-x-2">
-                    <h6>Status</h6>
+                    <h6>{t('policies.status')}</h6>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="7" height="13" viewBox="0 0 7 13">
@@ -205,7 +222,7 @@ function Policies() {
                       </g>
                     </svg>
                   </div>
-                  <h6 className="ml-28">Action</h6>
+                  <h6 className="ml-28">{t('policies.action')}</h6>
                 </div>
               </div>
               <div className="flex-col ml-5 text-xs font-semibold text-gray-800 items-center justify-evenly">
@@ -213,7 +230,7 @@ function Policies() {
                   return (
                     <div key={index}>
                       <hr className="h-px bg-gray-200 border-0 mr-5" />
-                      <div className="flex items-center ml-3 p-1 gap-x-9">
+                      <div className={`flex items-center ml-3 p-1 gap-x-9 ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
                         <p className="w-28">P88424932</p>
                         <p className="w-32">{partner.Ptype}</p>
                         <p className="w-32">Banking</p>
@@ -221,7 +238,7 @@ function Policies() {
                         <p className="w-28">31/05/2023</p>
                         <div className="flex">
                           <div className="flex justify-between w-80 ml-16 pl-6 items-center">
-                            <div className={`bg-green-200 text-green-600 px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
+                            <div className={`${bgOfStatus(partner.status)} px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
                               {partner.status}
                             </div>
                             <div className="flex-col pb-2">
@@ -291,8 +308,8 @@ function Policies() {
                 </nav>
                 <div className="flex items-center gap-x-3">
                   <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                  <div className="flex p-0.5 items-center text-xs border-2 rounded-md border-indigo-400 text-indigo-600 font-medium">
-                    <p className="m-0.5 mr-2">
+                  <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
+                    <p>
                       {records.length}
                     </p>
                     <svg
