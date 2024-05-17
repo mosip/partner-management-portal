@@ -70,6 +70,8 @@ COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 # copy build files to nginx html directory
 COPY --from=build_pmp_reactjs_ui /build  ${work_dir}
 
+RUN echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ${work_dir}/env.env
+
 RUN chown -R ${container_user}:${container_user} /home/${container_user}
 
 # change permissions of file inside working dir
