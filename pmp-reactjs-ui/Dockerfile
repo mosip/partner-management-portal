@@ -27,6 +27,8 @@ LABEL commit_hash=${COMMIT_HASH}
 LABEL commit_id=${COMMIT_ID}
 LABEL build_time=${BUILD_TIME}
 
+ENV nginx_dir=/usr/share/nginx
+
 ENV base_path=/usr/share/nginx/html
 
 ENV i18n_path=${base_path}/i18n
