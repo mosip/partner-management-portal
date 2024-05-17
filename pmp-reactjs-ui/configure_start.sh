@@ -3,20 +3,20 @@
 #installs the pre-requisites.
 set -e
 
-echo "Downloading pre-requisites started."
+#echo "Downloading pre-requisites started."
 
 #i18n bundle
-echo "Downloading i18n bundle files"
-wget --no-check-certificate --no-cache --no-cookies $artifactory_url_env/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O $i18n_path/pmp-i18n-bundle.zip
+#echo "Downloading i18n bundle files"
+#wget --no-check-certificate --no-cache --no-cookies $artifactory_url_env/artifactory/libs-release-local/i18n/pmp-i18n-bundle.zip -O $i18n_path/pmp-i18n-bundle.zip
 
-echo "unzip i18n bundle files.."
-chmod 775 $i18n_path/*
+#echo "unzip i18n bundle files.."
+#chmod 775 $i18n_path/*
 
-cd $i18n_path
-unzip -o pmp-i18n-bundle.zip
-rm pmp-i18n-bundle.zip
+#cd $i18n_path
+#unzip -o pmp-i18n-bundle.zip
+#rm pmp-i18n-bundle.zip
 
-echo "Pre-requisites download completed."
+#echo "Pre-requisites download completed."
 
 echo "Replacing public url placeholder with public url"
 
