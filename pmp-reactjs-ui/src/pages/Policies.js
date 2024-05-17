@@ -36,12 +36,12 @@ function Policies() {
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
   ];
 
-  const [prev, setPrev] = useState('');
+  const [prev, setPrev] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [next, setNext] = useState('');                         // 
-  const recordsPerPage = 8;
-  const lastIndex = currentPage * recordsPerPage;               //      This  part related to Pagination logic
-  const firstIndex = lastIndex - recordsPerPage;                 //     Related functions are bottom
+  const [next, setNext] = useState(false);                         // 
+  const recordsPerPage = 4;
+  const lastIndex = currentPage * recordsPerPage;                 //      This  part related to Pagination logic
+  const firstIndex = lastIndex - recordsPerPage;                  //     Related functions are bottom
   const records = tableValues.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(tableValues.length / recordsPerPage)
   const numbers = [...Array(nPage + 1).keys()].slice(1)          //
@@ -246,9 +246,21 @@ function Policies() {
                 <div></div>
                 <nav>
                   <ul className="flex gap-x-4 items-center">
-                    <li className={`cursor-pointer font-bold ${prev}`}>
-                      <p className='page-link'
-                        onClick={prevPage}>{'<'}</p>
+                    <li className={`cursor-pointer`}>
+                      <svg onClick={prevPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32" height="32" viewBox="0 0 32 32">
+                        <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
+                          <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
+                            fill="#fff" stroke={prev ? "#1447b2" : "#bababa"} strokeWidth="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
+                          </g>
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
+                            transform="translate(450.214 766.359) rotate(-90)" fill={prev ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>
                     </li>
                     {
                       numbers.map((n, i) => (
@@ -259,17 +271,38 @@ function Policies() {
                         </li>
                       ))
                     }
-                    <li className={`cursor-pointer font-bold ${next}`}>
-                      <p className='page-link'
-                        onClick={nextPage}>{'>'}</p>
+                    <li className={`cursor-pointer`}>
+                      <svg onClick={nextPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32" height="32" viewBox="0 0 32 32">
+                        <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
+                          <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
+                            fill="#fff" stroke={next ? "#1447b2" : "#bababa"} stroke-width="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
+                          </g>
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                            transform="translate(763.613 778.68) rotate(-90)" fill={next ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>
                     </li>
                   </ul>
                 </nav>
                 <div className="flex items-center gap-x-3">
                   <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                  <p className="p-1 text-xs border-2 border-indigo-400 text-indigo-600 font-bold">
-                    {records.length}
-                  </p>
+                  <div className="flex p-0.5 items-center text-xs border-2 rounded-md border-indigo-400 text-indigo-600 font-medium">
+                    <p className="m-0.5 mr-2">
+                      {records.length}
+                    </p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                      <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                        d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                        transform="translate(-12 -16.6)" fill="#1447b2" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </>
@@ -294,22 +327,22 @@ function Policies() {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1)
     }
-    setPrev('border-2 border-blue-500 px-0.5 text-blue-500')
-    setNext('')
+    setPrev(true)
+    setNext(false)
   }
 
   function changeCurrPage(id) {
     setCurrentPage(id)
-    setPrev('')
-    setNext('')
+    setPrev(false)
+    setNext(false)
   }
 
   function nextPage() {
     if (currentPage !== nPage) {
       setCurrentPage(currentPage + 1)
     }
-    setNext('border-2 border-blue-500 px-0.5 text-blue-500')
-    setPrev('')
+    setNext(true)
+    setPrev(false)
   }
 }
 
