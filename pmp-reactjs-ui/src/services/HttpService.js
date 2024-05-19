@@ -16,27 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
   })
 }
 
-// Add a request interceptor
-HttpService.interceptors.request.use(function (request) {
-  // Do something before request is sent
-  if (process.env.NODE_ENV === 'production') {
-    const originalRequest = request.url;
-    console.log(originalRequest);
-    if (originalRequest.includes("/api")) {
-      request.url = originalRequest.replace("/api", "");
-    }
-    console.log(request.url);
-  }
-  return request;
-}, function (error) {
-  // Do something with request error
-  console.log("request interceptor");
-  console.log(error);
-  loginRedirect(window.location.href);
-  return Promise.reject(error);
-});
-
-
 HttpService.interceptors.response.use((response) => { // block to handle success case
   const originalRequest = response.config;
   console.log("interceptor: "+ originalRequest.url);

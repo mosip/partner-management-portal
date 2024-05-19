@@ -1,15 +1,16 @@
 import HttpService from "../services/HttpService.js";
 import { useEffect, useState } from 'react';
+import { getUrl } from "../utils/AppUtils";
 
 const GuardedRoute = ({ children }) => {
-  
+
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const apiResp = await HttpService
-          .get(`/api/authorize/admin/validateToken`);
+          .get(getUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
         if (apiResp.status === 200 && apiResp.data.response) {
           console.log(`isAuthenticated: yes`);
           setIsUserAuthenticated(true);
