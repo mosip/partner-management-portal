@@ -1,8 +1,9 @@
 //import HttpService from "./HttpService.js";
+//import { getUrl } from "../utils/AppUtils";
 
 export const loadAppConfig = async () => {
     try {
-        //const resp = await HttpService.get("/api/configs");
+        //const resp = await HttpService.get(getUrl("/configs", process.env.NODE_ENV));
         //const appConfig = resp.data.response;
         //localStorage.setItem('appConfig', JSON.stringify(appConfig));
         console.log("window._env_.REACT_APP_API_BASE_URL " + window._env_.REACT_APP_API_BASE_URL);

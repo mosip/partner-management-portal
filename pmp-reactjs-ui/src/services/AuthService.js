@@ -1,10 +1,11 @@
 import HttpService from "./HttpService.js";
+import { getUrl } from "../utils/AppUtils";
 
 export const isAuthenticated = async () => {
     try {
-        const resp = await HttpService
-            .get(`/api/authorize/admin/validateToken`);
-            console.log(`isAuthenticated: yes`);
+        await HttpService
+            .get(getUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
+        console.log(`isAuthenticated: yes`);
         return { token: true };
     } catch (err) {
         console.log('isAuthenticated error:', err);

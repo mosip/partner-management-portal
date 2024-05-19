@@ -59,3 +59,13 @@ export const handleMouseClickForDropdown = (ref, callback) => {
         document.removeEventListener('mousedown', handleClickOutside);
     };
 };
+
+export const getUrl = (url, env) => {
+    let newUrl = '';
+    if (env !== 'production') {
+        newUrl = "/api" + url;
+    } else {
+        newUrl = url;
+    }
+    return newUrl;
+}
