@@ -10,11 +10,7 @@
         "policies": "سياسات",
         "policiesDesc": "طلب وإدارة السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
-        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
-        "mosipRights": "كل الحقوق محفوظة.",
-        "documentation": "توثيق",
-        "mosipCommunity": "مجتمع MOSIP",
-        "contactUs": "اتصل بنا"
+        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API"
     },
     "header": {
         "partnerProfile": "الملف التعريفي للشريك",
@@ -77,5 +73,24 @@
         "printPartner": "شريك الطباعة",
         "internalPartner": "الشريك الداخلي",
         "manualAdjudication": "التحكيم اليدوي"
+    },
+    "policies": {
+        "requestAPolicy": "طلب سياسة",
+        "home": "بيت",
+        "requestPolicyBtn": "سياسة الطلب",
+        "listOfPolicies": "قائمة السياسات",
+        "filterBtn": "منقي",
+        "partnerId": "معرف الشريك",
+        "partnerType": "معرف الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "policyName": "اسم السياسة",
+        "status": "حالة",
+        "action": "فعل",
+        "enterPartnerID": "أدخل معرف الشريك",
+        "selectPartnerType": "حدد نوع الشريك",
+        "selectPolicyGroup": "حدد مجموعة السياسات",
+        "selectPolicyName": "حدد اسم السياسة",
+        "approved": "موافقة",
+        "itemsPerPage": "مواد لكل صفحة"
     }
 }

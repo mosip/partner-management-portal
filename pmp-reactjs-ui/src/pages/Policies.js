@@ -13,7 +13,6 @@ function Policies() {
 
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [statusBg, setStatusBg] = useState('');
   const [viewOpt, setViewOpt] = useState(false);
 
   const titles = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
@@ -27,21 +26,39 @@ function Policies() {
   const tableValues = [
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Pending for Approval", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
     { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Pending for Approval", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Deactivated", "Action": "..." },
     { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
+    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
+    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
   ];
 
-  const [prev, setPrev] = useState('');
+  function bgOfStatus(status) {
+    if (status === "Approved") {
+      return ("bg-[#D1FADF] text-[#155E3E]")
+    }
+    else if (status === "Rejected") {
+      return ("bg-[#FAD6D1] text-[#5E1515]")
+    }
+    else if (status === "Pending for Approval") {
+      return ("bg-[#FEF1C6] text-[#6D1C00]")
+    }
+    else if (status === "Deactivated") {
+      return ("bg-[#EAECF0] text-[#525252]")
+    }
+  }
+
+  const [prev, setPrev] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [next, setNext] = useState('');                         // 
+  const [next, setNext] = useState(false);                         // 
   const recordsPerPage = 8;
-  const lastIndex = currentPage * recordsPerPage;               //      This  part related to Pagination logic
-  const firstIndex = lastIndex - recordsPerPage;                 //     Related functions are bottom
+  const lastIndex = currentPage * recordsPerPage;                 //      This  part related to Pagination logic
+  const firstIndex = lastIndex - recordsPerPage;                  //     Related functions are bottom
   const records = tableValues.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(tableValues.length / recordsPerPage)
   const numbers = [...Array(nPage + 1).keys()].slice(1)          //
@@ -190,7 +207,7 @@ function Policies() {
 
                 <div className="flex gap-x-24 ml-24">
                   <div className="flex items-center gap-x-2">
-                    <h6>Status</h6>
+                    <h6>{t('policies.status')}</h6>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="7" height="13" viewBox="0 0 7 13">
@@ -205,7 +222,7 @@ function Policies() {
                       </g>
                     </svg>
                   </div>
-                  <h6 className="ml-28">Action</h6>
+                  <h6 className="ml-28">{t('policies.action')}</h6>
                 </div>
               </div>
               <div className="flex-col ml-5 text-xs font-semibold text-gray-800 items-center justify-evenly">
@@ -213,7 +230,7 @@ function Policies() {
                   return (
                     <div key={index}>
                       <hr className="h-px bg-gray-200 border-0 mr-5" />
-                      <div className="flex items-center ml-3 p-1 gap-x-9">
+                      <div className={`flex items-center ml-3 p-1 gap-x-9 ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
                         <p className="w-28">P88424932</p>
                         <p className="w-32">{partner.Ptype}</p>
                         <p className="w-32">Banking</p>
@@ -221,7 +238,7 @@ function Policies() {
                         <p className="w-28">31/05/2023</p>
                         <div className="flex">
                           <div className="flex justify-between w-80 ml-16 pl-6 items-center">
-                            <div className={`bg-green-200 text-green-600 px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
+                            <div className={`${bgOfStatus(partner.status)} px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
                               {partner.status}
                             </div>
                             <div className="flex-col pb-2">
@@ -246,9 +263,21 @@ function Policies() {
                 <div></div>
                 <nav>
                   <ul className="flex gap-x-4 items-center">
-                    <li className={`cursor-pointer font-bold ${prev}`}>
-                      <p className='page-link'
-                        onClick={prevPage}>{'<'}</p>
+                    <li className={`cursor-pointer`}>
+                      <svg onClick={prevPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32" height="32" viewBox="0 0 32 32">
+                        <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
+                          <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
+                            fill="#fff" stroke={prev ? "#1447b2" : "#bababa"} strokeWidth="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
+                          </g>
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
+                            transform="translate(450.214 766.359) rotate(-90)" fill={prev ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>
                     </li>
                     {
                       numbers.map((n, i) => (
@@ -259,17 +288,38 @@ function Policies() {
                         </li>
                       ))
                     }
-                    <li className={`cursor-pointer font-bold ${next}`}>
-                      <p className='page-link'
-                        onClick={nextPage}>{'>'}</p>
+                    <li className={`cursor-pointer`}>
+                      <svg onClick={nextPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32" height="32" viewBox="0 0 32 32">
+                        <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
+                          <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
+                            fill="#fff" stroke={next ? "#1447b2" : "#bababa"} stroke-width="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
+                          </g>
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                            transform="translate(763.613 778.68) rotate(-90)" fill={next ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>
                     </li>
                   </ul>
                 </nav>
                 <div className="flex items-center gap-x-3">
                   <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                  <p className="p-1 text-xs border-2 border-indigo-400 text-indigo-600 font-bold">
-                    {records.length}
-                  </p>
+                  <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
+                    <p>
+                      {records.length}
+                    </p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                      <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                        d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                        transform="translate(-12 -16.6)" fill="#1447b2" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </>
@@ -294,22 +344,22 @@ function Policies() {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1)
     }
-    setPrev('border-2 border-blue-500 px-0.5 text-blue-500')
-    setNext('')
+    setPrev(true)
+    setNext(false)
   }
 
   function changeCurrPage(id) {
     setCurrentPage(id)
-    setPrev('')
-    setNext('')
+    setPrev(false)
+    setNext(false)
   }
 
   function nextPage() {
     if (currentPage !== nPage) {
       setCurrentPage(currentPage + 1)
     }
-    setNext('border-2 border-blue-500 px-0.5 text-blue-500')
-    setPrev('')
+    setNext(true)
+    setPrev(false)
   }
 }
 

@@ -1,5 +1,5 @@
 {
-    "dashboard" : {
+    "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
         "partnerTypeRequest": "Partner Type Request",
         "partnerTypeRequestDesc": "Request for Partner Type.",
@@ -10,11 +10,7 @@
         "policies": "Policies",
         "policiesDesc": "Request and Manage your policies.",
         "authenticationServices": "Authentication Services",
-        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
-        "mosipRights": "All rights reserved.",
-        "documentation": "Documentation",
-        "mosipCommunity": "MOSIP Community",
-        "contactUs": "Contact Us"
+        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications"
     },
     "header": {
         "partnerProfile": "Partner Profile",
@@ -54,7 +50,7 @@
         "partnerDomainTypeLabel": "Partner Domain Type",
         "selectingFile": "Selecting the file...",
         "cancel": "Cancel",
-        "selectCertificate": "Please tap to select the certificate", 
+        "selectCertificate": "Please tap to select the certificate",
         "certificateFormat": "Only .cer or .pem certificate formats are allowed for upload",
         "remove": "Remove",
         "close": "Close",

@@ -127,12 +127,12 @@ function Dashboard() {
       <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
       <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
         <div>
-          <p>2024 © MOSIP - {t('dashboard.mosipRights')}</p>
+          <p>2024 © MOSIP - {t('footer.allRightsReserved')}</p>
         </div>
         <div className="flex justify-between">
-          <p className="mr-7">{t('dashboard.documentation')}</p>
-          <p className="mr-7">{t('dashboard.mosipCommunity')}</p>
-          <p className="mr-7">{t('dashboard.contactUs')}</p>
+        <p className="mr-7">{t('footer.documentation')}</p>
+              <p className="mr-7">{t('footer.mosipCommunity')}</p>
+              <p className="mr-7">{t('footer.contactUs')}</p>
         </div>
       </div>
     </div>

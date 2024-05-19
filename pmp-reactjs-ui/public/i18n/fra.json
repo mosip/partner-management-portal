@@ -10,11 +10,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et gérez vos polices.",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
-        "mosipRights": "Tous droits réservés.",
-        "documentation": "Documentation",
-        "mosipCommunity": "Communauté MOSIP",
-        "contactUs": "Contactez-nous"
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API"
     },
     "header": {
         "partnerProfile": "Profil du partenaire",
@@ -77,5 +73,24 @@
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
         "manualAdjudication": "Arbitrage manuelle"
+    },
+    "policies": {
+        "requestAPolicy": "Demander une politique",
+        "home": "Maison",
+        "requestPolicyBtn": "Politique de demande",
+        "listOfPolicies": "Liste des politiques",
+        "filterBtn": "Filtre",
+        "partnerId": "ID partenaire",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "status": "Statut",
+        "action": "Action",
+        "enterPartnerID": "Saisissez l'ID du partenaire",
+        "selectPartnerType": "Sélectionnez le type de partenaire",
+        "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
+        "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "approved": "Approuvée",
+        "itemsPerPage": "Objets par page"
     }
 }
