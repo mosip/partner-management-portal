@@ -46,7 +46,7 @@ HttpService.interceptors.response.use((response) => { // block to handle success
     console.log(error);
     console.log("originalRequest._retry" + originalRequest._retry);
     originalRequest._retry = true;
-    return loginRedirect(window.location.href);
+    return loginRedirect("/");
   } 
   else {
     return Promise.reject(error);
