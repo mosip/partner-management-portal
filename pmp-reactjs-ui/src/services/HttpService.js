@@ -46,9 +46,11 @@ export const setupResponseInterceptor = () => {
         // Code inside this block will refresh the auth token  
         console.log(error);
         error.config.count += 1 // update count
-        const redirectUrl = loginRedirect(window.location.href);
+        let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL; 
+        redirectUrl = redirectUrl + loginRedirect(window.location.href);
+        console.log(redirectUrl);
         window.location.href = redirectUrl;
-        return HttpService(originalRequest);
+       // return HttpService(originalRequest);
       }
       return Promise.reject(error);
     });
