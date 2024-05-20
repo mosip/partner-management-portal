@@ -6,8 +6,8 @@ function ErrorMessage ({errorCode, errorMessage, clickOnCancel}) {
     const [errorMsg, setErrorMsg] = useState();
 
     useEffect(() => {
-        const serverErrors = t('serverError', { returnObjects: true });
         if (errorCode) {
+            const serverErrors = t('serverError', { returnObjects: true });
             if(serverErrors[errorCode]) {
                 setErrorMsg(serverErrors[errorCode]);
             } else {
