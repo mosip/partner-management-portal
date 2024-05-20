@@ -1,4 +1,4 @@
-import HttpService from "./HttpService.js";
+import { HttpService } from "../services/HttpService";
 import { getUrl } from "../utils/AppUtils";
 
 export const isAuthenticated = async () => {

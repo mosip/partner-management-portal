@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
-import HttpService from "../services/HttpService";
+import { HttpService } from "../services/HttpService";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getUrl } from "../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 

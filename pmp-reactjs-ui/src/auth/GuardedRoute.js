@@ -1,4 +1,4 @@
-import HttpService from "../services/HttpService.js";
+import { HttpService } from "../services/HttpService";
 import { useEffect, useState } from 'react';
 import { getUrl } from "../utils/AppUtils";
 
