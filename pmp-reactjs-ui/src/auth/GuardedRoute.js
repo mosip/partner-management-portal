@@ -11,7 +11,7 @@ const GuardedRoute = ({ children }) => {
       try {
         const apiResp = await HttpService
           .get(getUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
-        if (apiResp.status === 200 && apiResp.data.response) {
+        if (apiResp && apiResp.status === 200 && apiResp.data.response) {
           console.log(`isAuthenticated: yes`);
           setIsUserAuthenticated(true);
         } else {
