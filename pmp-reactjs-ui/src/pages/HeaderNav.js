@@ -22,7 +22,10 @@ function HeaderNav({ open, setOpen }) {
         // if (cachedAppConfig)
         // console.log(cachedAppConfig['sbiPorts']);
         localStorage.clear();
-        window.location.href = getUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+        let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL; 
+        redirectUrl = redirectUrl + getUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+        console.log(redirectUrl);
+        window.location.href = redirectUrl;
     }
     
     return (

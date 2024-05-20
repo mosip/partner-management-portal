@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginRedirect } from './LoginRedirectService.js';
+import { getLoginRedirectUrl } from './LoginRedirectService.js';
 import { jwtDecode } from 'jwt-decode';
 import { setUserProfile, getUserProfile } from './UserProfileService.js';
 
@@ -7,7 +7,7 @@ export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL,
   count: 0, //custom
-  retries: 3
+  retries: 2
 })
 
 export const setupResponseInterceptor = () => {
@@ -35,8 +35,6 @@ export const setupResponseInterceptor = () => {
   },
     (error) => { // block to handle error case
       const { count, retries } = error.config // extract count and retries
-      console.log(count);        
-      console.log(retries);
       const originalRequestUrl = error.config.url;
       if (error.response && error.response.status === 401
         && originalRequestUrl.split('/').includes('validateToken')
@@ -45,10 +43,9 @@ export const setupResponseInterceptor = () => {
         console.log(error);
         error.config.count += 1 // update count
         let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL; 
-        redirectUrl = redirectUrl + loginRedirect(window.location.href);
+        redirectUrl = redirectUrl + getLoginRedirectUrl(window.location.href);
         console.log(redirectUrl);
         window.location.href = redirectUrl;
-       // return HttpService(originalRequest);
       }
       return Promise.reject(error);
     });
