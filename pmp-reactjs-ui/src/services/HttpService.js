@@ -7,7 +7,7 @@ export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL,
   count: 0, //custom
-  retries: 1, //custom
+  retries: 3, //custom
 })
 
 export const setupResponseInterceptor = () => {

@@ -1,10 +1,13 @@
 import './App.css';
 import AppRoutes from './auth/AppRoutes';
 import { loadAppConfig } from './services/ConfigService.js';
+import { setupResponseInterceptor } from './services/HttpService.js';
 
 await loadAppConfig();
+setupResponseInterceptor();
 
-function App() {  
+function App() {
+
   return (
     <AppRoutes></AppRoutes>
   );
