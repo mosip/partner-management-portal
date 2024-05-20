@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { HttpService } from "../services/HttpService";
 import { formatDate, getPartnerTypeDescription, getUrl } from '../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from "./ErrorMessage";
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -10,6 +11,7 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [fileName, setFileName] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadFailure, setUploadFailure] = useState(false);
+    const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [certificateData, setCertificateData] = useState("");
     const [formattedDate, setFormattedDate] = useState("");
@@ -39,14 +41,17 @@ function UploadCertificate({ closePopup, partnerData }) {
                 if (response !== null) {
                     const resData = response.data.response;
                     if (response.data.errors && response.data.errors.length > 0) {
+                        const errorCode = response.data.errors[0].errorCode;
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
+                        setErrorCode(errorCode)
                         setErrorMsg(errorMessage);
                     } else if (resData === null) {
                         setUploadFailure(true);
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
                     } else {
                         setUploadSuccess(true);
+                        setErrorMsg(t('uploadCertificate.successMsg', { partnerType: getPartnerType(partnerData) }));
                     }
                 } else {
                     setUploadFailure(true);
@@ -91,7 +96,6 @@ function UploadCertificate({ closePopup, partnerData }) {
     };
     const cancelErrorMsg = () => {
         setErrorMsg("");
-        setUploadFailure(false);
     };
 
     const handleFileChange = (event) => {
@@ -267,27 +271,10 @@ function UploadCertificate({ closePopup, partnerData }) {
                             ) : (
                                 <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">{t('uploadCertificate.submit')}</button>
                             )}
-                            {uploadSuccess && !uploadFailure && (
+                            {uploadSuccess && errorMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
                                     <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
-                                        <p className="text-sm font-semibold text-white break-words">
-                                            {t('uploadCertificate.successMsg', { partnerType: getPartnerType(partnerData) })}
-                                        </p>
-                                        <svg
-                                            className="cursor-pointer"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16.828"
-                                            height="16.828"
-                                            viewBox="0 0 16.828 16.828"
-                                            onClick={() => setUploadFailure(true)}
-                                        >
-                                            <path
-                                                id="close_FILL0_wght400_GRAD0_opsz48"
-                                                d="M 23.27308082580566 25.05710983276367 L 22.91953086853027 24.70355033874512 L 17.35000038146973 19.13401985168457 L 11.7804708480835 24.70355033874512 L 11.42691993713379 25.05710983276367 L 11.0733699798584 24.70355033874512 L 9.996450424194336 23.62663078308105 L 9.642889976501465 23.27308082580566 L 9.996450424194336 22.91953086853027 L 15.56597995758057 17.35000038146973 L 9.996450424194336 11.7804708480835 L 9.642889976501465 11.42691993713379 L 9.996450424194336 11.07336044311523 L 11.07338047027588 9.996439933776855 L 11.42693042755127 9.642889976501465 L 11.78048038482666 9.996450424194336 L 17.35000038146973 15.5659704208374 L 22.91953086853027 9.996450424194336 L 23.27308082580566 9.642889976501465 L 23.62663078308105 9.996450424194336 L 24.70355033874512 11.0733699798584 L 25.05710983276367 11.42691993713379 L 24.70355033874512 11.7804708480835 L 19.13401985168457 17.35000038146973 L 24.70355033874512 22.91953086853027 L 25.05710983276367 23.27308082580566 L 24.70355033874512 23.62663078308105 L 23.62663078308105 24.70355033874512 L 23.27308082580566 25.05710983276367 Z"
-                                                transform="translate(-8.936 -8.936)"
-                                                fill="#fff"
-                                            />
-                                        </svg>
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                     </div>
                                 </div>
 
@@ -295,24 +282,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                             {uploadFailure && errorMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
                                     <div className="bg-moderate-red md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
-                                        <p className="text-sm font-semibold text-white break-words">
-                                            {errorMsg}
-                                        </p>
-                                        <svg
-                                            className="cursor-pointer"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16.828"
-                                            height="16.828"
-                                            viewBox="0 0 16.828 16.828"
-                                            onClick={cancelErrorMsg}
-                                        >
-                                            <path
-                                                id="close_FILL0_wght400_GRAD0_opsz48"
-                                                d="M 23.27308082580566 25.05710983276367 L 22.91953086853027 24.70355033874512 L 17.35000038146973 19.13401985168457 L 11.7804708480835 24.70355033874512 L 11.42691993713379 25.05710983276367 L 11.0733699798584 24.70355033874512 L 9.996450424194336 23.62663078308105 L 9.642889976501465 23.27308082580566 L 9.996450424194336 22.91953086853027 L 15.56597995758057 17.35000038146973 L 9.996450424194336 11.7804708480835 L 9.642889976501465 11.42691993713379 L 9.996450424194336 11.07336044311523 L 11.07338047027588 9.996439933776855 L 11.42693042755127 9.642889976501465 L 11.78048038482666 9.996450424194336 L 17.35000038146973 15.5659704208374 L 22.91953086853027 9.996450424194336 L 23.27308082580566 9.642889976501465 L 23.62663078308105 9.996450424194336 L 24.70355033874512 11.0733699798584 L 25.05710983276367 11.42691993713379 L 24.70355033874512 11.7804708480835 L 19.13401985168457 17.35000038146973 L 24.70355033874512 22.91953086853027 L 25.05710983276367 23.27308082580566 L 24.70355033874512 23.62663078308105 L 23.62663078308105 24.70355033874512 L 23.27308082580566 25.05710983276367 Z"
-                                                transform="translate(-8.936 -8.936)"
-                                                fill="#fff"
-                                            />
-                                        </svg>
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                     </div>
                                 </div>
                             )}
