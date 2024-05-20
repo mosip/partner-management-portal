@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../services/HttpService";
+import ErrorMessage from "./ErrorMessage";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getUrl } from "../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
@@ -14,6 +15,7 @@ function PartnerCertificatesList() {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
     const [certificatesData, setcertificatesData] = useState([]);
+    const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
     const dropdownRef = useRef(null);
@@ -56,7 +58,9 @@ function PartnerCertificatesList() {
             if (response != null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
+                    const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
+                    setErrorCode(errorCode);
                     setErrorMsg(errorMessage);
                     console.error('Error:', errorMessage);
                 } else {
@@ -93,7 +97,9 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
+                        const errorCode = responseData.errors[0].errorCode;
                         const errorMessage = responseData.errors[0].message;
+                        setErrorCode(errorCode);
                         setErrorMsg(errorMessage);
                         console.error('Error:', errorMessage);
                     } else {
@@ -137,27 +143,7 @@ function PartnerCertificatesList() {
                     {errorMsg && (
                         <div className="flex justify-end max-w-7xl">
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
-                                <div>
-                                    <p className="text-xs font-semibold text-white break-words">
-                                        {errorMsg}
-                                    </p>
-                                </div>
-                                <div className="mr-3 ml-5">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16.828"
-                                        height="16.828"
-                                        viewBox="0 0 16.828 16.828"
-                                        onClick={cancelErrorMsg}
-                                    >
-                                        <path
-                                            id="close_FILL0_wght400_GRAD0_opsz48"
-                                            d="M 23.27308082580566 25.05710983276367 L 22.91953086853027 24.70355033874512 L 17.35000038146973 19.13401985168457 L 11.7804708480835 24.70355033874512 L 11.42691993713379 25.05710983276367 L 11.0733699798584 24.70355033874512 L 9.996450424194336 23.62663078308105 L 9.642889976501465 23.27308082580566 L 9.996450424194336 22.91953086853027 L 15.56597995758057 17.35000038146973 L 9.996450424194336 11.7804708480835 L 9.642889976501465 11.42691993713379 L 9.996450424194336 11.07336044311523 L 11.07338047027588 9.996439933776855 L 11.42693042755127 9.642889976501465 L 11.78048038482666 9.996450424194336 L 17.35000038146973 15.5659704208374 L 22.91953086853027 9.996450424194336 L 23.27308082580566 9.642889976501465 L 23.62663078308105 9.996450424194336 L 24.70355033874512 11.0733699798584 L 25.05710983276367 11.42691993713379 L 24.70355033874512 11.7804708480835 L 19.13401985168457 17.35000038146973 L 24.70355033874512 22.91953086853027 L 25.05710983276367 23.27308082580566 L 24.70355033874512 23.62663078308105 L 23.62663078308105 24.70355033874512 L 23.27308082580566 25.05710983276367 Z"
-                                            transform="translate(-8.936 -8.936)"
-                                            fill="#fff"
-                                        />
-                                    </svg>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
                     )}
@@ -317,12 +303,12 @@ function PartnerCertificatesList() {
             <hr className="h-px ml-7 mt-9 bg-gray-200 border-0 " />
             <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
                 <div>
-                    <p>2024 © MOSIP - {t('dashboard.mosipRights')}</p>
+                    <p>2024 © MOSIP - {t('footer.allRightsReserved')}</p>
                 </div>
                 <div className="flex justify-between">
-                    <p className="mr-7">{t('dashboard.documentation')}</p>
-                    <p className="mr-7">{t('dashboard.mosipCommunity')}</p>
-                    <p className="mr-7">{t('dashboard.contactUs')}</p>
+                    <p className="mr-7">{t('footer.documentation')}</p>
+                    <p className="mr-7">{t('footer.mosipCommunity')}</p>
+                    <p className="mr-7">{t('footer.contactUs')}</p>
                 </div>
             </div>
         </div>
