@@ -8,7 +8,7 @@ export const HttpService = axios.create({
   baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL
 })
 
-export const setupResponseInterceptor = (navigate) => {
+export const setupResponseInterceptor = () => {
   HttpService.interceptors.response.use((response) => { // block to handle success case
     const originalRequest = response.config;
     console.log("interceptor: " + originalRequest.url);
