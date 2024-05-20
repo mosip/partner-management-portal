@@ -9,6 +9,7 @@ export const loginRedirect = (url) => {
     cookies.set('state', stateParam, { path: '/' });
     let url1 = getUrl(`/login/` + btoa(url) + '?state=' + stateParam, process.env.NODE_ENV);
     console.log(url1);
+    window.onbeforeunload = null;
     window.location.href = url1;
     //return url1;
 }
