@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import HttpService from '../services/HttpService';
+import { HttpService } from "../services/HttpService";
 import { formatDate, getPartnerTypeDescription, getUrl } from '../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 
