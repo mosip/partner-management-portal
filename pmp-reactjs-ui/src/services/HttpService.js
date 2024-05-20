@@ -5,14 +5,16 @@ import { setUserProfile, getUserProfile } from './UserProfileService.js';
 
 export const HttpService = axios.create({
   withCredentials: true,
-  baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL
+  baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL,
+  count: 0, //custom
+  retries: 1, //custom
 })
 
 export const setupResponseInterceptor = () => {
   HttpService.interceptors.response.use((response) => { // block to handle success case
-    const originalRequest = response.config;
-    console.log("interceptor: " + originalRequest.url);
-    if (originalRequest.url.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
+    const originalRequestUrl = response.config.url;
+    console.log("interceptor: " + originalRequestUrl);
+    if (originalRequestUrl.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
       if (!getUserProfile()) {
         const resp = response.data.response;
         const userData = jwtDecode(resp.token);
@@ -32,14 +34,16 @@ export const setupResponseInterceptor = () => {
     return response;
   },
     (error) => { // block to handle error case
-      const originalRequest = error.config;
+      const { count, retries } = error.config // extract count and retries
+      console.log(count);        
+      console.log(retries);
+      const originalRequestUrl = error.config.url;
       if (error.response && error.response.status === 401
-        && originalRequest.url.split('/').includes('validateToken')
-        && !originalRequest._retry) { // Code inside this block will refresh the auth token
-        console.log("response interceptor");
+        && originalRequestUrl.split('/').includes('validateToken')
+        && count < retries) { 
+        // Code inside this block will refresh the auth token  
         console.log(error);
-        console.log("originalRequest._retry" + originalRequest._retry);
-        originalRequest._retry = true;
+        error.config.count += 1 // update count
         loginRedirect(window.location.href);
       }
       else {
