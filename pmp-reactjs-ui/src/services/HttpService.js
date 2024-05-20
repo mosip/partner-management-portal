@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 HttpService.interceptors.response.use((response) => { // block to handle success case
   const originalRequest = response.config;
-  console.log("interceptor: "+ originalRequest.url);
+  console.log("interceptor: " + originalRequest.url);
   if (originalRequest.url.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
     if (!getUserProfile()) {
       const resp = response.data.response;
@@ -39,13 +39,16 @@ HttpService.interceptors.response.use((response) => { // block to handle success
   return response;
 }, function (error) { // block to handle error case
   const originalRequest = error.config;
-  if (error.response.status === 401 && originalRequest.url.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
-    // Redirect to any unauthorised route to avoid infinite loop...
+  if (error.response && error.response.status === 401
+    && originalRequest.url.split('/').includes('validateToken')
+    && !originalRequest._retry) { // Code inside this block will refresh the auth token
     console.log("response interceptor");
     console.log(error);
+    console.log("originalRequest._retry" + originalRequest._retry);
+    originalRequest._retry = true;
     loginRedirect(window.location.href);
-    return Promise.reject(error);
   }
+  return Promise.reject(error);
 });
 
 export default HttpService;
