@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
-import HttpService from "../services/HttpService";
-import {formatDate, getPartnerTypeDescription, handleMouseClickForDropdown} from "../utils/AppUtils";
+import { HttpService } from "../services/HttpService";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getUrl } from "../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 function PartnerCertificatesList() {
@@ -52,7 +52,7 @@ function PartnerCertificatesList() {
 
     const getMosipSignedCertificate = async (partner) => {
         try {
-            const response = await HttpService.get('/api/partners/' + partner.partnerId + '/certificate');
+            const response = await HttpService.get(getUrl('/partners/' + partner.partnerId + '/certificate', process.env.NODE_ENV));
             if (response != null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
@@ -89,7 +89,7 @@ function PartnerCertificatesList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await HttpService.get('/api/partners/getAllCertificateDetails');
+                const response = await HttpService.get(getUrl('/partners/getAllCertificateDetails', process.env.NODE_ENV));
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
@@ -175,7 +175,7 @@ function PartnerCertificatesList() {
                             <div className="flex-col mt-4">
                                 <h1 className="font-bold text-md text-blue-900">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                 <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
-                                {t('partnerCertificatesList.home')}</p>
+                                    {t('partnerCertificatesList.home')}</p>
                             </div>
                         </div>
                         <ul className="min-w-3.5 bg-white mt-3 rounded-lg shadow-md p-5 mr-8 pb-20">
