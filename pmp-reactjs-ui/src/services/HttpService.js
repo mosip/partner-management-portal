@@ -34,9 +34,11 @@ export const setupResponseInterceptor = () => {
     return response;
   },
     (error) => { // block to handle error case
+     
       const { count, retries } = error.config // extract count and retries
       console.log(count);        
       console.log(retries);
+      const originalRequest = error.config;
       const originalRequestUrl = error.config.url;
       if (error.response && error.response.status === 401
         && originalRequestUrl.split('/').includes('validateToken')
@@ -44,11 +46,11 @@ export const setupResponseInterceptor = () => {
         // Code inside this block will refresh the auth token  
         console.log(error);
         error.config.count += 1 // update count
-        loginRedirect(window.location.href);
+        const redirectUrl = loginRedirect(window.location.href);
+        window.location.href = redirectUrl;
+        return HttpService(originalRequest);
       }
-      else {
-        return Promise.reject(error);
-      }
+      return Promise.reject(error);
     });
 }
 
