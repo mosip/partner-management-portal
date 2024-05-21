@@ -17,9 +17,9 @@ function MainLayout({ children }) {
       }, [i18n]);
 
     return (
-        <div className="flex w-full">
+        <div className="flex">
             <SideNav open={open}></SideNav>
-            <div className='w-full'>
+            <div className='lg:w-full'>
                 <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
                 {children}
             </div>

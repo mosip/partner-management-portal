@@ -97,13 +97,13 @@ function Policies() {
           {!isData
             ?
             <div className="bg-white w-full mt-3 rounded-lg shadow-lg items-center">
-              <div className="flex justify-between p-3 text-xs font-normal text-gray-500">
-                <div className="flex gap-x-48">
+              <div className="flex justify-between py-2 pt-4 text-xs font-medium text-gray-500">
+                <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-36">
                   <h6 className="ml-5">{t('policies.partnerId')}</h6>
                   <h6>{t('policies.partnerType')}</h6>
                   <h6>{t('policies.policyName')}</h6>
                 </div>
-                <div className='flex space-x-20 mr-6'>
+                <div className='flex sm:gap-x-7 md:gap-x-16 lg:gap-x-40  mr-6'>
                   <h6>{t('policies.status')}</h6>
                   <h6>{t('policies.action')}</h6>
                 </div>
@@ -188,13 +188,13 @@ function Policies() {
                 </div>
               }
               <div>
-                <table className="table-auto ml-5">
+                <table className="table-auto mx-5 lg:w-auto">
                   <thead>
                     <tr>
                       {table_heads.map((head, index) => {
                         return (
-                          <th key={index} className="py-3 px-9 text-sm font-medium text-gray-500">
-                            <div className="flex gap-x-1 items-center">
+                          <th key={index} className="py-3 text-sm font-medium text-gray-500">
+                            <div className="flex px-9 sm:px-6 md:px-5 lg:px-14 gap-x-1 items-center">
                               {head}
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@ function Policies() {
                         )
                       })
                       }
-                      <th className="px-16 text-sm font-medium text-gray-500">
+                      <th className="px-9 sm:px-6 md:px-5 lg:px-14 text-sm font-medium text-gray-500">
                         <div className="flex gap-x-1 items-center">
                           {t('policies.status')}
                           <svg
@@ -232,26 +232,26 @@ function Policies() {
                           </svg>
                         </div>
                       </th>
-                      <th className="px-9 text-sm font-medium text-gray-500">
+                      <th className="px-9 sm:px-6 md:px-5 lg:px-1 text-sm font-medium text-gray-500">
                         {t('policies.action')}
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="">
                     {records.map((partner, index) => {
                       return (
                         <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
-                          <td className="px-9">{partner.id}</td>
-                          <td className="px-9">{partner.type}</td>
-                          <td className="px-9">{partner.group}</td>
-                          <td className="px-9">{partner.policyName}</td>
-                          <td >{partner.createdDate}</td>
-                          <td className='px-14 flex font-semibold'>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.id}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.type}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.group}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.policyName}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.createdDate}</td>
+                          <td className="flex font-semibold px-9 sm:px-6 md:px-5 lg:px-14">
                             <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
                               {partner.status}
                             </div>
                           </td>
-                          <td className="px-12">{partner.Action}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-4">{partner.Action}</td>
                         </tr>
                       )
                     })
