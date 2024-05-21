@@ -15,27 +15,27 @@ function Policies() {
   const [filter, setFilter] = useState(false);
   const [viewOpt, setViewOpt] = useState(false);
 
-  const titles = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
+  const table_heads = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
   const filterTitles = [
     { "header": t('policies.partnerType'), "placeHolder": t('policies.selectPartnerType') },
     { "header": t('policies.policyGroup'), "placeHolder": t('policies.selectPolicyGroup') },
-    { "header": t('policies.partnerName'), "placeHolder": t('policies.selectPolicyName') },
+    { "header": t('policies.policyName'), "placeHolder": t('policies.selectPolicyName') },
     { "header": t('policies.status'), "placeHolder": t('policies.approved') }
   ];
 
   const tableValues = [
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Pending for Approval", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Pending for Approval", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Deactivated", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Deactivated", "Action": "..." },
-    { "Ptype": "Authentication", "PolicyName": "Full KYC", "status": "Approved", "Action": "..." },
-    { "Ptype": "MISP Partner", "PolicyName": "KYC", "status": "Rejected", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Pending for Approval", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Pending for Approval", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
+    { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
+    { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
   ];
 
   function bgOfStatus(status) {
@@ -97,13 +97,13 @@ function Policies() {
           {!isData
             ?
             <div className="bg-white w-full mt-3 rounded-lg shadow-lg items-center">
-              <div className="flex justify-between p-3 text-xs font-normal text-gray-500">
-                <div className="flex gap-x-48">
+              <div className="flex justify-between py-2 pt-4 text-xs font-medium text-gray-500">
+                <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-36">
                   <h6 className="ml-5">{t('policies.partnerId')}</h6>
                   <h6>{t('policies.partnerType')}</h6>
                   <h6>{t('policies.policyName')}</h6>
                 </div>
-                <div className='flex space-x-20 mr-6'>
+                <div className='flex sm:gap-x-7 md:gap-x-16 lg:gap-x-40  mr-6'>
                   <h6>{t('policies.status')}</h6>
                   <h6>{t('policies.action')}</h6>
                 </div>
@@ -166,97 +166,98 @@ function Policies() {
               {filter &&
                 <div className="flex flex-wrap py-3 bg-gray-50 font-semibold text-xs pl-5">
                   <div className="m-3">
-                    <h3 className="text-xs font-semibold text-tory-blue mb-2">{t('policies.partnerId')}</h3>
+                    <h3 className="text-xs mb-2 text-[#1447b2]">
+                      {t('policies.partnerId')}
+                    </h3>
                     <input type="text"
-                      className="text-start border border-gray-800 text-gray-900 text-xs font-medium rounded-sm shadow-sm w-72 h-8 p-2.5"
+                      className="text-start border border-gray-800 text-gray-900 text-xs rounded-md shadow-sm w-72 h-8 p-2.5"
                       placeholder={t('policies.enterPartnerID')} />
                   </div>
                   {filterTitles.map((filter, index) => {
                     return (
                       <div key={index} className="m-2">
-                        <h3 className="text-xs font-semibold text-tory-blue mb-2">{filter.header}</h3>
-                        <select className="border border-gray-800 text-gray-400 text-xs font-medium rounded-sm w-72 h-8 pl-2.5 focus:none">
+                        <h3 className="text-xs mb-2 text-[#1447b2]">{filter.header}</h3>
+                        <select className="border border-gray-800 text-gray-400 text-xs rounded-md w-72 h-8 pl-2.5">
                           <option selected>{`${filter.placeHolder}`}</option>
                           <option></option>
                         </select>
                       </div>
                     );
-                  })}
-                </div>}
-
-              <div className="flex ml-5 text-xs gap-x-10 font-normal text-gray-500 items-center">
-                {titles.map((header, index) => {
-                  return (
-                    <div key={index} className="flex items-center gap-x-1 m-1">
-                      <h6 className="p-3">{header}</h6>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="7" height="13" viewBox="0 0 7 13">
-                        <g
-                          id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
-                          <path id="Polygon_3" data-name="Polygon 3"
-                            d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                            transform="translate(247 461)" fill="#6f6e6e" />
-                          <path id="Polygon_4" data-name="Polygon 4"
-                            d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                            transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
-                        </g>
-                      </svg>
-                    </div>);
-                })}
-
-                <div className="flex gap-x-24 ml-24">
-                  <div className="flex items-center gap-x-2">
-                    <h6>{t('policies.status')}</h6>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="7" height="13" viewBox="0 0 7 13">
-                      <g
-                        id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
-                        <path id="Polygon_3" data-name="Polygon 3"
-                          d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                          transform="translate(247 461)" fill="#6f6e6e" />
-                        <path id="Polygon_4" data-name="Polygon 4"
-                          d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                          transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
-                      </g>
-                    </svg>
-                  </div>
-                  <h6 className="ml-28">{t('policies.action')}</h6>
+                  })
+                  }
                 </div>
-              </div>
-              <div className="flex-col ml-5 text-xs font-semibold text-gray-800 items-center justify-evenly">
-                {records.map((partner, index) => {
-                  return (
-                    <div key={index}>
-                      <hr className="h-px bg-gray-200 border-0 mr-5" />
-                      <div className={`flex items-center ml-3 p-1 gap-x-9 ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
-                        <p className="w-28">P88424932</p>
-                        <p className="w-32">{partner.Ptype}</p>
-                        <p className="w-32">Banking</p>
-                        <p className="w-28">{partner.PolicyName}</p>
-                        <p className="w-28">31/05/2023</p>
-                        <div className="flex">
-                          <div className="flex justify-between w-80 ml-16 pl-6 items-center">
-                            <div className={`${bgOfStatus(partner.status)} px-3 py-1 font-semibold justify-center text-xs rounded-md`}>
+              }
+              <div>
+                <table className="table-auto mx-5 lg:w-auto">
+                  <thead>
+                    <tr>
+                      {table_heads.map((head, index) => {
+                        return (
+                          <th key={index} className="py-3 text-sm font-medium text-gray-500">
+                            <div className="flex px-9 sm:px-6 md:px-5 lg:px-14 gap-x-1 items-center">
+                              {head}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="7" height="13" viewBox="0 0 7 13">
+                                <g
+                                  id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
+                                  <path id="Polygon_3" data-name="Polygon 3"
+                                    d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                    transform="translate(247 461)" fill="#6f6e6e" />
+                                  <path id="Polygon_4" data-name="Polygon 4"
+                                    d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                    transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
+                                </g>
+                              </svg>
+                            </div>
+                          </th>
+                        )
+                      })
+                      }
+                      <th className="px-9 sm:px-6 md:px-5 lg:px-14 text-sm font-medium text-gray-500">
+                        <div className="flex gap-x-1 items-center">
+                          {t('policies.status')}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="7" height="13" viewBox="0 0 7 13">
+                            <g
+                              id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
+                              <path id="Polygon_3" data-name="Polygon 3"
+                                d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                transform="translate(247 461)" fill="#6f6e6e" />
+                              <path id="Polygon_4" data-name="Polygon 4"
+                                d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
+                            </g>
+                          </svg>
+                        </div>
+                      </th>
+                      <th className="px-9 sm:px-6 md:px-5 lg:px-1 text-sm font-medium text-gray-500">
+                        {t('policies.action')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="">
+                    {records.map((partner, index) => {
+                      return (
+                        <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.id}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.type}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.group}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.policyName}</td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.createdDate}</td>
+                          <td className="flex font-semibold px-9 sm:px-6 md:px-5 lg:px-14">
+                            <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
                               {partner.status}
                             </div>
-                            <div className="flex-col pb-2">
-                              <p onClick={() => setViewOpt(!viewOpt)} className="font-bold text-2xl text-gray-500 cursor-pointer">
-                                ...
-                              </p>
-                              {viewOpt &&
-                                <div className="absolute font-medium px-7 py-2 bg-white shadow-md rounded-sm text-xs">
-                                  View
-                                </div>}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="bg-gray-200 border-0 mr-5" />
-                    </div>
-                  );
-                })}
+                          </td>
+                          <td className="px-9 sm:px-6 md:px-5 lg:px-4">{partner.Action}</td>
+                        </tr>
+                      )
+                    })
+                    }
+                  </tbody>
+                </table>
               </div>
             </div>
               <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
