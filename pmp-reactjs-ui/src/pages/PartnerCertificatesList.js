@@ -5,6 +5,11 @@ import { HttpService } from "../services/HttpService";
 import ErrorMessage from "./ErrorMessage";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getUrl } from "../utils/AppUtils";
 import { useTranslation } from "react-i18next";
+import rectangleBox from '../svg/rectangle_box.svg';
+import fileUpload from '../svg/file_upload_icon.svg';
+import file from '../svg/file_icon.svg';
+import downloadIcon from '../svg/download_icon.svg';
+import backArrow from '../svg/back_arrow.svg';
 
 function PartnerCertificatesList() {
     const { t } = useTranslation();
@@ -149,16 +154,8 @@ function PartnerCertificatesList() {
                     )}
                     <div className="flex-col ml-1">
                         <div className="flex space-x-4">
-                            <svg onClick={() => moveToHome()} className="mt-5 cursor-pointer"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="22.765" height="14.416" viewBox="0 0 22.765 17.416">
-                                <path
-                                    id="keyboard_backspace_FILL0_wght200_GRAD0_opsz24"
-                                    d="M168-676.306l-8-8,8-8,1.067,1.067-6.18,6.18h18.671v1.507H162.887l6.18,6.18Z"
-                                    transform="translate(-159.293 693.015)" stroke="#000" strokeWidth="1.5" />
-                            </svg>
-
-                            <div className="flex-col mt-4">
+                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-1 cursor-pointer" />
+                             <div className="flex-col mt-4">
                                 <h1 className="font-bold text-md text-blue-900">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                 <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
                                     {t('partnerCertificatesList.home')}</p>
@@ -167,29 +164,7 @@ function PartnerCertificatesList() {
                         <ul className="min-w-3.5 bg-white mt-3 rounded-lg shadow-md p-5 mr-8 pb-20">
                             {certificatesData.length === 0 ?
                                 <div className="p-14 flex flex-col justify-center items-center w-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="273" height="132" viewBox="0 0 273 132">
-                                        <g id="Group_58184" data-name="Group 58184" transform="translate(-633 -323)">
-                                            <g id="Group_58183" data-name="Group 58183" transform="translate(0 5.431)">
-                                                <g id="page_under_construction" transform="translate(595.167 316.495)">
-                                                    <path id="Path_155" data-name="Path 155" d="M348.036,207.189H159.343c-1.754,0-3.18-1.805-3.18-4.025s1.427-4.025,3.18-4.025H348.036c1.754,0,3.18,1.805,3.18,4.025S349.79,207.189,348.036,207.189Z" transform="translate(-105.33 -114.842)" fill="#e6e6e6" />
-                                                    <path id="Path_175" data-name="Path 175" d="M360.375,176.189H121.586a4.025,4.025,0,1,1,0-8.049H360.375a4.025,4.025,0,0,1,0,8.049Z" transform="translate(-65.868 -104.635)" fill="#e6e6e6" />
-                                                    <path id="Path_155384" data-name="Path 155384" d="M119.084,176.189h90.358c.84,0,1.523-1.805,1.523-4.025s-.683-4.025-1.523-4.025H119.084c-.84,0-1.523,1.805-1.523,4.025S118.245,176.189,119.084,176.189Z" transform="translate(86.705 -63.735)" fill="#e6e6e6" />
-                                                    <path id="Path_179" data-name="Path 179" d="M333.4,238.189H200.586a4.025,4.025,0,0,1,0-8.049H333.4a4.025,4.025,0,0,1,0,8.049Z" transform="translate(-145.728 -125.048)" fill="#e6e6e6" />
-                                                    <path id="Path_155385" data-name="Path 155385" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(148.079 -83.682)" fill="#e6e6e6" />
-                                                    <path id="Path_155386" data-name="Path 155386" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(146.535 -143.682)" fill="#d0d0d0" />
-                                                    <path id="Path_155387" data-name="Path 155387" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(104.535 -143.682)" fill="#d0d0d0" />
-                                                    <path id="Path_155388" data-name="Path 155388" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(62.535 -143.682)" fill="#d0d0d0" />
-                                                    <path id="Path_155389" data-name="Path 155389" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(20.535 -143.682)" fill="#d0d0d0" />
-                                                    <path id="Path_155390" data-name="Path 155390" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(-21.465 -143.682)" fill="#d0d0d0" />
-                                                    <path id="Path_155391" data-name="Path 155391" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(-63.465 -143.682)" fill="#d0d0d0" />
-                                                </g>
-                                            </g>
-                                            <g id="Rectangle_7160" data-name="Rectangle 7160" transform="translate(633 323)" fill="none" stroke="#d0d0d0" strokeWidth="1">
-                                                <rect width="273" height="132" rx="20" stroke="none" />
-                                                <rect x="0.5" y="0.5" width="272" height="131" rx="19.5" fill="none" />
-                                            </g>
-                                        </g>
-                                    </svg>
+                                    <img src={rectangleBox} alt="" />
                                     <p className="mt-5 ml-4 font-inter text-xs font-normal tracking-tight text-[#666666]">{t('partnerCertificatesList.noPartnerTypesAreMapped')}</p>
                                 </div> :
                                 certificatesData.map((partner, index) => {
@@ -198,22 +173,8 @@ function PartnerCertificatesList() {
                                             <div className={`flex p-5 items-center ${partner.isCertificateAvailable ? "bg-green-50" : "bg-slate-100"} justify-between`}>
                                                 <div className="flex items-center">
                                                     {partner.isCertificateAvailable
-                                                        ? <svg className="h-11"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="36.754" height="47.255" viewBox="0 0 36.754 47.255">
-                                                            <path id="description_FILL0_wght200_GRAD0_opsz24"
-                                                                d="M209.188-801.934h18.377v-2.625H209.188Zm0-10.5h18.377v-2.625H209.188Zm-4.948,19.69a4.108,4.108,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
-                                                                transform="translate(-200 840)" fill="#1d9027" />
-                                                        </svg>
-                                                        : <svg className="h-11"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="36.754" height="47.255" viewBox="0 0 36.754 47.255">
-                                                            <path
-                                                                id="upload_file_FILL0_wght200_GRAD0_opsz24"
-                                                                d="M217.064-801.227h2.625V-813.55l5.513,5.513,1.858-1.873-8.684-8.684-8.684,8.684,1.873,1.858,5.5-5.5Zm-12.823,8.482a4.107,4.107,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
-                                                                transform="translate(-200 840)" fill="#1347b2"
-                                                            />
-                                                        </svg>
+                                                        ? <img src={fileUpload} className="h-11" alt="" />
+                                                        : <img src={file} className="h-11" alt="" />
                                                     }
 
                                                     <div className="flex-col p-3 items-center">
@@ -241,26 +202,14 @@ function PartnerCertificatesList() {
 
                                                             {activeBtn && (
                                                                 <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
-                                                                    <div className="flex items-center border-b-2 justify-between cursor-pointer">
-                                                                        <button onClick={() => getOriginalCertificate()} className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.originalCertificate')}</button>
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
-                                                                            <path id="download_FILL0_wght300_GRAD0_opsz24"
-                                                                                d="M187.634-768.511l-4.345-4.345,1.073-1.1,2.509,2.509V-780H188.4v8.549l2.509-2.509,1.073,1.1Zm-5.793,3.777a1.776,1.776,0,0,1-1.305-.534,1.776,1.776,0,0,1-.534-1.305v-2.76h1.527v2.76a.3.3,0,0,0,.1.215.3.3,0,0,0,.215.1h11.586a.3.3,0,0,0,.215-.1.3.3,0,0,0,.1-.215v-2.76h1.527v2.76a1.776,1.776,0,0,1-.534,1.305,1.776,1.776,0,0,1-1.305.534Z"
-                                                                                transform="translate(-180.001 779.999)" fill="#1447b2" />
-                                                                        </svg>
+                                                                    <div onClick={() => getOriginalCertificate()} className="flex items-center border-b-2 justify-between cursor-pointer">
+                                                                        <button className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.originalCertificate')}</button>
+                                                                        <img src={downloadIcon} alt=""/>
 
                                                                     </div>
-                                                                    <div className="flex items-center cursor-pointer">
-                                                                        <button onClick={() => getMosipSignedCertificate(partner)} className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width="12.266" height="12.266" viewBox="0 0 15.266 15.266">
-                                                                            <path id="download_FILL0_wght300_GRAD0_opsz24"
-                                                                                d="M187.634-768.511l-4.345-4.345,1.073-1.1,2.509,2.509V-780H188.4v8.549l2.509-2.509,1.073,1.1Zm-5.793,3.777a1.776,1.776,0,0,1-1.305-.534,1.776,1.776,0,0,1-.534-1.305v-2.76h1.527v2.76a.3.3,0,0,0,.1.215.3.3,0,0,0,.215.1h11.586a.3.3,0,0,0,.215-.1.3.3,0,0,0,.1-.215v-2.76h1.527v2.76a1.776,1.776,0,0,1-.534,1.305,1.776,1.776,0,0,1-1.305.534Z"
-                                                                                transform="translate(-180.001 779.999)" fill="#1447b2" />
-                                                                        </svg>
+                                                                    <div onClick={() => getMosipSignedCertificate(partner)} className="flex items-center cursor-pointer">
+                                                                        <button className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
+                                                                        <img src={downloadIcon} alt=""/>
 
                                                                     </div>
                                                                 </div>)}

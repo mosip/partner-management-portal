@@ -3,6 +3,8 @@ import { HttpService } from "../services/HttpService";
 import { formatDate, getPartnerTypeDescription, getUrl } from '../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from "./ErrorMessage";
+import fileUploadImg from '../svg/file_upload_certificate.svg';
+import fileDescription from '../svg/file_description.svg';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -210,19 +212,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 {!uploading && fileName === '' && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
                                         <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="28.75"
-                                                height="39.26"
-                                                viewBox="0 0 36.754 47.255"
-                                            >
-                                                <path
-                                                    id="upload_file_FILL0_wght200_GRAD0_opsz24"
-                                                    d="M217.064-801.227h2.625V-813.55l5.513,5.513,1.858-1.873-8.684-8.684-8.684,8.684,1.873,1.858,5.5-5.5Zm-12.823,8.482a4.107,4.107,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
-                                                    transform="translate(-200 840)"
-                                                    fill="#1347b2"
-                                                />
-                                            </svg>
+                                            <img src={fileUploadImg} alt="" />
                                             <h5 className="text-gray-700 text-sm">
                                                 {t('uploadCertificate.selectCertificate')}
                                             </h5>
@@ -236,19 +226,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 {!uploading && fileName && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
                                         <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="28.75"
-                                                height="39.26"
-                                                viewBox="0 0 36.754 47.255"
-                                            >
-                                                <path
-                                                    id="description_FILL0_wght200_GRAD0_opsz24"
-                                                    d="M209.188-801.934h18.377v-2.625H209.188Zm0-10.5h18.377v-2.625H209.188Zm-4.948,19.69a4.108,4.108,0,0,1-3.027-1.214A4.108,4.108,0,0,1,200-796.986v-38.773a4.108,4.108,0,0,1,1.214-3.027A4.108,4.108,0,0,1,204.241-840h20.7l11.814,11.814v31.2a4.108,4.108,0,0,1-1.214,3.027,4.107,4.107,0,0,1-3.027,1.214Zm19.387-34.129v-10.5H204.241a1.544,1.544,0,0,0-1.111.5,1.544,1.544,0,0,0-.5,1.111v38.773a1.544,1.544,0,0,0,.5,1.111,1.544,1.544,0,0,0,1.111.5h28.272a1.544,1.544,0,0,0,1.111-.5,1.544,1.544,0,0,0,.5-1.111v-29.888Zm-21-10.5v0Z"
-                                                    transform="translate(-200 840)"
-                                                    fill="#1447b2"
-                                                />
-                                            </svg>
+                                        <img src={fileDescription} alt="" />
                                         </label>
                                         <h5 className="text-gray-800 text-sm">
                                             {fileName}
