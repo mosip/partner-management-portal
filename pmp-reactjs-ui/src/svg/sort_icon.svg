@@ -1,0 +1,13 @@
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="7" height="13" viewBox="0 0 7 13">
+	<g
+	  id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
+	  <path id="Polygon_3" data-name="Polygon 3"
+		d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+		transform="translate(247 461)" fill="#6f6e6e" />
+	  <path id="Polygon_4" data-name="Polygon 4"
+		d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+		transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
+	</g>
+</svg>

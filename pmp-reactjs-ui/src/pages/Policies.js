@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import rectangleGrid from '../svg/rectangle_grid.svg';
+import sortIcon from '../svg/sort_icon.svg';
+import backArrow from '../svg/back_arrow.svg';
 
 function Policies() {
 
@@ -68,15 +71,7 @@ function Policies() {
       <div className="flex-col ml-1">
         <div className="flex justify-between mb-5">
           <div className="flex space-x-4">
-            <svg onClick={() => moveToHome()} className="mt-5 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg"
-              width="22.765" height="14.416" viewBox="0 0 22.765 17.416">
-              <path
-                id="keyboard_backspace_FILL0_wght200_GRAD0_opsz24"
-                d="M168-676.306l-8-8,8-8,1.067,1.067-6.18,6.18h18.671v1.507H162.887l6.18,6.18Z"
-                transform="translate(-159.293 693.015)" stroke="#000" strokeWidth="1.5" />
-            </svg>
-
+            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-1 cursor-pointer" />
             <div className="flex-col mt-4">
               <h1 className="font-bold text-md text-blue-900">{t('policies.requestAPolicy')}</h1>
               <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
@@ -113,30 +108,7 @@ function Policies() {
 
               <div className="flex items-center justify-center p-24">
                 <div className="flex-col items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                    width="273" height="132" viewBox="0 0 273 132">
-                    <g id="Group_58184" data-name="Group 58184" transform="translate(-633 -323)">
-                      <g id="Group_58183" data-name="Group 58183" transform="translate(0 5.431)">
-                        <g id="page_under_construction" transform="translate(595.167 316.495)">
-                          <path id="Path_155" data-name="Path 155" d="M348.036,207.189H159.343c-1.754,0-3.18-1.805-3.18-4.025s1.427-4.025,3.18-4.025H348.036c1.754,0,3.18,1.805,3.18,4.025S349.79,207.189,348.036,207.189Z" transform="translate(-105.33 -114.842)" fill="#e6e6e6" />
-                          <path id="Path_175" data-name="Path 175" d="M360.375,176.189H121.586a4.025,4.025,0,1,1,0-8.049H360.375a4.025,4.025,0,0,1,0,8.049Z" transform="translate(-65.868 -104.635)" fill="#e6e6e6" />
-                          <path id="Path_155384" data-name="Path 155384" d="M119.084,176.189h90.358c.84,0,1.523-1.805,1.523-4.025s-.683-4.025-1.523-4.025H119.084c-.84,0-1.523,1.805-1.523,4.025S118.245,176.189,119.084,176.189Z" transform="translate(86.705 -63.735)" fill="#e6e6e6" />
-                          <path id="Path_179" data-name="Path 179" d="M333.4,238.189H200.586a4.025,4.025,0,0,1,0-8.049H333.4a4.025,4.025,0,0,1,0,8.049Z" transform="translate(-145.728 -125.048)" fill="#e6e6e6" />
-                          <path id="Path_155385" data-name="Path 155385" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(148.079 -83.682)" fill="#e6e6e6" />
-                          <path id="Path_155386" data-name="Path 155386" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(146.535 -143.682)" fill="#d0d0d0" />
-                          <path id="Path_155387" data-name="Path 155387" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(104.535 -143.682)" fill="#d0d0d0" />
-                          <path id="Path_155388" data-name="Path 155388" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(62.535 -143.682)" fill="#d0d0d0" />
-                          <path id="Path_155389" data-name="Path 155389" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(20.535 -143.682)" fill="#d0d0d0" />
-                          <path id="Path_155390" data-name="Path 155390" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(-21.465 -143.682)" fill="#d0d0d0" />
-                          <path id="Path_155391" data-name="Path 155391" d="M118.084,176.189H149.07c.288,0,.522-1.805.522-4.025s-.234-4.025-.522-4.025H118.084c-.288,0-.522,1.805-.522,4.025S117.8,176.189,118.084,176.189Z" transform="translate(-63.465 -143.682)" fill="#d0d0d0" />
-                        </g>
-                      </g>
-                      <g id="Rectangle_7160" data-name="Rectangle 7160" transform="translate(633 323)" fill="none" stroke="#d0d0d0" stroke-width="1">
-                        <rect width="273" height="132" rx="20" stroke="none" />
-                        <rect x="0.5" y="0.5" width="272" height="131" rx="19.5" fill="none" />
-                      </g>
-                    </g>
-                  </svg>
+                  <img src={rectangleGrid} alt="" />
                   <button type="button" className="text-white mt-8 ml-16 bg-tory-blue rounded-md text-xs px-5 py-3">
                     {t('policies.requestPolicyBtn')}
                   </button>
@@ -196,19 +168,7 @@ function Policies() {
                           <th key={index} className="py-3 text-sm font-medium text-gray-500">
                             <div className="flex px-9 sm:px-6 md:px-5 lg:px-14 gap-x-1 items-center">
                               {head}
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="7" height="13" viewBox="0 0 7 13">
-                                <g
-                                  id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
-                                  <path id="Polygon_3" data-name="Polygon 3"
-                                    d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                    transform="translate(247 461)" fill="#6f6e6e" />
-                                  <path id="Polygon_4" data-name="Polygon 4"
-                                    d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                    transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
-                                </g>
-                              </svg>
+                              <img src={sortIcon} alt="" />
                             </div>
                           </th>
                         )
@@ -217,19 +177,7 @@ function Policies() {
                       <th className="px-9 sm:px-6 md:px-5 lg:px-14 text-sm font-medium text-gray-500">
                         <div className="flex gap-x-1 items-center">
                           {t('policies.status')}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="7" height="13" viewBox="0 0 7 13">
-                            <g
-                              id="Group_58195" data-name="Group 58195" transform="translate(-247 -461)">
-                              <path id="Polygon_3" data-name="Polygon 3"
-                                d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                transform="translate(247 461)" fill="#6f6e6e" />
-                              <path id="Polygon_4" data-name="Polygon 4"
-                                d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                transform="translate(254 474) rotate(180)" fill="#6f6e6e" />
-                            </g>
-                          </svg>
+                          <img src={sortIcon} alt="" />
                         </div>
                       </th>
                       <th className="px-9 sm:px-6 md:px-5 lg:px-1 text-sm font-medium text-gray-500">
@@ -295,7 +243,7 @@ function Policies() {
                         width="32" height="32" viewBox="0 0 32 32">
                         <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
                           <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
-                            fill="#fff" stroke={next ? "#1447b2" : "#bababa"} stroke-width="1">
+                            fill="#fff" stroke={next ? "#1447b2" : "#bababa"} strokeWidth="1">
                             <rect width="32" height="32" rx="6" stroke="none" />
                             <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
                           </g>
