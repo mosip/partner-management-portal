@@ -66,21 +66,6 @@ function Policies() {
     setErrorMsg("");
   };
 
-  // const tableValues = [
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Pending for Approval", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Pending for Approval", "Action": "..." },
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Finance", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Deactivated", "Action": "..." },
-  //   { "id": "P88424932", "type": "Authentication", "group": "Banking", "policyName": "Full KYC", "createdDate": "31/05/2023", "status": "Approved", "Action": "..." },
-  //   { "id": "P88424932", "type": "MISP Partner", "group": "Banking", "policyName": "KYC", "createdDate": "31/05/2023", "status": "Rejected", "Action": "..." },
-  // ];
-
   function bgOfStatus(status) {
     if (status === "approved") {
       return ("bg-[#D1FADF] text-[#155E3E]")
