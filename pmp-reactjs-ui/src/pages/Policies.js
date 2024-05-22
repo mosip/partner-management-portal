@@ -24,6 +24,7 @@ function Policies() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policiesList, setPoliciesList] = useState([]);
+  const [isDescending, setIsDescending] = useState(true);
 
   const table_heads = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
   const filterTitles = [
@@ -47,8 +48,9 @@ function Policies() {
                     console.error('Error:', errorMessage);
                 } else {
                     const resData = responseData.response;
-                    setPoliciesList(resData);
-                    console.log('Response data:', resData);
+                    const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+                    setPoliciesList(sortedData);
+                    console.log('Response data:', sortedData);
                 }
             } else {
                 setErrorMsg(t('policies.errorInPoliciesList'));
@@ -61,6 +63,17 @@ function Policies() {
     };
     fetchData();
   }, [t]);
+
+  const toggleSortOrder = () => {
+    const sortedPolicies = [...policiesList].sort((a, b) => {
+      const dateA = new Date(a.createDate);
+      const dateB = new Date(b.createDate);
+      return isDescending ? dateA - dateB : dateB - dateA;
+    });
+  
+    setPoliciesList(sortedPolicies);
+    setIsDescending(!isDescending);
+  };
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -215,7 +228,7 @@ function Policies() {
                               <th key={index} className="py-3 text-sm font-medium text-gray-500">
                                 <div className="flex px-9 sm:px-6 md:px-5 lg:px-14 gap-x-1 items-center">
                                   {head}
-                                  <img src={sortIcon} alt="" />
+                                  <img src={sortIcon} onClick={toggleSortOrder} className="cursor-pointer" alt="" />
                                 </div>
                               </th>
                             )
@@ -224,7 +237,7 @@ function Policies() {
                           <th className="px-9 sm:px-6 md:px-5 lg:px-14 text-sm font-medium text-gray-500">
                             <div className="flex gap-x-1 items-center">
                               {t('policies.status')}
-                              <img src={sortIcon} alt="" />
+                              <img src={sortIcon} onClick={toggleSortOrder} className="cursor-pointer" alt="" />
                             </div>
                           </th>
                           <th className="px-9 sm:px-6 md:px-5 lg:px-1 text-sm font-medium text-gray-500">
