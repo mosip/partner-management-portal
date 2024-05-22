@@ -91,7 +91,8 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "approved": "Approved",
-        "itemsPerPage": "Items per Page"
+        "itemsPerPage": "Items per Page",
+        "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
@@ -232,6 +233,8 @@
         "PMS_AUT_028": "Device details for id $ID are rejected. Can't use same details for mapping.",
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
         "PMS_CERTIFICATE_ERROR_002": "User Id does not exists.",
-        "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty."
+        "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty.",
+        "PMS_POLICY_ERROR_001": "Policy Group Name is null or empty.",
+        "PMS_POLICY_ERROR_002": "Error while fetching partner policies."
     }
 }

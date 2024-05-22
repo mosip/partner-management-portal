@@ -91,7 +91,9 @@
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "approved": "Approuvée",
-        "itemsPerPage": "Objets par page"
+        "itemsPerPage": "Objets par page",
+        "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
+
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
@@ -232,6 +234,8 @@
         "PMS_AUT_028": "Les détails de l'appareil pour l'identifiant $ID sont rejetés. Impossible d'utiliser les mêmes détails pour le mappage.",
         "PMS_CERTIFICATE_ERROR_001": "Erreur lors de la récupération des certificats partenaires.",
         "PMS_CERTIFICATE_ERROR_002": "L'ID utilisateur n'existe pas.",
-        "PMS_CERTIFICATE_ERROR_003": "L'ID du partenaire est nul ou vide."
+        "PMS_CERTIFICATE_ERROR_003": "L'ID du partenaire est nul ou vide.",
+        "PMS_POLICY_ERROR_001": "Le nom du groupe de stratégies est nul ou vide.",
+        "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires."
     }
 }
