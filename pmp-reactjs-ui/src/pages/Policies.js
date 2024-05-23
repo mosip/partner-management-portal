@@ -17,53 +17,81 @@ function Policies() {
     navigate('/partnermanagement')
   };
 
+  var options = [];
+
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [viewOpt, setViewOpt] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [isFilterDropdown, setIsFilterDropdown] = useState(false);
+  const [filterOpts, setFilterOpts] = useState([]);
   const [policiesList, setPoliciesList] = useState([]);
 
   const table_heads = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
   const filterTitles = [
+    { "header": t('policies.partnerId'), "placeHolder": t('policies.enterPartnerID') },
     { "header": t('policies.partnerType'), "placeHolder": t('policies.selectPartnerType') },
     { "header": t('policies.policyGroup'), "placeHolder": t('policies.selectPolicyGroup') },
     { "header": t('policies.policyName'), "placeHolder": t('policies.selectPolicyName') },
-    { "header": t('policies.status'), "placeHolder": t('policies.approved') }
+    { "header": t('policies.status'), "placeHolder": t('policies.status') }
   ];
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await HttpService.get(getUrl('/partners/getAllPolicies', process.env.NODE_ENV));
-            if (response != null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                } else {
-                    const resData = responseData.response;
-                    setPoliciesList(resData);
-                    console.log('Response data:', resData);
-                }
-            } else {
-                setErrorMsg(t('policies.errorInPoliciesList'));
-            }
-            setDataLoaded(true);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
+      try {
+        const response = await HttpService.get(getUrl('/partners/getAllPolicies', process.env.NODE_ENV));
+        if (response != null) {
+          const responseData = response.data;
+          if (responseData.errors && responseData.errors.length > 0) {
+            const errorCode = responseData.errors[0].errorCode;
+            const errorMessage = responseData.errors[0].message;
+            setErrorCode(errorCode);
+            setErrorMsg(errorMessage);
+            console.error('Error:', errorMessage);
+          } else {
+            const resData = responseData.response;
+            setPoliciesList(resData);
+            console.log('Response data:', resData);
+          }
+        } else {
+          setErrorMsg(t('policies.errorInPoliciesList'));
         }
+        setDataLoaded(true);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setErrorMsg(err);
+      }
     };
     fetchData();
   }, [t]);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
+  };
+
+  const openFilterDropdown = (choosenFilter) => {
+    setIsFilterDropdown(!isFilterDropdown);
+    if (choosenFilter === t('policies.enterPartnerID')) {
+      options = records.map((opt) => opt.partnerId)
+      setFilterOpts(options)
+    }
+    if (choosenFilter === t('policies.selectPartnerType')) {
+      options = records.map((opt) => opt.partnerType)
+      setFilterOpts(options)
+    }
+    if (choosenFilter === t('policies.selectPolicyGroup')) {
+      options = records.map((opt) => opt.policyGroup)
+      setFilterOpts(options)
+    }
+    if (choosenFilter === t('policies.selectPolicyName')) {
+      options = records.map((opt) => opt.policyName)
+      setFilterOpts(options)
+    }
+    if (choosenFilter === t('policies.status')) {
+      options = records.map((opt) => opt.status)
+      setFilterOpts(options)
+    }
   };
 
   function bgOfStatus(status) {
@@ -95,32 +123,30 @@ function Policies() {
     <div className="flex-col w-full p-5 bg-anti-flash-white font-inter">
       {!dataLoaded && (
         <div className="flex items-center justify-center h-4/5">
-
-            <div role="status" className="flex items-center">
-                <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                </svg>
-                <p className="ml-3">{t('partnerCertificatesList.loading')}</p>
-            </div>
-
+          <div role="status" className="flex items-center">
+            <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+            </svg>
+            <p className="ml-3">{t('partnerCertificatesList.loading')}</p>
+          </div>
         </div>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-              <div className="flex justify-end max-w-7xl">
-                  <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
-                      <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                  </div>
+            <div className="flex justify-end max-w-7xl">
+              <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
+                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
+            </div>
           )}
           <div className="flex-col ml-1">
             <div className="flex justify-between mb-5">
               <div className="flex space-x-4">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-1 cursor-pointer" />
                 <div className="flex-col mt-4">
-                  <h1 className="font-bold text-md text-blue-900">{t('policies.requestAPolicy')}</h1>
+                  <h1 className="font-bold text-lg text-md text-blue-900">{t('policies.requestAPolicy')}</h1>
                   <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
                     {t('policies.home')}
                   </p>
@@ -128,7 +154,7 @@ function Policies() {
               </div>
 
               {isData ?
-                <button type="button" className="text-sm px-5 h-10 text-white bg-tory-blue rounded-md">
+                <button type="button" className="text-md font-medium px-7 text-white bg-tory-blue rounded-md">
                   {t('policies.requestPolicyBtn')}
                 </button>
                 : null
@@ -163,98 +189,117 @@ function Policies() {
                   </div>
                 </div>
                 :
-                <><div className="bg-white w-full mt-3 rounded-tlg shadow-lg">
-                  <div className="flex justify-between pl-5 pt-5 pr-2 items-center">
-                    <p className=" font-bold text-blue-900 text-md ml-4">
-                      {t('policies.listOfPolicies')}
-                    </p>
-                    <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'} h-9 w-32 text-xs px-2 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center`}>
-                      {t('policies.filterBtn')}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ml-2`}
-                        width="10" height="8" viewBox="0 0 10 8">
-                        <path id="Polygon_8"
-                          data-name="Polygon 8"
-                          d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
-                          transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                  {filter &&
-                    <div className="flex flex-wrap py-3 bg-gray-50 font-semibold text-xs pl-5">
-                      <div className="m-3">
-                        <h3 className="text-xs mb-2 text-[#1447b2]">
-                          {t('policies.partnerId')}
-                        </h3>
-                        <input type="text"
-                          className="text-start border border-gray-800 text-gray-900 text-xs rounded-md shadow-sm w-72 h-8 p-2.5"
-                          placeholder={t('policies.enterPartnerID')} />
-                      </div>
-                      {filterTitles.map((filter, index) => {
-                        return (
-                          <div key={index} className="m-2">
-                            <h3 className="text-xs mb-2 text-[#1447b2]">{filter.header}</h3>
-                            <select className="border border-gray-800 text-gray-400 text-xs rounded-md w-72 h-8 pl-2.5">
-                              <option selected>{`${filter.placeHolder}`}</option>
-                              <option></option>
-                            </select>
-                          </div>
-                        );
-                      })
-                      }
+                <>
+                  <div className="bg-white w-full mt-3 rounded-t-xl shadow-lg">
+                    <div className="flex justify-between pl-3 items-center">
+                      <p className=" font-bold text-blue-900 text-md ml-4 my-6">
+                        {t('policies.listOfPolicies')}
+                      </p>
+                      <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[13%] text-sm py-3 mx-4 text-blue-700 border border-blue-700 font-semibold rounded-md text-center
+                        ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'}`}
+                      >
+                        {t('policies.filterBtn')}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ml-2`}
+                          width="10" height="8" viewBox="0 0 10 8">
+                          <path id="Polygon_8"
+                            data-name="Polygon 8"
+                            d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
+                            transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
+                        </svg>
+                      </button>
                     </div>
-                  }
-                  <div>
-                    <table className="table-auto mx-5 lg:w-auto">
-                      <thead>
-                        <tr>
-                          {table_heads.map((head, index) => {
-                            return (
-                              <th key={index} className="py-3 text-sm font-medium text-gray-500">
-                                <div className="flex px-9 sm:px-6 md:px-5 lg:px-14 gap-x-1 items-center">
-                                  {head}
-                                  <img src={sortIcon} alt="" />
+
+                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                    {filter &&
+                      <div className="flex flex-wrap py-3 bg-gray-100 font-semibold text-xs pl-5">
+                        {filterTitles.map((filter, index) => {
+                          return (
+                            <div key={index} className="m-2">
+                              <h3 className="text-sm mb-2 text-[#031640]">{filter.header}</h3>
+                              <div onClick={() => openFilterDropdown(filter.placeHolder)}
+                                className="flex items-center justify-between w-[280px] h-[35px] p-2 px-3 bg-white text-[15px] font-medium rounded-[4px] text-gray-600 shadow-sm border-[1.5px] border-gray-400 cursor-pointer"
+                              >
+                                <p>{`${filter.placeHolder}`}</p>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="14" height="14" viewBox="0 0 11.359 6.697">
+                                  <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                                    d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                                    transform="translate(-12 -16.6)" fill="#707070" />
+                                </svg>
+                              </div>
+                              {isFilterDropdown && (
+                                <div className="absolute bg-white w-[260px] ml-4 duration-400">
+                                  {filterOpts.map((item, index) => {
+                                    return (
+                                      <div key={index}>
+                                        <button className="block py-1 px-24 items-center text-xs text-gray-900">
+                                          {item}
+                                        </button>
+                                        <hr className="h-5" />
+                                      </div>
+                                    )
+                                  })}
                                 </div>
-                              </th>
+                              )}
+                            </div>
+                          );
+                        })
+                        }
+                      </div>
+                    }
+                    <div>
+                      <table className="table-auto mx-5 lg:w-[96%]">
+                        <thead>
+                          <tr>
+                            {table_heads.map((head, index) => {
+                              return (
+                                <th key={index} className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
+                                  <div className="flex gap-x-2 items-center">
+                                    {head}
+                                    <img src={sortIcon} alt="" />
+                                  </div>
+                                </th>
+                              )
+                            })
+                            }
+                            <th className="text-sm font-medium text-gray-500 pl-6">
+                              <div className="flex gap-x-1 items-center">
+                                {t('policies.status')}
+                                <img src={sortIcon} alt="" />
+                              </div>
+                            </th>
+                            <th className="text-sm font-medium text-gray-500">
+                              {t('policies.action')}
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {records.map((partner, index) => {
+                            return (
+                              <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
+                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerId}</td>
+                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerType}</td>
+                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyGroup}</td>
+                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyName}</td>
+                                <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'date')}</td>
+                                <td className="flex font-semibold pl-6">
+                                  <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
+                                    {partner.status}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div className="lg:ml-5 text-sm">...</div>
+                                </td>
+                              </tr>
                             )
                           })
                           }
-                          <th className="px-9 sm:px-6 md:px-5 lg:px-14 text-sm font-medium text-gray-500">
-                            <div className="flex gap-x-1 items-center">
-                              {t('policies.status')}
-                              <img src={sortIcon} alt="" />
-                            </div>
-                          </th>
-                          <th className="px-9 sm:px-6 md:px-5 lg:px-1 text-sm font-medium text-gray-500">
-                            {t('policies.action')}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="">
-                        {records.map((partner, index) => {
-                          return (
-                            <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.partnerId}</td>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.partnerType}</td>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.policyGroup}</td>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-14">{partner.policyName}</td>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-14">{formatDate(partner.createDate, 'date')}</td>
-                              <td className="flex font-semibold px-9 sm:px-6 md:px-5 lg:px-14">
-                                <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
-                                  {partner.status}
-                                </div>
-                              </td>
-                              <td className="px-9 sm:px-6 md:px-5 lg:px-4">...</td>
-                            </tr>
-                          )
-                        })
-                        }
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
                   <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
                     <div></div>
                     <nav>
@@ -320,21 +365,21 @@ function Policies() {
                   </div>
                 </>
               }
-              </div>
             </div>
-          </>
-        )}
-        <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
-        <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
-          <div>
-            <p>2024 © MOSIP - {t('footer.allRightsReserved')} </p>
           </div>
-          <div className="flex justify-between">
-            <p className="mr-7">{t('footer.documentation')}</p>
-            <p className="mr-7">{t('footer.mosipCommunity')}</p>
-            <p className="mr-7">{t('footer.contactUs')}</p>
-          </div>
+        </>
+      )}
+      <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
+      <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
+        <div>
+          <p>2024 © MOSIP - {t('footer.allRightsReserved')} </p>
         </div>
+        <div className="flex justify-between">
+          <p className="mr-7">{t('footer.documentation')}</p>
+          <p className="mr-7">{t('footer.mosipCommunity')}</p>
+          <p className="mr-7">{t('footer.contactUs')}</p>
+        </div>
+      </div>
     </div>
   )
 
