@@ -123,13 +123,13 @@ function Policies() {
   };
 
   function bgOfStatus(status) {
-    if (status === "approved") {
+    if (status === "Approved") {
       return ("bg-[#D1FADF] text-[#155E3E]")
     }
-    else if (status === "rejected") {
+    else if (status === "Rejected") {
       return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress") {
+    else if (status === "Pending for Approval") {
       return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === "Deactivated") {
@@ -240,8 +240,8 @@ function Policies() {
                           <tr>
                             {tableHeaders.map((header, index) => {
                               return (
-                                <th key={index} className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
-                                  <div className="flex gap-x-1 items-center">
+                                <th key={index} className="py-4 text-sm font-medium text-gray-500 lg:w-[15%]">
+                                  <div className="mx-2 flex gap-x-1 items-center">
                                     {t('policies.' + header.head)}
                                     <img
                                       src={sortIcon} className="cursor-pointer"
@@ -251,7 +251,7 @@ function Policies() {
                                 </th>
                               )
                             })}
-                            <th className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
+                            <th className="text-sm font-medium text-gray-500">
                               {t('policies.action')}
                             </th>
                           </tr>
@@ -260,13 +260,13 @@ function Policies() {
                           {records.map((partner, index) => {
                             return (
                               <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerId}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerType}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyGroup}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyName}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'dateTime')}</td>
-                                <td className="flex font-semibold pl-6">
-                                  <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
+                                <td className="px-2">{partner.partnerId}</td>
+                                <td className="px-2">{partner.partnerType}</td>
+                                <td className="px-2">{partner.policyGroup}</td>
+                                <td className="px-2">{partner.policyName}</td>
+                                <td className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
+                                <td className="">
+                                  <div className={`${bgOfStatus(partner.status)}flex w-fit py-1.5 px-2 m-3 text-xs rounded-md`}>
                                     {partner.status}
                                   </div>
                                 </td>
