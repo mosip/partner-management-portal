@@ -94,6 +94,7 @@
         "partnerType": "Partner Type",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
+        "createdDate": "Created Date",
         "status": "Status",
         "action": "Action",
         "enterPartnerID": "Enter Partner ID",
