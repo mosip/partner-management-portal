@@ -1,6 +1,6 @@
 import { HttpService } from "../services/HttpService";
 import { useEffect, useState } from 'react';
-import { getUrl } from "../utils/AppUtils";
+import { getPartnerManagerUrl } from "../utils/AppUtils";
 
 const GuardedRoute = ({ children }) => {
 
@@ -10,7 +10,7 @@ const GuardedRoute = ({ children }) => {
     async function fetchData() {
       try {
         const apiResp = await HttpService
-          .get(getUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
+          .get(getPartnerManagerUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
         if (apiResp && apiResp.status === 200 && apiResp.data.response) {
           console.log(`isAuthenticated: yes`);
           setIsUserAuthenticated(true);

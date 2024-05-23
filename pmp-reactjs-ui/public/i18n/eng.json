@@ -10,7 +10,9 @@
         "policies": "Policies",
         "policiesDesc": "Request and Manage your policies.",
         "authenticationServices": "Authentication Services",
-        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications"
+        "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
+        "userRegistrationError": "Unable to register user. Try login again!",
+        "verifyEmailError": "Error during user's email verification. Try login again!"
     },
     "header": {
         "partnerProfile": "Partner Profile",
@@ -23,8 +25,16 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
+    "selectPolicyPopup": {
+        "title": "Select Policy Group",
+        "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
+        "partnerTypeLabel": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
+        "submit": "Submit"
+    },
+    "loading": "Loading",
     "partnerCertificatesList": {
-        "loading": "Loading",
         "home": "Home",
         "partnerCertificate": "Partner Certificate",
         "noPartnerTypesAreMapped": "No partner types are mapped to your user id",
@@ -173,7 +183,7 @@
         "PMS_PMP_014": "Policy does not exist",
         "PMS_PMS_022": "Given Partner api key is not active.",
         "PMS_PMP_018": "Policy expired.",
-        "PMS_PRT_108": "Certficate is not uploaded for the given partner.Cannot activate the same.",
+        "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
         "PMS_AUT_002": "Device provider id not found from the partners list",
         "PMS_AUT_003": "Device Details already exists",
         "PMS_AUT_004": "Duplicate request received",

@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import rectangleGrid from '../svg/rectangle_grid.svg';
 import sortIcon from '../svg/sort_icon.svg';
 import backArrow from '../svg/back_arrow.svg';
-import gotoNextPage from '../svg/next_page_icon.svg';
-import gotoPrevtPage from '../svg/previous_page_icon.svg';
-import ErrorMessage from './ErrorMessage';
-import { getUrl, formatDate } from '../utils/AppUtils';
+import ErrorMessage from './common/ErrorMessage';
+import LoadingIcon from "./common/LoadingIcon";
+import Footer from "./common/Footer";
+import { getPartnerManagerUrl, formatDate } from '../utils/AppUtils';
 import { HttpService } from '../services/HttpService';
 
 function Policies() {
@@ -37,10 +37,44 @@ function Policies() {
     { id: "status", head: "status" },
   ];
 
+  const tableValues = [
+    { "partnerId": "P10001", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10002", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T03:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10003", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:16:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10004", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:14:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+    { "partnerId": "P10005", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:13:42.422+00:00", "status": "Deactivated", "Action": "..." },
+    { "partnerId": "P10006", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC1", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10007", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10008", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10009", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10010", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10011", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10012", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10013", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+    { "partnerId": "P10014", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
+    { "partnerId": "P10015", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10016", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10017", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10018", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10019", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10020", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10021", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10022", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+    { "partnerId": "P10023", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
+    { "partnerId": "P10024", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10025", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10026", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10027", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10028", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10029", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+    { "partnerId": "P10030", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+    { "partnerId": "P10031", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." }
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await HttpService.get(getUrl('/partners/getAllPolicies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllPolicies', process.env.NODE_ENV));
         if (response != null) {
           const responseData = response.data;
           if (responseData.errors && responseData.errors.length > 0) {
@@ -52,7 +86,7 @@ function Policies() {
           } else {
             const resData = responseData.response;
             const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-            setPoliciesList(sortedData);
+            setPoliciesList(tableValues);
             console.log('Response data:', sortedData);
           }
         } else {
@@ -68,14 +102,14 @@ function Policies() {
   }, [t]);
 
   const toggleSortOrder = (sortItem) => {
-    if(order === 'ASC') {
+    if (order === 'ASC') {
       const sortedPolicies = [...policiesList].sort((a, b) =>
         a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
       );
       setPoliciesList(sortedPolicies);
       setOrder("DSC")
     }
-    if(order === 'DSC') {
+    if (order === 'DSC') {
       const sortedPolicies = [...policiesList].sort((a, b) => 
         a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
       );
@@ -104,7 +138,7 @@ function Policies() {
   }
 
   const [firstIndex, setFirstIndex] = useState(0);
-  const recordsPerPage = 8;
+  const recordsPerPage = 10;
   const lastIndex = firstIndex + recordsPerPage;
   const records = policiesList.slice(firstIndex, lastIndex);
   const pageCount = Math.ceil(policiesList.length / recordsPerPage);                        //   This  part related to Pagination logic
@@ -116,17 +150,9 @@ function Policies() {
   const [next, setNext] = useState(false);
 
   return (
-    <div className="flex-col w-full p-5 bg-anti-flash-white font-inter">
+    <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
       {!dataLoaded && (
-        <div className="flex items-center justify-center h-4/5">
-          <div role="status" className="flex items-center">
-            <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-            </svg>
-            <p className="ml-3">{t('partnerCertificatesList.loading')}</p>
-          </div>
-        </div>
+        <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
@@ -238,8 +264,8 @@ function Policies() {
                                 <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerType}</td>
                                 <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyGroup}</td>
                                 <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyName}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'date')}</td>
-                                <td className="flex font-semibold ">
+                                <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'dateTime')}</td>
+                                <td className="flex font-semibold pl-6">
                                   <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
                                     {partner.status}
                                   </div>
@@ -316,19 +342,10 @@ function Policies() {
               }
             </div>
           </div>
+          <Footer></Footer>
         </>
       )}
-      <hr className="h-px ml-7 mt-7 bg-gray-200 border-0" />
-      <div className="flex mt-7 ml-7 justify-between text-sm text-gray-400">
-        <div>
-          <p>2024 © MOSIP - {t('footer.allRightsReserved')} </p>
-        </div>
-        <div className="flex justify-between">
-          <p className="mr-7">{t('footer.documentation')}</p>
-          <p className="mr-7">{t('footer.mosipCommunity')}</p>
-          <p className="mr-7">{t('footer.contactUs')}</p>
-        </div>
-      </div>
+
     </div>
   )
 

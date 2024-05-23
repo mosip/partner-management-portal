@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import cancelIcon from '../svg/cancel_icon.svg';
+import cancelIcon from '../../svg/cancel_icon.svg';
 
 function ErrorMessage ({errorCode, errorMessage, clickOnCancel}) {
     const { t } = useTranslation();
