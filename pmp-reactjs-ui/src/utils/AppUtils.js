@@ -11,38 +11,40 @@ export const formatDate = (dateString, format) => {
 };
 
 export const getPartnerTypeDescription = (partnerType, t) => {
+    console.log(partnerType);
     if (partnerType) {
-        if (partnerType === "Device_Provider") {
+        partnerType = partnerType.toUpperCase();
+        if (partnerType === "Device_Provider".toUpperCase()) {
             return t('partnerTypes.deviceProvider');
         }
-        else if (partnerType === "FTM_Provider") {
+        else if (partnerType === "FTM_Provider".toUpperCase()) {
             return t('partnerTypes.ftmProvider');
         }
-        else if (partnerType === "Auth_Partner") {
+        else if (partnerType === "Auth_Partner".toUpperCase()) {
             return t('partnerTypes.authPartner');
         }
-        else if (partnerType === "Credential_Partner") {
+        else if (partnerType === "Credential_Partner".toUpperCase()) {
             return t('partnerTypes.credentialPartner');
         }
-        else if (partnerType === "Online_Verification_Partner") {
+        else if (partnerType === "Online_Verification_Partner".toUpperCase()) {
             return t('partnerTypes.onlineVerficationPartner');
         }
-        else if (partnerType === "ABIS_Partner") {
+        else if (partnerType === "ABIS_Partner".toUpperCase()) {
             return t('partnerTypes.abisPartner');
         }
-        else if (partnerType === "MISP_Partner") {
+        else if (partnerType === "MISP_Partner".toUpperCase()) {
             return t('partnerTypes.mispPartner');
         }
-        else if (partnerType === "SDK_Partner") {
+        else if (partnerType === "SDK_Partner".toUpperCase()) {
             return t('partnerTypes.sdkPartner');
         }
-        else if (partnerType === "Print_Partner") {
+        else if (partnerType === "Print_Partner".toUpperCase()) {
             return t('partnerTypes.printPartner');
         }
-        else if (partnerType === "Internal_Partner") {
+        else if (partnerType === "Internal_Partner".toUpperCase()) {
             return t('partnerTypes.internalPartner');
         }
-        else if (partnerType === "Manual_Adjudication") {
+        else if (partnerType === "Manual_Adjudication".toUpperCase()) {
             return t('partnerTypes.manualAdjudication');
         }
     }
@@ -60,12 +62,42 @@ export const handleMouseClickForDropdown = (ref, callback) => {
     };
 };
 
-export const getUrl = (url, env) => {
+export const getPartnerManagerUrl = (url, env) => {
     let newUrl = '';
     if (env !== 'production') {
-        newUrl = "/api" + url;
+        newUrl = "/partnerapi" + url;
     } else {
         newUrl = url;
     }
     return newUrl;
+}
+
+export const getPolicyManagerUrl = (url, env) => {
+    let newUrl = '';
+    if (env !== 'production') {
+        newUrl = "/policyapi" + url;
+    } else {
+        newUrl = url;
+    }
+    return newUrl;
+}
+
+export const createRequest = (requestData, id) => {
+    const request = {
+        id: id ? id : "",
+        version: "1.0",
+        requesttime: new Date().toISOString(),
+        request: requestData
+    };
+    return request;
+}
+
+export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => {
+    if (responseData && responseData.errors && responseData.errors.length > 0) {
+        const errorCode = responseData.errors[0].errorCode;
+        const errorMessage = responseData.errors[0].message;
+        setErrorCode(errorCode);
+        setErrorMsg(errorMessage);
+        console.error('Error:', errorMessage);
+    }
 }

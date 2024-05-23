@@ -1,5 +1,5 @@
 {
-    "dashboard" : {
+    "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
         "partnerTypeRequest": "Demande de type de partenaire",
         "partnerTypeRequestDesc": "Demande de type de partenaire.",
@@ -10,7 +10,9 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et gérez vos polices.",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API"
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
+        "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
     },
     "header": {
         "partnerProfile": "Profil du partenaire",
@@ -23,8 +25,16 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
+    "selectPolicyPopup": {
+        "title": "Select Policy Group",
+        "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
+        "partnerTypeLabel": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
+        "submit": "Submit"
+    },
+    "loading": "chargement",
     "partnerCertificatesList": {
-        "loading": "chargement",
         "home": "Maison",
         "partnerCertificate": "Certificat de partenaire",
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
@@ -50,7 +60,7 @@
         "partnerDomainTypeLabel": "Type de domaine partenaire",
         "selectingFile": "Sélection du fichier...",
         "cancel": "Annuler",
-        "selectCertificate": "Veuillez appuyer pour sélectionner le certificat", 
+        "selectCertificate": "Veuillez appuyer pour sélectionner le certificat",
         "certificateFormat": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
         "remove": "Retirer",
         "close": "Fermer",
@@ -173,7 +183,7 @@
         "PMS_PMP_014": "La politique n'existe pas",
         "PMS_PMS_022": "La clé API du partenaire donné n'est pas active.",
         "PMS_PMP_018": "La politique a expiré.",
-        "PMS_PRT_108": "Le certificat n'est pas téléchargé pour le partenaire donné. Impossible de l'activer.",
+        "PMS_PRT_108": "Le groupe de stratégies est obligatoire pour Auth_Partner",
         "PMS_AUT_002": "Identifiant du fournisseur de l'appareil introuvable dans la liste des partenaires",
         "PMS_AUT_003": "Les détails de l'appareil existent déjà",
         "PMS_AUT_004": "Demande en double reçue",

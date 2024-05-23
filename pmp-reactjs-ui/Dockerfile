@@ -2,8 +2,11 @@ FROM node:12.18.4-alpine as build_pmp_reactjs_ui
 
 ENV NODE_ENV production
 
-ARG REACT_APP_API_BASE_URL
-ENV REACT_APP_API_BASE_URL $REACT_APP_API_BASE_URL
+ARG REACT_APP_PARTNER_MANAGER_API_BASE_URL
+ENV REACT_APP_PARTNER_MANAGER_API_BASE_URL $REACT_APP_PARTNER_MANAGER_API_BASE_URL
+
+ARG REACT_APP_POLICY_MANAGER_API_BASE_URL
+ENV REACT_APP_POLICY_MANAGER_API_BASE_URL $REACT_APP_POLICY_MANAGER_API_BASE_URL
 
 # Set the environment variable as a placeholder for PUBLIC_URL
 ENV PUBLIC_URL=_PUBLIC_URL_
@@ -70,7 +73,8 @@ COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 # copy build files to nginx html directory
 COPY --from=build_pmp_reactjs_ui /build  ${work_dir}
 
-RUN echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ${work_dir}/env.env
+RUN echo "REACT_APP_PARTNER_MANAGER_API_BASE_URL=$REACT_APP_PARTNER_MANAGER_API_BASE_URL" >> ${work_dir}/env.env
+RUN echo "REACT_APP_POLICY_MANAGER_API_BASE_URL=$REACT_APP_POLICY_MANAGER_API_BASE_URL" >> ${work_dir}/env.env
 
 RUN chown -R ${container_user}:${container_user} /home/${container_user}
 
