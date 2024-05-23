@@ -19,7 +19,7 @@ function MainLayout({ children }) {
     return (
         <div className="flex">
             <SideNav open={open}></SideNav>
-            <div className='lg:w-full'>
+            <div className='w-full'>
                 <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
                 {children}
             </div>

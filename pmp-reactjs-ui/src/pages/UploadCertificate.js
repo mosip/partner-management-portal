@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { HttpService } from "../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getUrl } from '../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "./common/ErrorMessage";
+import LoadingIcon from "./common/LoadingIcon";
 import fileUploadImg from '../svg/file_upload_certificate.svg';
 import fileDescription from '../svg/file_description.svg';
+import cancelIcon from '../svg/cancel_icon.svg';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -15,6 +17,7 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [uploadFailure, setUploadFailure] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [certificateData, setCertificateData] = useState("");
     const [formattedDate, setFormattedDate] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -24,7 +27,7 @@ function UploadCertificate({ closePopup, partnerData }) {
         setIsDropdownOpen(!isDropdownOpen);
     };
     const clickOnCancel = () => {
-        closePopup(false);
+        closePopup(true);
     };
     const clickOnSubmit = async () => {
         if (uploadSuccess) {
@@ -39,7 +42,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                 },
             }
             try {
-                const response = await HttpService.post(getUrl('/partners/certificate/upload', process.env.NODE_ENV), request)
+                const response = await HttpService.post(getPartnerManagerUrl('/partners/certificate/upload', process.env.NODE_ENV), request)
                 if (response !== null) {
                     const resData = response.data.response;
                     if (response.data.errors && response.data.errors.length > 0) {
@@ -53,7 +56,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
                     } else {
                         setUploadSuccess(true);
-                        setErrorMsg(t('uploadCertificate.successMsg', { partnerType: getPartnerType(partnerData) }));
+                        setSuccessMsg(t('uploadCertificate.successMsg', { partnerType: getPartnerType(partnerData) }));
                     }
                 } else {
                     setUploadFailure(true);
@@ -99,7 +102,9 @@ function UploadCertificate({ closePopup, partnerData }) {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
-
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -136,17 +141,7 @@ function UploadCertificate({ closePopup, partnerData }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg mt-5`}>
                 {!dataLoaded && (
-                    <div className="flex items-center justify-center h-full">
-
-                        <div role="status" className="flex items-center">
-                            <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                            </svg>
-                            <p className="ml-3">{t('partnerCertificatesList.loading')}</p>
-                        </div>
-
-                    </div>
+                    <LoadingIcon></LoadingIcon>
                 )}
                 {dataLoaded && (
                     <>
@@ -226,7 +221,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 {!uploading && fileName && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
                                         <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
-                                        <img src={fileDescription} alt="" />
+                                            <img src={fileDescription} alt="" />
                                         </label>
                                         <h5 className="text-gray-800 text-sm">
                                             {fileName}
@@ -249,10 +244,17 @@ function UploadCertificate({ closePopup, partnerData }) {
                             ) : (
                                 <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">{t('uploadCertificate.submit')}</button>
                             )}
-                            {uploadSuccess && errorMsg && (
+                            {uploadSuccess && successMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
                                     <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                                        <div>
+                                            <p className=" text-sm font-semibold text-white break-words font-inter">
+                                                {successMsg}
+                                            </p>
+                                        </div>
+                                        <div className="mr-3 ml-5">
+                                            <img src={cancelIcon} alt="" onClick={cancelSuccessMsg}></img>
+                                        </div>
                                     </div>
                                 </div>
 

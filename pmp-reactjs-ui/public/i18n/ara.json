@@ -1,5 +1,5 @@
 {
-    "dashboard" : {
+    "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
         "partnerTypeRequest": "طلب نوع الشريك",
         "partnerTypeRequestDesc": "طلب نوع الشريك.",
@@ -10,7 +10,9 @@
         "policies": "سياسات",
         "policiesDesc": "طلب وإدارة السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
-        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API"
+        "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
+        "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
+        "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى"
     },
     "header": {
         "partnerProfile": "الملف التعريفي للشريك",
@@ -23,8 +25,16 @@
         "mosipCommunity": "مجتمع موسيب",
         "contactUs": "اتصل بنا"
     },
+    "selectPolicyPopup": {
+        "title": "Select Policy Group",
+        "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
+        "partnerTypeLabel": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
+        "submit": "Submit"
+    },
+    "loading": "تحميل",
     "partnerCertificatesList": {
-        "loading": "تحميل",
         "home": "بيت",
         "partnerCertificate": "شهادة الشريك",
         "noPartnerTypesAreMapped": "لم يتم تعيين أي أنواع شركاء لمعرف المستخدم الخاص بك",
@@ -50,7 +60,7 @@
         "partnerDomainTypeLabel": "نوع نطاق الشريك",
         "selectingFile": "تحديد الملف...",
         "cancel": "يلغي",
-        "selectCertificate": "الرجاء الضغط لتحديد الشهادة", 
+        "selectCertificate": "الرجاء الضغط لتحديد الشهادة",
         "certificateFormat": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
         "remove": "يزيل",
         "close": "يغلق",
@@ -172,7 +182,7 @@
         "PMS_PMP_014": "السياسة غير موجودة",
         "PMS_PMS_022": "تم توفير مفتاح واجهة برمجة تطبيقات الشريك غير نشط.",
         "PMS_PMP_018": "انتهت صلاحية السياسة.",
-        "PMS_PRT_108": "لم يتم تحميل Certficate للشريك المحدد. لا يمكن تنشيطه.",
+        "PMS_PRT_108": "مجموعة السياسات إلزامية لـ Auth_Partner",
         "PMS_AUT_002": "لم يتم العثور على معرف موفر الجهاز من قائمة الشركاء",
         "PMS_AUT_003": "تفاصيل الجهاز موجودة بالفعل",
         "PMS_AUT_004": "تم استلام طلب مكرر",

@@ -1,7 +1,7 @@
 import profileIcon from '../profile_icon.png';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useState, useRef, useEffect } from 'react';
-import { handleMouseClickForDropdown, getUrl } from '../utils/AppUtils.js';
+import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -24,8 +24,8 @@ function HeaderNav({ open, setOpen }) {
         // if (cachedAppConfig)
         // console.log(cachedAppConfig['sbiPorts']);
         localStorage.clear();
-        let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_API_BASE_URL; 
-        redirectUrl = redirectUrl + getUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+        let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL; 
+        redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
         console.log(redirectUrl);
         window.location.href = redirectUrl;
     }
