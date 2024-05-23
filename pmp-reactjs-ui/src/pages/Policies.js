@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
 import rectangleGrid from '../svg/rectangle_grid.svg';
 import sortIcon from '../svg/sort_icon.svg';
 import backArrow from '../svg/back_arrow.svg';
+import gotoNextPage from '../svg/next_page_icon.svg';
+import gotoPrevtPage from '../svg/previous_page_icon.svg';
 import ErrorMessage from './ErrorMessage';
 import { getUrl, formatDate } from '../utils/AppUtils';
 import { HttpService } from '../services/HttpService';
@@ -40,30 +43,30 @@ function Policies() {
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await HttpService.get(getUrl('/partners/getAllPolicies', process.env.NODE_ENV));
-            if (response != null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                } else {
-                    const resData = responseData.response;
-                    const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-                    setPoliciesList(sortedData);
-                    console.log('Response data:', sortedData);
-                }
-            } else {
-                setErrorMsg(t('policies.errorInPoliciesList'));
-            }
-            setDataLoaded(true);
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
+      try {
+        const response = await HttpService.get(getUrl('/partners/getAllPolicies', process.env.NODE_ENV));
+        if (response != null) {
+          const responseData = response.data;
+          if (responseData.errors && responseData.errors.length > 0) {
+            const errorCode = responseData.errors[0].errorCode;
+            const errorMessage = responseData.errors[0].message;
+            setErrorCode(errorCode);
+            setErrorMsg(errorMessage);
+            console.error('Error:', errorMessage);
+          } else {
+            const resData = responseData.response;
+            const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+            setPoliciesList(sortedData);
+            console.log('Response data:', sortedData);
+          }
+        } else {
+          setErrorMsg(t('policies.errorInPoliciesList'));
         }
+        setDataLoaded(true);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setErrorMsg(err);
+      }
     };
     fetchData();
   }, [t]);
@@ -122,15 +125,17 @@ function Policies() {
     }
   }
 
-  const [prev, setPrev] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [next, setNext] = useState(false);                         // 
+  const [firstIndex, setFirstIndex] = useState(0);
   const recordsPerPage = 8;
-  const lastIndex = currentPage * recordsPerPage;                 //      This  part related to Pagination logic
-  const firstIndex = lastIndex - recordsPerPage;                  //     Related functions are bottom
+  const lastIndex = firstIndex + recordsPerPage;
   const records = policiesList.slice(firstIndex, lastIndex);
-  const nPage = Math.ceil(policiesList.length / recordsPerPage)
-  const numbers = [...Array(nPage + 1).keys()].slice(1)          //
+  const pageCount = Math.ceil(policiesList.length / recordsPerPage);                        //   This  part related to Pagination logic
+  const onHandelPageChange = (event) => {
+    const newIndex = (event.selected * recordsPerPage) % policiesList.length;               //    Respective functions are at bottom
+    setFirstIndex(newIndex);
+  };
+  const [previous, setPrevious] = useState(false);
+  const [next, setNext] = useState(false); 
 
   return (
     <div className="flex-col w-full p-5 bg-anti-flash-white font-inter">
@@ -167,7 +172,7 @@ function Policies() {
               </div>
 
               {isData ?
-                <button type="button" className="text-md font-medium px-7 text-white bg-tory-blue rounded-md">
+                <button type="button" className="h-[50px] text-sm font-medium px-7 text-white bg-tory-blue rounded-md">
                   {t('policies.requestPolicyBtn')}
                 </button>
                 : null
@@ -208,7 +213,7 @@ function Policies() {
                       <p className=" font-bold text-blue-900 text-md ml-4 my-6">
                         {t('policies.listOfPolicies')}
                       </p>
-                      <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[13%] text-sm py-3 mx-4 text-blue-700 border border-blue-700 font-semibold rounded-md text-center
+                      <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[12%] text-sm py-3 mx-4 text-blue-700 border border-blue-700 font-semibold rounded-md text-center
                         ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'}`}
                       >
                         {t('policies.filterBtn')}
@@ -271,7 +276,10 @@ function Policies() {
                                 <th key={index} className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
                                   <div className="flex gap-x-2 items-center">
                                     {head}
-                                    <img src={sortIcon} alt="" />
+                                    <img
+                                      src={sortIcon} className="cursor-pointer"
+                                      onClick={toggleSortOrder} alt=""
+                                    />
                                   </div>
                                 </th>
                               )
@@ -280,7 +288,10 @@ function Policies() {
                             <th className="text-sm font-medium text-gray-500 pl-6">
                               <div className="flex gap-x-1 items-center">
                                 {t('policies.status')}
-                                <img src={sortIcon} alt="" />
+                                <img
+                                  src={sortIcon} className="cursor-pointer"
+                                  onClick={toggleSortOrder} alt=""
+                                />
                               </div>
                             </th>
                             <th className="text-sm font-medium text-gray-500">
@@ -315,51 +326,47 @@ function Policies() {
                   </div>
                   <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
                     <div></div>
-                    <nav>
-                      <ul className="flex gap-x-4 items-center">
-                        <li className={`cursor-pointer`}>
-                          <svg onClick={prevPage}
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="32" height="32" viewBox="0 0 32 32">
-                            <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
-                              <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
-                                fill="#fff" stroke={prev ? "#1447b2" : "#bababa"} strokeWidth="1">
-                                <rect width="32" height="32" rx="6" stroke="none" />
-                                <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
-                              </g>
-                              <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
-                                transform="translate(450.214 766.359) rotate(-90)" fill={prev ? "#1447b2" : "#bababa"} />
+
+                      <ReactPaginate
+                        breakLabel="..."
+                        previousLabel={<svg onClick={perviousPage}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28" height="28" viewBox="0 0 32 32">
+                          <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
+                            <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
+                              fill="#fff" stroke= {previous ? "#1447b2" : "#bababa"} strokeWidth="1">
+                              <rect width="32" height="32" rx="6" stroke="none" />
+                              <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
                             </g>
-                          </svg>
-                        </li>
-                        {
-                          numbers.map((n, i) => (
-                            <li key={i} className='cursor-pointer'>
-                              <p className={`text-xs font-semibold px-2 py-1 ${currentPage === n ? "bg-tory-blue text-white rounded-md" : "text-blue-600"}`}
-                                onClick={() => changeCurrPage(n)}>
-                                {n} </p>
-                            </li>
-                          ))
-                        }
-                        <li className={`cursor-pointer`}>
-                          <svg onClick={nextPage}
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="32" height="32" viewBox="0 0 32 32">
-                            <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
-                              <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
-                                fill="#fff" stroke={next ? "#1447b2" : "#bababa"} strokeWidth="1">
-                                <rect width="32" height="32" rx="6" stroke="none" />
-                                <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
-                              </g>
-                              <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                                transform="translate(763.613 778.68) rotate(-90)" fill={next ? "#1447b2" : "#bababa"} />
+                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                              d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
+                              transform="translate(450.214 766.359) rotate(-90)" fill= {previous ? "#1447b2" : "#bababa"}/>
+                          </g>
+                        </svg>}
+                        nextLabel={<svg onClick={nextPage}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28" height="28" viewBox="0 0 32 32">
+                          <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
+                            <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
+                              fill="#fff" stroke= {next ? "#1447b2" : "#bababa"} strokeWidth="1">
+                              <rect width="32" height="32" rx="6" stroke="none" />
+                              <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
                             </g>
-                          </svg>
-                        </li>
-                      </ul>
-                    </nav>
+                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                              d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                              transform="translate(763.613 778.68) rotate(-90)" fill= {next ? "#1447b2" : "#bababa"}/>
+                          </g>
+                        </svg>}
+                        onPageChange={onHandelPageChange}
+                        pageRangeDisplayed={3}
+                        pageCount={pageCount}
+                        renderOnZeroPageCount={null}
+                        containerClassName="flex gap-x-4 mx-4 items-center"
+                        pageLinkClassName={`text-blue-700 font-semibold text-xs`}
+                        activeLinkClassName='text-gray-100 bg-blue-700 py-[18%] px-3 rounded-md'
+                        breakClassName='text-blue-700 text-md'
+                      />
+
                     <div className="flex items-center gap-x-3">
                       <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                       <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
@@ -396,26 +403,13 @@ function Policies() {
     </div>
   )
 
-  function prevPage() {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1)
-    }
-    setPrev(true)
-    setNext(false)
-  }
-
-  function changeCurrPage(id) {
-    setCurrentPage(id)
-    setPrev(false)
-    setNext(false)
-  }
-
+  function perviousPage() {
+    setPrevious(true);                                  //   Functions related to pagination 
+    setNext(false);                                      //  to handle previous & next
+  }                                                   
   function nextPage() {
-    if (currentPage !== nPage) {
-      setCurrentPage(currentPage + 1)
-    }
-    setNext(true)
-    setPrev(false)
+    setNext(true);
+    setPrevious(false);
   }
 }
 
