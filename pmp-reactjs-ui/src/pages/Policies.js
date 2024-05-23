@@ -20,25 +20,21 @@ function Policies() {
     navigate('/partnermanagement')
   };
 
-  var options = [];
-
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [isFilterDropdown, setIsFilterDropdown] = useState(false);
-  const [filterOpts, setFilterOpts] = useState([]);
   const [policiesList, setPoliciesList] = useState([]);
-  const [isDescending, setIsDescending] = useState(true);
+  const [order, setOrder] = useState("ASC");
 
-  const table_heads = ["Partner ID", "Partner Type", "Policy Group", "Policy Name", "Create Data"];
-  const filterTitles = [
-    { "header": t('policies.partnerId'), "placeHolder": t('policies.enterPartnerID') },
-    { "header": t('policies.partnerType'), "placeHolder": t('policies.selectPartnerType') },
-    { "header": t('policies.policyGroup'), "placeHolder": t('policies.selectPolicyGroup') },
-    { "header": t('policies.policyName'), "placeHolder": t('policies.selectPolicyName') },
-    { "header": t('policies.status'), "placeHolder": t('policies.status') }
+  const tableHeaders = [
+    { id: "partnerId", head: 'partnerId' },
+    { id: "partnerType", head: "partnerType" },
+    { id: "policyGroup", head: "policyGroup" },
+    { id: "policyName", head: "policyName" },
+    { id: "createDate", head: "createdDate" },
+    { id: "status", head: "status" },
   ];
 
   useEffect(() => {
@@ -71,43 +67,25 @@ function Policies() {
     fetchData();
   }, [t]);
 
-  const toggleSortOrder = () => {
-    const sortedPolicies = [...policiesList].sort((a, b) => {
-      const dateA = new Date(a.createDate);
-      const dateB = new Date(b.createDate);
-      return isDescending ? dateA - dateB : dateB - dateA;
-    });
-  
-    setPoliciesList(sortedPolicies);
-    setIsDescending(!isDescending);
+  const toggleSortOrder = (sortItem) => {
+    if(order === 'ASC') {
+      const sortedPolicies = [...policiesList].sort((a, b) =>
+        a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
+      );
+      setPoliciesList(sortedPolicies);
+      setOrder("DSC")
+    }
+    if(order === 'DSC') {
+      const sortedPolicies = [...policiesList].sort((a, b) => 
+        a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
+      );
+      setPoliciesList(sortedPolicies);
+      setOrder("ASC")
+    }
   };
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
-  };
-
-  const openFilterDropdown = (choosenFilter) => {
-    setIsFilterDropdown(!isFilterDropdown);
-    if (choosenFilter === t('policies.enterPartnerID')) {
-      options = records.map((opt) => opt.partnerId)
-      setFilterOpts(options)
-    }
-    if (choosenFilter === t('policies.selectPartnerType')) {
-      options = records.map((opt) => opt.partnerType)
-      setFilterOpts(options)
-    }
-    if (choosenFilter === t('policies.selectPolicyGroup')) {
-      options = records.map((opt) => opt.policyGroup)
-      setFilterOpts(options)
-    }
-    if (choosenFilter === t('policies.selectPolicyName')) {
-      options = records.map((opt) => opt.policyName)
-      setFilterOpts(options)
-    }
-    if (choosenFilter === t('policies.status')) {
-      options = records.map((opt) => opt.status)
-      setFilterOpts(options)
-    }
   };
 
   function bgOfStatus(status) {
@@ -135,7 +113,7 @@ function Policies() {
     setFirstIndex(newIndex);
   };
   const [previous, setPrevious] = useState(false);
-  const [next, setNext] = useState(false); 
+  const [next, setNext] = useState(false);
 
   return (
     <div className="flex-col w-full p-5 bg-anti-flash-white font-inter">
@@ -229,72 +207,25 @@ function Policies() {
                     </div>
 
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                    {filter &&
-                      <div className="flex flex-wrap py-3 bg-gray-100 font-semibold text-xs pl-5">
-                        {filterTitles.map((filter, index) => {
-                          return (
-                            <div key={index} className="m-2">
-                              <h3 className="text-sm mb-2 text-[#031640]">{filter.header}</h3>
-                              <div onClick={() => openFilterDropdown(filter.placeHolder)}
-                                className="flex items-center justify-between w-[280px] h-[35px] p-2 px-3 bg-white text-[15px] font-medium rounded-[4px] text-gray-600 shadow-sm border-[1.5px] border-gray-400 cursor-pointer"
-                              >
-                                <p>{`${filter.placeHolder}`}</p>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="14" height="14" viewBox="0 0 11.359 6.697">
-                                  <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                    d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                                    transform="translate(-12 -16.6)" fill="#707070" />
-                                </svg>
-                              </div>
-                              {isFilterDropdown && (
-                                <div className="absolute bg-white w-[260px] ml-4 duration-400">
-                                  {filterOpts.map((item, index) => {
-                                    return (
-                                      <div key={index}>
-                                        <button className="block py-1 px-24 items-center text-xs text-gray-900">
-                                          {item}
-                                        </button>
-                                        <hr className="h-5" />
-                                      </div>
-                                    )
-                                  })}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })
-                        }
-                      </div>
-                    }
+
                     <div>
                       <table className="table-auto mx-5 lg:w-[96%]">
                         <thead>
                           <tr>
-                            {table_heads.map((head, index) => {
+                            {tableHeaders.map((header, index) => {
                               return (
                                 <th key={index} className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
-                                  <div className="flex gap-x-2 items-center">
-                                    {head}
+                                  <div className="flex gap-x-1 items-center">
+                                    {t('policies.' + header.head)}
                                     <img
                                       src={sortIcon} className="cursor-pointer"
-                                      onClick={toggleSortOrder} alt=""
+                                      onClick={() => toggleSortOrder(header.id)} alt=""
                                     />
                                   </div>
                                 </th>
                               )
-                            })
-                            }
-                            <th className="text-sm font-medium text-gray-500 pl-6">
-                              <div className="flex gap-x-1 items-center">
-                                {t('policies.status')}
-                                <img
-                                  src={sortIcon} className="cursor-pointer"
-                                  onClick={toggleSortOrder} alt=""
-                                />
-                              </div>
-                            </th>
-                            <th className="text-sm font-medium text-gray-500">
+                            })}
+                            <th className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
                               {t('policies.action')}
                             </th>
                           </tr>
@@ -308,14 +239,12 @@ function Policies() {
                                 <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyGroup}</td>
                                 <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyName}</td>
                                 <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'date')}</td>
-                                <td className="flex font-semibold pl-6">
+                                <td className="flex font-semibold ">
                                   <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
                                     {partner.status}
                                   </div>
                                 </td>
-                                <td>
-                                  <div className="lg:ml-5 text-sm">...</div>
-                                </td>
+                                <td className="text-center">...</td>
                               </tr>
                             )
                           })
@@ -327,45 +256,45 @@ function Policies() {
                   <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
                     <div></div>
 
-                      <ReactPaginate
-                        breakLabel="..."
-                        previousLabel={<svg onClick={perviousPage}
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28" height="28" viewBox="0 0 32 32">
-                          <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
-                            <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
-                              fill="#fff" stroke= {previous ? "#1447b2" : "#bababa"} strokeWidth="1">
-                              <rect width="32" height="32" rx="6" stroke="none" />
-                              <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
-                            </g>
-                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                              d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
-                              transform="translate(450.214 766.359) rotate(-90)" fill= {previous ? "#1447b2" : "#bababa"}/>
+                    <ReactPaginate
+                      breakLabel="..."
+                      previousLabel={<svg onClick={perviousPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28" height="28" viewBox="0 0 32 32">
+                        <g id="Group_58361" data-name="Group 58361" transform="translate(-438.213 -745)">
+                          <g id="Rectangle_15" data-name="Rectangle 15" transform="translate(438.213 745)"
+                            fill="#fff" stroke={previous ? "#1447b2" : "#bababa"} strokeWidth="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
                           </g>
-                        </svg>}
-                        nextLabel={<svg onClick={nextPage}
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28" height="28" viewBox="0 0 32 32">
-                          <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
-                            <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
-                              fill="#fff" stroke= {next ? "#1447b2" : "#bababa"} strokeWidth="1">
-                              <rect width="32" height="32" rx="6" stroke="none" />
-                              <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
-                            </g>
-                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                              d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                              transform="translate(763.613 778.68) rotate(-90)" fill= {next ? "#1447b2" : "#bababa"}/>
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M5.68,0,0,5.679,1.018,6.7,5.68,2.011l4.662,4.662,1.018-1.018Z"
+                            transform="translate(450.214 766.359) rotate(-90)" fill={previous ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>}
+                      nextLabel={<svg onClick={nextPage}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28" height="28" viewBox="0 0 32 32">
+                        <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
+                          <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)"
+                            fill="#fff" stroke={next ? "#1447b2" : "#bababa"} strokeWidth="1">
+                            <rect width="32" height="32" rx="6" stroke="none" />
+                            <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" />
                           </g>
-                        </svg>}
-                        onPageChange={onHandelPageChange}
-                        pageRangeDisplayed={3}
-                        pageCount={pageCount}
-                        renderOnZeroPageCount={null}
-                        containerClassName="flex gap-x-4 mx-4 items-center"
-                        pageLinkClassName={`text-blue-700 font-semibold text-xs`}
-                        activeLinkClassName='text-gray-100 bg-blue-700 py-[18%] px-3 rounded-md'
-                        breakClassName='text-blue-700 text-md'
-                      />
+                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                            d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                            transform="translate(763.613 778.68) rotate(-90)" fill={next ? "#1447b2" : "#bababa"} />
+                        </g>
+                      </svg>}
+                      onPageChange={onHandelPageChange}
+                      pageRangeDisplayed={3}
+                      pageCount={pageCount}
+                      renderOnZeroPageCount={null}
+                      containerClassName="flex gap-x-4 mx-4 items-center"
+                      pageLinkClassName={`text-blue-700 font-semibold text-xs`}
+                      activeLinkClassName='text-gray-100 bg-blue-700 py-[18%] px-3 rounded-md'
+                      breakClassName='text-blue-700 text-md'
+                    />
 
                     <div className="flex items-center gap-x-3">
                       <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
@@ -373,7 +302,7 @@ function Policies() {
                         <p>
                           {records.length}
                         </p>
-                        <svg
+                        <svg className="cursor-pointer"
                           xmlns="http://www.w3.org/2000/svg"
                           width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
                           <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
@@ -406,7 +335,7 @@ function Policies() {
   function perviousPage() {
     setPrevious(true);                                  //   Functions related to pagination 
     setNext(false);                                      //  to handle previous & next
-  }                                                   
+  }
   function nextPage() {
     setNext(true);
     setPrevious(false);
