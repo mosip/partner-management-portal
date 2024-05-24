@@ -20,6 +20,10 @@ function Policies() {
     navigate('/partnermanagement')
   };
 
+  const showViewPolicyDetails = (id) => {
+    navigate('/partnermanagement/viewPolicyDetails')
+  };
+
   const [isData, setIsData] = useState(true);
   const [filter, setFilter] = useState(false);
   const [errorCode, setErrorCode] = useState("");
@@ -27,6 +31,10 @@ function Policies() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policiesList, setPoliciesList] = useState([]);
   const [order, setOrder] = useState("ASC");
+  const [itemsPerPage, setItemsPerPage] = useState(false);
+  const [isDescending, setIsDescending] = useState(true);
+  const [countOfItems, setCountOfItems] = useState(5);
+  const [view, setView] = useState(false);
 
   const tableHeaders = [
     { id: "partnerId", head: 'partnerId' },
@@ -37,6 +45,27 @@ function Policies() {
     { id: "status", head: "status" },
   ];
 
+  const ViewOption = (id) => {
+    return (
+      <>
+        <p onClick={() => setView(!view)} className="font-semibold mb-0.5 cursor-pointer">
+          ...
+        </p>
+        {
+          view && (
+            <div onClick={() => showViewPolicyDetails()}
+              className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
+              <p className="px-5 py-2 cursor-pointer">
+                {t('policies.view')}
+              </p>
+            </div>
+          )
+        }
+      </>
+    )
+  }
+
+  const itemsInPage = [5, 10, 15, 20];
   const tableValues = [
     { "partnerId": "P10001", "partnerType": "Authentication", "policyGroup": "Policy Group Name", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
     { "partnerId": "P10002", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name", "policyName": "KYC", "createDate": "2024-05-21T03:11:42.422+00:00", "status": "Rejected", "Action": "..." },
@@ -103,18 +132,42 @@ function Policies() {
 
   const toggleSortOrder = (sortItem) => {
     if (order === 'ASC') {
-      const sortedPolicies = [...policiesList].sort((a, b) =>
-        a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
-      );
-      setPoliciesList(sortedPolicies);
-      setOrder("DSC")
+      if (sortItem === "createDate") {
+        const sortedPolicies = [...policiesList].sort((a, b) => {
+          const dateA = new Date(a.createDate);
+          const dateB = new Date(b.createDate);
+          return isDescending ? dateA - dateB : dateB - dateA;
+        });
+
+        setPoliciesList(sortedPolicies);
+        setIsDescending(!isDescending);
+      }
+      else {
+        const sortedPolicies = [...policiesList].sort((a, b) =>
+          a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
+        );
+        setPoliciesList(sortedPolicies);
+        setOrder("DSC")
+      }
     }
     if (order === 'DSC') {
-      const sortedPolicies = [...policiesList].sort((a, b) => 
-        a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
-      );
-      setPoliciesList(sortedPolicies);
-      setOrder("ASC")
+      if (sortItem === "createDate") {
+        const sortedPolicies = [...policiesList].sort((a, b) => {
+          const dateA = new Date(a.createDate);
+          const dateB = new Date(b.createDate);
+          return isDescending ? dateA - dateB : dateB - dateA;
+        });
+
+        setPoliciesList(sortedPolicies);
+        setIsDescending(!isDescending);
+      }
+      else {
+        const sortedPolicies = [...policiesList].sort((a, b) =>
+          a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
+        );
+        setPoliciesList(sortedPolicies);
+        setOrder("ASC")
+      }
     }
   };
 
@@ -122,14 +175,19 @@ function Policies() {
     setErrorMsg("");
   };
 
+  const changeItemsCount = (num) => {
+    setItemsPerPage(false);
+    setCountOfItems(num);
+  };
+
   function bgOfStatus(status) {
-    if (status === "approved") {
+    if (status === "Approved") {
       return ("bg-[#D1FADF] text-[#155E3E]")
     }
-    else if (status === "rejected") {
+    else if (status === "Rejected") {
       return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress") {
+    else if (status === "Pending for Approval") {
       return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === "Deactivated") {
@@ -138,7 +196,7 @@ function Policies() {
   }
 
   const [firstIndex, setFirstIndex] = useState(0);
-  const recordsPerPage = 10;
+  var recordsPerPage = countOfItems;
   const lastIndex = firstIndex + recordsPerPage;
   const records = policiesList.slice(firstIndex, lastIndex);
   const pageCount = Math.ceil(policiesList.length / recordsPerPage);                        //   This  part related to Pagination logic
@@ -170,7 +228,7 @@ function Policies() {
                 <div className="flex-col mt-4">
                   <h1 className="font-bold text-lg text-md text-blue-900">{t('policies.requestAPolicy')}</h1>
                   <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
-                    {t('policies.home')}
+                    {t('commons.home')}
                   </p>
                 </div>
               </div>
@@ -240,8 +298,8 @@ function Policies() {
                           <tr>
                             {tableHeaders.map((header, index) => {
                               return (
-                                <th key={index} className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
-                                  <div className="flex gap-x-1 items-center">
+                                <th key={index} className="py-4 text-sm font-medium text-gray-500 lg:w-[15%]">
+                                  <div className="mx-2 flex gap-x-1 items-center">
                                     {t('policies.' + header.head)}
                                     <img
                                       src={sortIcon} className="cursor-pointer"
@@ -251,7 +309,7 @@ function Policies() {
                                 </th>
                               )
                             })}
-                            <th className="py-4 sm:px-6 md:px-5 lg:px-3 text-sm font-medium text-gray-500">
+                            <th className="text-sm font-medium text-gray-500">
                               {t('policies.action')}
                             </th>
                           </tr>
@@ -260,17 +318,19 @@ function Policies() {
                           {records.map((partner, index) => {
                             return (
                               <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerId}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.partnerType}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyGroup}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{partner.policyName}</td>
-                                <td className="sm:px-6 md:px-5 lg:px-4">{formatDate(partner.createDate, 'dateTime')}</td>
-                                <td className="flex font-semibold pl-6">
-                                  <div className={`${bgOfStatus(partner.status)} py-1 px-3 my-3 text-xs rounded-md`}>
+                                <td className="px-2">{partner.partnerId}</td>
+                                <td className="px-2">{partner.partnerType}</td>
+                                <td className="px-2">{partner.policyGroup}</td>
+                                <td className="px-2">{partner.policyName}</td>
+                                <td className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
+                                <td className="">
+                                  <div className={`${bgOfStatus(partner.status)}flex w-fit py-1.5 px-2 m-3 text-xs rounded-md`}>
                                     {partner.status}
                                   </div>
                                 </td>
-                                <td className="text-center">...</td>
+                                <td className="text-center">
+                                  <ViewOption id={partner.partnerId}/>
+                                </td>
                               </tr>
                             )
                           })
@@ -324,17 +384,32 @@ function Policies() {
 
                     <div className="flex items-center gap-x-3">
                       <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                      <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
-                        <p>
-                          {records.length}
-                        </p>
-                        <svg className="cursor-pointer"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
-                          <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                            d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                            transform="translate(-12 -16.6)" fill="#1447b2" />
-                        </svg>
+                      <div>
+                        <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
+                          <p>
+                            {countOfItems}
+                          </p>
+                          <svg className={`cursor-pointer ${itemsPerPage ? "rotate-180" : null}`} onClick={() => setItemsPerPage(!itemsPerPage)}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                              d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                              transform="translate(-12 -16.6)" fill="#1447b2" />
+                          </svg>
+                        </div>
+                        {itemsPerPage && (
+                          <div className="absolute bg-white text-xs text-indigo-600 font-medium rounded-b-lg shadow-md">
+                            {itemsInPage.map((num, i) => {
+                              return (
+                                <p key={i} onClick={() => changeItemsCount(num)}
+                                  className="px-3 py-2 cursor-pointer hover:bg-gray-200">
+                                  {num}
+                                </p>
+                              )
+                            })
+                            }
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

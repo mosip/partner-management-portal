@@ -38,7 +38,6 @@
     },
     "loading": "chargement",
     "partnerCertificatesList": {
-        "home": "Maison",
         "partnerCertificate": "Certificat de partenaire",
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
         "uploadPartnerCertificate": "Veuillez télécharger le certificat de partenaire ici",
@@ -89,7 +88,6 @@
     },
     "policies": {
         "requestAPolicy": "Demander une politique",
-        "home": "Maison",
         "requestPolicyBtn": "Politique de demande",
         "listOfPolicies": "Liste des politiques",
         "filterBtn": "Filtre",
@@ -99,6 +97,7 @@
         "policyName": "Nom de la politique",
         "status": "Statut",
         "action": "Action",
+        "view": "voir",
         "enterPartnerID": "Saisissez l'ID du partenaire",
         "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
@@ -107,6 +106,13 @@
         "itemsPerPage": "Objets par page",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
 
+    },
+    "viewPolicyDetails": {
+        "viewPolicyDetails": "Afficher les détails de la politique",
+        "policySection": "Section des politiques"
+    },
+    "commons": {
+        "home": "Maison"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

@@ -150,7 +150,7 @@ function PartnerCertificatesList() {
                             <div className="flex-col mt-4">
                                 <h1 className="font-bold text-md text-blue-900">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                 <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
-                                    {t('partnerCertificatesList.home')}</p>
+                                    {t('commons.home')}</p>
                             </div>
                         </div>
                         <ul className="min-w-3.5 bg-white mt-3 rounded-lg shadow-md p-5 mr-8 pb-20">
