@@ -6,7 +6,7 @@ import ErrorMessage from "./common/ErrorMessage";
 import LoadingIcon from "./common/LoadingIcon";
 import fileUploadImg from '../svg/file_upload_certificate.svg';
 import fileDescription from '../svg/file_description.svg';
-import cancelIcon from '../svg/cancel_icon.svg';
+import SuccessMessage from './common/SuccessMessage';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -246,18 +246,10 @@ function UploadCertificate({ closePopup, partnerData }) {
                             )}
                             {uploadSuccess && successMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">
-                                    <div className=" bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
-                                        <div>
-                                            <p className=" text-sm font-semibold text-white break-words font-inter">
-                                                {successMsg}
-                                            </p>
-                                        </div>
-                                        <div className="mr-3 ml-5">
-                                            <img src={cancelIcon} alt="" onClick={cancelSuccessMsg}></img>
-                                        </div>
+                                    <div className="bg-fruit-salad md:w-[400px] w-[60%] h-[50px] flex items-center justify-between p-4">
+                                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                                     </div>
                                 </div>
-
                             )}
                             {uploadFailure && errorMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">

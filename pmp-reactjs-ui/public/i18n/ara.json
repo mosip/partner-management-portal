@@ -26,12 +26,15 @@
         "contactUs": "اتصل بنا"
     },
     "selectPolicyPopup": {
-        "title": "Select Policy Group",
-        "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
-        "partnerTypeLabel": "Partner Type",
-        "policyGroup": "Policy Group",
-        "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
-        "submit": "Submit"
+        "title": "حدد مجموعة السياسات",
+        "description": "حدد مجموعة السياسات التي تنطبق على مؤسستك لمتابعة تدفق نوع الشريك المسجل. يرجى التأكد من مراجعة وصف مجموعة السياسات لتأكيد مجموعة السياسات. بعد حفظ التحديد، لن تتمكن من تعديل مجموعة السياسات مرة أخرى. يُسمح بمجموعة سياسة واحدة فقط لكل معرف شريك.",
+        "partnerTypeLabel": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "policyGroupError": "غير قادر على جلب أي مجموعات النهج. اتصل بالمسؤول.",
+        "submit": "يُقدِّم",
+        "search": "يبحث",
+        "viewLess": "عرض أقل",
+        "viewMore": "عرض المزيد"
     },
     "loading": "تحميل",
     "partnerCertificatesList": {

@@ -31,7 +31,10 @@
         "partnerTypeLabel": "Partner Type",
         "policyGroup": "Policy Group",
         "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
-        "submit": "Submit"
+        "submit": "Submit",
+        "search": "Search",
+        "viewLess": "View Less",
+        "viewMore": "View More"
     },
     "loading": "Loading",
     "partnerCertificatesList": {
