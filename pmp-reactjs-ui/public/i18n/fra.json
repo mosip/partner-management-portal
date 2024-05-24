@@ -26,12 +26,15 @@
         "contactUs": "Contactez-nous"
     },
     "selectPolicyPopup": {
-        "title": "Select Policy Group",
-        "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
-        "partnerTypeLabel": "Partner Type",
-        "policyGroup": "Policy Group",
-        "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
-        "submit": "Submit"
+        "title": "Sélectionnez un groupe de stratégies",
+        "description": "Sélectionnez le groupe de stratégies applicable à votre organisation pour poursuivre le flux de type de partenaire inscrit. Veuillez vous assurer de parcourir la description du groupe de stratégies pour confirmer le groupe de stratégies. Une fois votre sélection enregistrée, vous ne pourrez plus modifier le groupe de stratégies. Un seul groupe de stratégies est autorisé par ID de partenaire.",
+        "partnerTypeLabel": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyGroupError": "Impossible de récupérer des groupes de stratégies. Contactez l'administrateur.",
+        "submit": "Soumettre",
+        "search": "Recherche",
+        "viewLess": "Voir moins",
+        "viewMore": "Voir plus"
     },
     "loading": "chargement",
     "partnerCertificatesList": {
