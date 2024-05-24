@@ -4,6 +4,7 @@ import MainLayout from '../pages/MainLayout.js';
 import PartnerCertificatesList from '../pages/PartnerCertificatesList.js';
 import Policies from '../pages/Policies.js';
 import Dashboard from '../pages/Dashboard.js';
+import ViewPoliciyDetails from '../pages/ViewPoliciyDetails.js';
 
 function AppRoutes() {
 
@@ -27,6 +28,10 @@ function AppRoutes() {
         {
           path: 'policies',
           element: <GuardedRoute><MainLayout><Policies /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'viewPolicyDetailes',
+          element: <GuardedRoute><MainLayout><ViewPoliciyDetails/></MainLayout></GuardedRoute>,
         }
       ],
     },
