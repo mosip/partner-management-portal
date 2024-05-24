@@ -21,7 +21,7 @@ function Policies() {
   };
 
   const showViewPolicyDetails = (id) => {
-    navigate('/partnermanagement/viewPolicyDetailes')
+    navigate('/partnermanagement/viewPolicyDetails')
   };
 
   const [isData, setIsData] = useState(true);
