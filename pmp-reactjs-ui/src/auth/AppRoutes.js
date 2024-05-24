@@ -30,7 +30,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><Policies /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'viewPolicyDetailes',
+          path: 'viewPolicyDetails',
           element: <GuardedRoute><MainLayout><ViewPoliciyDetails/></MainLayout></GuardedRoute>,
         }
       ],
