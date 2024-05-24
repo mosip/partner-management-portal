@@ -38,7 +38,6 @@
     },
     "loading": "تحميل",
     "partnerCertificatesList": {
-        "home": "بيت",
         "partnerCertificate": "شهادة الشريك",
         "noPartnerTypesAreMapped": "لم يتم تعيين أي أنواع شركاء لمعرف المستخدم الخاص بك",
         "uploadPartnerCertificate": "يرجى تحميل شهادة الشريك هنا",
@@ -89,7 +88,6 @@
     },
     "policies": {
         "requestAPolicy": "طلب سياسة",
-        "home": "بيت",
         "requestPolicyBtn": "سياسة الطلب",
         "listOfPolicies": "قائمة السياسات",
         "filterBtn": "منقي",
@@ -99,6 +97,7 @@
         "policyName": "اسم السياسة",
         "status": "حالة",
         "action": "فعل",
+        "view": "منظر",
         "enterPartnerID": "أدخل معرف الشريك",
         "selectPartnerType": "حدد نوع الشريك",
         "selectPolicyGroup": "حدد مجموعة السياسات",
@@ -106,6 +105,13 @@
         "approved": "موافقة",
         "itemsPerPage": "مواد لكل صفحة",
         "errorInPoliciesList": "هناك بعض الخطأ في جلب السياسات. حاول مرة أخرى في وقت لاحق!"
+    },
+    "viewPolicyDetails": {
+        "viewPolicyDetails": "عرض تفاصيل السياسة",
+        "policySection": "قسم السياسات"
+    },
+    "commons": {
+        "home": "بيت"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",

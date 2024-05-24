@@ -20,7 +20,7 @@ function Policies() {
     navigate('/partnermanagement')
   };
 
-  const showViewPoliciyDetails = (id) => {
+  const showViewPolicyDetails = (id) => {
     navigate('/partnermanagement/viewPolicyDetailes')
   };
 
@@ -53,7 +53,7 @@ function Policies() {
         </p>
         {
           view && (
-            <div onClick={() => showViewPoliciyDetails()}
+            <div onClick={() => showViewPolicyDetails()}
               className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
               <p className="px-5 py-2 cursor-pointer">
                 {t('policies.view')}
@@ -387,7 +387,7 @@ function Policies() {
                       <div>
                         <div className="flex justify-between w-10 h-6 items-center text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium">
                           <p>
-                            {records.length}
+                            {countOfItems}
                           </p>
                           <svg className={`cursor-pointer ${itemsPerPage ? "rotate-180" : null}`} onClick={() => setItemsPerPage(!itemsPerPage)}
                             xmlns="http://www.w3.org/2000/svg"

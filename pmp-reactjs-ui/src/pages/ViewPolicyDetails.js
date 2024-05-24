@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import backArrow from '../svg/back_arrow.svg';
 
-function ViewPoliciyDetails() {
+function ViewPolicyDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -37,4 +37,4 @@ function ViewPoliciyDetails() {
     )
 }
 
-export default ViewPoliciyDetails;
+export default ViewPolicyDetails;
