@@ -163,7 +163,7 @@ function SelectPolicyPopup() {
                                             </button>
                                             {isDropdownOpen && (
                                                 <div className="absolute z-50 top-10 left-0 w-full">
-                                                    <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                                                    <div className="z-10 max-h-40 overflow-y-auto border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                                                         <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                                             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
