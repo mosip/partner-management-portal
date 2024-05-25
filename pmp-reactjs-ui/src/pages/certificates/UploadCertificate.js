@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { HttpService } from "../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../utils/AppUtils';
+import { HttpService } from "../../services/HttpService";
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
-import ErrorMessage from "./common/ErrorMessage";
-import LoadingIcon from "./common/LoadingIcon";
-import fileUploadImg from '../svg/file_upload_certificate.svg';
-import fileDescription from '../svg/file_description.svg';
-import SuccessMessage from './common/SuccessMessage';
+import ErrorMessage from "../common/ErrorMessage";
+import LoadingIcon from "../common/LoadingIcon";
+import SuccessMessage from '../common/SuccessMessage';
+
+import fileUploadImg from '../../svg/file_upload_certificate.svg';
+import fileDescription from '../../svg/file_description.svg';
 
 function UploadCertificate({ closePopup, partnerData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

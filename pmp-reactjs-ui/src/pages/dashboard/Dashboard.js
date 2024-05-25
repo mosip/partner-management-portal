@@ -1,18 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getUserProfile } from '../services/UserProfileService.js';
+import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import partnerTypeRequestIcon from '../svg/partner_type_request_icon.svg';
-import orgUsersIcon from '../svg/org_user_icon.svg';
-import partnerCertificateIcon from '../svg/partner_certificate_icon.svg';
-import policiesIcon from '../svg/policies_icon.svg';
-import authServiceIcon from '../svg/auth_services_icon.svg';
-import { getPartnerManagerUrl, createRequest, handleServiceErrors } from '../utils/AppUtils';
-import { HttpService } from '../services/HttpService';
-import ErrorMessage from './common/ErrorMessage.js';
-import LoadingIcon from "./common/LoadingIcon";
-import Footer from "./common/Footer";
+import { getPartnerManagerUrl, createRequest, handleServiceErrors } from '../../utils/AppUtils.js';
+import { HttpService } from '../../services/HttpService.js';
+import ErrorMessage from '../common/ErrorMessage.js';
+import LoadingIcon from "../common/LoadingIcon.js";
+import Footer from "../common/Footer.js";
 import SelectPolicyPopup from './SelectPolicyPopup.js';
+
+import partnerTypeRequestIcon from '../../svg/partner_type_request_icon.svg';
+import orgUsersIcon from '../../svg/org_user_icon.svg';
+import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
+import policiesIcon from '../../svg/policies_icon.svg';
+import authServiceIcon from '../../svg/auth_services_icon.svg';
 
 function Dashboard() {
   const navigate = useNavigate();

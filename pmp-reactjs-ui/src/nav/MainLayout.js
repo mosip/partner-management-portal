@@ -1,5 +1,5 @@
 import HeaderNav from './HeaderNav.js';
-import SideNav from '../nav/SideNav.js';
+import SideNav from './SideNav.js';
 import '../index.css';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useTranslation } from 'react-i18next';

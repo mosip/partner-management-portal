@@ -1,10 +1,10 @@
 import { createHashRouter, RouterProvider, redirect } from 'react-router-dom';
-import GuardedRoute from './GuardedRoute.js';
-import MainLayout from '../pages/MainLayout.js';
-import PartnerCertificatesList from '../pages/PartnerCertificatesList.js';
-import Policies from '../pages/Policies.js';
-import Dashboard from '../pages/Dashboard.js';
-import ViewPolicyDetails from '../pages/ViewPolicyDetails.js';
+import GuardedRoute from './auth/GuardedRoute.js';
+import MainLayout from './nav/MainLayout.js';
+import PartnerCertificatesList from './pages/certificates/PartnerCertificatesList.js';
+import Policies from './pages/policies/Policies.js';
+import Dashboard from './pages/dashboard/Dashboard.js';
+import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 
 function AppRoutes() {
 

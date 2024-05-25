@@ -13,7 +13,7 @@ function SideNav({open}) {
     const { t } = useTranslation();
 
     useEffect(() => {
-        console.log(selectedPath);
+        //console.log(selectedPath);
         if (selectedPath.includes('dashboard')) {
             setActiveIcon("home");
         } else if (selectedPath.includes('partnerCertificate')) {
@@ -68,7 +68,7 @@ function SideNav({open}) {
                 </div>
                 <ul className="mt-7 space-y-5">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
-                        <SideNavMenuItem title={t('partnerCertificatesList.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
+                        <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
                         <SideNavMenuItem title={t('dashboard.partnerTypeRequest')} id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
