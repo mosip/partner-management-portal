@@ -11,7 +11,6 @@ export const formatDate = (dateString, format) => {
 };
 
 export const getPartnerTypeDescription = (partnerType, t) => {
-    console.log(partnerType);
     if (partnerType) {
         partnerType = partnerType.toUpperCase();
         if (partnerType === "Device_Provider".toUpperCase()) {

@@ -13,7 +13,7 @@ export const HttpService = axios.create({
 export const setupResponseInterceptor = () => {
   HttpService.interceptors.response.use((response) => { // block to handle success case
     const originalRequestUrl = response.config.url;
-    console.log("interceptor: " + originalRequestUrl);
+    //console.log("interceptor: " + originalRequestUrl);
     if (originalRequestUrl.split('/').includes('validateToken')) { // Added this condition to avoid infinite loop 
       if (!getUserProfile()) {
         const resp = response.data.response;

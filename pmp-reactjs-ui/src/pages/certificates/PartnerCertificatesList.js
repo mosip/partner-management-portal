@@ -1,17 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
-import { HttpService } from "../services/HttpService";
-import ErrorMessage from "./common/ErrorMessage";
-import LoadingIcon from "./common/LoadingIcon";
-import Footer from "./common/Footer";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl } from "../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import ErrorMessage from "../common/ErrorMessage";
+import LoadingIcon from "../common/LoadingIcon";
+import Footer from "../common/Footer";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
-import rectangleBox from '../svg/rectangle_box.svg';
-import fileUpload from '../svg/file_upload_icon.svg';
-import file from '../svg/file_icon.svg';
-import downloadIcon from '../svg/download_icon.svg';
-import backArrow from '../svg/back_arrow.svg';
+
+import rectangleBox from '../../svg/rectangle_box.svg';
+import fileUpload from '../../svg/file_upload_icon.svg';
+import file from '../../svg/file_icon.svg';
+import downloadIcon from '../../svg/download_icon.svg';
+import backArrow from '../../svg/back_arrow.svg';
 
 function PartnerCertificatesList() {
     const { t } = useTranslation();

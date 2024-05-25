@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import backArrow from '../svg/back_arrow.svg';
+import backArrow from '../../svg/back_arrow.svg';
 
 function ViewPolicyDetails() {
     const { t } = useTranslation();

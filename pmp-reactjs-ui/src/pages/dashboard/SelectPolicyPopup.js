@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { HttpService } from "../services/HttpService";
+import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
     getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors
-} from '../utils/AppUtils';
+} from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
-import { getUserProfile } from '../services/UserProfileService.js';
-import ErrorMessage from "./common/ErrorMessage";
-import LoadingIcon from './common/LoadingIcon';
+import { getUserProfile } from '../../services/UserProfileService.js';
+import ErrorMessage from "../common/ErrorMessage.js";
+import LoadingIcon from '../common/LoadingIcon.js';
 
 function SelectPolicyPopup() {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState("");
@@ -22,7 +22,7 @@ function SelectPolicyPopup() {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const descriptionText = t('selectPolicyPopup.description');
-    const maxWords = 35;
+    const maxWords = 20;
     const displayText = isExpanded ? descriptionText : `${descriptionText.split(' ').slice(0, maxWords).join(' ')}...`;
     const filteredPolicyGroupList = policyGroupList.filter(policyGroupItem =>
         policyGroupItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
@@ -136,9 +136,6 @@ function SelectPolicyPopup() {
                                         </label>
                                         <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-base text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
-                                            <svg className="w-3 h-2 ml-3 transform text-gray-500 text-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                            </svg>
                                         </button>
                                     </div>
                                     <div className="flex flex-row">
@@ -155,7 +152,7 @@ function SelectPolicyPopup() {
                                                             return selectedPolicyGroup === policyGroupItem.fieldCode ? policyGroupItem.fieldValue : '';
                                                         }).filter(Boolean)
                                                         : t('selectPolicyPopup.title')
-                                                    }
+                                                }
                                                 </span>
                                                 <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
@@ -168,21 +165,21 @@ function SelectPolicyPopup() {
                                                             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
-                                                                </svg>  
+                                                                </svg>
                                                             </span>
                                                             <input type="text" placeholder={t('selectPolicyPopup.search')} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
-                                                                className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800"/>
+                                                                className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                                                         </div>
-                                                        {filteredPolicyGroupList.slice(0, 5).map(policyGroupItem => {
+                                                        {filteredPolicyGroupList.map((policyGroupItem, index) => {
                                                             return (
-                                                                <>
+                                                                <div key={index}>
                                                                     <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
                                                                         ${selectedPolicyGroup === policyGroupItem.id ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                                         onClick={() => changePolicyGroupSelection(policyGroupItem.fieldCode)}>
                                                                         {policyGroupItem.fieldValue}
                                                                     </button>
                                                                     <div className="border-gray-100 border-t mx-2"></div>
-                                                                </>
+                                                                </div>
                                                             );
                                                         })}
                                                     </div>

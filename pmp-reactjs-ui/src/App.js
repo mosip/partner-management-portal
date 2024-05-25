@@ -1,5 +1,5 @@
 import './App.css';
-import AppRoutes from './auth/AppRoutes';
+import AppRoutes from './AppRoutes';
 import { loadAppConfig } from './services/ConfigService.js';
 import { setupResponseInterceptor } from './services/HttpService.js';
 
