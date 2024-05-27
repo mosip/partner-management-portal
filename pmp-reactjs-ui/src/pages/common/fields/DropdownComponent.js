@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey }) {
+function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, dropDownPlaceHolder }) {
 
     const { t } = useTranslation();
 
@@ -19,13 +19,17 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     };
 
     return (
-        <div key={fieldName}>
-            <label className="block text-indigo-950 text-md font-semibold mb-2">
+        <div key={fieldName} className="ml-4 mb-2">
+            <label className="block text-indigo-900 text-sm font-semibold mb-2">
                 {t(fieldNameKey)}:
             </label>
-            <div className="relative z-10">
-                <button onClick={openDropdown} className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-400 rounded-md text-md text-start text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
-                    <span>{dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })}</span>
+            <div className="relative">
+                <button onClick={openDropdown} className="flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-base text-[15px] text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
+                    <span>{
+                        selectedDropdownEntry ?
+                        dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
+                        : t(dropDownPlaceHolder)}
+                    </span>
                     <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                     </svg>
@@ -42,7 +46,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                             onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                             {dropdownItem.fieldCode === "" ? "---" : dropdownItem.fieldCode}
                                         </button>
-                                        <div className="border-gray-600 border-t mx-2"></div>
+                                        <div className="border-gray-200 border-t mx-2"></div>
                                     </div>
                                 )
                             })}

@@ -89,7 +89,7 @@
     "policies": {
         "requestAPolicy": "Demander une politique",
         "requestPolicyBtn": "Politique de demande",
-        "listOfPolicies": "Liste des politiques",
+        "listOfPolicies": "Liste des demandes de politique",
         "filterBtn": "Filtre",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
@@ -98,11 +98,11 @@
         "status": "Statut",
         "action": "Action",
         "view": "voir",
-        "enterPartnerID": "Saisissez l'ID du partenaire",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
         "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
-        "approved": "Approuvée",
+        "selectStatus": "Sélectionnez le statut",
         "itemsPerPage": "Objets par page",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
 

@@ -89,7 +89,7 @@
     "policies": {
         "requestAPolicy": "طلب سياسة",
         "requestPolicyBtn": "سياسة الطلب",
-        "listOfPolicies": "قائمة السياسات",
+        "listOfPolicies": "قائمة طلبات السياسة",
         "filterBtn": "منقي",
         "partnerId": "معرف الشريك",
         "partnerType": "معرف الشريك",
@@ -98,11 +98,11 @@
         "status": "حالة",
         "action": "فعل",
         "view": "منظر",
-        "enterPartnerID": "أدخل معرف الشريك",
+        "selectPartnerId": "حدد معرف الشريك",
         "selectPartnerType": "حدد نوع الشريك",
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
-        "approved": "موافقة",
+        "selectStatus": "حدد الحالة",
         "itemsPerPage": "مواد لكل صفحة",
         "errorInPoliciesList": "هناك بعض الخطأ في جلب السياسات. حاول مرة أخرى في وقت لاحق!"
     },
