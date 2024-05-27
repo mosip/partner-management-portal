@@ -89,7 +89,7 @@
     "policies": {
         "requestAPolicy": "Request a Policy",
         "requestPolicyBtn": "Request Policy",
-        "listOfPolicies": "List of Policies",
+        "listOfPolicies": "List of Policy Requests",
         "filterBtn": "Filter",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
@@ -99,11 +99,11 @@
         "status": "Status",
         "action": "Action",
         "view": "View",
-        "enterPartnerID": "Enter Partner ID",
+        "selectPartnerId": "Select Partner ID",
         "selectPartnerType": "Select Partner Type",
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
-        "approved": "Approved",
+        "selectStatus": "Select Status",
         "itemsPerPage": "Items per Page",
         "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
