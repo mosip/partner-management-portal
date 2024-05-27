@@ -23,7 +23,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <label className="block text-indigo-900 text-sm font-semibold mb-2">
                 {t(fieldNameKey)}:
             </label>
-            <div className="relative">
+            <div className="relative w-full">
                 <button onClick={openDropdown} className="flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-base text-[15px] text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
                     <span>{
                         selectedDropdownEntry ?
@@ -37,19 +37,21 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 {isDropdownOpen && (
                     <div className="absolute z-50 top-10 left-0  w-full">
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                            {dropdownDataList.map((dropdownItem, index) => {
-                                return (
-                                    <div key={index} className='min-h-3'>
-                                        <button
-                                            className={`block w-full px-4 py-2 text-left text-base text-blue-950
-                                                ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                            onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
-                                            {dropdownItem.fieldCode === "" ? "---" : dropdownItem.fieldCode}
-                                        </button>
-                                        <div className="border-gray-200 border-t mx-2"></div>
-                                    </div>
-                                )
-                            })}
+                            <div className="max-h-40 overflow-y-auto">
+                                {dropdownDataList.map((dropdownItem, index) => {
+                                    return (
+                                        <div key={index} className="min-h-3">
+                                            <button
+                                                className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                    ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
+                                                {dropdownItem.fieldCode}
+                                            </button>
+                                            <div className="border-gray-200 border-t mx-2"></div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 )}
