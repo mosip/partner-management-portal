@@ -287,11 +287,11 @@ function Policies() {
                 <>
                   <div className="bg-white w-full mt-1 rounded-t-xl shadow-lg">
                     <div className="flex w-full p-2">
-                      <div className="flex w-full pl-3 justify-start font-bold text-blue-900 text-md" >
+                      <div className="flex w-full pl-3 items-center justify-start font-bold text-blue-900 text-md" >
                         {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                       </div>
                       <div className="w-full flex justify-end relative ">
-                        <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[20%] text-sm py-3  text-blue-700 border border-blue-700 font-semibold rounded-md text-center
+                        <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-3  text-blue-700 border border-blue-700 font-semibold rounded-md text-center
                         ${filter ? 'bg-blue-800 text-white' : 'text-blue-700'}`}
                         >
                           {t('policies.filterBtn')}
@@ -305,17 +305,18 @@ function Policies() {
                           </svg>
                         </button>
                         {filter && <button onClick={() => onClearFilter()} type="button"
-                          className="flex ml-2 justify-center items-center w-[20%] text-sm py-3 border border-blue-700 font-semibold rounded-md text-center bg-blue-800 text-white">
+                          className="flex ml-2 justify-center items-center w-[23%] text-sm py-3 border border-blue-700 font-semibold rounded-md text-center bg-blue-800 text-white">
                           Clear Filter
                         </button>}
                       </div>
                     </div>
+                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter &&
                       <PoliciesFilter
                         filteredPoliciesList={filteredPoliciesList}
                         onFilterChange={onFilterChange}
                       ></PoliciesFilter>}
-                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                    
                     <div>
                       <table className="table-auto mx-5 lg:w-[96%]">
                         <thead>
@@ -325,10 +326,12 @@ function Policies() {
                                 <th key={index} className="py-4 text-sm font-medium text-gray-500 lg:w-[15%]">
                                   <div className="mx-2 flex gap-x-1 items-center">
                                     {t(header.headerNameKey)}
-                                    <img
-                                      src={sortIcon} className="cursor-pointer"
-                                      onClick={() => toggleSortOrder(header.id)} alt=""
-                                    />
+                                    {header.id !== "action" && (
+                                      <img
+                                        src={sortIcon} className="cursor-pointer"
+                                        onClick={() => toggleSortOrder(header.id)} alt=""
+                                      />
+                                    )}
                                   </div>
                                 </th>
                               )
@@ -351,7 +354,7 @@ function Policies() {
                                 </td>
                                 <td className="text-center">
                                   <div>
-                                    <p onClick={() => setViewPolicyId(index)} className="font-semibold mb-0.5 cursor-pointer">...</p>
+                                    <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
                                     {
                                       viewPolicyId === index && (
                                         <div onClick={() => showViewPolicyDetails()}
@@ -419,7 +422,7 @@ function Policies() {
                       <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                       <div>
                         <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border-2 px-1 rounded-md border-indigo-400 text-indigo-600 font-medium"
+                        text-xs border px-1 rounded-md border-indigo-500 text-indigo-600 font-medium"
                           onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
                           <p>
                             {selectedRecordsPerPage}

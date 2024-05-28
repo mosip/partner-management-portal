@@ -160,7 +160,7 @@ function SelectPolicyPopup() {
                                             </button>
                                             {isDropdownOpen && (
                                                 <div className="absolute z-50 top-10 left-0 w-full">
-                                                    <div className="z-10 max-h-40 overflow-y-auto border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                                                    <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                                                         <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                                             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -170,18 +170,20 @@ function SelectPolicyPopup() {
                                                             <input type="text" placeholder={t('selectPolicyPopup.search')} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
                                                                 className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                                                         </div>
-                                                        {filteredPolicyGroupList.map((policyGroupItem, index) => {
-                                                            return (
-                                                                <div key={index}>
-                                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
-                                                                        ${selectedPolicyGroup === policyGroupItem.id ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                                        onClick={() => changePolicyGroupSelection(policyGroupItem.fieldCode)}>
-                                                                        {policyGroupItem.fieldValue}
-                                                                    </button>
-                                                                    <div className="border-gray-100 border-t mx-2"></div>
-                                                                </div>
-                                                            );
-                                                        })}
+                                                        <div className="max-h-32 overflow-y-auto">
+                                                            {filteredPolicyGroupList.map((policyGroupItem, index) => {
+                                                                return (
+                                                                    <div key={index}>
+                                                                        <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                                            ${selectedPolicyGroup === policyGroupItem.id ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                                            onClick={() => changePolicyGroupSelection(policyGroupItem.fieldCode)}>
+                                                                            {policyGroupItem.fieldValue}
+                                                                        </button>
+                                                                        <div className="border-gray-100 border-t mx-2"></div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
