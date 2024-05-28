@@ -338,7 +338,7 @@ function Policies() {
                         <tbody>
                           {tableRows.map((partner, index) => {
                             return (
-                              <tr key={index} className={`border-y-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
+                              <tr key={index} className={`border-t-2 text-xs text-[#191919] font-semibold ${partner.status === "Deactivated" ? "text-gray-400" : "text-[#191919]"}`}>
                                 <td className="px-2">{partner.partnerId}</td>
                                 <td className="px-2">{partner.partnerType}</td>
                                 <td className="px-2">{partner.policyGroup}</td>
@@ -372,7 +372,7 @@ function Policies() {
                       </table>
                     </div>
                   </div>
-                  <div className="flex justify-between bg-white items-center h-9 w-full m-0.5 p-8 rounded-b-md shadow-lg">
+                  <div className="flex justify-between bg-white items-center h-9 w-full mt-0.5 p-8 rounded-b-md shadow-md">
                     <div></div>
 
                     <ReactPaginate
