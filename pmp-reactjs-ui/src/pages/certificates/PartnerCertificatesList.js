@@ -163,7 +163,7 @@ function PartnerCertificatesList() {
                                 certificatesData.map((partner, index) => {
                                     return (
                                         <li key={index} className="rounded-lg shadow-lg border mb-4">
-                                            <div className={`flex h-[93px] p-5 items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-slate-100"} justify-between`}>
+                                            <div className={`flex h-[93px] p-5 items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-[#F4FAF4]"} justify-between`}>
                                                 <div className="flex items-center">
                                                     {partner.isCertificateAvailable
                                                         ? <img src={fileUpload} className="h-10" alt="" />
