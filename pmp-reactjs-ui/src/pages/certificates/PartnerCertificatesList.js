@@ -146,15 +146,15 @@ function PartnerCertificatesList() {
                         </div>
                     )}
                     <div className="flex-col ml-1">
-                        <div className="flex space-x-4">
-                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-1 cursor-pointer" />
-                            <div className="flex-col mt-4">
-                                <h1 className="font-bold text-md text-blue-900">{t('partnerCertificatesList.partnerCertificate')}</h1>
-                                <p onClick={() => moveToHome()} className="font-semibold text-blue-500 text-xs cursor-pointer">
+                        <div className="flex items-start space-x-3 mt-2">
+                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-3 cursor-pointer" />
+                            <div className="flex-col">
+                                <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
+                                <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t('commons.home')}</p>
                             </div>
                         </div>
-                        <ul className="min-w-3.5 bg-white mt-3 rounded-lg shadow-md p-5 mr-8 pb-20">
+                        <ul className="min-w-3.5 bg-snow-white mt-3 rounded-lg shadow-md p-5 pb-20">
                             {certificatesData.length === 0 ?
                                 <div className="p-14 flex flex-col justify-center items-center w-full">
                                     <img src={rectangleBox} alt="" />
@@ -162,25 +162,25 @@ function PartnerCertificatesList() {
                                 </div> :
                                 certificatesData.map((partner, index) => {
                                     return (
-                                        <li key={index} className="rounded-lg shadow-lg border mb-6">
-                                            <div className={`flex p-5 items-center ${partner.isCertificateAvailable ? "bg-green-50" : "bg-slate-100"} justify-between`}>
+                                        <li key={index} className="rounded-lg shadow-lg border mb-4">
+                                            <div className={`flex h-[93px] p-5 items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-slate-100"} justify-between`}>
                                                 <div className="flex items-center">
                                                     {partner.isCertificateAvailable
-                                                        ? <img src={fileUpload} className="h-11" alt="" />
-                                                        : <img src={file} className="h-11" alt="" />
+                                                        ? <img src={fileUpload} className="h-10" alt="" />
+                                                        : <img src={file} className="h-10" alt="" />
                                                     }
 
                                                     <div className="flex-col p-3 items-center">
-                                                        <h6 className={`text-sm text-gray-600 ${partner.isCertificateAvailable ? 'font-bold' : 'font-medium'}`}>
+                                                        <h6 className={`text-base ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-medium text-charcoal-gray'}`}>
                                                             {partner.isCertificateAvailable ? partner.certificateName : t('partnerCertificatesList.uploadPartnerCertificate')}
                                                         </h6>
-                                                        <p className="font-medium text-xs text-gray-400">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
+                                                        <p className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
                                                     </div>
                                                 </div>
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
                                                         <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-blue-700'} text-xs px-2 py-2 mr-1 text-blue-700 border border-blue-700 font-semibold rounded-lg text-center`}>
+                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-4 py-2 mr-1 text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ml-2`}
@@ -194,43 +194,43 @@ function PartnerCertificatesList() {
                                                             </button>
 
                                                             {activeBtn && (
-                                                                <div className="absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
-                                                                    <div onClick={() => getOriginalCertificate()} className="flex items-center border-b-2 justify-between cursor-pointer">
-                                                                        <button className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.originalCertificate')}</button>
-                                                                        <img src={downloadIcon} alt="" />
+                                                                <div className="w-[18%] absolute py-2 px-1 mr-2 right-48 origin-bottom-left rounded-md bg-white shadow-lg ring-gray-50 border duration-700">
+                                                                    <div onClick={() => getOriginalCertificate()} className="flex items-center border-b justify-between cursor-pointer">
+                                                                        <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.originalCertificate')}</button>
+                                                                        <img src={downloadIcon} alt="" className="mr-2" />
 
                                                                     </div>
-                                                                    <div onClick={() => getMosipSignedCertificate(partner)} className="flex items-center cursor-pointer">
-                                                                        <button className="block px-4 py-2 text-xs font-semibold text-gray-900">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
-                                                                        <img src={downloadIcon} alt="" />
+                                                                    <div onClick={() => getMosipSignedCertificate(partner)} className="flex items-center justify-between cursor-pointer">
+                                                                        <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
+                                                                        <img src={downloadIcon} alt="" className="mr-2" />
 
                                                                     </div>
                                                                 </div>)}
                                                         </div>
-                                                        <button onClick={() => clickOnUpload(partner)} className="text-xs p-3 py-2 text-blue-700 border border-blue-700 font-semibold rounded-md text-center">
+                                                        <button onClick={() => clickOnUpload(partner)} className="h-11 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                                             {t('partnerCertificatesList.reUpload')}
                                                         </button>
                                                     </div>
-                                                    : <button onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-9 w-28 text-white text-sm font-medium rounded-md">
+                                                    : <button onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-11 w-[120px] text-snow-white text-sm font-semibold rounded-md">
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
                                                     <UploadCertificate closePopup={closePopup} partnerData={selectedPartnerData} />
                                                 )}
                                             </div>
-                                            <hr className="border" />
+                                            <hr className="border bg-medium-gray" />
                                             <div className="flex items-center p-5 bg-white">
                                                 <div className="flex-col">
-                                                    <p className="font-medium text-xs text-gray-400">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-semibold text-sm text-red-950">{getPartnerType(partner.partnerType)}</p>
+                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p className="font-bold text-base text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
                                                 <div className="flex-col ml-12">
-                                                    <p className="font-medium text-xs text-gray-400">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-red-950">{formatDate(partner.certificateExpiryDate, 'date')}</p>
+                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
+                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
                                                 </div>
                                                 <div className="flex-col ml-36">
-                                                    <p className="font-medium text-xs text-gray-400">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-red-950">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
+                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
                                                 </div>
                                             </div>
                                         </li>
