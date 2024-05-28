@@ -24,6 +24,7 @@ module.exports = {
         'light-gray': '#818181',
         'snow-white': '#FCFCFC',
         'dark-blue': '#031640',
+        'gunmetal-gray': '36393E',
       }),
       fontFamily: {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],
