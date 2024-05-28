@@ -31,7 +31,7 @@ function HeaderNav({ open, setOpen }) {
     }
     
     return (
-        <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_3px_8px_0px] relative">
+        <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] relative">
             <div className="p-6 cursor-pointer" onClick={() => setOpen(!open)}>
                 <img src={hamburgerIcon} alt=""></img>
             </div>
