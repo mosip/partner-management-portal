@@ -115,13 +115,13 @@ function Dashboard() {
               </div>
             </div>
           )}
-          <div className="mb-8 mt-8 ml-[2%] text-xl font-semibold tracking-tight text-gray-700">
+          <div className="mb-7 mt-5 ml-[2.3%] text-xl font-semibold tracking-tight text-gray-700">
             <p >
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })},
             </p>
           </div>
-          <div className="flex ml-[2.7%] flex-wrap">
-            <div className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+          <div className="flex mt-2 ml-[3.2%] flex-wrap break-words">
+            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerTypeRequestIcon} alt=""></img>
               </div>
@@ -134,7 +134,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div className="w-[25%] min-w-72 max-w-[18.7rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={orgUsersIcon} alt=""></img>
               </div>
@@ -147,7 +147,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div onClick={() => partnerCertificatesList()} className="w-[25%] min-w-72 max-w-[18.7rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt=""></img>
               </div>
@@ -160,7 +160,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div onClick={() => policies()} className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={policiesIcon} alt=""></img>
               </div>
@@ -173,7 +173,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={authServiceIcon} alt=""></img>
               </div>

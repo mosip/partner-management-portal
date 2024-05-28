@@ -57,7 +57,7 @@ function SideNav({open}) {
     };
     return (
         <div className="flex font-inter">
-            <div className={`${open ? "w-64" : "w-20"} flex-col h-screen relative duration-500 shadow-lg`}>
+            <div className={`${open ? "w-64" : "w-20"} flex-col h-full relative duration-500`}>
                 <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
                     <div className="flex items-center space-x-4 pl-6">
                         <img src={mosip_icon} alt=""/>
@@ -66,7 +66,7 @@ function SideNav({open}) {
                         </div>
                     </div>
                 </div>
-                <ul className="mt-7 space-y-5">
+                <ul className="pt-10 space-y-5 h-full shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
