@@ -3,7 +3,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
     return (
         <div className="flex items-center gap-x-2 mt-2 font-inter">
             <div className={`h-6 pl-1 w-1 ${activeIcon === id ? 'bg-tory-blue' : null} rounded-e-md`}></div>
-            <div className="h-10 p-3 rounded-md shadow-md">
+            <div className="h-10 p-3 ml-2 rounded-md shadow-md">
                 {id === 'home' &&
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

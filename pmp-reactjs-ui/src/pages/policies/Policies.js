@@ -8,7 +8,8 @@ import ReactPaginate from 'react-paginate';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
 import Footer from "../common/Footer";
-
+import SortAsc from '../../svg/sort_down';
+import SortDesc from '../../svg/sort_up';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import sortIcon from '../../svg/sort_icon.svg';
 import backArrow from '../../svg/back_arrow.svg';
@@ -25,6 +26,8 @@ function Policies() {
   const [policiesList, setPoliciesList] = useState([]);
   const [filteredPoliciesList, setFilteredPoliciesList] = useState([]);
   const [order, setOrder] = useState("ASC");
+  const [activeSortAsc, setActiveSortAsc] = useState(false);
+  const [activeSortDesc, setActiveSortDesc] = useState(false);
   const [firstIndex, setFirstIndex] = useState(0);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
   const [previous, setPrevious] = useState(false);
@@ -151,6 +154,8 @@ function Policies() {
         });
         setFilteredPoliciesList(sortedPolicies);
         setIsDescending(!isDescending);
+        setActiveSortDesc(true);
+        setActiveSortAsc(false);
       }
       else {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
@@ -158,6 +163,8 @@ function Policies() {
         );
         setFilteredPoliciesList(sortedPolicies);
         setOrder("DESC")
+        setActiveSortDesc(true);
+        setActiveSortAsc(false);
       }
     }
     if (order === 'DESC') {
@@ -170,6 +177,8 @@ function Policies() {
 
         setFilteredPoliciesList(sortedPolicies);
         setIsDescending(!isDescending);
+        setActiveSortDesc(false);
+        setActiveSortAsc(true);
       }
       else {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
@@ -177,6 +186,8 @@ function Policies() {
         );
         setFilteredPoliciesList(sortedPolicies);
         setOrder("ASC")
+        setActiveSortDesc(false);
+        setActiveSortAsc(true);
       }
     }
   };
@@ -316,7 +327,7 @@ function Policies() {
                         filteredPoliciesList={filteredPoliciesList}
                         onFilterChange={onFilterChange}
                       ></PoliciesFilter>}
-                    
+
                     <div>
                       <table className="table-auto mx-5 lg:w-[96%]">
                         <thead>
@@ -327,10 +338,24 @@ function Policies() {
                                   <div className="mx-2 flex gap-x-1 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
-                                      <img
-                                        src={sortIcon} className="cursor-pointer"
-                                        onClick={() => toggleSortOrder(header.id)} alt=""
-                                      />
+                                      // <img
+                                      //   src={sortIcon} className="cursor-pointer"
+                                      //   onClick={() => toggleSortOrder(header.id)} alt=""
+                                      // />
+                                      <div>
+                                        <svg className="cursor-pointer" onClick={() => toggleSortOrder(header.id)} alt=""
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="7" height="6" viewBox="0 0 7 6">
+                                          <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                            fill={`${activeSortDesc ? "#1447b2" : "#6f6e6e"}`} />
+                                        </svg>
+                                        <svg className="cursor-pointer" onClick={() => toggleSortOrder(header.id)} alt=""
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="7" height="6" viewBox="0 0 7 6">
+                                          <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                            transform="translate(7 6) rotate(180)" fill={`${activeSortAsc ? "#1447b2" : "#6f6e6e"}`} />
+                                        </svg>
+                                      </div>
                                     )}
                                   </div>
                                 </th>
