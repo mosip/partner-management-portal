@@ -115,7 +115,7 @@ function Dashboard() {
               </div>
             </div>
           )}
-          <div className="mb-8 mt-8 ml-[2.1%] text-xl font-semibold tracking-tight text-gray-700">
+          <div className="mb-8 mt-8 ml-[2%] text-xl font-semibold tracking-tight text-gray-700">
             <p >
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })},
             </p>
