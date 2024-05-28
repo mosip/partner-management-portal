@@ -28,11 +28,11 @@ function UploadCertificate({ closePopup, partnerData }) {
         setIsDropdownOpen(!isDropdownOpen);
     };
     const clickOnCancel = () => {
-        closePopup(true);
+        closePopup(true, "cancel");
     };
     const clickOnSubmit = async () => {
         if (uploadSuccess) {
-            closePopup(true);
+            closePopup(true, "close");
         } else {
             setDataLoaded(false);
             let request = {
@@ -139,48 +139,48 @@ function UploadCertificate({ closePopup, partnerData }) {
     }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate]);
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg mt-5`}>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
+            <div className={`bg-white md:w-[35%] w-[55%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[89%]' : 'h-[84%]'} rounded-lg shadow-lg mt-5`}>
                 {!dataLoaded && (
                     <LoadingIcon></LoadingIcon>
                 )}
                 {dataLoaded && (
                     <>
-                        <div className="px-4 py-3">
-                            <h3 className="text-md font-bold text-gray-900">{partnerData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
-                            <p className="text-sm text-gray-600">{t('uploadCertificate.selectFieldsMsg')}</p>
+                        <div className="px-[4.5%] py-[3%]">
+                            <h3 className="text-base font-bold text-[#333333]">{partnerData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
+                            <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="p-3">
+                        <div className="px-[6%] py-[3%]">
                             <form>
-                                <div className="mb-4">
-                                    <label className="block text-indigo-950 text-md font-semibold mb-2">{t('uploadCertificate.partnerTypeLabel')}</label>
-                                    <input type="text" className="w-full h-15 px-3 py-2 border border-gray-300 rounded-md text-md text-gray-800 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                <div className="mb-3">
+                                    <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerTypeLabel')}</label>
+                                    <input type="text" className="w-full h-12 px-3 py-2 border border-[#C1C1C1] rounded-md text-md text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
                                         value={getPartnerType(partnerData)} disabled />
                                 </div>
-                                <div className="mb-4">
-                                    <label className="block text-indigo-950 text-md font-semibold mb-2">{t('uploadCertificate.partnerDomainTypeLabel')}<span className="text-red-500">*</span></label>
+                                <div className="mb-3">
+                                    <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainTypeLabel')}<span className="text-red-500">*</span></label>
                                     <div className="relative z-10">
-                                        <button onClick={openDropdown} className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-400 rounded-md text-md text-start text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
+                                        <button onClick={openDropdown} className="flex items-center justify-between w-full h-12 px-3 py-2 border border-gray-400 rounded-md text-md text-start text-gunmetal-gray leading-tight focus:outline-none focus:shadow-none" type="button">
                                             <span>{selectedDomainType || setDefaultDomainType()}</span>
                                             <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                             </svg>
                                         </button>
                                         {isDropdownOpen && (
-                                            <div className="absolute z-50 top-10 left-0 w-full">
+                                            <div className="absolute z-50 top-12 left-0 w-full">
                                                 <div className="z-10 border border-gray-400 bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
                                                         ${selectedDomainType === "DEVICE" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                         onClick={() => selectDomainType("DEVICE")}>DEVICE
                                                     </button>
-                                                    <div className="border-gray-100 border-t mx-2"></div>
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                    <div className="border-gray-200 border-t mx-2"></div>
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
                                                         ${selectedDomainType === "FTM" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                         onClick={() => selectDomainType("FTM")}>FTM
                                                     </button>
-                                                    <div className="border-t border-gray-100 mx-2"></div>
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
+                                                    <div className="border-t border-gray-200 mx-2"></div>
+                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
                                                         ${selectedDomainType === "AUTH" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                         onClick={() => selectDomainType("AUTH")}>AUTH
                                                     </button>
@@ -190,17 +190,17 @@ function UploadCertificate({ closePopup, partnerData }) {
                                     </div>
                                 </div>
                             </form>
-                            <div className="flex items-center justify-center w-full h-36 p-4 border-2 border-blue-300 rounded-lg bg-blue-50 bg-opacity-25 text-center cursor-pointer relative">
+                            <div className="flex items-center justify-center mt-[4%] w-full h-36 p-4 border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
                                 {uploading && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
-                                        <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg aria-hidden="true" className="w-9 h-9 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
                                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                                         </svg>
-                                        <h5 className="text-gray-800 text-sm">
+                                        <h5 className="text-charcoal-gray text-base font-medium">
                                             {t('uploadCertificate.selectingFile')}
                                         </h5>
-                                        <p className="text-sm font-semibold text-blue-700" onClick={cancelUpload}>
+                                        <p className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
                                             {t('uploadCertificate.cancel')}
                                         </p>
                                     </div>
@@ -208,11 +208,11 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 {!uploading && fileName === '' && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
                                         <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
-                                            <img src={fileUploadImg} alt="" />
-                                            <h5 className="text-gray-700 text-sm">
+                                            <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10"/>
+                                            <h5 className="text-charcoal-gray text-base font-medium">
                                                 {t('uploadCertificate.selectCertificate')}
                                             </h5>
-                                            <p className="text-sm text-gray-400">
+                                            <p className="text-xs text-light-gray">
                                                 {t('uploadCertificate.certificateFormat')}
                                             </p>
                                         </label>
@@ -222,12 +222,12 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 {!uploading && fileName && (
                                     <div className={`flex flex-col items-center justify-center mb-2 cursor-pointer ${!isDropdownOpen ? 'z-10' : 'z-0'}`}>
                                         <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
-                                            <img src={fileDescription} alt="" />
+                                            <img src={fileDescription} alt="" className="w-10 h-10 mb-2" />
                                         </label>
-                                        <h5 className="text-gray-800 text-sm">
+                                        <h5 className="text-charcoal-gray text-base font-medium">
                                             {fileName}
                                         </h5>
-                                        <p className="text-sm font-semibold text-blue-700" onClick={removeUpload}>
+                                        <p className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
                                             {t('uploadCertificate.remove')}
                                         </p>
                                     </div>
@@ -238,12 +238,12 @@ function UploadCertificate({ closePopup, partnerData }) {
                             )}
                         </div>
                         <div className="border-gray-200 border-opacity-50 border-t"></div>
-                        <div className="p-4 flex justify-end relative">
-                            <button className="mr-2 w-36 h-10 border-blue-700 border rounded-md text-blue-700 text-base font-semibold relative z-10" onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                        <div className="p-[4%] flex justify-end relative">
+                            <button className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold relative z-10" onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                             {(!uploading && fileName) ? (
-                                <button className="w-36 h-10 border-blue-700 border bg-blue-700 rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
+                                <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                             ) : (
-                                <button disabled className="w-36 h-10 border-zinc-400 border bg-zinc-400 rounded-md text-white text-base font-semibold">{t('uploadCertificate.submit')}</button>
+                                <button disabled className="w-40 h-12 border-[#A5A5A5] border bg-[#A5A5A5] rounded-md text-white text-base font-semibold">{t('uploadCertificate.submit')}</button>
                             )}
                             {uploadSuccess && successMsg && (
                                 <div className="fixed inset-0 flex mt-[122px] justify-center">

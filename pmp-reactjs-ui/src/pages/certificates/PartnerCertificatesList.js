@@ -38,10 +38,12 @@ function PartnerCertificatesList() {
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = (reload) => {
-        setShowPopup(false);
-        if (reload) {
-            window.location.reload();
+    const closePopup = (state, buttonName) => {
+        if(state) {
+            setShowPopup(false);
+            if (buttonName === "close") {
+                window.location.reload();
+            }
         }
     };
 
@@ -145,25 +147,25 @@ function PartnerCertificatesList() {
                             </div>
                         </div>
                     )}
-                    <div className="flex-col ml-1">
-                        <div className="flex items-start space-x-3 mt-2">
-                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-3 cursor-pointer" />
+                    <div className="flex-col">
+                        <div className="flex items-start space-x-3 mt-[1%]">
+                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[2%] cursor-pointer" />
                             <div className="flex-col">
                                 <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                 <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t('commons.home')}</p>
                             </div>
                         </div>
-                        <ul className="min-w-3.5 bg-snow-white mt-3 rounded-lg shadow-md p-5 pb-20">
+                        <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
                             {certificatesData.length === 0 ?
-                                <div className="p-14 flex flex-col justify-center items-center w-full">
+                                <div className="p-[8%] flex flex-col justify-center items-center w-full">
                                     <img src={rectangleBox} alt="" />
-                                    <p className="mt-5 ml-4 font-inter text-xs font-normal tracking-tight text-[#666666]">{t('partnerCertificatesList.noPartnerTypesAreMapped')}</p>
+                                    <p className="mt-[1.5%] font-inter text-xs font-normal tracking-tight text-[#666666]">{t('partnerCertificatesList.noPartnerTypesAreMapped')}</p>
                                 </div> :
                                 certificatesData.map((partner, index) => {
                                     return (
-                                        <li key={index} className="rounded-lg shadow-lg border mb-4">
-                                            <div className={`flex h-[93px] p-5 items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-[#F4FAF4]"} justify-between`}>
+                                        <li key={index} className="rounded-lg shadow-lg border mb-[2%]">
+                                            <div className={`flex h-[93px] p-[2.5%] items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-[#F4FAF4]"} justify-between`}>
                                                 <div className="flex items-center">
                                                     {partner.isCertificateAvailable
                                                         ? <img src={fileUpload} className="h-10" alt="" />
@@ -180,7 +182,7 @@ function PartnerCertificatesList() {
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
                                                         <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-4 py-2 mr-1 text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
+                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[14%] py-[1%] mr-1 text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ml-2`}
@@ -219,7 +221,7 @@ function PartnerCertificatesList() {
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />
-                                            <div className="flex items-center p-5 bg-white">
+                                            <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col">
                                                     <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
                                                     <p className="font-bold text-base text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
