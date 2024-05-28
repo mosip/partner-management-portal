@@ -115,73 +115,73 @@ function Dashboard() {
               </div>
             </div>
           )}
-          <div className="mb-7 mt-4 ml-5 text-xl font-semibold tracking-tight text-gray-700">
+          <div className="mb-8 mt-8 ml-[2.1%] text-xl font-semibold tracking-tight text-gray-700">
             <p >
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })},
             </p>
           </div>
-          <div className="flex mt-2 ml-7 flex-wrap">
-            <div className="w-[18.5rem] h-60 p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+          <div className="flex ml-[2.7%] flex-wrap">
+            <div className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerTypeRequestIcon} alt=""></img>
               </div>
               <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                <h5 className="mb-2 text-base font-semibold tracking-tight text-gray-600 ">
                   {t('dashboard.partnerTypeRequest')}
                 </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
+                <p className="mb-3 text-sm font-normal text-gray-400">
                   {t('dashboard.partnerTypeRequestDesc')}
                 </p>
               </div>
             </div>
-            <div className="w-[18.8rem] h-60 p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div className="w-[25%] min-w-72 max-w-[18.7rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={orgUsersIcon} alt=""></img>
               </div>
               <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                <h5 className="mb-2 text-base font-semibold tracking-tight text-gray-600 ">
                   {t('dashboard.organisationUsers')}
                 </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
+                <p className="mb-3 text-sm font-normal text-gray-400">
                   {t('dashboard.organisationUsersDesc')}
                 </p>
               </div>
             </div>
-            <div onClick={() => partnerCertificatesList()} className="w-[18.5rem] h-60 p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => partnerCertificatesList()} className="w-[25%] min-w-72 max-w-[18.7rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt=""></img>
               </div>
               <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                <h5 className="mb-2 text-base font-semibold tracking-tight text-gray-600">
                   {t('dashboard.partnerCertificate')}
                 </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
+                <p className="mb-3 text-sm font-normal text-gray-400">
                   {t('dashboard.partnerCertificateDesc')}
                 </p>
               </div>
             </div>
-            <div onClick={() => policies()} className="w-[18.8rem] h-60 p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => policies()} className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={policiesIcon} alt=""></img>
               </div>
               <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                <h5 className="mb-2 text-base font-semibold tracking-tight text-gray-600 ">
                   {t('dashboard.policies')}
                 </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
+                <p className="mb-3 text-sm font-normal text-gray-400">
                   {t('dashboard.policiesDesc')}
                 </p>
               </div>
             </div>
-            <div className="w-[18.5rem] h-60 p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div className="w-[25%] min-w-72 max-w-[18.6rem] min-h-[17rem] p-6 mr-3 mb-4 pt-20 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={authServiceIcon} alt=""></img>
               </div>
               <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                <h5 className="mb-2 text-base font-semibold tracking-tight text-gray-600 ">
                   {t('dashboard.authenticationServices')}
                 </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
+                <p className="mb-3 text-sm font-normal text-gray-400">
                   {t('dashboard.authenticationServicesDesc')}
                 </p>
               </div>
