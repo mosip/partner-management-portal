@@ -86,8 +86,14 @@
         "internalPartner": "Partenaire interne",
         "manualAdjudication": "Arbitrage manuelle"
     },
+    "statusCodes": {
+        "approved": "Approuvée",
+        "inProgress": "En attente d'approbation",
+        "rejected": "Rejetée",
+        "deactivated": "Désactivé"
+    },
     "policies": {
-        "requestAPolicy": "Demander une politique",
+        "policies": "Stratégies",
         "requestPolicyBtn": "Politique de demande",
         "listOfPolicies": "Liste des demandes de politique",
         "filterBtn": "Filtre",
