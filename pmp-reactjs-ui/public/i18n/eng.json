@@ -86,8 +86,14 @@
         "internalPartner": "Internal Partner",
         "manualAdjudication": "Manual Adjudication"
     },
+    "statusCodes": {
+        "approved": "Approved",
+        "inProgress": "Pending For Approval",
+        "rejected": "Rejected",
+        "deactivated": "Deactivated"
+    },
     "policies": {
-        "requestAPolicy": "Request a Policy",
+        "policies": "Policies",
         "requestPolicyBtn": "Request Policy",
         "listOfPolicies": "List of Policy Requests",
         "filterBtn": "Filter",

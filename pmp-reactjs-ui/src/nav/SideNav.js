@@ -66,7 +66,7 @@ function SideNav({open}) {
                         </div>
                     </div>
                 </div>
-                <ul className="pt-10 space-y-5 h-full shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
+                <ul className="pt-3 space-y-5 h-full bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>

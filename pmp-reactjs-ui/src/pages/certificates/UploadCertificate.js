@@ -140,7 +140,7 @@ function UploadCertificate({ closePopup, partnerData }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
-            <div className={`bg-white md:w-[35%] w-[55%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[89%]' : 'h-[84%]'} rounded-lg shadow-lg mt-5`}>
+            <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg`}>
                 {!dataLoaded && (
                     <LoadingIcon></LoadingIcon>
                 )}
@@ -238,7 +238,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                             )}
                         </div>
                         <div className="border-gray-200 border-opacity-50 border-t"></div>
-                        <div className="p-[4%] flex justify-end relative">
+                        <div className="py-[4%] px-[6%] flex justify-end relative">
                             <button className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold relative z-10" onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                             {(!uploading && fileName) ? (
                                 <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
