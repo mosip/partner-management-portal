@@ -49,6 +49,22 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
+export const getStatusCode = (status, t) => {
+    if(status) {
+        status = status.toLowerCase();
+        if (status === "approved") {
+            return t('statusCodes.approved');
+        } else if (status === "inprogress") {
+            return t('statusCodes.inProgress');
+        } else if (status === "rejected") {
+            return t('statusCodes.rejected');
+        } else if (status === "deactivated") {
+            return t('statusCodes.deactivated');
+        }
+    }
+
+}
+
 export const handleMouseClickForDropdown = (ref, callback) => {
     const handleClickOutside = (event) => {
         if (ref.current && !ref.current.contains(event.target)) {

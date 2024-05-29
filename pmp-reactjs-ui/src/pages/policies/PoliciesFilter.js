@@ -1,8 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../common/fields/DropdownComponent.js';
+import { useTranslation } from 'react-i18next';
+import { getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils.js';
 
 function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
+    const { t } = useTranslation();
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [partnerTypeData, setPartnerTypeData] = useState([]);
     const [policyGroupData, setPolicyGroupData] = useState([]);
@@ -24,10 +27,22 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     }
                 });
                 if (!alreadyAdded) {
-                    dataArr.push({
-                        fieldCode: item[fieldName],
-                        fieldValue: item[fieldName]
-                    });
+                    if (fieldName === "partnerType") {
+                        dataArr.push({
+                            fieldCode: getPartnerTypeDescription(item[fieldName], t),
+                            fieldValue: item[fieldName]
+                        });
+                    } else if (fieldName === "status") {
+                        dataArr.push({
+                            fieldCode: getStatusCode(item[fieldName], t),
+                            fieldValue: item[fieldName]
+                        });
+                    } else {
+                        dataArr.push({
+                            fieldCode: item[fieldName],
+                            fieldValue: item[fieldName]
+                        });
+                    }
                 }
             });
             return dataArr;

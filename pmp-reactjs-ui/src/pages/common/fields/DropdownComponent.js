@@ -27,11 +27,11 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
 
     return (
         <div key={fieldName} className="ml-4 mb-2">
-            <label className="block text-indigo-900 text-sm font-semibold mb-2">
+            <label className="block text-dark-blue text-sm font-semibold mb-2">
                 {t(fieldNameKey)}:
             </label>
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} className="flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-base text-[15px] text-gray-800 leading-tight focus:outline-none focus:shadow-none" type="button">
+                <button onClick={openDropdown} className="flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none focus:shadow-none" type="button">
                     <span>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
