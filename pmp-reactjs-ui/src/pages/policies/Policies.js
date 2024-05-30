@@ -51,39 +51,39 @@ function Policies() {
     { id: "action", headerNameKey: 'policies.action' }
   ];
 
-  const tableValues = [
-    { "partnerId": "P10001", "partnerType": "Authentication", "policyGroup": "Policy Group Name1", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10002", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name2", "policyName": "KYC", "createDate": "2024-05-21T03:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10003", "partnerType": "Authentication", "policyGroup": "Policy Group Name3", "policyName": "Full KYC", "createDate": "2024-05-21T02:16:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10004", "partnerType": "Authentication", "policyGroup": "Policy Group Name4", "policyName": "Full KYC", "createDate": "2024-05-21T02:14:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
-    { "partnerId": "P10005", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name5", "policyName": "KYC", "createDate": "2024-05-21T02:13:42.422+00:00", "status": "Deactivated", "Action": "..." },
-    { "partnerId": "P10006", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name6", "policyName": "KYC1", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10007", "partnerType": "Authentication", "policyGroup": "Policy Group Name7", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10008", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name8", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10009", "partnerType": "Authentication", "policyGroup": "Policy Group Name9", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10010", "partnerType": "Authentication", "policyGroup": "Policy Group Name10", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10011", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name11", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10012", "partnerType": "Authentication", "policyGroup": "Policy Group Name11", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10013", "partnerType": "Authentication", "policyGroup": "Policy Group Name11", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
-    { "partnerId": "P10014", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name12", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
-    { "partnerId": "P10015", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name12", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10016", "partnerType": "Authentication", "policyGroup": "Policy Group Name10", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10017", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name13", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10018", "partnerType": "Authentication", "policyGroup": "Policy Group Name14", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10019", "partnerType": "Authentication", "policyGroup": "Policy Group Name16", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10020", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name16", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10021", "partnerType": "Authentication", "policyGroup": "Policy Group Name17", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10022", "partnerType": "Authentication", "policyGroup": "Policy Group Name14", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
-    { "partnerId": "P10023", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name2", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
-    { "partnerId": "P10024", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name1", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10025", "partnerType": "Authentication", "policyGroup": "Policy Group Name18", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10026", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name19", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10027", "partnerType": "Authentication", "policyGroup": "Policy Group Name20", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10028", "partnerType": "Authentication", "policyGroup": "Policy Group Name21", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10029", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name22", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
-    { "partnerId": "P10030", "partnerType": "Authentication", "policyGroup": "Policy Group Name23", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
-    { "partnerId": "P10031", "partnerType": "Authentication", "policyGroup": "Policy Group Name24", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." }
-  ];
+  // const tableValues = [
+  //   { "partnerId": "P10001", "partnerType": "Authentication", "policyGroup": "Policy Group Name1", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10002", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name2", "policyName": "KYC", "createDate": "2024-05-21T03:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10003", "partnerType": "Authentication", "policyGroup": "Policy Group Name3", "policyName": "Full KYC", "createDate": "2024-05-21T02:16:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10004", "partnerType": "Authentication", "policyGroup": "Policy Group Name4", "policyName": "Full KYC", "createDate": "2024-05-21T02:14:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+  //   { "partnerId": "P10005", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name5", "policyName": "KYC", "createDate": "2024-05-21T02:13:42.422+00:00", "status": "Deactivated", "Action": "..." },
+  //   { "partnerId": "P10006", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name6", "policyName": "KYC1", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10007", "partnerType": "Authentication", "policyGroup": "Policy Group Name7", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10008", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name8", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10009", "partnerType": "Authentication", "policyGroup": "Policy Group Name9", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10010", "partnerType": "Authentication", "policyGroup": "Policy Group Name10", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10011", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name11", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10012", "partnerType": "Authentication", "policyGroup": "Policy Group Name11", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10013", "partnerType": "Authentication", "policyGroup": "Policy Group Name11", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+  //   { "partnerId": "P10014", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name12", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
+  //   { "partnerId": "P10015", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name12", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10016", "partnerType": "Authentication", "policyGroup": "Policy Group Name10", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10017", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name13", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10018", "partnerType": "Authentication", "policyGroup": "Policy Group Name14", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10019", "partnerType": "Authentication", "policyGroup": "Policy Group Name16", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10020", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name16", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10021", "partnerType": "Authentication", "policyGroup": "Policy Group Name17", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10022", "partnerType": "Authentication", "policyGroup": "Policy Group Name14", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." },
+  //   { "partnerId": "P10023", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name2", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Deactivated", "Action": "..." },
+  //   { "partnerId": "P10024", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name1", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10025", "partnerType": "Authentication", "policyGroup": "Policy Group Name18", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10026", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name19", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10027", "partnerType": "Authentication", "policyGroup": "Policy Group Name20", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10028", "partnerType": "Authentication", "policyGroup": "Policy Group Name21", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10029", "partnerType": "MISP Partner", "policyGroup": "Policy Group Name22", "policyName": "KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Rejected", "Action": "..." },
+  //   { "partnerId": "P10030", "partnerType": "Authentication", "policyGroup": "Policy Group Name23", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Approved", "Action": "..." },
+  //   { "partnerId": "P10031", "partnerType": "Authentication", "policyGroup": "Policy Group Name24", "policyName": "Full KYC", "createDate": "2024-05-21T02:11:42.422+00:00", "status": "Pending for Approval", "Action": "..." }
+  // ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +95,7 @@ function Policies() {
           const responseData = response.data;
           if (responseData && responseData.response) {
             const resData = responseData.response;
-            const sortedData = tableValues.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+            const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
             setPoliciesList(sortedData);
             setFilteredPoliciesList(policiesList);
             console.log('Response data:', policiesList.length);
