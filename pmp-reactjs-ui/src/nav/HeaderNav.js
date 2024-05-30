@@ -24,9 +24,6 @@ function HeaderNav({ open, setOpen }) {
         setIsDropdownOpen(!isDropdownOpen);
     };
     const logout = async () => {
-        // const cachedAppConfig = await getAppConfig();
-        // if (cachedAppConfig)
-        // console.log(cachedAppConfig['sbiPorts']);
         localStorage.clear();
         let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
         redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
@@ -35,8 +32,9 @@ function HeaderNav({ open, setOpen }) {
     }
 
     return (
-        <nav className="sticky top-0 z-40 bg-white flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
-            <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-sm' : 'shadow-sm'}`}>
+        <nav className="sticky top-0 z-40 bg-white flex justify-between w-full h-16 font-inter 
+            shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
+            <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
                 {!open && (
                     <div className={`flex items-center pl-6`}>
                         <img src={mosip_icon} alt="" />
@@ -56,10 +54,7 @@ function HeaderNav({ open, setOpen }) {
                         </div>
                     </div>
                 )}
-
             </div>
-
-
             <div className="px-5 xl:px-12">
                 <div className=" flex-1 justify-evenly mt-6">
                     &nbsp;

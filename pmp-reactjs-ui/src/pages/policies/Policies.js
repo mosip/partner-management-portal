@@ -236,7 +236,7 @@ function Policies() {
   };
 
   return (
-    <div className="flex-col ml-[8%] mr-[2%] mt-[2%] w-full">
+    <div className="ml-32 mr-5 mt-5 w-[100%]">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -330,8 +330,8 @@ function Policies() {
                         onFilterChange={onFilterChange}
                       ></PoliciesFilter>}
 
-                    <div className="overflow-x-auto mx-[2%] lg:w-[96%]">
-                      <table className="table-auto lg:w-[96%]">
+                    <div className="mx-[2%] overflow-x-scroll">
+                      <table className="table-auto">
                         <thead>
                           <tr>
                             {tableHeaders.map((header, index) => {
