@@ -59,7 +59,7 @@
         "reUploadPartnerCertificate": "Re-télécharger le certificat de partenaire",
         "selectFieldsMsg": "Veuillez sélectionner les champs et télécharger le certificat.",
         "partnerTypeLabel": "Type de partenaire",
-        "partnerDomainTypeLabel": "Type de domaine partenaire",
+        "partnerDomainType": "Type de domaine partenaire",
         "selectingFile": "Sélection du fichier...",
         "cancel": "Annuler",
         "selectCertificate": "Veuillez appuyer pour sélectionner le certificat",

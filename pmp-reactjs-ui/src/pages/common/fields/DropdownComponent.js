@@ -3,7 +3,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 
-function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, dropDownPlaceHolder }) {
+function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
+    dropDownPlaceHolder, defaultDropdownValue, outerDivStyle, fieldNameStyle, fieldBtnStyle, dropdownBoxStyle }) {
 
     const { t } = useTranslation();
 
@@ -16,6 +17,12 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         return clickOutSideDropdown;
     }, [dropdownRef]);
 
+    useEffect(() => {
+        if(defaultDropdownValue) {
+            setSelectedDropdownEntry(defaultDropdownValue);
+        }
+    }, [defaultDropdownValue])
+
     const changeDropdownSelection = (selectedid) => {
         setSelectedDropdownEntry(selectedid);
         setIsDropdownOpen(false);
@@ -26,12 +33,12 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     };
 
     return (
-        <div key={fieldName} className="ml-4 mb-2">
-            <label className="block text-dark-blue text-sm font-semibold mb-2">
+        <div key={fieldName} className={`${outerDivStyle}`}>
+            <label className={`block text-dark-blue font-semibold ${fieldNameStyle}`}>
                 {t(fieldNameKey)}:
             </label>
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} className="flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none focus:shadow-none" type="button">
+                <button onClick={openDropdown} className={`${fieldBtnStyle} flex items-center justify-between py-2 border border-gray-400 bg-white leading-tight focus:outline-none focus:shadow-none`} type="button">
                     <span>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
@@ -42,14 +49,14 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className="absolute z-50 top-10 left-0  w-full">
+                    <div className={`${dropdownBoxStyle} absolute z-50 left-0 w-full`}>
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             <div className="max-h-40 overflow-y-auto">
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block w-full h-8 px-4 py-1 text-left text-base text-blue-950
+                                                className={`block w-full h-8 px-4 py-1 text-left text-base text-dark-blue
                                                     ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 {dropdownItem.fieldCode}
