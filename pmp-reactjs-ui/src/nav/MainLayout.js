@@ -1,5 +1,6 @@
 import HeaderNav from './HeaderNav.js';
 import SideNav from './SideNav.js';
+import Footer from './Footer.js';
 import '../index.css';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useTranslation } from 'react-i18next';
@@ -12,16 +13,20 @@ function MainLayout({ children }) {
     useEffect(() => {
         const langCode = getUserProfile().langCode;
         if (langCode != null) {
-          i18n.changeLanguage(langCode);
+            i18n.changeLanguage(langCode);
         }
-      }, [i18n]);
+    }, [i18n]);
 
     return (
-        <div className="flex">
+        <div className="flex bg-anti-flash-white font-inter">
             <SideNav open={open}></SideNav>
             <div className='w-full lg:w-full'>
                 <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
-                {children}
+                <div className="ml-[80px] mt-[2%]">
+                    {children}
+                    <Footer></Footer>
+                </div>
+               
             </div>
         </div>
     );

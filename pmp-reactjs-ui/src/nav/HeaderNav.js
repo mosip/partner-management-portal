@@ -1,10 +1,14 @@
-import profileIcon from '../profile_icon.png';
-import { getUserProfile } from '../services/UserProfileService.js';
 import { useState, useRef, useEffect } from 'react';
-import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
+
+import { getUserProfile } from '../services/UserProfileService.js';
+import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
+
+import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
+import mosip_icon from '../../src/mosip_icon.svg';
+import side_menu_title from '../../src/side_menu_title.svg';
 
 function HeaderNav({ open, setOpen }) {
     const { t } = useTranslation();
@@ -24,19 +28,41 @@ function HeaderNav({ open, setOpen }) {
         // if (cachedAppConfig)
         // console.log(cachedAppConfig['sbiPorts']);
         localStorage.clear();
-        let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL; 
+        let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
         redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
         console.log(redirectUrl);
         window.location.href = redirectUrl;
     }
-    
+
     return (
-        <nav className="flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] relative">
-            <div className="p-6 cursor-pointer" onClick={() => setOpen(!open)}>
-                <img src={hamburgerIcon} alt=""></img>
+        <nav className="sticky top-0 bg-white flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
+
+            <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
+                {!open && (
+                    <div className={`flex items-center pl-6`}>
+                        <img src={mosip_icon} alt="" />
+                        <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
+                            <img src={hamburgerIcon} alt=""></img>
+                        </div>
+                    </div>
+                )}
+                {open && (
+                    <div className={`flex items-center w-64 space-x-4 pl-6 h-16 shadow-md`}>
+                        <img src={mosip_icon} alt="" />
+                        <div className={`duration-700`}>
+                            <img src={side_menu_title} alt="" />
+                        </div>
+                        <div className="p-2 cursor-pointer" onClick={() => setOpen(!open)}>
+                            <img src={hamburgerIcon} alt=""></img>
+                        </div>
+                    </div>
+                )}
+
             </div>
+
+
             <div className="px-5 xl:px-12">
-                <div className=" flex-1 justify-evenly mt-6 cursor-pointer">
+                <div className=" flex-1 justify-evenly mt-6">
                     &nbsp;
                 </div>
             </div>
