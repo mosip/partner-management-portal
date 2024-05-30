@@ -4,7 +4,6 @@ import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../services/HttpService";
 import ErrorMessage from "../common/ErrorMessage";
 import LoadingIcon from "../common/LoadingIcon";
-import Footer from "../common/Footer";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
@@ -134,7 +133,7 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
+        <div className="flex-col">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -242,7 +241,7 @@ function PartnerCertificatesList() {
                             }
                         </ul>
                     </div>
-                    <Footer></Footer>
+                    
                 </>
             )}
             
