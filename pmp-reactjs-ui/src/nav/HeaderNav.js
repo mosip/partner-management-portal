@@ -35,9 +35,8 @@ function HeaderNav({ open, setOpen }) {
     }
 
     return (
-        <nav className="sticky top-0 bg-white flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
-
-            <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
+        <nav className="sticky top-0 z-40 bg-white flex justify-between w-full h-16 font-inter shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
+            <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-sm' : 'shadow-sm'}`}>
                 {!open && (
                     <div className={`flex items-center pl-6`}>
                         <img src={mosip_icon} alt="" />

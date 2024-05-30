@@ -236,7 +236,7 @@ function Policies() {
   };
 
   return (
-    <div className="flex-col">
+    <div className="flex-col ml-[8%] mr-[2%] mt-[2%] w-full">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
