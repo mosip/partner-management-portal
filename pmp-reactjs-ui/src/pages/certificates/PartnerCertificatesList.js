@@ -133,14 +133,14 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className="flex-col">
+        <div className="ml-[8%] mr-[2%] w-full">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="flex justify-end max-w-7xl">
+                        <div className="flex justify-end">
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>

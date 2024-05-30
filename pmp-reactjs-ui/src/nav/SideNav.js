@@ -56,7 +56,7 @@ function SideNav({ open }) {
         setActiveIcon("authenticationServices");
     };
     return (
-        <div className="flex font-inter bg-white">
+        <div className="flex font-inter bg-white h-screen">
             <div className={`h-full ${open ? "absolute inset-y-16 left-0 z-30 w-64" : "absolute inset-y-16  w-20"} 
             flex-col duration-500`}>
                 {/* <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
