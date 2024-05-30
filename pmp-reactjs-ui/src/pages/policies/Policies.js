@@ -25,8 +25,8 @@ function Policies() {
   const [policiesList, setPoliciesList] = useState([]);
   const [filteredPoliciesList, setFilteredPoliciesList] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState(false);
-  const [activeSortDesc, setActiveSortDesc] = useState(false);
+  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
   const [previous, setPrevious] = useState(false);
@@ -142,7 +142,7 @@ function Policies() {
   }
 
   //This part is related to Sorting
-  const toggleSortOrder = (sortItem) => {
+  const toggleSortDescOrder = (sortItem) => {
     if (order === 'ASC') {
       if (sortItem === "createDate") {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) => {
@@ -151,9 +151,10 @@ function Policies() {
           return isDescending ? dateA - dateB : dateB - dateA;
         });
         setFilteredPoliciesList(sortedPolicies);
+        setOrder("DESC")
         setIsDescending(!isDescending);
-        setActiveSortDesc(true);
-        setActiveSortAsc(false);
+        setActiveSortDesc(sortItem);
+        setActiveSortAsc(sortItem);
       }
       else {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
@@ -161,10 +162,12 @@ function Policies() {
         );
         setFilteredPoliciesList(sortedPolicies);
         setOrder("DESC")
-        setActiveSortDesc(true);
-        setActiveSortAsc(false);
+        setActiveSortDesc(sortItem);
+        setActiveSortAsc(sortItem);
       }
     }
+  }
+  const toggleSortAscOrder = (sortItem) => {
     if (order === 'DESC') {
       if (sortItem === "createDate") {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) => {
@@ -174,9 +177,10 @@ function Policies() {
         });
 
         setFilteredPoliciesList(sortedPolicies);
+        setOrder("ASC")
         setIsDescending(!isDescending);
-        setActiveSortDesc(false);
-        setActiveSortAsc(true);
+        setActiveSortDesc(sortItem);
+        setActiveSortAsc(sortItem);
       }
       else {
         const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
@@ -184,8 +188,8 @@ function Policies() {
         );
         setFilteredPoliciesList(sortedPolicies);
         setOrder("ASC")
-        setActiveSortDesc(false);
-        setActiveSortAsc(true);
+        setActiveSortDesc(sortItem);
+        setActiveSortAsc(sortItem);
       }
     }
   };
@@ -336,22 +340,18 @@ function Policies() {
                                   <div className="mx-2 flex gap-x-1 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
-                                      // <img
-                                      //   src={sortIcon} className="cursor-pointer"
-                                      //   onClick={() => toggleSortOrder(header.id)} alt=""
-                                      // />
                                       <div>
-                                        <svg className="cursor-pointer" onClick={() => toggleSortOrder(header.id)} alt=""
+                                        <svg className="cursor-pointer mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt=""
                                           xmlns="http://www.w3.org/2000/svg"
                                           width="7" height="6" viewBox="0 0 7 6">
                                           <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                            fill={`${activeSortDesc ? "#1447b2" : "#6f6e6e"}`} />
+                                            fill={`${(activeSortDesc===header.id && order==="ASC") ? "#1447b2" : "#6f6e6e"}`} />
                                         </svg>
-                                        <svg className="cursor-pointer" onClick={() => toggleSortOrder(header.id)} alt=""
+                                        <svg className="cursor-pointer" onClick={() => toggleSortDescOrder(header.id)} alt=""
                                           xmlns="http://www.w3.org/2000/svg"
                                           width="7" height="6" viewBox="0 0 7 6">
                                           <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                            transform="translate(7 6) rotate(180)" fill={`${activeSortAsc ? "#1447b2" : "#6f6e6e"}`} />
+                                            transform="translate(7 6) rotate(180)" fill={`${(activeSortAsc===header.id && order==="DESC") ? "#1447b2" : "#6f6e6e"}`} />
                                         </svg>
                                       </div>
                                     )}
