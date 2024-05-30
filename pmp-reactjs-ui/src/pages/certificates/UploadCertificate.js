@@ -160,6 +160,13 @@ function UploadCertificate({ closePopup, partnerData }) {
         }
     }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate]);
 
+    const styles = {
+        outerDiv: "!ml-0 !mb-0",
+        dropdownLabel: "!text-base !mb-1",
+        dropdownButton: "!w-full !h-12 !px-3 !rounded-md !text-lg !text-start !text-gunmetal-gray",
+        selectionBox: "!top-12"
+    }
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
             <div className={`bg-white md:w-[400px] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'h-[520px]' : 'h-[500px]'} rounded-lg shadow-lg`}>
@@ -181,11 +188,13 @@ function UploadCertificate({ closePopup, partnerData }) {
                                         value={getPartnerType(partnerData)} disabled />
                                 </div>
                                 <div className="mb-3">
-                                    <DropdownComponent fieldName='partnerDomainType' dropdownDataList={partnerDomainTypeData} onDropDownChangeEvent={selectDomainType} fieldNameKey='uploadCertificate.partnerDomainType' 
-                                        defaultDropdownValue={selectedDomainType} 
-                                        fieldNameStyle='text-base mb-1' 
-                                        fieldBtnStyle='w-full h-12 px-3 rounded-md text-md text-start text-gunmetal-gray' 
-                                        dropdownBoxStyle='top-12'>
+                                    <DropdownComponent 
+                                        fieldName='partnerDomainType' 
+                                        dropdownDataList={partnerDomainTypeData} 
+                                        onDropDownChangeEvent={selectDomainType} 
+                                        fieldNameKey='uploadCertificate.partnerDomainType*' 
+                                        selectedDropdownValue={selectedDomainType} 
+                                        styleSet={styles}>
                                     </DropdownComponent>
                                 </div>
                             </form>
