@@ -59,7 +59,7 @@
         "reUploadPartnerCertificate": "Re-Upload Partner Certificate",
         "selectFieldsMsg": "Please select the fields and upload certificate.",
         "partnerTypeLabel": "Partner Type",
-        "partnerDomainTypeLabel": "Partner Domain Type",
+        "partnerDomainType": "Partner Domain Type",
         "selectingFile": "Selecting the file...",
         "cancel": "Cancel",
         "selectCertificate": "Please tap to select the certificate",

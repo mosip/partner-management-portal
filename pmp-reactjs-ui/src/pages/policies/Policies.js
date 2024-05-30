@@ -7,7 +7,6 @@ import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
-import Footer from "../common/Footer";
 import SortAsc from '../../svg/sort_down';
 import SortDesc from '../../svg/sort_up';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
@@ -237,7 +236,7 @@ function Policies() {
   };
 
   return (
-    <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
+    <div className="flex-col">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -479,7 +478,7 @@ function Policies() {
               }
             </div>
           </div>
-          <Footer></Footer>
+         
         </>
       )}
 

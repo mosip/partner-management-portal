@@ -6,7 +6,7 @@ import { getPartnerManagerUrl, createRequest, handleServiceErrors } from '../../
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
-import Footer from "../common/Footer.js";
+
 import SelectPolicyPopup from './SelectPolicyPopup.js';
 
 import partnerTypeRequestIcon from '../../svg/partner_type_request_icon.svg';
@@ -102,7 +102,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter">
+    <div className="flex-col mb-[2%]">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -190,7 +190,7 @@ function Dashboard() {
           {showPopup && (
             <SelectPolicyPopup closePopup={closePopup} />
           )}
-          <Footer></Footer>
+          
         </>)}
     </div>
   )
