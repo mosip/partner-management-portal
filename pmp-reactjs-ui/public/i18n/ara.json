@@ -59,7 +59,7 @@
         "reUploadPartnerCertificate": "إعادة تحميل شهادة الشريك",
         "selectFieldsMsg": "الرجاء تحديد الحقول وتحميل الشهادة.",
         "partnerTypeLabel": "نوع الشريك",
-        "partnerDomainTypeLabel": "نوع نطاق الشريك",
+        "partnerDomainType": "نوع نطاق الشريك",
         "selectingFile": "تحديد الملف...",
         "cancel": "يلغي",
         "selectCertificate": "الرجاء الضغط لتحديد الشهادة",

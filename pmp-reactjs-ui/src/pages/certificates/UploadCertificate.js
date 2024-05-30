@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from "../common/ErrorMessage";
 import LoadingIcon from "../common/LoadingIcon";
 import SuccessMessage from '../common/SuccessMessage';
-
+import DropdownComponent from '../common/fields/DropdownComponent';
 import fileUploadImg from '../../svg/file_upload_certificate.svg';
 import fileDescription from '../../svg/file_description.svg';
 
@@ -22,7 +22,23 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [certificateData, setCertificateData] = useState("");
     const [formattedDate, setFormattedDate] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
+    const [partnerDomainTypeData, setPartnerDomainTypeData] = useState([]);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const partnerDomainTypeList = ["DEVICE", "FTM", "AUTH"];
+            let dataArr = [];
+            partnerDomainTypeList.forEach(item => {
+                dataArr.push({
+                    fieldCode: item,
+                    fieldValue: item
+                })
+            })
+            setPartnerDomainTypeData(dataArr);
+        }
+        fetchData();
+    }, [])
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -31,6 +47,9 @@ function UploadCertificate({ closePopup, partnerData }) {
         closePopup(true, "cancel");
     };
     const clickOnSubmit = async () => {
+        setSuccessMsg("");
+        setErrorCode("");
+        setErrorMsg("");
         if (uploadSuccess) {
             closePopup(true, "close");
         } else {
@@ -79,11 +98,12 @@ function UploadCertificate({ closePopup, partnerData }) {
         }
     }
 
-    const selectDomainType = (option) => {
-        setSelectedDomainType(option);
+    const selectDomainType = (fieldName, selectedValue) => {
+        setSelectedDomainType(selectedValue);
         openDropdown();
     };
-    const setDefaultDomainType = () => {
+
+    useEffect(() => {
         if (partnerData.partnerType === "Device_Provider") {
             setSelectedDomainType("DEVICE");
         } else if (partnerData.partnerType === "FTM_Provider") {
@@ -91,7 +111,8 @@ function UploadCertificate({ closePopup, partnerData }) {
         } else {
             setSelectedDomainType("AUTH");
         }
-    };
+    }, [partnerData.partnerType]);
+
     const cancelUpload = () => {
         setFileName("");
         setUploading(false);
@@ -107,6 +128,7 @@ function UploadCertificate({ closePopup, partnerData }) {
         setSuccessMsg("");
     };
     const handleFileChange = (event) => {
+        setErrorMsg("");
         const file = event.target.files[0];
         if (file) {
             const fileName = file.name;
@@ -155,39 +177,16 @@ function UploadCertificate({ closePopup, partnerData }) {
                             <form>
                                 <div className="mb-3">
                                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerTypeLabel')}</label>
-                                    <input type="text" className="w-full h-12 px-3 py-2 border border-[#C1C1C1] rounded-md text-md text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
+                                    <input type="text" className="w-full h-12 px-3 py-2 border border-[#C1C1C1] rounded-md text-lg text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
                                         value={getPartnerType(partnerData)} disabled />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainTypeLabel')}<span className="text-red-500">*</span></label>
-                                    <div className="relative z-10">
-                                        <button onClick={openDropdown} className="flex items-center justify-between w-full h-12 px-3 py-2 border border-gray-400 rounded-md text-md text-start text-gunmetal-gray leading-tight focus:outline-none focus:shadow-none" type="button">
-                                            <span>{selectedDomainType || setDefaultDomainType()}</span>
-                                            <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                            </svg>
-                                        </button>
-                                        {isDropdownOpen && (
-                                            <div className="absolute z-50 top-12 left-0 w-full">
-                                                <div className="z-10 border border-gray-400 bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
-                                                        ${selectedDomainType === "DEVICE" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                        onClick={() => selectDomainType("DEVICE")}>DEVICE
-                                                    </button>
-                                                    <div className="border-gray-200 border-t mx-2"></div>
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
-                                                        ${selectedDomainType === "FTM" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                        onClick={() => selectDomainType("FTM")}>FTM
-                                                    </button>
-                                                    <div className="border-t border-gray-200 mx-2"></div>
-                                                    <button className={`block w-full px-4 py-2 text-left text-base text-dark-blue
-                                                        ${selectedDomainType === "AUTH" ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                        onClick={() => selectDomainType("AUTH")}>AUTH
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
+                                    <DropdownComponent fieldName='partnerDomainType' dropdownDataList={partnerDomainTypeData} onDropDownChangeEvent={selectDomainType} fieldNameKey='uploadCertificate.partnerDomainType' 
+                                        defaultDropdownValue={selectedDomainType} 
+                                        fieldNameStyle='text-base mb-1' 
+                                        fieldBtnStyle='w-full h-12 px-3 rounded-md text-md text-start text-gunmetal-gray' 
+                                        dropdownBoxStyle='top-12'>
+                                    </DropdownComponent>
                                 </div>
                             </form>
                             <div className="flex items-center justify-center mt-[4%] w-full h-36 p-4 border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
