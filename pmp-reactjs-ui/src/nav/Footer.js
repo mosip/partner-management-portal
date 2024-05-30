@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 function Footer() {
     const { t } = useTranslation();
     return (
-        <div className='bg-anti-flash-white items-center ml-[2%]'>
+        <div className='bg-anti-flash-white items-center ml-[8%]'>
             <hr className="h-px bg-gray-200 border-0 " />
             <div className="flex py-[3%] justify-between text-sm text-gray-400">
                 <div>

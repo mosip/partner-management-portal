@@ -102,7 +102,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex-col mb-[2%]">
+    <div className="w-full mb-[2%] ml-[5%]">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -190,7 +190,7 @@ function Dashboard() {
           {showPopup && (
             <SelectPolicyPopup closePopup={closePopup} />
           )}
-          
+
         </>)}
     </div>
   )

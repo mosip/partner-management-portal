@@ -18,16 +18,13 @@ function MainLayout({ children }) {
     }, [i18n]);
 
     return (
-        <div className="flex bg-anti-flash-white font-inter">
-            <SideNav open={open}></SideNav>
-            <div className='w-full lg:w-full'>
-                <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
-                <div className="ml-[80px] mt-[2%]">
-                    {children}
-                    <Footer></Footer>
-                </div>
-               
+        <div className="flex flex-col justify-evenly bg-anti-flash-white font-inter">
+            <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
+            <div className='flex flex-row justify-stretch h-full'>
+                <SideNav open={open}></SideNav>
+                {children}
             </div>
+            <Footer></Footer>
         </div>
     );
 }
