@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    dropDownPlaceHolder, defaultDropdownValue, outerDivStyle, fieldNameStyle, fieldBtnStyle, dropdownBoxStyle }) {
+    placeHolderKey, selectedDropdownValue, styleSet}) {
 
     const { t } = useTranslation();
 
@@ -12,16 +12,19 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
+    const containsAsterisk = fieldNameKey.includes('*');
+    fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
+
     useEffect(() => {
         const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
         return clickOutSideDropdown;
     }, [dropdownRef]);
 
     useEffect(() => {
-        if(defaultDropdownValue) {
-            setSelectedDropdownEntry(defaultDropdownValue);
+        if(selectedDropdownValue) {
+            setSelectedDropdownEntry(selectedDropdownValue);
         }
-    }, [defaultDropdownValue])
+    }, [selectedDropdownValue]);
 
     const changeDropdownSelection = (selectedid) => {
         setSelectedDropdownEntry(selectedid);
@@ -33,23 +36,24 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     };
 
     return (
-        <div key={fieldName} className={`${outerDivStyle}`}>
-            <label className={`block text-dark-blue font-semibold ${fieldNameStyle}`}>
-                {t(fieldNameKey)}:
+        <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
+            <label className={`block text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
+                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : ":"}
             </label>
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} className={`${fieldBtnStyle} flex items-center justify-between py-2 border border-gray-400 bg-white leading-tight focus:outline-none focus:shadow-none`} type="button">
+                <button onClick={openDropdown} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-gray-400 bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none 
+                    focus:shadow-none ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
-                        : t(dropDownPlaceHolder)}
+                        : t(placeHolderKey)}
                     </span>
                     <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`${dropdownBoxStyle} absolute z-50 left-0 w-full`}>
+                    <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             <div className="max-h-40 overflow-y-auto">
                                 {dropdownDataList.map((dropdownItem, index) => {
