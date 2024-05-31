@@ -114,7 +114,18 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "عرض تفاصيل السياسة",
-        "policySection": "قسم السياسات"
+        "policySection": "قسم السياسات",
+        "policyName": "اسم السياسة",
+        "partnerId": "معرف الشريك",
+        "partnerIdName": "اسم معرف الشريك",
+        "partnerType": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "policyGroupDescription": "وصف مجموعة السياسات",
+        "policyNameDescription": "وصف اسم السياسة",
+        "comments": "تعليقات",
+        "adminComments": "تعليقات المشرف",
+        "partnerComments" : "تعليقات الشريك",
+        "back": "خلف"
     },
     "commons": {
         "home": "بيت"

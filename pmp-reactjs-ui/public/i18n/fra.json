@@ -115,7 +115,18 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "Afficher les détails de la politique",
-        "policySection": "Section des politiques"
+        "policySection": "Section des politiques",
+        "policyName": "Nom de la politique",
+        "partnerId": "ID partenaire",
+        "partnerIdName": "Nom du partenaire",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyGroupDescription": "Description du groupe de stratégies",
+        "policyNameDescription": "Nom de la stratégie Description",
+        "comments": "commentaires",
+        "adminComments": "Commentaires de l'administrateur",
+        "partnerComments" : "Commentaires du partenaire",
+        "back": "Dos"
     },
     "commons": {
         "home": "Maison"

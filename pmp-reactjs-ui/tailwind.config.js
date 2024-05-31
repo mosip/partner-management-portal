@@ -25,6 +25,8 @@ module.exports = {
         'snow-white': '#FCFCFC',
         'dark-blue': '#031640',
         'gunmetal-gray': '36393E',
+        'suva-gray': '#8B8B8B',
+        'vulcan': '#36393E',
       }),
       fontFamily: {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],
