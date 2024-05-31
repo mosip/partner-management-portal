@@ -2,18 +2,24 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
+import { use } from 'i18next';
 
-function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, selectedDropdownValue, styleSet}) {
+function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet}) {
 
     const { t } = useTranslation();
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [searchItem, setSearchItem] = useState("");
     const dropdownRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
+
+    const filteredPolicyGroupList = dropdownDataList.filter(dropdownItem =>
+        dropdownItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
+    );
 
     useEffect(() => {
         const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -32,6 +38,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         onDropDownChangeEvent(fieldName, selectedid);
     };
     const openDropdown = () => {
+        setSearchItem("");
         setIsDropdownOpen(!isDropdownOpen);
     };
 
@@ -54,9 +61,18 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 </button>
                 {isDropdownOpen && (
                     <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                            <div className="max-h-40 overflow-y-auto">
-                                {dropdownDataList.map((dropdownItem, index) => {
+                        <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                            <div className="p-2 border-b border-gray-200 shadow-sm relative">
+                                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
+                                    </svg>
+                                </span>
+                                <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
+                                    className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
+                            </div>
+                            <div className="max-h-32 overflow-y-auto">
+                                {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
@@ -78,4 +94,4 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     );
 }
 
-export default DropdownComponent;
+export default DropdownWithSearchComponent;

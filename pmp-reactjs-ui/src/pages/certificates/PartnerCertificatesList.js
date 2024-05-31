@@ -140,8 +140,8 @@ function PartnerCertificatesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="flex justify-end">
-                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
+                        <div className="absolute right-0 flex justify-end">
+                            <div className="flex justify-between items-centermax-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4 mr-10 z-50">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>

@@ -32,7 +32,6 @@
         "policyGroup": "مجموعة السياسات",
         "policyGroupError": "غير قادر على جلب أي مجموعات النهج. اتصل بالمسؤول.",
         "submit": "يُقدِّم",
-        "search": "يبحث",
         "viewLess": "عرض أقل",
         "viewMore": "عرض المزيد"
     },
@@ -116,8 +115,25 @@
         "viewPolicyDetails": "عرض تفاصيل السياسة",
         "policySection": "قسم السياسات"
     },
+    "requestPolicy": {
+        "requestPolicy": "طلب سياسة",
+        "policies": "سياسات",
+        "mandatoryFieldsMsg1": "جميع الحقول تحمل علامة",
+        "mandatoryFieldsMsg2": "إلزامية.",
+        "partnerId": "معرف الشريك",
+        "partnerType": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "policyName": "اسم السياسة",
+        "selectPolicyName": "حدد اسم السياسة",
+        "comments": "تعليقات",
+        "commentBoxDesc": "أكتب تعليقك هنا",
+        "clearForm": "شكل واضح",
+        "cancel": "يلغي",
+        "submit": "يُقدِّم"
+    },
     "commons": {
-        "home": "بيت"
+        "home": "بيت",
+        "search": "يبحث"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",
