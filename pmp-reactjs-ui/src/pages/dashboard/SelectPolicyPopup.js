@@ -8,25 +8,22 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
+import DropdownWithSearchComponent from '../common/fields/DropdownWithSearchComponent.js';
 
 function SelectPolicyPopup() {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState("");
     const [policyGroupList, setPolicyGroupList] = useState([]);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
     const userprofile = getUserProfile();
-    const [searchItem, setSearchItem] = useState("");
     const [isExpanded, setIsExpanded] = useState(false);
 
     const descriptionText = t('selectPolicyPopup.description');
     const maxWords = 20;
     const displayText = isExpanded ? descriptionText : `${descriptionText.split(' ').slice(0, maxWords).join(' ')}...`;
-    const filteredPolicyGroupList = policyGroupList.filter(policyGroupItem =>
-        policyGroupItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
-    );
+    
 
     const expandDescription = () => {
         setIsExpanded(!isExpanded);
@@ -66,17 +63,13 @@ function SelectPolicyPopup() {
         fetchData();
     }, [t]);
 
-    const changePolicyGroupSelection = (policyGrpId) => {
+    const changePolicyGroupSelection = (fieldName, policyGrpId) => {
         setSelectedPolicyGroup(policyGrpId);
-        setIsDropdownOpen(false);
     };
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
-    const openDropdown = () => {
-        setSearchItem("")
-        setIsDropdownOpen(!isDropdownOpen);
-    };
+
     const clickOnSubmit = async () => {
         setDataLoaded(false);
         const userProfile = getUserProfile();
@@ -100,6 +93,14 @@ function SelectPolicyPopup() {
             handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
         }
     }
+
+    const styles = {
+        outerDiv: "!ml-0 !mb-0",
+        dropdownLabel: "!text-lg !my-2 mb-0",
+        dropdownButton: "!w-full !h-11 !rounded-md !text-lg !text-dark-blue",
+        selectionBox: ""
+    }
+
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
             <div className={`bg-white w-1/3 mx-auto rounded-xl shadow-lg mt-5`}>
@@ -132,62 +133,22 @@ function SelectPolicyPopup() {
                                 <div className="pt-3  w-full mb-4 flex flex-col">
                                     <div className="flex flex-col">
                                         <label className="block text-dark-blue text-base font-semibold mb-2">
-                                            {t('selectPolicyPopup.partnerTypeLabel')}:<span className="text-red-500 pl-1">*</span>
+                                            {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                         </label>
                                         <button disabled className="flex items-center justify-between w-full h-11 px-2 py-2 border border-gray-300 rounded-md text-lg text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                         </button>
                                     </div>
-                                    <div className="flex flex-row">
-                                        <label className="block text-dark-blue text-lg font-medium my-2">
-                                            {t('selectPolicyPopup.policyGroup')}:<span className="text-red-500 pl-1">*</span>
-                                        </label>
-                                    </div>
-                                    <div className="flex flex-row">
-                                        <div className="relative z-10 w-full">
-                                            <button onClick={openDropdown} className="flex items-center justify-between w-full h-11 px-2 py-2 border border-gray-400 rounded-md text-lg text-start text-dark-blue leading-tight focus:outline-none focus:shadow-none" type="button">
-                                                <span>{
-                                                    selectedPolicyGroup
-                                                        ? policyGroupList.map(policyGroupItem => {
-                                                            return selectedPolicyGroup === policyGroupItem.fieldCode ? policyGroupItem.fieldValue : '';
-                                                        }).filter(Boolean)
-                                                        : t('selectPolicyPopup.title')
-                                                }
-                                                </span>
-                                                <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                </svg>
-                                            </button>
-                                            {isDropdownOpen && (
-                                                <div className="absolute z-50 top-10 left-0 w-full">
-                                                    <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
-                                                        <div className="p-2 border-b border-gray-200 shadow-sm relative">
-                                                            <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
-                                                                </svg>
-                                                            </span>
-                                                            <input type="text" placeholder={t('selectPolicyPopup.search')} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
-                                                                className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
-                                                        </div>
-                                                        <div className="max-h-32 overflow-y-auto">
-                                                            {filteredPolicyGroupList.map((policyGroupItem, index) => {
-                                                                return (
-                                                                    <div key={index}>
-                                                                        <button className={`block w-full px-4 py-2 text-left text-base text-blue-950
-                                                                            ${selectedPolicyGroup === policyGroupItem.id ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                                                                            onClick={() => changePolicyGroupSelection(policyGroupItem.fieldCode)}>
-                                                                            {policyGroupItem.fieldValue}
-                                                                        </button>
-                                                                        <div className="border-gray-100 border-t mx-2"></div>
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
+                                    <div className="flex flex-col">
+                                        <DropdownWithSearchComponent 
+                                            fieldName='policyGroup' 
+                                            dropdownDataList={policyGroupList} 
+                                            onDropDownChangeEvent={changePolicyGroupSelection}
+                                            fieldNameKey='selectPolicyPopup.policyGroup*' 
+                                            placeHolderKey='selectPolicyPopup.title' 
+                                            searchKey='commons.search'
+                                            styleSet={styles}>
+                                        </DropdownWithSearchComponent>
                                     </div>
                                 </div>
                             </form>

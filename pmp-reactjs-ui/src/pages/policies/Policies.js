@@ -115,6 +115,10 @@ function Policies() {
     navigate('/partnermanagement')
   };
 
+  const showRequestPolicy = () => {
+    navigate('/partnermanagement/requestPolicy')
+  }
+
   const showViewPolicyDetails = (id) => {
     navigate('/partnermanagement/viewPolicyDetails')
   };
@@ -259,7 +263,7 @@ function Policies() {
               </div>
 
               {policiesList.length > 0 ?
-                <button type="button" className="h-[50px] text-base font-semibold px-7 text-white bg-tory-blue rounded-md">
+                <button onClick={() => showRequestPolicy()} type="button" className="h-[50px] text-base font-semibold px-7 text-white bg-tory-blue rounded-md">
                   {t('policies.requestPolicyBtn')}
                 </button>
                 : null
@@ -287,7 +291,7 @@ function Policies() {
                   <div className="flex items-center justify-center p-24">
                     <div className="flex-col items-center">
                       <img src={rectangleGrid} alt="" />
-                      <button type="button" className="text-white font-semibold mt-8 ml-16 bg-tory-blue rounded-md text-base px-5 py-3">
+                      <button onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 ml-16 bg-tory-blue rounded-md text-base px-5 py-3">
                         {t('policies.requestPolicyBtn')}
                       </button>
                     </div>
