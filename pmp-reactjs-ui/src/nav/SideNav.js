@@ -55,7 +55,7 @@ function SideNav({ open }) {
     };
     return (
         <div className="flex font-inter bg-white h-screen z-30">
-            <div className={`h-full ${open ? "absolute inset-y-16 left-0 w-64" : "absolute inset-y-16 w-20"} 
+            <div className={`h-full ${open ? "absolute inset-y-16 w-64" : "absolute inset-y-16 w-20"} 
             flex-col duration-500`}>
                 <ul className="pt-3 h-full space-y-5 bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
