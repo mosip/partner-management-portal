@@ -133,7 +133,7 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className="ml-32 mr-5 mt-5 w-full">
+        <div className="ml-32 mr-5 mt-5 w-full overflow-x-scroll">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
