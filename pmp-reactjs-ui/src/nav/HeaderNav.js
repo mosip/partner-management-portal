@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getUserProfile } from '../services/UserProfileService.js';
-import { RTLStyles } from '../utils/AppUtils.js';
+import { isLangRTL } from '../utils/AppUtils.js';
 import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
@@ -12,7 +12,7 @@ import side_menu_title from '../../src/side_menu_title.svg';
 
 function HeaderNav({ open, setOpen }) {
     const { t } = useTranslation();
-    const arabicLang = RTLStyles(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -37,7 +37,7 @@ function HeaderNav({ open, setOpen }) {
             shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
             <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
                 {!open && (
-                    <div className={`flex items-center ${arabicLang ? "pr-5" : "pl-6"}`}>
+                    <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
                         <img src={mosip_icon} alt="" />
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
                             <img src={hamburgerIcon} alt=""></img>
@@ -45,7 +45,7 @@ function HeaderNav({ open, setOpen }) {
                     </div>
                 )}
                 {open && (
-                    <div className={`flex items-center w-64 gap-x-4 ${arabicLang ? "pr-5" : "pl-6"} h-16 shadow-md`}>
+                    <div className={`flex items-center w-64 gap-x-4 ${isLoginLanguageRTL ? "pr-5" : "pl-6"} h-16 shadow-md`}>
                         <img src={mosip_icon} alt="" />
                         <div className={`duration-700`}>
                             <img src={side_menu_title} alt="" />

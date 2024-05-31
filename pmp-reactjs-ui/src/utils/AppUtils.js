@@ -117,7 +117,7 @@ export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => 
     }
 }
 
-export const RTLStyles = (langCode) => {
+export const isLangRTL = (langCode) => {
     if(langCode==='ara'){
     return true;
     }

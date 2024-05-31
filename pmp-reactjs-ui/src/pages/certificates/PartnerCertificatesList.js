@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../services/HttpService";
 import { getUserProfile } from "../../services/UserProfileService";
-import { RTLStyles } from "../../utils/AppUtils";
+import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
 import LoadingIcon from "../common/LoadingIcon";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
@@ -17,7 +17,7 @@ import backArrow from '../../svg/back_arrow.svg';
 
 function PartnerCertificatesList() {
     const { t } = useTranslation();
-    const arabicLang = RTLStyles(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [activeBtn, setActiveBtn] = useState(false);
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
@@ -134,14 +134,14 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className={`mt-5 w-full ${arabicLang ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll`}>
+        <div className={`mt-5 w-full ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="absolute right-0 flex justify-end">
+                        <div className="flex justify-end max-w-7xl">
                             <div className="flex justify-between items-centermax-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4 mr-10 z-50">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
@@ -150,7 +150,7 @@ function PartnerCertificatesList() {
                     <div className="flex-col">
                         <div className="flex justify-between mb-5">
                             <div className="flex items-start space-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${arabicLang ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
                                     <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
