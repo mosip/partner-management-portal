@@ -28,6 +28,8 @@ module.exports = {
         'gunmetal-gray': '36393E',
         'crimson-red': '#E21D1D',
         'grayish-blue': '#9FA1AD'
+        'suva-gray': '#8B8B8B',
+        'vulcan': '#36393E'
       }),
       fontFamily: {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],

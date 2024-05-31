@@ -7,10 +7,7 @@ import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
-import SortAsc from '../../svg/sort_down';
-import SortDesc from '../../svg/sort_up';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
-import sortIcon from '../../svg/sort_icon.svg';
 import backArrow from '../../svg/back_arrow.svg';
 
 function Policies() {
