@@ -57,7 +57,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ml-[6%]">
+            <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ml-[8%]">
                 <div className="flex justify-between mb-5">
                     <div className="flex space-x-4">
                         <img src={backArrow} alt="" onClick={() => moveToPolicies()} className="mt-1 cursor-pointer" />
