@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { getUserProfile } from '../../services/UserProfileService';
+import { isLangRTL } from '../../utils/AppUtils';
 import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -15,6 +17,7 @@ import { IconContext } from "react-icons"; // for customizing icons
 function Policies() {
 
   const { t } = useTranslation();
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const navigate = useNavigate();
   const [firstTimeLoad, setFirstTimeLoad] = useState(false);
   const [filter, setFilter] = useState(false);
@@ -237,7 +240,7 @@ function Policies() {
   };
 
   return (
-    <div className="ml-32 mr-5 mt-5 w-[100%] overflow-x-scroll">
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -252,8 +255,8 @@ function Policies() {
           )}
           <div className="flex-col">
             <div className="flex justify-between mb-5">
-              <div className="flex items-start space-x-3">
-                <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[9%] cursor-pointer" />
+              <div className="flex items-start">
+                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-xl text-dark-blue">{t('policies.policies')}</h1>
                   <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">

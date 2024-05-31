@@ -116,3 +116,12 @@ export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => 
         console.error('Error:', errorMessage);
     }
 }
+
+export const isLangRTL = (langCode) => {
+    if(langCode==='ara'){
+    return true;
+    }
+    else{
+        return false;
+    }
+}

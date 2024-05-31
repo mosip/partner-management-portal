@@ -100,6 +100,7 @@
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
+        "createdDate": "Date de création",
         "status": "Statut",
         "action": "Action",
         "view": "voir",

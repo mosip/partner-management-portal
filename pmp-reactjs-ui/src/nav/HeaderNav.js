@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getUserProfile } from '../services/UserProfileService.js';
+import { isLangRTL } from '../utils/AppUtils.js';
 import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
-
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -12,6 +12,7 @@ import side_menu_title from '../../src/side_menu_title.svg';
 
 function HeaderNav({ open, setOpen }) {
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -36,7 +37,7 @@ function HeaderNav({ open, setOpen }) {
             shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
             <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
                 {!open && (
-                    <div className={`flex items-center pl-6`}>
+                    <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
                         <img src={mosip_icon} alt="" />
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
                             <img src={hamburgerIcon} alt=""></img>
@@ -44,12 +45,12 @@ function HeaderNav({ open, setOpen }) {
                     </div>
                 )}
                 {open && (
-                    <div className={`flex items-center w-64 space-x-4 pl-6 h-16 shadow-md`}>
+                    <div className={`flex items-center w-64 gap-x-4 ${isLoginLanguageRTL ? "pr-5" : "pl-6"} h-16 shadow-md`}>
                         <img src={mosip_icon} alt="" />
                         <div className={`duration-700`}>
                             <img src={side_menu_title} alt="" />
                         </div>
-                        <div className="p-2 cursor-pointer" onClick={() => setOpen(!open)}>
+                        <div className="cursor-pointer" onClick={() => setOpen(!open)}>
                             <img src={hamburgerIcon} alt=""></img>
                         </div>
                     </div>
@@ -60,7 +61,7 @@ function HeaderNav({ open, setOpen }) {
                     &nbsp;
                 </div>
             </div>
-            <div className="flex items-center relative justify-between space-x-14">
+            <div className="flex items-center relative justify-between gap-x-12">
                 <div className="flex items-center">
                     <div className="p-2 bg-blue-50">
                         <img src={orgIcon} alt=""></img>
