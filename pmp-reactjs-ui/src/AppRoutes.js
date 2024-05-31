@@ -5,6 +5,7 @@ import PartnerCertificatesList from './pages/certificates/PartnerCertificatesLis
 import Policies from './pages/policies/Policies.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
+import RequestPolicy from './pages/policies/RequestPolicy';
 
 function AppRoutes() {
 
@@ -32,6 +33,10 @@ function AppRoutes() {
         {
           path: 'viewPolicyDetails',
           element: <GuardedRoute><MainLayout><ViewPolicyDetails/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'requestPolicy',
+          element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
         }
       ],
     },

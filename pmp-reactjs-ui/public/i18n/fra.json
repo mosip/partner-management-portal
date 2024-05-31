@@ -32,7 +32,6 @@
         "policyGroup": "Groupe de politiques",
         "policyGroupError": "Impossible de récupérer des groupes de stratégies. Contactez l'administrateur.",
         "submit": "Soumettre",
-        "search": "Recherche",
         "viewLess": "Voir moins",
         "viewMore": "Voir plus"
     },
@@ -115,10 +114,38 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "Afficher les détails de la politique",
-        "policySection": "Section des politiques"
+        "policySection": "Section des politiques",
+        "policyName": "Nom de la politique",
+        "partnerId": "ID partenaire",
+        "partnerIdName": "Nom du partenaire",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyGroupDescription": "Description du groupe de stratégies",
+        "policyNameDescription": "Nom de la stratégie Description",
+        "comments": "commentaires",
+        "adminComments": "Commentaires de l'administrateur",
+        "partnerComments" : "Commentaires du partenaire",
+        "back": "Dos"
+    },
+    "requestPolicy": {
+        "requestPolicy": "Demander une politique",
+        "policies": "Stratégies",
+        "mandatoryFieldsMsg1": "Tous les champs marqués d'un",
+        "mandatoryFieldsMsg2": "sont obligatoires.",
+        "partnerId": "ID partenaire",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "comments": "commentaires",
+        "commentBoxDesc": "Écrivez votre commentaire ici",
+        "clearForm": "Forme claire",
+        "cancel": "Annuler",
+        "submit": "Soumettre"
     },
     "commons": {
-        "home": "Maison"
+        "home": "Maison",
+        "search": "Recherche"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

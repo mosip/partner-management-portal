@@ -32,7 +32,6 @@
         "policyGroup": "Policy Group",
         "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
         "submit": "Submit",
-        "search": "Search",
         "viewLess": "View Less",
         "viewMore": "View More"
     },
@@ -115,10 +114,38 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "View Policy Details",
-        "policySection": "Policy Section"
+        "policySection": "Policy Section",
+        "policyName": "Policy Name",
+        "partnerId": "Partner ID",
+        "partnerIdName": "Partner ID Name",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyGroupDescription": "Policy Group Description",
+        "policyNameDescription": "Policy Name Description",
+        "comments": "Comments",
+        "adminComments": "Admin Comments",
+        "partnerComments" : "Partner's Comments",
+        "back": "Back"
+    },
+    "requestPolicy": {
+        "requestPolicy": "Request a Policy",
+        "policies": "Policies",
+        "mandatoryFieldsMsg1": "All fields marked with",
+        "mandatoryFieldsMsg2": "are mandatory.",
+        "partnerId": "Partner ID",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "selectPolicyName": "Select Policy Name",
+        "comments": "Comments",
+        "commentBoxDesc": "Write your comment here",
+        "clearForm": "Clear Form",
+        "cancel": "Cancel",
+        "submit": "Submit"
     },
     "commons": {
-        "home": "Home"
+        "home": "Home",
+        "search": "Search"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
