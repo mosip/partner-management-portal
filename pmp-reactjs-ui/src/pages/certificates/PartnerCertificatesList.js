@@ -38,7 +38,7 @@ function PartnerCertificatesList() {
     };
 
     const closePopup = (state, buttonName) => {
-        if(state) {
+        if (state) {
             setShowPopup(false);
             if (buttonName === "close") {
                 window.location.reload();
@@ -133,7 +133,7 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className="ml-[8%] mr-[2%] w-full">
+        <div className="ml-32 mr-5 mt-5 w-full">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -147,12 +147,15 @@ function PartnerCertificatesList() {
                         </div>
                     )}
                     <div className="flex-col">
-                        <div className="flex items-start space-x-3 mt-[1%]">
-                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[2%] cursor-pointer" />
-                            <div className="flex-col">
-                                <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
-                                <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                    {t('commons.home')}</p>
+                        <div className="flex justify-between mb-5">
+                            <div className="flex items-start space-x-3">
+                                <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[9%] cursor-pointer" />
+                                <div className="flex-col">
+                                    <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
+                                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                        {t('commons.home')}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
@@ -241,10 +244,10 @@ function PartnerCertificatesList() {
                             }
                         </ul>
                     </div>
-                    
+
                 </>
             )}
-            
+
         </div>
     );
 }

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
-import mosip_icon from '../../src/mosip_icon.svg';
-import side_menu_title from '../../src/side_menu_title.svg';
 import { useTranslation } from 'react-i18next';
 
 function SideNav({ open }) {
@@ -56,17 +54,9 @@ function SideNav({ open }) {
         setActiveIcon("authenticationServices");
     };
     return (
-        <div className="flex font-inter bg-white h-screen">
-            <div className={`h-full ${open ? "absolute inset-y-16 left-0 z-30 w-64" : "absolute inset-y-16  w-20"} 
+        <div className="flex font-inter bg-white h-screen z-30">
+            <div className={`h-full ${open ? "absolute inset-y-16 left-0 w-64" : "absolute inset-y-16 w-20"} 
             flex-col duration-500`}>
-                {/* <div className={`flex gap-x-4 h-16 items-center ${open ? 'shadow-md' : 'shadow-sm'}`}>
-                    <div className="flex items-center space-x-4 pl-6">
-                        <img src={mosip_icon} alt=""/>
-                        <div className={`${!open && 'scale-0'} duration-700`}>
-                            <img src={side_menu_title} alt=""/>
-                        </div>
-                    </div>
-                </div> */}
                 <ul className="pt-3 h-full space-y-5 bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />

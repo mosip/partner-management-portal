@@ -102,7 +102,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="w-full mb-[2%] ml-[5%]">
+    <div className="w-full mb-[2%] ml-20">
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
