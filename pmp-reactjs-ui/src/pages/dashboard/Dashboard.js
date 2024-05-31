@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
+import { RTLStyles } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
 import { getPartnerManagerUrl, createRequest, handleServiceErrors } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
@@ -18,6 +19,7 @@ import authServiceIcon from '../../svg/auth_services_icon.svg';
 function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const arabicLang = RTLStyles(getUserProfile().langCode);
   const [firstLoginFlow, setFirstLoginFlow] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -102,7 +104,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="w-full mb-[2%] ml-20  overflow-x-scroll">
+    <div className={`w-full mb-[2%] ${arabicLang ? "mr-28": "ml-20"} overflow-x-scroll`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
