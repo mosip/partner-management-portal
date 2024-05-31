@@ -114,7 +114,18 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "View Policy Details",
-        "policySection": "Policy Section"
+        "policySection": "Policy Section",
+        "policyName": "Policy Name",
+        "partnerId": "Partner ID",
+        "partnerIdName": "Partner ID Name",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyGroupDescription": "Policy Group Description",
+        "policyNameDescription": "Policy Name Description",
+        "comments": "Comments",
+        "adminComments": "Admin Comments",
+        "partnerComments" : "Partner's Comments",
+        "back": "Back"
     },
     "requestPolicy": {
         "requestPolicy": "Request a Policy",
