@@ -16,7 +16,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
         const fetchData = async () => {
             setPartnerIdData(createDropdownDataList('partnerId', filteredPoliciesList, t));
             setPartnerTypeData(createDropdownDataList('partnerType', filteredPoliciesList, t));
-            setPolicyGroupNameData(createDropdownDataList('policyGroup', filteredPoliciesList, t));
+            setPolicyGroupNameData(createDropdownDataList('policyGroupName', filteredPoliciesList, t));
             setPolicyNameData(createDropdownDataList('policyName', filteredPoliciesList, t));
             setStatusData(createDropdownDataList('status', filteredPoliciesList, t));
         };
@@ -46,10 +46,10 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPartnerType'>
                 </DropdownComponent>
                 <DropdownComponent 
-                    fieldName='policyGroup' 
+                    fieldName='policyGroupName' 
                     dropdownDataList={policyGroupNameData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
-                    fieldNameKey='policies.policyGroup' 
+                    fieldNameKey='policies.policyGroupName' 
                     placeHolderKey='policies.selectPolicyGroup'>
                 </DropdownComponent>
                 <DropdownComponent 

@@ -37,14 +37,14 @@ function Policies() {
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
     partnerId: "",
-    policyGroup: ""
+    policyGroupName: ""
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
     { id: "partnerType", headerNameKey: "policies.partnerType" },
-    { id: "policyGroup", headerNameKey: "policies.policyGroup" },
+    { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
     { id: "policyName", headerNameKey: "policies.policyName" },
     { id: "createDate", headerNameKey: "policies.createdDate" },
     { id: "status", headerNameKey: "policies.status" },
@@ -90,7 +90,7 @@ function Policies() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllPolicies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllRequestedPolicies', process.env.NODE_ENV));
         setFirstTimeLoad(true);
         if (response) {
           const responseData = response.data;
@@ -123,7 +123,8 @@ function Policies() {
     navigate('/partnermanagement/requestPolicy')
   }
 
-  const showViewPolicyDetails = (id) => {
+  const showViewPolicyDetails = (selectedPolicyData) => {
+    localStorage.setItem('selectedPolicyData', JSON.stringify(selectedPolicyData));
     navigate('/partnermanagement/viewPolicyDetails')
   };
 
@@ -371,7 +372,7 @@ function Policies() {
                                 <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td className="px-2">{partner.partnerId}</td>
                                   <td className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                  <td className="px-2">{partner.policyGroup}</td>
+                                  <td className="px-2">{partner.policyGroupName}</td>
                                   <td className="px-2">{partner.policyName}</td>
                                   <td className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
                                   <td className="">
@@ -384,7 +385,7 @@ function Policies() {
                                       <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
                                       {
                                         viewPolicyId === index && (
-                                          <div onClick={() => showViewPolicyDetails()}
+                                          <div onClick={() => showViewPolicyDetails(partner)}
                                             className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
                                             <p className="px-5 py-2 cursor-pointer">
                                               {t('policies.view')}

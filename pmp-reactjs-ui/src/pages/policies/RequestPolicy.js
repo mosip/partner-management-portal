@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, createDropdownDataList } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, createDropdownDataList, moveToPolicies } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -30,10 +30,6 @@ function RequestPolicy() {
 
     const moveToHome = () => {
         navigate('/partnermanagement')
-    };
-
-    const moveToPolicies = () => {
-        navigate('/partnermanagement/policies')
     };
 
     useEffect(() => {
@@ -155,7 +151,7 @@ function RequestPolicy() {
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')} / 
                                     </p>
-                                    <p onClick={() => moveToPolicies()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToPolicies(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('requestPolicy.policies')}
                                     </p>
                                 </div>
@@ -226,7 +222,7 @@ function RequestPolicy() {
                             <div className="flex flex-row px-[3%] py-[2%] justify-between">
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                    <button onClick={() => moveToPolicies()} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
+                                    <button onClick={() => moveToPolicies(navigate)} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
