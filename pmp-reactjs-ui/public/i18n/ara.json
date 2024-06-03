@@ -119,7 +119,7 @@
         "partnerId": "معرف الشريك",
         "partnerIdName": "اسم معرف الشريك",
         "partnerType": "نوع الشريك",
-        "policyGroup": "مجموعة السياسات",
+        "policyGroupName": "مجموعة السياسات",
         "policyGroupDescription": "وصف مجموعة السياسات",
         "policyNameDescription": "وصف اسم السياسة",
         "comments": "تعليقات",

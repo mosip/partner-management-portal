@@ -123,8 +123,9 @@ function Policies() {
     navigate('/partnermanagement/requestPolicy')
   }
 
-  const showViewPolicyDetails = (id) => {
-    navigate('/partnermanagement/viewPolicyDetails')
+  const showViewPolicyDetails = (partner) => {
+    localStorage.setItem('partner', JSON.stringify(partner));
+    navigate('/partnermanagement/viewPolicyDetails', { state: { partner } })
   };
 
   const cancelErrorMsg = () => {
@@ -384,7 +385,7 @@ function Policies() {
                                       <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
                                       {
                                         viewPolicyId === index && (
-                                          <div onClick={() => showViewPolicyDetails()}
+                                          <div onClick={() => showViewPolicyDetails(partner)}
                                             className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
                                             <p className="px-5 py-2 cursor-pointer">
                                               {t('policies.view')}

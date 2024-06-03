@@ -119,7 +119,7 @@
         "partnerId": "Partner ID",
         "partnerIdName": "Partner ID Name",
         "partnerType": "Partner Type",
-        "policyGroup": "Policy Group",
+        "policyGroupName": "Policy Group",
         "policyGroupDescription": "Policy Group Description",
         "policyNameDescription": "Policy Name Description",
         "comments": "Comments",

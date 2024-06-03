@@ -120,7 +120,7 @@
         "partnerId": "ID partenaire",
         "partnerIdName": "Nom du partenaire",
         "partnerType": "Type de partenaire",
-        "policyGroup": "Groupe de politiques",
+        "policyGroupName": "Groupe de politiques",
         "policyGroupDescription": "Description du groupe de stratégies",
         "policyNameDescription": "Nom de la stratégie Description",
         "comments": "commentaires",
