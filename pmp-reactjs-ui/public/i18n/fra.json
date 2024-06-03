@@ -137,12 +137,14 @@
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
-        "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
+        "selectPolicyName": "Sélectionnez le nom de la politique applicable à votre organisation",
         "comments": "commentaires",
-        "commentBoxDesc": "Écrivez votre commentaire ici",
+        "commentBoxDesc": "Mentionner le but de la demande de police",
         "clearForm": "Forme claire",
         "cancel": "Annuler",
-        "submit": "Soumettre"
+        "submit": "Soumettre",
+        "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard"
     },
     "commons": {
         "home": "Maison",

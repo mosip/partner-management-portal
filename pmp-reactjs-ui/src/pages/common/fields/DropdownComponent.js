@@ -21,9 +21,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     }, [dropdownRef]);
 
     useEffect(() => {
-        if(selectedDropdownValue) {
-            setSelectedDropdownEntry(selectedDropdownValue);
-        }
+        setSelectedDropdownEntry(selectedDropdownValue || "");
     }, [selectedDropdownValue]);
 
     const changeDropdownSelection = (selectedid) => {
@@ -42,7 +40,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             </label>
             <div className="relative w-full" ref={dropdownRef}>
                 <button onClick={openDropdown} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none 
-                    focus:shadow-none ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
+                    focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
