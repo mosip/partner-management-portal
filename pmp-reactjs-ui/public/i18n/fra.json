@@ -98,7 +98,7 @@
         "filterBtn": "Filtre",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
-        "policyGroup": "Groupe de politiques",
+        "policyGroupName": "Groupe de politiques",
         "policyName": "Nom de la politique",
         "createdDate": "Date de création",
         "status": "Statut",
@@ -120,7 +120,7 @@
         "partnerId": "ID partenaire",
         "partnerIdName": "Nom du partenaire",
         "partnerType": "Type de partenaire",
-        "policyGroup": "Groupe de politiques",
+        "policyGroupName": "Groupe de politiques",
         "policyGroupDescription": "Description du groupe de stratégies",
         "policyNameDescription": "Nom de la stratégie Description",
         "comments": "commentaires",
@@ -291,7 +291,10 @@
         "PMS_CERTIFICATE_ERROR_001": "Erreur lors de la récupération des certificats partenaires.",
         "PMS_CERTIFICATE_ERROR_002": "L'ID utilisateur n'existe pas.",
         "PMS_CERTIFICATE_ERROR_003": "L'ID du partenaire est nul ou vide.",
-        "PMS_POLICY_ERROR_001": "Le nom du groupe de stratégies est nul ou vide.",
-        "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires."
+        "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
+        "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
+        "PMS_POLICY_ERROR_003": "Erreur lors de la récupération de tous les identifiants de partenaires approuvés avec les groupes de stratégies.",
+        "PMS_POLICY_ERROR_004": "Politique correspondante introuvable.",
+        "PMS_POLICY_ERROR_005": "LID du groupe de stratégies est vide."
     }
 }

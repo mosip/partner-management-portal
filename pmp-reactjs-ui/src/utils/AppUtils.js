@@ -169,3 +169,7 @@ export const createDropdownDataList = (fieldName, dataList, t) => {
     return dataArr;
 
 }
+
+export const moveToPolicies = (navigate) => {
+    navigate('/partnermanagement/policies')
+};

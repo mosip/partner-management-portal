@@ -98,7 +98,7 @@
         "filterBtn": "Filter",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
-        "policyGroup": "Policy Group",
+        "policyGroupName": "Policy Group",
         "policyName": "Policy Name",
         "createdDate": "Created Date",
         "status": "Status",
@@ -119,7 +119,7 @@
         "partnerId": "Partner ID",
         "partnerIdName": "Partner ID Name",
         "partnerType": "Partner Type",
-        "policyGroup": "Policy Group",
+        "policyGroupName": "Policy Group",
         "policyGroupDescription": "Policy Group Description",
         "policyNameDescription": "Policy Name Description",
         "comments": "Comments",
@@ -290,7 +290,10 @@
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
         "PMS_CERTIFICATE_ERROR_002": "User Id does not exists.",
         "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty.",
-        "PMS_POLICY_ERROR_001": "Policy Group Name is null or empty.",
-        "PMS_POLICY_ERROR_002": "Error while fetching partner policies."
+        "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
+        "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
+        "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",
+        "PMS_POLICY_ERROR_004": "Matching Policy not found.",
+        "PMS_POLICY_ERROR_005": "Policy Group Id is empty."
     }
 }
