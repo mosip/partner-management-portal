@@ -98,7 +98,7 @@
         "filterBtn": "منقي",
         "partnerId": "معرف الشريك",
         "partnerType": "معرف الشريك",
-        "policyGroup": "مجموعة السياسات",
+        "policyGroupName": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "createdDate": "تاريخ الإنشاء",
         "status": "حالة",
@@ -119,7 +119,7 @@
         "partnerId": "معرف الشريك",
         "partnerIdName": "اسم معرف الشريك",
         "partnerType": "نوع الشريك",
-        "policyGroup": "مجموعة السياسات",
+        "policyGroupName": "مجموعة السياسات",
         "policyGroupDescription": "وصف مجموعة السياسات",
         "policyNameDescription": "وصف اسم السياسة",
         "comments": "تعليقات",
@@ -293,7 +293,10 @@
         "PMS_CERTIFICATE_ERROR_001": "حدث خطأ أثناء جلب شهادات الشريك.",
         "PMS_CERTIFICATE_ERROR_002": "معرف المستخدم غير موجود.",
         "PMS_CERTIFICATE_ERROR_003": "معرف الشريك فارغ أو فارغ.",
-        "PMS_POLICY_ERROR_001": "اسم مجموعة السياسات فارغ أو فارغ.",
-        "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء."
+        "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
+        "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
+        "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",
+        "PMS_POLICY_ERROR_004": "لم يتم العثور على سياسة المطابقة.",
+        "PMS_POLICY_ERROR_005": "معرف مجموعة السياسات فارغ."
     }
 }

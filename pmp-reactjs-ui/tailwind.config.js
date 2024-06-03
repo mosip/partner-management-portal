@@ -15,7 +15,9 @@ module.exports = {
         'moderate-red': '#B43F3F',
         'snow-white': '#FCFCFC',
         'medium-gray': '#707070',
-        'platinum-gray': '#EBEBEB'
+        'platinum-gray': '#EBEBEB',
+        'floral-white': '#FFF9F0',
+        'alice-green': '#F2F5FC',
       }),
       textColor: theme => ({
         ...theme('colors'),
