@@ -19,9 +19,9 @@ function RequestPolicy() {
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
-    const [comments, setComments] = useState("");
-    const [partnerIdData, setPartnerIdData] = useState([]);
-    const [policyNameData, setPolicyNameData] = useState([]);
+    const [partnerComments, setPartnerComments] = useState("");
+    const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
+    const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerData, setPartnerData] = useState([]);
 
     const cancelErrorMsg = () => {
@@ -40,13 +40,13 @@ function RequestPolicy() {
         const fetchData = async () => {
           try {
             setDataLoaded(false);
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPolicyGroups', process.env.NODE_ENV));
+            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPartnerIdsWithPolicyGroups', process.env.NODE_ENV));
             if (response) {
               const responseData = response.data;
               if (responseData && responseData.response) {
                 const resData = responseData.response;
                 setPartnerData(resData);
-                setPartnerIdData(createDropdownDataList('partnerId', partnerData));
+                setPartnerIdDropdownData(createDropdownDataList('partnerId', partnerData, t));
                 console.log('Response data:', partnerData.length);
               } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -63,23 +63,25 @@ function RequestPolicy() {
         fetchData();
     }, [partnerData.length, t]);
 
-    const onChangePartnerId = (fieldName, selectedValue) => {
+    const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
             setPartnerType(selectedPartner.partnerType);
             setPolicyGroupName(selectedPartner.policyGroupName);
-            getListofPolicies(selectedPartner.policyGroupName);
+            setPolicyName("");
+            await getListofPolicies(selectedPartner.policyGroupName);
         }
     };
 
-    const onChangePolicyGroupName = (fieldName, selectedValue) => {
+    const onChangePolicyName = (fieldName, selectedValue) => {
         setPolicyName(selectedValue);
     };
 
     const getListofPolicies = async (policyGroupName) => {
         try {
+            setDataLoaded(false);
             const response = await HttpService({
                 url: getPolicyManagerUrl(`/policies/active/group/${policyGroupName}`, process.env.NODE_ENV),
                 method: 'get',
@@ -89,7 +91,7 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    setPolicyNameData(createDropdownDataList('name', resData));
+                    setPoliciesDropdownData(createDropdownDataList('name', resData, t));
                     console.log(`Response data: ${resData.length}`);
                 } else {
                   handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -97,6 +99,7 @@ function RequestPolicy() {
             } else {
                 setErrorMsg(t('requestPolicy.errorInFetchingPolicyNames'));
             }
+            setDataLoaded(true);
         } catch (err) {
             console.error('Error fetching policies:', err);
             setErrorMsg(err.message);
@@ -108,11 +111,11 @@ function RequestPolicy() {
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
-        setComments("");
+        setPartnerComments("");
     };
 
     const isFormValid = () => {
-        return partnerId && policyName && comments;
+        return partnerId && policyName && partnerComments;
     };
 
     const styles = {
@@ -167,7 +170,7 @@ function RequestPolicy() {
                                             <div className="flex flex-col w-[48%]">
                                                 <DropdownComponent 
                                                     fieldName='partnerId' 
-                                                    dropdownDataList={partnerIdData} 
+                                                    dropdownDataList={partnerIdDropdownData} 
                                                     onDropDownChangeEvent={onChangePartnerId} 
                                                     fieldNameKey='requestPolicy.partnerId*' 
                                                     placeHolderKey='requestPolicy.selectPartnerId' 
@@ -198,8 +201,8 @@ function RequestPolicy() {
                                             <div className="flex flex-col w-[48%]">
                                                 <DropdownWithSearchComponent 
                                                     fieldName='policyName' 
-                                                    dropdownDataList={policyNameData} 
-                                                    onDropDownChangeEvent={onChangePolicyGroupName} 
+                                                    dropdownDataList={policiesDropdownData} 
+                                                    onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     selectedDropdownValue={policyGroupName}
@@ -211,7 +214,7 @@ function RequestPolicy() {
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                                                <textarea value={comments} onChange={(e) => setComments(e.target.value)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                <textarea value={partnerComments} onChange={(e) => setPartnerComments(e.target.value)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
                                             </div>

@@ -126,8 +126,12 @@ export const isLangRTL = (langCode) => {
     }
 }
 
-export const createDropdownDataList = (fieldName, dataList) => {
+export const createDropdownDataList = (fieldName, dataList, t) => {
     let dataArr = [];
+    dataArr.push({
+        fieldCode: "",
+        fieldValue: ""
+    });
     dataList.forEach(item => {
         let alreadyAdded = false;
         dataArr.forEach(item1 => {
@@ -136,17 +140,29 @@ export const createDropdownDataList = (fieldName, dataList) => {
             }
         });
         if (!alreadyAdded) {
-            if (item.descr) {
+            if (fieldName === "partnerType") {
                 dataArr.push({
-                    fieldCode: item[fieldName],
-                    fieldValue: item[fieldName],
-                    fieldDescription: item.descr
-                });
-            } else {
-                dataArr.push({
-                    fieldCode: item[fieldName],
+                    fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
+            } else if (fieldName === "status") {
+                dataArr.push({
+                    fieldCode: getStatusCode(item[fieldName], t),
+                    fieldValue: item[fieldName]
+                });
+            } else {
+                if (item.descr) {
+                    dataArr.push({
+                        fieldCode: item[fieldName],
+                        fieldValue: item[fieldName],
+                        fieldDescription: item.descr
+                    });
+                } else {
+                    dataArr.push({
+                        fieldCode: item[fieldName],
+                        fieldValue: item[fieldName]
+                    });
+                }
             }
         }
     });
