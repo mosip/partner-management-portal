@@ -16,6 +16,7 @@ function RequestPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerId, setPartnerId] = useState("");
+    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
@@ -23,6 +24,7 @@ function RequestPolicy() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerData, setPartnerData] = useState([]);
+    const [policyData, setPolicyData] = useState([]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -77,6 +79,10 @@ function RequestPolicy() {
 
     const onChangePolicyName = (fieldName, selectedValue) => {
         setPolicyName(selectedValue);
+        const selectedPolicy = policyData.find(item => item.name === selectedValue);
+        if (selectedPolicy) {
+            setPolicyId(selectedPolicy.id);
+        }
     };
 
     const getListofPolicies = async (policyGroupName) => {
@@ -91,7 +97,8 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    setPoliciesDropdownData(createDropdownDataList('name', resData, t));
+                    setPolicyData(resData);
+                    setPoliciesDropdownData(createDropdownDataList('name', resData));
                     console.log(`Response data: ${resData.length}`);
                 } else {
                   handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -112,7 +119,42 @@ function RequestPolicy() {
         setPolicyGroupName("");
         setPolicyName("");
         setPartnerComments("");
+        setPoliciesDropdownData([]);
     };
+
+    const clickOnSubmit = async () => {
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+        let request = {
+            request: {
+                partnerId: partnerId,
+                policyId: policyId,
+                policyName: policyName,
+                requestDetail: partnerComments,
+                useCaseDescription: partnerComments
+            },
+        }
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policy/map`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    console.log(`Response data: ${resData.length}`);
+                } else {
+                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('requestPolicy.errorInMapPolicy'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
+
+    }
 
     const isFormValid = () => {
         return partnerId && policyName && partnerComments;
@@ -227,7 +269,7 @@ function RequestPolicy() {
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                     <button onClick={() => moveToPolicies()} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>
