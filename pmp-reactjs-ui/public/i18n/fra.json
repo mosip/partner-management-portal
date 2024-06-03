@@ -137,14 +137,15 @@
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
-        "selectPartnerId": "Sélectionnez l'ID du partenaire",
+        "selectPartnerId": "ID de partenaire approuvé",
         "selectPolicyName": "Sélectionnez le nom de la politique applicable à votre organisation",
         "comments": "commentaires",
         "commentBoxDesc": "Mentionner le but de la demande de police",
         "clearForm": "Forme claire",
         "cancel": "Annuler",
         "submit": "Soumettre",
-        "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard"
+        "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard",
+        "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard"
     },
     "commons": {
         "home": "Maison",
