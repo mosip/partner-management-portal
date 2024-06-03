@@ -6,6 +6,7 @@ import Policies from './pages/policies/Policies.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
+import StatusOfRequestPolicy from './pages/policies/StatusOfRequestPolicy.js';
 
 function AppRoutes() {
 
@@ -37,6 +38,10 @@ function AppRoutes() {
         {
           path: 'requestPolicy',
           element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'statusOfRequestPolicy',
+          element: <GuardedRoute><MainLayout><StatusOfRequestPolicy/></MainLayout></GuardedRoute>,
         }
       ],
     },

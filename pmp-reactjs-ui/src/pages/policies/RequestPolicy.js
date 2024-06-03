@@ -36,29 +36,33 @@ function RequestPolicy() {
         navigate('/partnermanagement/policies')
     };
 
+    const moveToPolicyConfirmation = () => {
+        navigate('/partnermanagement/statusOfRequestPolicy')
+    };
+
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            setDataLoaded(false);
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPolicyGroups', process.env.NODE_ENV));
-            if (response) {
-              const responseData = response.data;
-              if (responseData && responseData.response) {
-                const resData = responseData.response;
-                setPartnerData(resData);
-                setPartnerIdData(createDropdownDataList('partnerId', partnerData));
-                console.log('Response data:', partnerData.length);
-              } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-              }
-            } else {
-              setErrorMsg(t('policies.errorInResponse'));
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPolicyGroups', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setPartnerData(resData);
+                        setPartnerIdData(createDropdownDataList('partnerId', partnerData));
+                        console.log('Response data:', partnerData.length);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('policies.errorInResponse'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
             }
-            setDataLoaded(true);
-          } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
-          }
         };
         fetchData();
     }, [partnerData.length, t]);
@@ -92,7 +96,7 @@ function RequestPolicy() {
                     setPolicyNameData(createDropdownDataList('name', resData));
                     console.log(`Response data: ${resData.length}`);
                 } else {
-                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
                 setErrorMsg(t('requestPolicy.errorInFetchingPolicyNames'));
@@ -129,7 +133,7 @@ function RequestPolicy() {
         selectionBox: "!top-12"
     }
 
-    return(
+    return (
         <div className="ml-32 mr-5 mt-5 w-[100%]">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
@@ -150,7 +154,7 @@ function RequestPolicy() {
                                 <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')} / 
+                                        {t('commons.home')} /
                                     </p>
                                     <p onClick={() => moveToPolicies()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('requestPolicy.policies')}
@@ -165,12 +169,12 @@ function RequestPolicy() {
                                     <div className="flex flex-col">
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                             <div className="flex flex-col w-[48%]">
-                                                <DropdownComponent 
-                                                    fieldName='partnerId' 
-                                                    dropdownDataList={partnerIdData} 
-                                                    onDropDownChangeEvent={onChangePartnerId} 
-                                                    fieldNameKey='requestPolicy.partnerId*' 
-                                                    placeHolderKey='requestPolicy.selectPartnerId' 
+                                                <DropdownComponent
+                                                    fieldName='partnerId'
+                                                    dropdownDataList={partnerIdData}
+                                                    onDropDownChangeEvent={onChangePartnerId}
+                                                    fieldNameKey='requestPolicy.partnerId*'
+                                                    placeHolderKey='requestPolicy.selectPartnerId'
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}>
                                                 </DropdownComponent>
@@ -196,14 +200,14 @@ function RequestPolicy() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <DropdownWithSearchComponent 
-                                                    fieldName='policyName' 
-                                                    dropdownDataList={policyNameData} 
-                                                    onDropDownChangeEvent={onChangePolicyGroupName} 
-                                                    fieldNameKey='requestPolicy.policyName*' 
+                                                <DropdownWithSearchComponent
+                                                    fieldName='policyName'
+                                                    dropdownDataList={policyNameData}
+                                                    onDropDownChangeEvent={onChangePolicyGroupName}
+                                                    fieldNameKey='requestPolicy.policyName*'
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     selectedDropdownValue={policyGroupName}
-                                                    searchKey='commons.search' 
+                                                    searchKey='commons.search'
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>
@@ -224,7 +228,9 @@ function RequestPolicy() {
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                     <button onClick={() => moveToPolicies()} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button disabled={!isFormValid()} onClick={()=>moveToPolicyConfirmation()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                        {t('requestPolicy.submit')}
+                                    </button>
                                 </div>
                             </div>
                         </div>

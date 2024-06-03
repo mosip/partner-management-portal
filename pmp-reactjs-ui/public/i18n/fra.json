@@ -145,11 +145,14 @@
         "cancel": "Annuler",
         "submit": "Soumettre",
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard",
-        "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard"
+        "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard",
+        "policySuccessHeader": "Politique soumise avec succès !",
+        "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur."
     },
     "commons": {
         "home": "Maison",
-        "search": "Recherche"
+        "search": "Recherche",
+        "goBack": "Retourner"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
