@@ -166,7 +166,7 @@ function ViewPolicyDetails() {
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
                                         <div className="w-0 h-0 border-t-[0.5rem] border-t-transparent border-r-[7px] border-r-[#FFF9F0] border-b-[0.5rem] border-b-transparent absolute top-4 -left-[0.38rem]"></div>
-                                        <h4 className="text-lg  text-indigo-600">
+                                        <h4 className="text-lg  text-[#031640]">
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4">
@@ -194,7 +194,7 @@ function ViewPolicyDetails() {
                                         </span>
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
                                             <div className="w-0 h-0 border-t-[0.5rem] border-t-transparent border-r-[7px] border-r-[#F2F5FC] border-b-[0.5rem] border-b-transparent absolute top-4 -left-[0.38rem]"></div>
-                                            <h4 className="text-lg  text-indigo-600">
+                                            <h4 className="text-lg  text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
                                             <span className="text-sm mt-3">
