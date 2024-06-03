@@ -372,7 +372,7 @@ function Policies() {
                                 <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td className="px-2">{partner.partnerId}</td>
                                   <td className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                  <td className="px-2">{partner.policyGroup}</td>
+                                  <td className="px-2">{partner.policyGroupName}</td>
                                   <td className="px-2">{partner.policyName}</td>
                                   <td className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
                                   <td className="">
