@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
-import { use } from 'i18next';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
     placeHolderKey, searchKey, selectedDropdownValue, styleSet}) {
@@ -27,9 +26,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     }, [dropdownRef]);
 
     useEffect(() => {
-        if(selectedDropdownValue) {
-            setSelectedDropdownEntry(selectedDropdownValue);
-        }
+        setSelectedDropdownEntry(selectedDropdownValue || "");
     }, [selectedDropdownValue]);
 
     const changeDropdownSelection = (selectedid) => {
@@ -49,7 +46,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
             </label>
             <div className="relative w-full" ref={dropdownRef}>
                 <button onClick={openDropdown} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none 
-                    focus:shadow-none ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
+                    focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
@@ -76,10 +73,16 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block w-full h-8 px-4 py-1 text-left text-base text-dark-blue
+                                                className={`block ${dropdownItem.fieldDescription ? 'h-20' : 'h-8'} w-full px-4 py-1 text-left text-base text-dark-blue
                                                     ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
-                                                {dropdownItem.fieldCode}
+                                                <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
+                                                {dropdownItem.fieldDescription && (
+                                                    <>
+                                                        <br />
+                                                        <p className="text-sm text-[#727272]">{dropdownItem.fieldDescription}</p>
+                                                    </>
+                                                )}
                                             </button>
                                             <div className="border-gray-200 border-t mx-2"></div>
                                         </div>

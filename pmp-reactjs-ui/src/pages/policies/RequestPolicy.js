@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils';
+import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import backArrow from '../../svg/back_arrow.svg';
@@ -15,8 +17,12 @@ function RequestPolicy() {
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerId, setPartnerId] = useState("");
     const [policyName, setPolicyName] = useState("");
+    const [partnerType, setPartnerType] = useState("");
+    const [policyGroupName, setPolicyGroupName] = useState("");
+    const [comments, setComments] = useState("");
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [policyNameData, setPolicyNameData] = useState([]);
+    const [approvedPolicyGroupList, setApprovedPolicyGroupList] = useState([]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -32,18 +38,54 @@ function RequestPolicy() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const partnerIdList = ["auth1", "auth2", "auth3", "auth4"]
-            let dataArr = [];
-            partnerIdList.forEach(item => {
-                dataArr.push({
-                    fieldCode: item,
-                    fieldValue: item
-                })
-            })
-            setPartnerIdData(dataArr);
-        }
+          try {
+            setDataLoaded(false);
+            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPolicyGroups', process.env.NODE_ENV));
+            if (response) {
+              const responseData = response.data;
+              if (responseData && responseData.response) {
+                const resData = responseData.response;
+                setApprovedPolicyGroupList(resData);
+                console.log('Response data:', approvedPolicyGroupList.length);
+              } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+              }
+            } else {
+              setErrorMsg(t('policies.errorInResponse'));
+            }
+            setDataLoaded(true);
+          } catch (err) {
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
+          }
+        };
         fetchData();
-    }, []);
+      }, [approvedPolicyGroupList.length, t]);
+
+    useEffect(() => {
+        const getData = (fieldName) => {
+            let dataArr = [];
+            approvedPolicyGroupList.forEach(item => {
+                let alreadyAdded = false;
+                dataArr.forEach(item1 => {
+                    if (item1.fieldValue === item[fieldName]) {
+                        alreadyAdded = true;
+                    }
+                });
+                if (!alreadyAdded) {
+                    dataArr.push({
+                        fieldCode: item[fieldName],
+                        fieldValue: item[fieldName]
+                    });
+                }
+            });
+            return dataArr;
+        }
+        const fetchData = async () => {
+            setPartnerIdData(getData('partnerId'));
+        };
+        fetchData();
+    }, [approvedPolicyGroupList]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,7 +95,8 @@ function RequestPolicy() {
             policyNameList.forEach(item => {
                 dataArr.push({
                     fieldCode: item,
-                    fieldValue: item
+                    fieldValue: item,
+                    fieldDescription: "Policy group details goes here, some descriptive text goes here to make the user experience easier."
                 })
             })
             setPolicyNameData(dataArr);
@@ -64,26 +107,40 @@ function RequestPolicy() {
     const selectValue = (fieldName, selectedValue) => {
         if (fieldName === "partnerId") {
             setPartnerId(selectedValue);
+            // Find the selected partner data
+            const selectedPartner = approvedPolicyGroupList.find(item => item.partnerId === selectedValue);
+            if (selectedPartner) {
+                setPartnerType(selectedPartner.partnerType);
+                setPolicyGroupName(selectedPartner.policyGroupName);
+            }
         } else if (fieldName === "policyName") {
-            setPolicyName(selectedValue)
+            setPolicyName(selectedValue);
         }
     };
 
     const clearForm = () => {
-        window.location.reload();
-      }
+        setPartnerId("");
+        setPartnerType("");
+        setPolicyGroupName("");
+        setPolicyName("");
+        setComments("");
+    };
+
+    const isFormValid = () => {
+        return partnerId && policyName && comments;
+    };
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-grayish-blue !text-left",
+        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left !text-grayish-blue",
         selectionBox: "!top-12"
     }
 
     const styleForSearch = {
         outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-lg !my-2 mb-0",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-grayish-blue !text-left",
+        dropdownLabel: "!text-base !mb-1",
+        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left !text-grayish-blue",
         selectionBox: "!top-12"
     }
 
@@ -128,14 +185,15 @@ function RequestPolicy() {
                                                     dropdownDataList={partnerIdData} 
                                                     onDropDownChangeEvent={selectValue} 
                                                     fieldNameKey='requestPolicy.partnerId*' 
-                                                    placeHolderKey='requestPolicy.partnerId' 
-                                                    styleSet={styleForSearch}>
+                                                    placeHolderKey='requestPolicy.selectPartnerId' 
+                                                    selectedDropdownValue={partnerId}
+                                                    styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                    <span>Partner Type</span>
+                                                    <span>{partnerType || "Partner Type"}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>
@@ -146,7 +204,7 @@ function RequestPolicy() {
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                    <span>Policy Group</span>
+                                                    <span>{policyGroupName || "Policy Group"}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>
@@ -159,16 +217,17 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={selectValue} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
+                                                    selectedDropdownValue={policyGroupName}
                                                     searchKey='commons.search' 
-                                                    styleSet={styles}>
+                                                    styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>
                                         </div>
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                                                <textarea id="comment" className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline"
-                                                    placeholder={t('requestPolicy.commentBoxDesc')}>
+                                                <textarea value={comments} onChange={(e) => setComments(e.target.value)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-nowrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
                                             </div>
                                         </div>
@@ -178,9 +237,9 @@ function RequestPolicy() {
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-[2%] justify-between">
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
-                                <div className="space-x-3">
-                                    <button className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                    <button className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-base font-semibold">{t('requestPolicy.submit')}</button>
+                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
+                                    <button onClick={() => moveToPolicies()} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
+                                    <button disabled={!isFormValid()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>

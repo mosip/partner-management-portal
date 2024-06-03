@@ -136,12 +136,14 @@
         "partnerType": "نوع الشريك",
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
-        "selectPolicyName": "حدد اسم السياسة",
+        "selectPartnerId": "حدد معرف الشريك",
+        "selectPolicyName": "حدد اسم السياسة المطبقة على مؤسستك",
         "comments": "تعليقات",
-        "commentBoxDesc": "أكتب تعليقك هنا",
+        "commentBoxDesc": "اذكر الغرض من طلب السياسة",
         "clearForm": "شكل واضح",
         "cancel": "يلغي",
-        "submit": "يُقدِّم"
+        "submit": "يُقدِّم",
+        "errorInResponse": "يوجد خطأ ما في جلب التفاصيل لجميع مجموعات السياسات المعتمدة. حاول مرة أخرى في وقت لاحق"
     },
     "commons": {
         "home": "بيت",
