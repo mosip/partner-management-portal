@@ -98,7 +98,7 @@ function RequestPolicy() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     setPolicyData(resData);
-                    setPoliciesDropdownData(createDropdownDataList('name', resData));
+                    setPoliciesDropdownData(createDropdownDataList('name', resData, t));
                     console.log(`Response data: ${resData.length}`);
                 } else {
                   handleServiceErrors(responseData, setErrorCode, setErrorMsg);
