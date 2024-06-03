@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, createDropdownDataList, moveToPolicies } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -16,6 +16,7 @@ function RequestPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerId, setPartnerId] = useState("");
+    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
@@ -42,7 +43,7 @@ function RequestPolicy() {
               if (responseData && responseData.response) {
                 const resData = responseData.response;
                 setPartnerData(resData);
-                setPartnerIdDropdownData(createDropdownDataList('partnerId', partnerData, t));
+                setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', partnerData));
                 console.log('Response data:', partnerData.length);
               } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -59,6 +60,54 @@ function RequestPolicy() {
         fetchData();
     }, [partnerData.length, t]);
 
+    const createPartnerIdDropdownData = (fieldName, dataList) => {
+        let dataArr = [];
+        dataArr.push({
+            fieldCode: "",
+            fieldValue: ""
+        });
+        dataList.forEach(item => {
+            let alreadyAdded = false;
+            dataArr.forEach(item1 => {
+                if (item1.fieldValue === item[fieldName]) {
+                    alreadyAdded = true;
+                }
+            });
+            if (!alreadyAdded) {
+                dataArr.push({
+                    fieldCode: item[fieldName],
+                    fieldValue: item[fieldName]
+                });
+            }
+        });
+        return dataArr;
+    }
+
+    const createPoliciesDropdownData = (fieldName, dataList) => {
+        let dataArr = [];
+        dataArr.push({
+            fieldCode: "",
+            fieldValue: "",
+            fieldDescription: ""
+        });
+        dataList.forEach(item => {
+            let alreadyAdded = false;
+            dataArr.forEach(item1 => {
+                if (item1.fieldValue === item[fieldName]) {
+                    alreadyAdded = true;
+                }
+            });
+            if (!alreadyAdded) {
+                dataArr.push({
+                    fieldCode: item[fieldName],
+                    fieldValue: item.id,
+                    fieldDescription: item.descr
+                });
+            }
+        });
+        return dataArr;
+    }
+
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
         // Find the selected partner data
@@ -72,7 +121,11 @@ function RequestPolicy() {
     };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        setPolicyName(selectedValue);
+        setPolicyId(selectedValue);
+        const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
+        if (selectedPolicy) {
+            setPolicyName(selectedPolicy.fieldCode);
+        }
     };
 
     const getListofPolicies = async (policyGroupName) => {
@@ -87,7 +140,7 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    setPoliciesDropdownData(createDropdownDataList('name', resData, t));
+                    setPoliciesDropdownData(createPoliciesDropdownData('name', resData));
                     console.log(`Response data: ${resData.length}`);
                 } else {
                   handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -108,7 +161,42 @@ function RequestPolicy() {
         setPolicyGroupName("");
         setPolicyName("");
         setPartnerComments("");
+        setPoliciesDropdownData([]);
     };
+
+    const clickOnSubmit = async () => {
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+        let request = {
+            request: {
+                partnerId: partnerId,
+                policyId: policyId,
+                policyName: policyName,
+                requestDetail: partnerComments,
+                useCaseDescription: partnerComments
+            },
+        }
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policy/map`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    navigate('/partnermanagement/requestPolicyConfirmation');
+                    console.log(`Response data: ${resData.length}`);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('requestPolicy.errorInMapPolicy'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
+    }
 
     const isFormValid = () => {
         return partnerId && policyName && partnerComments;
@@ -201,7 +289,7 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
-                                                    selectedDropdownValue={policyGroupName}
+                                                    selectedDropdownValue={policyName}
                                                     searchKey='commons.search' 
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
@@ -223,7 +311,7 @@ function RequestPolicy() {
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                     <button onClick={() => moveToPolicies(navigate)} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>

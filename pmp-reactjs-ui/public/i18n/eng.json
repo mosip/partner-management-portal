@@ -143,12 +143,16 @@
         "clearForm": "Clear Form",
         "cancel": "Cancel",
         "submit": "Submit",
-        "errorInResponse": "There is some error in fetching the details for all approved policy groups. Try again later",
-        "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later"
+        "errorInResponse": "There is some error in fetching the details for all approved policy groups. Try again later!",
+        "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later!",
+        "errorInMapPolicy": "There is some error in requesting a new policy. Try again later!",
+        "policySuccessHeader": "Policy Submitted Successfully!",
+        "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin."
     },
     "commons": {
         "home": "Home",
-        "search": "Search"
+        "search": "Search",
+        "goBack": "Go Back"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
