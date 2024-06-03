@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, createDropdownDataList } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -22,7 +22,7 @@ function RequestPolicy() {
     const [comments, setComments] = useState("");
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [policyNameData, setPolicyNameData] = useState([]);
-    const [approvedPolicyGroupList, setApprovedPolicyGroupList] = useState([]);
+    const [partnerData, setPartnerData] = useState([]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -45,8 +45,9 @@ function RequestPolicy() {
               const responseData = response.data;
               if (responseData && responseData.response) {
                 const resData = responseData.response;
-                setApprovedPolicyGroupList(resData);
-                console.log('Response data:', approvedPolicyGroupList.length);
+                setPartnerData(resData);
+                setPartnerIdData(createDropdownDataList('partnerId', partnerData));
+                console.log('Response data:', partnerData.length);
               } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
               }
@@ -60,61 +61,45 @@ function RequestPolicy() {
           }
         };
         fetchData();
-      }, [approvedPolicyGroupList.length, t]);
+    }, [partnerData.length, t]);
 
-    useEffect(() => {
-        const getData = (fieldName) => {
-            let dataArr = [];
-            approvedPolicyGroupList.forEach(item => {
-                let alreadyAdded = false;
-                dataArr.forEach(item1 => {
-                    if (item1.fieldValue === item[fieldName]) {
-                        alreadyAdded = true;
-                    }
-                });
-                if (!alreadyAdded) {
-                    dataArr.push({
-                        fieldCode: item[fieldName],
-                        fieldValue: item[fieldName]
-                    });
-                }
+    const onChangePartnerId = (fieldName, selectedValue) => {
+        setPartnerId(selectedValue);
+        // Find the selected partner data
+        const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
+        if (selectedPartner) {
+            setPartnerType(selectedPartner.partnerType);
+            setPolicyGroupName(selectedPartner.policyGroupName);
+            getListofPolicies(selectedPartner.policyGroupName);
+        }
+    };
+
+    const onChangePolicyGroupName = (fieldName, selectedValue) => {
+        setPolicyName(selectedValue);
+    };
+
+    const getListofPolicies = async (policyGroupName) => {
+        try {
+            const response = await HttpService({
+                url: getPolicyManagerUrl(`/policies/active/group/${policyGroupName}`, process.env.NODE_ENV),
+                method: 'get',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
             });
-            return dataArr;
-        }
-        const fetchData = async () => {
-            setPartnerIdData(getData('partnerId'));
-        };
-        fetchData();
-    }, [approvedPolicyGroupList]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const policyNameList = ["authpolicy1", "authpolicy2", "authpolicy3", "authpolicy4", 
-                                    "authpolicy5", "authpolicy6", "authpolicy7", "authpolicy8"]
-            let dataArr = [];
-            policyNameList.forEach(item => {
-                dataArr.push({
-                    fieldCode: item,
-                    fieldValue: item,
-                    fieldDescription: "Policy group details goes here, some descriptive text goes here to make the user experience easier."
-                })
-            })
-            setPolicyNameData(dataArr);
-        }
-        fetchData();
-    }, []);
-
-    const selectValue = (fieldName, selectedValue) => {
-        if (fieldName === "partnerId") {
-            setPartnerId(selectedValue);
-            // Find the selected partner data
-            const selectedPartner = approvedPolicyGroupList.find(item => item.partnerId === selectedValue);
-            if (selectedPartner) {
-                setPartnerType(selectedPartner.partnerType);
-                setPolicyGroupName(selectedPartner.policyGroupName);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    setPolicyNameData(createDropdownDataList('name', resData));
+                    console.log(`Response data: ${resData.length}`);
+                } else {
+                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('requestPolicy.errorInFetchingPolicyNames'));
             }
-        } else if (fieldName === "policyName") {
-            setPolicyName(selectedValue);
+        } catch (err) {
+            console.error('Error fetching policies:', err);
+            setErrorMsg(err.message);
         }
     };
 
@@ -183,7 +168,7 @@ function RequestPolicy() {
                                                 <DropdownComponent 
                                                     fieldName='partnerId' 
                                                     dropdownDataList={partnerIdData} 
-                                                    onDropDownChangeEvent={selectValue} 
+                                                    onDropDownChangeEvent={onChangePartnerId} 
                                                     fieldNameKey='requestPolicy.partnerId*' 
                                                     placeHolderKey='requestPolicy.selectPartnerId' 
                                                     selectedDropdownValue={partnerId}
@@ -214,7 +199,7 @@ function RequestPolicy() {
                                                 <DropdownWithSearchComponent 
                                                     fieldName='policyName' 
                                                     dropdownDataList={policyNameData} 
-                                                    onDropDownChangeEvent={selectValue} 
+                                                    onDropDownChangeEvent={onChangePolicyGroupName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     selectedDropdownValue={policyGroupName}

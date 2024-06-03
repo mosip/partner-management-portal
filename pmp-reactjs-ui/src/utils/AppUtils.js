@@ -125,3 +125,31 @@ export const isLangRTL = (langCode) => {
         return false;
     }
 }
+
+export const createDropdownDataList = (fieldName, dataList) => {
+    let dataArr = [];
+    dataList.forEach(item => {
+        let alreadyAdded = false;
+        dataArr.forEach(item1 => {
+            if (item1.fieldValue === item[fieldName]) {
+                alreadyAdded = true;
+            }
+        });
+        if (!alreadyAdded) {
+            if (item.descr) {
+                dataArr.push({
+                    fieldCode: item[fieldName],
+                    fieldValue: item[fieldName],
+                    fieldDescription: item.descr
+                });
+            } else {
+                dataArr.push({
+                    fieldCode: item[fieldName],
+                    fieldValue: item[fieldName]
+                });
+            }
+        }
+    });
+    return dataArr;
+
+}
