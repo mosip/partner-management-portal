@@ -120,10 +120,10 @@ function RequestPolicy() {
     };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        setPolicyId(selectedValue);
         const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedPolicy.fieldCode);
+            setPolicyId(selectedValue);
         }
     };
 
@@ -231,7 +231,7 @@ function RequestPolicy() {
                     )}
                     <div className="flex-col">
                         <div className="flex items-start space-x-3">
-                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[1%] cursor-pointer" />
+                            <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className="mt-[1%] cursor-pointer" />
                             <div className="flex-col">
                                 <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
@@ -288,7 +288,7 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
-                                                    searchKey='commons.search' 
+                                                    searchKey='commons.search'
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>
