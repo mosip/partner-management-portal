@@ -124,7 +124,6 @@ function RequestPolicy() {
         const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedPolicy.fieldCode);
-            console.log(`policy name: ${policyName}`)
         }
     };
 
