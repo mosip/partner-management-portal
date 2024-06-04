@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -62,10 +62,6 @@ function RequestPolicy() {
 
     const createPartnerIdDropdownData = (fieldName, dataList) => {
         let dataArr = [];
-        dataArr.push({
-            fieldCode: "",
-            fieldValue: ""
-        });
         dataList.forEach(item => {
             let alreadyAdded = false;
             dataArr.forEach(item1 => {
@@ -85,11 +81,6 @@ function RequestPolicy() {
 
     const createPoliciesDropdownData = (fieldName, dataList) => {
         let dataArr = [];
-        dataArr.push({
-            fieldCode: "",
-            fieldValue: "",
-            fieldDescription: ""
-        });
         dataList.forEach(item => {
             let alreadyAdded = false;
             dataArr.forEach(item1 => {
@@ -113,18 +104,17 @@ function RequestPolicy() {
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-            setPartnerType(selectedPartner.partnerType);
+            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
             setPolicyGroupName(selectedPartner.policyGroupName);
-            setPolicyName("");
             await getListofPolicies(selectedPartner.policyGroupName);
         }
     };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        setPolicyId(selectedValue);
         const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedPolicy.fieldCode);
+            setPolicyId(selectedValue);
         }
     };
 
@@ -232,7 +222,7 @@ function RequestPolicy() {
                     )}
                     <div className="flex-col">
                         <div className="flex items-start space-x-3">
-                            <img src={backArrow} alt="" onClick={() => moveToHome()} className="mt-[1%] cursor-pointer" />
+                            <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className="mt-[1%] cursor-pointer" />
                             <div className="flex-col">
                                 <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
@@ -289,8 +279,7 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
-                                                    selectedDropdownValue={policyName}
-                                                    searchKey='commons.search' 
+                                                    searchKey='commons.search'
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>
