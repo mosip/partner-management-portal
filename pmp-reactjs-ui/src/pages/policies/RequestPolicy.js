@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -113,9 +113,8 @@ function RequestPolicy() {
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-            setPartnerType(selectedPartner.partnerType);
+            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
             setPolicyGroupName(selectedPartner.policyGroupName);
-            setPolicyName("");
             await getListofPolicies(selectedPartner.policyGroupName);
         }
     };
@@ -125,6 +124,7 @@ function RequestPolicy() {
         const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedPolicy.fieldCode);
+            console.log(`policy name: ${policyName}`)
         }
     };
 
@@ -289,7 +289,6 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
-                                                    selectedDropdownValue={policyName}
                                                     searchKey='commons.search' 
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>

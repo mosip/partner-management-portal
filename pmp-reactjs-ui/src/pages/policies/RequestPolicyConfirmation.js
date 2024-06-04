@@ -25,7 +25,7 @@ function RequestPolicyConfirmation() {
         <div className="ml-32 mr-5 mt-5 w-[100%] h-[100%] font-inter">
             <div className="flex-col">
                 <div className="flex items-start space-x-3">
-                    <img src={backArrow} alt="" className="mt-[1%] cursor-pointer" />
+                    <img src={backArrow} onClick={() => moveToHome()} alt="" className="mt-[1%] cursor-pointer" />
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                         <div className="flex space-x-1">
