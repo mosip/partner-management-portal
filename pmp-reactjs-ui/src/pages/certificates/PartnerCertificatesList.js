@@ -185,7 +185,7 @@ function PartnerCertificatesList() {
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
                                                         <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[14%] py-[1%] mr-1 text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
+                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[14%] py-[1%] ${isLoginLanguageRTL?"ml-1": "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ml-2`}
