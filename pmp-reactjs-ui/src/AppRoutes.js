@@ -7,7 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
 import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
-import AuthService from './pages/authServices/AuthService.js';
+import AuthenticationServices from './pages/authServices/AuthenticationServices.js';
 
 function AppRoutes() {
 
@@ -46,7 +46,7 @@ function AppRoutes() {
         },
         {
           path: 'authenticationServices',
-          element: <GuardedRoute><MainLayout><AuthService/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><AuthenticationServices/></MainLayout></GuardedRoute>,
         }
       ],
     },

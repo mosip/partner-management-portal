@@ -151,14 +151,19 @@
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
-        "createOidcClientBtn": "Create OIDC Client",
+        "oidcClient": "OIDC Client",
+        "apiKey": "API Key",
         "partnerId": "Partner ID",
         "policyName": "Policy Name",
         "oidcClientName": "OIDC Client Name",
         "createdDate": "Created Date",
+        "apiKeyLable": "API Key Label",
+        "expiryDate": "Expiry Date",
         "status": "Status",
         "oidcClientId": "OIDC Client ID",
-        "action": "Action"
+        "action": "Action",
+        "createOidcClientBtn": "Create OIDC Client",
+        "generateApiKeyBtn": "Generate API Key"
     },
     "commons": {
         "home": "Home",
