@@ -62,10 +62,6 @@ function RequestPolicy() {
 
     const createPartnerIdDropdownData = (fieldName, dataList) => {
         let dataArr = [];
-        dataArr.push({
-            fieldCode: "",
-            fieldValue: ""
-        });
         dataList.forEach(item => {
             let alreadyAdded = false;
             dataArr.forEach(item1 => {
@@ -85,11 +81,6 @@ function RequestPolicy() {
 
     const createPoliciesDropdownData = (fieldName, dataList) => {
         let dataArr = [];
-        dataArr.push({
-            fieldCode: "",
-            fieldValue: "",
-            fieldDescription: ""
-        });
         dataList.forEach(item => {
             let alreadyAdded = false;
             dataArr.forEach(item1 => {
