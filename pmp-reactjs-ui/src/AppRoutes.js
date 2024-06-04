@@ -7,6 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
 import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
+import AuthService from './pages/authServices/AuthService.js';
 
 function AppRoutes() {
 
@@ -42,6 +43,10 @@ function AppRoutes() {
         {
           path: 'requestPolicyConfirmation',
           element: <GuardedRoute><MainLayout><RequestPolicyConfirmation/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'authenticationServices',
+          element: <GuardedRoute><MainLayout><AuthService/></MainLayout></GuardedRoute>,
         }
       ],
     },

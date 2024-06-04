@@ -149,6 +149,17 @@
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin."
     },
+    "authenticationServices": {
+        "authenticationServices": "Authentication Services",
+        "createOidcClientBtn": "Create OIDC Client",
+        "partnerId": "Partner ID",
+        "policyName": "Policy Name",
+        "oidcClientName": "OIDC Client Name",
+        "createdDate": "Created Date",
+        "status": "Status",
+        "oidcClientId": "OIDC Client ID",
+        "action": "Action"
+    },
     "commons": {
         "home": "Home",
         "search": "Search",

@@ -256,7 +256,7 @@ function Policies() {
           )}
           <div className="flex-col">
             <div className="flex justify-between mb-5">
-              <div className="flex items-start">
+              <div className="flex items-start space-x-3">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-xl text-dark-blue">{t('policies.policies')}</h1>
