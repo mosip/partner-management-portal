@@ -79,7 +79,7 @@ function AuthenticationServices() {
 
                     <hr className="h-px mx-3 bg-gray-200 border-0" />
 
-                    <div className="flex items-center justify-center p-28">
+                    <div className="flex items-center justify-center p-24">
                         <div className="flex-col justify-center">
                             <img src={rectangleGrid} alt="" />
                             {activeOidcClient &&
