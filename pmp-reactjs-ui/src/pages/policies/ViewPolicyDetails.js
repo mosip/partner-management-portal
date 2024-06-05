@@ -13,12 +13,19 @@ function ViewPolicyDetails() {
     const [policyDetails, setPolicyDetails] = useState([]);
 
     useEffect(() => {
-            const partnerData = localStorage.getItem('selectedPolicyData');
-            if (partnerData) {
+        const partnerData = localStorage.getItem('selectedPolicyData');
+        if (partnerData) {
+            try {
                 const selectedPartner = JSON.parse(partnerData);
                 setPolicyDetails(selectedPartner);
+            } catch (error) {
+                navigate('/partnermanagement/policies');
+                console.error('Error in viewPolicyDetails page :', error);
             }
-    }, []);
+        } else {
+            navigate('/partnermanagement/policies');
+        }
+    }, [navigate]);
 
     const moveToHome = () => {
         navigate("/partnermanagement");
@@ -83,8 +90,12 @@ function ViewPolicyDetails() {
                                 {policyDetails.status}
                             </div>
                             <div className="font-medium ml-3 text-sm text-blue-900">
-                                {"Created on " +
-                                    formatDate(policyDetails.createDate, "dateTime")}
+                                {t("viewPolicyDetails.createdOn") + ' ' +
+                                    formatDate(policyDetails.createDate, "date")}
+                            </div>
+                            <div className="mx-3 text-gray-300">|</div>
+                            <div className="font-medium text-sm text-blue-900">
+                                {formatDate(policyDetails.createDate, "time")}
                             </div>
                         </div>
                     </div>
@@ -150,7 +161,8 @@ function ViewPolicyDetails() {
                             </p>
                             <div>
                                 <div className="flex font-medium w-full  ">
-                                    <span className=" w-8 h-8 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10 ">
+                                    <span className=" w-8 h-8 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10">
+                                        <div className="relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute after:left-[1.2rem] after:mt-7"></div>
                                         <img src={adminImage} alt="Example" className="" />
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
@@ -168,8 +180,14 @@ function ViewPolicyDetails() {
                                             </div>
                                             <div>
                                                 {policyDetails.updDtimes && (
-                                                    <div className="font-medium ml-3 text-sm text-blue-900">
-                                                        {"Created on " + formatDate(policyDetails.updDtimes, "dateTime")}
+                                                    <div className="flex">
+                                                        <div className="font-medium ml-3 text-sm text-blue-900">
+                                                            {formatDate(policyDetails.updDtimes, "date")}
+                                                        </div>
+                                                        <div className="mx-3 text-gray-300">|</div>
+                                                        <div className="font-medium text-sm text-blue-900">
+                                                            {formatDate(policyDetails.updDtimes, "time")}
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>
@@ -192,8 +210,12 @@ function ViewPolicyDetails() {
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
                                                 <div className="font-medium text-sm text-blue-900">
-                                                    {"Created on " +
-                                                        formatDate(policyDetails.createDate, "dateTime")}
+                                                    {t("viewPolicyDetails.createdOn") + ' ' +
+                                                        formatDate(policyDetails.createDate, "date")}
+                                                </div>
+                                                <div className="mx-3 text-gray-300">|</div>
+                                                <div className="font-medium text-sm text-blue-900">
+                                                    {formatDate(policyDetails.createDate, "time")}
                                                 </div>
                                             </div>
                                         </div>
