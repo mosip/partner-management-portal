@@ -15,10 +15,16 @@ function ViewPolicyDetails() {
     useEffect(() => {
         const partnerData = localStorage.getItem('selectedPolicyData');
         if (partnerData) {
-            const selectedPartner = JSON.parse(partnerData);
-            setPolicyDetails(selectedPartner);
+            try {
+                const selectedPartner = JSON.parse(partnerData);
+                setPolicyDetails(selectedPartner);
+            } catch (error) {
+                navigate('/partnermanagement/policies');
+            }
+        } else {
+            navigate('/partnermanagement/policies');
         }
-    }, []);
+    }, [navigate]);
 
     const moveToHome = () => {
         navigate("/partnermanagement");
