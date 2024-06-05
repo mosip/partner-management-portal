@@ -301,6 +301,7 @@
         "PMS_POL_056": "Les stratégies actives existent sous le groupe de stratégies.",
         "PMS_POL_057": "L'apiKey active existe sous la stratégie.",
         "PMS_POL_058": "Le statut ne peut pas être modifié pour la politique publiée.;",
+        "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-004": "Les dates des certificats ne sont pas valides.",
