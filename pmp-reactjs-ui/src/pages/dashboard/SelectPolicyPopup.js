@@ -33,22 +33,19 @@ function SelectPolicyPopup() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const request = createRequest({
-                    "filters": [{ "columnName": "name", "type": "unique", "text": "" }],
-                    "languageCode": "eng",
-                    "optionalFilters": [{ "columnName": "isActive", "type": "equals", "value": "true" }]
-                });
                 const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/group/filtervalues', process.env.NODE_ENV),
-                    method: 'post',
-                    data: request,
+                    url: getPolicyManagerUrl('/policies/getAllPolicyGroups', process.env.NODE_ENV),
+                    method: 'get',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
                 });
-                if (response && response.data && response.data.response) {
-                    const resData = response.data.response;
-                    if (resData.filters && resData.filters.length > 0) {
-                        console.log(`found records: ${resData.filters.length}`);
-                        setPolicyGroupList(resData.filters);
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setPolicyGroupList(createPolicyGroupDropdownData(resData));
+                        console.log(`Response data: ${resData.length}`);
+                    } else {
+                      handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
                     setErrorMsg(t('selectPolicyPopup.policyGroupError'));
@@ -62,6 +59,26 @@ function SelectPolicyPopup() {
         };
         fetchData();
     }, [t]);
+
+    const createPolicyGroupDropdownData = (dataList) => {
+        let dataArr = [];
+        dataList.forEach(item => {
+            let alreadyAdded = false;
+            dataArr.forEach(item1 => {
+                if (item1.fieldValue === item.id) {
+                    alreadyAdded = true;
+                }
+            });
+            if (!alreadyAdded) {
+                dataArr.push({
+                    fieldCode: item.name,
+                    fieldValue: item.id,
+                    fieldDescription: item.desc
+                });
+            }
+        });
+        return dataArr;
+    }
 
     const changePolicyGroupSelection = (fieldName, policyGrpId) => {
         setSelectedPolicyGroup(policyGrpId);
