@@ -6,7 +6,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 
-function AuthenticationServices() {
+function OidcClientsList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -100,4 +100,4 @@ function AuthenticationServices() {
     )
 }
 
-export default AuthenticationServices; 
+export default OidcClientsList; 

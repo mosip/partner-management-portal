@@ -7,7 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
 import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
-import AuthenticationServices from './pages/authServices/AuthenticationServices.js';
+import OidcClientsList from './pages/authenticationServices/OidcClientsList.js';
 
 function AppRoutes() {
 
@@ -45,8 +45,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><RequestPolicyConfirmation/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices',
-          element: <GuardedRoute><MainLayout><AuthenticationServices/></MainLayout></GuardedRoute>,
+          path: 'authenticationServices/oidcClientsList',
+          element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
         }
       ],
     },
