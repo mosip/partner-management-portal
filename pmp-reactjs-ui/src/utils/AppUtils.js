@@ -1,12 +1,16 @@
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
     const date = new Date(dateString);
-    if (format === 'dateTime') {
-        return date.toLocaleString();
-    } else if (format === 'date') {
-        return date.toLocaleDateString();
-    } else {
-        return '-';
+
+    switch (format) {
+        case 'dateTime':
+            return date.toLocaleString();
+        case 'date':
+            return date.toLocaleDateString();
+        case 'time':
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        default:
+            return '-';
     }
 };
 

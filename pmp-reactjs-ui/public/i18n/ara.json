@@ -125,7 +125,8 @@
         "comments": "تعليقات",
         "adminComments": "تعليقات المشرف",
         "partnerComments" : "تعليقات الشريك",
-        "back": "خلف"
+        "back": "خلف",
+        "createdOn": "تم إنشاؤها على"
     },
     "requestPolicy": {
         "requestPolicy": "طلب سياسة",

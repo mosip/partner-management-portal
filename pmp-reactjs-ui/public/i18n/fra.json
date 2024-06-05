@@ -126,7 +126,8 @@
         "comments": "commentaires",
         "adminComments": "Commentaires de l'administrateur",
         "partnerComments" : "Commentaires du partenaire",
-        "back": "Dos"
+        "back": "Dos",
+        "createdOn": "Créé sur"
     },
     "requestPolicy": {
         "requestPolicy": "Demander une politique",
