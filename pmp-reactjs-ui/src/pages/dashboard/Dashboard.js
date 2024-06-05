@@ -99,6 +99,10 @@ function Dashboard() {
     navigate('/partnermanagement/policies')
   };
 
+  const OidcClientsList = () => {
+    navigate('/partnermanagement/authenticationServices/oidcClientsList')
+  };
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -175,7 +179,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => OidcClientsList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={authServiceIcon} alt=""></img>
               </div>

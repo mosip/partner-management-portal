@@ -150,6 +150,22 @@
         "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur."
     },
+    "authenticationServices": {
+        "authenticationServices": "Authentication Services",
+        "oidcClient": "OIDC Client",
+        "apiKey": "API Key",
+        "partnerId": "Partner ID",
+        "policyName": "Policy Name",
+        "oidcClientName": "OIDC Client Name",
+        "createdDate": "Created Date",
+        "apiKeyLable": "API Key Label",
+        "expiryDate": "Expiry Date",
+        "status": "Status",
+        "oidcClientId": "OIDC Client ID",
+        "action": "Action",
+        "createOidcClientBtn": "Create OIDC Client",
+        "generateApiKeyBtn": "Generate API Key"
+    },
     "commons": {
         "home": "Maison",
         "search": "Recherche",
