@@ -20,6 +20,7 @@ function ViewPolicyDetails() {
                 setPolicyDetails(selectedPartner);
             } catch (error) {
                 navigate('/partnermanagement/policies');
+                console.error('Error in viewPolicyDetails page :', error);
             }
         } else {
             navigate('/partnermanagement/policies');
