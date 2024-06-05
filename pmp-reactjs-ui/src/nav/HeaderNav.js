@@ -40,7 +40,7 @@ function HeaderNav({ open, setOpen }) {
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
                         <img src={mosip_icon} alt="" />
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img src={hamburgerIcon} alt=""></img>
+                            <img className="min-w-5" src={hamburgerIcon} alt=""></img>
                         </div>
                     </div>
                 )}
@@ -51,7 +51,7 @@ function HeaderNav({ open, setOpen }) {
                             <img src={side_menu_title} alt="" />
                         </div>
                         <div className="cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img src={hamburgerIcon} alt=""></img>
+                            <img className="min-w-5" src={hamburgerIcon} alt=""></img>
                         </div>
                     </div>
                 )}
