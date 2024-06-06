@@ -59,7 +59,7 @@
         "selectFieldsMsg": "الرجاء تحديد الحقول وتحميل الشهادة.",
         "partnerTypeLabel": "نوع الشريك",
         "partnerDomainType": "نوع نطاق الشريك",
-        "selectingFile": "تحديد الملف...",
+        "selectingFile": "نحن نحضر شهادتك...",
         "cancel": "يلغي",
         "selectCertificate": "الرجاء الضغط لتحديد الشهادة",
         "certificateFormat": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
@@ -148,7 +148,8 @@
         "errorInFetchingPolicyNames": "يوجد خطأ ما في جلب أسماء السياسات. حاول مرة أخرى في وقت لاحق!",
         "errorInMapPolicy": "هناك بعض الخطأ في طلب سياسة جديدة. حاول مرة أخرى في وقت لاحق!",
         "policySuccessHeader": "تم إرسال السياسة بنجاح!",
-        "policySuccessMsg":"تم إرسال عملية طلب السياسة بنجاح. الموافقة في انتظار المشرف."
+        "policySuccessMsg":"تم إرسال عملية طلب السياسة بنجاح. الموافقة في انتظار المشرف.",
+        "info":"تتوفر فقط معرفات الشركاء التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً"
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",

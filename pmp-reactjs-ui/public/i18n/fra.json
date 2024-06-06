@@ -59,7 +59,7 @@
         "selectFieldsMsg": "Veuillez sélectionner les champs et télécharger le certificat.",
         "partnerTypeLabel": "Type de partenaire",
         "partnerDomainType": "Type de domaine partenaire",
-        "selectingFile": "Sélection du fichier...",
+        "selectingFile": "Nous récupérons votre certificat...",
         "cancel": "Annuler",
         "selectCertificate": "Veuillez appuyer pour sélectionner le certificat",
         "certificateFormat": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
@@ -149,7 +149,8 @@
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Il y a une erreur lors de la demande d'une nouvelle politique. Réessayez plus tard!",
         "policySuccessHeader": "Politique soumise avec succès !",
-        "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur."
+        "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
+        "info":"Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
