@@ -47,21 +47,22 @@ function CreateOidcClient() {
     setRedirectUrls(filteredRedirectUrls);
   };
 
-// Below code related to addind & deleting of Grant Types
+  // Below code related to addind & deleting of Grant Types
 
   const addTypeOfGrants = () => {
     const updatedtypeOfGrants = [...typeOfGrants, []];
     setTypeOfGrants(updatedtypeOfGrants);
   };
   const handleGrantTypeChange = (value, i) => {
+    console.log(value + 'data--');
     const inputGrantTypes = [...typeOfGrants];
     inputGrantTypes[i] = value;
-    setRedirectUrls(inputGrantTypes);
+    setTypeOfGrants(inputGrantTypes);
   };
   const deleteGrantType = (i) => {
     const filteredTypeOfGrants = [...typeOfGrants];
-    filteredTypeOfGrants.splice(i,1)
-    setRedirectUrls(filteredTypeOfGrants);
+    filteredTypeOfGrants.splice(i, 1)
+    setTypeOfGrants(filteredTypeOfGrants);
   };
 
 
@@ -184,14 +185,16 @@ function CreateOidcClient() {
                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.redirectUrl')}<span className="text-crimson-red">*</span></label>
                     <ul>
                       <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline">
-                        <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} placeholder={t('createOidcClient.redirectUrlPlaceHolder')} className="w-[85%] focus:outline-none"/>
-                        <p onClick={()=>setLoginUrl('')} className="text-sm text-[#1447b2] font-semibold">{t('createOidcClient.delete')}</p>
+                        <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} placeholder={t('createOidcClient.redirectUrlPlaceHolder')} className="w-[85%] focus:outline-none" />
+                        <p onClick={() => setLogoUrl('')} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
+                          {t('createOidcClient.delete')}
+                        </p>
                       </div>
                       {redirectUrls.map((data, index) => {
                         return (
                           <li key={index}>
                             <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                              <input value={data} onChange={(e) => handleRedirectUrlChange(e, index)} placeholder={t("createOidcClient.enterLogoUrl")} className="focus:outline-none" />
+                              <input value={data} onChange={(e) => handleRedirectUrlChange(e,index)} placeholder={t("createOidcClient.enterLogoUrl")} className="w-[85%] focus:outline-none" />
                               <p onClick={() => deleteLogoUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
                                 {t('createOidcClient.delete')}
                               </p>
@@ -208,13 +211,13 @@ function CreateOidcClient() {
                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.grantTypes')}<span className="text-crimson-red">*</span></label>
                     <ul>
                       <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                        <input value={grantTypes} onChange={(e) => setGrantTypes(e.target.value)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none"/>
+                        <input value={grantTypes} onChange={(e) => setGrantTypes(e.target.value)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
                       </div>
                       {typeOfGrants.map((itemData, index) => {
                         return (
                           <li key={index}>
                             <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                              <input value={itemData} onChange={(e) => handleGrantTypeChange(e.target.value)} placeholder={t('createOidcClient.enterGrantTypes')} className="focus:outline-none"/>
+                              <input value={itemData} onChange={(e) => handleGrantTypeChange(e.target.value,index)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
                               <p onClick={() => deleteGrantType(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
                                 {t('createOidcClient.delete')}
                               </p>
