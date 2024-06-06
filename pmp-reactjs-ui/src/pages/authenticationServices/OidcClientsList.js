@@ -38,14 +38,14 @@ function OidcClientsList() {
                 <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%]'>
                     <div className={`flex-col justify-center`}>
                         <h6 onClick={() => { setActiveOicdClient(true); setActiveApiKey(false) }}
-                            className={`${activeOidcClient ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[10%] cursor-pointer`}>
+                            className={`${activeOidcClient ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[10%] cursor-pointer text-sm`}>
                             {t('authenticationServices.oidcClient')}
                         </h6>
                         <div className={`h-1 w-24 ${activeOidcClient ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                     </div>
                     <div className={`flex-col justify-center`}>
                         <h6 onClick={() => { setActiveOicdClient(false); setActiveApiKey(true) }}
-                            className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[20%] cursor-pointer`}>
+                            className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[20%] cursor-pointer text-sm`}>
                             {t('authenticationServices.apiKey')}
                         </h6>
                         <div className={`h-1 w-24 ${activeApiKey ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
@@ -53,7 +53,7 @@ function OidcClientsList() {
                 </div>
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                     {
-                        activeOidcClient && (<div className="flex justify-between py-2 pt-4 text-xs font-medium text-[#6F6E6E]">
+                        activeOidcClient && (<div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                             <div className={`flex gap-x-28 ${isLoginLanguageRTL ? "mr-6" : "ml-6"}`}>
                                 <h6>{t('authenticationServices.partnerId')}</h6>
                                 <h6>{t('authenticationServices.policyName')}</h6>
@@ -70,7 +70,7 @@ function OidcClientsList() {
                         </div>)
                     }
                     {
-                        activeApiKey && (<div className="flex space-x-[13%] py-2 pt-4 text-xs font-medium text-[#6F6E6E]">
+                        activeApiKey && (<div className="flex space-x-[13%] py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                             <h6 className={`${isLoginLanguageRTL ? "mr-6" : "ml-6"}`}>{t('authenticationServices.partnerId')}</h6>
                             <h6>{t('authenticationServices.policyName')}</h6>
                             <h6>{t('authenticationServices.apiKeyLable')}</h6>
