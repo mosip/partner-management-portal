@@ -48,7 +48,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 )}
             </label>
             {showTooltip && (
-                <div className="z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 p-3 rounded">
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}
