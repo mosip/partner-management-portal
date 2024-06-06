@@ -113,14 +113,14 @@ function SelectPolicyPopup() {
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-lg !my-2 mb-0",
-        dropdownButton: "!w-full !h-11 !rounded-md !text-lg !text-dark-blue",
+        dropdownLabel: "!text-base !my-2 mb-0",
+        dropdownButton: "!w-full !h-11 !rounded-md !text-base !text-dark-blue",
         selectionBox: ""
     }
 
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
-            <div className={`bg-white w-1/3 mx-auto rounded-xl shadow-lg mt-5`}>
+            <div className={`bg-white w-1/3 mx-auto rounded-xl shadow-lg -mt-3`}>
                 {!dataLoaded && (
                     <LoadingIcon></LoadingIcon>
                 )}
@@ -134,10 +134,10 @@ function SelectPolicyPopup() {
                             </div>
                         )}
                         <div className="px-[6%] py-[3%]">
-                            <h3 className="text-xl font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
+                            <h3 className="text-lg font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="px-[6%] py-[3%] text-base text-[#414141]">
+                        <div className="px-[6%] py-[3%] text-sm text-[#414141]">
                             <p>
                                 {displayText}
                             </p>
@@ -147,12 +147,12 @@ function SelectPolicyPopup() {
                                 </button>
                             )}
                             <form>
-                                <div className="pt-3  w-full mb-4 flex flex-col">
+                                <div className="pt-3 w-full mb-4 flex flex-col">
                                     <div className="flex flex-col">
                                         <label className="block text-dark-blue text-base font-semibold mb-2">
                                             {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                         </label>
-                                        <button disabled className="flex items-center justify-between w-full h-11 px-2 py-2 border border-gray-300 rounded-md text-lg text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                        <button disabled className="flex items-center justify-between w-full h-11 px-2 py-2 border border-gray-300 rounded-md text-base text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                         </button>
                                     </div>
@@ -170,9 +170,8 @@ function SelectPolicyPopup() {
                                 </div>
                             </form>
                         </div>
-                        <div className="border-gray-200 border-opacity-50 border-t"></div>
                         <div className="p-5 flex justify-end relative">
-                            <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-lg text-white text-base font-semibold relative z-60" onClick={clickOnSubmit}>
+                            <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-lg text-white text-sm font-semibold relative z-60" onClick={clickOnSubmit}>
                                 {t('selectPolicyPopup.submit')}
                             </button>
                         </div>
