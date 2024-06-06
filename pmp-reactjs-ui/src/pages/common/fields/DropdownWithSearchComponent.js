@@ -71,9 +71,9 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                             <div className="max-h-32 overflow-y-auto">
                                 {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (
-                                        <div key={index} className="min-h-8">
+                                        <div key={index} className="min-h-3">
                                             <button
-                                                className={`block ${dropdownItem.fieldDescription ? 'h-[4.5rem]' : 'h-'} w-full px-4 py-1 text-left text-base text-dark-blue
+                                                className={`block ${dropdownItem.fieldDescription ? 'h-[4.5rem]' : 'h-8'} w-full px-4 py-1 text-left text-base text-dark-blue
                                                     ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
