@@ -39,7 +39,7 @@
     "partnerCertificatesList": {
         "partnerCertificate": "Partner Certificate",
         "noPartnerTypesAreMapped": "No partner types are mapped to your user id",
-        "uploadPartnerCertificate": "Please upload partner certificate here",
+        "uploadPartnerCertificate": "Upload CA Signed Partner Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats are allowed for upload",
         "download": "Download",
         "originalCertificate": "Original Certificate",

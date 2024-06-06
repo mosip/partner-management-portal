@@ -39,7 +39,7 @@
     "partnerCertificatesList": {
         "partnerCertificate": "Certificat de partenaire",
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
-        "uploadPartnerCertificate": "Veuillez télécharger le certificat de partenaire ici",
+        "uploadPartnerCertificate": "Télécharger le certificat de partenaire signé par une autorité de certification",
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
         "download": "Télécharger",
         "originalCertificate": "Certificat original",

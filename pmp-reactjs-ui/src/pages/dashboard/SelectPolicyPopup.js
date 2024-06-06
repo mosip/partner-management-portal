@@ -65,14 +65,14 @@ function SelectPolicyPopup() {
         dataList.forEach(item => {
             let alreadyAdded = false;
             dataArr.forEach(item1 => {
-                if (item1.fieldValue === item.id) {
+                if (item1.fieldValue === item.name) {
                     alreadyAdded = true;
                 }
             });
             if (!alreadyAdded) {
                 dataArr.push({
                     fieldCode: item.name,
-                    fieldValue: item.id,
+                    fieldValue: item.name,
                     fieldDescription: item.desc
                 });
             }
@@ -115,14 +115,15 @@ function SelectPolicyPopup() {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !my-2 mb-0",
         dropdownButton: "!w-full !h-11 !rounded-md !text-base !text-dark-blue",
-        selectionBox: ""
+        selectionBox: "",
+        loadingDiv: "!py-[50%]"
     }
 
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
             <div className={`bg-white w-1/3 mx-auto rounded-xl shadow-lg -mt-3`}>
                 {!dataLoaded && (
-                    <LoadingIcon></LoadingIcon>
+                    <LoadingIcon styleSet={styles}></LoadingIcon>
                 )}
                 {dataLoaded && (
                     <>
