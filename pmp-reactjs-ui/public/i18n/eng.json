@@ -179,6 +179,7 @@
         "name": "Name",
         "enterNameForOidcClient":"Enter a name for OIDC Client",
         "publicKey": "Public Key",
+        "publicKeyToolTip": "Only JWK format is allowed",
         "publicKeyPlaceHolder": "Enter public key in JWK format only",
         "loginUrl": "Login URL",
         "loginUrlPlaceHolder": "Enter Logo URL",
