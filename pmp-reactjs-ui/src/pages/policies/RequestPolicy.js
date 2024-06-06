@@ -249,13 +249,15 @@ function RequestPolicy() {
                                                     fieldNameKey='requestPolicy.partnerId*' 
                                                     placeHolderKey='requestPolicy.selectPartnerId' 
                                                     selectedDropdownValue={partnerId}
-                                                    styleSet={styles}>
+                                                    styleSet={styles}
+                                                    addInfoIcon={true}
+                                                    infoKey='requestPolicy.info'>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                    <span>{partnerType || "Partner Type"}</span>
+                                                    <span>{partnerType || t('requestPolicy.partnerType')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>
@@ -266,7 +268,7 @@ function RequestPolicy() {
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                    <span>{policyGroupName || "Policy Group"}</span>
+                                                    <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>

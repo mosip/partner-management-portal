@@ -59,7 +59,7 @@
         "selectFieldsMsg": "Please select the fields and upload certificate.",
         "partnerTypeLabel": "Partner Type",
         "partnerDomainType": "Partner Domain Type",
-        "selectingFile": "Selecting the file...",
+        "selectingFile": "We’re fetching your certificate...",
         "cancel": "Cancel",
         "selectCertificate": "Please tap to select the certificate",
         "certificateFormat": "Only .cer or .pem certificate formats are allowed for upload",
@@ -148,7 +148,8 @@
         "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later!",
         "errorInMapPolicy": "There is some error in requesting a new policy. Try again later!",
         "policySuccessHeader": "Policy Submitted Successfully!",
-        "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin."
+        "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin.",
+        "info":"Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
