@@ -241,7 +241,7 @@ function Policies() {
   };
 
   return (
-    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll`}>
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
