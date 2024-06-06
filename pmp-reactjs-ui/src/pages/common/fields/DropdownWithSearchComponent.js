@@ -58,7 +58,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                 </button>
                 {isDropdownOpen && (
                     <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                        <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
                             <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,7 +73,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block ${dropdownItem.fieldDescription ? 'h-20' : 'h-8'} w-full px-4 py-1 text-left text-base text-dark-blue
+                                                className={`block ${dropdownItem.fieldDescription ? 'h-[4.5rem]' : 'h-8'} w-full px-4 py-1 text-left text-base text-dark-blue
                                                     ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
