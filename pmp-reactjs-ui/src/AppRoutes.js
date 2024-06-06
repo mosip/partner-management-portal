@@ -8,6 +8,7 @@ import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
 import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
 import OidcClientsList from './pages/authenticationServices/OidcClientsList.js';
+import CreateOidcClient from './pages/authenticationServices/CreateOidcClient.js';
 
 function AppRoutes() {
 
@@ -47,6 +48,10 @@ function AppRoutes() {
         {
           path: 'authenticationServices/oidcClientsList',
           element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'createOidcClient',
+          element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
         }
       ],
     },

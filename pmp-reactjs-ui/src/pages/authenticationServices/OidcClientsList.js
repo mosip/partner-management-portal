@@ -17,6 +17,10 @@ function OidcClientsList() {
         navigate('/partnermanagement')
     };
 
+    const createOidcClient = () => {
+        navigate('/partnermanagement/createOidcClient')
+    }
+
     return (
         <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
             <div className="flex-col">
@@ -83,7 +87,8 @@ function OidcClientsList() {
                         <div className="flex-col justify-center">
                             <img src={rectangleGrid} alt="" />
                             {activeOidcClient &&
-                                (<button type="button" className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
+                                (<button onClick={() => createOidcClient()} type="button"
+                                    className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
                                     {t('authenticationServices.createOidcClientBtn')}
                                 </button>)
                             }
