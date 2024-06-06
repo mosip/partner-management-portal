@@ -39,7 +39,7 @@
     "partnerCertificatesList": {
         "partnerCertificate": "شهادة الشريك",
         "noPartnerTypesAreMapped": "لم يتم تعيين أي أنواع شركاء لمعرف المستخدم الخاص بك",
-        "uploadPartnerCertificate": "يرجى تحميل شهادة الشريك هنا",
+        "uploadPartnerCertificate": "قم بتحميل شهادة الشريك الموقّع من CA",
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
         "download": "تحميل",
         "originalCertificate": "الشهادة الأصلية",
