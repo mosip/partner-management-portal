@@ -11,6 +11,7 @@ export const HttpService = axios.create({
 })
 
 export const setupResponseInterceptor = () => {
+  
   HttpService.interceptors.response.use((response) => { // block to handle success case
     const originalRequestUrl = response.config.url;
     //console.log("interceptor: " + originalRequestUrl);
@@ -34,6 +35,16 @@ export const setupResponseInterceptor = () => {
         console.log(profile);
       }
     }
+    //in case user has a new started session on any page other than dashboard 
+    //and he is not a registered user, then we want to forecfully redirect him to dashboard 
+    //where he will be forced to select a policy group
+    if (originalRequestUrl.split('/').includes('verify')) {  
+      const emailResp = response.data.response;
+      const reqUrl = window.location.href.split('/');
+      if (!emailResp.emailExists && !reqUrl.includes("dashboard")) {
+        window.location.href = '/';
+      }  
+    }  
     return response;
   },
     (error) => { // block to handle error case
