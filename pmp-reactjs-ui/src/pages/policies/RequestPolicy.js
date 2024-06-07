@@ -253,7 +253,7 @@ function RequestPolicy() {
                                                     placeHolderKey='requestPolicy.selectPartnerId' 
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
-                                                    addInfoIcon={true}
+                                                    addInfoIcon
                                                     infoKey='requestPolicy.info'>
                                                 </DropdownComponent>
                                             </div>
