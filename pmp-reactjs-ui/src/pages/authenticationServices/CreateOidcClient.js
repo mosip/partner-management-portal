@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import backArrow from '../../svg/back_arrow.svg';
-import info from '../../svg/info_icon.svg';
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
+import backArrow from '../../svg/back_arrow.svg';
+import info from '../../svg/info_icon.svg';
+import help_icon from '../../svg/help_icon.svg';
 
 function CreateOidcClient() {
   const [partnerComments, setPartnerComments] = useState("");
@@ -101,7 +102,8 @@ function CreateOidcClient() {
               </div>
             </div>
           </div>
-          {/* <div className="px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
+          {/* <div className="flex items-center space-x-2 px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
+            <img src={help_icon} className="h-4"/>
             <p>{t('createOidcClient.help')}</p>
           </div> */}
         </div>
@@ -189,9 +191,6 @@ function CreateOidcClient() {
                     <ul>
                       <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline">
                         <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} placeholder={t('createOidcClient.redirectUrlPlaceHolder')} className="w-[85%] focus:outline-none" />
-                        <p onClick={() => setLogoUrl('')} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                          {t('createOidcClient.delete')}
-                        </p>
                       </div>
                       {redirectUrls.map((data, index) => {
                         return (
@@ -233,7 +232,6 @@ function CreateOidcClient() {
                     <p type="button" onClick={() => addTypeOfGrants()} className="text-[#1447b2] font-bold text-xs cursor-pointer"><span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}</p>
                   </div>
                 </div>
-
 
                 <div className="flex my-[1%]">
                   <div className="flex flex-col w-full">

@@ -185,10 +185,10 @@ function PartnerCertificatesList() {
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
                                                         <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 w-[120px] flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[14%] py-[1%] ${isLoginLanguageRTL?"ml-1":"mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
+                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 ${isLoginLanguageRTL ? "ml-5" :"mr-5"} flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
-                                                                    xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ${isLoginLanguageRTL?"mr-2":"ml-2"}`}
+                                                                    xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
                                                                     width="10" height="8" viewBox="0 0 10 8">
                                                                     <path id="Polygon_8"
                                                                         data-name="Polygon 8"
@@ -199,15 +199,14 @@ function PartnerCertificatesList() {
                                                             </button>
 
                                                             {activeBtn && (
-                                                                <div className={`w-[18%] absolute py-2 px-1  ${isLoginLanguageRTL?"origin-bottom-right left-52 ml-2":"origin-bottom-left right-52 mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
+                                                                <div className={`w-[18%] absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-52 ml-2" : "origin-bottom-left right-52 mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
                                                                     <div onClick={() => getOriginalCertificate()} className="flex items-center border-b justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.originalCertificate')}</button>
-                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL?"ml-2":"mr-2"}`} />
-
+                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
                                                                     </div>
                                                                     <div onClick={() => getMosipSignedCertificate(partner)} className="flex items-center justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
-                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL?"ml-2":"mr-2"}`}/>
+                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`}/>
 
                                                                     </div>
                                                                 </div>)}
