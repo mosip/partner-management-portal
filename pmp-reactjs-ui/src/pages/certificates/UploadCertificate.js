@@ -185,7 +185,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                             <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="relativ">
+                        <div className="relative">
                             <div className="px-[6%] py-[3%]">
                                 <form>
                                     <div className="mb-3">
