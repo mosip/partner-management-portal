@@ -1,4 +1,11 @@
 {
+    "commons": {
+        "home": "Home",
+        "search": "Search",
+        "goBack": "Go Back",
+        "emptyMsg": "No Data Available.",
+        "logout": "Logout"
+    },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
         "partnerTypeRequest": "Partner Type Request",
@@ -16,8 +23,7 @@
     },
     "header": {
         "partnerProfile": "Partner Profile",
-        "changePassword": "Change Password",
-        "logout": "Logout"
+        "changePassword": "Change Password"
     },
     "footer": {
         "allRightsReserved": "All rights reserved.",
@@ -33,7 +39,8 @@
         "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
         "submit": "Submit",
         "viewLess": "View Less",
-        "viewMore": "View More"
+        "viewMore": "View More",
+        "logoutMsg": "Do not want to select policy group and proceed further?"
     },
     "loading": "Loading",
     "partnerCertificatesList": {
@@ -150,7 +157,9 @@
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin.",
-        "info":"Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
+        "info":"Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "commentTooLong": "Comments should not allow more than 500 characters.",
+        "specialCharNotAllowed": "Special characters are not allowed."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -192,12 +201,6 @@
         "delete": "Delete",
         "addNew": "Add New",
         "commentBoxDesc": "Mention the purpose of requesting the OIDC Client"
-    },
-    "commons": {
-        "home": "Home",
-        "search": "Search",
-        "goBack": "Go Back",
-        "emptyMsg": "No Data Available."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

@@ -17,7 +17,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     const filteredPolicyGroupList = dropdownDataList.filter(dropdownItem =>
-        dropdownItem.fieldCode.toLowerCase().includes(searchItem.toLowerCase())
+        dropdownItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
     );
 
     useEffect(() => {

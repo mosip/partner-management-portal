@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { getUserProfile } from '../services/UserProfileService.js';
 import { isLangRTL } from '../utils/AppUtils.js';
-import { handleMouseClickForDropdown, getPartnerManagerUrl } from '../utils/AppUtils.js';
+import { handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -24,13 +24,6 @@ function HeaderNav({ open, setOpen }) {
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
-    const logout = async () => {
-        localStorage.clear();
-        let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
-        redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
-        console.log(redirectUrl);
-        window.location.href = redirectUrl;
-    }
 
     return (
         <nav className="sticky top-0 z-40 bg-white flex justify-between w-full h-16 font-inter 
@@ -88,7 +81,7 @@ function HeaderNav({ open, setOpen }) {
                             <div className="border-gray-100 border-t mx-2"></div>
                             <button className={`block px-4 py-2 text-sm text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>
-                            <button className={`block px-4 py-2 text-sm text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} onClick={logout}>{t('header.logout')}</button>
+                            <button className={`block px-4 py-2 text-sm text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} onClick={logout}>{t('commons.logout')}</button>
                         </div>
                     )}
                 </div>
