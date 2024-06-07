@@ -114,7 +114,7 @@ function Dashboard() {
       )}
       {dataLoaded && (
         <>
-          {!errorMsg && (
+          {errorMsg && (
             <div className="flex justify-end max-w-7xl mt-2 absolute right-2">
               <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>

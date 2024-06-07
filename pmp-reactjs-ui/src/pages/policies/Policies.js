@@ -247,7 +247,7 @@ function Policies() {
       )}
       {dataLoaded && (
         <>
-          {!errorMsg && (
+          {errorMsg && (
             <div className="flex justify-end max-w-7xl absolute right-0">
               <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
