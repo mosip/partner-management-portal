@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -40,6 +40,12 @@ function Policies() {
     policyGroupName: ""
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+      const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setViewPolicyId(-1));
+      return clickOutSideDropdown;
+  }, [dropdownRef]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -279,12 +285,12 @@ function Policies() {
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                    <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-48">
+                    <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28">
                       <h6 className="ml-5">{t('policies.partnerId')}</h6>
                       <h6>{t('policies.partnerType')}</h6>
+                      <h6>{t('policies.policyGroupName')}</h6>
                       <h6>{t('policies.policyName')}</h6>
-                    </div>
-                    <div className='flex sm:gap-x-7 md:gap-x-16 lg:gap-x-44  mr-6'>
+                      <h6>{t('policies.createdDate')}</h6>
                       <h6>{t('policies.status')}</h6>
                       <h6>{t('policies.action')}</h6>
                     </div>
@@ -309,9 +315,12 @@ function Policies() {
                           {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                         </div>
                         <div className="w-full flex justify-end relative ">
+                          {filter && <button onClick={() => onClearFilter()} type="button"
+                            className="flex mr-2 justify-center items-center w-[23%] text-base py-3 font-semibold text-cente text-tory-blue">
+                            {t('policies.clearFilter')}
+                          </button>}
                           <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}
-                          >
+                            ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
                               xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL? "mr-2": "ml-2"}`}
@@ -381,7 +390,7 @@ function Policies() {
                                     </div>
                                   </td>
                                   <td className="text-center">
-                                    <div>
+                                    <div ref={dropdownRef}>
                                       <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
                                       {
                                         viewPolicyId === index && (
