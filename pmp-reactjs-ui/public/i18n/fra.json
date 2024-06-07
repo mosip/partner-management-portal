@@ -1,4 +1,11 @@
 {
+    "commons": {
+        "home": "Maison",
+        "search": "Recherche",
+        "goBack": "Retourner",
+        "emptyMsg": "Pas de données disponibles.",
+        "logout": "Se déconnecter"
+    },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
         "partnerTypeRequest": "Demande de type de partenaire",
@@ -16,8 +23,7 @@
     },
     "header": {
         "partnerProfile": "Profil du partenaire",
-        "changePassword": "Changer le mot de passe",
-        "logout": "Se déconnecter"
+        "changePassword": "Changer le mot de passe"
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",
@@ -33,7 +39,8 @@
         "policyGroupError": "Impossible de récupérer des groupes de stratégies. Contactez l'administrateur.",
         "submit": "Soumettre",
         "viewLess": "Voir moins",
-        "viewMore": "Voir plus"
+        "viewMore": "Voir plus",
+        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
     },
     "loading": "chargement",
     "partnerCertificatesList": {
@@ -151,7 +158,9 @@
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
         "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
-        "info":"Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
+        "info":"Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
+        "specialCharNotAllowed": "Les caractères spéciaux ne sont pas autorisés."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -193,12 +202,6 @@
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC"
-    },
-    "commons": {
-        "home": "Maison",
-        "search": "Recherche",
-        "goBack": "Retourner",
-        "emptyMsg": "Pas de données disponibles."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -27,6 +27,8 @@ function RequestPolicy() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerData, setPartnerData] = useState([]);
+    const [policyList, setPolicyList] = useState([]);
+    const [validationError, setValidationError] = useState("");
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -94,7 +96,7 @@ function RequestPolicy() {
             if (!alreadyAdded) {
                 dataArr.push({
                     fieldCode: item[fieldName],
-                    fieldValue: item.id,
+                    fieldValue: item[fieldName],
                     fieldDescription: item.descr
                 });
             }
@@ -114,10 +116,10 @@ function RequestPolicy() {
     };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
+        const selectedPolicy = policyList.find(item => item.name === selectedValue);
         if (selectedPolicy) {
-            setPolicyName(selectedPolicy.fieldCode);
-            setPolicyId(selectedValue);
+            setPolicyName(selectedValue);
+            setPolicyId(selectedPolicy.id);
         }
     };
 
@@ -133,6 +135,7 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    setPolicyList(resData);
                     setPoliciesDropdownData(createPoliciesDropdownData('name', resData));
                     console.log(`Response data: ${resData.length}`);
                 } else {
@@ -155,6 +158,7 @@ function RequestPolicy() {
         setPolicyName("");
         setPartnerComments("");
         setPoliciesDropdownData([]);
+        setValidationError("");
     };
 
     const clickOnSubmit = async () => {
@@ -193,6 +197,30 @@ function RequestPolicy() {
 
     const isFormValid = () => {
         return partnerId && policyName && partnerComments;
+    };
+
+    const validateComments = (comments) => {
+        let error = "";
+        const maxLength = 500;
+        const regexPattern = /^[a-zA-Z0-9-_ ,.]*$/;
+
+        if (comments.length > maxLength) {
+            error = t('requestPolicy.commentTooLong');
+        } else if (!regexPattern.test(comments)) {
+            error = t('requestPolicy.specialCharNotAllowed');
+        }
+
+        setValidationError(error);
+        return error === "";
+    };
+
+    const handleCommentChange = (e) => {
+        const { value } = e.target;
+
+        if (validateComments(value)) {
+            setValidationError("");
+            setPartnerComments(value);
+        }
     };
 
     const styles = {
@@ -284,6 +312,7 @@ function RequestPolicy() {
                                                     onDropDownChangeEvent={onChangePolicyName} 
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
+                                                    selectedDropdownValue={policyName}
                                                     searchKey='commons.search'
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
@@ -292,9 +321,10 @@ function RequestPolicy() {
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                                                <textarea value={partnerComments} onChange={(e) => setPartnerComments(e.target.value)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                <textarea value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
+                                                {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
                                             </div>
                                         </div>
                                     </div>

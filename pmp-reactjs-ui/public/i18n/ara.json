@@ -1,4 +1,11 @@
 {
+    "commons": {
+        "home": "بيت",
+        "search": "يبحث",
+        "goBack": "عُد",
+        "emptyMsg": "لا تتوافر بيانات.",
+        "logout": "تسجيل خروج"
+    },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
         "partnerTypeRequest": "طلب نوع الشريك",
@@ -16,8 +23,7 @@
     },
     "header": {
         "partnerProfile": "الملف التعريفي للشريك",
-        "changePassword": "تغيير كلمة المرور",
-        "logout": "تسجيل خروج"
+        "changePassword": "تغيير كلمة المرور"
     },
     "footer": {
         "allRightsReserved": "كل الحقوق محفوظة.",
@@ -33,7 +39,8 @@
         "policyGroupError": "غير قادر على جلب أي مجموعات النهج. اتصل بالمسؤول.",
         "submit": "يُقدِّم",
         "viewLess": "عرض أقل",
-        "viewMore": "عرض المزيد"
+        "viewMore": "عرض المزيد",
+        "logoutMsg": "لا تريد تحديد مجموعة السياسات والمضي قدما؟"
     },
     "loading": "تحميل",
     "partnerCertificatesList": {
@@ -150,7 +157,9 @@
         "errorInMapPolicy": "أثناء طلب السياسة، واجهنا خطأ",
         "policySuccessHeader": "تم إرسال السياسة بنجاح!",
         "policySuccessMsg":"تم إرسال عملية طلب السياسة بنجاح. الموافقة في انتظار المشرف.",
-        "info":"تتوفر فقط معرفات الشركاء التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً"
+        "info":"تتوفر فقط معرفات الشركاء التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
+        "commentTooLong": "يجب ألا تسمح التعليقات بأكثر من 500 حرف.",
+        "specialCharNotAllowed": "يمنع استعمال الرموز."
     },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",
@@ -192,12 +201,6 @@
         "delete": "يمسح",
         "addNew": "اضف جديد",
         "commentBoxDesc": "اذكر الغرض من طلب عميل OIDC"
-    },
-    "commons": {
-        "home": "بيت",
-        "search": "يبحث",
-        "goBack": "عُد",
-        "emptyMsg": "لا تتوافر بيانات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",

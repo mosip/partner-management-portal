@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors
+    getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors, logout
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
@@ -171,7 +171,11 @@ function SelectPolicyPopup() {
                                 </div>
                             </form>
                         </div>
-                        <div className="p-5 flex justify-end relative">
+                        <div className="border-[#E5EBFA] border-t mx-2"></div>
+                        <div className="p-5 flex justify-between relative">
+                            <p className="text-[#333333] text-sm font-medium ml-2">{t('selectPolicyPopup.logoutMsg')} 
+                                <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                            </p>
                             <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-lg text-white text-sm font-semibold relative z-60" onClick={clickOnSubmit}>
                                 {t('selectPolicyPopup.submit')}
                             </button>
