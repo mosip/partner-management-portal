@@ -87,8 +87,8 @@ function CreateOidcClient() {
     <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       <div className="flex-col">
         <div className="flex justify-between">
-          <div className="flex items-start space-x-3">
-            <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices()} className="mt-[5%] cursor-pointer" />
+          <div className="flex items-start gap-x-3">
+            <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices()} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
             <div className="flex-col">
               <h1 className="font-semibold text-xl text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
               <div className="flex space-x-1">
