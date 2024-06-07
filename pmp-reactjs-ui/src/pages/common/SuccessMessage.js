@@ -3,7 +3,7 @@ import cancelIcon from '../../svg/cancel_icon.svg';
 function SuccessMessage({ successMsg, clickOnCancel}) {
     return (
         <>
-            <div className="h-full mr-6">
+            <div className="mr-6">
                 <p className=" text-sm font-semibold text-white break-words font-inter">
                     {successMsg}
                 </p>
