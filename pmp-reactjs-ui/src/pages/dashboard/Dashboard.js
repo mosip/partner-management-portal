@@ -108,15 +108,15 @@ function Dashboard() {
   };
 
   return (
-    <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28": "ml-20"} overflow-x-scroll`}>
+    <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28": "ml-20"} overflow-x-scroll relative`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className="flex justify-end">
-              <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3 mr-10">
+            <div className="flex justify-end absolute right-0">
+              <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
             </div>
