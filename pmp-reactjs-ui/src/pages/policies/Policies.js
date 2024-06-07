@@ -381,7 +381,7 @@ function Policies() {
                                   </td>
                                   <td className="text-center">
                                     <div>
-                                      <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
+                                      <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ?"ml-9":"mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
