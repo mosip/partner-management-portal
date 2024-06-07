@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet}) {
+    placeHolderKey, searchKey, selectedDropdownValue, noDataKey, styleSet}) {
 
     const { t } = useTranslation();
 
@@ -68,6 +68,11 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                 <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
                                     className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                             </div>
+                            {filteredPolicyGroupList.length === 0 && (
+                                <div className="min-h-3 p-4">
+                                    <p className="text-sm text-dark-blue font-semibold">{t(noDataKey)}</p>
+                                </div>
+                            )}
                             <div className="max-h-32 overflow-y-auto">
                                 {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (

@@ -33,7 +33,8 @@
         "policyGroupError": "Unable to fetch any policy groups. Contact the administrator.",
         "submit": "Submit",
         "viewLess": "View Less",
-        "viewMore": "View More"
+        "viewMore": "View More",
+        "emptyListMsg": "There are no active policy groups."
     },
     "loading": "Loading",
     "partnerCertificatesList": {
@@ -149,7 +150,8 @@
         "errorInMapPolicy": "There is some error in requesting a new policy. Try again later!",
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg":"Policy request process has been successfully submitted. Approval is pending with admin.",
-        "info":"Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
+        "info":"Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "emptyListMsg": "There are no active policies."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",

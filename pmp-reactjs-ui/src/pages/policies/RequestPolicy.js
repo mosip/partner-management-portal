@@ -207,15 +207,15 @@ function RequestPolicy() {
     }
 
     return(
-        <div className="ml-32 mr-5 mt-5 w-[100%]">
+        <div className="ml-32 mr-5 mt-5 w-[100%] relative">
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="flex justify-end max-w-7xl">
-                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 mr-10">
+                        <div className="flex justify-end max-w-7xl absolute right-0">
+                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
@@ -282,6 +282,7 @@ function RequestPolicy() {
                                                     fieldNameKey='requestPolicy.policyName*' 
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     searchKey='commons.search'
+                                                    noDataKey='requestPolicy.emptyListMsg'
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>

@@ -134,15 +134,15 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className={`mt-5 w-full ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll`}>
+        <div className={`mt-5 w-full ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className="flex justify-end max-w-7xl">
-                            <div className="flex justify-between items-centermax-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4 mr-10 z-50">
+                        <div className="flex justify-end max-w-7xl absolute right-0">
+                            <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>

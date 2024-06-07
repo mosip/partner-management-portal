@@ -128,8 +128,8 @@ function SelectPolicyPopup() {
                 {dataLoaded && (
                     <>
                         {errorMsg && (
-                            <div className="flex justify-end">
-                                <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3 mr-10">
+                            <div className="flex justify-end absolute w-1/3">
+                                <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                 </div>
                             </div>
@@ -165,6 +165,7 @@ function SelectPolicyPopup() {
                                             fieldNameKey='selectPolicyPopup.policyGroup*' 
                                             placeHolderKey='selectPolicyPopup.title' 
                                             searchKey='commons.search'
+                                            noDataKey='selectPolicyPopup.emptyListMsg'
                                             styleSet={styles}>
                                         </DropdownWithSearchComponent>
                                     </div>

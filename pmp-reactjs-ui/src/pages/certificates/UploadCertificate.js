@@ -23,6 +23,7 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [formattedDate, setFormattedDate] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
     const [partnerDomainTypeData, setPartnerDomainTypeData] = useState([]);
+    const [removeLastUploadDate, setRemoveLastUploadData] = useState(false);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -138,6 +139,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                 reader.onload = (e) => {
                     const fileData = e.target.result;
                     setUploading(true);
+                    setRemoveLastUploadData(true);
                     setFileName(fileName);
                     setCertificateData(fileData);
                     setTimeout(() => {
@@ -242,7 +244,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                         </div>
                                     )}
                                 </div>
-                                {partnerData.isCertificateAvailable && (
+                                {partnerData.isCertificateAvailable && !removeLastUploadDate && (
                                     <p className="text-sm text-gray-800 text-center mt-1">{t('uploadCertificate.lastcertificateUploadDate', { date: formattedDate })}</p>
                                 )}
                             </div>
@@ -256,14 +258,14 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                                 {uploadSuccess && successMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-fruit-salad md:w-[400px] w-full h-[50px] flex items-center justify-between p-4">
+                                        <div className="bg-fruit-salad md:w-[400px] w-full h-[50px] flex items-center justify-between p-4 overflow-auto">
                                             <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                                         </div>
                                     </div>
                                 )}
                                 {uploadFailure && errorMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-moderate-red md:w-[400px] w-full h-[50px] flex items-center justify-between p-4">
+                                        <div className="bg-moderate-red md:w-[400px] w-full h-[50px] flex items-center justify-between p-4 overflow-y-auto">
                                             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                         </div>
                                     </div>
