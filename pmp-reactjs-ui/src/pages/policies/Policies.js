@@ -256,7 +256,7 @@ function Policies() {
           )}
           <div className="flex-col">
             <div className="flex justify-between mb-5">
-              <div className="flex items-start space-x-3">
+              <div className="flex items-start gap-x-2">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-xl text-dark-blue">{t('policies.policies')}</h1>
@@ -386,7 +386,7 @@ function Policies() {
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
-                                            className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
+                                            className={`absolute ${isLoginLanguageRTL ? "mr-16": null} bg-white text-xs font-medium rounded-lg shadow-md border`}>
                                             <p className="px-5 py-2 cursor-pointer">
                                               {t('policies.view')}
                                             </p>
@@ -414,12 +414,12 @@ function Policies() {
                         breakLabel="..."
                         previousLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            <AiFillLeftCircle />
+                           {isLoginLanguageRTL ? <AiFillRightCircle/> : <AiFillLeftCircle/>}
                           </IconContext.Provider>
                         }
                         nextLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            <AiFillRightCircle />
+                            {isLoginLanguageRTL ? <AiFillLeftCircle/> : <AiFillRightCircle/>}
                           </IconContext.Provider>
                         }
                       />

@@ -47,11 +47,11 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
                 {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : <span>{isLoginLanguageRTL ?"" :":"}</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className="ml-2 cursor-pointer" onClick={handleIconClick}></img>
+                    <img src={infoIcon} alt="" className= {`cursor-pointer`} onClick={handleIconClick}></img>
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[8.5%]"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}

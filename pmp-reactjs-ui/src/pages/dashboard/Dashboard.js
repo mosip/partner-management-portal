@@ -123,7 +123,7 @@ function Dashboard() {
           )}
           <div className="mb-7 mt-5 ml-[2.3%] text-xl font-semibold tracking-tight text-gray-700">
             <p >
-              {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })},
+              {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}
             </p>
           </div>
           <div className="flex mt-2 ml-[3.2%] flex-wrap break-words">

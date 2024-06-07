@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import DropdownComponent from '../common/fields/DropdownComponent';
+import { getUserProfile } from '../../services/UserProfileService';
+import { isLangRTL } from '../../utils/AppUtils';
 
 function CreateOidcClient() {
   const [partnerComments, setPartnerComments] = useState("");
@@ -18,6 +20,7 @@ function CreateOidcClient() {
 
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
   const count = 0;
 
@@ -81,7 +84,7 @@ function CreateOidcClient() {
   }
 
   return (
-    <div className="ml-32 mr-5 mt-5 w-[100%]">
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       <div className="flex-col">
         <div className="flex justify-between">
           <div className="flex items-start space-x-3">
@@ -158,11 +161,11 @@ function CreateOidcClient() {
                   <div className="flex flex-col w-full">
                     <label className="flex space-x-1 items-center text-dark-blue text-base font-semibold mb-1">
                       {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
-                      <img src={info} className="ml-2 cursor-pointer" onClick={() => setShowPublicKeyToolTip(!showPublicKeyToolTip)} />
+                      <img src={info} className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} onClick={() => setShowPublicKeyToolTip(!showPublicKeyToolTip)} />
                     </label>
                     {showPublicKeyToolTip &&
                       (
-                        <div className="z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 p-3 rounded">
+                        <div className={`z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[8%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                           <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                         </div>
                       )}
@@ -249,8 +252,8 @@ function CreateOidcClient() {
           <div className="flex flex-row px-[3%] py-[2%] justify-between">
             <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
             <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-              <button onClick={() => moveToAuthenticationServices(navigate)} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-              <button className={`mr-2 w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold bg-tory-blue text-white`}>{t('requestPolicy.submit')}</button>
+              <button onClick={() => moveToAuthenticationServices(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
+              <button className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold bg-tory-blue text-white`}>{t('requestPolicy.submit')}</button>
             </div>
           </div>
         </div>
