@@ -258,7 +258,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                                 {uploadSuccess && successMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-fruit-salad md:w-[400px] w-full h-[50px] flex items-center justify-between p-4 overflow-auto">
+                                        <div className="bg-fruit-salad md:w-[400px] w-full h-[50px] flex items-center justify-between p-4">
                                             <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                                         </div>
                                     </div>
