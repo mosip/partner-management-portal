@@ -247,9 +247,9 @@ function Policies() {
       )}
       {dataLoaded && (
         <>
-          {errorMsg && (
+          {!errorMsg && (
             <div className="flex justify-end max-w-7xl absolute right-0">
-              <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
+              <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
             </div>
@@ -310,7 +310,7 @@ function Policies() {
                         </div>
                         <div className="w-full flex justify-end relative ">
                           <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'}`}
+                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}
                           >
                             {t('policies.filterBtn')}
                             <svg
