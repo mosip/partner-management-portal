@@ -252,7 +252,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                             </div>
                             <div className="border-gray-200 border-opacity-50 border-t"></div>
-                            <div className="py-[4%] px-[6%] flex justify-end">
+                            <div className="px-[6%] flex justify-center">
                                 <button className={`${isLoginLanguageRTL? "ml-2": "mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                 {(!uploading && fileName) ? (
                                     <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
