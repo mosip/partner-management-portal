@@ -40,12 +40,6 @@ function Policies() {
     policyGroupName: ""
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-      const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setViewPolicyId(-1));
-      return clickOutSideDropdown;
-  }, [dropdownRef]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -331,10 +325,6 @@ function Policies() {
                                 transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
                             </svg>
                           </button>
-                          {filter && <button onClick={() => onClearFilter()} type="button"
-                            className={`flex ${isLoginLanguageRTL ? "mr-2":"ml-2"} justify-center items-center w-[23%] text-base py-3 border border-[#1447B2] font-semibold rounded-md text-center bg-tory-blue text-white`}>
-                            Clear Filter
-                          </button>}
                         </div>
                       </div>
                       <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
@@ -390,7 +380,7 @@ function Policies() {
                                     </div>
                                   </td>
                                   <td className="text-center">
-                                    <div ref={dropdownRef}>
+                                    <div>
                                       <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
                                       {
                                         viewPolicyId === index && (
