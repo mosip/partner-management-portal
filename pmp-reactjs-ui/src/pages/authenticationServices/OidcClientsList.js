@@ -25,7 +25,7 @@ function OidcClientsList() {
         <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
             <div className="flex-col">
                 <div className="flex justify-between mb-5">
-                    <div className={`flex space-x-3`}>
+                    <div className={`flex gap-x-3`}>
                         <img src={backArrow} alt="" onClick={() => moveToHome()} className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                         <div className="flex-col mt-[3%]">
                             <h1 className="font-semibold text-xl text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
@@ -38,14 +38,14 @@ function OidcClientsList() {
                 <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%]'>
                     <div className={`flex-col justify-center`}>
                         <h6 onClick={() => { setActiveOicdClient(true); setActiveApiKey(false) }}
-                            className={`${activeOidcClient ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[10%] cursor-pointer text-sm`}>
+                            className={`${activeOidcClient ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} cursor-pointer text-sm`}>
                             {t('authenticationServices.oidcClient')}
                         </h6>
                         <div className={`h-1 w-24 ${activeOidcClient ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                     </div>
                     <div className={`flex-col justify-center`}>
                         <h6 onClick={() => { setActiveOicdClient(false); setActiveApiKey(true) }}
-                            className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ml-[20%] cursor-pointer text-sm`}>
+                            className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[20%]" : "ml-[20%]"} cursor-pointer text-sm`}>
                             {t('authenticationServices.apiKey')}
                         </h6>
                         <div className={`h-1 w-24 ${activeApiKey ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
@@ -88,12 +88,12 @@ function OidcClientsList() {
                             <img src={rectangleGrid} alt="" />
                             {activeOidcClient &&
                                 (<button onClick={() => createOidcClient()} type="button"
-                                    className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
+                                    className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-14" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
                                     {t('authenticationServices.createOidcClientBtn')}
                                 </button>)
                             }
                             {activeApiKey &&
-                                (<button type="button" className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
+                                (<button type="button" className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-14" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
                                     {t('authenticationServices.generateApiKeyBtn')}
                                 </button>)
                             }
