@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getUserProfile } from "../../services/UserProfileService";
+import { isLangRTL } from "../../utils/AppUtils";
 import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
@@ -12,6 +14,7 @@ import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComp
 function RequestPolicy() {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -207,7 +210,7 @@ function RequestPolicy() {
     }
 
     return(
-        <div className="ml-32 mr-5 mt-5 w-[100%] relative">
+        <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -221,8 +224,8 @@ function RequestPolicy() {
                         </div>
                     )}
                     <div className="flex-col">
-                        <div className="flex items-start space-x-3">
-                            <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className="mt-[1%] cursor-pointer" />
+                        <div className="flex items-start gap-x-2">
+                            <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                             <div className="flex-col">
                                 <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
@@ -300,10 +303,10 @@ function RequestPolicy() {
                             </div>
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                                <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
-                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                    <button onClick={() => moveToPolicies(navigate)} className="mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`mr-2 w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                <button onClick={() => clearForm()} className={`w-40 h-12 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
+                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>

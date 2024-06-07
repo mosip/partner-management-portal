@@ -241,7 +241,7 @@ function Policies() {
   };
 
   return (
-    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll font-inter relative`}>
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -314,7 +314,7 @@ function Policies() {
                           >
                             {t('policies.filterBtn')}
                             <svg
-                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ml-2`}
+                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL? "mr-2": "ml-2"}`}
                               width="10" height="8" viewBox="0 0 10 8">
                               <path id="Polygon_8"
                                 data-name="Polygon 8"
@@ -323,7 +323,7 @@ function Policies() {
                             </svg>
                           </button>
                           {filter && <button onClick={() => onClearFilter()} type="button"
-                            className="flex ml-2 justify-center items-center w-[23%] text-base py-3 border border-[#1447B2] font-semibold rounded-md text-center bg-tory-blue text-white">
+                            className={`flex ${isLoginLanguageRTL ? "mr-2":"ml-2"} justify-center items-center w-[23%] text-base py-3 border border-[#1447B2] font-semibold rounded-md text-center bg-tory-blue text-white`}>
                             Clear Filter
                           </button>}
                         </div>

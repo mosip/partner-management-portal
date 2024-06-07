@@ -3,11 +3,14 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 import infoIcon from '../../../svg/info_icon.svg';
+import { isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
     placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey}) {
 
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,7 +45,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
-                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : ":"}
+                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : <span>{isLoginLanguageRTL ?"" :":"}</span>}
                 {addInfoIcon && (
                     <img src={infoIcon} alt="" className="ml-2 cursor-pointer" onClick={handleIconClick}></img>
                 )}
