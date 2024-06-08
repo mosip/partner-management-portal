@@ -138,7 +138,7 @@
     },
     "requestPolicy": {
         "requestPolicy": "طلب سياسة",
-        "policies": "سياسات",
+        "policies": " سياسات",
         "mandatoryFieldsMsg1": "جميع الحقول تحمل علامة",
         "mandatoryFieldsMsg2": "إلزامية.",
         "partnerId": "معرف الشريك",
