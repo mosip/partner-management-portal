@@ -5,7 +5,7 @@ import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 import infoIcon from '../../../svg/info_icon.svg';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey}) {
+    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
 
     const { t } = useTranslation();
 
@@ -32,7 +32,9 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         onDropDownChangeEvent(fieldName, selectedid);
     };
     const openDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+        if (!disabled) {
+            setIsDropdownOpen(!isDropdownOpen);
+        }
     };
 
     const handleIconClick = () => {
@@ -53,7 +55,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 </div>
             )}
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none 
+                <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] text-[#343434] leading-tight focus:outline-none 
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?

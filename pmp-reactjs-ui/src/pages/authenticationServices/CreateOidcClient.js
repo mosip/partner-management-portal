@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import DropdownComponent from '../common/fields/DropdownComponent';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
+import { HttpService } from '../../services/HttpService';
+import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 
 function CreateOidcClient() {
   const [partnerComments, setPartnerComments] = useState("");
@@ -15,9 +18,110 @@ function CreateOidcClient() {
   const [logoUrl, setLogoUrl] = useState("");
   const [typeOfGrants, setTypeOfGrants] = useState([]);
   const [grantTypes, setGrantTypes] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(true);
+  const [errorCode, setErrorCode] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const { t } = useTranslation();
+  const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
+  const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
+  const [partnerId, setPartnerId] = useState("");
+  const [policyId, setPolicyId] = useState("");
+  const [policyName, setPolicyName] = useState("");
+  const [partnerType, setPartnerType] = useState("");
+  const [policyGroupName, setPolicyGroupName] = useState("");
+  const [partnerData, setPartnerData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setDataLoaded(false);
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPolicies', process.env.NODE_ENV));
+
+        if (response && response.data) {
+          const responseData = response.data;
+
+          if (responseData.response) {
+            const resData = responseData.response;
+            setPartnerData(resData);
+
+            setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
+            setPoliciesDropdownData(createPoliciesDropdownData('policyName', resData));
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('policies.errorInPoliciesList'));
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setDataLoaded(true);
+      }
+    };
+
+    fetchData();
+  }, [t]);
+
+  useEffect(() => {
+
+  }, []);
+
+
+  const createPartnerIdDropdownData = (fieldName, dataList) => {
+    let dataArr = [];
+    dataList.forEach(item => {
+      let alreadyAdded = false;
+      dataArr.forEach(item1 => {
+        if (item1.fieldValue === item[fieldName]) {
+          alreadyAdded = true;
+        }
+      });
+      if (!alreadyAdded) {
+        dataArr.push({
+          fieldCode: item[fieldName],
+          fieldValue: item[fieldName]
+        });
+      }
+    });
+    return dataArr;
+  }
+
+  const createPoliciesDropdownData = (fieldName, dataList) => {
+    let dataArr = [];
+    dataList.forEach(item => {
+      item.activePolicies.forEach(policy => {
+        let alreadyAdded = dataArr.some(data => data.fieldValue === policy[fieldName]);
+        if (!alreadyAdded) {
+          dataArr.push({
+            fieldCode: policy[fieldName],
+            fieldValue: policy[fieldName]
+          });
+        }
+      });
+    });
+    return dataArr;
+  };
+
+  const onChangePartnerId = async (fieldName, selectedValue) => {
+    setPartnerId(selectedValue);
+    // Find the selected partner data
+    const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
+    if (selectedPartner) {
+      setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+      setPolicyGroupName(selectedPartner.policyGroupName);
+    }
+  };
+
+  const onChangePolicyName = (fieldName, selectedValue) => {
+    const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
+    if (selectedPolicy) {
+      setPolicyName(selectedPolicy.fieldCode);
+      setPolicyId(selectedValue);
+    }
+  };
+
 
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const count = 0;
 
@@ -111,15 +215,20 @@ function CreateOidcClient() {
                   <div className="flex flex-col w-[48%]">
                     <DropdownComponent
                       fieldName='partnerId'
-                      addInfoIcon
+                      dropdownDataList={partnerIdDropdownData}
+                      onDropDownChangeEvent={onChangePartnerId}
                       fieldNameKey='requestPolicy.partnerId*'
                       placeHolderKey='createOidcClient.selectPartnerId'
-                      styleSet={styles} />
+                      selectedDropdownValue={partnerId}
+                      styleSet={styles}
+                      addInfoIcon={true}
+                      infoKey='requestPolicy.info'>
+                    </DropdownComponent>
                   </div>
                   <div className="flex flex-col w-[48%]">
                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                     <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                      <span>{t('createOidcClient.devicePartner')}</span>
+                    <span>{partnerType || t('requestPolicy.partnerType')}</span>
                       <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                       </svg>
@@ -130,20 +239,24 @@ function CreateOidcClient() {
                   <div className="flex flex-col w-[48%]">
                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                     <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-grayish-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
-                      <span>{t('createOidcClient.policyGroupGoesHere')}</span>
+                    <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
                       <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                       </svg>
                     </button>
                   </div>
                   <div className="flex flex-col w-[48%]">
-                    <DropdownComponent
+                  <DropdownComponent
                       fieldName='policyName'
-                      addInfoIcon
-                      infoKey={t('createOidcClient.policyNameToolTip')}
+                      dropdownDataList={policiesDropdownData}
+                      onDropDownChangeEvent={onChangePolicyName}
                       fieldNameKey='requestPolicy.policyName*'
                       placeHolderKey='createOidcClient.policyNamePlaceHolder'
-                      styleSet={styles} />
+                      selectedDropdownValue={policyName}
+                      styleSet={styles}
+                      addInfoIcon={true}
+                      disabled={!partnerId}
+                      infoKey={t('createOidcClient.policyNameToolTip')}/>
                   </div>
                 </div>
                 <div className="flex my-[1%]">
@@ -194,7 +307,7 @@ function CreateOidcClient() {
                         return (
                           <li key={index}>
                             <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                              <input value={data} onChange={(e) => handleRedirectUrlChange(e,index)} placeholder={t("createOidcClient.enterLogoUrl")} className="w-[85%] focus:outline-none" />
+                              <input value={data} onChange={(e) => handleRedirectUrlChange(e, index)} placeholder={t("createOidcClient.enterLogoUrl")} className="w-[85%] focus:outline-none" />
                               <p onClick={() => deleteLogoUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
                                 {t('createOidcClient.delete')}
                               </p>
@@ -217,7 +330,7 @@ function CreateOidcClient() {
                         return (
                           <li key={index}>
                             <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                              <input value={itemData} onChange={(e) => handleGrantTypeChange(e.target.value,index)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
+                              <input value={itemData} onChange={(e) => handleGrantTypeChange(e.target.value, index)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
                               <p onClick={() => deleteGrantType(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
                                 {t('createOidcClient.delete')}
                               </p>
