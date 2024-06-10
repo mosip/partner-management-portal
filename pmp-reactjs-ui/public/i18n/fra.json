@@ -218,6 +218,7 @@
         "PMS_PRT_359": "Une erreur s'est produite lors du tri",
         "PMS_PRT_357": " Champ de tri non valide %s",
         "KER_PRT_390": "Valeur de filtre non valide",
+        "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
         "PMS_PRT_051": " Un partenaire est déjà enregistré avec le même identifiant",
         "PMS_PRT_052": "La longueur maximale de PartnerId doit être",
