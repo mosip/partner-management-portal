@@ -1,17 +1,22 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
+import infoIcon from '../../../svg/info_icon.svg';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet}) {
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled}) {
 
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [showTooltip, setShowTooltip] = useState(false);
     const [searchItem, setSearchItem] = useState("");
     const dropdownRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
@@ -26,6 +31,11 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     }, [dropdownRef]);
 
     useEffect(() => {
+        const clickOutSideDropdown = handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
+        return clickOutSideDropdown;
+    }, [tooltipRef]);
+
+    useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
     }, [selectedDropdownValue]);
 
@@ -35,17 +45,31 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
         onDropDownChangeEvent(fieldName, selectedid);
     };
     const openDropdown = () => {
-        setSearchItem("");
-        setIsDropdownOpen(!isDropdownOpen);
+        if (!disabled) {
+            setSearchItem("");
+            setIsDropdownOpen(!isDropdownOpen);
+        };
+    };
+
+    const handleIconClick = () => {
+        setShowTooltip(!showTooltip);
     };
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`block text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
+            <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
                 {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : ":"}
+                {addInfoIcon && (
+                    <img src={infoIcon} alt="" className= {`cursor-pointer`} onClick={handleIconClick}></img>
+                )}
             </label>
+            {showTooltip && (
+                <div ref={tooltipRef} className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[8.5%]"} shadow-lg bg-white border border-gray-300 rounded`}>
+                    <p className="text-black text-sm">{t(infoKey)}</p>
+                </div>
+            )}
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight focus:outline-none 
+                <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-[282px] h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight focus:outline-none 
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?

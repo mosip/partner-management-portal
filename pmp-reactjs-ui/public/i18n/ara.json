@@ -191,16 +191,16 @@
         "publicKey": "المفتاح العمومي",
         "publicKeyToolTip": "يُسمح بتنسيق JWK فقط",
         "publicKeyPlaceHolder": "أدخل المفتاح العام بتنسيق JWK فقط",
-        "loginUrl": "عنوان URL لتسجيل الدخول",
-        "loginUrlPlaceHolder": "أدخل عنوان URL للشعار",
-        "redirectUrl": "إعادة توجيه URL",
+        "logoUrl": "عنوان URI للشعار",
+        "logoUrlPlaceHolder": "أدخل عنوان URI للشعار",
+        "redirectUrl": "إعادة توجيه URI",
         "redirectUrlPlaceHolder": "أدخل إعادة توجيه URI",
-        "enterLogoUrl": "أدخل عنوان URL للشعار",
         "grantTypes": "أنواع المنح",
         "enterGrantTypes": "أدخل أنواع المنح",
         "delete": "يمسح",
         "addNew": "اضف جديد",
-        "commentBoxDesc": "اذكر الغرض من طلب عميل OIDC"
+        "commentBoxDesc": "اذكر الغرض من طلب عميل OIDC",
+        "errorInCreateOIDC": "أثناء طلب عميل OIDC، واجهنا خطأ"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",
