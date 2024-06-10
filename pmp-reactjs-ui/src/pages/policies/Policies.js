@@ -368,13 +368,13 @@ function Policies() {
                           <tbody>
                             {tableRows.map((partner, index) => {
                               return (
-                                <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
-                                  <td className="px-2">{partner.partnerId}</td>
-                                  <td className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                  <td className="px-2">{partner.policyGroupName}</td>
-                                  <td className="px-2">{partner.policyName}</td>
-                                  <td className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
-                                  <td className="">
+                                <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="">
                                     <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-medium rounded-md`}>
                                       {getStatusCode(partner.status, t)}
                                     </div>

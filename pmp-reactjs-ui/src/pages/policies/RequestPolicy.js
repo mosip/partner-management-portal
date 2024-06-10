@@ -226,14 +226,14 @@ function RequestPolicy() {
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left !text-grayish-blue",
+        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left",
         selectionBox: "!top-12"
     }
 
     const styleForSearch = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left !text-grayish-blue",
+        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left",
         selectionBox: "!top-12"
     }
 
@@ -278,7 +278,7 @@ function RequestPolicy() {
                                                     dropdownDataList={partnerIdDropdownData} 
                                                     onDropDownChangeEvent={onChangePartnerId} 
                                                     fieldNameKey='requestPolicy.partnerId*' 
-                                                    placeHolderKey='requestPolicy.selectPartnerId' 
+                                                    placeHolderKey='requestPolicy.partnerId' 
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon
@@ -287,7 +287,8 @@ function RequestPolicy() {
                                             </div>
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{partnerType || t('requestPolicy.partnerType')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
@@ -298,7 +299,8 @@ function RequestPolicy() {
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                             <div className="flex flex-col w-[48%]">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />

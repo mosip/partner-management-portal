@@ -62,6 +62,10 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
         onFilterChange(fieldName, selectedFilter);
     }
 
+    const styles = {
+        dropdownButton: "!text-[#343434]"
+    }
+
     return (
         <>
             <div className="flex w-full p-2 justify-start bg-gray-50 flex-wrap">
@@ -70,35 +74,40 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     dropdownDataList={partnerIdData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.partnerId' 
-                    placeHolderKey='policies.selectPartnerId'>
+                    placeHolderKey='policies.selectPartnerId'
+                    styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='partnerType' 
                     dropdownDataList={partnerTypeData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.partnerType' 
-                    placeHolderKey='policies.selectPartnerType'>
+                    placeHolderKey='policies.selectPartnerType'
+                    styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyGroupName' 
                     dropdownDataList={policyGroupNameData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.policyGroupName' 
-                    placeHolderKey='policies.selectPolicyGroup'>
+                    placeHolderKey='policies.selectPolicyGroup'
+                    styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
                     dropdownDataList={policyNameData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.policyName' 
-                    placeHolderKey='policies.selectPolicyName'>
+                    placeHolderKey='policies.selectPolicyName'
+                    styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
                     dropdownDataList={statusData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.status' 
-                    placeHolderKey='policies.selectStatus'> 
+                    placeHolderKey='policies.selectStatus'
+                    styleSet={styles}> 
                 </DropdownComponent>
             </div>
         </>
