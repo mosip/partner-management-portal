@@ -192,16 +192,16 @@
         "publicKey": "Clé publique",
         "publicKeyToolTip": "Seul le format JWK est autorisé",
         "publicKeyPlaceHolder": "Saisissez la clé publique au format JWK uniquement",
-        "loginUrl": "URL de connexion",
-        "loginUrlPlaceHolder": "Entrez l'URL du logo",
-        "redirectUrl": "URL de redirection",
+        "logoUrl": "URI de Logo",
+        "logoUrlPlaceHolder": "Entrez l'URI du logo",
+        "redirectUrl": "URI de redirection",
         "redirectUrlPlaceHolder": "Entrez l'URI de redirection",
-        "enterLogoUrl": "Entrez l'URL du logo",
         "grantTypes": "Types de subventions",
         "enterGrantTypes": "Entrez les types de subventions",
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
-        "commentBoxDesc": "Mentionner le but de la demande du client OIDC"
+        "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
+        "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

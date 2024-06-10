@@ -191,16 +191,16 @@
         "publicKey": "Public Key",
         "publicKeyToolTip": "Only JWK format is allowed",
         "publicKeyPlaceHolder": "Enter public key in JWK format only",
-        "loginUrl": "Login URL",
-        "loginUrlPlaceHolder": "Enter Logo URL",
-        "redirectUrl": "Redirect URL",
+        "logoUrl": "Logo URI",
+        "logoUrlPlaceHolder": "Enter Logo URI",
+        "redirectUrl": "Redirect URI",
         "redirectUrlPlaceHolder": "Enter Redirect URI",
-        "enterLogoUrl": "Enter Logo Url",
         "grantTypes": "Grant Types",
         "enterGrantTypes": "Enter Grant Types",
         "delete": "Delete",
         "addNew": "Add New",
-        "commentBoxDesc": "Mention the purpose of requesting the OIDC Client"
+        "commentBoxDesc": "Mention the purpose of requesting the OIDC Client",
+        "errorInCreateOIDC": "While requesting OIDC Client, we have encountered with an error"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
