@@ -1,4 +1,11 @@
 {
+    "commons": {
+        "home": "Maison",
+        "search": "Recherche",
+        "goBack": "Retourner",
+        "emptyMsg": "Pas de données disponibles.",
+        "logout": "Se déconnecter"
+    },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
         "partnerTypeRequest": "Demande de type de partenaire",
@@ -16,8 +23,7 @@
     },
     "header": {
         "partnerProfile": "Profil du partenaire",
-        "changePassword": "Changer le mot de passe",
-        "logout": "Se déconnecter"
+        "changePassword": "Changer le mot de passe"
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",
@@ -34,7 +40,7 @@
         "submit": "Soumettre",
         "viewLess": "Voir moins",
         "viewMore": "Voir plus",
-        "emptyListMsg": "Il n’existe aucun groupe de stratégies actif."
+        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
     },
     "loading": "chargement",
     "partnerCertificatesList": {
@@ -97,6 +103,7 @@
         "requestPolicyBtn": "Politique de demande",
         "listOfPolicies": "Liste des demandes de politique",
         "filterBtn": "Filtre",
+        "clearFilter": "Effacer le filtre",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
@@ -116,7 +123,7 @@
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "Afficher les détails de la politique",
-        "policySection": "Section des politiques",
+        "policySection": "Stratégies",
         "policyName": "Nom de la politique",
         "partnerId": "ID partenaire",
         "partnerIdName": "Nom du partenaire",
@@ -148,11 +155,12 @@
         "submit": "Soumettre",
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
-        "errorInMapPolicy": "Il y a une erreur lors de la demande d'une nouvelle politique. Réessayez plus tard!",
+        "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
         "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
         "info":"Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
-        "emptyListMsg": "Il n'y a pas de politiques actives."
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
+        "specialCharNotAllowed": "Les caractères spéciaux ne sont pas autorisés."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -194,11 +202,6 @@
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC"
-    },
-    "commons": {
-        "home": "Maison",
-        "search": "Recherche",
-        "goBack": "Retourner"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

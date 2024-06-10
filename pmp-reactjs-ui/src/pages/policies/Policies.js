@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -241,14 +241,14 @@ function Policies() {
   };
 
   return (
-    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll font-inter relative`}>
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className="flex justify-end max-w-7xl absolute right-0">
+            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
               <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
@@ -256,7 +256,7 @@ function Policies() {
           )}
           <div className="flex-col">
             <div className="flex justify-between mb-5">
-              <div className="flex items-start space-x-3">
+              <div className="flex items-start gap-x-2">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-xl text-dark-blue">{t('policies.policies')}</h1>
@@ -279,12 +279,12 @@ function Policies() {
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                    <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-48">
+                    <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28">
                       <h6 className="ml-5">{t('policies.partnerId')}</h6>
                       <h6>{t('policies.partnerType')}</h6>
+                      <h6>{t('policies.policyGroupName')}</h6>
                       <h6>{t('policies.policyName')}</h6>
-                    </div>
-                    <div className='flex sm:gap-x-7 md:gap-x-16 lg:gap-x-44  mr-6'>
+                      <h6>{t('policies.createdDate')}</h6>
                       <h6>{t('policies.status')}</h6>
                       <h6>{t('policies.action')}</h6>
                     </div>
@@ -309,12 +309,15 @@ function Policies() {
                           {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                         </div>
                         <div className="w-full flex justify-end relative ">
+                          {filter && <button onClick={() => onClearFilter()} type="button"
+                            className="flex mr-2 justify-center items-center w-[23%] text-base py-3 font-semibold text-cente text-tory-blue">
+                            {t('policies.clearFilter')}
+                          </button>}
                           <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}
-                          >
+                            ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
-                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ml-2`}
+                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL? "mr-2": "ml-2"}`}
                               width="10" height="8" viewBox="0 0 10 8">
                               <path id="Polygon_8"
                                 data-name="Polygon 8"
@@ -322,10 +325,6 @@ function Policies() {
                                 transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
                             </svg>
                           </button>
-                          {filter && <button onClick={() => onClearFilter()} type="button"
-                            className="flex ml-2 justify-center items-center w-[23%] text-base py-3 border border-[#1447B2] font-semibold rounded-md text-center bg-tory-blue text-white">
-                            Clear Filter
-                          </button>}
                         </div>
                       </div>
                       <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
@@ -382,11 +381,11 @@ function Policies() {
                                   </td>
                                   <td className="text-center">
                                     <div>
-                                      <p onClick={() => setViewPolicyId(index)} className="mr-9 font-semibold mb-0.5 cursor-pointer">...</p>
+                                      <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ?"ml-9":"mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
-                                            className="absolute bg-white text-xs font-medium rounded-lg shadow-md border">
+                                            className={`absolute ${isLoginLanguageRTL ? "mr-16": null} bg-white text-xs font-medium rounded-lg shadow-md border`}>
                                             <p className="px-5 py-2 cursor-pointer">
                                               {t('policies.view')}
                                             </p>
@@ -414,12 +413,12 @@ function Policies() {
                         breakLabel="..."
                         previousLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            <AiFillLeftCircle />
+                           {isLoginLanguageRTL ? <AiFillRightCircle/> : <AiFillLeftCircle/>}
                           </IconContext.Provider>
                         }
                         nextLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            <AiFillRightCircle />
+                            {isLoginLanguageRTL ? <AiFillLeftCircle/> : <AiFillRightCircle/>}
                           </IconContext.Provider>
                         }
                       />

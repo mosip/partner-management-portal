@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, searchKey, selectedDropdownValue, noDataKey, styleSet}) {
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet}) {
 
     const { t } = useTranslation();
 
@@ -17,7 +17,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     const filteredPolicyGroupList = dropdownDataList.filter(dropdownItem =>
-        dropdownItem.fieldCode.toLowerCase().includes(searchItem.toLowerCase())
+        dropdownItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
     );
 
     useEffect(() => {
@@ -70,7 +70,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
                                 <div className="min-h-3 p-4">
-                                    <p className="text-sm text-dark-blue font-semibold">{t(noDataKey)}</p>
+                                    <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
                             <div className="max-h-32 overflow-y-auto">

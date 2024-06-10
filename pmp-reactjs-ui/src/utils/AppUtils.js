@@ -133,3 +133,11 @@ export const isLangRTL = (langCode) => {
 export const moveToPolicies = (navigate) => {
     navigate('/partnermanagement/policies')
 };
+
+export const logout = async () => {
+    localStorage.clear();
+    let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
+    redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+    console.log(redirectUrl);
+    window.location.href = redirectUrl;
+}

@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getUserProfile } from "../../services/UserProfileService";
+import { isLangRTL } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToPolicies } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
@@ -9,6 +11,7 @@ import partnerImage from "../../svg/partner.png";
 
 function ViewPolicyDetails() {
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
     const [policyDetails, setPolicyDetails] = useState([]);
 
@@ -48,29 +51,29 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className="flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ml-[8%] overflow-x-scroll">
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center gap-x-2">
                         <img
                             src={backArrow}
                             alt=""
                             onClick={() => moveToPolicies(navigate)}
-                            className="mt-1 cursor-pointer"
+                            className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
                         />
-                        <div className="flex-col mt-4">
-                            <h1 className="font-bold text-lg text-md text-blue-900">
+                        <div className="flex-col">
+                            <h1 className="font-bold text-lg text-md text-dark-blue">
                                 {t("viewPolicyDetails.viewPolicyDetails")}
                             </h1>
                             <div className="flex space-x-1">
                                 <p
                                     onClick={() => moveToHome()}
-                                    className="font-semibold text-blue-500 text-xs cursor-pointer"
+                                    className="font-semibold text-tory-blue text-xs cursor-pointer"
                                 >
                                     {t("commons.home")} /
                                 </p>
                                 <p
                                     onClick={() => moveToPolicies(navigate)}
-                                    className="font-semibold text-blue-500 text-xs cursor-pointer"
+                                    className="font-semibold text-tory-blue text-xs cursor-pointer"
                                 >
                                     {t("viewPolicyDetails.policySection")}
                                 </p>
@@ -78,9 +81,9 @@ function ViewPolicyDetails() {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white h-fit mt-1 rounded-t-xl shadow-lg">
-                    <div className="flex flex-col pl-8 pt-6 pb-5">
-                        <p className="font-bold text-lg text-blue-900 mb-3">{policyDetails.policyName}</p>
+                <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg">
+                    <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>
+                        <p className="font-bold text-lg text-dark-blue mb-3">{policyDetails.policyName}</p>
                         <div className="flex items-center justify-start">
                             <div
                                 className={`${bgOfStatus(
@@ -89,18 +92,18 @@ function ViewPolicyDetails() {
                             >
                                 {policyDetails.status}
                             </div>
-                            <div className="font-medium ml-3 text-sm text-blue-900">
+                            <div className={`font-medium ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-sm text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
                                     formatDate(policyDetails.createDate, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
-                            <div className="font-medium text-sm text-blue-900">
+                            <div className="font-medium text-sm text-dark-blue">
                                 {formatDate(policyDetails.createDate, "time")}
                             </div>
                         </div>
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
-                    <div className="pl-8 pt-6 mr-8 mb-4">
+                    <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
                             <div className="w-[50%] mb-5">
                                 <p className="font-semibold text-suva-gray text-base">
@@ -160,13 +163,13 @@ function ViewPolicyDetails() {
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
-                                <div className="flex font-medium w-full  ">
-                                    <span className=" w-8 h-8 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10">
-                                        <div className="relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute after:left-[1.2rem] after:mt-7"></div>
+                                <div className="flex font-medium w-full ">
+                                    <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL?"ml-3":"mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
+                                        <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL?"after:right-[1.2rem]":"after:left-[1.2rem]"} after:mt-7`}></div>
                                         <img src={adminImage} alt="Example" className="" />
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
-                                        <div className="w-0 h-0 border-t-[0.5rem] border-t-transparent border-r-[7px] border-r-[#FFF9F0] border-b-[0.5rem] border-b-transparent absolute top-4 -left-[0.38rem]"></div>
+                                        <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
                                         <h4 className="text-lg  text-[#031640]">
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
@@ -181,11 +184,11 @@ function ViewPolicyDetails() {
                                             <div>
                                                 {policyDetails.updDtimes && (
                                                     <div className="flex">
-                                                        <div className="font-medium ml-3 text-sm text-blue-900">
+                                                        <div className={`font-medium ${isLoginLanguageRTL?"mr-3":"ml-3"} text-sm text-dark-blue`}>
                                                             {formatDate(policyDetails.updDtimes, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-medium text-sm text-blue-900">
+                                                        <div className="font-medium text-sm text-dark-blue">
                                                             {formatDate(policyDetails.updDtimes, "time")}
                                                         </div>
                                                     </div>
@@ -196,11 +199,11 @@ function ViewPolicyDetails() {
                                 </div>
                                 <div className="mt-4">
                                     <div className="flex font-medium w-full">
-                                        <span className="w-8 h-8 rounded-full flex justify-center items-center mr-3 text-sm lg:w-10 lg:h-10">
+                                        <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL?"ml-3":"mr-3"} text-sm lg:w-10 lg:h-10`}>
                                             <img src={partnerImage} alt="Example" className="" />
                                         </span>
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
-                                            <div className="w-0 h-0 border-t-[0.5rem] border-t-transparent border-r-[7px] border-r-[#F2F5FC] border-b-[0.5rem] border-b-transparent absolute top-4 -left-[0.38rem]"></div>
+                                            <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
                                             <h4 className="text-lg  text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
@@ -209,12 +212,12 @@ function ViewPolicyDetails() {
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-medium text-sm text-blue-900">
+                                                <div className="font-medium text-sm text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyDetails.createDate, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-medium text-sm text-blue-900">
+                                                <div className="font-medium text-sm text-dark-blue">
                                                     {formatDate(policyDetails.createDate, "time")}
                                                 </div>
                                             </div>
@@ -225,7 +228,7 @@ function ViewPolicyDetails() {
                         </div>
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
-                    <div className="flex justify-end py-5 mr-8">
+                    <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" :"mr-8"}`}>
                         <button
                             onClick={() => moveToPolicies(navigate)}
                             className="h-11 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center"

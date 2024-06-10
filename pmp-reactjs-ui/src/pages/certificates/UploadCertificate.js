@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { HttpService } from "../../services/HttpService";
 import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
+import { isLangRTL } from '../../utils/AppUtils';
+import { getUserProfile } from '../../services/UserProfileService';
 import ErrorMessage from "../common/ErrorMessage";
 import LoadingIcon from "../common/LoadingIcon";
 import SuccessMessage from '../common/SuccessMessage';
@@ -25,6 +27,7 @@ function UploadCertificate({ closePopup, partnerData }) {
     const [partnerDomainTypeData, setPartnerDomainTypeData] = useState([]);
     const [removeLastUploadDate, setRemoveLastUploadData] = useState(false);
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -249,8 +252,8 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                             </div>
                             <div className="border-gray-200 border-opacity-50 border-t"></div>
-                            <div className="py-[4%] px-[6%] flex justify-end">
-                                <button className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold relative z-10" onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                            <div className="px-[6%] flex justify-center">
+                                <button className={`${isLoginLanguageRTL? "ml-2": "mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                 {(!uploading && fileName) ? (
                                     <button className="w-40 h-12 border-[#1447B2] border bg-tory-blue rounded-md text-white text-base font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                 ) : (

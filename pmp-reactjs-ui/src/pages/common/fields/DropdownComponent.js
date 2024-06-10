@@ -3,16 +3,20 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 import infoIcon from '../../../svg/info_icon.svg';
+import { isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
     placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
 
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const dropdownRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
@@ -21,6 +25,11 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
         return clickOutSideDropdown;
     }, [dropdownRef]);
+
+    useEffect(() => {
+        const clickOutSideDropdown = handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
+        return clickOutSideDropdown;
+    }, [tooltipRef]);
 
     useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
@@ -44,13 +53,13 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
-                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : ":"}
+                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : <span>{isLoginLanguageRTL ?"" :":"}</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className="ml-2 cursor-pointer" onClick={handleIconClick}></img>
+                    <img src={infoIcon} alt="" className= {`cursor-pointer`} onClick={handleIconClick}></img>
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 rounded`}>
+                <div ref={tooltipRef} className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[8.5%]"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}
@@ -69,6 +78,11 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 {isDropdownOpen && (
                     <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                            {dropdownDataList.length === 0 && (
+                                <div className="min-h-3 p-4">
+                                    <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                </div>
+                            )}
                             <div className="max-h-40 overflow-y-auto">
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (

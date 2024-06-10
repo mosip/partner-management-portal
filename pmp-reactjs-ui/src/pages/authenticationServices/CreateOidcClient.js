@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import DropdownComponent from '../common/fields/DropdownComponent';
+import { getUserProfile } from '../../services/UserProfileService';
+import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
-import DropdownComponent from '../common/fields/DropdownComponent';
 import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -122,6 +124,7 @@ function CreateOidcClient() {
 
 
   const navigate = useNavigate();
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
   const count = 0;
 
@@ -185,11 +188,11 @@ function CreateOidcClient() {
   }
 
   return (
-    <div className="ml-32 mr-5 mt-5 w-[100%]">
+    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       <div className="flex-col">
         <div className="flex justify-between">
-          <div className="flex items-start space-x-3">
-            <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices()} className="mt-[5%] cursor-pointer" />
+          <div className="flex items-start gap-x-3">
+            <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices()} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
             <div className="flex-col">
               <h1 className="font-semibold text-xl text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
               <div className="flex space-x-1">
@@ -202,7 +205,8 @@ function CreateOidcClient() {
               </div>
             </div>
           </div>
-          {/* <div className="px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
+          {/* <div className="flex items-center space-x-2 px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
+            <img src={help_icon} className="h-4"/>
             <p>{t('createOidcClient.help')}</p>
           </div> */}
         </div>
@@ -271,11 +275,11 @@ function CreateOidcClient() {
                   <div className="flex flex-col w-full">
                     <label className="flex space-x-1 items-center text-dark-blue text-base font-semibold mb-1">
                       {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
-                      <img src={info} className="ml-2 cursor-pointer" onClick={() => setShowPublicKeyToolTip(!showPublicKeyToolTip)} />
+                      <img src={info} className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} onClick={() => setShowPublicKeyToolTip(!showPublicKeyToolTip)} />
                     </label>
                     {showPublicKeyToolTip &&
                       (
-                        <div className="z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ml-28 shadow-lg bg-white border border-gray-300 p-3 rounded">
+                        <div className={`z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[8%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                           <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                         </div>
                       )}
@@ -299,9 +303,6 @@ function CreateOidcClient() {
                     <ul>
                       <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline">
                         <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} placeholder={t('createOidcClient.redirectUrlPlaceHolder')} className="w-[85%] focus:outline-none" />
-                        <p onClick={() => setLogoUrl('')} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                          {t('createOidcClient.delete')}
-                        </p>
                       </div>
                       {redirectUrls.map((data, index) => {
                         return (
@@ -344,7 +345,6 @@ function CreateOidcClient() {
                   </div>
                 </div>
 
-
                 <div className="flex my-[1%]">
                   <div className="flex flex-col w-full">
                     <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
@@ -362,8 +362,8 @@ function CreateOidcClient() {
           <div className="flex flex-row px-[3%] py-[2%] justify-between">
             <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
             <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-              <button onClick={() => moveToAuthenticationServices(navigate)} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-              <button className={`mr-2 w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold bg-tory-blue text-white`}>{t('requestPolicy.submit')}</button>
+              <button onClick={() => moveToAuthenticationServices(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
+              <button className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold bg-tory-blue text-white`}>{t('requestPolicy.submit')}</button>
             </div>
           </div>
         </div>
