@@ -224,8 +224,6 @@
         "selectPolicyGroup":"Select Policy Group",
         "selectPolicyName":"Select Policy Name",
         "selectStatus":"Select Status"
-    
-
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

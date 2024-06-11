@@ -260,7 +260,7 @@ function OidcClientsList() {
                         <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                             <div className="flex w-full p-2">
                                 <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-lg" >
-                                    {t('oidcClientsList.listOfOidcClientRequests')}
+                                    {t('oidcClientsList.listOfOidcClientRequests') + ' (' + filteredOidcClientsList.length + ")"}
                                 </div>
                                 <div className="w-full flex justify-end relative ">
                                     <button type="button" onClick={() => createOidcClient()}

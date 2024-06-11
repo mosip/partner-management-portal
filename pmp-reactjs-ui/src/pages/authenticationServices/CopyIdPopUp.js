@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
-import copy_content_icon from '../../svg/content_copy_icon.svg';
 
 function CopyIdPopUp({ closePopUp, policyName, partnerId }) {
     const [copied, setCopied] = useState(false);
@@ -31,7 +30,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId }) {
                 </header>
                 <hr className={`py-[4%]`} />
                 <div className={` flex-col text-center items-center`}>
-                    <h1 className={`text-[#6A6A6A] font-bold opacity-8 mb-[0.5%]`}>OIDC Client ID</h1>
+                    <h1 className={`text-[#6A6A6A] font-bold opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
                     <p className={`font-bold text-xs`}>4fcqta1MRkzMnG5nEkbGPlBZmbJFRenR-sPCUWHEdsA</p>
                     <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[7%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-20"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"
