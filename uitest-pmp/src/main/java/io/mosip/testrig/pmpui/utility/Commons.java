@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -115,7 +116,8 @@ public class Commons extends BaseClass {
 	public  static void click(ExtentTest test,WebDriver driver, By by) throws IOException {
 		logger.info("Clicking " + by );
 		try {
-			(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(by));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			wait.until(ExpectedConditions.elementToBeClickable(by));
 			Thread.sleep(2000);
 			driver.findElement(by).click();
 			Thread.sleep(2000);
@@ -150,8 +152,8 @@ public class Commons extends BaseClass {
 		logger.info("Clicking " + by );
 
 		try {
-			(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(by));
-			Thread.sleep(500);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			wait.until(ExpectedConditions.elementToBeClickable(by));			Thread.sleep(500);
 			WebElement checkbox= driver.findElement(by);
 			js.executeScript("arguments[0].click();", checkbox);
 			Thread.sleep(500);
@@ -170,8 +172,8 @@ public class Commons extends BaseClass {
 		logger.info("Entering " + by +value);
 		//value="10";
 		try {
-			(new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOfElementLocated(by));
-			driver.findElement(by).clear();
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			wait.until(ExpectedConditions.elementToBeClickable(by));			driver.findElement(by).clear();
 			driver.findElement(by).sendKeys(value);
 			try {
 				Thread.sleep(8);
