@@ -18,12 +18,15 @@ function OidcClientsList() {
     const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
     const [isData, setIsData] = useState(true);
-    
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(true);
+    const [firstIndex, setFirstIndex] = useState(0);
     const [viewClientId, setViewClientId] = useState(-1);
+    const itemsPerPageOptions = [5, 10, 15, 20];
+    const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
 
     const tableValues = [
         { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
@@ -140,6 +143,19 @@ function OidcClientsList() {
         }
     };
 
+    //This part related to Pagination Logic
+    let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
+
+    const handlePageChange = (event) => {
+        const newIndex = (event.selected * selectedRecordsPerPage) % filteredOidcClientsList.length;
+        setFirstIndex(newIndex);
+    };
+    const changeItemsPerPage = (num) => {
+        setIsItemsPerPageOpen(false);
+        setSelectedRecordsPerPage(num);
+        setFirstIndex(0);
+    };
+
     return (
         <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
             <div className="flex-col">
@@ -214,7 +230,7 @@ function OidcClientsList() {
                                 </div>
                                 <div className="w-full flex justify-end relative ">
                                     <button type="button" onClick={() => createOidcClient()}
-                                    className="flex mr-2 justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
+                                        className="flex mr-2 justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
                                         {t('oidcClientsList.createOidcClient')}
                                     </button>
                                     <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
@@ -271,7 +287,7 @@ function OidcClientsList() {
                                     </thead>
                                     <tbody>
                                         {
-                                            filteredOidcClientsList.map((client, index) => {
+                                            tableRows.map((client, index) => {
                                                 return (
                                                     <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                                         <td className="px-2">{client.partnerId}</td>
@@ -315,6 +331,59 @@ function OidcClientsList() {
                                         }
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
+                            <div></div>
+                            <ReactPaginate
+                                containerClassName={"pagination"}
+                                pageClassName={"page-item"}
+                                activeClassName={"active"}
+                                onPageChange={(event) => handlePageChange(event)}
+                                pageCount={Math.ceil(filteredOidcClientsList.length / selectedRecordsPerPage)}
+                                breakLabel="..."
+                                previousLabel={
+                                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                                        {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
+                                    </IconContext.Provider>
+                                }
+                                nextLabel={
+                                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                                        {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
+                                    </IconContext.Provider>
+                                }
+                            />
+                            <div className="flex items-center gap-x-3">
+                                <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
+                                <div>
+                                    <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                                        onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
+                                        <p>
+                                            {selectedRecordsPerPage}
+                                        </p>
+                                        <svg className={`${isItemsPerPageOpen ? "rotate-180" : null}`}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                                                transform="translate(-12 -16.6)" fill="#1447b2" />
+                                        </svg>
+                                    </div>
+                                    {isItemsPerPageOpen && (
+                                        <div className="absolute bg-white text-xs text-tory-blue font-medium rounded-b-lg shadow-md">
+                                            {itemsPerPageOptions.map((num, i) => {
+                                                return (
+                                                    <p key={i} onClick={() => changeItemsPerPage(num)}
+                                                        className="px-3 py-2 cursor-pointer hover:bg-gray-200">
+                                                        {num}
+                                                    </p>
+                                                )
+                                            })
+                                            }
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </>
