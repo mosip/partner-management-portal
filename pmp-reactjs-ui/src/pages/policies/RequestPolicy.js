@@ -48,7 +48,7 @@ function RequestPolicy() {
               if (responseData && responseData.response) {
                 const resData = responseData.response;
                 setPartnerData(resData);
-                setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', partnerData));
+                setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
                 console.log('Response data:', partnerData.length);
               } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -106,6 +106,7 @@ function RequestPolicy() {
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
+        setPolicyName("");
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
