@@ -206,7 +206,7 @@
         "partnerId":"Partner ID",
         "policyGroup":"Policy Group",
         "policyName":"Policy Name",
-        "oidcClientname": "OIDC Client Name",
+        "oidcClientName": "OIDC Client Name",
         "createdDate":"Created Date",
         "status": "Status",
         "oidcClientId":"OIDC Client ID",
@@ -216,7 +216,16 @@
         "filterBtn": "Filter",
         "view": "View",
         "edit": "Edit",
-        "deActivate": "Deactivate"
+        "deActivate": "Deactivate",
+        "copy": "Copy",
+        "copied": "Copied!",
+        "selectPartnerId":"Select Partner ID",
+        "selectOidcClientType": "Select OIDC Client",
+        "selectPolicyGroup":"Select Policy Group",
+        "selectPolicyName":"Select Policy Name",
+        "selectStatus":"Select Status"
+    
+
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
