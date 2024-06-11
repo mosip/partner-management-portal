@@ -8,6 +8,8 @@ import { IconContext } from "react-icons"; // for customizing icons
 import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
+import CopyIdPopUp from './CopyIdPopUp';
+import OidcClientsFilter from './OidcClientsFilter';
 import PoliciesFilter from '../policies/PoliciesFilter';
 
 function OidcClientsList() {
@@ -18,12 +20,21 @@ function OidcClientsList() {
     const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
     const [isData, setIsData] = useState(true);
-    
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
+    const [firstIndex, setFirstIndex] = useState(0);
+    const itemsPerPageOptions = [5, 10, 15, 20];
+    const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [viewClientId, setViewClientId] = useState(-1);
+    const defaultFilterQuery = {
+        partnerId: "",
+        policyGroupName: ""
+    };
+    const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
 
     const tableValues = [
         { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
@@ -55,14 +66,15 @@ function OidcClientsList() {
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroup", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientname" },
+        { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientName" },
         { id: "createdDate", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
-
-    const [filteredOidcClientsList, setfilteredOidcClientsList] = useState(tableValues);
+    
+    const [oidcClientsList, setOidcClientsList] = useState(tableValues);
+    const [filteredOidcClientsList, setFilteredOidcClientsList] = useState(oidcClientsList);
 
     const moveToHome = () => {
         navigate('/partnermanagement')
@@ -85,7 +97,32 @@ function OidcClientsList() {
         else if (status === "Deactivated") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
+    };
+
+    const showCopyPopUp = (status) => {
+        if (status.toLowerCase() === "approved") {
+            setShowPopup(true);
+        }
+    };
+
+    //This part is related to Filter
+    const onFilterChange = (fieldName, selectedFilter) => {
+        setFilterQuery(oldFilterQuery => ({
+            ...oldFilterQuery,
+            [fieldName]: selectedFilter
+        }));
     }
+    useEffect(() => {
+        let filteredRows = oidcClientsList;
+        Object.keys(filterQuery).forEach(key => {
+            //console.log(`${key} : ${filterQuery[key]}`);
+            if (filterQuery[key] !== '') {
+                filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
+            }
+        });
+        setFilteredOidcClientsList(filteredRows);
+        setFirstIndex(0);
+    }, [filterQuery]);
 
     //This part is related to Sorting
     const toggleSortDescOrder = (sortItem) => {
@@ -96,7 +133,7 @@ function OidcClientsList() {
                     const dateB = new Date(b.createdDate);
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
-                setfilteredOidcClientsList(sortedOidcClients);
+                setFilteredOidcClientsList(sortedOidcClients);
                 setOrder("DESC")
                 setIsDescending(!isDescending);
                 setActiveSortDesc(sortItem);
@@ -106,7 +143,7 @@ function OidcClientsList() {
                 const sortedOidcClients = [...tableValues].sort((a, b) =>
                     a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
                 );
-                setfilteredOidcClientsList(sortedOidcClients);
+                setFilteredOidcClientsList(sortedOidcClients);
                 setOrder("DESC")
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
@@ -122,7 +159,7 @@ function OidcClientsList() {
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
 
-                setfilteredOidcClientsList(sortedOidcClients);
+                setFilteredOidcClientsList(sortedOidcClients);
                 setOrder("ASC")
                 setIsDescending(!isDescending);
                 setActiveSortDesc(sortItem);
@@ -132,12 +169,25 @@ function OidcClientsList() {
                 const sortedOidcClients = [...tableValues].sort((a, b) =>
                     a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
                 );
-                setfilteredOidcClientsList(sortedOidcClients);
+                setFilteredOidcClientsList(sortedOidcClients);
                 setOrder("ASC")
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
             }
         }
+    };
+
+    //This part related to Pagination Logic
+    let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
+
+    const handlePageChange = (event) => {
+        const newIndex = (event.selected * selectedRecordsPerPage) % filteredOidcClientsList.length;
+        setFirstIndex(newIndex);
+    };
+    const changeItemsPerPage = (num) => {
+        setIsItemsPerPageOpen(false);
+        setSelectedRecordsPerPage(num);
+        setFirstIndex(0);
     };
 
     return (
@@ -198,7 +248,7 @@ function OidcClientsList() {
                                 <img src={rectangleGrid} alt="" />
                                 {activeOidcClient &&
                                     (<button onClick={() => createOidcClient()} type="button"
-                                        className={`text-white font-semibold mt-8 ${isLoginLanguageRTL ? "mr-14" : "ml-12"} bg-tory-blue rounded-md text-base px-4 py-3`}>
+                                        className={`text-white font-semibold mt-8 mr-5 bg-tory-blue rounded-md text-base px-4 py-3`}>
                                         {t('authenticationServices.createOidcClientBtn')}
                                     </button>)
                                 }
@@ -210,15 +260,15 @@ function OidcClientsList() {
                         <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                             <div className="flex w-full p-2">
                                 <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-lg" >
-                                    {t('oidcClientsList.listOfOidcClientRequests')}
+                                    {t('oidcClientsList.listOfOidcClientRequests') + ' (' + filteredOidcClientsList.length + ")"}
                                 </div>
                                 <div className="w-full flex justify-end relative ">
                                     <button type="button" onClick={() => createOidcClient()}
-                                    className="flex mr-2 justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
+                                        className="flex justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
                                         {t('oidcClientsList.createOidcClient')}
                                     </button>
                                     <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
+                                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                         {t('oidcClientsList.filterBtn')}
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white duration-700' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
@@ -232,12 +282,12 @@ function OidcClientsList() {
                                 </div>
                             </div>
                             <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                            {/* {filter &&
-                                <PoliciesFilter
-                                    filteredPoliciesList={filteredOidcClientsList}
-                                    onFilterChange={onFilterChange}
-                                ></PoliciesFilter>
-                            } */}
+                            {filter &&
+                                <OidcClientsFilter
+                                    filteredOidcClientsList={filteredOidcClientsList}
+                                    onFilterChange={onFilterChange}>
+                                </OidcClientsFilter>
+                            }
                             <div className="mx-[2%]">
                                 <table className="table-fixed">
                                     <thead>
@@ -271,7 +321,7 @@ function OidcClientsList() {
                                     </thead>
                                     <tbody>
                                         {
-                                            filteredOidcClientsList.map((client, index) => {
+                                            tableRows.map((client, index) => {
                                                 return (
                                                     <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                                         <td className="px-2">{client.partnerId}</td>
@@ -285,12 +335,16 @@ function OidcClientsList() {
                                                             </div>
                                                         </td>
                                                         <td className="pl-[2%]">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
+                                                            <svg onClick={() => showCopyPopUp(client.status)}
+                                                                xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                 <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                                                     d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
                                                                     transform="translate(-40 800)" fill={`${client.status === 'Approved' ? "#1447B2" : "#D1D1D1"}`} />
                                                             </svg>
                                                         </td>
+                                                        {showPopup && (
+                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={client.partnerId} policyName={client.policyName} />
+                                                        )}
                                                         <td className="text-center">
                                                             <div>
                                                                 <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
@@ -315,6 +369,58 @@ function OidcClientsList() {
                                         }
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
+                            <div></div>
+                            <ReactPaginate
+                                containerClassName={"pagination"}
+                                pageClassName={"page-item"}
+                                activeClassName={"active"}
+                                onPageChange={(event) => handlePageChange(event)}
+                                pageCount={Math.ceil(filteredOidcClientsList.length / selectedRecordsPerPage)}
+                                breakLabel="..."
+                                previousLabel={
+                                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                                        {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
+                                    </IconContext.Provider>
+                                }
+                                nextLabel={
+                                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                                        {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
+                                    </IconContext.Provider>
+                                }
+                            />
+                            <div className="flex items-center gap-x-3">
+                                <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
+                                <div>
+                                    <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                                        onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
+                                        <p>
+                                            {selectedRecordsPerPage}
+                                        </p>
+                                        <svg className={`${isItemsPerPageOpen ? "rotate-180" : null}`}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                                                transform="translate(-12 -16.6)" fill="#1447b2" />
+                                        </svg>
+                                    </div>
+                                    {isItemsPerPageOpen && (
+                                        <div className="absolute bg-white text-xs text-tory-blue font-medium rounded-b-lg shadow-md">
+                                            {itemsPerPageOptions.map((num, i) => {
+                                                return (
+                                                    <p key={i} onClick={() => changeItemsPerPage(num)}
+                                                        className="px-3 py-2 cursor-pointer hover:bg-gray-200">
+                                                        {num}
+                                                    </p>
+                                                )
+                                            })
+                                            }
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </>
