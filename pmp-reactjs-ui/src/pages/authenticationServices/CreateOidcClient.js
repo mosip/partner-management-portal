@@ -110,6 +110,7 @@ function CreateOidcClient() {
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
+    setPolicyName("");
     // Find the selected partner data
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
