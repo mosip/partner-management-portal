@@ -9,6 +9,7 @@ import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
 import PoliciesFilter from '../policies/PoliciesFilter';
+import CopyIdPopUp from './CopyIdPopUp';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -23,6 +24,7 @@ function OidcClientsList() {
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const [viewClientId, setViewClientId] = useState(-1);
     const itemsPerPageOptions = [5, 10, 15, 20];
@@ -88,7 +90,13 @@ function OidcClientsList() {
         else if (status === "Deactivated") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
-    }
+    };
+
+    const showCopyPopUp = (status) => {
+        if(status.toLowerCase()==="approved"){
+            setShowPopup(true);
+        }
+    };
 
     //This part is related to Sorting
     const toggleSortDescOrder = (sortItem) => {
@@ -230,11 +238,11 @@ function OidcClientsList() {
                                 </div>
                                 <div className="w-full flex justify-end relative ">
                                     <button type="button" onClick={() => createOidcClient()}
-                                        className="flex mr-2 justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
+                                        className="flex justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
                                         {t('oidcClientsList.createOidcClient')}
                                     </button>
                                     <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
+                                        ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "ml-2" :"mr-2"}`}>
                                         {t('oidcClientsList.filterBtn')}
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white duration-700' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
@@ -301,12 +309,16 @@ function OidcClientsList() {
                                                             </div>
                                                         </td>
                                                         <td className="pl-[2%]">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
+                                                            <svg onClick={() => showCopyPopUp( client.status)}
+                                                                xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                 <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                                                     d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
                                                                     transform="translate(-40 800)" fill={`${client.status === 'Approved' ? "#1447B2" : "#D1D1D1"}`} />
                                                             </svg>
                                                         </td>
+                                                        {showPopup && (
+                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={client.partnerId} policyName={client.policyName} />
+                                                        )}
                                                         <td className="text-center">
                                                             <div>
                                                                 <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
@@ -356,8 +368,7 @@ function OidcClientsList() {
                             <div className="flex items-center gap-x-3">
                                 <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                 <div>
-                                    <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                                    <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
                                         onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
                                         <p>
                                             {selectedRecordsPerPage}
