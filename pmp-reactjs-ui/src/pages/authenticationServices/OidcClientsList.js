@@ -177,6 +177,10 @@ function OidcClientsList() {
         }
     };
 
+    const onClearFilter = () => {
+        window.location.reload();
+    }
+
     //This part related to Pagination Logic
     let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
@@ -267,6 +271,10 @@ function OidcClientsList() {
                                         className="flex justify-center items-center text-sm py-2 px-2 font-semibold text-center text-white bg-tory-blue rounded-md">
                                         {t('oidcClientsList.createOidcClient')}
                                     </button>
+                                    {filter && <button onClick={() => onClearFilter()} type="button"
+                                        className="flex justify-center items-center w-[23%] text-base py-2 font-semibold text-cente text-tory-blue">
+                                        {t('policies.clearFilter')}
+                                    </button>}
                                     <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                         ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                         {t('oidcClientsList.filterBtn')}
