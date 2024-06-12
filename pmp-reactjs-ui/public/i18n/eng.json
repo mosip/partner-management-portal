@@ -183,7 +183,7 @@
         "selectPartnerId":"Select Partner ID",
         "devicePartner": "Device Partner",
         "policyGroupGoesHere": "Policy Group Goes Here",
-        "policyNameToolTip": "Only policies in APPROVED status will be available in the dropdown for selection.",
+        "policyNameToolTip": "Make sure to request policy for given partner ID in POLICIES screen first. Only those policies in APPROVED status is available in dropdown.",
         "policyNamePlaceHolder":"Select policy for which OIDC Client ID is required",
         "selectPolicyName": "Select Policy Name",
         "name": "Name",
@@ -201,7 +201,8 @@
         "addNew": "Add New",
         "commentBoxDesc": "Mention the purpose of requesting the OIDC Client",
         "errorInCreateOIDC": "While requesting OIDC Client, we have encountered with an error",
-        "invalidJwkFormat": "Invalid JWK format"
+        "invalidJwkFormat": "Invalid JWK format",
+        "partnerIdTooltip":"Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },
     "oidcClientsList": {
         "partnerId":"Partner ID",
@@ -368,6 +369,8 @@
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
         "PMS_CERTIFICATE_ERROR_002": "User Id does not exists.",
         "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty.",
+        "PMS_CERTIFICATE_ERROR_004": "Partner Type is null or empty",
+        "PMS_CERTIFICATE_ERROR_005": "Approval Status is null or empty",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
         "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",

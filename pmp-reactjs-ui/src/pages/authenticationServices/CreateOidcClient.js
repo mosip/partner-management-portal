@@ -337,7 +337,7 @@ function CreateOidcClient() {
                           selectedDropdownValue={partnerId}
                           styleSet={styles}
                           addInfoIcon={true}
-                          infoKey='requestPolicy.info'>
+                          infoKey='createOidcClient.partnerIdTooltip'>
                         </DropdownComponent>
                       </div>
                       <div className="flex flex-col w-[48%]">

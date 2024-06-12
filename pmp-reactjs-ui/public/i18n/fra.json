@@ -184,7 +184,7 @@
         "selectPartnerId":"Sélectionnez l'ID du partenaire",
         "devicePartner": "Partenaire de l'appareil",
         "policyGroupGoesHere": "Le groupe de politiques va ici",
-        "policyNameToolTip": "Seules les politiques au statut APPROUVÉ seront disponibles dans la liste déroulante pour la sélection.",
+        "policyNameToolTip": "Assurez-vous d'abord de demander la politique pour l'ID de partenaire donné dans l'écran POLITIQUES. Seules les politiques dont le statut est APPROUVÉ sont disponibles dans la liste déroulante.",
         "policyNamePlaceHolder":"Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "name": "Nom",
@@ -202,7 +202,8 @@
         "addNew": "Ajouter un nouveau",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
         "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur",
-        "invalidJwkFormat": "Format JWK invalide"
+        "invalidJwkFormat": "Format JWK invalide",
+        "partnerIdTooltip":"Seuls les ID de partenaire d'authentification dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
     },
     "oidcClientsList": {
         "partnerId":"ID partenaire",
@@ -369,6 +370,8 @@
         "PMS_CERTIFICATE_ERROR_001": "Erreur lors de la récupération des certificats partenaires.",
         "PMS_CERTIFICATE_ERROR_002": "L'ID utilisateur n'existe pas.",
         "PMS_CERTIFICATE_ERROR_003": "L'ID du partenaire est nul ou vide.",
+        "PMS_CERTIFICATE_ERROR_004": "Le type de partenaire est nul ou vide",
+        "PMS_CERTIFICATE_ERROR_005": "Le statut d'approbation est nul ou vide",
         "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
         "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
         "PMS_POLICY_ERROR_003": "Erreur lors de la récupération de tous les identifiants de partenaires approuvés avec les groupes de stratégies.",
