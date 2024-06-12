@@ -58,7 +58,7 @@ export const getStatusCode = (status, t) => {
         status = status.toLowerCase();
         if (status === "approved") {
             return t('statusCodes.approved');
-        } else if (status === "inprogress") {
+        } else if (status === "inprogress" || status === 'pending for approval') {
             return t('statusCodes.inProgress');
         } else if (status === "rejected") {
             return t('statusCodes.rejected');
