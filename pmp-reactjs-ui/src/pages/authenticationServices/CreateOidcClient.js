@@ -151,7 +151,7 @@ function CreateOidcClient() {
 
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
-    const urlPattern = /^(http|https):\/\/([^ "]+)?$/;
+    const urlPattern = /^(http|https):\/\/[^ "]+$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
     setRedirectUrls(newRedirectUrls);
@@ -201,7 +201,7 @@ function CreateOidcClient() {
 
   const handleLogoUrlChange = (value) => {
     setLogoUrl(value);
-    const urlPattern = /^(http|https):\/\/([^ "]+)?$/;
+    const urlPattern = /^(http|https):\/\/[^ "]+$/;
     if (value.trim() === "" || urlPattern.test(value)) {
       setInvalidLogoUrl("");
     } else {

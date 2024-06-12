@@ -4,13 +4,18 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
 
-function CopyIdPopUp({ closePopUp, policyName, partnerId }) {
+function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
     const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const copyId = () => {
-        setCopied(!copied);
+        navigator.clipboard.writeText(oidcClientId).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
     };
     const dismiss = () => {
         policyName='';
@@ -31,8 +36,8 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId }) {
                 <hr className={`py-[4%]`} />
                 <div className={` flex-col text-center items-center`}>
                     <h1 className={`text-[#6A6A6A] font-bold opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
-                    <p className={`font-bold text-xs`}>4fcqta1MRkzMnG5nEkbGPlBZmbJFRenR-sPCUWHEdsA</p>
-                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[7%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-20"} cursor-pointer`}>
+                    <p className={`font-bold text-xs break-words px-2`}>{oidcClientId}</p>
+                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-20"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             width="13.808" height="16.481" viewBox="0 0 13.808 16.481">
                             <path id="content_copy_FILL0_wght300_GRAD0_opsz24" 

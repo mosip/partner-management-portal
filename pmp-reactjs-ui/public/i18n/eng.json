@@ -96,7 +96,8 @@
         "approved": "Approved",
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
-        "deactivated": "Deactivated"
+        "deactivated": "Deactivated",
+        "active": "Active"
     },
     "policies": {
         "policies": "Policies",
@@ -166,6 +167,7 @@
         "oidcClient": "OIDC Client",
         "partnerId": "Partner ID",
         "policyName": "Policy Name",
+        "policyGroup": "Policy Group",
         "oidcClientName": "OIDC Client Name",
         "createdDate": "Created Date",
         "expiryDate": "Expiry Date",
@@ -228,7 +230,8 @@
         "selectOidcClientType": "Select OIDC Client",
         "selectPolicyGroup":"Select Policy Group",
         "selectPolicyName":"Select Policy Name",
-        "selectStatus":"Select Status"
+        "selectStatus":"Select Status",
+        "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
