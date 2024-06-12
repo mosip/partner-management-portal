@@ -199,9 +199,12 @@
         "enterGrantTypes": "أدخل أنواع المنح",
         "delete": "يمسح",
         "addNew": "اضف جديد",
+        "requestSuccessHeader": "تم إرسال الطلب بنجاح!",
+        "requestSuccessMsg": "تم إرسال طلب إنشاء عميل OIDC بنجاح. الموافقة في انتظار المشرف.",
         "commentBoxDesc": "اذكر الغرض من طلب عميل OIDC",
         "errorInCreateOIDC": "أثناء طلب عميل OIDC، واجهنا خطأ",
         "invalidJwkFormat": "تنسيق JWK غير صالح",
+        "invalidUrl": "تنسيق عنوان URL غير صالح. يجب أن يبدأ عنوان URL بـ http:// أو https://",
         "partnerIdTooltip":"تتوفر فقط معرفات شركاء المصادقة التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً"
     },
     "oidcClientsList": {

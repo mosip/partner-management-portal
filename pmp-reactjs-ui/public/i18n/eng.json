@@ -199,9 +199,12 @@
         "enterGrantTypes": "Enter Grant Types",
         "delete": "Delete",
         "addNew": "Add New",
+        "requestSuccessHeader": "Request Submitted Successfully!",
+        "requestSuccessMsg": "OIDC Client creation request has been successfully submitted. Approval is pending with admin.",
         "commentBoxDesc": "Mention the purpose of requesting the OIDC Client",
         "errorInCreateOIDC": "While requesting OIDC Client, we have encountered with an error",
         "invalidJwkFormat": "Invalid JWK format",
+        "invalidUrl": "Invalid URL format. URL must start with http:// or https://",
         "partnerIdTooltip":"Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },
     "oidcClientsList": {

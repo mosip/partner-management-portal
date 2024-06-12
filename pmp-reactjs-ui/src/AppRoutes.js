@@ -9,6 +9,7 @@ import RequestPolicy from './pages/policies/RequestPolicy';
 import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
 import OidcClientsList from './pages/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/authenticationServices/CreateOidcClient.js';
+import CreateOidcClientConfirmation from './pages/authenticationServices/CreateOidcClientConfirmation.js';
 
 function AppRoutes() {
 
@@ -52,6 +53,10 @@ function AppRoutes() {
         {
           path: 'createOidcClient',
           element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'createOidcClientConfirmation',
+          element: <GuardedRoute><MainLayout><CreateOidcClientConfirmation/></MainLayout></GuardedRoute>,
         }
       ],
     },

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { isLangRTL } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, createRequest, handleServiceErrors } from '../../utils/AppUtils.js';
+import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -99,10 +99,6 @@ function Dashboard() {
     navigate('/partnermanagement/policies')
   };
 
-  const OidcClientsList = () => {
-    navigate('/partnermanagement/authenticationServices/oidcClientsList')
-  };
-
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -179,7 +175,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div onClick={() => OidcClientsList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={authServiceIcon} alt=""></img>
               </div>

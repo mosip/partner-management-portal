@@ -134,6 +134,10 @@ export const moveToPolicies = (navigate) => {
     navigate('/partnermanagement/policies')
 };
 
+export const moveToOidcClientsList = (navigate) => {
+    navigate('/partnermanagement/authenticationServices/oidcClientsList')
+};
+
 export const logout = async () => {
     localStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
