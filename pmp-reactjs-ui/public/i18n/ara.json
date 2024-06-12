@@ -96,7 +96,8 @@
         "approved": "موافقة",
         "inProgress": "في انتظار لموافقة",
         "rejected": "مرفوض",
-        "deactivated": "معطل"
+        "deactivated": "معطل",
+        "active": "نشيط"
     },
     "policies": {
         "policies": "سياسات",
@@ -166,6 +167,7 @@
         "oidcClient": "عميل OIDC",
         "partnerId": "معرف الشريك",
         "policyName": "اسم السياسة",
+        "policyGroup": "مجموعة السياسات",
         "oidcClientName": "اسم عميل OIDC",
         "createdDate": "تاريخ الإنشاء",
         "expiryDate": "تاريخ الانتهاء",
@@ -228,7 +230,8 @@
         "selectOidcClientType": "حدد عميل OIDC",
         "selectPolicyGroup":"حدد مجموعة السياسات",
         "selectPolicyName":"حدد اسم السياسة",
-        "selectStatus":"حدد الحالة"
+        "selectStatus":"حدد الحالة",
+        "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",

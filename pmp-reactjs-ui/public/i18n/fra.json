@@ -96,7 +96,8 @@
         "approved": "Approuvée",
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
-        "deactivated": "Désactivé"
+        "deactivated": "Désactivé",
+        "active": "Active"
     },
     "policies": {
         "policies": "Stratégies",
@@ -167,6 +168,7 @@
         "oidcClient": "Client OIDC",
         "partnerId": "ID partenaire",
         "policyName": "Nom de la politique",
+        "policyGroup": "Groupe de politiques",
         "oidcClientName": "Nom du client OIDC",
         "createdDate": "Date de création",
         "expiryDate": "Date d'expiration",
@@ -229,7 +231,8 @@
         "selectOidcClientType": "Sélectionnez le client OIDC",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
         "selectPolicyName":"Sélectionnez le nom de la stratégie",
-        "selectStatus":"Sélectionnez le statut"
+        "selectStatus":"Sélectionnez le statut",
+        "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

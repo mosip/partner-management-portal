@@ -44,7 +44,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
         const fetchData = async () => {
             setPartnerIdData(getData('partnerId'));
             setOidcClientNameData(getData('oidcClientName'));
-            setpolicyGroupData(getData('policyGroup'));
+            setpolicyGroupData(getData('policyGroupName'));
             setPolicyNameData(getData('policyName'));
             setStatusData(getData('status'));
         };
@@ -71,19 +71,11 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent
-                    fieldName='policyGroup'
+                    fieldName='policyGroupName'
                     dropdownDataList={policyGroupData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.policyGroup'
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
-                    styleSet={styles}>
-                </DropdownComponent>
-                <DropdownComponent
-                    fieldName='oidcClientName'
-                    dropdownDataList={oidcClientNameData}
-                    onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='oidcClientsList.oidcClientName'
-                    placeHolderKey='oidcClientsList.selectOidcClientType'
                     styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
@@ -92,6 +84,14 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='oidcClientsList.policyName' 
                     placeHolderKey='oidcClientsList.selectPolicyName'
+                    styleSet={styles}>
+                </DropdownComponent>
+                <DropdownComponent
+                    fieldName='oidcClientName'
+                    dropdownDataList={oidcClientNameData}
+                    onDropDownChangeEvent={onFilterChangeEvent}
+                    fieldNameKey='oidcClientsList.oidcClientName'
+                    placeHolderKey='oidcClientsList.selectOidcClientType'
                     styleSet={styles}>
                 </DropdownComponent>
                 <DropdownComponent 
