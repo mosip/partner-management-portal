@@ -200,9 +200,12 @@
         "enterGrantTypes": "Entrez les types de subventions",
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
+        "requestSuccessHeader": "Demande soumise avec succès !",
+        "requestSuccessMsg": "La demande de création de client OIDC a été soumise avec succès. L'approbation est en attente auprès de l'administrateur.",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
         "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur",
         "invalidJwkFormat": "Format JWK invalide",
+        "invalidUrl": "Format d'URL invalide. L'URL doit commencer par http:// ou https://",
         "partnerIdTooltip":"Seuls les ID de partenaire d'authentification dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
     },
     "oidcClientsList": {

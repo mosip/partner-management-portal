@@ -6,7 +6,8 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
+  handleMouseClickForDropdown, moveToOidcClientsList } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -35,6 +36,8 @@ function CreateOidcClient() {
   const [grantTypes, setGrantTypes] = useState(['']);
   const [validationError, setValidationError] = useState("");
   const [jsonError, setJsonError] = useState("");
+  const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
+  const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const tooltipRef = useRef(null);
 
   const cancelErrorMsg = () => {
@@ -146,15 +149,17 @@ function CreateOidcClient() {
     navigate('/partnermanagement')
   };
 
-  const moveToAuthenticationServices = () => {
-    navigate('/partnermanagement/authenticationServices/oidcClientsList');
-  };
-
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
+    const urlPattern = /^(http|https):\/\/([^ "]+)?$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
     setRedirectUrls(newRedirectUrls);
+    if (value.trim() === "" || urlPattern.test(value)) {
+      setInvalidRedirectUrl("");
+    } else {
+      setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
+    }
   };
   const addNewRedirectUrl = () => {
     setRedirectUrls([...redirectUrls, '']);
@@ -194,6 +199,16 @@ function CreateOidcClient() {
     }
   }
 
+  const handleLogoUrlChange = (value) => {
+    setLogoUrl(value);
+    const urlPattern = /^(http|https):\/\/([^ "]+)?$/;
+    if (value.trim() === "" || urlPattern.test(value)) {
+      setInvalidLogoUrl("");
+    } else {
+      setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+    }
+  };
+
   const clickOnSubmit = async () => {
     setErrorCode("");
     setErrorMsg("");
@@ -224,7 +239,7 @@ function CreateOidcClient() {
           const responseData = response.data;
           if (responseData && responseData.response) {
               const resData = responseData.response;
-              console.log(resData);
+              navigate('/partnermanagement/createOidcClientConfirmation');
               console.log(`Response data: ${resData.length}`);
           } else {
               handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -252,6 +267,10 @@ function CreateOidcClient() {
     setRedirectUrls(['']);
     setGrantTypes(['']);
     setPartnerComments("");
+    setJsonError("");
+    setInvalidLogoUrl("");
+    setInvalidRedirectUrl("");
+    setValidationError("");
   };
 
   const validateComments = (comments) => {
@@ -276,7 +295,8 @@ function CreateOidcClient() {
   };
 
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes && partnerComments;
+    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes 
+      && partnerComments && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
   };
 
   const styles = {
@@ -303,14 +323,14 @@ function CreateOidcClient() {
           <div className="flex-col">
             <div className="flex justify-between">
               <div className="flex items-start gap-x-3">
-                <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices()} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                <img src={backArrow} alt="" onClick={() => moveToOidcClientsList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-xl text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
                   <div className="flex space-x-1">
                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                       {t('commons.home')} /
                     </p>
-                    <p onClick={() => moveToAuthenticationServices()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                    <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                       {t('authenticationServices.authenticationServices')}
                     </p>
                   </div>
@@ -407,9 +427,10 @@ function CreateOidcClient() {
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
                         <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.logoUrl')}<span className="text-crimson-red">*</span></label>
-                        <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)}
+                        <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                           className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
+                        {invalidLogoUrl && <span className="text-sm text-crimson-red font-medium">{invalidLogoUrl}</span>}
                       </div>
                     </div>
 
@@ -433,6 +454,7 @@ function CreateOidcClient() {
                             )}
                           </div>
                         ))}
+                        {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
                         <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
                           <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
                         </p>
@@ -479,7 +501,7 @@ function CreateOidcClient() {
               <div className="flex flex-row px-[3%] py-[2%] justify-between">
                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                  <button onClick={() => moveToAuthenticationServices(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
+                  <button onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
                   <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                 </div>
               </div>
