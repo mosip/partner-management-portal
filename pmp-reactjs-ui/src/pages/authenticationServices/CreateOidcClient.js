@@ -267,6 +267,10 @@ function CreateOidcClient() {
     setRedirectUrls(['']);
     setGrantTypes(['']);
     setPartnerComments("");
+    setJsonError("");
+    setInvalidLogoUrl("");
+    setInvalidRedirectUrl("");
+    setValidationError("");
   };
 
   const validateComments = (comments) => {
