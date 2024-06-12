@@ -248,7 +248,13 @@ export class MasterDataCommonBodyComponent implements OnInit {
       ); 
       this.dataStorageService.mapSBIVersion(request).subscribe(response => { 
         if (!response.errors || (response.errors.length == 0)) {
-          this.showMessage(response.response)
+          let message;
+          if(response.response === 'Mapping already exists'){
+            message = this.popupMessages.generickeys.mapped
+          }else{
+            message = this.popupMessages.generickeys.updatedSuccessfully
+          }
+          this.showMessage(message)
             .afterClosed()
             .subscribe(() => {
               this.dropDownValues["sbiId"] = [];
@@ -257,7 +263,8 @@ export class MasterDataCommonBodyComponent implements OnInit {
               this.getSbidetailFilterValues("sbiId");  
             });
         }else{
-          this.showErrorPopup(response.errors[0].message);
+          let message = this.popupMessages.serverError[response.errors[0].errorCode].replace('$ID', response.errors[0].message.split("id ")[1].split(" ")[0])
+          this.showErrorPopup(message);
         }
       });
     }
@@ -552,6 +559,7 @@ export class MasterDataCommonBodyComponent implements OnInit {
         }
       }
     }
+    
     let len = mandatoryFieldName.length;
     for (let i = 0; i < len; i++) {
       if(!self.primaryData[mandatoryFieldName[i]]){
@@ -603,7 +611,8 @@ export class MasterDataCommonBodyComponent implements OnInit {
               this.changePage();
             });
         } else {
-          this.showErrorPopup(response.errors[0].message);
+          
+          this.showErrorPopup(this.popupMessages.serverError[response.errors[0].errorCode]);
         }
       });
     }else{ 
@@ -617,8 +626,7 @@ export class MasterDataCommonBodyComponent implements OnInit {
         url = "partnermanager/partners/"+this.primaryData["partnerId"]+"/policy/map";
         this.dataStorageService.requestAPIKey(url, request).subscribe(response => {
           if (!response.errors || (response.errors.length == 0)) {
-            let url = response.response.message;
-            this.showMessage(url)
+            this.showMessage(this.popupMessages.policy.updatedSuccessfully)
               .afterClosed()
               .subscribe(() => {
                 this.changePage();
