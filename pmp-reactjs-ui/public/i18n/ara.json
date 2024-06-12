@@ -200,7 +200,8 @@
         "delete": "يمسح",
         "addNew": "اضف جديد",
         "commentBoxDesc": "اذكر الغرض من طلب عميل OIDC",
-        "errorInCreateOIDC": "أثناء طلب عميل OIDC، واجهنا خطأ"
+        "errorInCreateOIDC": "أثناء طلب عميل OIDC، واجهنا خطأ",
+        "invalidJwkFormat": "تنسيق JWK غير صالح"
     },
     "oidcClientsList": {
         "partnerId":"معرف الشريك",

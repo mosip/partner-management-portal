@@ -201,7 +201,8 @@
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
-        "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur"
+        "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur",
+        "invalidJwkFormat": "Format JWK invalide"
     },
     "oidcClientsList": {
         "partnerId":"ID partenaire",

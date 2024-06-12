@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
@@ -6,7 +6,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -16,12 +16,9 @@ function CreateOidcClient() {
   const [partnerComments, setPartnerComments] = useState("");
   const [oidcClientName, setOidcClientName] = useState("");
   const [publicKey, setPublicKey] = useState("");
+  const [publicKeyInJson, setPublicKeyInJson] = useState(null);
   const [showPublicKeyToolTip, setShowPublicKeyToolTip] = useState(false);
-  const [redirectUrl, setRedirectUrl] = useState("");
-  const [redirectUrlList, setRedirectUrlList] = useState([]);
   const [logoUrl, setLogoUrl] = useState("");
-  const [typeOfGrants, setTypeOfGrants] = useState([]);
-  const [grantTypes, setGrantTypes] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -34,10 +31,20 @@ function CreateOidcClient() {
   const [partnerType, setPartnerType] = useState("");
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
+  const [redirectUrls, setRedirectUrls] = useState(['']);
+  const [grantTypes, setGrantTypes] = useState(['']);
+  const [validationError, setValidationError] = useState("");
+  const [jsonError, setJsonError] = useState("");
+  const tooltipRef = useRef(null);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
+
+  useEffect(() => {
+    const clickOutSideDropdown = handleMouseClickForDropdown(tooltipRef, () => setShowPublicKeyToolTip(false));
+    return clickOutSideDropdown;
+}, [tooltipRef]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,10 +128,13 @@ function CreateOidcClient() {
   };
 
   const onChangePolicyName = (fieldName, selectedValue) => {
-    const selectedPolicy = policiesDropdownData.find(item => item.fieldValue === selectedValue);
-    if (selectedPolicy) {
-      setPolicyName(selectedPolicy.fieldCode);
-      setPolicyId(selectedValue);
+    const selectedPartner = partnerData.find(item => item.partnerId === partnerId);
+    if (selectedPartner) {
+      const selectedPolicy = selectedPartner.activePolicies.find(item => item.policyName === selectedValue);
+      if (selectedPolicy) {
+        setPolicyName(selectedValue);
+        setPolicyId(selectedPolicy.policyId);
+      }
     }
   };
 
@@ -141,63 +151,75 @@ function CreateOidcClient() {
   };
 
   // Below code related to adding & deleting of Redirect URLs
-
-  const addRedirectUrl = () => {
-    const updatedRedirectUrls = [...redirectUrlList, []];
-    setRedirectUrlList(updatedRedirectUrls);
-    console.log(updatedRedirectUrls);
+  const onChangeRedirectUrl = (index, value) => {
+    const newRedirectUrls = [...redirectUrls];
+    newRedirectUrls[index] = value;
+    setRedirectUrls(newRedirectUrls);
   };
-  const handleRedirectUrlChange = (event, i) => {
-    const inputRedirectUrls = [...redirectUrlList];
-    inputRedirectUrls[i] = event.target.value;
-    setRedirectUrlList(inputRedirectUrls);
+  const addNewRedirectUrl = () => {
+    setRedirectUrls([...redirectUrls, '']);
   };
-  const deleteLogoUrl = (i) => {
-    const filteredRedirectUrls = [...redirectUrlList];
-    filteredRedirectUrls.splice(i, 1);
-    setRedirectUrlList(filteredRedirectUrls);
+  const onDeleteRedirectUrl = (index) => {
+    const newRedirectUrls = redirectUrls.filter((_, i) => i !== index);
+    setRedirectUrls(newRedirectUrls);
   };
 
   // Below code related to addind & deleting of Grant Types
+  const onChangeGrantType = (index, value) => {
+    const newGrantTypes = [...grantTypes];
+    newGrantTypes[index] = value;
+    setGrantTypes(newGrantTypes);
+  }
+  const addNewGrantTypes = () => {
+    setGrantTypes([...grantTypes, '']);
+  }
+  const onDeleteGrantTypes = (index) => {
+    const newGrantTypes = grantTypes.filter((_, i) => i !== index);
+    setGrantTypes(newGrantTypes);
+  }
 
-  const addTypeOfGrants = () => {
-    const updatedtypeOfGrants = [...typeOfGrants, []];
-    setTypeOfGrants(updatedtypeOfGrants);
-  };
-  const handleGrantTypeChange = (value, i) => {
-    console.log(value + 'data--');
-    const inputGrantTypes = [...typeOfGrants];
-    inputGrantTypes[i] = value;
-    setTypeOfGrants(inputGrantTypes);
-  };
-  const deleteGrantType = (i) => {
-    const filteredTypeOfGrants = [...typeOfGrants];
-    filteredTypeOfGrants.splice(i, 1)
-    setTypeOfGrants(filteredTypeOfGrants);
-  };
+  const handlePublicKeyChange = (value) => {
+    setPublicKey(value);
+    if (value.trim() === "") {
+      setJsonError("");
+      setPublicKeyInJson(null);
+      return;
+    }
+    try {
+      const parsedValue = JSON.parse(value);
+      setPublicKeyInJson(parsedValue);
+      setJsonError("");
+    } catch (err) {
+      setJsonError(t('createOidcClient.invalidJwkFormat'));
+    }
+  }
 
   const clickOnSubmit = async () => {
     setErrorCode("");
     setErrorMsg("");
     setDataLoaded(false);
-    let request = {
-        request: {
-            name: oidcClientName,
-            policyId: policyId,
-            publicKey: publicKey,
-            authPartnerId: partnerId,
-            logoUri: logoUrl,
-            redirectUris: redirectUrlList,
-            grantTypes: typeOfGrants,
-            clientAuthMethods: ["private_key_jwt"],
-            clientNameLangMap: {
-              "eng": oidcClientName
-            }
-        },
-    }
+    let request = createRequest({
+      name: oidcClientName,
+      policyId: policyId,
+      publicKey: publicKeyInJson,
+      authPartnerId: partnerId,
+      logoUri: logoUrl,
+      redirectUris: redirectUrls,
+      grantTypes: grantTypes,
+      clientAuthMethods: ["private_key_jwt"],
+      clientNameLangMap: {
+        "eng": oidcClientName,
+        "fra": oidcClientName,
+        "ara": oidcClientName
+      }
+    });
     console.log(request);
     try {
-      const response = await HttpService.post(getPartnerManagerUrl(`/oauth/client`, process.env.NODE_ENV), request);
+      const response = await HttpService.post(getPartnerManagerUrl(`/oauth/client`, process.env.NODE_ENV), request, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
@@ -219,10 +241,42 @@ function CreateOidcClient() {
 
 
   const clearForm = () => {
-    setPartnerComments("");
+    setPartnerId("");
+    setPartnerType("");
+    setPolicyGroupName("");
+    setPoliciesDropdownData([]);
+    setPolicyName("");
     setOidcClientName("");
     setPublicKey("");
-    setRedirectUrl("");
+    setLogoUrl("");
+    setRedirectUrls(['']);
+    setGrantTypes(['']);
+    setPartnerComments("");
+  };
+
+  const validateComments = (comments) => {
+    let error = "";
+    const maxLength = 500;
+    const regexPattern = /^[a-zA-Z0-9-_ ,.]*$/;
+    if (comments.length > maxLength) {
+        error = t('requestPolicy.commentTooLong');
+    } else if (!regexPattern.test(comments)) {
+        error = t('requestPolicy.specialCharNotAllowed');
+    }
+    setValidationError(error);
+    return error === "";
+  };
+
+  const handleCommentChange = (e) => {
+      const { value } = e.target;
+      if (validateComments(value)) {
+          setValidationError("");
+          setPartnerComments(value);
+      }
+  };
+
+  const isFormValid = () => {
+    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes && partnerComments;
   };
 
   const styles = {
@@ -339,17 +393,19 @@ function CreateOidcClient() {
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div className={`z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[8%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div ref={tooltipRef} className={`z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[8%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
-                        <textarea value={publicKey} onChange={(e) => setPublicKey(e.target.value)}
+                        <textarea value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                           className="h-14 px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                          placeholder={t('createOidcClient.publicKeyPlaceHolder')}></textarea>
+                          placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
+                        </textarea>
+                        {jsonError && <span className="text-sm text-crimson-red font-medium">{jsonError}</span>}
                       </div>
                     </div>
                     <div className="flex my-[1%]">
-                      <div className="flex flex-col w-[562px]">
+                      <div className="flex flex-col w-full">
                         <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.logoUrl')}<span className="text-crimson-red">*</span></label>
                         <input value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)}
                           className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
@@ -359,59 +415,60 @@ function CreateOidcClient() {
 
                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
                       <div className="flex flex-col w-[48%]">
-                        <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.redirectUrl')}<span className="text-crimson-red">*</span></label>
-                        <ul>
-                          <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline">
-                            <input value={redirectUrl} onChange={(e) => setRedirectUrl(e.target.value)} placeholder={t('createOidcClient.redirectUrlPlaceHolder')} className="w-[85%] focus:outline-none" />
+                        <label className="block text-dark-blue text-base font-semibold mb-1">
+                          {t('createOidcClient.redirectUrl')}<span className="text-crimson-red">*</span>
+                        </label>
+                        {redirectUrls.map((url, index) => (
+                          <div key={index} className="flex w-full justify-between items-center h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
+                            <input
+                              value={url}
+                              onChange={(e) => onChangeRedirectUrl(index, e.target.value)}
+                              placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
+                              className="w-[85%] focus:outline-none"
+                            />
+                            {index > 0 && (
+                              <p onClick={() => onDeleteRedirectUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
+                                {t('createOidcClient.delete')}
+                              </p>
+                            )}
                           </div>
-                          {redirectUrlList.map((data, index) => {
-                            return (
-                              <li key={index}>
-                                <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                                  <input value={data} onChange={(e) => handleRedirectUrlChange(e, index)} placeholder={t("createOidcClient.redirectUrlPlaceHolder")} className="w-[85%] focus:outline-none" />
-                                  <p onClick={() => deleteLogoUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                                    {t('createOidcClient.delete')}
-                                  </p>
-                                </div>
-                              </li>
-                            )
-                          })
-                          }
-                        </ul>
-                        <p type="button" onClick={() => addRedirectUrl()} className="text-[#1447b2] font-bold text-xs cursor-pointer"><span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}</p>
+                        ))}
+                        <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
+                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
+                        </p>
                       </div>
 
                       <div className="flex flex-col w-[48%]">
                         <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.grantTypes')}<span className="text-crimson-red">*</span></label>
-                        <ul>
-                          <div className="flex w-f justify-between h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                            <input value={grantTypes} onChange={(e) => setGrantTypes(e.target.value)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
+                        {grantTypes.map((grantType, index) => (
+                          <div key={index} className="flex w-full justify-between items-center h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
+                            <input
+                              value={grantType}
+                              onChange={(e) => onChangeGrantType(index, e.target.value)}
+                              placeholder={t('createOidcClient.enterGrantTypes')}
+                              className="w-[85%] focus:outline-none"
+                            />
+                            {index > 0 && (
+                              <p onClick={() => onDeleteGrantTypes(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
+                                {t('createOidcClient.delete')}
+                              </p>
+                            )}
                           </div>
-                          {typeOfGrants.map((itemData, index) => {
-                            return (
-                              <li key={index}>
-                                <div className="flex w-full justify-between h-11 px-2 py-2 mt-1 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar">
-                                  <input value={itemData} onChange={(e) => handleGrantTypeChange(e.target.value, index)} placeholder={t('createOidcClient.enterGrantTypes')} className="w-[100%] focus:outline-none" />
-                                  <p onClick={() => deleteGrantType(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                                    {t('createOidcClient.delete')}
-                                  </p>
-                                </div>
-                              </li>
-                            )
-                          })
-                          }
-                        </ul>
-                        <p type="button" onClick={() => addTypeOfGrants()} className="text-[#1447b2] font-bold text-xs cursor-pointer"><span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}</p>
+                        ))}
+                        <p type="button" onClick={() => addNewGrantTypes()} className="text-[#1447b2] font-bold text-xs cursor-pointer">
+                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
+                        </p>
                       </div>
                     </div>
 
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
                         <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                        <textarea value={partnerComments} onChange={(e) => setPartnerComments(e.target.value)}
+                        <textarea value={partnerComments} onChange={(e) => handleCommentChange(e)}
                           className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.commentBoxDesc')}>
                         </textarea>
+                        {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
                       </div>
                     </div>
                   </div>
@@ -423,7 +480,7 @@ function CreateOidcClient() {
                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                   <button onClick={() => moveToAuthenticationServices(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
-                  <button onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold bg-tory-blue text-white`}>{t('requestPolicy.submit')}</button>
+                  <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                 </div>
               </div>
             </div>
