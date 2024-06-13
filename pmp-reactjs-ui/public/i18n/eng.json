@@ -256,7 +256,7 @@
         "adminName": "Admin Name",
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
-        "commentOfPartner": ""
+        "back": "Back"
 
     },
     "editOidcClient": {
