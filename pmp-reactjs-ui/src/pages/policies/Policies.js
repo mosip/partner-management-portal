@@ -334,7 +334,7 @@ function Policies() {
                           onFilterChange={onFilterChange}
                         ></PoliciesFilter>}
 
-                      <div className="mx-[2%] overflow-x-scroll">
+                      <div className="mx-[2%]">
                         <table className="table-fixed">
                           <thead>
                             <tr>
