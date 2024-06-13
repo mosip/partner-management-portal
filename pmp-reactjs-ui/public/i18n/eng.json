@@ -118,7 +118,7 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
-        "itemsPerPage": "Items per Page",
+        "itemsPerPage": "Items per page",
         "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
     "viewPolicyDetails": {
