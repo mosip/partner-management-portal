@@ -10,6 +10,9 @@ import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmatio
 import OidcClientsList from './pages/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/authenticationServices/CreateOidcClient.js';
 import CreateOidcClientConfirmation from './pages/authenticationServices/CreateOidcClientConfirmation.js';
+import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClientDetails.js';
+import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
+import DeactivateOidcClient from './pages/authenticationServices/DeactivateOidcClient.js';
 
 function AppRoutes() {
 
@@ -57,7 +60,20 @@ function AppRoutes() {
         {
           path: 'createOidcClientConfirmation',
           element: <GuardedRoute><MainLayout><CreateOidcClientConfirmation/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'viewOidcClienDetails',
+          element: <GuardedRoute><MainLayout><ViewOidcClientDetails/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'editOidcClient',
+          element: <GuardedRoute><MainLayout><EditOidcClient/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'deactivateOidcClient',
+          element: <GuardedRoute><MainLayout><DeactivateOidcClient/></MainLayout></GuardedRoute>,
         }
+         
       ],
     },
   ])

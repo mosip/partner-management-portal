@@ -263,8 +263,8 @@ function ViewOidcClientDetails() {
                                             <h4 className="text-lg  text-[#031640]">
                                                 {t("viewOidcClientDetails.partnersComment")}
                                             </h4>
-                                            <p className="text-[#666666] text-sm ">{t('viewOidcClientDetails.commentsOfAdmin')}</p>
-                                            <span className="text-sm mt-3">
+                                            
+                                            <span className="text-sm mt-3 break-all">
                                                 {oidcClientDetails.partnerComments}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-1" />
