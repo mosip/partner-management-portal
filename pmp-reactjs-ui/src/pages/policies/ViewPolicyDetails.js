@@ -207,7 +207,7 @@ function ViewPolicyDetails() {
                                             <h4 className="text-lg  text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
-                                            <span className="text-sm mt-3">
+                                            <span className="text-sm mt-3 break-all">
                                                 {policyDetails.partnerComments}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
