@@ -385,8 +385,8 @@ function Policies() {
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute ${isLoginLanguageRTL ? "mr-16": null} bg-white text-xs font-medium rounded-lg shadow-md border`}>
-                                            <p className="px-5 py-2 cursor-pointer">
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%]`}>
+                                            <p className={`${isLoginLanguageRTL ? "ml-16" :"mr-12"} cursor-pointer`}>
                                               {t('policies.view')}
                                             </p>
                                           </div>
