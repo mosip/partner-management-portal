@@ -44,7 +44,7 @@ function RequestPolicyConfirmation() {
                             <p className="text-[#666666] text-sm font-semibold">
                                 {t('requestPolicy.policySuccessMsg')}
                             </p>
-                            <div className="flex space-x-3 mt-12 border justify-center">
+                            <div className="flex space-x-3 mt-12 justify-center">
                                 <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-base px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
