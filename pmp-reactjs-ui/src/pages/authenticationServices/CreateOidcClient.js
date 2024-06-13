@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
@@ -7,7 +7,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
-  handleMouseClickForDropdown, moveToOidcClientsList } from '../../utils/AppUtils';
+  moveToOidcClientsList } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -33,21 +33,17 @@ function CreateOidcClient() {
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
-  const [grantTypes, setGrantTypes] = useState(['']);
+  const [grantTypes, setGrantTypes] = useState("");
+  const [grantTypesList, setGrantTypesList] = useState(['']);
+  const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
   const [validationError, setValidationError] = useState("");
   const [jsonError, setJsonError] = useState("");
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
-  const tooltipRef = useRef(null);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
-
-  useEffect(() => {
-    const clickOutSideDropdown = handleMouseClickForDropdown(tooltipRef, () => setShowPublicKeyToolTip(false));
-    return clickOutSideDropdown;
-}, [tooltipRef]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,11 +58,12 @@ function CreateOidcClient() {
             const resData = responseData.response;
             setPartnerData(resData);
             setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
+            setGrantTypesDropdownData(createGrantTypesDropdownData());
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
         } else {
-          setErrorMsg(t('policies.errorInPoliciesList'));
+          setErrorMsg(t('createOidcClient.errorInResponse'));
         }
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -94,6 +91,15 @@ function CreateOidcClient() {
           fieldValue: item[fieldName]
         });
       }
+    });
+    return dataArr;
+  }
+
+  const createGrantTypesDropdownData =() => {
+    let dataArr = [];
+    dataArr.push({
+      fieldCode: t('createOidcClient.authorizationCode'),
+      fieldValue: "authorization_code"
     });
     return dataArr;
   }
@@ -141,6 +147,13 @@ function CreateOidcClient() {
     }
   };
 
+  const handleGrantTypesChange = (fieldName, selectedValue) => {
+    setGrantTypes(selectedValue);
+    const grantTypeValue = [''];
+    grantTypeValue[0] = selectedValue
+    setGrantTypesList(grantTypeValue);
+  }
+
 
   const navigate = useNavigate();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -168,20 +181,6 @@ function CreateOidcClient() {
     const newRedirectUrls = redirectUrls.filter((_, i) => i !== index);
     setRedirectUrls(newRedirectUrls);
   };
-
-  // Below code related to addind & deleting of Grant Types
-  const onChangeGrantType = (index, value) => {
-    const newGrantTypes = [...grantTypes];
-    newGrantTypes[index] = value;
-    setGrantTypes(newGrantTypes);
-  }
-  const addNewGrantTypes = () => {
-    setGrantTypes([...grantTypes, '']);
-  }
-  const onDeleteGrantTypes = (index) => {
-    const newGrantTypes = grantTypes.filter((_, i) => i !== index);
-    setGrantTypes(newGrantTypes);
-  }
 
   const handlePublicKeyChange = (value) => {
     setPublicKey(value);
@@ -220,12 +219,10 @@ function CreateOidcClient() {
       authPartnerId: partnerId,
       logoUri: logoUrl,
       redirectUris: redirectUrls,
-      grantTypes: grantTypes,
+      grantTypes: grantTypesList,
       clientAuthMethods: ["private_key_jwt"],
       clientNameLangMap: {
-        "eng": oidcClientName,
-        "fra": oidcClientName,
-        "ara": oidcClientName
+        "eng": oidcClientName
       }
     });
     console.log(request);
@@ -265,7 +262,8 @@ function CreateOidcClient() {
     setPublicKey("");
     setLogoUrl("");
     setRedirectUrls(['']);
-    setGrantTypes(['']);
+    setGrantTypes("");
+    setGrantTypesList(['']);
     setPartnerComments("");
     setJsonError("");
     setInvalidLogoUrl("");
@@ -409,11 +407,13 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className="flex space-x-1 items-center text-dark-blue text-base font-semibold mb-1">
                           {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
-                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} onClick={() => setShowPublicKeyToolTip(!showPublicKeyToolTip)} />
+                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} 
+                            onMouseEnter={() => setShowPublicKeyToolTip(true)}
+                            onMouseLeave={() => setShowPublicKeyToolTip(false)} />
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div ref={tooltipRef} className={`z-20 w-[24%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[8%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[120px]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
@@ -447,40 +447,32 @@ function CreateOidcClient() {
                               placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                               className="w-[85%] focus:outline-none"
                             />
-                            {index > 0 && (
+                            {index < redirectUrls.length - 1 && (
                               <p onClick={() => onDeleteRedirectUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
                                 {t('createOidcClient.delete')}
+                              </p>
+                            )}
+                            {index === redirectUrls.length - 1 && (
+                              <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
+                                <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
                               </p>
                             )}
                           </div>
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
-                        <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
-                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
-                        </p>
                       </div>
 
                       <div className="flex flex-col w-[48%]">
-                        <label className="block text-dark-blue text-base font-semibold mb-1">{t('createOidcClient.grantTypes')}<span className="text-crimson-red">*</span></label>
-                        {grantTypes.map((grantType, index) => (
-                          <div key={index} className="flex w-full justify-between items-center h-11 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
-                            <input
-                              value={grantType}
-                              onChange={(e) => onChangeGrantType(index, e.target.value)}
-                              placeholder={t('createOidcClient.enterGrantTypes')}
-                              className="w-[85%] focus:outline-none"
-                            />
-                            {index > 0 && (
-                              <p onClick={() => onDeleteGrantTypes(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                                {t('createOidcClient.delete')}
-                              </p>
-                            )}
-                          </div>
-                        ))}
-                        <p type="button" onClick={() => addNewGrantTypes()} className="text-[#1447b2] font-bold text-xs cursor-pointer">
-                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
-                        </p>
-                      </div>
+                        <DropdownComponent
+                          fieldName='grantTypes'
+                          dropdownDataList={grantTypesDropdownData}
+                          onDropDownChangeEvent={handleGrantTypesChange}
+                          fieldNameKey='createOidcClient.grantTypes*'
+                          placeHolderKey='createOidcClient.enterGrantTypes'
+                          selectedDropdownValue={grantTypes}
+                          styleSet={styles}>
+                        </DropdownComponent>
+                        </div>
                     </div>
 
                     <div className="flex my-[1%]">
