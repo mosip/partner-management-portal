@@ -241,20 +241,20 @@ function Policies() {
   };
 
   return (
-    <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
+            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
               <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
             </div>
           )}
-          <div className="flex-col">
+          <div className="flex-col mt-7">
             <div className="flex justify-between mb-5">
               <div className="flex items-start gap-x-2">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
@@ -385,8 +385,8 @@ function Policies() {
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute ${isLoginLanguageRTL ? "mr-16": null} bg-white text-xs font-medium rounded-lg shadow-md border`}>
-                                            <p className="px-5 py-2 cursor-pointer">
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%]`}>
+                                            <p className={`${isLoginLanguageRTL ? "ml-16" :"mr-12"} cursor-pointer`}>
                                               {t('policies.view')}
                                             </p>
                                           </div>

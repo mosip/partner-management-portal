@@ -239,7 +239,7 @@ function RequestPolicy() {
     }
 
     return(
-        <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll relative font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -252,7 +252,7 @@ function RequestPolicy() {
                             </div>
                         </div>
                     )}
-                    <div className="flex-col">
+                    <div className="flex-col mt-7">
                         <div className="flex items-start gap-x-2">
                             <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                             <div className="flex-col">
