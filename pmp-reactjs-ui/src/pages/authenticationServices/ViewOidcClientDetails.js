@@ -246,7 +246,7 @@ function ViewOidcClientDetails() {
                                             return (
                                                 <ul>
                                                     <li key={index} className="p-1 space-y-4 text-sm">
-                                                        <p className="text-[#36393E] text-lg font-semibold">{type.replace('_', ' ')}</p>
+                                                        <p className="text-[#36393E] text-lg font-normal">{type.replace('_', ' ')}</p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
                                                             (<hr className="h-px bg-gray-200" />)
                                                         }
