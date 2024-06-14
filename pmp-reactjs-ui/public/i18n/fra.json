@@ -236,6 +236,39 @@
         "selectStatus":"Sélectionnez le statut",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
     },
+    "viewOidcClientDetails": {
+        "viewOidcClientDetails": "Afficher les détails du client OIDC",
+        "authenticationServiceSection": "Services d'authentification",
+        "createdOn":"Créé sur",
+        "oidcClientId":"ID client OIDC",
+        "partnerId":"ID partenaire",
+        "partnerIdAlias": "Alias ​​d’ID de partenaire",
+        "partnerType":"Type de partenaire",
+        "policyGroup":"Groupe de politiques",
+        "policyName":"Nom de la politique",
+        "policyGroupDescription":"Description du groupe de stratégies",
+        "policyNameDescription":"Nom de la stratégie Description",
+        "name":"Nom",
+        "publicKey":"Clé publique",
+        "logoUri": "URI du logo",
+        "redirectUri": "URI de redirection",
+        "grantTypes":"Types de subventions",
+        "comments":"commentaires",
+        "adminComment":"Commentaires de l'administrateur",
+        "adminName": "Nom de l'administrateur",
+        "commentsOfAdmin": "Commentaires de l'administrateur",
+        "partnersComment": "Commentaire du partenaire",
+        "back": "Dos"
+
+    },
+    "editOidcClient": {
+        "editOidcClient": "Modifier le client OIDC",
+        "authenticationServiceSection": "Services d'authentification"
+    },
+    "deactivateOidcClient": {
+        "deactivateOidcClient": "Désactiver le client OIDC",
+        "authenticationServiceSection": "Services d'authentification"
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
