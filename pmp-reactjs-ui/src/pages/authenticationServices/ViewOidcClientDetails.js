@@ -14,7 +14,10 @@ function ViewOidcClientDetails() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
-    const [oidcClientDetails, setOidcClientDetails] = useState([]);
+    const [oidcClientDetails, setOidcClientDetails] = useState({
+        redirectUris: [],
+        grantTypes: [],
+    });
 
     useEffect(() => {
         const clientData = localStorage.getItem('selectedClientData');
