@@ -44,8 +44,8 @@ function CreateOidcClientConfirmation() {
                             <p className="text-[#666666] text-sm font-semibold">
                                 {t('createOidcClient.requestSuccessMsg')}
                             </p>
-                            <div className="flex space-x-3 mt-12 border justify-center">
-                                <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-base px-12 py-4">
+                            <div className="flex space-x-3 mt-12 justify-center">
+                                <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-base px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
                                 <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-base px-12 py-4">

@@ -168,19 +168,21 @@ function CreateOidcClient() {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    setRedirectUrls(newRedirectUrls);
     if (value.trim() === "" || urlPattern.test(value)) {
       setInvalidRedirectUrl("");
     } else {
       setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
     }
+    setRedirectUrls(newRedirectUrls);
   };
   const addNewRedirectUrl = () => {
     setRedirectUrls([...redirectUrls, '']);
   };
   const onDeleteRedirectUrl = (index) => {
-    const newRedirectUrls = redirectUrls.filter((_, i) => i !== index);
-    setRedirectUrls(newRedirectUrls);
+    if (redirectUrls.length > 1) {
+      const newRedirectUrls = redirectUrls.filter((_, i) => i !== index);
+      setRedirectUrls(newRedirectUrls);
+    }
   };
 
   const handlePublicKeyChange = (value) => {
@@ -448,22 +450,22 @@ function CreateOidcClient() {
                               placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                               className="w-[85%] focus:outline-none"
                             />
-                            {index < redirectUrls.length - 1 && (
-                              <div className="flex flex-row cursor-pointer" onClick={() => onDeleteRedirectUrl(index)}>
-                                <img src={deleteIcon} alt="" className={`w-[18px] h-5 mr-1`} />
-                                <p className="text-sm text-[#1447b2] font-semibold">
-                                  {t('createOidcClient.delete')}
-                                </p>
-                              </div>
-                            )}
-                            {index === redirectUrls.length - 1 && (
-                              <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
-                                <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
+                            <div className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)}>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
+                                stroke={redirectUrls.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${redirectUrls.length > 1 ? 'cursor-pointer' : ''}`}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                              </svg>
+                              <p className={`text-sm font-semibold ${redirectUrls.length > 1 ? 'text-[#1447b2] cursor-pointer' : 'text-[#969696]'}`}>
+                                {t('createOidcClient.delete')}
                               </p>
-                            )}
+                            </div>
                           </div>
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
+                        <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
+                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
+                        </p>
                       </div>
 
                       <div className="flex flex-col w-[48%]">

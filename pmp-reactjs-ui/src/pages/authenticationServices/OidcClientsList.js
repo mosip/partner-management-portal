@@ -123,8 +123,10 @@ function OidcClientsList() {
     }
 
     const showViewOidcClientDetails = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/viewOidcClienDetails')
+        if (selectedClientdata.status === "ACTIVE") {
+            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            navigate('/partnermanagement/viewOidcClienDetails')
+        }
     };
 
     const showEditOidcClient = (selectedClientdata) => {
@@ -247,6 +249,13 @@ function OidcClientsList() {
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
     };
+    const onClickAction = (client, index) => {
+        if (client.status === "ACTIVE") {
+            setViewClientId(index);
+        } else {
+            setViewClientId(-1)
+        }
+    }
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
@@ -397,7 +406,7 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                            <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyName}</td>
@@ -422,7 +431,7 @@ function OidcClientsList() {
                                                                 
                                                                 <td className="text-center">
                                                                     <div>
-                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                                                        <p onClick={() => onClickAction(client, index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 ${client.status === "ACTIVE" && "cursor-pointer"}`}>...</p>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <p onClick={() => showViewOidcClientDetails(client)} className="px-4 py-2 cursor-pointer">
