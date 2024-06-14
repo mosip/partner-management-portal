@@ -228,11 +228,11 @@ function PartnerCertificatesList() {
                                                     <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
                                                     <p className="font-bold text-base text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
-                                                <div className="flex-col ml-12">
+                                                <div className="flex-col ml-[5%]">
                                                     <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
                                                 </div>
-                                                <div className="flex-col ml-36">
+                                                <div className="flex-col ml-[10%]">
                                                     <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
                                                 </div>
