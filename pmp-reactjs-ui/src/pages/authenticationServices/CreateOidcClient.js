@@ -6,6 +6,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
+import deleteIcon from '../../svg/delete_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
   moveToOidcClientsList } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
@@ -448,9 +449,12 @@ function CreateOidcClient() {
                               className="w-[85%] focus:outline-none"
                             />
                             {index < redirectUrls.length - 1 && (
-                              <p onClick={() => onDeleteRedirectUrl(index)} className="text-sm text-[#1447b2] font-semibold cursor-pointer">
-                                {t('createOidcClient.delete')}
-                              </p>
+                              <div className="flex flex-row cursor-pointer" onClick={() => onDeleteRedirectUrl(index)}>
+                                <img src={deleteIcon} alt="" className={`w-[18px] h-5 mr-1`} />
+                                <p className="text-sm text-[#1447b2] font-semibold">
+                                  {t('createOidcClient.delete')}
+                                </p>
+                              </div>
                             )}
                             {index === redirectUrls.length - 1 && (
                               <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
