@@ -1,0 +1,14 @@
+<svg 
+xmlns="http://www.w3.org/2000/svg" 
+width="32" height="32" viewBox="0 0 32 32">
+  <g id="Group_58360" data-name="Group 58360" transform="translate(-767.213 -745)">
+    <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(767.213 745)" 
+    fill="#fff" stroke="#1447b2" stroke-width="1">
+      <rect width="32" height="32" rx="6" stroke="none"/>
+      <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none"/>
+    </g>
+    <path id="expand_more_FILL0_wght400_GRAD0_opsz48" 
+    d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z" 
+    transform="translate(763.613 778.68) rotate(-90)" fill="#1447b2"/>
+  </g>
+</svg>
