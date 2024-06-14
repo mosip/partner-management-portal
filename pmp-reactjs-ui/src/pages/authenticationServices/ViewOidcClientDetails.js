@@ -12,6 +12,7 @@ import content_copy_icon from "../../svg/content_copy_icon.svg";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
+    const [copied, setCopied] = useState(false);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
     const [oidcClientDetails, setOidcClientDetails] = useState({
@@ -38,7 +39,6 @@ function ViewOidcClientDetails() {
         navigate("/partnermanagement");
     };
 
-
     function bgOfStatus(status) {
         if (status === "approved" || status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
@@ -52,6 +52,15 @@ function ViewOidcClientDetails() {
         else if (status === "deActivated" || status=== "DEACTIVATED") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
+    };
+
+    const copyId = () => {
+        navigator.clipboard.writeText(oidcClientDetails.oidcClientId).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
     };
 
     return (
@@ -102,7 +111,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <button type="button"
+                        <button type="button" onClick={() => copyId()}
                             className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-base">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex gap-x-2">
