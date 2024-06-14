@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import cancelIcon from '../../svg/cancel_icon.svg';
 
-function ErrorMessage ({errorCode, errorMessage, clickOnCancel}) {
+function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
     const { t } = useTranslation();
     const [errorMsg, setErrorMsg] = useState();
 
     useEffect(() => {
         if (errorCode) {
             const serverErrors = t('serverError', { returnObjects: true });
-            if(serverErrors[errorCode]) {
+            if (serverErrors[errorCode]) {
                 setErrorMsg(serverErrors[errorCode]);
             } else {
                 setErrorMsg(errorMessage)

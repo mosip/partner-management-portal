@@ -14,7 +14,10 @@ function ViewOidcClientDetails() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
-    const [oidcClientDetails, setOidcClientDetails] = useState([]);
+    const [oidcClientDetails, setOidcClientDetails] = useState({
+        redirectUris: [],
+        grantTypes: [],
+    });
 
     useEffect(() => {
         const clientData = localStorage.getItem('selectedClientData');
@@ -34,6 +37,7 @@ function ViewOidcClientDetails() {
     const moveToHome = () => {
         navigate("/partnermanagement");
     };
+
 
     function bgOfStatus(status) {
         if (status === "Approved") {
@@ -90,16 +94,16 @@ function ViewOidcClientDetails() {
                                     </div>
                                     <div className={`font-medium ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                            formatDate(oidcClientDetails.createdDate, "date")}
+                                            formatDate(oidcClientDetails.crDtimes, "date")}
                                     </div>
                                     <div className="mx-3 text-gray-300">|</div>
                                     <div className="font-medium text-sm text-dark-blue">
-                                        {formatDate(oidcClientDetails.createdDate, "time")}
+                                        {formatDate(oidcClientDetails.crDtimes, "time")}
                                     </div>
                                 </div>
                             </div>
                             <button type="button"
-                                className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ?"pr-[3%]" :"pl-[3%]"} py-[0.5%] px-[0.8%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                                className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                                 <p className="text-sm font-base">{t('viewOidcClientDetails.oidcClientId')}</p>
                                 <div className="flex gap-x-2">
                                     <p className="text-md font-semibold text-[#1447B2]">
@@ -149,7 +153,7 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
                                 <p className="font-semibold text-vulcan text-lg">
-                                    {oidcClientDetails.policyGroup}
+                                    {oidcClientDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className="w-[50%]">
@@ -192,7 +196,7 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
                                 <p className="font-semibold text-vulcan text-lg">
-                                    {t('Public Key Goes Here.')}
+                                    {oidcClientDetails.publicKey}
                                 </p>
                             </div>
                             <div className="mb-4">
@@ -200,19 +204,39 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.logoUri")}
                                 </p>
                                 <p className="font-semibold text-vulcan text-lg">
-                                    {t('Logo URI Goes Here')}
+                                    {oidcClientDetails.logoUri}
                                 </p>
                             </div>
-                            <div className="flex w-[58%] flex-wrap justify-between mb-4">
-                                <div>
+                            <div className="flex justify-between w-[60%] mb-4">
+                                <div className="flex-col">
                                     <p className="font-semibold text-suva-gray text-base">
                                         {t("viewOidcClientDetails.redirectUri")}
                                     </p>
+                                    <div className="flex flex-col">
+                                        {oidcClientDetails.redirectUris.map((uri, index) => {
+                                            return (
+                                                <ul>
+                                                    <li className="p-1">{uri}</li>
+                                                    <hr className="h-px bg-gray-200 border-2" />
+                                                </ul>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
-                                <div>
+                                <div className="flex-col">
                                     <p className="font-semibold text-suva-gray text-base">
                                         {t("viewOidcClientDetails.grantTypes")}
                                     </p>
+                                    <div className="flex flex-col">
+                                        {oidcClientDetails.grantTypes.map((type, index) => {
+                                            return (
+                                                <ul>
+                                                    <li className="p-1">{type}</li>
+                                                    <hr className="h-px bg-gray-200 border-2" />
+                                                </ul>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -263,19 +287,19 @@ function ViewOidcClientDetails() {
                                             <h4 className="text-lg  text-[#031640]">
                                                 {t("viewOidcClientDetails.partnersComment")}
                                             </h4>
-                                            <p className="text-[#666666] text-sm ">{t('viewOidcClientDetails.commentsOfAdmin')}</p>
-                                            <span className="text-sm mt-3">
+
+                                            <span className="text-sm mt-3 break-all">
                                                 {oidcClientDetails.partnerComments}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-1" />
                                             <div className="flex items-center justify-start">
                                                 <div className="font-medium text-sm text-dark-blue">
                                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                                        formatDate(oidcClientDetails.createdDate, "date")}
+                                                        formatDate(oidcClientDetails.crDtimes, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-medium text-sm text-dark-blue">
-                                                    {formatDate(oidcClientDetails.createdDate, "time")}
+                                                    {formatDate(oidcClientDetails.crDtimes, "time")}
                                                 </div>
                                             </div>
                                         </div>

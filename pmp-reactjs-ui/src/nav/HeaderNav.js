@@ -7,7 +7,6 @@ import { handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
-import mosip_icon from '../../src/mosip_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 
 function HeaderNav({ open, setOpen }) {
@@ -31,7 +30,7 @@ function HeaderNav({ open, setOpen }) {
             <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
                 {!open && (
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
-                        <img src={mosip_icon} alt="" />
+                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" />
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
                             <img className="min-w-5" src={hamburgerIcon} alt=""></img>
                         </div>
@@ -39,7 +38,7 @@ function HeaderNav({ open, setOpen }) {
                 )}
                 {open && (
                     <div className={`flex items-center w-64 gap-x-4 ${isLoginLanguageRTL ? "pr-5" : "pl-6"} h-16 shadow-md`}>
-                        <img src={mosip_icon} alt="" />
+                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" />
                         <div className={`duration-700`}>
                             <img src={side_menu_title} alt="" />
                         </div>

@@ -72,29 +72,29 @@ function OidcClientsList() {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            setDataLoaded(false);
-            const response = await HttpService.get(getPartnerManagerUrl('/getAllOidcClients', process.env.NODE_ENV));
-            setFirstTimeLoad(true);
-            if (response) {
-              const responseData = response.data;
-              if (responseData && responseData.response) {
-                const resData = responseData.response;
-                const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                setOidcClientsList(sortedData);
-                setFilteredOidcClientsList(oidcClientsList)
-                console.log('Response data:', oidcClientsList.length);
-              } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-              }
-            } else {
-              setErrorMsg(t('oidcClientsList.errorInOidcClientsList'));
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl('/getAllOidcClients', process.env.NODE_ENV));
+                setFirstTimeLoad(true);
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        setOidcClientsList(sortedData);
+                        setFilteredOidcClientsList(oidcClientsList)
+                        console.log('Response data:', oidcClientsList.length);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
             }
-            setDataLoaded(true);
-          } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
-          }
         };
         fetchData();
     }, [firstTimeLoad]);
@@ -122,8 +122,23 @@ function OidcClientsList() {
         navigate('/partnermanagement/createOidcClient')
     }
 
+    const showViewOidcClientDetails = (selectedClientdata) => {
+        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        navigate('/partnermanagement/viewOidcClienDetails')
+    };
+
+    const showEditOidcClient = (selectedClientdata) => {
+        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        navigate('/partnermanagement/editOidcClient')
+    };
+
+    const showDeactivateOidcClient = (selectedClientdata) => {
+        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        navigate('/partnermanagement/deactivateOidcClient')
+    };
+
     function bgOfStatus(status) {
-        if (status === "approved") {
+        if (status === "approved" || status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
         }
         else if (status === "rejected") {
@@ -138,7 +153,7 @@ function OidcClientsList() {
     };
 
     const showCopyPopUp = (client) => {
-        if (client.status.toLowerCase() === "approved") {
+        if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
             setShowPopup(true);
         }
@@ -234,22 +249,22 @@ function OidcClientsList() {
     };
 
     return (
-        <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
+                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
                     )}
-                    <div className="flex-col">
+                    <div className="flex-col mt-4">
                         <div className="flex justify-between mb-5">
-                            <div className={`flex gap-x-3`}>
+                            <div className={`flex gap-x-2`}>
                                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col mt-[3%]">
                                     <h1 className="font-semibold text-xl text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
@@ -286,18 +301,18 @@ function OidcClientsList() {
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 {
                                     activeOidcClient && (
-                                    <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                                        <div className={`flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28`}>
-                                            <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
-                                            <h6>{t('authenticationServices.policyGroup')}</h6>
-                                            <h6>{t('authenticationServices.policyName')}</h6>
-                                            <h6>{t('authenticationServices.oidcClientName')}</h6>
-                                            <h6>{t('authenticationServices.createdDate')}</h6>
-                                            <h6>{t('authenticationServices.status')}</h6>
-                                            <h6>{t('authenticationServices.oidcClientId')}</h6>
-                                            <h6 className="mr-5">{t('authenticationServices.action')}</h6>
-                                        </div>
-                                    </div>)
+                                        <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
+                                            <div className={`flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28`}>
+                                                <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
+                                                <h6>{t('authenticationServices.policyGroup')}</h6>
+                                                <h6>{t('authenticationServices.policyName')}</h6>
+                                                <h6>{t('authenticationServices.oidcClientName')}</h6>
+                                                <h6>{t('authenticationServices.createdDate')}</h6>
+                                                <h6>{t('authenticationServices.status')}</h6>
+                                                <h6>{t('authenticationServices.oidcClientId')}</h6>
+                                                <h6 className="mr-5">{t('authenticationServices.action')}</h6>
+                                            </div>
+                                        </div>)
                                 }
 
                                 <hr className="h-px mx-3 bg-gray-200 border-0" />
@@ -326,7 +341,7 @@ function OidcClientsList() {
                                                 className="flex justify-center items-center w-[23%] text-base py-2 font-semibold text-cente text-tory-blue">
                                                 {t('policies.clearFilter')}
                                             </button>}
-                                            <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                                            <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                                 {t('oidcClientsList.filterBtn')}
                                                 <svg
@@ -383,12 +398,12 @@ function OidcClientsList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                <td className="px-2">{client.partnerId}</td>
-                                                                <td className="px-2">{client.policyGroupName}</td>
-                                                                <td className="px-2">{client.policyName}</td>
-                                                                <td className="px-2">{client.oidcClientName}</td>
-                                                                <td className="px-2">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td className="">
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-5">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
@@ -398,24 +413,27 @@ function OidcClientsList() {
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                                                             d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                            transform="translate(-40 800)" fill={`${client.status === 'approved' ? "#1447B2" : "#D1D1D1"}`} />
+                                                                            transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                     </svg>
+                                                                    {showPopup && (
+                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId} />
+                                                                    )}
                                                                 </td>
-                                                                {showPopup && (
-                                                                    <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId} />
-                                                                )}
+                                                                
                                                                 <td className="text-center">
                                                                     <div>
                                                                         <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
-                                                                                <p className="px-4 py-2 cursor-pointer">
+                                                                                <p onClick={() => showViewOidcClientDetails(client)} className="px-4 py-2 cursor-pointer">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
-                                                                                <p className="px-5 py-2 cursor-pointer">
+                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                <p onClick={() => showEditOidcClient(client)} className="px-5 py-2 cursor-pointer">
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
-                                                                                <p className="px-5 py-2 cursor-pointer text-red-700">
+                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                <p onClick={() => showDeactivateOidcClient(client)} className="px-5 py-2 cursor-pointer text-red-700">
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                             </div>

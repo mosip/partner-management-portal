@@ -25,7 +25,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[16%] z-50 font-inter cursor-default">
-            <div className={`bg-white w-[20%] mx-auto rounded-lg shadow-lg h-[35%]`}>
+            <div className={`bg-white w-[22%] mx-auto rounded-lg shadow-lg h-[40%]`}>
                 <header className={`flex justify-between p-[5%]`}>
                     <div className={`flex-col`}>
                         <h1 className={`font-bold text-md text-[#333333]`}>{policyName}</h1>
@@ -34,10 +34,10 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
                     <img src={close_icon} className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
                 </header>
                 <hr className={`py-[4%]`} />
-                <div className={` flex-col text-center items-center`}>
-                    <h1 className={`text-[#6A6A6A] font-bold opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
-                    <p className={`font-bold text-xs break-words px-2`}>{oidcClientId}</p>
-                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-20"} cursor-pointer`}>
+                <div className={` flex-col text-center justify-center items-center`}>
+                    <h1 className={`text-[#6A6A6A] text-base opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
+                    <p className={`font-semibold text-base text-black break-words px-2`}>{oidcClientId}</p>
+                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-[31%]"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             width="13.808" height="16.481" viewBox="0 0 13.808 16.481">
                             <path id="content_copy_FILL0_wght300_GRAD0_opsz24"

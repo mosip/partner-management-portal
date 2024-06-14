@@ -16,7 +16,6 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const dropdownRef = useRef(null);
-    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
@@ -25,11 +24,6 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
         return clickOutSideDropdown;
     }, [dropdownRef]);
-
-    useEffect(() => {
-        const clickOutSideDropdown = handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
-        return clickOutSideDropdown;
-    }, [tooltipRef]);
 
     useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
@@ -46,20 +40,19 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         }
     };
 
-    const handleIconClick = () => {
-        setShowTooltip(!showTooltip);
-    };
-
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''}`}>
                 {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : <span>{isLoginLanguageRTL ?"" :":"}</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className= {`cursor-pointer`} onClick={handleIconClick}></img>
+                    <img src={infoIcon} alt="" className= {`ml-1 cursor-pointer`} 
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}>
+                    </img>
                 )}
             </label>
             {showTooltip && (
-                <div ref={tooltipRef} className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[8.5%]"} shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[115px]"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}
