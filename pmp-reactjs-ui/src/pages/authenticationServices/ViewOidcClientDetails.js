@@ -66,7 +66,7 @@ function ViewOidcClientDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"}`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -94,8 +94,8 @@ function ViewOidcClientDetails() {
                     </div>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg">
-                    <div className="flex flex-wrap justify-between px-9 pt-6 border-b-2">
-                        <div className="flex-col flex-wrap">
+                    <div className="flex justify-between px-9 pt-6 border-b-2">
+                        <div className="flex-col">
                             <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md my-2 font-semibold`}>
@@ -111,19 +111,20 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                        <button type="button"
+                            className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-base">{t('viewOidcClientDetails.oidcClientId')}</p>
-                            <div className="flex flex-wrap gap-x-2 items-center">
+                            <div className="flex gap-x-2 items-center">
                                 <p className={`text-md font-semibold text-[#1447B2] ${copied ? "mr-6" : "mr-0"} `}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
                                 {
                                     copied
-                                        ? <img src={content_copied_icon} className={`absolute ${isLoginLanguageRTL ? "left-14" :"right-14"}  mt-[5%]`}/>
+                                        ? <img src={content_copied_icon} className={`absolute ${isLoginLanguageRTL ? "left-14" : "right-14"}  mt-[5%]`} />
                                         : <img src={content_copy_icon} onClick={() => copyId()} />
                                 }
                             </div>
-                        </div>
+                        </button>
                     </div>
 
                     <div className={`flex-col p-6`}>
@@ -168,7 +169,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
 
-                            <div className="flex-col xlg:w-[50%]">
+                            <div className="flex-col">
                                 <div className={``}>
                                     <p className="font-semibold text-suva-gray text-base">
                                         {t("viewOidcClientDetails.policyName")}
@@ -203,7 +204,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-semibold text-suva-gray text-base mb-[0.6%]">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-semibold text-vulcan text-lg line-clamp-6 w-[90%]">
                                     {oidcClientDetails.publicKey}
                                 </p>
                             </div>
