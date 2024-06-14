@@ -13,6 +13,7 @@ import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
 import CopyIdPopUp from './CopyIdPopUp';
 import OidcClientsFilter from './OidcClientsFilter';
+import DeactivateOidcClient from './DeactivateOidcClient.js';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -38,6 +39,7 @@ function OidcClientsList() {
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
     const [viewClientId, setViewClientId] = useState(-1);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const defaultFilterQuery = {
         partnerId: "",
         policyGroupName: ""
@@ -129,14 +131,22 @@ function OidcClientsList() {
         }
     };
 
-    const showEditOidcClient = (selectedClientdata) => {
+    const onClickView = (selectedClientdata) => {
         localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/editOidcClient')
+        navigate('/partnermanagement/viewOidcClienDetails')
+    };
+
+    const showEditOidcClient = (selectedClientdata) => {
+        if (selectedClientdata.status === "ACTIVE") {
+            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            navigate('/partnermanagement/editOidcClient')
+        }
     };
 
     const showDeactivateOidcClient = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/deactivateOidcClient')
+        if (selectedClientdata.status === "ACTIVE") {
+            setShowDeactivatePopup(true);
+        }
     };
 
     function bgOfStatus(status) {
@@ -249,13 +259,6 @@ function OidcClientsList() {
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
     };
-    const onClickAction = (client, index) => {
-        if (client.status === "ACTIVE") {
-            setViewClientId(index);
-        } else {
-            setViewClientId(-1)
-        }
-    }
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
@@ -311,7 +314,7 @@ function OidcClientsList() {
                                 {
                                     activeOidcClient && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                                            <div className={`flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28`}>
+                                            <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
                                                 <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
@@ -407,9 +410,9 @@ function OidcClientsList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2 break-all">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="pr-5">{formatDate(client.crDtimes, 'dateTime')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="">
@@ -431,20 +434,23 @@ function OidcClientsList() {
                                                                 
                                                                 <td className="text-center">
                                                                     <div>
-                                                                        <p onClick={() => onClickAction(client, index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 ${client.status === "ACTIVE" && "cursor-pointer"}`}>...</p>
+                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
-                                                                                <p onClick={() => showViewOidcClientDetails(client)} className="px-4 py-2 cursor-pointer">
+                                                                                <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showEditOidcClient(client)} className="px-5 py-2 cursor-pointer">
+                                                                                <p onClick={() => showEditOidcClient(client)} className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#BEBEBE]'}`}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showDeactivateOidcClient(client)} className="px-5 py-2 cursor-pointer text-red-700">
+                                                                                <p onClick={() => showDeactivateOidcClient(client)} className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivateOidcClient closePopUp={setShowDeactivatePopup} clientData={client}></DeactivateOidcClient>
+                                                                                )}
                                                                             </div>
                                                                         )}
                                                                     </div>
