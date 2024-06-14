@@ -9,6 +9,7 @@ import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/Ap
 import adminImage from "../../svg/admin.png";
 import clientImage from "../../svg/partner.png";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
+import content_copied_icon from "../../svg/content_copied_icon.svg";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -49,7 +50,7 @@ function ViewOidcClientDetails() {
         else if (status === "pendingForApproval" || status === "inProgress") {
             return ("bg-[#FEF1C6] text-[#6D1C00]")
         }
-        else if (status === "deActivated" || status=== "DEACTIVATED") {
+        else if (status === "deActivated" || status === "DEACTIVATED") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
@@ -65,7 +66,7 @@ function ViewOidcClientDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"}`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -93,13 +94,12 @@ function ViewOidcClientDetails() {
                     </div>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg">
-
-                    <div className="flex justify-between px-9 pt-6 border-b-2">
-                        <div className="flex-col">
+                    <div className="flex flex-wrap justify-between px-9 pt-6 border-b-2">
+                        <div className="flex-col flex-wrap">
                             <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md my-2 font-semibold`}>
-                                {getStatusCode(oidcClientDetails.status, t)}
+                                    {getStatusCode(oidcClientDetails.status, t)}
                                 </div>
                                 <div className={`font-medium ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
@@ -111,16 +111,19 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <button type="button" onClick={() => copyId()}
-                            className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                        <div className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-base">{t('viewOidcClientDetails.oidcClientId')}</p>
-                            <div className="flex gap-x-2">
-                                <p className="text-md font-semibold text-[#1447B2]">
+                            <div className="flex flex-wrap gap-x-2 items-center">
+                                <p className={`text-md font-semibold text-[#1447B2] ${copied ? "mr-6" : "mr-0"} `}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
-                                <img src={content_copy_icon} />
+                                {
+                                    copied
+                                        ? <img src={content_copied_icon} className={`absolute ${isLoginLanguageRTL ? "left-14" :"right-14"}  mt-[5%]`}/>
+                                        : <img src={content_copy_icon} onClick={() => copyId()} />
+                                }
                             </div>
-                        </button>
+                        </div>
                     </div>
 
                     <div className={`flex-col p-6`}>
@@ -165,7 +168,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
 
-                            <div className="flex-col">
+                            <div className="flex-col xlg:w-[50%]">
                                 <div className={``}>
                                     <p className="font-semibold text-suva-gray text-base">
                                         {t("viewOidcClientDetails.policyName")}
@@ -196,15 +199,15 @@ function ViewOidcClientDetails() {
                                     {oidcClientDetails.oidcClientName}
                                 </p>
                             </div>
-                            <div className="py-6">
+                            <div className="py-5">
                                 <p className="font-semibold text-suva-gray text-base mb-[0.6%]">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg line-clamp-4 w-[90%]">
+                                <p className="font-semibold text-vulcan text-lg">
                                     {oidcClientDetails.publicKey}
                                 </p>
                             </div>
-                            <div className="py-6 space-y-3">
+                            <div className="py-5 space-y-3">
                                 <p className="font-semibold text-suva-gray text-base">
                                     {t("viewOidcClientDetails.logoUri")}
                                 </p>
@@ -223,7 +226,9 @@ function ViewOidcClientDetails() {
                                                 <ul>
                                                     <li key={index} className="p-1 space-y-4">
                                                         <p className="text-md font-semibold text-[#36393E]">{uri}</p>
-                                                        <hr className="h-px bg-gray-200"/>
+                                                        {(oidcClientDetails.redirectUris).length > 1 &&
+                                                            (<hr className="h-px bg-gray-200 border-2" />)
+                                                        }
                                                     </li>
                                                 </ul>
                                             )
@@ -238,9 +243,11 @@ function ViewOidcClientDetails() {
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="p-1 space-y-4 text-sm font-bold">
-                                                        <p>{type.replace('_',' ').toUpperCase()}</p>
-                                                        <hr className="h-px bg-gray-200"/>
+                                                    <li key={index} className="p-1 space-y-4 text-sm">
+                                                        <p className="text-[#36393E] text-lg font-normal">{type.replace('_', ' ')}</p>
+                                                        {(oidcClientDetails.grantTypes).length > 1 &&
+                                                            (<hr className="h-px bg-gray-200" />)
+                                                        }
                                                     </li>
                                                 </ul>
                                             )
@@ -249,7 +256,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <hr className="h-px w-full bg-gray-200 border-0" />
+                        {/* <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="py-6">
                             <p className="font-medium text-vulcan text-lg mb-4">
                                 {t("viewOidcClientDetails.comments")}
@@ -315,7 +322,7 @@ function ViewOidcClientDetails() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
