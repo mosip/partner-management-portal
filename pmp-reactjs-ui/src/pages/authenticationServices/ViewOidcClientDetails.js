@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
-import { formatDate, moveToOidcClientsList } from "../../utils/AppUtils";
+import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
 import clientImage from "../../svg/partner.png";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
@@ -90,7 +90,7 @@ function ViewOidcClientDetails() {
                             <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md my-2 font-semibold`}>
-                                    {oidcClientDetails.status}
+                                {getStatusCode(oidcClientDetails.status, t)}
                                 </div>
                                 <div className={`font-medium ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
