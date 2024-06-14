@@ -252,6 +252,7 @@
         "logoUri": "Logo URI",
         "redirectUri": "Redirect URI",
         "grantTypes":"Grant Types",
+        "comments":"Comments",
         "adminComment":"Admin Comments",
         "adminName": "Admin Name",
         "commentsOfAdmin": "Comments of Admin",
