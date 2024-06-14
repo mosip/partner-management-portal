@@ -402,7 +402,7 @@
         "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
-        "KER-PCM-004": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide.",
+        "KER-PCM-004": "La date du certificat n'est pas valide.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PV_005": "Paramètre d'entrée non valide - errorCode dans les données de stratégie",
