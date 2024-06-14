@@ -279,14 +279,14 @@ function Policies() {
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                    <div className="flex sm:gap-x-7 md:gap-x-16 lg:gap-x-28">
+                    <div className="flex w-full justify-between">
                       <h6 className="ml-5">{t('policies.partnerId')}</h6>
                       <h6>{t('policies.partnerType')}</h6>
                       <h6>{t('policies.policyGroupName')}</h6>
                       <h6>{t('policies.policyName')}</h6>
                       <h6>{t('policies.createdDate')}</h6>
                       <h6>{t('policies.status')}</h6>
-                      <h6>{t('policies.action')}</h6>
+                      <h6 className="mr-4">{t('policies.action')}</h6>
                     </div>
                   </div>
 

@@ -246,8 +246,8 @@ function RequestPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL? "left-0" : "right-0"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
+                        <div className={`flex justify-end items-center max-w-7xl mt-3 absolute ${isLoginLanguageRTL? "left-0" : "right-0"}`}>
+                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl px-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
@@ -335,10 +335,10 @@ function RequestPolicy() {
                             </div>
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                                <button onClick={() => clearForm()} className={`w-40 h-12 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                <button onClick={() => clearForm()} className={`w-40 h-12 mr-3 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                 <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-full md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-full md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>
