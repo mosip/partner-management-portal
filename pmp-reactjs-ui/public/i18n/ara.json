@@ -264,8 +264,8 @@
         "authenticationServiceSection": "خدمات المصادقة"
     },
     "deactivateOidcClient": {
-        "deactivateOidcClient": "قم بإلغاء تنشيط عميل OIDC",
-        "authenticationServiceSection": "خدمات المصادقة"
+       "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
+       "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام معرف عميل OIDC للمصادقة وعرض تفاصيله بعد الآن."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",

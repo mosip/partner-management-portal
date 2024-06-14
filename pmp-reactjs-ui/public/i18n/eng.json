@@ -265,8 +265,8 @@
         "authenticationServiceSection": "Authentication Services"
     },
     "deactivateOidcClient": {
-        "deactivateOidcClient": "Deactivate OIDC Client",
-        "authenticationServiceSection": "Authentication Services"
+       "oidcClientName": "Do you want to Deactivate OIDC Client",
+       "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication and view its details anymore."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
