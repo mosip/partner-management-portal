@@ -74,6 +74,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   build-uitest-pmp-local:
     needs: build-maven-uitest-pmp
@@ -81,6 +82,10 @@ jobs:
   build-pmptest-local:
     needs: build-maven-pmptest
 >>>>>>> upstream/develop
+=======
+  build-uitest-pmp-local:
+    needs: build-maven-uitest-pmp
+>>>>>>> upstream/develop-java21
     runs-on: ubuntu-latest
     env:
       NAMESPACE: ${{ secrets.dev_namespace_docker_hub }}
@@ -88,9 +93,15 @@ jobs:
       SERVICE_LOCATION: uitest-pmp
       BUILD_ARTIFACT: uitest-pmp-local
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@v3
       - name: Set up JDK 21
         uses: actions/setup-java@v3
+=======
+       - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+>>>>>>> upstream/develop-java21
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -135,6 +146,7 @@ jobs:
         if: failure() # Pick up events even if the job fails or is canceled.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
   build-dockers-uitest-pmp:
@@ -148,15 +160,25 @@ jobs:
       matrix:
         include:
 <<<<<<< HEAD
+=======
+  build-dockers-uitest-pmp:
+    needs: build-uitest-pmp-local
+    strategy:
+      matrix:
+        include:
+>>>>>>> upstream/develop-java21
           - SERVICE_LOCATION: 'uitest-pmp'
             SERVICE_NAME: 'uitest-pmp'
 
             BUILD_ARTIFACT: 'uitest-pmp-local'
+<<<<<<< HEAD
 =======
           - SERVICE_LOCATION: 'pmptest'
             SERVICE_NAME: 'pmptest'
             BUILD_ARTIFACT: 'pmptest-local'
 >>>>>>> upstream/develop
+=======
+>>>>>>> upstream/develop-java21
 
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
