@@ -231,14 +231,14 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                                 {uploadSuccess && successMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-fruit-salad w-full h-[50px] flex items-center justify-between p-4">
+                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-4">
                                             <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                                         </div>
                                     </div>
                                 )}
                                 {uploadFailure && errorMsg && (
-                                    <div className="absolute inset-0 flex justify-center w-full">
-                                        <div className="bg-moderate-red w-full h-[50px] flex items-center justify-between p-4 overflow-y-auto">
+                                    <div className="absolute inset-0 flex justify-center">
+                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-3 overflow-y-auto">
                                             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                         </div>
                                     </div>

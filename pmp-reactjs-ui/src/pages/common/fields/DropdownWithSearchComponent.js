@@ -74,7 +74,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                    <div className={`absolute z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                         <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
                             <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
