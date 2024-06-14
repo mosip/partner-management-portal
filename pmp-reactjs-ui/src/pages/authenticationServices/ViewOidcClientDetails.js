@@ -49,7 +49,7 @@ function ViewOidcClientDetails() {
         else if (status === "pendingForApproval" || status === "inProgress") {
             return ("bg-[#FEF1C6] text-[#6D1C00]")
         }
-        else if (status === "deActivated" || status=== "DEACTIVATED") {
+        else if (status === "deActivated" || status === "DEACTIVATED") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
@@ -57,7 +57,7 @@ function ViewOidcClientDetails() {
     const copyId = () => {
         navigator.clipboard.writeText(oidcClientDetails.oidcClientId).then(() => {
             setCopied(true);
-            setTimeout(() => setCopied(false), 3000);
+            setTimeout(() => setCopied(false), 10000);
         }).catch(err => {
             console.error('Failed to copy text: ', err);
         });
@@ -99,7 +99,7 @@ function ViewOidcClientDetails() {
                             <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md my-2 font-semibold`}>
-                                {getStatusCode(oidcClientDetails.status, t)}
+                                    {getStatusCode(oidcClientDetails.status, t)}
                                 </div>
                                 <div className={`font-medium ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
@@ -111,14 +111,19 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <button type="button" onClick={() => copyId()}
+                        <button type="button"
                             className={`bg-[#F0F5FF] border-2 h-[4%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-base">{t('viewOidcClientDetails.oidcClientId')}</p>
-                            <div className="flex gap-x-2">
+                            <div className="flex gap-x-2 items-center">
                                 <p className="text-md font-semibold text-[#1447B2]">
                                     {oidcClientDetails.oidcClientId}
                                 </p>
-                                <img src={content_copy_icon} />
+                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => copyId()}
+                                    width="13.808" height="16.481" viewBox="0 0 13.808 16.481">
+                                    <path id="content_copy_FILL0_wght300_GRAD0_opsz24"
+                                        d="M154.728-846.637a1.555,1.555,0,0,1-1.143-.468,1.555,1.555,0,0,1-.468-1.143V-858.39a1.554,1.554,0,0,1,.468-1.143,1.554,1.554,0,0,1,1.143-.468H162.2a1.554,1.554,0,0,1,1.143.468,1.555,1.555,0,0,1,.468,1.143v10.142a1.555,1.555,0,0,1-.468,1.143,1.555,1.555,0,0,1-1.143.468Zm0-1.336H162.2a.261.261,0,0,0,.188-.086.261.261,0,0,0,.086-.188V-858.39a.261.261,0,0,0-.086-.188.261.261,0,0,0-.188-.086h-7.469a.261.261,0,0,0-.188.086.261.261,0,0,0-.086.188v10.142a.261.261,0,0,0,.086.188A.261.261,0,0,0,154.728-847.974Zm-3.118,4.454a1.555,1.555,0,0,1-1.143-.468A1.555,1.555,0,0,1,150-845.13v-11.478h1.336v11.478a.261.261,0,0,0,.086.188.261.261,0,0,0,.188.086h8.806v1.336Zm2.844-4.454v0Z"
+                                        transform="translate(-150 860)" fill={`${copied ? "#1447b2" : "#719af5"}`} />
+                                </svg>
                             </div>
                         </button>
                     </div>
@@ -223,7 +228,9 @@ function ViewOidcClientDetails() {
                                                 <ul>
                                                     <li key={index} className="p-1 space-y-4">
                                                         <p className="text-md font-semibold text-[#36393E]">{uri}</p>
-                                                        <hr className="h-px bg-gray-200"/>
+                                                        {(oidcClientDetails.redirectUris).length > 1 &&
+                                                            (<hr className="h-px bg-gray-200 border-2" />)
+                                                        }
                                                     </li>
                                                 </ul>
                                             )
@@ -238,9 +245,11 @@ function ViewOidcClientDetails() {
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="p-1 space-y-4 text-sm font-bold">
-                                                        <p>{type.replace('_',' ').toUpperCase()}</p>
-                                                        <hr className="h-px bg-gray-200"/>
+                                                    <li key={index} className="p-1 space-y-4 text-sm">
+                                                        <p className="text-[#36393E] text-lg font-semibold">{type.replace('_', ' ')}</p>
+                                                        {(oidcClientDetails.grantTypes).length > 1 &&
+                                                            (<hr className="h-px bg-gray-200" />)
+                                                        }
                                                     </li>
                                                 </ul>
                                             )
@@ -249,7 +258,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <hr className="h-px w-full bg-gray-200 border-0" />
+                        {/* <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="py-6">
                             <p className="font-medium text-vulcan text-lg mb-4">
                                 {t("viewOidcClientDetails.comments")}
@@ -315,7 +324,7 @@ function ViewOidcClientDetails() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
