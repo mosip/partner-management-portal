@@ -26,7 +26,7 @@ function HeaderNav({ open, setOpen }) {
     };
 
     return (
-        <nav className="sticky top-0 z-40 bg-white flex justify-between w-full h-16 font-inter 
+        <nav className="sticky top-0 z-50 bg-white flex justify-between w-full h-16 font-inter 
             shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
             <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
                 {!open && (

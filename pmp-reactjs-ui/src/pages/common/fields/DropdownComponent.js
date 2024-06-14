@@ -76,7 +76,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`absolute z-50 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                    <div className={`absolute z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4">

@@ -373,7 +373,7 @@ function Policies() {
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'dateTime')}</td>
+                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="">
                                     <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-medium rounded-md`}>
                                       {getStatusCode(partner.status, t)}
