@@ -6,16 +6,15 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
-import deleteIcon from '../../svg/delete_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
   moveToOidcClientsList } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
+import { importJWK } from 'jose';
 
 function CreateOidcClient() {
-  const [partnerComments, setPartnerComments] = useState("");
   const [oidcClientName, setOidcClientName] = useState("");
   const [publicKey, setPublicKey] = useState("");
   const [publicKeyInJson, setPublicKeyInJson] = useState(null);
@@ -34,10 +33,9 @@ function CreateOidcClient() {
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
-  const [grantTypes, setGrantTypes] = useState("");
-  const [grantTypesList, setGrantTypesList] = useState(['']);
+  const [grantTypes, setGrantTypes] = useState("authorization_code");
+  const [grantTypesList, setGrantTypesList] = useState(['authorization_code']);
   const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
-  const [validationError, setValidationError] = useState("");
   const [jsonError, setJsonError] = useState("");
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
@@ -185,7 +183,7 @@ function CreateOidcClient() {
     }
   };
 
-  const handlePublicKeyChange = (value) => {
+  const handlePublicKeyChange = async (value) => {
     setPublicKey(value);
     if (value.trim() === "") {
       setJsonError("");
@@ -194,6 +192,8 @@ function CreateOidcClient() {
     }
     try {
       const parsedValue = JSON.parse(value);
+      // validate the JWK
+      await importJWK(parsedValue);
       setPublicKeyInJson(parsedValue);
       setJsonError("");
     } catch (err) {
@@ -265,39 +265,14 @@ function CreateOidcClient() {
     setPublicKey("");
     setLogoUrl("");
     setRedirectUrls(['']);
-    setGrantTypes("");
-    setGrantTypesList(['']);
-    setPartnerComments("");
     setJsonError("");
     setInvalidLogoUrl("");
     setInvalidRedirectUrl("");
-    setValidationError("");
-  };
-
-  const validateComments = (comments) => {
-    let error = "";
-    const maxLength = 500;
-    const regexPattern = /^[a-zA-Z0-9-_ ,.]*$/;
-    if (comments.length > maxLength) {
-        error = t('requestPolicy.commentTooLong');
-    } else if (!regexPattern.test(comments)) {
-        error = t('requestPolicy.specialCharNotAllowed');
-    }
-    setValidationError(error);
-    return error === "";
-  };
-
-  const handleCommentChange = (e) => {
-      const { value } = e.target;
-      if (validateComments(value)) {
-          setValidationError("");
-          setPartnerComments(value);
-      }
   };
 
   const isFormValid = () => {
     return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes 
-      && partnerComments && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
   };
 
   const styles = {
@@ -343,7 +318,7 @@ function CreateOidcClient() {
               </div> */}
             </div>
             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-              <div className="p-[2.5%]">
+              <div className="px-[2.5%] py-[2%]">
                 <p className="text-lg text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                 <form>
                   <div className="flex flex-col">
@@ -474,27 +449,14 @@ function CreateOidcClient() {
                           dropdownDataList={grantTypesDropdownData}
                           onDropDownChangeEvent={handleGrantTypesChange}
                           fieldNameKey='createOidcClient.grantTypes*'
-                          placeHolderKey='createOidcClient.enterGrantTypes'
                           selectedDropdownValue={grantTypes}
                           styleSet={styles}>
                         </DropdownComponent>
                         </div>
                     </div>
-
-                    <div className="flex my-[1%]">
-                      <div className="flex flex-col w-full">
-                        <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                        <textarea value={partnerComments} onChange={(e) => handleCommentChange(e)}
-                          className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                          placeholder={t('createOidcClient.commentBoxDesc')}>
-                        </textarea>
-                        {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
-                      </div>
-                    </div>
                   </div>
                 </form>
               </div>
-              <div className="border bg-medium-gray" />
               <div className="border bg-medium-gray" />
               <div className="flex flex-row px-[3%] py-[2%] justify-between">
                 <button onClick={() => clearForm()} className="mr-2 w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold">{t('requestPolicy.clearForm')}</button>
