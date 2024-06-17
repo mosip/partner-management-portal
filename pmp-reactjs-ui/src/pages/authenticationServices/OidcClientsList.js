@@ -380,7 +380,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className="py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%]">
+                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-2'} ${header.id === "crDtimes" && 'pl-4'} ${header.id === "status" && 'pl-10'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {header.id !== "action" && (
@@ -414,8 +414,8 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="pr-2 break-all">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-5">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="">
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pl-4 pr-1">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-10">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
