@@ -62,7 +62,7 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.inProgress');
         } else if (status === "rejected") {
             return t('statusCodes.rejected');
-        } else if (status === "deactivated") {
+        } else if (status === "deactivated" || status === "inactive") {
             return t('statusCodes.deactivated');
         } else if (status === "active") {
             return t('statusCodes.activated');

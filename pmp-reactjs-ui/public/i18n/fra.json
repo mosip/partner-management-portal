@@ -267,7 +267,8 @@
     },
     "deactivateOidcClient": {
        "oidcClientName": "Voulez-vous désactiver le client OIDC",
-       "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification et afficher ses détails."
+       "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification.",
+       "confirm": "Confirmer"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

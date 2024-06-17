@@ -3,9 +3,13 @@ import { useState} from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
+import { createRequest, getPartnerManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService.js";
+import { getUserProfile } from "../../services/UserProfileService.js";
 
 function DeactivateOidcClient({ closePopUp, clientData }) {
     const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -14,8 +18,37 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
         setErrorMsg("");
     };
 
-    const clickOnSubmit = async () => {
-        window.location.reload();
+    const clickOnConfirm = async () => {
+        setDataLoaded(false);
+        const request = createRequest({
+            logoUri: clientData.logoUri,
+            redirectUris: clientData.redirectUris,
+            status: "INACTIVE",
+            grantTypes: clientData.grantTypes,
+            clientName: clientData.oidcClientName,
+            clientAuthMethods: clientData.clientAuthMethods,
+            clientNameLangMap: {
+                "eng" : clientData.oidcClientName
+            }
+        });
+        try {
+            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${clientData.oidcClientId}`, process.env.NODE_ENV), request, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                setDataLoaded(true);
+                window.location.reload();
+            } else {
+                setDataLoaded(true);
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } catch (err) {
+            setDataLoaded(true);
+            setErrorMsg(err);
+        }
     }
 
     const styles = {
@@ -23,8 +56,8 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[16%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[402px] w-[50%] mx-auto rounded-lg shadow-lg h-[272px]`}>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
+            <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg md:h-[240px] h-[260px]`}>
                 {!dataLoaded && (
                     <LoadingIcon styleSet={styles}></LoadingIcon>
                 )}
@@ -46,7 +79,7 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
                             </p>
                             <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
                                 <button onClick={() => closePopUp(false)} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-base font-semibold">{t('requestPolicy.cancel')}</button>
-                                <button onClick={() => clickOnSubmit()}type="button" className="w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-base font-semibold">{t('requestPolicy.submit')}</button>
+                                <button onClick={() => clickOnConfirm()}type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-base font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                             </div>
                         </div>
                     </>
