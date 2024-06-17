@@ -97,7 +97,7 @@
         "inProgress": "في انتظار لموافقة",
         "rejected": "مرفوض",
         "deactivated": "معطل",
-        "active": "نشيط"
+        "activated": "نشط"
     },
     "policies": {
         "policies": "سياسات",
