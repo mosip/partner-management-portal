@@ -97,7 +97,7 @@
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
-        "actived": "Actif"
+        "activated": "Actif"
     },
     "policies": {
         "policies": "Stratégies",

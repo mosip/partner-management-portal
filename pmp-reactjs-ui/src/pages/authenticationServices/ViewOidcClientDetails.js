@@ -120,7 +120,7 @@ function ViewOidcClientDetails() {
                             </div>
                         </div>
                         <button type="button"
-                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold text-[#1447B2] ${copied ? "mr-6" : "mr-0"} truncate`}>

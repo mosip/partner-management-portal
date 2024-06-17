@@ -65,7 +65,7 @@ export const getStatusCode = (status, t) => {
         } else if (status === "deactivated") {
             return t('statusCodes.deactivated');
         } else if (status === "active") {
-            return t('statusCodes.actived');
+            return t('statusCodes.activated');
         }
     }
 
