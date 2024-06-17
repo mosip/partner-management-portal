@@ -159,7 +159,7 @@ function OidcClientsList() {
         else if (status === "InProgress") {
             return ("bg-[#FEF1C6] text-[#6D1C00]")
         }
-        else if (status === "deactivated") {
+        else if (status === "deactivated" || status === "INACTIVE") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
@@ -380,7 +380,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-2'} ${header.id === "crDtimes" && 'pl-4'} ${header.id === "status" && 'pl-10'}`}>
+                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-8'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {header.id !== "action" && (
@@ -409,18 +409,18 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2 break-all">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.policyName}</td>
+                                                            <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pl-4 pr-1">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-10">
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
-                                                                <td className="pl-[2%]">
+                                                                <td className="pl-2">
                                                                     <svg onClick={() => showCopyPopUp(client)}
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"
