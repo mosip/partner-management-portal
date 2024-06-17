@@ -380,7 +380,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-8'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
+                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {header.id !== "action" && (
