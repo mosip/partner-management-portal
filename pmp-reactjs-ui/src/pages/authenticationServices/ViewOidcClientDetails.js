@@ -9,7 +9,6 @@ import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/Ap
 import adminImage from "../../svg/admin.png";
 import clientImage from "../../svg/partner.png";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
-import content_copied_icon from "../../svg/content_copied_icon.svg";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -74,7 +73,7 @@ function ViewOidcClientDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -113,26 +112,30 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(oidcClientDetails.crDtimes, "date")}
                                 </div>
-                                <div className="mx-2 text-gray-300 max-[400px]:">|</div>
+                                <div className="mx-2 text-gray-300">|</div>
                                 <div className="font-medium text-sm text-dark-blue">
                                     {formatDate(oidcClientDetails.crDtimes, "time")}
                                 </div>
                             </div>
                         </div>
                         <button type="button"
-                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold text-[#1447B2] truncate`}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
-                                {
-                                    copied
-                                        ? <img src={content_copied_icon} className={`absolute ${isLoginLanguageRTL ? "left-14" : "right-14"}  mt-[5%]`} />
-                                        : <img src={content_copy_icon} onClick={() => copyId()} />
-                                }
+                                <img src={content_copy_icon} onClick={() => copyId()} />
                             </div>
                         </button>
+                        {copied &&
+                            (
+                                <div className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                    <p className="text-[#36393E] text-md font-inter">{t('Copied!')}</p>
+                                </div>
+                            )
+                        }
+
                     </div>
 
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-6 mb-4`}>
@@ -215,12 +218,12 @@ function ViewOidcClientDetails() {
                                     {oidcClientDetails.logoUri}
                                 </p>
                             </div>
-                            <div className="flex flex-wrap my-6 max-[800px]:flex-col">
+                            <div className="flex flex-wrap my-6 max-[800px]:flex-col max-[1020px]:flex-col">
                                 <div className="flex-col space-y-1 w-[50%]">
                                     <p className="font-[600] text-suva-gray text-base">
                                         {t("viewOidcClientDetails.redirectUri")}
                                     </p>
-                                    <div className="flex flex-col">
+                                    <div className="flex-col">
                                         {(oidcClientDetails.redirectUris).map((uri, index) => {
                                             return (
                                                 <ul>
@@ -229,7 +232,7 @@ function ViewOidcClientDetails() {
                                                             {uri}
                                                         </p>
                                                         {(oidcClientDetails.redirectUris).length > 1 &&
-                                                            (<hr className="h-px bg-gray-200 border-2" />)
+                                                            (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px]" />)
                                                         }
                                                     </li>
                                                 </ul>
@@ -241,7 +244,7 @@ function ViewOidcClientDetails() {
                                     <p className="font-[600] text-suva-gray text-base max-[800px]:mt-4 max-[1020px]:mt-4">
                                         {t("viewOidcClientDetails.grantTypes")}
                                     </p>
-                                    <div className="flex flex-col">
+                                    <div className="flex-col">
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>
@@ -250,7 +253,7 @@ function ViewOidcClientDetails() {
                                                             {capitalization(type)}
                                                         </p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
-                                                            (<hr className="h-px bg-gray-200" />)
+                                                            (<hr className="h-px w-[72%] bg-gray-200" />)
                                                         }
                                                     </li>
                                                 </ul>
@@ -329,10 +332,10 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div> */}
-                    <hr className="h-px w-full bg-gray-200 border-0" />
+                    <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
                         <button onClick={() => moveToOidcClientsList(navigate)}
-                            className="h-10 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                            className="h-11 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                             {t("viewOidcClientDetails.back")}
                         </button>
                     </div>
