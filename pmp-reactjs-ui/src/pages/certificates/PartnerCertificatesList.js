@@ -134,7 +134,7 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-32 ml-5": "ml-32 mr-5"} overflow-x-scroll relative`}>
+        <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5": "ml-28 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -147,19 +147,19 @@ function PartnerCertificatesList() {
                             </div>
                         </div>
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
                             <div className="flex items-start space-x-3">
                                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
-                                    <h1 className="font-semibold text-xl text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
+                                    <h1 className="font-semibold text-lg text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')}
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
+                        <ul className="w-[100%] bg-snow-white mt-[1.5%] ml-3 rounded-lg shadow-md p-[2.5%] pb-[10%]">
                             {certificatesData.length === 0 ?
                                 <div className="p-[8%] flex flex-col justify-center items-center w-full">
                                     <img src={rectangleBox} alt="" />
@@ -171,12 +171,12 @@ function PartnerCertificatesList() {
                                             <div className={`flex h-[93px] p-[2.5%] items-center ${partner.isCertificateAvailable ? "bg-[#F9FBFF]" : "bg-[#F4FAF4]"} justify-between`}>
                                                 <div className="flex items-center">
                                                     {partner.isCertificateAvailable
-                                                        ? <img src={fileUpload} className="h-10" alt="" />
-                                                        : <img src={file} className="h-10" alt="" />
+                                                        ? <img src={fileUpload} className="h-8" alt="" />
+                                                        : <img src={file} className="h-8" alt="" />
                                                     }
 
                                                     <div className="flex-col p-3 items-center">
-                                                        <h6 className={`text-base ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-medium text-charcoal-gray'}`}>
+                                                        <h6 className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-medium text-charcoal-gray'}`}>
                                                             {partner.isCertificateAvailable ? partner.certificateName : t('partnerCertificatesList.uploadPartnerCertificate')}
                                                         </h6>
                                                         <p className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
@@ -185,7 +185,7 @@ function PartnerCertificatesList() {
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
                                                         <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-11 ${isLoginLanguageRTL ? "ml-5" :"mr-5"} flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-sm px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
+                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-10 ${isLoginLanguageRTL ? "ml-5" :"mr-5"} flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-xs px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
@@ -211,11 +211,11 @@ function PartnerCertificatesList() {
                                                                     </div>
                                                                 </div>)}
                                                         </div>
-                                                        <button onClick={() => clickOnUpload(partner)} className="h-11 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                                                        <button onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                                             {t('partnerCertificatesList.reUpload')}
                                                         </button>
                                                     </div>
-                                                    : <button onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-11 w-[120px] text-snow-white text-sm font-semibold rounded-md">
+                                                    : <button onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
@@ -225,16 +225,16 @@ function PartnerCertificatesList() {
                                             <hr className="border bg-medium-gray" />
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col">
-                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-base text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
+                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p className="font-bold text-sm text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
                                                 <div className="flex-col ml-[5%]">
-                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
+                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
                                                 </div>
                                                 <div className="flex-col ml-[10%]">
-                                                    <p className="font-medium text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
+                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
                                                 </div>
                                             </div>
                                         </li>

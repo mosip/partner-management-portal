@@ -8,7 +8,7 @@ function Footer() {
     return (
         <div className={`bg-anti-flash-white items-center ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"}`}>
             <hr className="h-px bg-gray-200 border-0 " />
-            <div className="flex py-[3%] justify-between text-sm text-gray-400">
+            <div className="flex py-[3%] justify-between text-xs text-gray-400">
                 <div>
                     <p>2024 © MOSIP - {t('footer.allRightsReserved')}</p>
                 </div>

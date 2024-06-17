@@ -237,20 +237,20 @@ function RequestPolicy() {
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left",
+        dropdownLabel: "!text-sm !mb-1",
+        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
         selectionBox: "!top-12"
     }
 
     const styleForSearch = {
         outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-12 !rounded-md !text-lg !text-left",
+        dropdownLabel: "!text-sm !mb-1",
+        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
         selectionBox: "!top-12"
     }
 
     return(
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll relative font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -267,7 +267,7 @@ function RequestPolicy() {
                         <div className="flex items-start gap-x-2">
                             <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                             <div className="flex-col">
-                                <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
+                                <h1 className="font-semibold text-lg text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')} / 
@@ -278,9 +278,9 @@ function RequestPolicy() {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-                            <div className="p-[2.5%]">
-                                <p className="text-lg text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                        <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
+                            <div className="p-7">
+                                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                 <form>
                                     <div className="flex flex-col">
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
@@ -298,8 +298,8 @@ function RequestPolicy() {
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+                                                <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{partnerType || t('requestPolicy.partnerType')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -308,10 +308,10 @@ function RequestPolicy() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row justify-between space-x-4 my-[1%]">
+                                        <div className="flex flex-row justify-between space-x-4">
                                             <div className="flex flex-col w-[48%]">
-                                                <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-12 px-2 py-2 border border-[#C1C1C1] rounded-md text-lg text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -334,8 +334,8 @@ function RequestPolicy() {
                                         </div>
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
-                                                <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                                                <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
+                                                <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
                                                 {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
@@ -345,11 +345,11 @@ function RequestPolicy() {
                                 </form>
                             </div>
                             <div className="border bg-medium-gray" />
-                            <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                                <button onClick={() => clearForm()} className={`w-40 h-12 mr-3 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                            <div className="flex flex-row px-[3%] py-5 justify-between">
+                                <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                 <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-12 border-[#1447B2] border rounded-md bg-white text-tory-blue text-base font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-12 border-[#1447B2] border rounded-md text-base font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>
