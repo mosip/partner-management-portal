@@ -222,7 +222,6 @@ function RequestPolicy() {
             setValidationError("");
         }
         setPartnerComments(value);
-        adjustTextareaHeight();
     };
 
     const adjustTextareaHeight = () => {
