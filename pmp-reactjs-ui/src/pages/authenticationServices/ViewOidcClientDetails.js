@@ -73,7 +73,7 @@ function ViewOidcClientDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -103,7 +103,7 @@ function ViewOidcClientDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-9 pt-6 border-b-2 max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName.toUpperCase()}</p>
+                            <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName ? oidcClientDetails.oidcClientName.toUpperCase() : oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -231,7 +231,7 @@ function ViewOidcClientDetails() {
                                                         <p className="text-lg max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
                                                             {uri}
                                                         </p>
-                                                        {(oidcClientDetails.redirectUris).length > 0 &&
+                                                        {(oidcClientDetails.redirectUris).length > 1 &&
                                                             (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px]" />)
                                                         }
                                                     </li>
