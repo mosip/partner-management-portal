@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -29,6 +29,7 @@ function RequestPolicy() {
     const [partnerData, setPartnerData] = useState([]);
     const [policyList, setPolicyList] = useState([]);
     const [validationError, setValidationError] = useState("");
+    const textareaRef = useRef(null);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -197,20 +198,19 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComments;
+        return partnerId && policyName && partnerComments && !validationError;
     };
 
     const validateComments = (comments) => {
         let error = "";
         const maxLength = 500;
-        const regexPattern = /^[a-zA-Z0-9-_ ,.]*$/;
-
+        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
+    
         if (comments.length > maxLength) {
             error = t('requestPolicy.commentTooLong');
         } else if (!regexPattern.test(comments)) {
             error = t('requestPolicy.specialCharNotAllowed');
         }
-
         setValidationError(error);
         return error === "";
     };
@@ -220,9 +220,20 @@ function RequestPolicy() {
 
         if (validateComments(value)) {
             setValidationError("");
-            setPartnerComments(value);
+        }
+        setPartnerComments(value);
+    };
+
+    const adjustTextareaHeight = () => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
     };
+
+    useEffect(() => {
+        adjustTextareaHeight(); 
+    }, [partnerComments]);
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
@@ -324,8 +335,8 @@ function RequestPolicy() {
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className="block text-dark-blue text-base font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
-                                                <textarea value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full h-12 px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-nowrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
+                                                <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-lg text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
                                                 {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
                                             </div>
