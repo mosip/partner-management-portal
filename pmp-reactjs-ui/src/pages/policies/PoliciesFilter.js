@@ -55,7 +55,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
             setStatusData(getData('status'));
         };
         fetchData();
-    }, [filteredPoliciesList, t]);
+    }, [t]);
 
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {

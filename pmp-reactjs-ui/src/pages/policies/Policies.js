@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -311,7 +311,7 @@ function Policies() {
                         <div className="w-full flex justify-end relative ">
                           {filter && <button onClick={() => onClearFilter()} type="button"
                             className="flex mr-2 justify-center items-center w-[23%] text-base py-3 font-semibold text-cente text-tory-blue">
-                            {t('policies.clearFilter')}
+                            {t('policies.resetFilter')}
                           </button>}
                           <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] min-w-20 text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>

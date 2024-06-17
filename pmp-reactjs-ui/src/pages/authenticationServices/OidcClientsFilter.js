@@ -49,7 +49,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
             setStatusData(getData('status'));
         };
         fetchData();
-    }, [filteredOidcClientsList, t]);
+    }, [t]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         onFilterChange(fieldName, selectedFilter);

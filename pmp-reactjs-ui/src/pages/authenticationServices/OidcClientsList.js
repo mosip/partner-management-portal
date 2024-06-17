@@ -150,16 +150,10 @@ function OidcClientsList() {
     };
 
     function bgOfStatus(status) {
-        if (status === "approved" || status === "ACTIVE") {
+        if (status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
         }
-        else if (status === "rejected") {
-            return ("bg-[#FAD6D1] text-[#5E1515]")
-        }
-        else if (status === "InProgress") {
-            return ("bg-[#FEF1C6] text-[#6D1C00]")
-        }
-        else if (status === "deactivated" || status === "INACTIVE") {
+        else if (status === "INACTIVE") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
@@ -351,7 +345,7 @@ function OidcClientsList() {
                                         <div className="w-full flex justify-end relative ">
                                             {filter && <button onClick={() => onClearFilter()} type="button"
                                                 className="flex justify-center items-center w-[23%] text-base py-2 font-semibold text-cente text-tory-blue">
-                                                {t('policies.clearFilter')}
+                                                {t('policies.resetFilter')}
                                             </button>}
                                             <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
