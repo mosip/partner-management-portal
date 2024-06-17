@@ -274,7 +274,7 @@ function OidcClientsList() {
                             </div>
                         </div>
                     )}
-                    <div className="flex-col mt-4">
+                    <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
                             <div className={`flex gap-x-2`}>
                                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
@@ -374,7 +374,7 @@ function OidcClientsList() {
                                             onFilterChange={onFilterChange}>
                                         </OidcClientsFilter>
                                     }
-                                    <div className="mx-[2%]">
+                                    <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>
