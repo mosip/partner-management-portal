@@ -104,7 +104,7 @@
         "requestPolicyBtn": "Politique de demande",
         "listOfPolicies": "Liste des demandes de politique",
         "filterBtn": "Filtre",
-        "clearFilter": "Effacer le filtre",
+        "resetFilter": "Réinitialiser le filtre",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",

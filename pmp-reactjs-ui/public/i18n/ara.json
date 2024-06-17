@@ -104,7 +104,7 @@
         "requestPolicyBtn": "سياسة الطلب",
         "listOfPolicies": "قائمة طلبات السياسة",
         "filterBtn": "منقي",
-        "clearFilter": "مرشح واضح",
+        "resetFilter": "تصفية إعادة تعيين",
         "partnerId": "معرف الشريك",
         "partnerType": "معرف الشريك",
         "policyGroupName": "مجموعة السياسات",

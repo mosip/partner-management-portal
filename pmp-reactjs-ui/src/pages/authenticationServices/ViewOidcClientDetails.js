@@ -6,9 +6,8 @@ import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
-import adminImage from "../../svg/admin.png";
-import clientImage from "../../svg/partner.png";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
+import disabled_copy_icon from "../../svg/disabled_copy_icon.svg";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -40,27 +39,23 @@ function ViewOidcClientDetails() {
     };
 
     function bgOfStatus(status) {
-        if (status === "approved" || status === "ACTIVE") {
+        if (status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
         }
-        else if (status === "rejected") {
-            return ("bg-[#FAD6D1] text-[#5E1515]")
-        }
-        else if (status === "pendingForApproval" || status === "inProgress") {
-            return ("bg-[#FEF1C6] text-[#6D1C00]")
-        }
-        else if (status === "deActivated" || status === "DEACTIVATED") {
+        else if (status === "INACTIVE") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
 
     const copyId = () => {
-        navigator.clipboard.writeText(oidcClientDetails.oidcClientId).then(() => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 3000);
-        }).catch(err => {
-            console.error('Failed to copy text: ', err);
-        });
+        if (oidcClientDetails.status === "ACTIVE") {
+            navigator.clipboard.writeText(oidcClientDetails.oidcClientId).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 3000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
     };
 
     const capitalization = (type) => {
@@ -119,13 +114,17 @@ function ViewOidcClientDetails() {
                             </div>
                         </div>
                         <button type="button"
-                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right cursor-pointer hover:shadow-md`}>
+                            className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right hover:shadow-md`}>
                             <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
-                                <p className={`text-md font-bold text-[#1447B2] truncate`}>
+                                <p className={`text-md font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
-                                <img src={content_copy_icon} onClick={() => copyId()} />
+                                {oidcClientDetails.status === "ACTIVE" ? (
+                                    <img src={content_copy_icon} alt="" onClick={() => copyId()} />
+                                ) : (
+                                    <img src={disabled_copy_icon} alt="" />
+                                )}
                             </div>
                         </button>
                         {copied &&
