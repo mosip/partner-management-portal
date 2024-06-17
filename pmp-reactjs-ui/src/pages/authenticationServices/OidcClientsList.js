@@ -380,7 +380,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-2'} ${header.id === "crDtimes" && 'pl-4'} ${header.id === "status" && 'pl-10'}`}>
+                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {header.id !== "action" && (
@@ -409,10 +409,10 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t-2 text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2 break-all">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all">{client.policyName}</td>
+                                                            <tr key={index} className={`border-t-2 text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="pl-4 pr-1">{formatDate(client.crDtimes, 'dateTime')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-10">
