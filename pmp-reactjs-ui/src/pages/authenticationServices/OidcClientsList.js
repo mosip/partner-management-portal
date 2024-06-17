@@ -255,7 +255,7 @@ function OidcClientsList() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -273,14 +273,14 @@ function OidcClientsList() {
                             <div className={`flex gap-x-2`}>
                                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col mt-[3%]">
-                                    <h1 className="font-semibold text-xl text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
+                                    <h1 className="font-semibold text-lg text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')}
                                     </p>
                                 </div>
                             </div>
                             {oidcClientsList.length > 0 ?
-                                <button onClick={() => createOidcClient()} type="button" className="h-[50px] text-base font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('createOidcClient.createOidcClient')}
                                 </button>
                                 : null
@@ -328,7 +328,7 @@ function OidcClientsList() {
                                         <img src={rectangleGrid} alt="" />
                                         {activeOidcClient &&
                                             (<button onClick={() => createOidcClient()} type="button"
-                                                className={`text-white font-semibold mt-8 ml-[55px] bg-tory-blue rounded-md text-base px-4 py-3`}>
+                                                className={`text-white font-semibold mt-8 ml-[55px] bg-tory-blue rounded-md text-sm px-4 py-3`}>
                                                 {t('authenticationServices.createOidcClientBtn')}
                                             </button>)
                                         }
@@ -339,15 +339,15 @@ function OidcClientsList() {
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
-                                        <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-lg" >
+                                        <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
                                             {t('oidcClientsList.listOfOidcClientRequests') + ' (' + filteredOidcClientsList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
                                             {filter && <button onClick={() => onClearFilter()} type="button"
-                                                className="flex justify-center items-center w-[23%] text-base py-2 font-semibold text-cente text-tory-blue">
-                                                {t('policies.resetFilter')}
+                                                className="flex justify-center items-center w-[23%] text-sm py-2 font-semibold text-cente text-tory-blue">
+                                                {t('policies.clearFilter')}
                                             </button>}
-                                            <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                                            <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                                 {t('oidcClientsList.filterBtn')}
                                                 <svg
@@ -374,7 +374,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-sm font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
+                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {header.id !== "action" && (
@@ -403,7 +403,7 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t-2 text-sm text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t-2 text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
