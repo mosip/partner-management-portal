@@ -26,14 +26,14 @@ function OidcClientsList() {
     const [activeOidcClient, setActiveOicdClient] = useState(true);
     const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
-    const itemsPerPageOptions = [5, 10, 15, 20];
+    const itemsPerPageOptions = [8, 16, 24, 32];
     const [oidcClientsList, setOidcClientsList] = useState([]);
     const [filteredOidcClientsList, setFilteredOidcClientsList] = useState([]);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
@@ -262,7 +262,7 @@ function OidcClientsList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
+                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
@@ -324,11 +324,11 @@ function OidcClientsList() {
                                 <hr className="h-px mx-3 bg-gray-200 border-0" />
 
                                 <div className="flex items-center justify-center p-24">
-                                    <div className="flex-col justify-center">
+                                    <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activeOidcClient &&
                                             (<button onClick={() => createOidcClient()} type="button"
-                                                className={`text-white font-semibold mt-8 ml-[55px] bg-tory-blue rounded-md text-sm px-4 py-3`}>
+                                                className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-base mx-8 py-3`}>
                                                 {t('authenticationServices.createOidcClientBtn')}
                                             </button>)
                                         }
@@ -425,7 +425,7 @@ function OidcClientsList() {
                                                                         <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId} />
                                                                     )}
                                                                 </td>
-                                                                
+
                                                                 <td className="text-center">
                                                                     <div>
                                                                         <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
@@ -480,6 +480,19 @@ function OidcClientsList() {
                                     <div className="flex items-center gap-x-3">
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
+                                            {isItemsPerPageOpen && (
+                                                <div className={`bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                    {itemsPerPageOptions.map((num, i) => {
+                                                        return (
+                                                            <p key={i} onClick={() => changeItemsPerPage(num)}
+                                                                className="px-3 py-2 cursor-pointer hover:bg-[#F2F5FC]">
+                                                                {num}
+                                                            </p>
+                                                        )
+                                                    })
+                                                    }
+                                                </div>
+                                            )}
                                             <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
                                                 onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
                                                 <p>
@@ -493,19 +506,6 @@ function OidcClientsList() {
                                                         transform="translate(-12 -16.6)" fill="#1447b2" />
                                                 </svg>
                                             </div>
-                                            {isItemsPerPageOpen && (
-                                                <div className="absolute bg-white text-xs text-tory-blue font-medium rounded-b-lg shadow-md">
-                                                    {itemsPerPageOptions.map((num, i) => {
-                                                        return (
-                                                            <p key={i} onClick={() => changeItemsPerPage(num)}
-                                                                className="px-3 py-2 cursor-pointer hover:bg-gray-200">
-                                                                {num}
-                                                            </p>
-                                                        )
-                                                    })
-                                                    }
-                                                </div>
-                                            )}
                                         </div>
                                     </div>
                                 </div>

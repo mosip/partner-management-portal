@@ -41,27 +41,27 @@ function RequestPolicy() {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            setDataLoaded(false);
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPartnerIdsWithPolicyGroups', process.env.NODE_ENV));
-            if (response) {
-              const responseData = response.data;
-              if (responseData && responseData.response) {
-                const resData = responseData.response;
-                setPartnerData(resData);
-                setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
-                console.log('Response data:', partnerData.length);
-              } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-              }
-            } else {
-              setErrorMsg(t('policies.errorInResponse'));
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedPartnerIdsWithPolicyGroups', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setPartnerData(resData);
+                        setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
+                        console.log('Response data:', partnerData.length);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('policies.errorInResponse'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
             }
-            setDataLoaded(true);
-          } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
-          }
         };
         fetchData();
     }, [partnerData.length, t]);
@@ -141,7 +141,7 @@ function RequestPolicy() {
                     setPoliciesDropdownData(createPoliciesDropdownData('name', resData));
                     console.log(`Response data: ${resData.length}`);
                 } else {
-                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
                 setErrorMsg(t('requestPolicy.errorInFetchingPolicyNames'));
@@ -205,7 +205,7 @@ function RequestPolicy() {
         let error = "";
         const maxLength = 500;
         const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
-    
+
         if (comments.length > maxLength) {
             error = t('requestPolicy.commentTooLong');
         } else if (!regexPattern.test(comments)) {
@@ -232,7 +232,7 @@ function RequestPolicy() {
     };
 
     useEffect(() => {
-        adjustTextareaHeight(); 
+        adjustTextareaHeight();
     }, [partnerComments]);
 
     const styles = {
@@ -249,7 +249,7 @@ function RequestPolicy() {
         selectionBox: "!top-12"
     }
 
-    return(
+    return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
@@ -257,7 +257,7 @@ function RequestPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end items-center max-w-7xl mt-3 absolute ${isLoginLanguageRTL? "left-0" : "right-0"}`}>
+                        <div className={`flex justify-end items-center max-w-7xl mt-3 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
                             <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl px-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
@@ -270,7 +270,7 @@ function RequestPolicy() {
                                 <h1 className="font-semibold text-lg text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')} / 
+                                        {t('commons.home')} /
                                     </p>
                                     <p onClick={() => moveToPolicies(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('requestPolicy.policies')}
@@ -285,12 +285,12 @@ function RequestPolicy() {
                                     <div className="flex flex-col">
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                             <div className="flex flex-col w-[48%]">
-                                                <DropdownComponent 
-                                                    fieldName='partnerId' 
-                                                    dropdownDataList={partnerIdDropdownData} 
-                                                    onDropDownChangeEvent={onChangePartnerId} 
-                                                    fieldNameKey='requestPolicy.partnerId*' 
-                                                    placeHolderKey='requestPolicy.partnerId' 
+                                                <DropdownComponent
+                                                    fieldName='partnerId'
+                                                    dropdownDataList={partnerIdDropdownData}
+                                                    onDropDownChangeEvent={onChangePartnerId}
+                                                    fieldNameKey='requestPolicy.partnerId*'
+                                                    placeHolderKey='requestPolicy.partnerId'
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon
@@ -298,7 +298,7 @@ function RequestPolicy() {
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{partnerType || t('requestPolicy.partnerType')}</span>
@@ -310,7 +310,7 @@ function RequestPolicy() {
                                         </div>
                                         <div className="flex flex-row justify-between space-x-4">
                                             <div className="flex flex-col w-[48%]">
-                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
@@ -320,11 +320,11 @@ function RequestPolicy() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <DropdownWithSearchComponent 
-                                                    fieldName='policyName' 
-                                                    dropdownDataList={policiesDropdownData} 
-                                                    onDropDownChangeEvent={onChangePolicyName} 
-                                                    fieldNameKey='requestPolicy.policyName*' 
+                                                <DropdownWithSearchComponent
+                                                    fieldName='policyName'
+                                                    dropdownDataList={policiesDropdownData}
+                                                    onDropDownChangeEvent={onChangePolicyName}
+                                                    fieldNameKey='requestPolicy.policyName*'
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     selectedDropdownValue={policyName}
                                                     searchKey='commons.search'
@@ -334,7 +334,9 @@ function RequestPolicy() {
                                         </div>
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
-                                                <label className="block text-dark-blue text-sm font-semibold mb-1">{t('requestPolicy.comments')}<span className="text-crimson-red">*</span></label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+                                                    {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
+                                                </label>
                                                 <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
@@ -346,10 +348,10 @@ function RequestPolicy() {
                             </div>
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-5 justify-between">
-                                <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL?"mr-2":"ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                 <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL?"ml-2":"mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
                         </div>

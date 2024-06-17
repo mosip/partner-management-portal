@@ -43,7 +43,7 @@ function HeaderNav({ open, setOpen }) {
                             <img src={side_menu_title} alt="" className="w-32 h-10"/>
                         </div>
                         <div className="cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5" src={hamburgerIcon} alt=""></img>
+                            <img className="min-w-5" src={hamburgerIcon} alt=""/>
                         </div>
                     </div>
                 )}
@@ -61,12 +61,12 @@ function HeaderNav({ open, setOpen }) {
 
                     <h2 className="text-xs font-bold text-gray-600 ml-1">{getUserProfile().orgName}</h2>
                 </div>
-                <div className="flex items-center mr-2" ref={dropdownRef}>
+                <div className={`flex items-center ${isLoginLanguageRTL ? "mr-1" :"ml-1"}`} ref={dropdownRef}>
                     <button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent"
                         onClick={openDropdown}>
                         <img className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
                     </button>
-                    <svg className="w-4 h-4 ml-2 text-gray-800 cursor-pointer" viewBox="0 0 24 24" onClick={openDropdown}>
+                    <svg className={`w-4 h-4 ${isLoginLanguageRTL ? "mr-2 ml-2" :"ml-2 mr-2"} text-gray-800 cursor-pointer" viewBox="0 0 24 24`} onClick={openDropdown}>
                         <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -75,8 +75,8 @@ function HeaderNav({ open, setOpen }) {
                         ></path>
                     </svg>
                     {isDropdownOpen && (
-                        <div className=" absolute top-14 right-7 z-10 w-36 h-fit origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none">
-                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
+                        <div className={`absolute top-14 ${isLoginLanguageRTL ? "left-7 origin-top-left" :"right-7 origin-top-right"} z-10 w-40 h-33 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
+                            <button className={`block px-4 py-2 text-sm text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
                             <div className="border-gray-100 border-t mx-2"></div>
                             <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>
