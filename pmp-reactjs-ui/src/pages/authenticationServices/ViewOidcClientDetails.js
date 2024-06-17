@@ -9,7 +9,6 @@ import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/Ap
 import adminImage from "../../svg/admin.png";
 import clientImage from "../../svg/partner.png";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
-import content_copied_icon from "../../svg/content_copied_icon.svg";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -104,7 +103,7 @@ function ViewOidcClientDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-9 pt-6 border-b-2 max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-bold text-2xl text-dark-blue mb-3">{oidcClientDetails.oidcClientName}</p>
+                            <p className="font-bold text-lg text-dark-blue mb-3">{oidcClientDetails.oidcClientName.toUpperCase()}</p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -113,123 +112,127 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(oidcClientDetails.crDtimes, "date")}
                                 </div>
-                                <div className="mx-2 text-gray-300 max-[400px]:">|</div>
+                                <div className="mx-2 text-gray-300">|</div>
                                 <div className="font-medium text-sm text-dark-blue">
                                     {formatDate(oidcClientDetails.crDtimes, "time")}
                                 </div>
                             </div>
                         </div>
                         <button type="button"
-                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1.5%]"} py-[0.5%] text-right rounded-md cursor-pointer hover:shadow-md`}>
+                            className={`bg-[#F0F5FF] border-2 h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] border-[#BED3FF] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right cursor-pointer hover:shadow-md`}>
                             <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
-                                <p className={`text-md font-bold text-[#1447B2] ${copied ? "mr-6" : "mr-0"} truncate`}>
+                                <p className={`text-md font-bold text-[#1447B2] truncate`}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
-                                {
-                                    copied
-                                        ? <img src={content_copied_icon} className={`absolute ${isLoginLanguageRTL ? "left-14" : "right-14"}  mt-[5%]`} />
-                                        : <img src={content_copy_icon} onClick={() => copyId()} />
-                                }
+                                <img src={content_copy_icon} onClick={() => copyId()} />
                             </div>
                         </button>
+                        {copied &&
+                            (
+                                <div className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                    <p className="text-[#36393E] text-md font-inter">{t('Copied!')}</p>
+                                </div>
+                            )
+                        }
+
                     </div>
 
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                            <div className="w-[50%] mb-5">
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className="w-[50%] max-[600px]:w-[100%] mb-5">
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.partnerId}
                                 </p>
                             </div>
-                            <div className="mb-5 w-[50%]">
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className="mb-5 max-[600px]:w-[100%] w-[50%]">
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.partnerType")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {t('Partner Type Goes Here')}
                                 </p>
                             </div>
                         </div>
                         <hr className={`h-px w-full bg-gray-200 border-0`} />
                         <div className={`flex flex-wrap pt-6`}>
-                            <div className={`w-[50%]`}>
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.policyGroupName}
                                 </p>
                             </div>
-                            <div className={`w-[50%]`}>
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.policyName}
                                 </p>
                             </div>
-                            <div className={`w-[50%] my-6`}>
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className={`w-[50%] max-[600px]:w-[100%] my-6`}>
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.policyGroupDescription}
                                 </p>
                             </div>
-                            <div className={`w-[50%] my-6`}>
-                                <p className="font-semibold text-suva-gray text-base">
+                            <div className={`w-[50%] max-[600px]:w-[100%] my-6`}>
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.policyNameDescription}
                                 </p>
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
-                        <div className="space-y-10">
-                            <div className="my-9">
-                                <p className="font-semibold text-suva-gray text-base">
+                        <div className="space-y-6">
+                            <div className="my-8">
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.name")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.oidcClientName}
                                 </p>
                             </div>
                             <div className="my-6 space-y-2">
-                                <p className="font-semibold text-suva-gray text-base">
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg text-wrap line-clamp-6 w-[90%]">
+                                <p className="font-[600] text-vulcan text-lg text-wrap line-clamp-6 w-[90%]">
                                     {oidcClientDetails.publicKey}
                                 </p>
                             </div>
                             <div className="my-8 space-y-1">
-                                <p className="font-semibold text-suva-gray text-base">
+                                <p className="font-[600] text-suva-gray text-base">
                                     {t("viewOidcClientDetails.logoUri")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-lg">
+                                <p className="font-[600] text-vulcan text-lg">
                                     {oidcClientDetails.logoUri}
                                 </p>
                             </div>
-                            <div className="flex flex-wrap my-6 max-[800px]:flex-col">
+                            <div className="flex flex-wrap my-6 max-[800px]:flex-col max-[1020px]:flex-col">
                                 <div className="flex-col space-y-1 w-[50%]">
-                                    <p className="font-semibold text-suva-gray text-base">
+                                    <p className="font-[600] text-suva-gray text-base">
                                         {t("viewOidcClientDetails.redirectUri")}
                                     </p>
-                                    <div className="flex flex-col">
+                                    <div className="flex-col">
                                         {(oidcClientDetails.redirectUris).map((uri, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="space-y-4">
-                                                        <p className="text-lg max-[450px]:text-sm max-[450px]:font-medium font-normal text-[#36393E] py-1">
+                                                    <li key={index} className="space-y-3 mt-2 text-left">
+                                                        <p className="text-lg max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
                                                             {uri}
                                                         </p>
-                                                        {(oidcClientDetails.redirectUris).length > 1 &&
-                                                            (<hr className="h-px bg-gray-200 border-2" />)
+                                                        {(oidcClientDetails.redirectUris).length > 0 &&
+                                                            (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px]" />)
                                                         }
                                                     </li>
                                                 </ul>
@@ -238,17 +241,19 @@ function ViewOidcClientDetails() {
                                     </div>
                                 </div>
                                 <div className="flex-col space-y-1 w-[50%]">
-                                    <p className="font-semibold text-suva-gray text-base max-[800px]:mt-4">
+                                    <p className="font-[600] text-suva-gray text-base max-[800px]:mt-4 max-[1020px]:mt-4">
                                         {t("viewOidcClientDetails.grantTypes")}
                                     </p>
-                                    <div className="flex flex-col">
+                                    <div className="flex-col">
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="space-y-4 text-sm">
-                                                        <p className="text-[#36393E] text-lg font-semibold py-1">{capitalization(type)}</p>
+                                                    <li key={index} className="space-y-4 text-sm text-left">
+                                                        <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-lg py-1">
+                                                            {capitalization(type)}
+                                                        </p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
-                                                            (<hr className="h-px bg-gray-200" />)
+                                                            (<hr className="h-px w-[72%] bg-gray-200" />)
                                                         }
                                                     </li>
                                                 </ul>
@@ -327,7 +332,7 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div> */}
-                    <hr className="h-px w-full bg-gray-200 border-0" />
+                    <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
                         <button onClick={() => moveToOidcClientsList(navigate)}
                             className="h-11 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
