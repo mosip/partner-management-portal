@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
-import { formatDate, moveToPolicies } from "../../utils/AppUtils";
+import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
 import partnerImage from "../../svg/partner.png";
 
@@ -90,7 +90,7 @@ function ViewPolicyDetails() {
                                     policyDetails.status
                                 )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
                             >
-                                {policyDetails.status}
+                                {getStatusCode(policyDetails.status, t)}
                             </div>
                             <div className={`font-medium ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-sm text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
@@ -118,7 +118,7 @@ function ViewPolicyDetails() {
                                     {t("viewPolicyDetails.partnerType")}
                                 </p>
                                 <p className="font-semibold text-vulcan text-lg">
-                                    {policyDetails.partnerType}
+                                    {getPartnerTypeDescription(policyDetails.partnerType, t)}
                                 </p>
                             </div>
                         </div>
@@ -179,7 +179,7 @@ function ViewPolicyDetails() {
                                                     policyDetails.status
                                                 )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
                                             >
-                                                {policyDetails.status}
+                                                {getStatusCode(policyDetails.status, t)}
                                             </div>
                                             <div>
                                                 {policyDetails.updDtimes && (

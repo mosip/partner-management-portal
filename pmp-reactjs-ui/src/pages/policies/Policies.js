@@ -280,22 +280,22 @@ function Policies() {
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                     <div className="flex w-full justify-between">
-                      <h6 className="ml-5">{t('policies.partnerId')}</h6>
+                      <h6 className="ml-5 mr-3">{t('policies.partnerId')}</h6>
                       <h6>{t('policies.partnerType')}</h6>
                       <h6>{t('policies.policyGroupName')}</h6>
                       <h6>{t('policies.policyName')}</h6>
                       <h6>{t('policies.createdDate')}</h6>
                       <h6>{t('policies.status')}</h6>
-                      <h6 className="mr-4">{t('policies.action')}</h6>
+                      <h6 className="mx-4">{t('policies.action')}</h6>
                     </div>
                   </div>
 
                   <hr className="h-px mx-3 bg-gray-200 border-0" />
 
                   <div className="flex items-center justify-center p-24">
-                    <div className="flex-col items-center">
+                    <div className="flex flex-col items-center">
                       <img src={rectangleGrid} alt="" />
-                      <button onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 ml-16 bg-tory-blue rounded-md text-base px-5 py-3">
+                      <button onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 bg-tory-blue rounded-md text-base px-5 py-3">
                         {t('policies.requestPolicyBtn')}
                       </button>
                     </div>
@@ -313,7 +313,7 @@ function Policies() {
                             className="flex mr-2 justify-center items-center w-[23%] text-base py-3 font-semibold text-cente text-tory-blue">
                             {t('policies.clearFilter')}
                           </button>}
-                          <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                          <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] min-w-20 text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
