@@ -39,16 +39,10 @@ function ViewOidcClientDetails() {
     };
 
     function bgOfStatus(status) {
-        if (status === "approved" || status === "ACTIVE") {
+        if (status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
         }
-        else if (status === "rejected") {
-            return ("bg-[#FAD6D1] text-[#5E1515]")
-        }
-        else if (status === "pendingForApproval" || status === "inProgress") {
-            return ("bg-[#FEF1C6] text-[#6D1C00]")
-        }
-        else if (status === "deActivated" || status === "INACTIVE") {
+        else if (status === "INACTIVE") {
             return ("bg-[#EAECF0] text-[#525252]")
         }
     };
