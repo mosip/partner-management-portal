@@ -144,7 +144,7 @@ function SelectPolicyPopup() {
                             </p>
                             {descriptionText.split(' ').length > maxWords && (
                                 <button className="text-tory-blue text-base font-semibold" onClick={expandDescription}>
-                                    {isExpanded ? 'View Less' : 'View More'}
+                                    {isExpanded ? t('selectPolicyPopup.viewLess'): t('selectPolicyPopup.viewMore')}
                                 </button>
                             )}
                             <form>
