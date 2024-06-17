@@ -25,22 +25,22 @@ function HeaderNav({ open, setOpen }) {
     };
 
     return (
-        <nav className="sticky top-0 z-50 bg-white flex justify-between w-full h-16 font-inter 
+        <nav className="sticky top-0 z-50 bg-white flex justify-between w-full h-14 font-inter 
             shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
-            <div className={`flex gap-x-4 h-16 items-center shadow-sm`}>
+            <div className={`flex gap-x-4 h-14 items-center shadow-sm`}>
                 {!open && (
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
-                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" />
+                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" className="w-8 h-8"/>
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5" src={hamburgerIcon} alt=""></img>
+                            <img className="min-w-5 w-5 h-5" src={hamburgerIcon} alt=""></img>
                         </div>
                     </div>
                 )}
                 {open && (
-                    <div className={`flex items-center w-64 gap-x-4 ${isLoginLanguageRTL ? "pr-5" : "pl-6"} h-16 shadow-md`}>
-                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" />
+                    <div className={`flex items-center w-64 gap-x-4 ${isLoginLanguageRTL ? "pr-5" : "pl-6"} h-14 shadow-md`}>
+                        <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" className="w-8 h-8"/>
                         <div className={`duration-700`}>
-                            <img src={side_menu_title} alt="" />
+                            <img src={side_menu_title} alt="" className="w-32 h-10"/>
                         </div>
                         <div className="cursor-pointer" onClick={() => setOpen(!open)}>
                             <img className="min-w-5" src={hamburgerIcon} alt=""></img>
@@ -55,8 +55,8 @@ function HeaderNav({ open, setOpen }) {
             </div>
             <div className="flex items-center relative justify-between gap-x-12">
                 <div className="flex items-center">
-                    <div className="p-2 bg-blue-50">
-                        <img src={orgIcon} alt=""></img>
+                    <div className="p-2 m-1 bg-blue-50">
+                        <img src={orgIcon} alt="" className="w-5 h-5"></img>
                     </div>
 
                     <h2 className="text-xs font-bold text-gray-600 ml-1">{getUserProfile().orgName}</h2>
@@ -64,7 +64,7 @@ function HeaderNav({ open, setOpen }) {
                 <div className="flex items-center mr-2" ref={dropdownRef}>
                     <button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent"
                         onClick={openDropdown}>
-                        <img className="h-11 w-10 rounded-full" src={profileIcon} alt="" />
+                        <img className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
                     </button>
                     <svg className="w-4 h-4 ml-2 text-gray-800 cursor-pointer" viewBox="0 0 24 24" onClick={openDropdown}>
                         <path
@@ -75,12 +75,12 @@ function HeaderNav({ open, setOpen }) {
                         ></path>
                     </svg>
                     {isDropdownOpen && (
-                        <div className=" absolute top-14 right-7 z-10 w-40 h-33 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none">
-                            <button className={`block px-4 py-2 text-sm text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
+                        <div className=" absolute top-14 right-7 z-10 w-36 h-fit origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none">
+                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <button className={`block px-4 py-2 text-sm text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
+                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>
-                            <button className={`block px-4 py-2 text-sm text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} onClick={logout}>{t('commons.logout')}</button>
+                            <button className={`block px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} onClick={logout}>{t('commons.logout')}</button>
                         </div>
                     )}
                 </div>

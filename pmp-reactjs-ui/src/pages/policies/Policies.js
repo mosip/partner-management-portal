@@ -241,7 +241,7 @@ function Policies() {
   };
 
   return (
-    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-32 ml-5" : "ml-32 mr-5"} overflow-x-scroll font-inter`}>
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
@@ -255,11 +255,11 @@ function Policies() {
             </div>
           )}
           <div className="flex-col mt-7">
-            <div className="flex justify-between mb-5">
+            <div className="flex justify-between mb-3">
               <div className="flex items-start gap-x-2">
                 <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
-                  <h1 className="font-semibold text-xl text-dark-blue">{t('policies.policies')}</h1>
+                  <h1 className="font-semibold text-lg text-dark-blue">{t('policies.policies')}</h1>
                   <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                     {t('commons.home')}
                   </p>
@@ -267,14 +267,14 @@ function Policies() {
               </div>
 
               {policiesList.length > 0 ?
-                <button onClick={() => showRequestPolicy()} type="button" className="h-[50px] text-base font-semibold px-7 text-white bg-tory-blue rounded-md">
+                <button onClick={() => showRequestPolicy()} type="button" className="h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                   {t('policies.requestPolicyBtn')}
                 </button>
                 : null
               }
             </div>
 
-            <div className="flex-col justify-center ml-1 h-full">
+            <div className="flex-col justify-center ml-3 h-full">
               {policiesList.length === 0
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -295,7 +295,7 @@ function Policies() {
                   <div className="flex items-center justify-center p-24">
                     <div className="flex flex-col items-center">
                       <img src={rectangleGrid} alt="" />
-                      <button onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 bg-tory-blue rounded-md text-base px-5 py-3">
+                      <button onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm h-11 px-5 py-3">
                         {t('policies.requestPolicyBtn')}
                       </button>
                     </div>
@@ -303,17 +303,17 @@ function Policies() {
                 </div>
                 : tableRows.length > 0 && (
                   <>
-                    <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
+                    <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
                       <div className="flex w-full p-2">
-                        <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-lg" >
+                        <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base" >
                           {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                         </div>
                         <div className="w-full flex justify-end relative ">
                           {filter && <button onClick={() => onClearFilter()} type="button"
-                            className="flex mr-2 justify-center items-center w-[23%] text-base py-3 font-semibold text-cente text-tory-blue">
+                            className="flex mr-2 justify-center items-center w-[23%] text-sm py-3 font-semibold text-cente text-tory-blue">
                             {t('policies.clearFilter')}
                           </button>}
-                          <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] min-w-20 text-base py-3  text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                          <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[20%] h-10 min-w-20 text-base py-3 mr-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
@@ -340,18 +340,18 @@ function Policies() {
                             <tr>
                               {tableHeaders.map((header, index) => {
                                 return (
-                                  <th key={index} className="py-4 text-sm font-medium text-[#6F6E6E] lg:w-[15%]">
-                                    <div className="mx-2 flex gap-x-1 items-center">
+                                  <th key={index} className="py-4 text-sm font-medium text-[#6F6E6E] w-[16%]">
+                                    <div className="mx-2 flex gap-x-0 items-center">
                                       {t(header.headerNameKey)}
                                       {header.id !== "action" && (
                                         <div>
-                                          <svg className="cursor-pointer mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
+                                          <svg className="cursor-pointer mx-2 mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="8" height="8" viewBox="0 0 7 6">
                                             <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
                                               fill={`${(activeSortDesc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
                                           </svg>
-                                          <svg className="cursor-pointer" onClick={() => toggleSortDescOrder(header.id)} alt="Descending"
+                                          <svg className="cursor-pointer mx-2" onClick={() => toggleSortDescOrder(header.id)} alt="Descending"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="8" height="8" viewBox="0 0 7 6">
                                             <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
@@ -368,7 +368,7 @@ function Policies() {
                           <tbody>
                             {tableRows.map((partner, index) => {
                               return (
-                                <tr key={index} className={`border-t-2 cursor-pointer text-sm text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <tr key={index} className={`border-t-2 cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
