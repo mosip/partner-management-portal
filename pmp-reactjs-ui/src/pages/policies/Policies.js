@@ -41,11 +41,12 @@ function Policies() {
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
   const submenuRef = useRef(null);
+  const itemsCountSelectionRef = useRef(null);
 
   useEffect(() => {
-      const clickOutSideDropdown = handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
-      return clickOutSideDropdown;
-  }, [submenuRef]);
+     handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
+     handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
+  }, [submenuRef,itemsCountSelectionRef]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -386,12 +387,12 @@ function Policies() {
                                     </div>
                                   </td>
                                   <td className="text-center">
-                                    <div className="relative">
+                                    <div>
                                       <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
                                           <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-full p-2 z-20 flex items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-[5%] p-2 z-20 flex items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
                                             <p className="cursor-pointer">
                                               {t('policies.view')}
                                             </p>
@@ -432,7 +433,7 @@ function Policies() {
                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                         <div>
                           {isItemsPerPageOpen && (
-                            <div className={`bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                            <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
                               {itemsPerPageOptions.map((num, i) => {
                                 return (
                                   <p key={i} onClick={() => changeItemsPerPage(num)}

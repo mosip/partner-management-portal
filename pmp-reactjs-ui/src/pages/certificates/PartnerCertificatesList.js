@@ -18,7 +18,7 @@ import backArrow from '../../svg/back_arrow.svg';
 function PartnerCertificatesList() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [downloadBtnId, setDownloadBtnId] = useState(-1);
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
@@ -29,8 +29,7 @@ function PartnerCertificatesList() {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setActiveBtn(false));
-        return clickOutSideDropdown;
+        handleMouseClickForDropdown(dropdownRef, () => setDownloadBtnId(-1));
     }, [dropdownRef]);
 
     const clickOnUpload = (partner) => {
@@ -134,14 +133,14 @@ function PartnerCertificatesList() {
     };
 
     return (
-        <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5": "ml-28 mr-5"} overflow-x-scroll relative`}>
+        <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
+                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
                             <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
@@ -184,29 +183,30 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
-                                                        <div className="flex-col" ref={dropdownRef}>
-                                                            <button onClick={() => setActiveBtn(!activeBtn)} className={`h-10 ${isLoginLanguageRTL ? "ml-5" :"mr-5"} flex items-center ${activeBtn ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-xs px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
+                                                        <div className="flex-col">
+                                                            <button onClick={() => setDownloadBtnId(index)}
+                                                                className={`h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} flex items-center ${downloadBtnId === index ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-xs px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}
                                                                 <svg
-                                                                    xmlns="http://www.w3.org/2000/svg" className={`${activeBtn ? 'rotate-180 duration-700 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
+                                                                    xmlns="http://www.w3.org/2000/svg" className={`${downloadBtnId === index ? 'rotate-180 duration-700 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
                                                                     width="10" height="8" viewBox="0 0 10 8">
                                                                     <path id="Polygon_8"
                                                                         data-name="Polygon 8"
                                                                         d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
-                                                                        transform="translate(10 8) rotate(180)" fill={`${activeBtn ? '#ffff' : '#1447b2'}`} />
+                                                                        transform="translate(10 8) rotate(180)" fill={`${downloadBtnId === index ? '#ffff' : '#1447b2'}`} />
                                                                 </svg>
 
                                                             </button>
 
-                                                            {activeBtn && (
-                                                                <div className={`w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[11.5rem] ml-2" : "origin-bottom-left right-[11.5rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
+                                                            {downloadBtnId === index && (
+                                                                <div ref={dropdownRef} className={`w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[11.5rem] ml-2" : "origin-bottom-left right-[11.5rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
                                                                     <div onClick={() => getOriginalCertificate()} className="flex items-center border-b justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.originalCertificate')}</button>
                                                                         <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
                                                                     </div>
                                                                     <div onClick={() => getMosipSignedCertificate(partner)} className="flex items-center justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.mosipSignedCertificate')}</button>
-                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`}/>
+                                                                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
 
                                                                     </div>
                                                                 </div>)}

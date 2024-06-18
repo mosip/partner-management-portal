@@ -241,6 +241,7 @@
         "authenticationServiceSection": "خدمات المصادقة",
         "createdOn": "تم إنشاؤها على",
         "oidcClientId": "معرف عميل OIDC",
+        "copied!": "نسخ!",
         "partnerId": "معرف الشريك",
         "partnerIdAlias": "الاسم المستعار لمعرف الشريك",
         "partnerType": "نوع الشريك",

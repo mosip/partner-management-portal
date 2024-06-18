@@ -242,6 +242,7 @@
         "authenticationServiceSection": "Services d'authentification",
         "createdOn":"Créé sur",
         "oidcClientId":"ID client OIDC",
+        "copied!": "Copié!",
         "partnerId":"ID partenaire",
         "partnerIdAlias": "Alias ​​d’ID de partenaire",
         "partnerType":"Type de partenaire",
