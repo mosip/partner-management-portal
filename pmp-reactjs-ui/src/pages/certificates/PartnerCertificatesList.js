@@ -199,7 +199,7 @@ function PartnerCertificatesList() {
                                                             </button>
 
                                                             {activeBtn && (
-                                                                <div className={`w-[18%] absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-52 ml-2" : "origin-bottom-left right-52 mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
+                                                                <div className={`w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[11.5rem] ml-2" : "origin-bottom-left right-[11.5rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
                                                                     <div onClick={() => getOriginalCertificate()} className="flex items-center border-b justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.originalCertificate')}</button>
                                                                         <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
