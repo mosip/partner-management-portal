@@ -226,7 +226,7 @@ function ViewOidcClientDetails() {
                                         {(oidcClientDetails.redirectUris).map((uri, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="space-y-3 mt-2 text-left">
+                                                    <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                         <p className="text-lg max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
                                                             {uri}
                                                         </p>
@@ -247,7 +247,7 @@ function ViewOidcClientDetails() {
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>
-                                                    <li key={index} className="space-y-4 text-sm text-left">
+                                                    <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                         <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-lg py-1">
                                                             {capitalization(type)}
                                                         </p>

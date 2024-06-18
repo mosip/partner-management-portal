@@ -30,9 +30,9 @@ function Policies() {
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
   const [isDescending, setIsDescending] = useState(true);
-  const itemsPerPageOptions = [5, 10, 15, 20];
+  const itemsPerPageOptions = [8, 16, 24, 32];
   const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
@@ -248,7 +248,7 @@ function Policies() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" :"right-0"}`}>
+            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
               <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
@@ -267,7 +267,7 @@ function Policies() {
               </div>
 
               {policiesList.length > 0 ?
-                <button onClick={() => showRequestPolicy()} type="button" className="h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                <button onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
                   {t('policies.requestPolicyBtn')}
                 </button>
                 : null
@@ -317,7 +317,7 @@ function Policies() {
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
-                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL? "mr-2": "ml-2"}`}
+                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
                               width="10" height="8" viewBox="0 0 10 8">
                               <path id="Polygon_8"
                                 data-name="Polygon 8"
@@ -331,8 +331,8 @@ function Policies() {
                       {filter &&
                         <PoliciesFilter
                           filteredPoliciesList={filteredPoliciesList}
-                          onFilterChange={onFilterChange}
-                        ></PoliciesFilter>}
+                          onFilterChange={onFilterChange}>
+                        </PoliciesFilter>}
 
                       <div className="mx-[2%] overflow-x-scroll">
                         <table className="table-fixed">
@@ -381,12 +381,12 @@ function Policies() {
                                   </td>
                                   <td className="text-center">
                                     <div>
-                                      <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ?"ml-9":"mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                      <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
                                           <div onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%]`}>
-                                            <p className={`${isLoginLanguageRTL ? "ml-16" :"mr-12"} cursor-pointer`}>
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%] ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                            <p className={`${isLoginLanguageRTL ? "ml-16" : "mr-12"} cursor-pointer`}>
                                               {t('policies.view')}
                                             </p>
                                           </div>
@@ -413,38 +413,24 @@ function Policies() {
                         breakLabel="..."
                         previousLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                           {isLoginLanguageRTL ? <AiFillRightCircle/> : <AiFillLeftCircle/>}
+                            {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
                           </IconContext.Provider>
                         }
                         nextLabel={
                           <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            {isLoginLanguageRTL ? <AiFillLeftCircle/> : <AiFillRightCircle/>}
+                            {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
                           </IconContext.Provider>
                         }
                       />
                       <div className="flex items-center gap-x-3">
                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                         <div>
-                          <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
-                            onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
-                            <p>
-                              {selectedRecordsPerPage}
-                            </p>
-                            <svg className={`${isItemsPerPageOpen ? "rotate-180" : null}`}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
-                              <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                                transform="translate(-12 -16.6)" fill="#1447b2" />
-                            </svg>
-                          </div>
                           {isItemsPerPageOpen && (
-                            <div className="absolute bg-white text-xs text-tory-blue font-medium rounded-b-lg shadow-md">
+                            <div className={`bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
                               {itemsPerPageOptions.map((num, i) => {
                                 return (
                                   <p key={i} onClick={() => changeItemsPerPage(num)}
-                                    className="px-3 py-2 cursor-pointer hover:bg-gray-200">
+                                    className="px-3 py-2 cursor-pointer hover:bg-[#F2F5FC]">
                                     {num}
                                   </p>
                                 )
@@ -452,6 +438,20 @@ function Policies() {
                               }
                             </div>
                           )}
+                          <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                            onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
+                            <p>
+                              {selectedRecordsPerPage}
+                            </p>
+                            <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                              <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                                transform="translate(-12 -16.6)" fill="#1447b2" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
