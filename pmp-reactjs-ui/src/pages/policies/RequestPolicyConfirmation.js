@@ -45,10 +45,10 @@ function RequestPolicyConfirmation() {
                                 {t('requestPolicy.policySuccessMsg')}
                             </p>
                             <div className="flex space-x-3 mt-12 justify-center">
-                                <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-base px-12 py-4">
+                                <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
-                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-base px-12 py-4">
+                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4">
                                 {t('commons.home')}
                                 </button>
                             </div>

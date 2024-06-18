@@ -83,26 +83,26 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                     </svg>
                                 </span>
                                 <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
-                                    className="w-full h-8 pl-8 py-1 text-base text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
+                                    className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
                                 <div className="min-h-3 p-4">
-                                    <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                    <p className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
                             <div className="max-h-32 overflow-y-auto">
                                 {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (
-                                        <div key={index} className="min-h-3">
+                                        <div key={index} className="min-h-2">
                                             <button
-                                                className={`block ${dropdownItem.fieldDescription ? 'min-h-20' : 'min-h-8'} w-full px-4 py-1 text-left text-base text-dark-blue overflow-x-auto no-scrollbar
+                                                className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-left text-sm text-dark-blue overflow-x-auto no-scrollbar
                                                     ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
                                                 {dropdownItem.fieldDescription && (
                                                     <>
                                                         <br />
-                                                        <p className="text-sm text-[#727272]">{dropdownItem.fieldDescription}</p>
+                                                        <p className="text-xs text-[#727272]">{dropdownItem.fieldDescription}</p>
                                                     </>
                                                 )}
                                             </button>

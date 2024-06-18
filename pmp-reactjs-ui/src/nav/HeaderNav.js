@@ -76,7 +76,7 @@ function HeaderNav({ open, setOpen }) {
                     </svg>
                     {isDropdownOpen && (
                         <div className={`absolute top-14 ${isLoginLanguageRTL ? "left-7 origin-top-left" :"right-7 origin-top-right"} z-10 w-40 h-33 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
-                            <button className={`block px-4 py-2 text-sm text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
+                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
                             <div className="border-gray-100 border-t mx-2"></div>
                             <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>

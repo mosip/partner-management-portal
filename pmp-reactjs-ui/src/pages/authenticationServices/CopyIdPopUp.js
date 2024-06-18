@@ -35,11 +35,11 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
                 </header>
                 <hr className={`py-[4%]`} />
                 <div className={` flex-col text-center justify-center items-center`}>
-                    <h1 className={`text-[#6A6A6A] text-base opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
-                    <p className={`font-semibold text-base text-black break-words px-2`}>{oidcClientId}</p>
+                    <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
+                    <p className={`font-semibold text-sm text-black break-words px-2`}>{oidcClientId}</p>
                     <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-[31%]"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"
-                            width="13.808" height="16.481" viewBox="0 0 13.808 16.481">
+                            width="13" height="15" viewBox="0 0 13.808 16.481">
                             <path id="content_copy_FILL0_wght300_GRAD0_opsz24"
                                 d="M154.728-846.637a1.555,1.555,0,0,1-1.143-.468,1.555,1.555,0,0,1-.468-1.143V-858.39a1.554,1.554,0,0,1,.468-1.143,1.554,1.554,0,0,1,1.143-.468H162.2a1.554,1.554,0,0,1,1.143.468,1.555,1.555,0,0,1,.468,1.143v10.142a1.555,1.555,0,0,1-.468,1.143,1.555,1.555,0,0,1-1.143.468Zm0-1.336H162.2a.261.261,0,0,0,.188-.086.261.261,0,0,0,.086-.188V-858.39a.261.261,0,0,0-.086-.188.261.261,0,0,0-.188-.086h-7.469a.261.261,0,0,0-.188.086.261.261,0,0,0-.086.188v10.142a.261.261,0,0,0,.086.188A.261.261,0,0,0,154.728-847.974Zm-3.118,4.454a1.555,1.555,0,0,1-1.143-.468A1.555,1.555,0,0,1,150-845.13v-11.478h1.336v11.478a.261.261,0,0,0,.086.188.261.261,0,0,0,.188.086h8.806v1.336Zm2.844-4.454v0Z"
                                 transform="translate(-150 860)" fill={`${copied ? "#FFFFFF" : "#1447b2"}`} />
