@@ -46,11 +46,12 @@ function OidcClientsList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef(null);
+    const itemsCountSelectionRef = useRef(null);
 
     useEffect(() => {
-        const clickOutSideDropdown = handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
-        return clickOutSideDropdown;
-    }, [submenuRef]);
+        handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
+        handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
+    }, [submenuRef, itemsCountSelectionRef]);
 
     // const tableValues = [
     //     { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
@@ -487,7 +488,7 @@ function OidcClientsList() {
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
                                             {isItemsPerPageOpen && (
-                                                <div className={`bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}

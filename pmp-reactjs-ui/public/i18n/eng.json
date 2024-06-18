@@ -241,6 +241,7 @@
         "authenticationServiceSection": "Authentication Services",
         "createdOn":"Created On",
         "oidcClientId":"OIDC Client ID",
+        "copied!": "Copied!",
         "partnerId":"Partner ID",
         "partnerIdAlias": "Partner ID Alias",
         "partnerType":"Partner Type",
