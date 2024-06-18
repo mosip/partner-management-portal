@@ -273,6 +273,12 @@
        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification.",
        "confirm": "Confirmer"
     },
+    "consentPopup": {
+        "title": "Termes et conditions",
+        "description": "Je comprends que les données partagées au moment de l'inscription seront utilisées par le portail de gestion des partenaires (PMP), qui comprennent le nom, le numéro de téléphone, l'adresse e-mail, le nom de l'organisation et l'adresse. Je comprends également que ces informations seront stockées et traitées par PMP dans le but de vérifier mon identité et mon organisation afin d'accéder aux différents services de cette application. J'autorise la collecte de mes données à cette fin.",
+        "checkBoxDesc": "J'ai lu les termes et conditions et j'accepte de donner mon consentement pour utiliser les données partagées lors de l'inscription",
+        "proceed": "Procéder"
+     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",

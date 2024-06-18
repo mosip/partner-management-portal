@@ -272,6 +272,12 @@
        "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
        "confirm": "Confirm"
     },
+    "consentPopup": {
+        "title": "Terms and Conditions",
+        "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
+        "checkBoxDesc": "I have read the terms and conditions and accept to provide consent to use the data shared during registration",
+        "proceed": "Proceed"
+     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",
