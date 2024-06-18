@@ -283,11 +283,12 @@ function CreateOidcClient() {
     setJsonError("");
     setInvalidLogoUrl("");
     setInvalidRedirectUrl("");
+    setNameValidationError("");
   };
 
   const isFormValid = () => {
     return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes 
-      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
   };
 
   const styles = {
