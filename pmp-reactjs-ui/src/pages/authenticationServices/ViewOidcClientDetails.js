@@ -98,7 +98,7 @@ function ViewOidcClientDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b-2 max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-bold text-base text-dark-blue mb-2">{oidcClientDetails.oidcClientName ? oidcClientDetails.oidcClientName.toUpperCase() : oidcClientDetails.oidcClientName}</p>
+                            <p className="font-bold text-sm text-dark-blue mb-2">{oidcClientDetails.oidcClientName ? oidcClientDetails.oidcClientName.toUpperCase() : oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -143,7 +143,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.partnerId}
                                 </p>
                             </div>
@@ -151,7 +151,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {t('Partner Type Goes Here')}
                                 </p>
                             </div>
@@ -162,7 +162,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyGroupName}
                                 </p>
                             </div>
@@ -170,7 +170,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyName}
                                 </p>
                             </div>
@@ -178,7 +178,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyGroupDescription}
                                 </p>
                             </div>
@@ -186,7 +186,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyNameDescription}
                                 </p>
                             </div>
@@ -197,7 +197,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.name")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.oidcClientName}
                                 </p>
                             </div>
@@ -205,7 +205,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base text-wrap line-clamp-6 w-[90%]">
+                                <p className="font-[600] text-vulcan text-sm text-wrap line-clamp-6 w-[90%]">
                                     {oidcClientDetails.publicKey}
                                 </p>
                             </div>
@@ -213,7 +213,7 @@ function ViewOidcClientDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.logoUri")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.logoUri}
                                 </p>
                             </div>
@@ -227,7 +227,7 @@ function ViewOidcClientDetails() {
                                             return (
                                                 <ul>
                                                     <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                        <p className="text-base max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
+                                                        <p className="text-sm max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
                                                             {uri}
                                                         </p>
                                                         {(oidcClientDetails.redirectUris).length > 1 &&
@@ -248,7 +248,7 @@ function ViewOidcClientDetails() {
                                             return (
                                                 <ul>
                                                     <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                        <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-base py-1">
+                                                        <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-sm py-1">
                                                             {capitalization(type)}
                                                         </p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
