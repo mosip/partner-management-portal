@@ -18,11 +18,11 @@ function ViewOidcClientDetails() {
         redirectUris: [],
         grantTypes: [],
     });
-    const copyToolkitRef = useRef(null)
+    const copyToolTipRef = useRef(null)
 
     useEffect(() => {
         const clientData = localStorage.getItem('selectedClientData');
-        handleMouseClickForDropdown(copyToolkitRef, () => setCopied(false));
+        handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
         if (clientData) {
             try {
                 const selectedClient = JSON.parse(clientData);
@@ -34,7 +34,7 @@ function ViewOidcClientDetails() {
         } else {
             navigate('/partnermanagement/authenticationServices/oidcClientsList');
         }
-    }, [navigate, copyToolkitRef]);
+    }, [navigate, copyToolTipRef]);
 
     const moveToHome = () => {
         navigate("/partnermanagement");
@@ -131,7 +131,7 @@ function ViewOidcClientDetails() {
                         </div>
                         {copied &&
                             (
-                                <div ref={copyToolkitRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
                                     <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied')}</p>
                                 </div>
                             )
