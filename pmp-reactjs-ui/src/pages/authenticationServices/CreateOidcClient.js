@@ -266,6 +266,8 @@ function CreateOidcClient() {
 
 
   const clearForm = () => {
+    setErrorCode("");
+    setErrorMsg("");
     setPartnerId("");
     setPartnerType("");
     setPolicyGroupName("");

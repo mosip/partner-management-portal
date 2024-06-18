@@ -134,6 +134,8 @@ function EditOidcClient() {
     const clearForm = () => {
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
+        setErrorCode("");
+        setErrorMsg("");
         setOidcClientDetails(selectedClientDetails);
     }
 
