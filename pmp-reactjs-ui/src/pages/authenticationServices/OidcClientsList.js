@@ -237,7 +237,7 @@ function OidcClientsList() {
         }
     };
 
-    const onClearFilter = () => {
+    const onResetFilter = () => {
         window.location.reload();
     }
 
@@ -343,9 +343,9 @@ function OidcClientsList() {
                                             {t('oidcClientsList.listOfOidcClientRequests') + ' (' + filteredOidcClientsList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
-                                            {filter && <button onClick={() => onClearFilter()} type="button"
+                                            {filter && <button onClick={() => onResetFilter()} type="button"
                                                 className="flex justify-center items-center w-[23%] text-sm py-2 font-semibold text-cente text-tory-blue">
-                                                {t('policies.clearFilter')}
+                                                {t('policies.resetFilter')}
                                             </button>}
                                             <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>

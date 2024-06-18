@@ -223,6 +223,7 @@
         "listOfOidcClientRequests": "List of OIDC Client Requests",
         "createOidcClient": "Create OIDC Client",
         "filterBtn": "Filter",
+        "resetFilter": "Reset Filter",
         "view": "View",
         "edit": "Edit",
         "deActivate": "Deactivate",

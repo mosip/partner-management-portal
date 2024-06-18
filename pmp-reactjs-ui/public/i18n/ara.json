@@ -223,6 +223,7 @@
         "listOfOidcClientRequests": "قائمة طلبات عملاء OIDC",
         "createOidcClient": "إنشاء عميل OIDC",
         "filterBtn": "منقي",
+        "resetFilter": "تصفية إعادة تعيين",
         "view": "منظر",
         "edit": "يحرر",
         "deActivate": "إلغاء التنشيط",
