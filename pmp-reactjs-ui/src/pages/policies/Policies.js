@@ -223,7 +223,7 @@ function Policies() {
     setFirstIndex(0);
   }, [filterQuery]);
 
-  const onClearFilter = () => {
+  const onResetFilter = () => {
     window.location.reload();
   }
 
@@ -309,11 +309,11 @@ function Policies() {
                           {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                         </div>
                         <div className="w-full flex justify-end relative ">
-                          {filter && <button onClick={() => onClearFilter()} type="button"
-                            className="flex mr-2 justify-center items-center w-[23%] text-sm py-3 font-semibold text-center text-tory-blue">
-                            {t('policies.clearFilter')}
+                          {filter && <button onClick={() => onResetFilter()} type="button"
+                            className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[23%] text-base py-3 font-semibold text-center text-tory-blue`}>
+                            {t('policies.resetFilter')}
                           </button>}
-                          <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[20%] h-10 min-w-20 text-base py-3 mr-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                          <button onClick={() => setFilter(!filter)} type="button" className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[20%] h-10 min-w-20 text-base py-3 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg

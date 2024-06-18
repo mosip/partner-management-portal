@@ -224,6 +224,7 @@
         "listOfOidcClientRequests": "Liste des demandes des clients OIDC",
         "createOidcClient": "Créer un client OIDC",
         "filterBtn": "Filtre",
+        "resetFilter": "Réinitialiser le filtre",
         "view": "Voir",
         "edit": "Modifier",
         "deActivate": "Désactiver",
