@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -40,6 +40,12 @@ function Policies() {
     policyGroupName: ""
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
+  const submenuRef = useRef(null);
+
+  useEffect(() => {
+      const clickOutSideDropdown = handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
+      return clickOutSideDropdown;
+  }, [submenuRef]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -301,7 +307,7 @@ function Policies() {
                     </div>
                   </div>
                 </div>
-                : tableRows.length > 0 && (
+                :
                   <>
                     <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
                       <div className="flex w-full p-2">
@@ -384,7 +390,7 @@ function Policies() {
                                       <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
-                                          <div onClick={() => showViewPolicyDetails(partner)}
+                                          <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
                                             className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%] ${isLoginLanguageRTL ? "-mr-14" : null}`}>
                                             <p className={`${isLoginLanguageRTL ? "ml-16" : "mr-12"} cursor-pointer`}>
                                               {t('policies.view')}
@@ -455,7 +461,7 @@ function Policies() {
                         </div>
                       </div>
                     </div>
-                  </>)
+                  </>
               }
             </div>
           </div>

@@ -113,8 +113,8 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <button type="button"
-                            className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right hover:shadow-md`}>
+                        <div
+                            className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}>
                             <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
@@ -126,7 +126,7 @@ function ViewOidcClientDetails() {
                                     <img src={disabled_copy_icon} alt="" />
                                 )}
                             </div>
-                        </button>
+                        </div>
                         {copied &&
                             (
                                 <div className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
