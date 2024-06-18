@@ -43,7 +43,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1":"ml-1"}`}>
-                {t(fieldNameKey)}{containsAsterisk ? <span className="text-crimson-red">*</span> : <span>{isLoginLanguageRTL ?"" :":"}</span>}
+            {t(fieldNameKey)}{containsAsterisk && <span className="text-crimson-red">*</span>}
                 {addInfoIcon && (
                     <img src={infoIcon} alt="" className= {`ml-1 cursor-pointer`} 
                         onMouseEnter={() => setShowTooltip(true)}
