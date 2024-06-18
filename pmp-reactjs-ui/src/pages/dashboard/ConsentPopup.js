@@ -48,7 +48,7 @@ function ConsentPopup() {
                             <div className="p-4"> <p>{consentText}</p></div>
                             <div className="flex items-center mt-3 bg-alice-green w-full px-4 py-3">
                                 <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
-                                <label for="default-checkbox" className="ms-2 text-sm font-medium">{t('consentPopup.checkBoxDesc')}</label>
+                                <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium">{t('consentPopup.checkBoxDesc')}</label>
                             </div>
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
