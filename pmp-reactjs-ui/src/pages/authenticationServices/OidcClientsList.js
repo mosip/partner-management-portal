@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode } from '../../utils/AppUtils';
+import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -45,6 +45,12 @@ function OidcClientsList() {
         policyGroupName: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
+    const submenuRef = useRef(null);
+
+    useEffect(() => {
+        const clickOutSideDropdown = handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
+        return clickOutSideDropdown;
+    }, [submenuRef]);
 
     // const tableValues = [
     //     { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
@@ -430,7 +436,7 @@ function OidcClientsList() {
                                                                     <div>
                                                                         <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
+                                                                            <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
