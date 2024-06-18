@@ -239,14 +239,14 @@ function RequestPolicy() {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
         dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
-        selectionBox: "!top-12"
+        selectionBox: "!top-10"
     }
 
     const styleForSearch = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
         dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
-        selectionBox: "!top-12"
+        selectionBox: "!top-10"
     }
 
     return (
