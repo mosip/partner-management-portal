@@ -39,6 +39,7 @@ function CreateOidcClient() {
   const [jsonError, setJsonError] = useState("");
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
+  const [nameValidationError, setNameValidationError] = useState("");
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -145,6 +146,15 @@ function CreateOidcClient() {
       }
     }
   };
+
+  const onChangeOidcClientName = (value) => {
+    if (value.length > 256) {
+      setNameValidationError(t('createOidcClient.nameTooLong'))
+    } else {
+      setNameValidationError("");
+    }
+    setOidcClientName(value);
+  }
 
   const handleGrantTypesChange = (fieldName, selectedValue) => {
     setGrantTypes(selectedValue);
@@ -256,6 +266,8 @@ function CreateOidcClient() {
 
 
   const clearForm = () => {
+    setErrorCode("");
+    setErrorMsg("");
     setPartnerId("");
     setPartnerType("");
     setPolicyGroupName("");
@@ -376,9 +388,10 @@ function CreateOidcClient() {
                     <div className="flex my-2">
                       <div className="flex flex-col w-[562px]">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red">*</span></label>
-                        <input value={oidcClientName} onChange={(e) => setOidcClientName(e.target.value)}
+                        <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
+                        {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
                       </div>
                     </div>
                     <div className="flex my-[1%]">
@@ -438,7 +451,7 @@ function CreateOidcClient() {
                           </div>
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
-                        <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
+                        <p className="text-[#1447b2] font-bold text-xs cursor-pointer w-20" onClick={addNewRedirectUrl}>
                           <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
                         </p>
                       </div>

@@ -19,6 +19,8 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
     };
 
     const clickOnConfirm = async () => {
+        setErrorCode("");
+        setErrorMsg("");
         setDataLoaded(false);
         const request = createRequest({
             logoUri: clientData.logoUri,

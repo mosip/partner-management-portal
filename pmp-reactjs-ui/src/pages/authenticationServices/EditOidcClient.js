@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import info from '../../svg/info_icon.svg';
@@ -112,18 +112,67 @@ function EditOidcClient() {
         }
     };
 
+    const checkIfRedirectUrisIsUpdated = () => {
+        const filteredOidcUris = oidcClientDetails.redirectUris.filter(uri => uri !== '');
+        const filteredSelectedUris = selectedClientDetails.redirectUris.filter(uri => uri !== '');
+        // Check if the lengths of the filtered arrays are different
+        if (filteredOidcUris.length !== filteredSelectedUris.length) {
+            return true;
+        }
+        for (let i = 0; i < filteredOidcUris.length; i++) {
+            if (filteredOidcUris[i] !== filteredSelectedUris[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const isFormValid = () => {
-        return (oidcClientDetails.logoUri !== "") && (oidcClientDetails.redirectUris.length > 0) && !invalidLogoUrl && !invalidRedirectUrl;
+        return (checkIfRedirectUrisIsUpdated() || oidcClientDetails.logoUri !== selectedClientDetails.logoUri) && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
     const clearForm = () => {
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
+        setErrorCode("");
+        setErrorMsg("");
         setOidcClientDetails(selectedClientDetails);
     }
 
     const clickOnSubmit = async () => {
-        navigate('/partnermanagement/editOidcClientConfirmation');
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+        const request = createRequest({
+            logoUri: oidcClientDetails.logoUri,
+            redirectUris: oidcClientDetails.redirectUris,
+            status: oidcClientDetails.status,
+            grantTypes: oidcClientDetails.grantTypes,
+            clientName: oidcClientDetails.oidcClientName,
+            clientAuthMethods: oidcClientDetails.clientAuthMethods,
+            clientNameLangMap: {
+                "eng" : oidcClientDetails.oidcClientName
+            }
+        });
+        console.log(request);
+        try {
+            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.oidcClientId}`, process.env.NODE_ENV), request, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                setDataLoaded(true);
+                navigate('/partnermanagement/editOidcClientConfirmation');
+            } else {
+                setDataLoaded(true);
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } catch (err) {
+            setDataLoaded(true);
+            setErrorMsg(err);
+        }
     }
 
     return (
@@ -134,7 +183,7 @@ function EditOidcClient() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL? "left-0" : "right-0"}`}>
+                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL? "left-0" : "right-2"}`}>
                             <div className="flex justify-between items-center max-w-[400px] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
@@ -293,7 +342,7 @@ function EditOidcClient() {
                                                     </div>
                                                 ))}
                                                 {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
-                                                <p type="button" className="text-[#1447b2] font-bold text-xs cursor-pointer" onClick={addNewRedirectUrl}>
+                                                <p className="text-[#1447b2] font-bold text-xs cursor-pointer w-20" onClick={addNewRedirectUrl}>
                                                     <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
                                                 </p>
                                             </div>

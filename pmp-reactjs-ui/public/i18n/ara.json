@@ -189,6 +189,7 @@
         "policyNamePlaceHolder": "حدد السياسة التي يلزم فيها معرف عميل OIDC",
         "selectPolicyName": "حدد اسم السياسة",
         "name": "اسم",
+        "nameTooLong": "يجب ألا يسمح الاسم بأكثر من 256 حرفًا.",
         "enterNameForOidcClient": "أدخل اسمًا لعميل OIDC",
         "publicKey": "المفتاح العمومي",
         "publicKeyToolTip": "يُسمح بتنسيق JWK فقط",
