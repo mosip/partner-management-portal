@@ -51,7 +51,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[6%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[6%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
