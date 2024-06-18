@@ -113,8 +113,8 @@ function SelectPolicyPopup() {
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-base !my-2 mb-0",
-        dropdownButton: "!w-full !h-11 !rounded-md !text-base !text-dark-blue",
+        dropdownLabel: "!text-sm !my-2 mb-0",
+        dropdownButton: "!w-full !h-10 !rounded-md !text-sm !text-dark-blue",
         selectionBox: "",
         loadingDiv: "!py-[50%]"
     }
@@ -134,26 +134,26 @@ function SelectPolicyPopup() {
                                 </div>
                             </div>
                         )}
-                        <div className="px-[6%] py-[3%]">
-                            <h3 className="text-lg font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
+                        <div className="px-[4%] py-[2%]">
+                            <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="px-[6%] py-[3%] text-sm text-[#414141]">
+                        <div className="px-[4%] py-[2%] text-sm text-[#414141]">
                             <p>
                                 {displayText}
                             </p>
                             {descriptionText.split(' ').length > maxWords && (
-                                <button className="text-tory-blue text-base font-semibold" onClick={expandDescription}>
+                                <button className="text-tory-blue text-sm font-semibold" onClick={expandDescription}>
                                     {isExpanded ? t('selectPolicyPopup.viewLess'): t('selectPolicyPopup.viewMore')}
                                 </button>
                             )}
                             <form>
-                                <div className="pt-3 w-full mb-4 flex flex-col">
+                                <div className="pt-2 w-full mb-2 flex flex-col">
                                     <div className="flex flex-col">
-                                        <label className="block text-dark-blue text-base font-semibold mb-2">
+                                        <label className="block text-dark-blue text-sm font-semibold mb-2">
                                             {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                         </label>
-                                        <button disabled className="flex items-center justify-between w-full h-11 px-2 py-2 border border-gray-300 rounded-md text-base text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                        <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                         </button>
                                     </div>
@@ -172,12 +172,12 @@ function SelectPolicyPopup() {
                             </form>
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
-                        <div className="p-5 flex justify-between relative">
+                        <div className="p-4 flex justify-between relative">
                             <p className="text-[#333333] text-sm font-medium ml-2">{t('selectPolicyPopup.logoutMsg')}
                                 <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
                             </p>
                             <button
-                                className={`w-40 h-12 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
+                                className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
                                 ${selectedPolicyGroup ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                 onClick={clickOnSubmit}
                                 disabled={!selectedPolicyGroup}

@@ -316,10 +316,10 @@ function Policies() {
                         </div>
                         <div className="w-full flex justify-end relative ">
                           {filter && <button onClick={() => onResetFilter()} type="button"
-                            className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[23%] text-base py-3 font-semibold text-center text-tory-blue`}>
+                            className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[23%] text-sm py-3 font-semibold text-center text-tory-blue`}>
                             {t('policies.resetFilter')}
                           </button>}
-                          <button onClick={() => setFilter(!filter)} type="button" className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[20%] h-10 min-w-20 text-base py-3 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                          <button onClick={() => setFilter(!filter)} type="button" className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[20%] h-10 min-w-20 text-sm py-3 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                             ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
                             {t('policies.filterBtn')}
                             <svg
@@ -386,13 +386,13 @@ function Policies() {
                                     </div>
                                   </td>
                                   <td className="text-center">
-                                    <div>
+                                    <div className="relative">
                                       <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                       {
                                         viewPolicyId === index && (
                                           <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md py-2 px-2 w-[5%] ${isLoginLanguageRTL ? "-mr-14" : null}`}>
-                                            <p className={`${isLoginLanguageRTL ? "ml-16" : "mr-12"} cursor-pointer`}>
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-full p-2 z-20 flex items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                            <p className="cursor-pointer">
                                               {t('policies.view')}
                                             </p>
                                           </div>

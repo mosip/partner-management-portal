@@ -45,10 +45,10 @@ function CreateOidcClientConfirmation() {
                                 {t('createOidcClient.requestSuccessMsg')}
                             </p>
                             <div className="flex space-x-3 mt-12 justify-center">
-                                <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-base px-12 py-4">
+                                <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-sm px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
-                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-base px-12 py-4">
+                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4">
                                 {t('commons.home')}
                                 </button>
                             </div>

@@ -159,7 +159,7 @@ function PartnerCertificatesList() {
                                 </div>
                             </div>
                         </div>
-                        <ul className="w-[100%] bg-snow-white mt-[1.5%] ml-3 rounded-lg shadow-md p-[2.5%] pb-[10%]">
+                        <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
                             {certificatesData.length === 0 ?
                                 <div className="p-[8%] flex flex-col justify-center items-center w-full">
                                     <img src={rectangleBox} alt="" />
