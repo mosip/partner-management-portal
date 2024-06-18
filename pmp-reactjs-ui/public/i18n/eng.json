@@ -189,6 +189,7 @@
         "policyNamePlaceHolder": "Select policy for which OIDC Client ID is required",
         "selectPolicyName": "Select Policy Name",
         "name": "Name",
+        "nameTooLong": "Name should not allow more than 256 characters.",
         "enterNameForOidcClient": "Enter a name for OIDC Client",
         "publicKey": "Public Key",
         "publicKeyToolTip": "Only JWK format is allowed",

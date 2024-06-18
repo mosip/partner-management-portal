@@ -190,6 +190,7 @@
         "policyNamePlaceHolder":"Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "name": "Nom",
+        "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
         "enterNameForOidcClient":"Entrez un nom pour le client OIDC",
         "publicKey": "Clé publique",
         "publicKeyToolTip": "Seul le format JWK est autorisé",
