@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
 
-function SelectPolicyPopup() {
+function ConsentPopup() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -47,8 +47,8 @@ function SelectPolicyPopup() {
                         <div className="text-sm text-[#414141] w-full">
                             <div className="p-4"> <p>{consentText}</p></div>
                             <div class="flex items-center mt-3 bg-alice-green w-full px-4 py-3">
-                                <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
-                                <label for="default-checkbox" class="ms-2 text-sm font-medium">{t('consentPopup.checkBoxDesc')}</label>
+                                <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
+                                <label for="default-checkbox" className="ms-2 text-sm font-medium">{t('consentPopup.checkBoxDesc')}</label>
                             </div>
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
@@ -72,4 +72,4 @@ function SelectPolicyPopup() {
     );
 }
 
-export default SelectPolicyPopup;
+export default ConsentPopup;
