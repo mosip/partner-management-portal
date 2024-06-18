@@ -152,7 +152,7 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.partnerType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    {t('Partner Type Goes Here')}
+                                    {t("partnerTypes.authPartner")}
                                 </p>
                             </div>
                         </div>
