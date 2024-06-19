@@ -4,7 +4,7 @@ function SuccessMessage({ successMsg, clickOnCancel}) {
     return (
         <>
             <div className="mr-6">
-                <p className=" text-sm font-semibold text-white break-words font-inter">
+                <p className="text-sm/none font-semibold text-white break-words font-inter">
                     {successMsg}
                 </p>
             </div>

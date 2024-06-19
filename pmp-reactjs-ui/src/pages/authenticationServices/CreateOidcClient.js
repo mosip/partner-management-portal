@@ -306,8 +306,8 @@ function CreateOidcClient() {
       {dataLoaded && (
         <>
           {errorMsg && (
-              <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL? "left-0" : "right-0"}`}>
-                  <div className="flex justify-between items-center max-w-[400px] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
+              <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL? "left-0" : "right-2"}`}>
+                  <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
                       <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                   </div>
               </div>
