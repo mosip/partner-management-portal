@@ -176,7 +176,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             value={partnerDomainType} disabled />
                                     </div>
                                 </form>
-                                <div className="flex items-center justify-center mt-[2%] w-full h-36 p-3 border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
+                                <div className="flex items-center justify-center mt-[2%] w-full min-h-36 h-fit p-3 border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
                                     {uploading && (
                                         <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                             <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
