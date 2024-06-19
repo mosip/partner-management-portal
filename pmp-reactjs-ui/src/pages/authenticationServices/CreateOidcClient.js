@@ -148,8 +148,11 @@ function CreateOidcClient() {
   };
 
   const onChangeOidcClientName = (value) => {
+    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
     if (value.length > 256) {
       setNameValidationError(t('createOidcClient.nameTooLong'))
+    } else if (!regexPattern.test(value)) {
+      setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
     } else {
       setNameValidationError("");
     }
@@ -280,11 +283,12 @@ function CreateOidcClient() {
     setJsonError("");
     setInvalidLogoUrl("");
     setInvalidRedirectUrl("");
+    setNameValidationError("");
   };
 
   const isFormValid = () => {
     return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes 
-      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
   };
 
   const styles = {
