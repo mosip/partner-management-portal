@@ -421,7 +421,7 @@ function OidcClientsList() {
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
-                                                                <td className="pl-2">
+                                                                <td className={`${isLoginLanguageRTL ? "pr-2" : "pl-2"}`}>
                                                                     <svg onClick={() => showCopyPopUp(client)}
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"

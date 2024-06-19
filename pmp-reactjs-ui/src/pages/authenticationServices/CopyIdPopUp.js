@@ -45,7 +45,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
                                 transform="translate(-150 860)" fill={`${copied ? "#FFFFFF" : "#1447b2"}`} />
                         </svg>
 
-                        {!copied ? "Copy" : "Copied!"}
+                        {!copied ? t("oidcClientsList.copy") : t("oidcClientsList.copied!")}
                     </button>
                 </div>
             </div>
