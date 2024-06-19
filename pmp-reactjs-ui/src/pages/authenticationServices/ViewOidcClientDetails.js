@@ -132,7 +132,7 @@ function ViewOidcClientDetails() {
                         {copied &&
                             (
                                 <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
-                                    <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied')}</p>
+                                    <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                 </div>
                             )
                         }
