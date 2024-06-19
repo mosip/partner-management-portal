@@ -240,7 +240,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                                 {uploadFailure && errorMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-2">
+                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-4">
                                             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                         </div>
                                     </div>
