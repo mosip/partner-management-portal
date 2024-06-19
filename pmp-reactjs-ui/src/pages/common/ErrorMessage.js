@@ -22,7 +22,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
     return (
         <>
             <div className="h-full mr-8">
-                <p className=" text-sm font-bold text-white break-words font-inter">
+                <p className="text-sm text-white break-words font-inter">
                     {errorMsg}
                 </p>
             </div>

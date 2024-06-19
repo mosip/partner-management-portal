@@ -257,8 +257,8 @@ function RequestPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end items-center max-w-7xl mt-3 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl px-3">
+                        <div className={`flex justify-end items-center max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
+                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>

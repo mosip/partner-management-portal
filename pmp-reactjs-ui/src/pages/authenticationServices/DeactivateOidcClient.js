@@ -66,7 +66,7 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
                 {dataLoaded && (
                     <>
                         {errorMsg && (
-                            <div className="flex justify-end absolute w-1/3">
+                            <div className="flex justify-end items-center absolute w-[55%] md:w-[390px]">
                                 <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                 </div>
