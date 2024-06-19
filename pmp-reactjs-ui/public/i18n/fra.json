@@ -230,7 +230,7 @@
         "edit": "Modifier",
         "deActivate": "Désactiver",
         "copy": "Copie",
-        "copied": "Copié!",
+        "copied!": "Copié!",
         "selectPartnerId":"Sélectionnez l'ID du partenaire",
         "selectOidcClientType": "Sélectionnez le client OIDC",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
