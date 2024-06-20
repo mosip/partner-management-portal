@@ -10,6 +10,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import backArrow from '../../svg/back_arrow.svg';
 import DropdownComponent from "../common/fields/DropdownComponent";
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
+import BlockerPrompt from "../common/BlockerPrompt";
 
 function RequestPolicy() {
     const navigate = useNavigate();
@@ -37,8 +38,8 @@ function RequestPolicy() {
 
     let blocker = useBlocker(
         ({ currentLocation, nextLocation }) =>
-            (partnerId !== "" || policyName !== "" || partnerType !== "" ||
-                policyGroupName !== "" || partnerComments !== "") &&
+            (partnerId !== "" || policyName !== "" ||
+                partnerComments !== "") &&
             currentLocation.pathname !== nextLocation.pathname
     );
 
@@ -376,21 +377,7 @@ function RequestPolicy() {
                     </div>
                 </>
             )}
-            {blocker.state === "blocked" ? (
-                <div className="fixed min-w-36 h-fit inset-0 w-full flex flex- col justify-center z-50 font-inter">
-                    <div className="bg-white w-fit mx-auto rounded-xl justify-center shadow-lg p-2 pt-4 text-sm">
-                        <p className="text-center">{t('blockerMessage.description')}</p>
-                        <div className="pt-2">
-                            <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.proceed()}>
-                                {t('blockerMessage.proceed')}
-                            </button>
-                            <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.reset()}>
-                                {t('blockerMessage.cancel')}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            ) : null}
+            <BlockerPrompt blocker={blocker} />
         </div>
 
     )
