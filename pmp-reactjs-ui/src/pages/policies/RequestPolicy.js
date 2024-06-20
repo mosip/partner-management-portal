@@ -35,6 +35,23 @@ function RequestPolicy() {
         setErrorMsg("");
     };
 
+    const handlePopState = (event) => {
+        console.log('trigg');
+        const confirmLeave = window.confirm("Are you sure you want to leave this page?");
+        if (!confirmLeave) {
+            console.log('Navigation prevented');
+            event.preventDefault();
+        } else {
+            window.removeEventListener('popstate', handlePopState);
+            console.log('Navigation allowed');
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('popstate', handlePopState);
+        console.log('EventListener added');
+    }, []);
+
     const moveToHome = () => {
         navigate('/partnermanagement')
     };
