@@ -282,6 +282,11 @@
         "checkBoxDesc": "I have read the terms and conditions and accept to provide consent to use the data shared during registration",
         "proceed": "Proceed"
      },
+     "blockerMessage": {
+        "description": "Are you sure you want to leave?",
+        "cancel": "Cancel",
+        "proceed": "Proceed"
+     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",

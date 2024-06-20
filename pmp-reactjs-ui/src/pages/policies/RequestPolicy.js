@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
@@ -34,6 +34,24 @@ function RequestPolicy() {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    let blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+            (partnerId !== "" || policyName !== "" || partnerType !== "" ||
+                policyGroupName !== "" || partnerComments !== "") &&
+            currentLocation.pathname !== nextLocation.pathname
+    );
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     const moveToHome = () => {
         navigate('/partnermanagement')
@@ -334,7 +352,7 @@ function RequestPolicy() {
                                         </div>
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
                                                 </label>
                                                 <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
@@ -358,7 +376,23 @@ function RequestPolicy() {
                     </div>
                 </>
             )}
+            {blocker.state === "blocked" ? (
+                <div className="fixed min-w-36 h-fit inset-0 w-full flex flex- col justify-center z-50 font-inter">
+                    <div className="bg-white w-fit mx-auto rounded-xl justify-center shadow-lg p-2 pt-4 text-sm">
+                        <p className="text-center">{t('blockerMessage.description')}</p>
+                        <div className="pt-2">
+                            <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.proceed()}>
+                                {t('blockerMessage.proceed')}
+                            </button>
+                            <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.reset()}>
+                                {t('blockerMessage.cancel')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
         </div>
+
     )
 }
 

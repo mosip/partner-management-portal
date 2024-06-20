@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
@@ -41,6 +41,33 @@ function CreateOidcClient() {
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
+
+  let blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      ( partnerId !== "" ||
+        oidcClientName !== "" ||
+        publicKey !== "" ||
+        showPublicKeyToolTip ||
+        logoUrl !== "" ||
+        policyId !== "" ||
+        policyName !== "" ||
+        partnerType !== "" ||
+        policyGroupName !== ""
+       ) &&
+        currentLocation.pathname !== nextLocation.pathname
+);
+
+useEffect(() => {
+    const handleBeforeUnload = (event) => {
+        event.preventDefault();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+}, []);
+
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -545,6 +572,21 @@ function CreateOidcClient() {
           </div>
         </>  
       )}
+      {blocker.state === "blocked" ? (
+        <div className="fixed min-w-36 h-fit inset-0 w-full flex flex- col justify-center z-50 font-inter">
+          <div className="bg-white w-fit mx-auto rounded-xl justify-center shadow-lg p-2 pt-4 text-sm">
+            <p className="text-center">{t('blockerMessage.description')}</p>
+            <div className="pt-2">
+              <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.proceed()}>
+              {t('blockerMessage.proceed')}
+              </button>
+              <button className="w-24 h-9 mx-2 my-1 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold" onClick={() => blocker.reset()}>
+              {t('blockerMessage.cancel')}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
