@@ -72,10 +72,12 @@ export const getStatusCode = (status, t) => {
 }
 
 export const getGrantTypes = (type, t) => {
-    if(type && type === "authorization_code") {
-        return t('createOidcClient.authorizationCode');
-    } else {
-        return type;
+    if (type) {
+        if (type === "authorization_code") {
+            return t('createOidcClient.authorization_code');
+        } else {
+            return type;
+        }
     }
 }
 

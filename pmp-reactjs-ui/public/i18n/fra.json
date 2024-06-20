@@ -200,7 +200,7 @@
         "redirectUrl": "URI de redirection",
         "redirectUrlPlaceHolder": "Entrez l'URI de redirection",
         "grantTypes": "Types de subventions",
-        "authorizationCode": "Code d'autorisation",
+        "authorization_code": "Code d'autorisation",
         "enterGrantTypes": "Entrez les types de subventions",
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",

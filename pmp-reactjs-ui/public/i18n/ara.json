@@ -199,7 +199,7 @@
         "redirectUrl": "إعادة توجيه URI",
         "redirectUrlPlaceHolder": "أدخل إعادة توجيه URI",
         "grantTypes": "أنواع المنح",
-        "authorizationCode": "قانون التفويض",
+        "authorization_code": "قانون التفويض",
         "enterGrantTypes": "أدخل أنواع المنح",
         "delete": "يمسح",
         "addNew": "اضف جديد",
