@@ -96,7 +96,7 @@ function ApiKeysList({ activeApiKey }) {
       {
         activeApiKey && (
           <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-            <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
+            <div className={`flex sm:gap-x-20 md:gap-x-24 lg:gap-x-32 xl:gap-x-40`}>
               <h6 className="ml-5">{t('apiKeysList.partnerId')}</h6>
               <h6>{t('apiKeysList.policyName')}</h6>
               <h6>{t('apiKeysList.apiKeylabel')}</h6>
