@@ -194,10 +194,10 @@ function OidcClientsList() {
     //This part is related to Sorting
     const toggleSortDescOrder = (sortItem) => {
         if (order === 'ASC') {
-            if (sortItem === "createdDate") {
+            if (sortItem === "crDtimes") {
                 const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
-                    const dateA = new Date(a.createdDate);
-                    const dateB = new Date(b.createdDate);
+                    const dateA = new Date(a.crDtimes);
+                    const dateB = new Date(b.crDtimes);
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
                 setFilteredOidcClientsList(sortedOidcClients);
@@ -219,10 +219,10 @@ function OidcClientsList() {
     }
     const toggleSortAscOrder = (sortItem) => {
         if (order === 'DESC') {
-            if (sortItem === "createDate") {
+            if (sortItem === "crDtimes") {
                 const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
-                    const dateA = new Date(a.createdDate);
-                    const dateB = new Date(b.createdDate);
+                    const dateA = new Date(a.crDtimes);
+                    const dateB = new Date(b.crDtimes);
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
 
@@ -277,8 +277,8 @@ function OidcClientsList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <div className={`flex gap-x-2`}>
-                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                            <div className={`flex items-start gap-x-2`}>
+                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[8%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col mt-[3%]">
                                     <h1 className="font-semibold text-lg text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
@@ -347,7 +347,7 @@ function OidcClientsList() {
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
                                         <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
-                                            {t('oidcClientsList.listOfOidcClientRequests') + ' (' + filteredOidcClientsList.length + ")"}
+                                            {t('oidcClientsList.listOfOidcClients') + ' (' + filteredOidcClientsList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
                                             {filter && <button onClick={() => onResetFilter()} type="button"
@@ -410,7 +410,7 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t-2 text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
@@ -492,7 +492,7 @@ function OidcClientsList() {
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}
-                                                                className="px-3 py-2 cursor-pointer hover:bg-[#F2F5FC]">
+                                                                className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                                                 {num}
                                                             </p>
                                                         )
