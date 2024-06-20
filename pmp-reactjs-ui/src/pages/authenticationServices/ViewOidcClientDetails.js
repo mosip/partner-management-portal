@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown } from "../../utils/AppUtils";
+import { isLangRTL, handleMouseClickForDropdown, getGrantTypes } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
@@ -60,14 +60,6 @@ function ViewOidcClientDetails() {
         }
     };
 
-    const capitalization = (type) => {
-        return type
-            .toLowerCase()
-            .split('_')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ')
-    };
-
     return (
         <>
             <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
@@ -98,7 +90,7 @@ function ViewOidcClientDetails() {
                     </div>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
-                    <div className="flex justify-between px-7 pt-3 border-b-2 max-[450px]:flex-col">
+                    <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
                             <p className="font-bold text-sm text-dark-blue mb-2">{oidcClientDetails.oidcClientName ? oidcClientDetails.oidcClientName.toUpperCase() : oidcClientDetails.oidcClientName}</p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
@@ -233,7 +225,7 @@ function ViewOidcClientDetails() {
                                                             {uri}
                                                         </p>
                                                         {(oidcClientDetails.redirectUris).length > 1 &&
-                                                            (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px]" />)
+                                                            (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />)
                                                         }
                                                     </li>
                                                 </ul>
@@ -251,10 +243,10 @@ function ViewOidcClientDetails() {
                                                 <ul>
                                                     <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                         <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-sm py-1">
-                                                            {capitalization(type)}
+                                                            {getGrantTypes(type, t)}
                                                         </p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
-                                                            (<hr className="h-px w-[72%] bg-gray-200" />)
+                                                            (<hr className="h-px w-[72%] bg-[#707070] border-[1px]" />)
                                                         }
                                                     </li>
                                                 </ul>

@@ -7,7 +7,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
-  moveToOidcClientsList } from '../../utils/AppUtils';
+  moveToOidcClientsList, getGrantTypes } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -34,8 +34,9 @@ function CreateOidcClient() {
   const [partnerData, setPartnerData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
   const [grantTypes, setGrantTypes] = useState("authorization_code");
-  const [grantTypesList, setGrantTypesList] = useState(['authorization_code']);
+  const [grantTypesList, setGrantTypesList] = useState(['']);
   const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
+  const [clientAuthMethods, setClientAuthMethods] = useState(['']);
   const [jsonError, setJsonError] = useState("");
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
@@ -44,6 +45,22 @@ function CreateOidcClient() {
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
+
+  useEffect(() => {
+    const config = localStorage.getItem('appConfig');
+    if (config) {
+      try {
+          const configData = JSON.parse(config);
+          const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
+          const configClientAuthMethods = configData.clientAuthMethods.split(',').map(item => item.trim());
+          setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
+          defaultGrantTypesList(configGrantTypes);
+          setClientAuthMethods(configClientAuthMethods);
+      } catch (error) {
+        console.log("Error in config: ", error)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +75,6 @@ function CreateOidcClient() {
             const resData = responseData.response;
             setPartnerData(resData);
             setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
-            setGrantTypesDropdownData(createGrantTypesDropdownData());
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -74,6 +90,16 @@ function CreateOidcClient() {
 
     fetchData();
   }, [t]);
+
+  const defaultGrantTypesList = (dataList) => {
+    const list = [];
+    dataList.forEach(item => {
+      if(item === grantTypes) {
+        list.push(item);
+      }
+    })
+    setGrantTypesList(list);
+  }
 
 
   const createPartnerIdDropdownData = (fieldName, dataList) => {
@@ -95,11 +121,21 @@ function CreateOidcClient() {
     return dataArr;
   }
 
-  const createGrantTypesDropdownData =() => {
+  const createGrantTypesDropdownData =(dataList) => {
     let dataArr = [];
-    dataArr.push({
-      fieldCode: t('createOidcClient.authorizationCode'),
-      fieldValue: "authorization_code"
+    dataList.forEach(item => {
+      let alreadyAdded = false;
+      dataArr.forEach(item1 => {
+        if (item1.fieldValue === item) {
+          alreadyAdded = true;
+        }
+      });
+      if (!alreadyAdded) {
+        dataArr.push({
+          fieldCode: getGrantTypes(item, t),
+          fieldValue: item
+        });
+      }
     });
     return dataArr;
   }
@@ -148,7 +184,7 @@ function CreateOidcClient() {
   };
 
   const onChangeOidcClientName = (value) => {
-    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
+    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
     if (value.length > 256) {
       setNameValidationError(t('createOidcClient.nameTooLong'))
     } else if (!regexPattern.test(value)) {
@@ -179,20 +215,39 @@ function CreateOidcClient() {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    if (value.trim() === "" || urlPattern.test(value)) {
+    if (value.trim() === "") {
       setInvalidRedirectUrl("");
-    } else {
+    } else if (value.length > 2000) {
+      setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
+    } else if (!urlPattern.test(value)) {
       setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
+    } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
+      setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+    } else {
+      setInvalidRedirectUrl("");
     }
     setRedirectUrls(newRedirectUrls);
   };
+
   const addNewRedirectUrl = () => {
     setRedirectUrls([...redirectUrls, '']);
   };
+
   const onDeleteRedirectUrl = (index) => {
     if (redirectUrls.length > 1) {
       const newRedirectUrls = redirectUrls.filter((_, i) => i !== index);
       setRedirectUrls(newRedirectUrls);
+      validateUrls(newRedirectUrls);
+    }
+  };
+
+  const validateUrls = (urls) => {
+    const hasDuplicate = urls.some((url, index) => urls.indexOf(url) !== index);
+  
+    if (hasDuplicate) {
+      setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+    } else {
+      setInvalidRedirectUrl("");
     }
   };
 
@@ -217,10 +272,14 @@ function CreateOidcClient() {
   const handleLogoUrlChange = (value) => {
     setLogoUrl(value);
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
-    if (value.trim() === "" || urlPattern.test(value)) {
+    if (value.trim() === "") {
       setInvalidLogoUrl("");
+    } else if (value.length > 2000) {
+        setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
+    } else if (!urlPattern.test(value)) {
+        setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
     } else {
-      setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+        setInvalidLogoUrl("");
     }
   };
 
@@ -236,7 +295,7 @@ function CreateOidcClient() {
       logoUri: logoUrl,
       redirectUris: redirectUrls,
       grantTypes: grantTypesList,
-      clientAuthMethods: ["private_key_jwt"],
+      clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
         "eng": oidcClientName
       }
@@ -469,7 +528,7 @@ function CreateOidcClient() {
                           selectedDropdownValue={grantTypes}
                           styleSet={styles}>
                         </DropdownComponent>
-                        </div>
+                      </div>
                     </div>
                   </div>
                 </form>

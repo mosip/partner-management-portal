@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import info from '../../svg/info_icon.svg';
+import DropdownComponent from "../common/fields/DropdownComponent";
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -22,6 +23,8 @@ function EditOidcClient() {
     const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
     const [showPartnerIdTooltip, setShowPartnerIdTooltip] = useState(false);
     const [showPolicyNameToolTip, setShowPolicyNameToolTip] = useState(false);
+    const [nameValidationError, setNameValidationError] = useState("");
+    const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
         policyGroupName: '',
@@ -45,6 +48,12 @@ function EditOidcClient() {
 
     useEffect(() => {
         const clientData = localStorage.getItem('selectedClientData');
+        const config = localStorage.getItem('appConfig');
+        if (config) {
+            const configData = JSON.parse(config);
+            const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
+            setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
+        }
         if (clientData) {
             try {
                 const selectedClient = JSON.parse(clientData);
@@ -59,6 +68,26 @@ function EditOidcClient() {
         }
     }, [navigate]);
 
+    const createGrantTypesDropdownData =(dataList) => {
+        let dataArr = [];
+        dataList.forEach(item => {
+          let alreadyAdded = false;
+          dataArr.forEach(item1 => {
+            if (item1.fieldValue === item) {
+              alreadyAdded = true;
+            }
+          });
+          if (!alreadyAdded) {
+            dataArr.push({
+              fieldCode: getGrantTypes(item, t),
+              fieldValue: item
+            });
+          }
+        });
+        console.log(dataArr);
+        return dataArr;
+    }
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -67,28 +96,62 @@ function EditOidcClient() {
         navigate("/partnermanagement");
     };
 
+    const onChangeOidcClientName = (value) => {
+        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
+        if (value.length > 256) {
+          setNameValidationError(t('createOidcClient.nameTooLong'))
+        } else if (!regexPattern.test(value)) {
+          setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
+        } else {
+          setNameValidationError("");
+        }
+        setOidcClientDetails(prevDetails => ({
+            ...prevDetails,
+            oidcClientName: value
+        }));
+    }
+
     const handleLogoUrlChange = (value) => {
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
             logoUri: value
         }));
         const urlPattern = /^(http|https):\/\/[^ "]+$/;
-        if (value.trim() === "" || urlPattern.test(value)) {
+        if (value.trim() === "") {
             setInvalidLogoUrl("");
-        } else {
+        } else if (value.length > 2000) {
+            setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
+        } else if (!urlPattern.test(value)) {
             setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+        } else {
+            setInvalidLogoUrl("");
         }
     };
+
+    const handleGrantTypesChange = (fieldName, selectedValue) => {
+        const grantTypeValue = [''];
+        grantTypeValue[0] = selectedValue
+        setOidcClientDetails(prevDetails => ({
+            ...prevDetails,
+            grantTypes: grantTypeValue
+        }));
+    }
 
     // Below code related to adding & deleting of Redirect URLs
     const onChangeRedirectUrl = (index, value) => {
         const urlPattern = /^(http|https):\/\/[^ "]+$/;
         const newRedirectUrls = [...oidcClientDetails.redirectUris];
         newRedirectUrls[index] = value;
-        if (value.trim() === "" || urlPattern.test(value)) {
+        if (value.trim() === "") {
             setInvalidRedirectUrl("");
-        } else {
+        } else if (value.length > 2000) {
+            setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
+        } else if (!urlPattern.test(value)) {
             setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
+        } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
+            setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+        } else {
+            setInvalidRedirectUrl("");
         }
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
@@ -109,6 +172,17 @@ function EditOidcClient() {
                 ...prevDetails,
                 redirectUris: newRedirectUrls
             }));
+            validateUrls(newRedirectUrls);
+        }
+    };
+
+    const validateUrls = (urls) => {
+        const hasDuplicate = urls.some((url, index) => urls.indexOf(url) !== index);
+      
+        if (hasDuplicate) {
+          setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+        } else {
+          setInvalidRedirectUrl("");
         }
     };
 
@@ -128,10 +202,13 @@ function EditOidcClient() {
     }
 
     const isFormValid = () => {
-        return (checkIfRedirectUrisIsUpdated() || oidcClientDetails.logoUri !== selectedClientDetails.logoUri) && !invalidLogoUrl && !invalidRedirectUrl;
+        return (checkIfRedirectUrisIsUpdated() || (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) || 
+            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) || (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName)) 
+            && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
     }
 
     const clearForm = () => {
+        setNameValidationError("");
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
         setErrorCode("");
@@ -173,6 +250,13 @@ function EditOidcClient() {
             setDataLoaded(true);
             setErrorMsg(err);
         }
+    }
+
+    const styles = {
+        outerDiv: "!ml-0 !mb-0",
+        dropdownLabel: "!text-sm !mb-1",
+        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
+        selectionBox: "!top-10"
     }
 
     return (
@@ -284,9 +368,10 @@ function EditOidcClient() {
                                         <div className="flex my-2">
                                             <div className="flex flex-col w-[562px]">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red">*</span></label>
-                                                <input value={oidcClientDetails.oidcClientName} readOnly
-                                                    className="h-10 px-2 py-3 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
+                                                    className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                 />
+                                                {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
                                             </div>
                                         </div>
                                         <div className="flex my-[1%]">
@@ -342,19 +427,20 @@ function EditOidcClient() {
                                                     </div>
                                                 ))}
                                                 {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
-                                                <p className="text-[#1447b2] font-bold text-xs cursor-pointer w-20" onClick={addNewRedirectUrl}>
-                                                    <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
+                                                <p className="text-[#1447b2] font-bold text-xs" onClick={addNewRedirectUrl}>
+                                                    <span className="text-lg text-center cursor-pointer">+</span>
+                                                    <span className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                                                 </p>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.grantTypes')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
-                                                    <span>{t('createOidcClient.authorizationCode')}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
-                                                </button>
+                                                <DropdownComponent
+                                                    fieldName='grantTypes'
+                                                    dropdownDataList={grantTypesDropdownData}
+                                                    onDropDownChangeEvent={handleGrantTypesChange}
+                                                    fieldNameKey='createOidcClient.grantTypes*'
+                                                    selectedDropdownValue={oidcClientDetails.grantTypes[0]}
+                                                    styleSet={styles}>
+                                                </DropdownComponent>
                                             </div>
                                         </div>
                                     </div>
