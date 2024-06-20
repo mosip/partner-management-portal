@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, moveToOidcClientsList } from '../../utils/AppUtils';
+import { isLangRTL, moveToAuthenticationServices } from '../../utils/AppUtils';
 
 import backArrow from '../../svg/back_arrow.svg';
 import successIcon from '../../svg/success_message_icon.svg';
@@ -21,14 +21,14 @@ function EditOidcClientConfirmation() {
         <div className={`${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-32 mr-5"} mt-5 w-[100%] h-[100%] font-inter`}>
             <div className="flex-col">
                 <div className="flex items-start space-x-3">
-                    <img src={backArrow} onClick={() => moveToOidcClientsList(navigate)} alt="" className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180 ml-1" : null}`} />
+                    <img src={backArrow} onClick={() => moveToAuthenticationServices(navigate)} alt="" className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180 ml-1" : null}`} />
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue">{t('editOidcClient.editOidcClient')}</h1>
                         <div className="flex space-x-1">
                             <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                 {t('commons.home')} /
                             </p>
-                            <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                            <p onClick={() => moveToAuthenticationServices(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                 {t('authenticationServices.authenticationServices')}
                             </p>
                         </div>
@@ -45,7 +45,7 @@ function EditOidcClientConfirmation() {
                                 {t('editOidcClient.editSuccessMsg')}
                             </p>
                             <div className="flex space-x-3 mt-12 justify-center">
-                                <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-base px-12 py-4">
+                                <button onClick={() => moveToAuthenticationServices(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-base px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
                                 <button onClick={() => moveToHome()} type="button" className={`${isLoginLanguageRTL && '!mr-2'} text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-base px-12 py-4`}>

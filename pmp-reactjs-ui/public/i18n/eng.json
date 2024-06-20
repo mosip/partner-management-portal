@@ -175,9 +175,9 @@
         "oidcClientId": "OIDC Client ID",
         "action": "Action",
         "createOidcClientBtn": "Create OIDC Client",
+        "generateApiKeyBtn": "Generate API Key",
         "apiKey": "API Key",
-        "apiKeyLable": "API Key Label",
-        "generateApiKeyBtn": "Generate API Key"
+        "apiKeyLable": "API Key Label"
     },
     "createOidcClient": {
         "createOidcClient": "Create OIDC Client",
@@ -212,6 +212,12 @@
         "invalidUrl": "Invalid URL format. URL must start with http:// or https://",
         "partnerIdTooltip": "Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },
+    "generateApiKey": {
+        "generateApiKey": "Generate API Key",
+        "selectedPolicyName": "Select Policy Name",
+        "label": "Label",
+        "labelGoesHere": "Label Goes Here"
+    },
     "oidcClientsList": {
         "partnerId": "Partner ID",
         "policyGroup": "Policy Group",
@@ -236,6 +242,14 @@
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
+    },
+    "apiKeysList": {
+        "partnerId":"Partner ID",
+        "policyName":"Policy Name",
+        "apiKeylabel": "API Key Label",
+        "expiryDate":"Expiry Date",
+        "status":"Status",
+        "action":"Action"
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",

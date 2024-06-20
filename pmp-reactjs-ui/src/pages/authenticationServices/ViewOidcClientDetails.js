@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL, handleMouseClickForDropdown } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
-import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
+import { formatDate, moveToAuthenticationServices, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../svg/disabled_copy_icon.svg";
 
@@ -28,11 +28,11 @@ function ViewOidcClientDetails() {
                 const selectedClient = JSON.parse(clientData);
                 setOidcClientDetails(selectedClient);
             } catch (error) {
-                navigate('/partnermanagement/authenticationServices/oidcClientsList');
+                navigate('/partnermanagement/authenticationServices');
                 console.error('Error in viewOidcClientDetails page :', error);
             }
         } else {
-            navigate('/partnermanagement/authenticationServices/oidcClientsList');
+            navigate('/partnermanagement/authenticationServices');
         }
     }, [navigate, copyToolTipRef]);
 
@@ -76,7 +76,7 @@ function ViewOidcClientDetails() {
                         <img
                             src={backArrow}
                             alt=""
-                            onClick={() => moveToOidcClientsList(navigate)}
+                            onClick={() => moveToAuthenticationServices(navigate)}
                             className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
                         />
                         <div className="flex-col">
@@ -90,7 +90,7 @@ function ViewOidcClientDetails() {
                                 >
                                     {t("commons.home")} /
                                 </p>
-                                <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                <p onClick={() => moveToAuthenticationServices(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t("viewOidcClientDetails.authenticationServiceSection")}
                                 </p>
                             </div>
@@ -335,7 +335,7 @@ function ViewOidcClientDetails() {
                         </div> */}
                     <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                        <button onClick={() => moveToOidcClientsList(navigate)}
+                        <button onClick={() => moveToAuthenticationServices(navigate)}
                             className="h-10 w-[120px] text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                             {t("viewOidcClientDetails.back")}
                         </button>

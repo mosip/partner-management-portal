@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { isLangRTL } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
+import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToAuthenticationServices } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -111,8 +111,8 @@ function Dashboard() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mt-3 absolute ${isLoginLanguageRTL ?"left-2" :"right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
+            <div className={`flex justify-end max-w-7xl mt-2 absolute ${isLoginLanguageRTL ?"left-2" :"right-2"}`}>
+              <div className="flex justify-between items-center max-w-96 min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
             </div>
@@ -175,7 +175,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            <div onClick={() => moveToAuthenticationServices(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
               </div>

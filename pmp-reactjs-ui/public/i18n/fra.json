@@ -166,6 +166,7 @@
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
         "oidcClient": "Client OIDC",
+        "requestApi": "Demander l'API",
         "partnerId": "ID partenaire",
         "policyName": "Nom de la politique",
         "policyGroup": "Groupe de politiques",
@@ -213,6 +214,12 @@
         "invalidUrl": "Format d'URL invalide. L'URL doit commencer par http:// ou https://",
         "partnerIdTooltip":"Seuls les ID de partenaire d'authentification dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
     },
+    "generateApiKey": {
+        "generateApiKey": "Générer une clé API",
+        "selectedPolicyName": "Sélectionnez le nom de la stratégie",
+        "label": "Étiquette",
+        "labelGoesHere": "L'étiquette va ici"
+    },
     "oidcClientsList": {
         "partnerId":"ID partenaire",
         "policyGroup":"Groupe de politiques",
@@ -237,6 +244,14 @@
         "selectPolicyName":"Sélectionnez le nom de la stratégie",
         "selectStatus":"Sélectionnez le statut",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
+    },
+    "apiKeysList": {
+        "partnerId":"ID partenaire",
+        "policyName":"Nom de la politique",
+        "apiKeylabel": "Étiquette de clé API",
+        "expiryDate":"Date d'expiration",
+        "status":"Statut",
+        "action":"Action"
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "Afficher les détails du client OIDC",

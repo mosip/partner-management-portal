@@ -50,7 +50,7 @@ function SideNav({ open }) {
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
-        navigate('/partnermanagement/authenticationServices/oidcClientsList');
+        navigate('/partnermanagement/authenticationServices');
         setActiveIcon("authenticationServices");
     };
     return (

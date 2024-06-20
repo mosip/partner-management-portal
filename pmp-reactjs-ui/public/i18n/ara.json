@@ -212,6 +212,12 @@
         "invalidUrl": "تنسيق عنوان URL غير صالح. يجب أن يبدأ عنوان URL بـ http:// أو https://",
         "partnerIdTooltip": "تتوفر فقط معرفات شركاء المصادقة التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً"
     },
+    "generateApiKey": {
+        "generateApiKey": "إنشاء مفتاح API",
+        "selectedPolicyName": "حدد اسم السياسة",
+        "label": "ملصق",
+        "labelGoesHere": "التسمية تذهب هنا"
+    },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",
         "policyGroup": "مجموعة السياسات",
@@ -236,6 +242,14 @@
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
         "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
+    },
+    "apiKeysList": {
+        "partnerId":"معرف الشريك",
+        "policyName":"اسم السياسة",
+        "apiKeylabel": "تسمية مفتاح API",
+        "expiryDate":"تاريخ الانتهاء",
+        "status":"حالة",
+        "action":"فعل"
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "عرض تفاصيل عميل OIDC",

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors } from "../../utils/AppUtils";
+import { moveToAuthenticationServices, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import info from '../../svg/info_icon.svg';
@@ -51,11 +51,11 @@ function EditOidcClient() {
                 setOidcClientDetails(selectedClient);
                 setSelectedClientDetails(selectedClient);
             } catch (error) {
-                navigate('/partnermanagement/authenticationServices/oidcClientsList');
+                navigate('/partnermanagement/authenticationServices');
                 console.error('Error in viewOidcClientDetails page :', error);
             }
         } else {
-            navigate('/partnermanagement/authenticationServices/oidcClientsList');
+            navigate('/partnermanagement/authenticationServices');
         }
     }, [navigate]);
 
@@ -192,14 +192,14 @@ function EditOidcClient() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
                             <div className="flex items-start gap-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToOidcClientsList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToAuthenticationServices(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
                                 <h1 className="font-semibold text-lg text-dark-blue">{t('editOidcClient.editOidcClient')}</h1>
                                 <div className="flex space-x-1">
                                     <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t('commons.home')} /
                                     </p>
-                                    <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToAuthenticationServices(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t('authenticationServices.authenticationServices')}
                                     </p>
                                 </div>
@@ -364,7 +364,7 @@ function EditOidcClient() {
                             <div className="flex flex-row px-[3%] py-[2%] justify-between">
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                <button onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                <button onClick={() => moveToAuthenticationServices(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                 <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>

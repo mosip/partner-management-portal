@@ -136,8 +136,8 @@ export const moveToPolicies = (navigate) => {
     navigate('/partnermanagement/policies')
 };
 
-export const moveToOidcClientsList = (navigate) => {
-    navigate('/partnermanagement/authenticationServices/oidcClientsList')
+export const moveToAuthenticationServices = (navigate) => {
+    navigate('/partnermanagement/authenticationServices')
 };
 
 export const logout = async () => {
