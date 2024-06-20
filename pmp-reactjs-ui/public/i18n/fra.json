@@ -283,6 +283,11 @@
         "checkBoxDesc": "J'ai lu les termes et conditions et j'accepte de donner mon consentement pour utiliser les données partagées lors de l'inscription",
         "proceed": "Procéder"
      },
+     "blockerMessage": {
+        "description": "Êtes-vous sûr de vouloir quitter?",
+        "cancel": "Annuler",
+        "proceed": "Procéder"
+     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",

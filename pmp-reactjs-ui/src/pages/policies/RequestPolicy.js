@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
@@ -10,6 +10,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import backArrow from '../../svg/back_arrow.svg';
 import DropdownComponent from "../common/fields/DropdownComponent";
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
+import BlockerPrompt from "../common/BlockerPrompt";
 
 function RequestPolicy() {
     const navigate = useNavigate();
@@ -34,6 +35,24 @@ function RequestPolicy() {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    let blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+            (partnerId !== "" || policyName !== "" ||
+                partnerComments !== "") &&
+            currentLocation.pathname !== nextLocation.pathname
+    );
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     const moveToHome = () => {
         navigate('/partnermanagement')
@@ -334,7 +353,7 @@ function RequestPolicy() {
                                         </div>
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
                                                 </label>
                                                 <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
@@ -358,7 +377,9 @@ function RequestPolicy() {
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div>
+
     )
 }
 

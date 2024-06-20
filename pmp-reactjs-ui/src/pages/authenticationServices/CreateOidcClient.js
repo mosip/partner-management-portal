@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
@@ -13,6 +13,7 @@ import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComp
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import { importJWK } from 'jose';
+import BlockerPrompt from "../common/BlockerPrompt";
 
 function CreateOidcClient() {
   const [oidcClientName, setOidcClientName] = useState("");
@@ -41,6 +42,30 @@ function CreateOidcClient() {
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
+
+  let blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      ( partnerId !== "" ||
+        oidcClientName !== "" ||
+        publicKey !== "" ||
+        logoUrl !== "" ||
+        policyId !== "" ||
+        policyName !== "" ||
+        redirectUrls.some(url => url !== "")
+       ) &&
+        currentLocation.pathname !== nextLocation.pathname
+);
+
+useEffect(() => {
+    const handleBeforeUnload = (event) => {
+        event.preventDefault();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+}, []);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -545,6 +570,7 @@ function CreateOidcClient() {
           </div>
         </>  
       )}
+      <BlockerPrompt blocker={blocker} />
     </div>
   )
 }
