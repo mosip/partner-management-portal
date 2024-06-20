@@ -14,6 +14,7 @@ import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClient
 import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
 import EditOidcClientConfirmation from './pages/authenticationServices/EditOidcClientConfirmation.js';
 import DeactivateOidcClient from './pages/authenticationServices/DeactivateOidcClient.js';
+import LeavePageGuard from './LeavePageGuard.js';
 
 function AppRoutes() {
 
@@ -44,7 +45,7 @@ function AppRoutes() {
         },
         {
           path: 'requestPolicy',
-          element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><LeavePageGuard><RequestPolicy/></LeavePageGuard></MainLayout></GuardedRoute>,
         },
         {
           path: 'requestPolicyConfirmation',
@@ -56,7 +57,7 @@ function AppRoutes() {
         },
         {
           path: 'createOidcClient',
-          element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><LeavePageGuard><CreateOidcClient/></LeavePageGuard></MainLayout></GuardedRoute>,
         },
         {
           path: 'createOidcClientConfirmation',
