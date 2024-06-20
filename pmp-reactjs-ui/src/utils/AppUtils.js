@@ -71,6 +71,16 @@ export const getStatusCode = (status, t) => {
 
 }
 
+export const getGrantTypes = (type, t) => {
+    if (type) {
+        if (type === "authorization_code") {
+            return t('createOidcClient.authorization_code');
+        } else {
+            return type;
+        }
+    }
+}
+
 export const handleMouseClickForDropdown = (ref, callback) => {
     const handleClickOutside = (event) => {
         if (ref.current && !ref.current.contains(event.target)) {
