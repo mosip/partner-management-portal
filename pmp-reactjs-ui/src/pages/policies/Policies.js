@@ -375,7 +375,7 @@ function Policies() {
                           <tbody>
                             {tableRows.map((partner, index) => {
                               return (
-                                <tr key={index} className={`border-t-2 cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
@@ -437,7 +437,7 @@ function Policies() {
                               {itemsPerPageOptions.map((num, i) => {
                                 return (
                                   <p key={i} onClick={() => changeItemsPerPage(num)}
-                                    className="px-3 py-2 cursor-pointer hover:bg-[#F2F5FC]">
+                                    className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                     {num}
                                   </p>
                                 )

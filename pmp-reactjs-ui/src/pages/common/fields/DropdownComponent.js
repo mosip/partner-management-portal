@@ -82,7 +82,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                         <div key={index} className="min-h-3">
                                             <button
                                                 className={`block w-full h-9 px-4 py-1 text-left text-sm text-dark-blue overflow-x-auto whitespace-nowrap no-scrollbar
-                                                    ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 {dropdownItem.fieldCode}
                                             </button>

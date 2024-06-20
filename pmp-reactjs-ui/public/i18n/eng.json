@@ -221,7 +221,7 @@
         "status": "Status",
         "oidcClientId": "OIDC Client ID",
         "action": "Action",
-        "listOfOidcClientRequests": "List of OIDC Client Requests",
+        "listOfOidcClients": "List of OIDC Clients",
         "createOidcClient": "Create OIDC Client",
         "filterBtn": "Filter",
         "resetFilter": "Reset Filter",

@@ -96,7 +96,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                         <div key={index} className="min-h-2">
                                             <button
                                                 className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-left text-sm text-dark-blue overflow-x-auto no-scrollbar
-                                                    ${selectedDropdownEntry === dropdownItem.fieldCode ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
                                                 {dropdownItem.fieldDescription && (

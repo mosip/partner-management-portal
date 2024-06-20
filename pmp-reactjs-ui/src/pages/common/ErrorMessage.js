@@ -27,7 +27,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
                 </p>
             </div>
             <div className="mr-3 ml-5 absolute right-2">
-                <img src={cancelIcon} alt="" onClick={clickOnCancel}></img>
+                <img src={cancelIcon} alt="" className="cursor-pointer" onClick={clickOnCancel}></img>
             </div>
         </>
     );
