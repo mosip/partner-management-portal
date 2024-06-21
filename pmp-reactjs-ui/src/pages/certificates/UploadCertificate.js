@@ -103,16 +103,19 @@ function UploadCertificate({ closePopup, partnerData }) {
     };
     const removeUpload = () => {
         setFileName("");
+        setUploadSuccess(false);
         setUploading(false);
     };
     const cancelErrorMsg = () => {
         setErrorMsg("");
+        setErrorCode("");
     };
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
     const handleFileChange = (event) => {
         setErrorMsg("");
+        setErrorCode("");
         const file = event.target.files[0];
         if (file) {
             const fileName = file.name;

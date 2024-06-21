@@ -14,8 +14,7 @@ function Footer() {
                 </div>
                 <div className="flex justify-between">
                     <a href="https://docs.mosip.io/1.2.0/modules/partner-management-services" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.documentation')}</a>
-                    <a href="https://community.mosip.io/c/platform/5" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.mosipCommunity')}</a>
-                    <a href="mailto:info@mosip.io" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.contactUs')}</a>
+                    <a href="https://community.mosip.io/c/platform/5" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.contactUs')}</a>
                 </div>
             </div>
         </div>
