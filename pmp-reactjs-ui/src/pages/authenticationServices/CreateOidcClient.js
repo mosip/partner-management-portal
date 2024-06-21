@@ -550,9 +550,12 @@ useEffect(() => {
                           </div>
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
-                        <p className="text-[#1447b2] font-bold text-xs cursor-pointer w-20" onClick={addNewRedirectUrl}>
-                          <span className="text-lg text-center">+</span>{t('createOidcClient.addNew')}
-                        </p>
+                        {redirectUrls.length < 5 && (
+                          <p className="text-[#1447b2] font-bold text-xs" onClick={addNewRedirectUrl}>
+                            <span className="text-lg text-center cursor-pointer">+</span>
+                            <span className="cursor-pointer">{t('createOidcClient.addNew')}</span>
+                          </p>
+                        )}
                       </div>
 
                       <div className="flex flex-col w-[48%]">
