@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -46,6 +46,26 @@ function EditOidcClient() {
         grantTypes: [],
     });
 
+    const createGrantTypesDropdownData = useCallback((dataList) => {
+        let dataArr = [];
+        dataList.forEach(item => {
+          let alreadyAdded = false;
+          dataArr.forEach(item1 => {
+            if (item1.fieldValue === item) {
+              alreadyAdded = true;
+            }
+          });
+          if (!alreadyAdded) {
+            dataArr.push({
+              fieldCode: getGrantTypes(item, t),
+              fieldValue: item
+            });
+          }
+        });
+        console.log(dataArr);
+        return dataArr;
+    }, [t]);
+
     useEffect(() => {
         const clientData = localStorage.getItem('selectedClientData');
         const config = localStorage.getItem('appConfig');
@@ -66,27 +86,7 @@ function EditOidcClient() {
         } else {
             navigate('/partnermanagement/authenticationServices/oidcClientsList');
         }
-    }, [navigate]);
-
-    const createGrantTypesDropdownData =(dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-          let alreadyAdded = false;
-          dataArr.forEach(item1 => {
-            if (item1.fieldValue === item) {
-              alreadyAdded = true;
-            }
-          });
-          if (!alreadyAdded) {
-            dataArr.push({
-              fieldCode: getGrantTypes(item, t),
-              fieldValue: item
-            });
-          }
-        });
-        console.log(dataArr);
-        return dataArr;
-    }
+    }, [navigate, createGrantTypesDropdownData]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -119,7 +119,7 @@ function EditOidcClient() {
         const urlPattern = /^(http|https):\/\/[^ "]+$/;
         if (value.trim() === "") {
             setInvalidLogoUrl("");
-        } else if (value.length > 2000) {
+        } else if (value.length > 2048) {
             setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
         } else if (!urlPattern.test(value)) {
             setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
@@ -144,7 +144,7 @@ function EditOidcClient() {
         newRedirectUrls[index] = value;
         if (value.trim() === "") {
             setInvalidRedirectUrl("");
-        } else if (value.length > 2000) {
+        } else if (value.length > 2048) {
             setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
         } else if (!urlPattern.test(value)) {
             setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
@@ -159,11 +159,13 @@ function EditOidcClient() {
         }));
     };
     const addNewRedirectUrl = () => {
-        const addRedirectUrl = [...oidcClientDetails.redirectUris, ''];
-        setOidcClientDetails(prevDetails => ({
-            ...prevDetails,
-            redirectUris: addRedirectUrl
-        }));
+        if (oidcClientDetails.redirectUris.length < 5) {
+            const addRedirectUrl = [...oidcClientDetails.redirectUris, ''];
+            setOidcClientDetails(prevDetails => ({
+                ...prevDetails,
+                redirectUris: addRedirectUrl
+            }));
+        }
     };
     const onDeleteRedirectUrl = (index) => {
         if (oidcClientDetails.redirectUris.length > 1) {
@@ -177,7 +179,8 @@ function EditOidcClient() {
     };
 
     const validateUrls = (urls) => {
-        const hasDuplicate = urls.some((url, index) => urls.indexOf(url) !== index);
+        const filteredUrls = urls.filter(url => url.trim() !== "");
+        const hasDuplicate = filteredUrls.some((url, index) => urls.indexOf(url) !== index);
       
         if (hasDuplicate) {
           setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
@@ -241,7 +244,7 @@ function EditOidcClient() {
             const responseData = response.data;
             if (responseData && responseData.response) {
                 setDataLoaded(true);
-                navigate('/partnermanagement/editOidcClientConfirmation');
+                navigate('/partnermanagement/authenticationServices/editOidcClientConfirmation');
             } else {
                 setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);

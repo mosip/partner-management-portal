@@ -105,8 +105,8 @@ function Policies() {
             const resData = responseData.response;
             const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
             setPoliciesList(sortedData);
-            setFilteredPoliciesList(policiesList);
-            console.log('Response data:', policiesList.length);
+            setFilteredPoliciesList(sortedData);
+            // console.log('Response data:', policiesList.length);
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -120,19 +120,19 @@ function Policies() {
       }
     };
     fetchData();
-  }, [firstTimeLoad]);
+  }, [firstTimeLoad, t]);
 
   const moveToHome = () => {
     navigate('/partnermanagement')
   };
 
   const showRequestPolicy = () => {
-    navigate('/partnermanagement/requestPolicy')
+    navigate('/partnermanagement/policies/requestPolicy')
   }
 
   const showViewPolicyDetails = (selectedPolicyData) => {
     localStorage.setItem('selectedPolicyData', JSON.stringify(selectedPolicyData));
-    navigate('/partnermanagement/viewPolicyDetails')
+    navigate('/partnermanagement/policies/viewPolicyDetails')
   };
 
   const cancelErrorMsg = () => {
@@ -228,7 +228,7 @@ function Policies() {
     });
     setFilteredPoliciesList(filteredRows);
     setFirstIndex(0);
-  }, [filterQuery]);
+  }, [filterQuery, policiesList]);
 
   const onResetFilter = () => {
     window.location.reload();

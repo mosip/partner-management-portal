@@ -201,7 +201,7 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    navigate('/partnermanagement/requestPolicyConfirmation');
+                    navigate('/partnermanagement/policies/requestPolicyConfirmation');
                     console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -223,8 +223,8 @@ function RequestPolicy() {
     const validateComments = (comments) => {
         let error = "";
         const maxLength = 500;
-        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
-
+        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
+        
         if (comments.length > maxLength) {
             error = t('requestPolicy.commentTooLong');
         } else if (!regexPattern.test(comments)) {

@@ -91,8 +91,8 @@ function OidcClientsList() {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
                         setOidcClientsList(sortedData);
-                        setFilteredOidcClientsList(oidcClientsList)
-                        console.log('Response data:', oidcClientsList.length);
+                        setFilteredOidcClientsList(sortedData)
+                        // console.log('Response data:', oidcClientsList.length);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -106,7 +106,7 @@ function OidcClientsList() {
             }
         };
         fetchData();
-    }, [firstTimeLoad]);
+    }, [firstTimeLoad, t]);
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
@@ -128,25 +128,25 @@ function OidcClientsList() {
     };
 
     const createOidcClient = () => {
-        navigate('/partnermanagement/createOidcClient')
+        navigate('/partnermanagement/authenticationServices/createOidcClient')
     }
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/viewOidcClienDetails')
+            navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
         }
     };
 
     const onClickView = (selectedClientdata) => {
         localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/viewOidcClienDetails')
+        navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/editOidcClient')
+            navigate('/partnermanagement/authenticationServices/editOidcClient')
         }
     };
 
@@ -189,7 +189,7 @@ function OidcClientsList() {
         });
         setFilteredOidcClientsList(filteredRows);
         setFirstIndex(0);
-    }, [filterQuery]);
+    }, [filterQuery, oidcClientsList]);
 
     //This part is related to Sorting
     const toggleSortDescOrder = (sortItem) => {
@@ -384,7 +384,7 @@ function OidcClientsList() {
                                                             <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
-                                                                    {header.id !== "action" && (
+                                                                    {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <div>
                                                                             <svg className="cursor-pointer mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
                                                                                 xmlns="http://www.w3.org/2000/svg"

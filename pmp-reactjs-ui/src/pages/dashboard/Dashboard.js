@@ -89,7 +89,7 @@ function Dashboard() {
     };
     fetchData();
 
-  }, [firstLoginFlow]);
+  }, [firstLoginFlow, t]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/partnerCertificate')

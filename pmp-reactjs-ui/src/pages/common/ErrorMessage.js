@@ -22,11 +22,11 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
     return (
         <>
             <div className="h-full mr-8">
-                <p className="text-sm text-white break-words font-inter">
+                <p className="text-white text-sm/4 break-words font-inter">
                     {errorMsg}
                 </p>
             </div>
-            <div className="mr-3 ml-5 absolute right-2">
+            <div className="mr-3 ml-5 absolute top-4 right-2">
                 <img src={cancelIcon} alt="" className="cursor-pointer" onClick={clickOnCancel}></img>
             </div>
         </>

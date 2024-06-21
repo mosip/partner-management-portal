@@ -210,7 +210,7 @@
         "errorInCreateOIDC": "While requesting OIDC Client, we have encountered with an error",
         "invalidJwkFormat": "Enter valid public key in JWK format",
         "invalidUrl": "Enter a valid URI",
-        "urlTooLong": "URI should not allow more than 2000 characters.",
+        "urlTooLong": "URI should not allow more than 2048 characters.",
         "duplicateUrl": "Duplicate URIs are not allowed",
         "partnerIdTooltip": "Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },

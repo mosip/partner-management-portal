@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
@@ -71,6 +71,35 @@ useEffect(() => {
     setErrorMsg("");
   };
 
+  const createGrantTypesDropdownData = useCallback((dataList) => {
+    let dataArr = [];
+    dataList.forEach(item => {
+      let alreadyAdded = false;
+      dataArr.forEach(item1 => {
+        if (item1.fieldValue === item) {
+          alreadyAdded = true;
+        }
+      });
+      if (!alreadyAdded) {
+        dataArr.push({
+          fieldCode: getGrantTypes(item, t),
+          fieldValue: item
+        });
+      }
+    });
+    return dataArr;
+  }, [t]);
+
+  const defaultGrantTypesList = useCallback((dataList) => {
+    const list = [];
+    dataList.forEach(item => {
+      if(item === grantTypes) {
+        list.push(item);
+      }
+    })
+    setGrantTypesList(list);
+  }, [grantTypes]);
+
   useEffect(() => {
     const config = localStorage.getItem('appConfig');
     if (config) {
@@ -85,7 +114,7 @@ useEffect(() => {
         console.log("Error in config: ", error)
       }
     }
-  }, [])
+  }, [createGrantTypesDropdownData, defaultGrantTypesList])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,17 +145,6 @@ useEffect(() => {
     fetchData();
   }, [t]);
 
-  const defaultGrantTypesList = (dataList) => {
-    const list = [];
-    dataList.forEach(item => {
-      if(item === grantTypes) {
-        list.push(item);
-      }
-    })
-    setGrantTypesList(list);
-  }
-
-
   const createPartnerIdDropdownData = (fieldName, dataList) => {
     let dataArr = [];
     dataList.forEach(item => {
@@ -140,25 +158,6 @@ useEffect(() => {
         dataArr.push({
           fieldCode: item[fieldName],
           fieldValue: item[fieldName]
-        });
-      }
-    });
-    return dataArr;
-  }
-
-  const createGrantTypesDropdownData =(dataList) => {
-    let dataArr = [];
-    dataList.forEach(item => {
-      let alreadyAdded = false;
-      dataArr.forEach(item1 => {
-        if (item1.fieldValue === item) {
-          alreadyAdded = true;
-        }
-      });
-      if (!alreadyAdded) {
-        dataArr.push({
-          fieldCode: getGrantTypes(item, t),
-          fieldValue: item
         });
       }
     });
@@ -242,7 +241,7 @@ useEffect(() => {
     newRedirectUrls[index] = value;
     if (value.trim() === "") {
       setInvalidRedirectUrl("");
-    } else if (value.length > 2000) {
+    } else if (value.length > 2048) {
       setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
     } else if (!urlPattern.test(value)) {
       setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
@@ -255,7 +254,9 @@ useEffect(() => {
   };
 
   const addNewRedirectUrl = () => {
-    setRedirectUrls([...redirectUrls, '']);
+    if (redirectUrls.length < 5) {
+      setRedirectUrls([...redirectUrls, '']);
+    }
   };
 
   const onDeleteRedirectUrl = (index) => {
@@ -267,7 +268,8 @@ useEffect(() => {
   };
 
   const validateUrls = (urls) => {
-    const hasDuplicate = urls.some((url, index) => urls.indexOf(url) !== index);
+    const filteredUrls = urls.filter(url => url.trim() !== "");
+    const hasDuplicate = filteredUrls.some((url, index) => urls.indexOf(url) !== index);
   
     if (hasDuplicate) {
       setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
@@ -299,7 +301,7 @@ useEffect(() => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     if (value.trim() === "") {
       setInvalidLogoUrl("");
-    } else if (value.length > 2000) {
+    } else if (value.length > 2048) {
         setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
     } else if (!urlPattern.test(value)) {
         setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
@@ -336,7 +338,7 @@ useEffect(() => {
           const responseData = response.data;
           if (responseData && responseData.response) {
               const resData = responseData.response;
-              navigate('/partnermanagement/createOidcClientConfirmation');
+              navigate('/partnermanagement/authenticationServices/createOidcClientConfirmation');
               console.log(`Response data: ${resData.length}`);
           } else {
               handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -370,8 +372,17 @@ useEffect(() => {
     setNameValidationError("");
   };
 
+  const redirectUrlsNotEmpty = () => {
+      const validUris = redirectUrls.filter(uri => uri !== '');
+      if (validUris.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+  };
+
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrls && grantTypes 
+    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes 
       && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
   };
 
