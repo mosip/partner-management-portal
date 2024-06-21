@@ -56,16 +56,30 @@ function CreateOidcClient() {
         currentLocation.pathname !== nextLocation.pathname
 );
 
-useEffect(() => {
-    const handleBeforeUnload = (event) => {
-        event.preventDefault();
+  useEffect(() => {
+    const shouldWarnBeforeUnload = () => {
+      return partnerId !== "" ||
+        oidcClientName !== "" ||
+        publicKey !== "" ||
+        logoUrl !== "" ||
+        policyId !== "" ||
+        policyName !== "" ||
+        redirectUrls.some(url => url !== "");
     };
+
+    const handleBeforeUnload = (event) => {
+      if (shouldWarnBeforeUnload()) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-}, []);
+  }, [partnerId, oidcClientName, publicKey, logoUrl, policyId, policyName, redirectUrls]);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
