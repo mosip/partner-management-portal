@@ -56,7 +56,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     }
 
     const styles = {
-        dropdownButton: "!text-[#343434]"
+        dropdownButton: "!text-[#343434] min-w-72"
     }
 
     return (

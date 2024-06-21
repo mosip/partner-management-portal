@@ -29,6 +29,10 @@ function SelectPolicyPopup() {
         setIsExpanded(!isExpanded);
     };
 
+    const handleDropdownClick = () => {
+        setIsExpanded(false);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             setDataLoaded(false);
@@ -114,14 +118,14 @@ function SelectPolicyPopup() {
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !my-2 mb-0",
-        dropdownButton: "!w-full !h-10 !rounded-md !text-sm !text-dark-blue",
+        dropdownButton: "!w-full min-w-fit !h-10 !rounded-md !text-sm !text-dark-blue",
         selectionBox: "",
         loadingDiv: "!py-[50%]"
     }
 
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
-            <div className={`bg-white w-1/3 mx-auto rounded-xl shadow-lg -mt-3`}>
+            <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                 {!dataLoaded && (
                     <LoadingIcon styleSet={styles}></LoadingIcon>
                 )}
@@ -134,11 +138,11 @@ function SelectPolicyPopup() {
                                 </div>
                             </div>
                         )}
-                        <div className="px-[4%] py-[2%]">
+                        <div className="px-4 py-2">
                             <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="px-[4%] py-[2%] text-sm text-[#414141]">
+                        <div className="py-3 px-4 text-sm text-[#414141]">
                             <p>
                                 {displayText}
                             </p>
@@ -148,7 +152,7 @@ function SelectPolicyPopup() {
                                 </button>
                             )}
                             <form>
-                                <div className="pt-2 w-full mb-2 flex flex-col">
+                                <div className="pt-2 w-full mb-1 flex flex-col">
                                     <div className="flex flex-col">
                                         <label className="block text-dark-blue text-sm font-semibold mb-2">
                                             {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
@@ -157,7 +161,7 @@ function SelectPolicyPopup() {
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                         </button>
                                     </div>
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col" onClick={handleDropdownClick}>
                                         <DropdownWithSearchComponent 
                                             fieldName='policyGroup' 
                                             dropdownDataList={policyGroupList} 
@@ -172,7 +176,7 @@ function SelectPolicyPopup() {
                             </form>
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
-                        <div className="p-4 flex justify-between relative">
+                        <div className="p-3 flex justify-between relative">
                             <p className="text-[#333333] text-sm font-medium ml-2">{t('selectPolicyPopup.logoutMsg')}
                                 <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
                             </p>
