@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService";
 import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
@@ -75,14 +75,14 @@ function UploadCertificate({ closePopup, partnerData }) {
         }
     };
 
-    const getPartnerType = (partner) => {
+    const getPartnerType = useCallback((partner) => {
         if (partner.partnerType) {
             const partnerTypeDesc = getPartnerTypeDescription(partner.partnerType, t);
             return partnerTypeDesc;
         }
-    }
+    }, [t]);
 
-    const getPartnerDomainType = (partner) => {
+    const getPartnerDomainType = useCallback((partner) => {
         if (partner.partnerType) {
             const partnerType = partner.partnerType.toUpperCase();
             if (partnerType === "Device_Provider".toUpperCase()) {
@@ -95,7 +95,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                 return 'AUTH';
             }
         }
-    }
+    }, []);
 
     const cancelUpload = () => {
         setFileName("");
@@ -145,15 +145,15 @@ function UploadCertificate({ closePopup, partnerData }) {
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate, partnerData, getPartnerType]);
+    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate, partnerData, getPartnerType, getPartnerDomainType]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
             <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                 {!dataLoaded && (
-                        <diV className="flex items-center h-[30rem]">
+                        <div className="flex items-center h-[30rem]">
                             <LoadingIcon></LoadingIcon>
-                        </diV>
+                        </div>
                 )}
                 {dataLoaded && (
                     <>
@@ -233,14 +233,14 @@ function UploadCertificate({ closePopup, partnerData }) {
                                 )}
                                 {uploadSuccess && successMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-4">
+                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
                                             <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                                         </div>
                                     </div>
                                 )}
                                 {uploadFailure && errorMsg && (
                                     <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between p-4">
+                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
                                             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                         </div>
                                     </div>

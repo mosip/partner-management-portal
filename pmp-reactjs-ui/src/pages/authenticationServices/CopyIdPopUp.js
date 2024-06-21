@@ -31,7 +31,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
                         <h1 className={`font-bold text-base text-[#333333]`}>{policyName}</h1>
                         <p className={`text-xs font-bold text-[#717171]`}># {partnerId}</p>
                     </div>
-                    <img src={close_icon} className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
+                    <img src={close_icon} alt="" className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
                 </header>
                 <hr className={`py-[4%]`} />
                 <div className={` flex-col text-center justify-center items-center`}>
