@@ -14,6 +14,7 @@ import ReactPaginate from 'react-paginate';
 import CopyIdPopUp from './CopyIdPopUp';
 import OidcClientsFilter from './OidcClientsFilter';
 import DeactivateOidcClient from './DeactivateOidcClient.js';
+import AuthenticationTabs from './Tabs.js';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -134,11 +135,6 @@ function OidcClientsList() {
 
     const moveToHome = () => {
         navigate('/partnermanagement')
-    };
-
-    const changeToApiKeyPath = () => {
-        setActiveOicdClient(false);
-        setActiveApiKey(true);
     };
 
     const createOidcClient = () => {
@@ -310,22 +306,13 @@ function OidcClientsList() {
                                 </button>
                             )}
                         </div>
-                        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%]'>
-                            <div className={`flex-col justify-center`}>
-                                <h6 onClick={() => { setActiveOicdClient(true); setActiveApiKey(false) }}
-                                    className={`${activeOidcClient ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} cursor-pointer text-sm`}>
-                                    {t('authenticationServices.oidcClient')}
-                                </h6>
-                                <div className={`h-1 w-24 ${activeOidcClient ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                            </div>
-                            <div className={`flex-col justify-center`}>
-                                <h6 onClick={() => changeToApiKeyPath()}
-                                    className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[20%]" : "ml-[20%]"} cursor-pointer text-sm`}>
-                                    {t('authenticationServices.apiKey')}
-                                </h6>
-                                <div className={`h-1 w-24 ${activeApiKey ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
-                            </div>
-                        </div>
+
+                        <AuthenticationTabs
+                            activeOidcClient={activeOidcClient}
+                            setActiveOicdClient={setActiveOicdClient}
+                            activeApiKey={activeApiKey}
+                            setActiveApiKey={setActiveApiKey}
+                        />
 
                         {(oidcClientsList.length === 0 && activeOidcClient) &&
                             (<div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
