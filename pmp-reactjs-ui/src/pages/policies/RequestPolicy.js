@@ -44,15 +44,25 @@ function RequestPolicy() {
     );
 
     useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            event.preventDefault();
+        const shouldWarnBeforeUnload = () => {
+            return partnerId !== "" ||
+                partnerComments !== "" ||
+                policyName !== "";
         };
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload()) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
         window.addEventListener('beforeunload', handleBeforeUnload);
 
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, []);
+    }, [partnerId, partnerComments, policyName]);
 
     const moveToHome = () => {
         navigate('/partnermanagement')
