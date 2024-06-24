@@ -13,6 +13,7 @@ import CreateOidcClientConfirmation from './pages/authenticationServices/CreateO
 import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClientDetails.js';
 import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
 import EditOidcClientConfirmation from './pages/authenticationServices/EditOidcClientConfirmation.js';
+import GenerateApiKey from './pages/authenticationServices/GenerateApiKey.js';
 
 function AppRoutes() {
 
@@ -72,7 +73,11 @@ function AppRoutes() {
         {
           path: 'authenticationServices/editOidcClientConfirmation',
           element: <GuardedRoute><MainLayout><EditOidcClientConfirmation/></MainLayout></GuardedRoute>,
-        }
+        },
+        {
+          path: 'generateApiKey',
+          element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
+        },
       ],
     },
   ])

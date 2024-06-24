@@ -214,6 +214,12 @@
         "duplicateUrl": "Duplicate URIs are not allowed",
         "partnerIdTooltip": "Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },
+    "generateApiKey": {
+        "generateApiKey": "Generate API Key",
+        "selectedPolicyName": "Select Policy Name",
+        "name": "Name",
+        "enterNameForApiKey": "Enter a name for API key"
+    },
     "oidcClientsList": {
         "partnerId": "Partner ID",
         "policyGroup": "Policy Group",
@@ -239,31 +245,38 @@
         "selectStatus": "Select Status",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
     },
+    "apiKeysList": {
+        "partnerId": "Partner ID",
+        "policyName": "Policy Name",
+        "apiKeylabel": "API Key Label",
+        "expiryDate": "Expiry Date",
+        "status": "Status",
+        "action": "Action"
+    },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",
         "authenticationServiceSection": "Authentication Services",
-        "createdOn":"Created On",
-        "oidcClientId":"OIDC Client ID",
+        "createdOn": "Created On",
+        "oidcClientId": "OIDC Client ID",
         "copied!": "Copied!",
-        "partnerId":"Partner ID",
+        "partnerId": "Partner ID",
         "partnerIdAlias": "Partner ID Alias",
-        "partnerType":"Partner Type",
-        "policyGroup":"Policy Group",
-        "policyName":"Policy Name",
-        "policyGroupDescription":"Policy Group Description",
-        "policyNameDescription":"Policy Name Description",
-        "name":"Name",
-        "publicKey":"Public Key",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "policyGroupDescription": "Policy Group Description",
+        "policyNameDescription": "Policy Name Description",
+        "name": "Name",
+        "publicKey": "Public Key",
         "logoUri": "Logo URI",
         "redirectUri": "Redirect URI",
-        "grantTypes":"Grant Types",
-        "comments":"Comments",
-        "adminComment":"Admin Comments",
+        "grantTypes": "Grant Types",
+        "comments": "Comments",
+        "adminComment": "Admin Comments",
         "adminName": "Admin Name",
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
         "back": "Back"
-
     },
     "editOidcClient": {
         "editOidcClient": "Edit OIDC Client",
@@ -272,21 +285,21 @@
         "editSuccessMsg": "OIDC Client details has been successfully modified and submitted."
     },
     "deactivateOidcClient": {
-       "oidcClientName": "Do you want to Deactivate OIDC Client",
-       "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
-       "confirm": "Confirm"
+        "oidcClientName": "Do you want to Deactivate OIDC Client",
+        "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
+        "confirm": "Confirm"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
         "checkBoxDesc": "I have read the terms and conditions and accept to provide consent to use the data shared during registration",
         "proceed": "Proceed"
-     },
-     "blockerMessage": {
+    },
+    "blockerMessage": {
         "description": "Are you sure you want to leave?",
         "cancel": "Cancel",
         "proceed": "Proceed"
-     },
+    },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",

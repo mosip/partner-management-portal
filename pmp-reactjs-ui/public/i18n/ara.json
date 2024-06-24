@@ -214,6 +214,12 @@
         "duplicateUrl": "غير مسموح بعناوين URI المكررة",
         "partnerIdTooltip": "تتوفر فقط معرفات شركاء المصادقة التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً"
     },
+    "generateApiKey": {
+        "generateApiKey": "إنشاء مفتاح API",
+        "selectedPolicyName": "حدد اسم السياسة",
+        "name": "اسم",
+        "enterNameForApiKey": "أدخل اسمًا لمفتاح API"
+    },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",
         "policyGroup": "مجموعة السياسات",
@@ -239,6 +245,14 @@
         "selectStatus": "حدد الحالة",
         "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
     },
+    "apiKeysList": {
+        "partnerId": "معرف الشريك",
+        "policyName": "اسم السياسة",
+        "apiKeylabel": "تسمية مفتاح API",
+        "expiryDate": "تاريخ الانتهاء",
+        "status": "حالة",
+        "action": "فعل"
+    },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "عرض تفاصيل عميل OIDC",
         "authenticationServiceSection": "خدمات المصادقة",
@@ -257,7 +271,7 @@
         "logoUri": "عنوان URL للشعار",
         "redirectUri": "إعادة توجيه URI",
         "grantTypes": "أنواع المنح",
-        "comments":"تعليقات",
+        "comments": "تعليقات",
         "adminComment": "تعليقات المشرف",
         "adminName": "اسم المشرف",
         "commentsOfAdmin": "تعليقات المشرف",
@@ -271,21 +285,21 @@
         "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح."
     },
     "deactivateOidcClient": {
-       "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
-       "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام معرف عميل OIDC للمصادقة بعد الآن.",
-       "confirm": "يتأكد"
+        "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
+        "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام معرف عميل OIDC للمصادقة بعد الآن.",
+        "confirm": "يتأكد"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
         "description": "أدرك أن البيانات التي تمت مشاركتها في وقت التسجيل سيتم استخدامها بواسطة بوابة إدارة الشركاء (PMP)، والتي تتضمن الاسم ورقم الهاتف وعنوان البريد الإلكتروني واسم المنظمة والعنوان. وأدرك أيضًا أنه سيتم تخزين هذه المعلومات ومعالجتها بواسطة PMP بغرض التحقق من هويتي ومنظمتي من أجل الوصول إلى الخدمات المختلفة لهذا التطبيق. أوافق على جمع بياناتي لهذا الغرض.",
         "checkBoxDesc": "لقد قرأت الشروط والأحكام وأوافق على تقديم الموافقة على استخدام البيانات التي تمت مشاركتها أثناء التسجيل",
         "proceed": "يتابع"
-     },
-     "blockerMessage": {
+    },
+    "blockerMessage": {
         "description": "هل انت متاكد انك تريد ان تغادر؟",
         "cancel": "يلغي",
         "proceed": "يتابع"
-     },
+    },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقود",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",

@@ -119,12 +119,26 @@ function OidcClientsList() {
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
+    const apiKeytableHeaders = [
+        { id: "partnerId", headerNameKey: 'apiKeysList.partnerId' },
+        { id: "policyName", headerNameKey: "apiKeysList.policyName" },
+        { id: "apiKeylabel", headerNameKey: "apiKeysList.apiKeylabel" },
+        { id: "expiryDate", headerNameKey: "apiKeysList.expiryDate" },
+        { id: "status", headerNameKey: "apiKeysList.status" },
+        { id: "action", headerNameKey: 'apiKeysList.action' }
+    ];
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const moveToHome = () => {
         navigate('/partnermanagement')
+    };
+
+    const changeToApiKeyPath = () => {
+        setActiveOicdClient(false);
+        setActiveApiKey(true);
     };
 
     const createOidcClient = () => {
@@ -261,6 +275,10 @@ function OidcClientsList() {
         setFirstIndex(0);
     };
 
+    const gennerateApiKey = () => {
+        navigate('/partnermanagement/generateApiKey')
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -286,12 +304,11 @@ function OidcClientsList() {
                                     </p>
                                 </div>
                             </div>
-                            {oidcClientsList.length > 0 ?
+                            {(oidcClientsList.length > 0 && activeOidcClient) && (
                                 <button onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('createOidcClient.createOidcClient')}
                                 </button>
-                                : null
-                            }
+                            )}
                         </div>
                         <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%]'>
                             <div className={`flex-col justify-center`}>
@@ -302,16 +319,16 @@ function OidcClientsList() {
                                 <div className={`h-1 w-24 ${activeOidcClient ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                             </div>
                             <div className={`flex-col justify-center`}>
-                                <h6 className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[20%]" : "ml-[20%]"} cursor-pointer text-sm`}>
+                                <h6 onClick={() => changeToApiKeyPath()}
+                                    className={`${activeApiKey ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] ${isLoginLanguageRTL ? "mr-[20%]" : "ml-[20%]"} cursor-pointer text-sm`}>
                                     {t('authenticationServices.apiKey')}
                                 </h6>
                                 <div className={`h-1 w-24 ${activeApiKey ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
                             </div>
                         </div>
 
-                        {oidcClientsList.length === 0
-                            ?
-                            <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                        {(oidcClientsList.length === 0 && activeOidcClient) &&
+                            (<div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 {
                                     activeOidcClient && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
@@ -341,9 +358,10 @@ function OidcClientsList() {
                                         }
                                     </div>
                                 </div>
-                            </div>
-                            :
-                            <>
+                            </div>)
+                        }
+                        {(oidcClientsList.length > 0 && activeOidcClient) &&
+                            (<>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
                                         <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
@@ -488,7 +506,7 @@ function OidcClientsList() {
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
                                             {isItemsPerPageOpen && (
-                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}
@@ -516,7 +534,36 @@ function OidcClientsList() {
                                         </div>
                                     </div>
                                 </div>
-                            </>
+                            </>)
+                        }
+                        {activeApiKey &&
+                            (
+                                <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                                    <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
+                                        <div className={`flex sm:gap-x-20 md:gap-x-24 lg:gap-x-32 xl:gap-x-40`}>
+                                            <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('apiKeysList.partnerId')}</h6>
+                                            <h6>{t('apiKeysList.policyName')}</h6>
+                                            <h6>{t('apiKeysList.apiKeylabel')}</h6>
+                                            <h6>{t('apiKeysList.expiryDate')}</h6>
+                                            <h6>{t('apiKeysList.status')}</h6>
+                                            <h6 className="mr-5">{t('apiKeysList.action')}</h6>
+                                        </div>
+                                    </div>
+                                    <hr className="h-px mx-3 bg-gray-200 border-0" />
+
+                                    <div className="flex items-center justify-center p-24">
+                                        <div className="flex flex-col justify-center">
+                                            <img src={rectangleGrid} alt="" />
+                                            {activeApiKey &&
+                                                (<button onClick={() => gennerateApiKey()} type="button"
+                                                    className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
+                                                    {t('authenticationServices.generateApiKeyBtn')}
+                                                </button>)
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )
                         }
                     </div>
                 </>
