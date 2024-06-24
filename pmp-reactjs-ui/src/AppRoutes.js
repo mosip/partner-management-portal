@@ -40,43 +40,47 @@ function AppRoutes() {
         },
         {
           path: 'policies/viewPolicyDetails',
-          element: <GuardedRoute><MainLayout><ViewPolicyDetails/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewPolicyDetails /></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/requestPolicy',
-          element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/requestPolicyConfirmation',
-          element: <GuardedRoute><MainLayout><RequestPolicyConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><RequestPolicyConfirmation /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/oidcClientsList',
-          element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><OidcClientsList /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'authenticationServices/apiKeyList',
+          element: <GuardedRoute><MainLayout><OidcClientsList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/createOidcClient',
-          element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><CreateOidcClient /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/createOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><CreateOidcClientConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><CreateOidcClientConfirmation /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewOidcClienDetails',
-          element: <GuardedRoute><MainLayout><ViewOidcClientDetails/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewOidcClientDetails /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/editOidcClient',
-          element: <GuardedRoute><MainLayout><EditOidcClient/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><EditOidcClient /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/editOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><EditOidcClientConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><EditOidcClientConfirmation /></MainLayout></GuardedRoute>,
         },
         {
           path: 'generateApiKey',
-          element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><GenerateApiKey /></MainLayout></GuardedRoute>,
         },
       ],
     },
