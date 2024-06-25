@@ -31,16 +31,25 @@ function RequestPolicy() {
     const [policyList, setPolicyList] = useState([]);
     const [validationError, setValidationError] = useState("");
     const textareaRef = useRef(null);
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
-    let blocker = useBlocker(
-        ({ currentLocation, nextLocation }) =>
-            (partnerId !== "" || policyName !== "" ||
-                partnerComments !== "") &&
-            currentLocation.pathname !== nextLocation.pathname
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked) {
+                setIsSubmitClicked(false);
+                return false;
+            }
+
+            return (
+                (partnerId !== "" || policyName !== "" ||
+                    partnerComments !== "") &&
+                currentLocation.pathname !== nextLocation.pathname
+            );
+        }
     );
 
     useEffect(() => {
@@ -193,6 +202,7 @@ function RequestPolicy() {
     };
 
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);

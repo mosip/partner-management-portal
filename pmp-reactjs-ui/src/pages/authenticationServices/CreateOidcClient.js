@@ -42,19 +42,28 @@ function CreateOidcClient() {
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      ( partnerId !== "" ||
-        oidcClientName !== "" ||
-        publicKey !== "" ||
-        logoUrl !== "" ||
-        policyId !== "" ||
-        policyName !== "" ||
-        redirectUrls.some(url => url !== "")
-       ) &&
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => {
+      if (isSubmitClicked) {
+        setIsSubmitClicked(false);
+        return false;
+      }
+
+      return (
+        (partnerId !== "" ||
+          oidcClientName !== "" ||
+          publicKey !== "" ||
+          logoUrl !== "" ||
+          policyId !== "" ||
+          policyName !== "" ||
+          redirectUrls.some(url => url !== "")
+        ) &&
         currentLocation.pathname !== nextLocation.pathname
-);
+      );
+    }
+  );
 
   useEffect(() => {
     const shouldWarnBeforeUnload = () => {
@@ -325,6 +334,7 @@ function CreateOidcClient() {
   };
 
   const clickOnSubmit = async () => {
+    setIsSubmitClicked(true);
     setErrorCode("");
     setErrorMsg("");
     setDataLoaded(false);
