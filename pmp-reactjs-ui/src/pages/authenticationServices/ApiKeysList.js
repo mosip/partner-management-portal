@@ -100,22 +100,6 @@ function ApiKeysList () {
         navigate('/partnermanagement')
     };
 
-    const moveToGenerateApiKey = () => {
-        navigate('/partnermanagement/authenticationServices/generateApiKey')
-    };
-
-    const showViewApiKeyDetails = (selectedClientdata) => {
-        if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
-        }
-    };
-
-    const onClickView = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
-    };
-
     function bgOfStatus(status) {
         if (status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
@@ -247,7 +231,7 @@ function ApiKeysList () {
                                 </div>
                             </div>
                             {apiKeysList.length > 0 ?
-                                <button onClick={() => moveToGenerateApiKey()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('apiKeysList.generateApiKey')}
                                 </button>
                                 : null
@@ -285,7 +269,7 @@ function ApiKeysList () {
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activeApiKey &&
-                                            (<button onClick={() => moveToGenerateApiKey()} type="button"
+                                            (<button type="button"
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                 {t('apiKeysList.generateApiKey')}
                                             </button>)
@@ -362,12 +346,12 @@ function ApiKeysList () {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="pr-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-4">{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-12">
+                                                                <td className="px-2">{client.partnerId}</td>
+                                                                <td className="pr-2">{client.policyGroupName}</td>
+                                                                <td className="px-4">{client.policyName}</td>
+                                                                <td className="px-2">{client.apiKeyLabel}</td>
+                                                                <td className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
@@ -389,7 +373,7 @@ function ApiKeysList () {
                                                                         <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
-                                                                                <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
+                                                                                <p className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
