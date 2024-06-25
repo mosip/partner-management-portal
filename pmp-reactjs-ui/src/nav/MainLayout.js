@@ -56,9 +56,15 @@ function MainLayout({ children }) {
 
     useEffect(() => {
         const langCode = getUserProfile().langCode;
-        if (langCode) {
-            document.body.dir = langCode === "ara" ? 'rtl' : 'ltr';
-            i18n.changeLanguage(langCode);
+        if (langCode != null) {
+            if (langCode === "ara") {
+                document.body.dir = 'rtl';
+                i18n.changeLanguage(langCode);
+            }
+            else{
+                document.body.dir = 'ltr';
+                i18n.changeLanguage(langCode);
+            }
         }
 
         const initialize = async () => {
