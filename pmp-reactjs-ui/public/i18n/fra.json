@@ -277,6 +277,15 @@
        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification.",
        "confirm": "Confirmer"
     },
+    "apiKeysList" : {
+        "apiKeyLabel": "Étiquette de clé API",
+        "apiKeyId": "ID de clé API",
+        "generateApiKey": "Générer une clé API",
+        "listOfApiKeyRequests": "Liste des demandes de clés API",
+        "selectApiKeyLabel": "Sélectionnez le libellé de la clé API",
+        "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre, car une fois fermée, la fenêtre contextuelle de la clé API sera désactivée.",
+        "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Je comprends que les données partagées au moment de l'inscription seront utilisées par le portail de gestion des partenaires (PMP), qui comprennent le nom, le numéro de téléphone, l'adresse e-mail, le nom de l'organisation et l'adresse. Je comprends également que ces informations seront stockées et traitées par PMP dans le but de vérifier mon identité et mon organisation afin d'accéder aux différents services de cette application. J'autorise la collecte de mes données à cette fin.",

@@ -11,12 +11,11 @@ import { IconContext } from "react-icons"; // for customizing icons
 import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
-import CopyIdPopUp from './CopyIdPopUp';
-import OidcClientsFilter from './OidcClientsFilter';
-import DeactivateOidcClient from './DeactivateOidcClient.js';
-import AuthenticationServicesTab from './AuthenticationServicesTab.js';
+import ApiClientsFilter from './ApiClientsFilter';
+import ApiKeyIdPopup from './ApiKeyIdPopup';
+import AuthenticationServicesTab from './AuthenticationServicesTab';
 
-function OidcClientsList() {
+function ApiKeysList () {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -24,23 +23,22 @@ function OidcClientsList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [firstTimeLoad, setFirstTimeLoad] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [activeOidcClient, setActiveOicdClient] = useState(true);
-    const [activeApiKey, setActiveApiKey] = useState(false);
+    const [activeOidcClient, setActiveOicdClient] = useState(false);
+    const [activeApiKey, setActiveApiKey] = useState(true);
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(true);
+    const [apiKeysList, setApiKeysList] = useState([]);
+    const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const itemsPerPageOptions = [8, 16, 24, 32];
-    const [oidcClientsList, setOidcClientsList] = useState([]);
-    const [filteredOidcClientsList, setFilteredOidcClientsList] = useState([]);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
-    const [viewClientId, setViewClientId] = useState(-1);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [viewApiKeyId, setViewApiKeyId] = useState(-1);
     const defaultFilterQuery = {
         partnerId: "",
         policyGroupName: ""
@@ -50,55 +48,29 @@ function OidcClientsList() {
     const itemsCountSelectionRef = useRef(null);
 
     useEffect(() => {
-        handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
+        handleMouseClickForDropdown(submenuRef, () => setViewApiKeyId(null));
         handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
     }, [submenuRef, itemsCountSelectionRef]);
-
-    // const tableValues = [
-    //     { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394092", "policyGroup": "Policy Group 02", "policyName": "KYC", "oidcClientName": "Client 22", "createdDate": "21/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394093", "policyGroup": "Policy Group 03", "policyName": "KYC1", "oidcClientName": "Client 11", "createdDate": "06/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394094", "policyGroup": "Policy Group 04", "policyName": "Full KYC", "oidcClientName": "Client 03", "createdDate": "30/09/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394095", "policyGroup": "Policy Group 05", "policyName": "KYC1", "oidcClientName": "Client 05", "createdDate": "12/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394096", "policyGroup": "Policy Group 06", "policyName": "KYC", "oidcClientName": "Client 16", "createdDate": "07/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394097", "policyGroup": "Policy Group 07", "policyName": "Full KYC", "oidcClientName": "Client 07", "createdDate": "01/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394098", "policyGroup": "Policy Group 08", "policyName": "KYC", "oidcClientName": "Client 04", "createdDate": "17/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394099", "policyGroup": "Policy Group 09", "policyName": "KYC1", "oidcClientName": "Client 12", "createdDate": "13/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394100", "policyGroup": "Policy Group 10", "policyName": "KYC", "oidcClientName": "Client 09", "createdDate": "02/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394101", "policyGroup": "Policy Group 11", "policyName": "Full KYC", "oidcClientName": "Client 02", "createdDate": "08/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394102", "policyGroup": "Policy Group 12", "policyName": "KYC", "oidcClientName": "Client 06", "createdDate": "18/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394103", "policyGroup": "Policy Group 13", "policyName": "KYC", "oidcClientName": "Client 01", "createdDate": "14/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394104", "policyGroup": "Policy Group 14", "policyName": "Full KYC", "oidcClientName": "Client 10", "createdDate": "03/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394105", "policyGroup": "Policy Group 15", "policyName": "KYC1", "oidcClientName": "Client 08", "createdDate": "09/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394106", "policyGroup": "Policy Group 16", "policyName": "Full KYC", "oidcClientName": "Client 20", "createdDate": "19/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394107", "policyGroup": "Policy Group 17", "policyName": "KYC", "oidcClientName": "Client 17", "createdDate": "04/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394108", "policyGroup": "Policy Group 18", "policyName": "Full KYC", "oidcClientName": "Client 14", "createdDate": "15/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394109", "policyGroup": "Policy Group 19", "policyName": "KYC", "oidcClientName": "Client 19", "createdDate": "10/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394110", "policyGroup": "Policy Group 20", "policyName": "Full KYC", "oidcClientName": "Client 18", "createdDate": "20/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394111", "policyGroup": "Policy Group 21", "policyName": "KYC1", "oidcClientName": "Client 21", "createdDate": "05/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394112", "policyGroup": "Policy Group 22", "policyName": "Full KYC", "oidcClientName": "Client 15", "createdDate": "16/10/2025", "status": "Rejected", "oidcClientId": "0" }
-
-    // ];
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/getAllOidcClients', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApiKeysForAuthPartners', process.env.NODE_ENV));
                 setFirstTimeLoad(true);
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        setOidcClientsList(sortedData);
-                        setFilteredOidcClientsList(sortedData)
-                        // console.log('Response data:', oidcClientsList.length);
+                        setApiKeysList(sortedData);
+                        setFilteredApiKeysList(sortedData)
+                        // console.log('Response data:', apiKeysList.length);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
-                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'));
+                    setErrorMsg(t('apiKeysList.errorInApiKeysList'));
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -113,10 +85,10 @@ function OidcClientsList() {
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyLabel" },
         { id: "crDtimes", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: "apiKeyReqID", headerNameKey: "apiKeysList.apiKeyId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
@@ -128,33 +100,20 @@ function OidcClientsList() {
         navigate('/partnermanagement')
     };
 
-    const createOidcClient = () => {
-        navigate('/partnermanagement/authenticationServices/createOidcClient')
-    }
+    const moveToGenerateApiKey = () => {
+        navigate('/partnermanagement/authenticationServices/generateApiKey')
+    };
 
-    const showViewOidcClientDetails = (selectedClientdata) => {
+    const showViewApiKeyDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
+            navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
         }
     };
 
     const onClickView = (selectedClientdata) => {
         localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
-    };
-
-    const showEditOidcClient = (selectedClientdata) => {
-        if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/editOidcClient')
-        }
-    };
-
-    const showDeactivateOidcClient = (selectedClientdata) => {
-        if (selectedClientdata.status === "ACTIVE") {
-            setShowDeactivatePopup(true);
-        }
+        navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
     };
 
     function bgOfStatus(status) {
@@ -166,13 +125,6 @@ function OidcClientsList() {
         }
     };
 
-    const showCopyPopUp = (client) => {
-        if (client.status.toLowerCase() === "active") {
-            setCurrentClient(client);
-            setShowPopup(true);
-        }
-    };
-
     //This part is related to Filter
     const onFilterChange = (fieldName, selectedFilter) => {
         setFilterQuery(oldFilterQuery => ({
@@ -181,37 +133,37 @@ function OidcClientsList() {
         }));
     }
     useEffect(() => {
-        let filteredRows = oidcClientsList;
+        let filteredRows = apiKeysList;
         Object.keys(filterQuery).forEach(key => {
             //console.log(`${key} : ${filterQuery[key]}`);
             if (filterQuery[key] !== '') {
                 filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
             }
         });
-        setFilteredOidcClientsList(filteredRows);
+        setFilteredApiKeysList(filteredRows);
         setFirstIndex(0);
-    }, [filterQuery, oidcClientsList]);
+    }, [filterQuery, apiKeysList]);
 
     //This part is related to Sorting
     const toggleSortDescOrder = (sortItem) => {
         if (order === 'ASC') {
             if (sortItem === "crDtimes") {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
+                const sortedOidcClients = [...filteredApiKeysList].sort((a, b) => {
                     const dateA = new Date(a.crDtimes);
                     const dateB = new Date(b.crDtimes);
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
-                setFilteredOidcClientsList(sortedOidcClients);
+                setFilteredApiKeysList(sortedOidcClients);
                 setOrder("DESC")
                 setIsDescending(!isDescending);
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
             }
             else {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) =>
+                const sortedOidcClients = [...filteredApiKeysList].sort((a, b) =>
                     a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
                 );
-                setFilteredOidcClientsList(sortedOidcClients);
+                setFilteredApiKeysList(sortedOidcClients);
                 setOrder("DESC")
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
@@ -221,23 +173,23 @@ function OidcClientsList() {
     const toggleSortAscOrder = (sortItem) => {
         if (order === 'DESC') {
             if (sortItem === "crDtimes") {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
+                const sortedOidcClients = [...filteredApiKeysList].sort((a, b) => {
                     const dateA = new Date(a.crDtimes);
                     const dateB = new Date(b.crDtimes);
                     return isDescending ? dateA - dateB : dateB - dateA;
                 });
 
-                setFilteredOidcClientsList(sortedOidcClients);
+                setFilteredApiKeysList(sortedOidcClients);
                 setOrder("ASC")
                 setIsDescending(!isDescending);
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
             }
             else {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) =>
+                const sortedOidcClients = [...filteredApiKeysList].sort((a, b) =>
                     a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
                 );
-                setFilteredOidcClientsList(sortedOidcClients);
+                setFilteredApiKeysList(sortedOidcClients);
                 setOrder("ASC")
                 setActiveSortDesc(sortItem);
                 setActiveSortAsc(sortItem);
@@ -250,16 +202,23 @@ function OidcClientsList() {
     }
 
     //This part related to Pagination Logic
-    let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
+    let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
     const handlePageChange = (event) => {
-        const newIndex = (event.selected * selectedRecordsPerPage) % filteredOidcClientsList.length;
+        const newIndex = (event.selected * selectedRecordsPerPage) % filteredApiKeysList.length;
         setFirstIndex(newIndex);
     };
     const changeItemsPerPage = (num) => {
         setIsItemsPerPageOpen(false);
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
+    };
+    const showApiKeyIdPopUp = (client) => {
+        if (client.status.toLowerCase() === "active") {
+            console.log(client);
+            setCurrentClient(client);
+            setShowPopup(true);
+        }
     };
 
     return (
@@ -287,9 +246,9 @@ function OidcClientsList() {
                                     </p>
                                 </div>
                             </div>
-                            {oidcClientsList.length > 0 ?
-                                <button onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                    {t('createOidcClient.createOidcClient')}
+                            {apiKeysList.length > 0 ?
+                                <button onClick={() => moveToGenerateApiKey()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                    {t('apiKeysList.generateApiKey')}
                                 </button>
                                 : null
                             }
@@ -301,20 +260,20 @@ function OidcClientsList() {
                             setActiveApiKey={setActiveApiKey}
                         />
 
-                        {oidcClientsList.length === 0
+                        {apiKeysList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 {
-                                    activeOidcClient && (
+                                    activeApiKey && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
                                                 <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
-                                                <h6>{t('authenticationServices.oidcClientName')}</h6>
+                                                <h6>{t('apiKeysList.apiKeyLabel')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
-                                                <h6>{t('authenticationServices.oidcClientId')}</h6>
+                                                <h6>{t('apiKeysList.apiKeyId')}</h6>
                                                 <h6 className="mr-5">{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
@@ -325,10 +284,10 @@ function OidcClientsList() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
-                                        {activeOidcClient &&
-                                            (<button onClick={() => createOidcClient()} type="button"
+                                        {activeApiKey &&
+                                            (<button onClick={() => moveToGenerateApiKey()} type="button"
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                                {t('authenticationServices.createOidcClientBtn')}
+                                                {t('apiKeysList.generateApiKey')}
                                             </button>)
                                         }
                                     </div>
@@ -339,7 +298,7 @@ function OidcClientsList() {
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
                                         <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
-                                            {t('oidcClientsList.listOfOidcClients') + ' (' + filteredOidcClientsList.length + ")"}
+                                            {t('apiKeysList.listOfApiKeyRequests') + ' (' + filteredApiKeysList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
                                             {filter && <button onClick={() => onResetFilter()} type="button"
@@ -362,10 +321,10 @@ function OidcClientsList() {
                                     </div>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
-                                        <OidcClientsFilter
-                                            filteredOidcClientsList={filteredOidcClientsList}
+                                        <ApiClientsFilter
+                                            filteredApiKeysList={filteredApiKeysList}
                                             onFilterChange={onFilterChange}>
-                                        </OidcClientsFilter>
+                                        </ApiClientsFilter>
                                     }
                                     <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
@@ -373,10 +332,10 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
+                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "apiKeyReqID" && 'pr-2'}`}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
-                                                                    {(header.id !== "action") && (header.id !== "oidcClientId") && (
+                                                                    {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
                                                                         <div>
                                                                             <svg className="cursor-pointer mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
                                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -402,48 +361,45 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="pr-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-4">{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-2">{client.apiKeyLabel}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
                                                                 <td className={`${isLoginLanguageRTL ? "pr-2" : "pl-2"}`}>
-                                                                    <svg onClick={() => showCopyPopUp(client)}
+                                                                    <svg onClick={() => showApiKeyIdPopUp(client)}
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                                                             d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                            transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
+                                                                            transform="translate(-40 800)" fill={`${client.status === "ACTIVE" ? "#1447B2" : "#D1D1D1"}`} />
                                                                     </svg>
                                                                     {showPopup && (
-                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId} />
+                                                                        <ApiKeyIdPopup closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} apiKeyId={currentClient.apiKeyReqID} />
                                                                     )}
                                                                 </td>
 
                                                                 <td className="text-center">
                                                                     <div>
-                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
-                                                                        {viewClientId === index && (
+                                                                        <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                                                        {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showEditOidcClient(client)} className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#BEBEBE]'}`}>
+                                                                                <p className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#BEBEBE]'}`}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showDeactivateOidcClient(client)} className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
+                                                                                <p className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivateOidcClient closePopUp={setShowDeactivatePopup} clientData={client}></DeactivateOidcClient>
-                                                                                )}
                                                                             </div>
                                                                         )}
                                                                     </div>
@@ -463,7 +419,7 @@ function OidcClientsList() {
                                         pageClassName={"page-item"}
                                         activeClassName={"active"}
                                         onPageChange={(event) => handlePageChange(event)}
-                                        pageCount={Math.ceil(filteredOidcClientsList.length / selectedRecordsPerPage)}
+                                        pageCount={Math.ceil(filteredApiKeysList.length / selectedRecordsPerPage)}
                                         breakLabel="..."
                                         previousLabel={
                                             <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
@@ -517,4 +473,4 @@ function OidcClientsList() {
     )
 }
 
-export default OidcClientsList; 
+export default ApiKeysList;
