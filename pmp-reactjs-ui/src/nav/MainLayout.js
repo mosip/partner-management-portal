@@ -65,6 +65,7 @@ function MainLayout({ children }) {
                 document.body.dir = 'ltr';
                 i18n.changeLanguage(langCode);
             }
+            i18n.changeLanguage(langCode);
         }
 
         const initialize = async () => {
