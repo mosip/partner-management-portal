@@ -13,7 +13,7 @@ import CreateOidcClientConfirmation from './pages/authenticationServices/CreateO
 import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClientDetails.js';
 import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
 import EditOidcClientConfirmation from './pages/authenticationServices/EditOidcClientConfirmation.js';
-
+import ApiKeysList from './pages/authenticationServices/ApiKeysList.js';
 function AppRoutes() {
 
   const router = createHashRouter([
@@ -72,6 +72,10 @@ function AppRoutes() {
         {
           path: 'authenticationServices/editOidcClientConfirmation',
           element: <GuardedRoute><MainLayout><EditOidcClientConfirmation/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'authenticationServices/apiKeysList',
+          element: <GuardedRoute><MainLayout><ApiKeysList/></MainLayout></GuardedRoute>,
         }
       ],
     },

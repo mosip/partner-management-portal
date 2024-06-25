@@ -276,6 +276,15 @@
        "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
        "confirm": "Confirm"
     },
+    "apiKeysList" : {
+        "apiKeyLabel": "API Key Label",
+        "apiKeyId": "API Key ID",
+        "generateApiKey": "Generate API Key",
+        "listOfApiKeyRequests": "List of API Key Requests",
+        "selectApiKeyLabel": "Select API Key Label",
+        "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view.",
+        "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
