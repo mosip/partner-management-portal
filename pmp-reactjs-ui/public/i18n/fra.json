@@ -269,7 +269,8 @@
         "viewApiKeyDetails": "عرض تفاصيل مفتاح API",
         "apiKeyNameGoeshere": "اسم مفتاح API يظهر هنا",
         "viewApiKeyId": "عرض معرف مفتاح API",
-        "label": "ملصق"
+        "label": "ملصق",
+        "copyApiKeyMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre, car une fois fermée, la fenêtre contextuelle de la clé API sera désactivée."
     },
     "editOidcClient": {
         "editOidcClient": "Modifier le client OIDC",

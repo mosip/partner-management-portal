@@ -269,7 +269,8 @@
         "viewApiKeyDetails": "عرض تفاصيل مفتاح API",
         "apiKeyNameGoeshere": "اسم مفتاح API يظهر هنا",
         "viewApiKeyId": "عرض معرف مفتاح API",
-        "label": "ملصق"
+        "label": "ملصق",
+        "copyApiKeyMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأنه بمجرد إغلاقها - سيتم تعطيل نافذة API المنبثقة للعرض."
     },
     "editOidcClient": {
         "editOidcClient": "تحرير عميل OIDC",
