@@ -265,6 +265,12 @@
         "partnersComment": "Commentaire du partenaire",
         "back": "Dos"
     },
+    "viewApiKeyDetails": {
+        "viewApiKeyDetails": "عرض تفاصيل مفتاح API",
+        "apiKeyNameGoeshere": "اسم مفتاح API يظهر هنا",
+        "viewApiKeyId": "عرض معرف مفتاح API",
+        "label": "ملصق"
+    },
     "editOidcClient": {
         "editOidcClient": "Modifier le client OIDC",
         "authenticationServiceSection": "Services d'authentification",

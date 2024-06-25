@@ -265,6 +265,12 @@
         "partnersComment": "تعليق الشريك",
         "back": "خلف"
     },
+    "viewApiKeyDetails": {
+        "viewApiKeyDetails": "عرض تفاصيل مفتاح API",
+        "apiKeyNameGoeshere": "اسم مفتاح API يظهر هنا",
+        "viewApiKeyId": "عرض معرف مفتاح API",
+        "label": "ملصق"
+    },
     "editOidcClient": {
         "editOidcClient": "تحرير عميل OIDC",
         "authenticationServiceSection": "خدمات المصادقة",

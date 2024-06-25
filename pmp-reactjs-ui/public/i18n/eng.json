@@ -264,7 +264,12 @@
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
         "back": "Back"
-
+    },
+    "viewApiKeyDetails": {
+        "viewApiKeyDetails": "View API Key Details",
+        "apiKeyNameGoeshere": "API Key Name Goes Here",
+        "viewApiKeyId": "View API Key ID",
+        "label": "Label"
     },
     "editOidcClient": {
         "editOidcClient": "Edit OIDC Client",
