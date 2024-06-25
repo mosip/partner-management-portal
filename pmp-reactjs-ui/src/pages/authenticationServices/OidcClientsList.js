@@ -120,15 +120,6 @@ function OidcClientsList() {
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
-    const apiKeytableHeaders = [
-        { id: "partnerId", headerNameKey: 'apiKeysList.partnerId' },
-        { id: "policyName", headerNameKey: "apiKeysList.policyName" },
-        { id: "apiKeylabel", headerNameKey: "apiKeysList.apiKeylabel" },
-        { id: "expiryDate", headerNameKey: "apiKeysList.expiryDate" },
-        { id: "status", headerNameKey: "apiKeysList.status" },
-        { id: "action", headerNameKey: 'apiKeysList.action' }
-    ];
-
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -272,7 +263,7 @@ function OidcClientsList() {
     };
 
     const gennerateApiKey = () => {
-        navigate('/partnermanagement/generateApiKey')
+        navigate('/partnermanagement/authenticationServices/generateApiKey')
     }
 
     return (

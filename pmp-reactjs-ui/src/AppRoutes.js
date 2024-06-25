@@ -79,7 +79,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><EditOidcClientConfirmation /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'generateApiKey',
+          path: 'authenticationServices/generateApiKey',
           element: <GuardedRoute><MainLayout><GenerateApiKey /></MainLayout></GuardedRoute>,
         },
       ],
