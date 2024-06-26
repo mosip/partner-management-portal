@@ -120,7 +120,6 @@
         "selectStatus": "Sélectionnez le statut",
         "itemsPerPage": "Objets par page",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
-
     },
     "viewPolicyDetails": {
         "viewPolicyDetails": "Afficher les détails de la politique",
@@ -134,7 +133,7 @@
         "policyNameDescription": "Nom de la stratégie Description",
         "comments": "commentaires",
         "adminComments": "Commentaires de l'administrateur",
-        "partnerComments" : "Commentaires du partenaire",
+        "partnerComments": "Commentaires du partenaire",
         "back": "Dos",
         "createdOn": "Créé sur"
     },
@@ -158,8 +157,8 @@
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
         "policySuccessHeader": "Politique soumise avec succès !",
-        "policySuccessMsg":"Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
-        "info":"Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
+        "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
+        "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
         "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
         "specialCharNotAllowed": "Les caractères spéciaux ne sont pas autorisés."
     },
@@ -183,15 +182,15 @@
     "createOidcClient": {
         "createOidcClient": "Créer un client OIDC",
         "help": "Aide",
-        "selectPartnerId":"Sélectionnez l'ID du partenaire",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
         "devicePartner": "Partenaire de l'appareil",
         "policyGroupGoesHere": "Le groupe de politiques va ici",
         "policyNameToolTip": "Assurez-vous d'abord de demander la politique pour l'ID de partenaire donné dans l'écran POLITIQUES. Seules les politiques dont le statut est APPROUVÉ sont disponibles dans la liste déroulante.",
-        "policyNamePlaceHolder":"Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
+        "policyNamePlaceHolder": "Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "name": "Nom",
         "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
-        "enterNameForOidcClient":"Entrez un nom pour le client OIDC",
+        "enterNameForOidcClient": "Entrez un nom pour le client OIDC",
         "publicKey": "Clé publique",
         "publicKeyToolTip": "Seul le format JWK est autorisé",
         "publicKeyPlaceHolder": "Saisissez la clé publique au format JWK uniquement",
@@ -213,17 +212,17 @@
         "invalidUrl": "Entrez un URI valide",
         "urlTooLong": "L'URI ne doit pas autoriser plus de 2048 caractères.",
         "duplicateUrl": "Les URI en double ne sont pas autorisés",
-        "partnerIdTooltip":"Seuls les ID de partenaire d'authentification dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
+        "partnerIdTooltip": "Seuls les ID de partenaire d'authentification dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire"
     },
     "oidcClientsList": {
-        "partnerId":"ID partenaire",
-        "policyGroup":"Groupe de politiques",
-        "policyName":"Nom de la politique",
+        "partnerId": "ID partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
         "oidcClientName": "Nom du client OIDC",
-        "createdDate":"Date de création",
+        "createdDate": "Date de création",
         "status": "Statut",
-        "oidcClientId":"ID client OIDC",
-        "action":"Action",
+        "oidcClientId": "ID client OIDC",
+        "action": "Action",
         "listOfOidcClients": "Liste des clients OIDC",
         "createOidcClient": "Créer un client OIDC",
         "filterBtn": "Filtre",
@@ -233,38 +232,37 @@
         "deActivate": "Désactiver",
         "copy": "Copie",
         "copied": "Copié!",
-        "selectPartnerId":"Sélectionnez l'ID du partenaire",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
         "selectOidcClientType": "Sélectionnez le client OIDC",
-        "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
-        "selectPolicyName":"Sélectionnez le nom de la stratégie",
-        "selectStatus":"Sélectionnez le statut",
+        "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
+        "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectStatus": "Sélectionnez le statut",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "Afficher les détails du client OIDC",
         "authenticationServiceSection": "Services d'authentification",
-        "createdOn":"Créé sur",
-        "oidcClientId":"ID client OIDC",
+        "createdOn": "Créé sur",
+        "oidcClientId": "ID client OIDC",
         "copied!": "Copié!",
-        "partnerId":"ID partenaire",
+        "partnerId": "ID partenaire",
         "partnerIdAlias": "Alias ​​d’ID de partenaire",
-        "partnerType":"Type de partenaire",
-        "policyGroup":"Groupe de politiques",
-        "policyName":"Nom de la politique",
-        "policyGroupDescription":"Description du groupe de stratégies",
-        "policyNameDescription":"Nom de la stratégie Description",
-        "name":"Nom",
-        "publicKey":"Clé publique",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "policyGroupDescription": "Description du groupe de stratégies",
+        "policyNameDescription": "Nom de la stratégie Description",
+        "name": "Nom",
+        "publicKey": "Clé publique",
         "logoUri": "URI du logo",
         "redirectUri": "URI de redirection",
-        "grantTypes":"Types de subventions",
-        "comments":"commentaires",
-        "adminComment":"Commentaires de l'administrateur",
+        "grantTypes": "Types de subventions",
+        "comments": "commentaires",
+        "adminComment": "Commentaires de l'administrateur",
         "adminName": "Nom de l'administrateur",
         "commentsOfAdmin": "Commentaires de l'administrateur",
         "partnersComment": "Commentaire du partenaire",
         "back": "Dos"
-
     },
     "editOidcClient": {
         "editOidcClient": "Modifier le client OIDC",
@@ -273,11 +271,11 @@
         "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès."
     },
     "deactivateOidcClient": {
-       "oidcClientName": "Voulez-vous désactiver le client OIDC",
-       "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification.",
-       "confirm": "Confirmer"
+        "oidcClientName": "Voulez-vous désactiver le client OIDC",
+        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser l'ID client OIDC pour l'authentification.",
+        "confirm": "Confirmer"
     },
-    "apiKeysList" : {
+    "apiKeysList": {
         "apiKeyLabel": "Étiquette de clé API",
         "apiKeyId": "ID de clé API",
         "generateApiKey": "Générer une clé API",
@@ -286,17 +284,23 @@
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre, car une fois fermée, la fenêtre contextuelle de la clé API sera désactivée.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
     },
+    "generateApiKey": {
+        "generateApiKey": "Générer une clé API",
+        "selectedPolicyName": "Sélectionnez le nom de la stratégie",
+        "name": "nom",
+        "enterNameForApiKey": "Entrez un nom pour la clé API"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Je comprends que les données partagées au moment de l'inscription seront utilisées par le portail de gestion des partenaires (PMP), qui comprennent le nom, le numéro de téléphone, l'adresse e-mail, le nom de l'organisation et l'adresse. Je comprends également que ces informations seront stockées et traitées par PMP dans le but de vérifier mon identité et mon organisation afin d'accéder aux différents services de cette application. J'autorise la collecte de mes données à cette fin.",
         "checkBoxDesc": "J'ai lu les termes et conditions et j'accepte de donner mon consentement pour utiliser les données partagées lors de l'inscription",
         "proceed": "Procéder"
-     },
-     "blockerMessage": {
+    },
+    "blockerMessage": {
         "description": "Êtes-vous sûr de vouloir quitter?",
         "cancel": "Annuler",
         "proceed": "Procéder"
-     },
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
