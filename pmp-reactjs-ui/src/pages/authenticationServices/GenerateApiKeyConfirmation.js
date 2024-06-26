@@ -39,7 +39,7 @@ function GenerateApiKeyConfirmation() {
                         <div className="text-center">
                             <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-28 max-[450px]:mr-20" : "ml-36 max-[450px]:ml-20"} h-40`} />
                             <h1 className="font-bold text-black text-lg max-[450px]:text-sm">
-                                {t('generateApiKey.requestSubmittedSuccessfully')}
+                                {t('generateApiKey.generateApiKeySuccessHeader')}
                             </h1>
                             <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                                 {t('generateApiKey.apiKeySuccessMsg')}

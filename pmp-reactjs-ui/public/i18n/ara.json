@@ -290,7 +290,7 @@
         "selectedPolicyName": "حدد اسم السياسة",
         "name": "اسم",
         "enterNameForApiKey": "أدخل اسمًا لمفتاح API",
-        "requestSubmittedSuccessfully":"تم تقديم الطلب بنجاح",
+        "generateApiKeySuccessHeader":"تم تقديم الطلب بنجاح",
         "apiKeySuccessMsg": "تم إرسال طلب إنشاء مفتاح API الخاص بك إلى المشرف للموافقة عليه"
     },
     "consentPopup": {

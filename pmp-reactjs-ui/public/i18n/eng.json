@@ -291,7 +291,7 @@
         "selectedPolicyName": "Select Policy Name",
         "name": "Name",
         "enterNameForApiKey": "Enter a name for API key",
-        "requestSubmittedSuccessfully":"Request Submitted Successfully",
+        "generateApiKeySuccessHeader":"Request Submitted Successfully",
         "apiKeySuccessMsg": "Your API key generation request has been sent to admin for approval."
     },
     "consentPopup": {
