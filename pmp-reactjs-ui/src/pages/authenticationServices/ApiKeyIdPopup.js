@@ -38,7 +38,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
                     <div className="w-full border border-[#EDDCAF] bg-[#FFF7E5] rounded-md p-2 text-left">
                         <p className="test-[13px] font-medium text-[#8B6105]">{t('apiKeysList.apiKeyIdAlertMsg')}</p>
                     </div>
-                    <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%] pt-3`}>{t('apiKeysList.apiKeyId')}</h1>
+                    <h1 className={`text-[#6A6A6A] font-bold text-sm opacity-8 mb-[0.5%] pt-3`}>{t('apiKeysList.apiKey')}</h1>
                     <p className={`font-bold text-sm text-black break-words px-6`}>{apiKeyId}</p>
                     <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[4%] w-[40%] rounded-3xl text-sm ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-[31%]"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"

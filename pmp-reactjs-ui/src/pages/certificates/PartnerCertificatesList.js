@@ -6,7 +6,7 @@ import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
 import LoadingIcon from "../common/LoadingIcon";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, moveToHome } from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../svg/rectangle_box.svg';
@@ -52,10 +52,6 @@ function PartnerCertificatesList() {
             return partnerTypeDesc;
         }
     }
-
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
 
     const getOriginalCertificate = () => {
         setErrorMsg(t('partnerCertificatesList.errorMsgForOriginalCertificate'))
@@ -149,10 +145,10 @@ function PartnerCertificatesList() {
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
                             <div className="flex items-start space-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
                                     <h1 className="font-semibold text-lg text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
-                                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')}
                                     </p>
                                 </div>

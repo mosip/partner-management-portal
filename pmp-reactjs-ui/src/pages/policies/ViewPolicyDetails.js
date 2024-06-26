@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
-import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription } from "../../utils/AppUtils";
+import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, moveToHome } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
 import partnerImage from "../../svg/partner.png";
 
@@ -29,10 +29,6 @@ function ViewPolicyDetails() {
             navigate('/partnermanagement/policies');
         }
     }, [navigate]);
-
-    const moveToHome = () => {
-        navigate("/partnermanagement");
-    };
 
     function bgOfStatus(status) {
         if (status === "approved") {
@@ -66,7 +62,7 @@ function ViewPolicyDetails() {
                             </h1>
                             <div className="flex space-x-1">
                                 <p
-                                    onClick={() => moveToHome()}
+                                    onClick={() => moveToHome(navigate)}
                                     className="font-semibold text-tory-blue text-xs cursor-pointer"
                                 >
                                     {t("commons.home")} /

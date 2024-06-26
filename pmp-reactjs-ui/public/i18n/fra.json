@@ -277,12 +277,13 @@
         "confirm": "Confirmer"
     },
     "apiKeysList": {
-        "apiKeyLabel": "Étiquette de clé API",
+        "apiKeyLabel": "Nom de la clé API",
         "apiKeyId": "ID de clé API",
+        "apiKey": "clé API",
         "generateApiKey": "Générer une clé API",
         "listOfApiKeyRequests": "Liste des demandes de clés API",
-        "selectApiKeyLabel": "Sélectionnez le libellé de la clé API",
-        "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre, car une fois fermée, la fenêtre contextuelle de la clé API sera désactivée.",
+        "selectApiKeyLabel": "Sélectionnez le nom de la clé API",
+        "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car une fois fermée, cette fenêtre sera désactivée pour s'ouvrir et s'afficher à nouveau.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
     },
     "generateApiKey": {

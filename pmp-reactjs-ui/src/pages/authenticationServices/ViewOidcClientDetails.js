@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes } from "../../utils/AppUtils";
+import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, moveToHome } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
@@ -35,10 +35,6 @@ function ViewOidcClientDetails() {
             navigate('/partnermanagement/authenticationServices/oidcClientsList');
         }
     }, [navigate, copyToolTipRef]);
-
-    const moveToHome = () => {
-        navigate("/partnermanagement");
-    };
 
     function bgOfStatus(status) {
         if (status === "ACTIVE") {
@@ -77,7 +73,7 @@ function ViewOidcClientDetails() {
                             </h1>
                             <div className="flex space-x-1">
                                 <p
-                                    onClick={() => moveToHome()}
+                                    onClick={() => moveToHome(navigate)}
                                     className="font-semibold text-tory-blue text-xs cursor-pointer"
                                 >
                                     {t("commons.home")} /

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import info from '../../svg/info_icon.svg';
@@ -90,10 +90,6 @@ function EditOidcClient() {
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
-    };
-
-    const moveToHome = () => {
-        navigate("/partnermanagement");
     };
 
     const onChangeOidcClientName = (value) => {
@@ -283,7 +279,7 @@ function EditOidcClient() {
                                 <div className="flex-col">
                                 <h1 className="font-semibold text-lg text-dark-blue">{t('editOidcClient.editOidcClient')}</h1>
                                 <div className="flex space-x-1">
-                                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t('commons.home')} /
                                     </p>
                                     <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">

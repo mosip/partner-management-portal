@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
+  toggleSortAscOrder, toggleSortDescOrder, moveToHome } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -122,10 +123,6 @@ function Policies() {
     fetchData();
   }, [firstTimeLoad, t]);
 
-  const moveToHome = () => {
-    navigate('/partnermanagement')
-  };
-
   const showRequestPolicy = () => {
     navigate('/partnermanagement/policies/requestPolicy')
   }
@@ -155,57 +152,15 @@ function Policies() {
   }
 
   //This part is related to Sorting
-  const toggleSortDescOrder = (sortItem) => {
-    if (order === 'ASC') {
-      if (sortItem === "createDate") {
-        const sortedPolicies = [...filteredPoliciesList].sort((a, b) => {
-          const dateA = new Date(a.createDate);
-          const dateB = new Date(b.createDate);
-          return isDescending ? dateA - dateB : dateB - dateA;
-        });
-        setFilteredPoliciesList(sortedPolicies);
-        setOrder("DESC")
-        setIsDescending(!isDescending);
-        setActiveSortDesc(sortItem);
-        setActiveSortAsc(sortItem);
-      }
-      else {
-        const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
-          a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
-        );
-        setFilteredPoliciesList(sortedPolicies);
-        setOrder("DESC")
-        setActiveSortDesc(sortItem);
-        setActiveSortAsc(sortItem);
-      }
-    }
-  }
-  const toggleSortAscOrder = (sortItem) => {
-    if (order === 'DESC') {
-      if (sortItem === "createDate") {
-        const sortedPolicies = [...filteredPoliciesList].sort((a, b) => {
-          const dateA = new Date(a.createDate);
-          const dateB = new Date(b.createDate);
-          return isDescending ? dateA - dateB : dateB - dateA;
-        });
+  const sortAscOrder = (header) => {
+    const isDateCol = (header === "createDate") ? true : false;
+    toggleSortAscOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+}
 
-        setFilteredPoliciesList(sortedPolicies);
-        setOrder("ASC")
-        setIsDescending(!isDescending);
-        setActiveSortDesc(sortItem);
-        setActiveSortAsc(sortItem);
-      }
-      else {
-        const sortedPolicies = [...filteredPoliciesList].sort((a, b) =>
-          a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
-        );
-        setFilteredPoliciesList(sortedPolicies);
-        setOrder("ASC")
-        setActiveSortDesc(sortItem);
-        setActiveSortAsc(sortItem);
-      }
-    }
-  };
+  const sortDescOrder = (header) => {
+    const isDateCol = (header === "createDate") ? true : false;
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+  }
 
   //This part is related to Filter
   const onFilterChange = (fieldName, selectedFilter) => {
@@ -264,10 +219,10 @@ function Policies() {
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
               <div className="flex items-start gap-x-2">
-                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                 <div className="flex-col">
                   <h1 className="font-semibold text-lg text-dark-blue">{t('policies.policies')}</h1>
-                  <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                  <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                     {t('commons.home')}
                   </p>
                 </div>
@@ -352,13 +307,13 @@ function Policies() {
                                       {t(header.headerNameKey)}
                                       {header.id !== "action" && (
                                         <div>
-                                          <svg className="cursor-pointer mx-2 mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
+                                          <svg className="cursor-pointer mx-2 mb-0.5" onClick={() => sortAscOrder(header.id)} alt="Ascending"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="8" height="8" viewBox="0 0 7 6">
                                             <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
                                               fill={`${(activeSortDesc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
                                           </svg>
-                                          <svg className="cursor-pointer mx-2" onClick={() => toggleSortDescOrder(header.id)} alt="Descending"
+                                          <svg className="cursor-pointer mx-2" onClick={() => sortDescOrder(header.id)} alt="Descending"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="8" height="8" viewBox="0 0 7 6">
                                             <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
