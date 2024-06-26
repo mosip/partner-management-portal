@@ -7,7 +7,7 @@ import { isLangRTL, moveToOidcClientsList, moveToHome } from '../../utils/AppUti
 import backArrow from '../../svg/back_arrow.svg';
 import successIcon from '../../svg/success_message_icon.svg';
 
-function GenerateApiKeyConfirmation() {
+function EditOidcClientConfirmation() {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -56,4 +56,4 @@ function GenerateApiKeyConfirmation() {
     )
 }
 
-export default GenerateApiKeyConfirmation;
+export default EditOidcClientConfirmation;
