@@ -4,7 +4,8 @@
         "search": "Search",
         "goBack": "Go Back",
         "emptyMsg": "No Data Available.",
-        "logout": "Logout"
+        "logout": "Logout",
+        "sessionIdleLogout": "Due to inactivity, you will be logged out"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

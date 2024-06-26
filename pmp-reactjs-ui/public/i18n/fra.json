@@ -4,7 +4,8 @@
         "search": "Recherche",
         "goBack": "Retourner",
         "emptyMsg": "Pas de données disponibles.",
-        "logout": "Se déconnecter"
+        "logout": "Se déconnecter",
+        "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
