@@ -1,21 +1,35 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes } from "../../utils/AppUtils";
+import { isLangRTL, moveToApiKeysList } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
 import partnerImage from "../../svg/partner.png";
-import CopyIdPopUp from "./CopyIdPopUp";
 
 function ViewApiKeyDetails() {
     const { t } = useTranslation();
-    const [copied, setCopied] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
+    const [apiKeyDetails, setApiKeyDetails] = useState({});
+
+    useEffect(() => {
+        const clientData = localStorage.getItem('selectedApiKeyClientdata');
+        // handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
+        if (clientData) {
+            try {
+                const selectedApiKeyClientdata = JSON.parse(clientData);
+                setApiKeyDetails(selectedApiKeyClientdata);
+            } catch (error) {
+                navigate('/partnermanagement/authenticationServices/apiKeysList');
+                console.error('Error in viewApiKeyDetails page :', error);
+            }
+        } else {
+            navigate('/partnermanagement/authenticationServices/apiKeysList');
+        }
+    }, [navigate]);
 
     const moveToHome = () => {
         navigate("/partnermanagement");
@@ -30,19 +44,15 @@ function ViewApiKeyDetails() {
         }
     };
 
-    const showCopyPopUp = () => {
-        setShowPopup(true);
-    };
-
     return (
         <>
-            <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <div className="flex items-center gap-x-2">
                         <img
                             src={backArrow}
                             alt=""
-                            onClick={() => moveToOidcClientsList(navigate)}
+                            onClick={() => moveToApiKeysList(navigate)}
                             className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
                         />
                         <div className="flex-col">
@@ -54,7 +64,7 @@ function ViewApiKeyDetails() {
                                     className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t("commons.home")} /
                                 </p>
-                                <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                <p onClick={() => moveToApiKeysList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                     {t("viewOidcClientDetails.authenticationServiceSection")}
                                 </p>
                             </div>
@@ -65,33 +75,30 @@ function ViewApiKeyDetails() {
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
                             <p className="font-bold text-sm text-dark-blue mb-2">
-                                {t('viewApiKeyDetails.apiKeyNameGoeshere')}
+                                {apiKeyDetails.apiKeyLabel ? apiKeyDetails.apiKeyLabel.toUpperCase() : apiKeyDetails.apiKeyLabel}
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus("ACTIVE")} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                    {getStatusCode("ACTIVE", t)}
+                                <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                    {getStatusCode(apiKeyDetails.status, t)}
                                 </div>
                                 <div className={`font-medium ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate("2024-05-30T14:52:30.580593", "date")}
+                                        formatDate(apiKeyDetails.crDtimes, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-medium text-sm text-dark-blue">
-                                    {formatDate("2024-05-30T14:52:30.580593", "time")}
+                                    {formatDate(apiKeyDetails.crDtimes, "time")}
                                 </div>
                             </div>
                         </div>
-                        <div className={`${"ACTIVE" === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'} flex gap-1 items-center border h-[4%] px-[1%] py-[0.5%] rounded-md text-right`}>
-                            <svg onClick={() => showCopyPopUp()}
+                        <div className={`${apiKeyDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'} flex gap-1 items-center border h-[4%] px-[2%] py-[1%] max-[450px]:w-[50%] w-60 break-all rounded-md text-right`}>
+                            <svg
                                 xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                 <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                     d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
                                     transform="translate(-40 800)" fill="#1447B2" />
                             </svg>
                             <p className="text-sm font-bold text-[#1447B2]">{t('viewApiKeyDetails.viewApiKeyId')}</p>
-                            {showPopup && (
-                                <CopyIdPopUp closePopUp={setShowPopup} partnerId={"P28394092"} policyName={"Policy Name Goes here"} id={"239492374"} idType={"API Key ID"} />
-                            )}
                         </div>
                     </div>
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
@@ -101,7 +108,7 @@ function ViewApiKeyDetails() {
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    P238478392
+                                    {apiKeyDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
@@ -120,7 +127,7 @@ function ViewApiKeyDetails() {
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Policy Group Goes Here
+                                    {apiKeyDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%]`}>
@@ -128,7 +135,7 @@ function ViewApiKeyDetails() {
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Policy Name Goes Here
+                                    {apiKeyDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
@@ -136,7 +143,7 @@ function ViewApiKeyDetails() {
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Policy group details, descriptive goes here.
+                                    {apiKeyDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
@@ -144,7 +151,7 @@ function ViewApiKeyDetails() {
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Policy Name details, descriptive goes here.
+                                    {apiKeyDetails.policyNameDescription}
                                 </p>
                             </div>
                         </div>
@@ -225,7 +232,7 @@ function ViewApiKeyDetails() {
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                        <button onClick={() => moveToOidcClientsList(navigate)}
+                        <button onClick={() => moveToApiKeysList(navigate)}
                             className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center"
                         >
                             {t("viewPolicyDetails.back")}
