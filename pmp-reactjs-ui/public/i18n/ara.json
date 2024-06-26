@@ -277,12 +277,13 @@
        "confirm": "يتأكد"
     },
     "apiKeysList" : {
-        "apiKeyLabel": "تسمية مفتاح API",
+        "apiKeyLabel": "اسم مفتاح API",
         "apiKeyId": "معرف مفتاح API",
+        "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",
         "listOfApiKeyRequests": "قائمة طلبات مفتاح API",
-        "selectApiKeyLabel": "حدد تسمية مفتاح API",
-        "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأنه بمجرد إغلاقها - سيتم تعطيل نافذة API المنبثقة للعرض.",
+        "selectApiKeyLabel": "حدد اسم مفتاح API",
+        "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأنه بمجرد إغلاقها، سيتم تعطيل فتح هذه النافذة وعرضها مرة أخرى.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ."
     },
     "generateApiKey": {

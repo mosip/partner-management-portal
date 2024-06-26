@@ -7,7 +7,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
-  moveToOidcClientsList, getGrantTypes } from '../../utils/AppUtils';
+  moveToOidcClientsList, getGrantTypes, moveToHome } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -253,10 +253,6 @@ function CreateOidcClient() {
   const navigate = useNavigate();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
-  const moveToHome = () => {
-    navigate('/partnermanagement')
-  };
-
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
@@ -438,7 +434,7 @@ function CreateOidcClient() {
                 <div className="flex-col">
                   <h1 className="font-semibold text-lg text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
                   <div className="flex space-x-1">
-                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                       {t('commons.home')} /
                     </p>
                     <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">

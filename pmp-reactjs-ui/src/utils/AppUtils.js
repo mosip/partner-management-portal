@@ -142,6 +142,10 @@ export const isLangRTL = (langCode) => {
     }
 }
 
+export const moveToHome = (navigate) => {
+    navigate('/partnermanagement')
+};
+
 export const moveToPolicies = (navigate) => {
     navigate('/partnermanagement/policies')
 };
@@ -161,3 +165,56 @@ export const logout = async () => {
     console.log(redirectUrl);
     window.location.href = redirectUrl;
 }
+
+export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc) => {
+    if (order === 'ASC') {
+        if (isDateCol) {
+            const sortedList = [...filteredList].sort((a, b) => {
+                const dateA = new Date(a[sortItem]);
+                const dateB = new Date(b[sortItem]);
+                return isDescending ? dateA - dateB : dateB - dateA;
+            });
+            setFilteredList(sortedList);
+            setOrder("DESC")
+            setIsDescending(!isDescending);
+            setActiveSortDesc(sortItem);
+            setActiveSortAsc(sortItem);
+        }
+        else {
+            const sortedList = [...filteredList].sort((a, b) =>
+                a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
+            );
+            setFilteredList(sortedList);
+            setOrder("DESC")
+            setActiveSortDesc(sortItem);
+            setActiveSortAsc(sortItem);
+        }
+    }
+}
+
+export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc) => {
+    if (order === 'DESC') {
+        if (isDateCol) {
+            const sortedList = [...filteredList].sort((a, b) => {
+                const dateA = new Date(a[sortItem]);
+                const dateB = new Date(b[sortItem]);
+                return isDescending ? dateA - dateB : dateB - dateA;
+            });
+
+            setFilteredList(sortedList);
+            setOrder("ASC")
+            setIsDescending(!isDescending);
+            setActiveSortDesc(sortItem);
+            setActiveSortAsc(sortItem);
+        }
+        else {
+            const sortedList = [...filteredList].sort((a, b) =>
+                a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
+            );
+            setFilteredList(sortedList);
+            setOrder("ASC")
+            setActiveSortDesc(sortItem);
+            setActiveSortAsc(sortItem);
+        }
+    }
+};

@@ -278,12 +278,13 @@
        "confirm": "Confirm"
     },
     "apiKeysList" : {
-        "apiKeyLabel": "API Key Label",
+        "apiKeyLabel": "API Key Name",
         "apiKeyId": "API Key ID",
+        "apiKey": "API Key",
         "generateApiKey": "Generate API Key",
         "listOfApiKeyRequests": "List of API Key Requests",
-        "selectApiKeyLabel": "Select API Key Label",
-        "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view.",
+        "selectApiKeyLabel": "Select API Key Name",
+        "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed, this window will be disabled to open and view again.",
         "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
     },
     "generateApiKey": {

@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -72,10 +72,6 @@ function RequestPolicy() {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, [partnerId, partnerComments, policyName]);
-
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -308,7 +304,7 @@ function RequestPolicy() {
                             <div className="flex-col">
                                 <h1 className="font-semibold text-lg text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
                                 <div className="flex space-x-1">
-                                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')} /
                                     </p>
                                     <p onClick={() => moveToPolicies(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">

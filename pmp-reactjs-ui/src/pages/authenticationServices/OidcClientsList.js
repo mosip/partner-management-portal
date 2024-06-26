@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, 
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -124,10 +125,6 @@ function OidcClientsList() {
         setErrorMsg("");
     };
 
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
-
     const createOidcClient = () => {
         navigate('/partnermanagement/authenticationServices/createOidcClient')
     }
@@ -192,61 +189,24 @@ function OidcClientsList() {
         setFirstIndex(0);
     }, [filterQuery, oidcClientsList]);
 
-    //This part is related to Sorting
-    const toggleSortDescOrder = (sortItem) => {
-        if (order === 'ASC') {
-            if (sortItem === "crDtimes") {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
-                    const dateA = new Date(a.crDtimes);
-                    const dateB = new Date(b.crDtimes);
-                    return isDescending ? dateA - dateB : dateB - dateA;
-                });
-                setFilteredOidcClientsList(sortedOidcClients);
-                setOrder("DESC")
-                setIsDescending(!isDescending);
-                setActiveSortDesc(sortItem);
-                setActiveSortAsc(sortItem);
-            }
-            else {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) =>
-                    a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
-                );
-                setFilteredOidcClientsList(sortedOidcClients);
-                setOrder("DESC")
-                setActiveSortDesc(sortItem);
-                setActiveSortAsc(sortItem);
-            }
-        }
-    }
-    const toggleSortAscOrder = (sortItem) => {
-        if (order === 'DESC') {
-            if (sortItem === "crDtimes") {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) => {
-                    const dateA = new Date(a.crDtimes);
-                    const dateB = new Date(b.crDtimes);
-                    return isDescending ? dateA - dateB : dateB - dateA;
-                });
-
-                setFilteredOidcClientsList(sortedOidcClients);
-                setOrder("ASC")
-                setIsDescending(!isDescending);
-                setActiveSortDesc(sortItem);
-                setActiveSortAsc(sortItem);
-            }
-            else {
-                const sortedOidcClients = [...filteredOidcClientsList].sort((a, b) =>
-                    a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
-                );
-                setFilteredOidcClientsList(sortedOidcClients);
-                setOrder("ASC")
-                setActiveSortDesc(sortItem);
-                setActiveSortAsc(sortItem);
-            }
-        }
-    };
-
     const onResetFilter = () => {
         window.location.reload();
+    }
+
+    const sortAscOrder = (header) => {
+        if (header === "crDtimes") {
+            toggleSortAscOrder(header, true, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        } else {
+            toggleSortAscOrder(header, false, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        }
+    }
+
+    const sortDescOrder = (header) => {
+        if (header === "crDtimes") {
+            toggleSortDescOrder(header, true, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        } else {
+            toggleSortDescOrder(header, false, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        }
     }
 
     //This part related to Pagination Logic
@@ -279,10 +239,10 @@ function OidcClientsList() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
                             <div className={`flex items-start gap-x-2`}>
-                                <img src={backArrow} alt="" onClick={() => moveToHome()} className={`mt-[8%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[8%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col mt-[3%]">
                                     <h1 className="font-semibold text-lg text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
-                                    <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                         {t('commons.home')}
                                     </p>
                                 </div>
@@ -378,13 +338,13 @@ function OidcClientsList() {
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <div>
-                                                                            <svg className="cursor-pointer mb-0.5" onClick={() => toggleSortAscOrder(header.id)} alt="Ascending"
+                                                                            <svg className="cursor-pointer mb-0.5" onClick={() => sortAscOrder(header.id)} alt="Ascending"
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 width="8" height="8" viewBox="0 0 7 6">
                                                                                 <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
                                                                                     fill={`${(activeSortDesc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
                                                                             </svg>
-                                                                            <svg className="cursor-pointer" onClick={() => toggleSortDescOrder(header.id)} alt="Descending"
+                                                                            <svg className="cursor-pointer" onClick={() => sortDescOrder(header.id)} alt="Descending"
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 width="8" height="8" viewBox="0 0 7 6">
                                                                                 <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"

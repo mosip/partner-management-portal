@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, moveToOidcClientsList } from '../../utils/AppUtils';
+import { isLangRTL, moveToOidcClientsList, moveToHome } from '../../utils/AppUtils';
 
 import backArrow from '../../svg/back_arrow.svg';
 import successIcon from '../../svg/success_message_icon.svg';
@@ -13,10 +13,6 @@ function CreateOidcClientConfirmation() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
-
     return (
         <div className="ml-32 mr-5 mt-5 w-[100%] h-[100%] font-inter">
             <div className="flex-col">
@@ -25,7 +21,7 @@ function CreateOidcClientConfirmation() {
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
                         <div className="flex space-x-1">
-                            <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                            <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                 {t('commons.home')} /
                             </p>
                             <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
@@ -48,7 +44,7 @@ function CreateOidcClientConfirmation() {
                                 <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-sm px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
-                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4">
+                                <button onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4">
                                 {t('commons.home')}
                                 </button>
                             </div>
