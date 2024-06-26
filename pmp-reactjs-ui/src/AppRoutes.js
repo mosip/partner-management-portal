@@ -14,6 +14,7 @@ import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClient
 import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
 import EditOidcClientConfirmation from './pages/authenticationServices/EditOidcClientConfirmation.js';
 import ApiKeysList from './pages/authenticationServices/ApiKeysList.js';
+import GenerateApiKey from './pages/authenticationServices/GenerateApiKey.js';
 function AppRoutes() {
 
   const router = createHashRouter([
@@ -76,6 +77,10 @@ function AppRoutes() {
         {
           path: 'authenticationServices/apiKeysList',
           element: <GuardedRoute><MainLayout><ApiKeysList/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'authenticationServices/generateApiKey',
+          element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
         }
       ],
     },

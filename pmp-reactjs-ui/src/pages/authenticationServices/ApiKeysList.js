@@ -100,6 +100,10 @@ function ApiKeysList () {
         navigate('/partnermanagement')
     };
 
+    const generateApiKey = () => {
+        navigate('/partnermanagement/authenticationServices/generateApiKey')
+    };
+
     function bgOfStatus(status) {
         if (status === "ACTIVE") {
             return ("bg-[#D1FADF] text-[#155E3E]")
@@ -269,7 +273,7 @@ function ApiKeysList () {
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activeApiKey &&
-                                            (<button type="button"
+                                            (<button onClick={() => generateApiKey()} type="button"
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                 {t('apiKeysList.generateApiKey')}
                                             </button>)

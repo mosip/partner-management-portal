@@ -285,6 +285,12 @@
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view.",
         "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
     },
+    "generateApiKey": {
+        "generateApiKey": "Generate API Key",
+        "selectedPolicyName": "Select Policy Name",
+        "name": "Name",
+        "enterNameForApiKey": "Enter a name for API key"
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
