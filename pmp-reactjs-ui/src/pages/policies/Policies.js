@@ -153,20 +153,14 @@ function Policies() {
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
-    if (header === "createDate") {
-        toggleSortAscOrder(header, true, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-    } else {
-        toggleSortAscOrder(header, false, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-    }
+    const isDateCol = (header === "createDate") ? true : false;
+    toggleSortAscOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
 }
 
-const sortDescOrder = (header) => {
-    if (header === "createDate") {
-        toggleSortDescOrder(header, true, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-    } else {
-        toggleSortDescOrder(header, false, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-    }
-}
+  const sortDescOrder = (header) => {
+    const isDateCol = (header === "createDate") ? true : false;
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+  }
 
   //This part is related to Filter
   const onFilterChange = (fieldName, selectedFilter) => {

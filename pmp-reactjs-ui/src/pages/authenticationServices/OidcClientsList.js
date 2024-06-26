@@ -194,19 +194,13 @@ function OidcClientsList() {
     }
 
     const sortAscOrder = (header) => {
-        if (header === "crDtimes") {
-            toggleSortAscOrder(header, true, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        } else {
-            toggleSortAscOrder(header, false, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        }
+        const isDateCol = (header === "crDtimes") ? true : false;
+        toggleSortAscOrder(header, isDateCol, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        if (header === "crDtimes") {
-            toggleSortDescOrder(header, true, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        } else {
-            toggleSortDescOrder(header, false, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        }
+        const isDateCol = (header === "crDtimes") ? true : false;
+        toggleSortDescOrder(header, isDateCol, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
     }
 
     //This part related to Pagination Logic

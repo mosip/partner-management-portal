@@ -134,19 +134,13 @@ function ApiKeysList () {
     }
 
     const sortAscOrder = (header) => {
-        if (header === "crDtimes") {
-            toggleSortAscOrder(header, true, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        } else {
-            toggleSortAscOrder(header, false, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        }
+        const isDateCol = (header === "crDtimes") ? true : false;
+        toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        if (header === "crDtimes") {
-            toggleSortDescOrder(header, true, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        } else {
-            toggleSortDescOrder(header, false, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
-        }
+        const isDateCol = (header === "crDtimes") ? true : false;
+        toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
     }
 
     //This part related to Pagination Logic
