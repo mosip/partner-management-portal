@@ -293,7 +293,9 @@
         "name": "Name",
         "enterNameForApiKey": "Enter a name for API key",
         "generateApiKeySuccessHeader":"Request Submitted Successfully",
-        "apiKeySuccessMsg": "Your API key generation request has been sent to admin for approval."
+        "apiKeySuccessMsg": "Your API key generation request has been sent to admin for approval.",
+        "errorInGenerateApiKey": "While generating API Key, we have encountered with an error.",
+        "nameTooLong": "Name should not allow more than 36 characters."
     },
     "consentPopup": {
         "title": "Terms and Conditions",

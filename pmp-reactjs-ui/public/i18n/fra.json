@@ -292,7 +292,9 @@
         "name": "nom",
         "enterNameForApiKey": "Entrez un nom pour la clé API",
         "generateApiKeySuccessHeader":"Demande soumise avec succès",
-        "apiKeySuccessMsg": "Votre demande de génération de clé API a été envoyée à l'administrateur pour approbation."
+        "apiKeySuccessMsg": "Votre demande de génération de clé API a été envoyée à l'administrateur pour approbation.",
+        "errorInGenerateApiKey": "Lors de la génération de la clé API, nous avons rencontré une erreur.",
+        "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
     },
     "consentPopup": {
         "title": "Termes et conditions",

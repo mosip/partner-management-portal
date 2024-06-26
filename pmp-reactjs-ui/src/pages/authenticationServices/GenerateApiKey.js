@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import backArrow from '../../svg/back_arrow.svg';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, moveToOidcClientsList, isLangRTL, moveToApiKeysList } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, moveToOidcClientsList, isLangRTL, moveToApiKeysList, moveToHome, createRequest } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
+import BlockerPrompt from "../common/BlockerPrompt";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
@@ -20,20 +21,53 @@ function GenerateApiKey() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerId, setPartnerId] = useState("");
-    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
     const [nameLabel, setNameLabel] = useState('');
     const [comments, setComments] = useState("");
     const [validationError, setValidationError] = useState("");
+    const [nameValidationError, setNameValidationError] = useState("");
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const textareaRef = useRef(null);
 
     const navigate = useNavigate();
 
-    const moveToHome = () => {
-        navigate('/partnermanagement')
-    };
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+          if (isSubmitClicked) {
+            setIsSubmitClicked(false);
+            return false;
+          }
+    
+          return (
+            (partnerId !== "" || nameLabel !== "" || policyName !== "" ||
+              comments !== "") && currentLocation.pathname !== nextLocation.pathname
+          );
+        }
+    );
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () => {
+            return partnerId !== "" ||
+                comments !== "" || 
+                nameLabel !== "" ||
+                policyName !== "";
+        };
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload()) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [partnerId, comments, nameLabel, policyName]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -53,10 +87,17 @@ function GenerateApiKey() {
 
     const onChangePolicyName = (fieldName, selectedValue) => {
         setPolicyName(selectedValue);
-        setPolicyId("");
     };
 
     const onChangeNameLabel = (value) => {
+        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
+        if (value.length > 36) {
+            setNameValidationError(t('generateApiKey.nameTooLong'))
+        } else if (!regexPattern.test(value)) {
+            setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
+        } else {
+            setNameValidationError("");
+        }
         setNameLabel(value)
     }
 
@@ -167,16 +208,45 @@ function GenerateApiKey() {
         setComments("");
         setPoliciesDropdownData([]);
         setValidationError("");
+        setNameValidationError("");
     };
 
     const isFormValid = () => {
-        return partnerId && policyName && comments && !validationError;
+        return partnerId && policyName && nameLabel && comments && !validationError && !nameValidationError;
     };
 
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
-        navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
+        setDataLoaded(false);
+        let request = createRequest({
+            policyName: policyName,
+            label: nameLabel
+        });
+        try {
+            const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
+                    console.log(`Response data: ${resData.length}`);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('generateApiKey.errorInGenerateApiKey'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
     }
 
     return (
@@ -200,7 +270,7 @@ function GenerateApiKey() {
                                 <div className="flex-col">
                                     <h1 className="font-semibold text-lg max-[450px]:text-md text-dark-blue">{t('generateApiKey.generateApiKey')}</h1>
                                     <div className="flex space-x-1 max-[450px]:flex-col">
-                                        <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                        <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                             {t('commons.home')} /
                                         </p>
                                         <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
@@ -273,6 +343,7 @@ function GenerateApiKey() {
                                                     <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />
+                                                    {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
                                                 </div>
                                             </div>
                                         </div>
@@ -302,6 +373,7 @@ function GenerateApiKey() {
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div>
     )
 }
