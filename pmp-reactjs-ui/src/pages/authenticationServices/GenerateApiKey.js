@@ -176,6 +176,7 @@ function GenerateApiKey() {
     const clickOnSubmit = async () => {
         setErrorCode("");
         setErrorMsg("");
+        navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
     }
 
     return (

@@ -36,7 +36,7 @@ function RequestPolicyConfirmation() {
                 </div>
                 <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                     <div className="flex-col justify-center">
-                        <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-56" : "ml-56"} h-40`} />
+                        <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-56" : "ml-52"} h-40`} />
                         <div className="text-center">
                             <h1 className="font-bold text-black text-lg">
                                 {t('requestPolicy.policySuccessHeader')}

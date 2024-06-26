@@ -290,7 +290,9 @@
         "generateApiKey": "Generate API Key",
         "selectedPolicyName": "Select Policy Name",
         "name": "Name",
-        "enterNameForApiKey": "Enter a name for API key"
+        "enterNameForApiKey": "Enter a name for API key",
+        "requestSubmittedSuccessfully":"Request Submitted Successfully",
+        "apiKeySuccessMsg": "Your API key generation request has been sent to admin for approval."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
