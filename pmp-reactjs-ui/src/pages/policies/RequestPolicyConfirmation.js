@@ -14,14 +14,14 @@ function RequestPolicyConfirmation() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     return (
-        <div className="ml-32 mr-5 mt-5 w-[100%] h-[100%] font-inter">
+        <div className={`mt-5 w-[100%]  ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex-col">
-                <div className="flex items-start space-x-3">
-                    <img src={backArrow} onClick={() => moveToPolicies(navigate)} alt="" className="mt-[1%] cursor-pointer" />
+                <div className={`flex items-start space-x-3`}>
+                    <img src={backArrow} onClick={() => moveToPolicies(navigate)} alt="" className={`cursor-pointer max-[450px]:h-3 ${isLoginLanguageRTL ? "ml-2" :""} mt-[1%] max-[450px]:mt-[3%]`} />
                     <div className="flex-col">
-                        <h1 className="font-semibold text-xl text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
-                        <div className="flex space-x-1">
-                            <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                        <h1 className="font-semibold text-xl text-dark-blue max-[450px]:text-sm">{t('requestPolicy.requestPolicy')}</h1>
+                        <div className="flex space-x-1  max-[350px]:flex-col">
+                            <p onClick={() => moveToHome()} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                 {t('commons.home')} /
                             </p>
                             <p onClick={() => moveToPolicies(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
@@ -31,20 +31,20 @@ function RequestPolicyConfirmation() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-                    <div className="flex-col justify-center">
-                        <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-56" : "ml-56"} h-40`} />
+                    <div className="flex-col justify-center items-center">
                         <div className="text-center">
-                            <h1 className="font-bold text-black text-lg">
+                            <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-28 max-[450px]:mr-20" : "ml-36 max-[450px]:ml-20"} h-40`} />
+                            <h1 className="font-bold text-black text-lg max-[450px]:text-sm">
                                 {t('requestPolicy.policySuccessHeader')}
                             </h1>
-                            <p className="text-[#666666] text-sm font-semibold">
+                            <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                                 {t('requestPolicy.policySuccessMsg')}
                             </p>
-                            <div className="flex space-x-3 mt-12 justify-center">
-                                <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4">
+                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 ${isLoginLanguageRTL ? "justify-center" :"justify-center"}`}>
+                                <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                     {t('commons.goBack')}
                                 </button>
-                                <button onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4">
+                                <button onClick={() => moveToHome()} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
                                 {t('commons.home')}
                                 </button>
                             </div>

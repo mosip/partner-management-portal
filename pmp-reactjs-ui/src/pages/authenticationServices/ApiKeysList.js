@@ -189,7 +189,8 @@ function ApiKeysList () {
                                 </div>
                             </div>
                             {apiKeysList.length > 0 ?
-                                <button onClick={() => generateApiKey()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button type="button" onClick={() => generateApiKey()}
+                                className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('apiKeysList.generateApiKey')}
                                 </button>
                                 : null
