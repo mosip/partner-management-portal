@@ -290,7 +290,9 @@
         "generateApiKey": "إنشاء مفتاح API",
         "selectedPolicyName": "حدد اسم السياسة",
         "name": "اسم",
-        "enterNameForApiKey": "أدخل اسمًا لمفتاح API"
+        "enterNameForApiKey": "أدخل اسمًا لمفتاح API",
+        "generateApiKeySuccessHeader":"تم تقديم الطلب بنجاح",
+        "apiKeySuccessMsg": "تم إرسال طلب إنشاء مفتاح API الخاص بك إلى المشرف للموافقة عليه"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
