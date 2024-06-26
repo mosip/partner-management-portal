@@ -7,7 +7,7 @@ import { isLangRTL, moveToPolicies, moveToHome } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import successIcon from '../../svg/success_message_icon.svg';
 
-function RequestPolicyConfirmation() {
+function GenerateApiKeyConfirmation() {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -56,4 +56,4 @@ function RequestPolicyConfirmation() {
     )
 }
 
-export default RequestPolicyConfirmation;
+export default GenerateApiKeyConfirmation;
