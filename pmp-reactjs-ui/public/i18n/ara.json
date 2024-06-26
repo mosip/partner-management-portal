@@ -4,7 +4,8 @@
         "search": "يبحث",
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
-        "logout": "تسجيل خروج"
+        "logout": "تسجيل خروج",
+        "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
