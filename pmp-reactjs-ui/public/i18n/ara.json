@@ -292,7 +292,9 @@
         "name": "اسم",
         "enterNameForApiKey": "أدخل اسمًا لمفتاح API",
         "generateApiKeySuccessHeader":"تم تقديم الطلب بنجاح",
-        "apiKeySuccessMsg": "تم إرسال طلب إنشاء مفتاح API الخاص بك إلى المشرف للموافقة عليه"
+        "apiKeySuccessMsg": "تم إرسال طلب إنشاء مفتاح API الخاص بك إلى المشرف للموافقة عليه",
+        "errorInGenerateApiKey": "أثناء إنشاء مفتاح API، واجهنا خطأ.",
+        "nameTooLong": "يجب ألا يسمح الاسم بأكثر من 36 حرفًا."
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
