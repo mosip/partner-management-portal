@@ -319,12 +319,12 @@ function ApiKeysList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-4">{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
+                                                                <td className="px-2">{client.partnerId}</td>
+                                                                <td className="pr-2">{client.policyGroupName}</td>
+                                                                <td className="px-4">{client.policyName}</td>
+                                                                <td className="px-2">{client.apiKeyLabel}</td>
+                                                                <td className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
@@ -348,10 +348,6 @@ function ApiKeysList() {
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
-                                                                                </p>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p className={`px-5 py-2 text-[#BEBEBE]`}>
-                                                                                    {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <p className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
