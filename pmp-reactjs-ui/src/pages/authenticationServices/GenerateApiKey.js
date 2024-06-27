@@ -25,7 +25,6 @@ function GenerateApiKey() {
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
     const [nameLabel, setNameLabel] = useState('');
-    const [comments, setComments] = useState("");
     const [validationError, setValidationError] = useState("");
     const [nameValidationError, setNameValidationError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -41,16 +40,14 @@ function GenerateApiKey() {
           }
     
           return (
-            (partnerId !== "" || nameLabel !== "" || policyName !== "" ||
-              comments !== "") && currentLocation.pathname !== nextLocation.pathname
+            (partnerId !== "" || nameLabel !== "" || policyName !== "") && currentLocation.pathname !== nextLocation.pathname
           );
         }
     );
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
-            return partnerId !== "" ||
-                comments !== "" || 
+            return partnerId !== "" || 
                 nameLabel !== "" ||
                 policyName !== "";
         };
@@ -67,7 +64,7 @@ function GenerateApiKey() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, comments, nameLabel, policyName]);
+    }, [partnerId, nameLabel, policyName]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -176,43 +173,19 @@ function GenerateApiKey() {
         selectionBox: "!top-10"
     }
 
-    const validateComments = (comments) => {
-        let error = "";
-        const maxLength = 500;
-        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.]*$/;
-
-        if (comments.length > maxLength) {
-            error = t('requestPolicy.commentTooLong');
-        } else if (!regexPattern.test(comments)) {
-            error = t('requestPolicy.specialCharNotAllowed');
-        }
-        setValidationError(error);
-        return error === "";
-    };
-
-    const handleCommentChange = (e) => {
-        const { value } = e.target;
-
-        if (validateComments(value)) {
-            setValidationError("");
-        }
-        setComments(value);
-    };
-
     const clearForm = () => {
         setPartnerId("");
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
         setNameLabel("");
-        setComments("");
         setPoliciesDropdownData([]);
         setValidationError("");
         setNameValidationError("");
     };
 
     const isFormValid = () => {
-        return partnerId && policyName && nameLabel && comments && !validationError && !nameValidationError;
+        return partnerId && policyName && nameLabel && !validationError && !nameValidationError;
     };
 
     const clickOnSubmit = async () => {
@@ -345,17 +318,6 @@ function GenerateApiKey() {
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />
                                                     {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex my-[1%]">
-                                            <div className="flex flex-col w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                    {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
-                                                </label>
-                                                <textarea ref={textareaRef} value={comments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
-                                                </textarea>
-                                                {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
                                             </div>
                                         </div>
                                     </div>
