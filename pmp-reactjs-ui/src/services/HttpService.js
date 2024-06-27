@@ -5,12 +5,10 @@ import { setUserProfile, getUserProfile } from './UserProfileService.js';
 
 export const HttpService = axios.create({
   withCredentials: true,
-  baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL,
-  count: 0, //custom
-  retries: 2
+  baseURL: process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL
 })
 
-export const setupResponseInterceptor = () => {
+export const setupResponseInterceptor = (navigate) => {
   
   HttpService.interceptors.response.use((response) => { // block to handle success case
     const originalRequestUrl = response.config.url;
@@ -34,6 +32,7 @@ export const setupResponseInterceptor = () => {
         setUserProfile(profile);
         console.log(profile);
       }
+      //Example: navigate('/partnermanagement/policies');
     }
     //in case user has a new started session on any page other than dashboard 
     //and he is not a registered user, then we want to forecfully redirect him to dashboard 
@@ -48,14 +47,10 @@ export const setupResponseInterceptor = () => {
     return response;
   },
     (error) => { // block to handle error case
-      const { count, retries } = error.config // extract count and retries
-      const originalRequestUrl = error.config.url;
-      if (error.response && error.response.status === 401
-        && originalRequestUrl.split('/').includes('validateToken')
-        && count < retries) { 
+      if (error.response && (error.response.status === 401
+        || error.response.status === 403)) { 
         // Code inside this block will refresh the auth token  
         console.log(error);
-        error.config.count += 1 // update count
         let redirectUrl = process.env.NODE_ENV !== 'production'? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL; 
         redirectUrl = redirectUrl + getLoginRedirectUrl(window.location.href);
         console.log(redirectUrl);
