@@ -342,10 +342,6 @@ function ApiKeysList() {
                                                                         {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p className={`px-5 py-2 text-[#BEBEBE]`}>
-                                                                                    {t('oidcClientsList.edit')}
-                                                                                </p>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <p className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
