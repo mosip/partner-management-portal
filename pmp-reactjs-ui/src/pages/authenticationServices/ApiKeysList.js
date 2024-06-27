@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, 
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome } from '../../utils/AppUtils';
+import {
+    isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome
+} from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -16,7 +18,7 @@ import ApiClientsFilter from './ApiClientsFilter';
 import ApiKeyIdPopup from './ApiKeyIdPopup';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
 
-function ApiKeysList () {
+function ApiKeysList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -99,6 +101,18 @@ function ApiKeysList () {
 
     const generateApiKey = () => {
         navigate('/partnermanagement/authenticationServices/generateApiKey')
+    }; 
+
+    const showViewApiKeyClientDetails = (selectedApiKeyClientdata) => {
+        if (selectedApiKeyClientdata.status === "ACTIVE") {
+            localStorage.setItem('selectedApiKeyClientdata', JSON.stringify(selectedApiKeyClientdata));
+            navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+        }
+    };
+
+    const onClickView = (selectedApiKeyClientdata) => {
+        localStorage.setItem('selectedApiKeyClientdata', JSON.stringify(selectedApiKeyClientdata));
+        navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
     };
 
     function bgOfStatus(status) {
@@ -305,12 +319,12 @@ function ApiKeysList () {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td className="px-2">{client.partnerId}</td>
-                                                                <td className="pr-2">{client.policyGroupName}</td>
-                                                                <td className="px-4">{client.policyName}</td>
-                                                                <td className="px-2">{client.apiKeyLabel}</td>
-                                                                <td className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
-                                                                <td className="px-12">
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-4">{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
@@ -332,7 +346,7 @@ function ApiKeysList () {
                                                                         <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
-                                                                                <p className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
+                                                                                <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
@@ -379,7 +393,7 @@ function ApiKeysList () {
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
                                             {isItemsPerPageOpen && (
-                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}

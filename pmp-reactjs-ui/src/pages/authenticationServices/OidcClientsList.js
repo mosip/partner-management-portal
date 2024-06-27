@@ -375,7 +375,7 @@ function OidcClientsList() {
                                                                             transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                     </svg>
                                                                     {showPopup && (
-                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId} />
+                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} idType={t('oidcClientsList.oidcClientId')}/>
                                                                     )}
                                                                 </td>
 

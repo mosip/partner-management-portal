@@ -4,7 +4,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
 
-function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
+function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId, id, idType }) {
     const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -25,19 +25,28 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[16%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[378px] w-[35%] mx-auto rounded-lg shadow-lg md:h-[280px] h-[40%]`}>
+            <div className={`bg-white md:w-[378px] w-[35%] mx-auto rounded-lg shadow-lg md:h-[290px] h-[40%]`}>
                 <header className={`flex justify-between p-[5%]`}>
                     <div className={`flex-col`}>
                         <h1 className={`font-bold text-base text-[#333333]`}>{policyName}</h1>
-                        <p className={`text-xs font-bold text-[#717171]`}># {partnerId}</p>
+                        <p className={`text-xs font-bold text-[#717171] text-left`}># {partnerId}</p>
                     </div>
                     <img src={close_icon} alt="" className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
                 </header>
-                <hr className={`py-[4%]`} />
+                <hr className={`py-[3.5%]`} />
+
+                {idType === "API Key ID" &&
+                    <div className={`bg-[#FFF7E5] w-[93%] border-1 border-[#EDDCAF] rounded-md px-3 py-2 mx-3 mb-2`}>
+                        <p className={`text-[#8B6105] font-medium text-xs text-left`}>
+                            {t('viewApiKeyDetails.copyApiKeyMsg')}
+                        </p>
+                    </div>
+                }
+
                 <div className={` flex-col text-center justify-center items-center`}>
-                    <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t('oidcClientsList.oidcClientId')}</h1>
-                    <p className={`font-bold text-sm text-black break-words px-6`}>{oidcClientId}</p>
-                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 mt-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-[31%]"} cursor-pointer`}>
+                    <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{idType}</h1>
+                    <p className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
+                    <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-20" : "ml-[31%]"} cursor-pointer`}>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             width="13" height="15" viewBox="0 0 13.808 16.481">
                             <path id="content_copy_FILL0_wght300_GRAD0_opsz24"

@@ -264,7 +264,13 @@
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
         "back": "Back"
-
+    },
+    "viewApiKeyDetails": {
+        "viewApiKeyDetails": "View API Key Details",
+        "apiKeyNameGoeshere": "API Key Name Goes Here",
+        "viewApiKeyId": "View API Key ID",
+        "label": "Label",
+        "copyApiKeyMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view."
     },
     "editOidcClient": {
         "editOidcClient": "Edit OIDC Client",
