@@ -1,12 +1,18 @@
-import { HttpService } from "../services/HttpService";
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
+import { setupResponseInterceptor } from '../services/HttpService.js';
+import { HttpService } from "../services/HttpService";
+import { getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 
 const GuardedRoute = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setupResponseInterceptor(navigate);
+  }, [navigate]);
 
   useEffect(() => {
     async function fetchData() {
