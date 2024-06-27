@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
@@ -8,6 +9,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
     const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const navigate = useNavigate();
 
     const copyId = () => {
         navigator.clipboard.writeText(apiKeyId).then(() => {
@@ -20,7 +22,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
     const dismiss = () => {
         policyName = '';
         partnerId = '';
-        closePopUp(false);
+        navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
     }
 
     return (

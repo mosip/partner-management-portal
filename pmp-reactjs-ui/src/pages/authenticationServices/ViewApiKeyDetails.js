@@ -148,7 +148,7 @@ function ViewApiKeyDetails() {
                                 {t("viewOidcClientDetails.name")}
                             </p>
                             <p className="font-[600] text-vulcan text-sm">
-                                {apiKeyDetails.partnerId}
+                                {apiKeyDetails.apiKeyLabel}
                             </p>
                         </div>
                     </div>
