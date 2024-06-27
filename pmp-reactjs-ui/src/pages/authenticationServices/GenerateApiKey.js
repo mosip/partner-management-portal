@@ -10,6 +10,7 @@ import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, m
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
+import ApiKeyIdPopup from "./ApiKeyIdPopup";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
@@ -18,6 +19,7 @@ function GenerateApiKey() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerData, setPartnerData] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerId, setPartnerId] = useState("");
@@ -25,6 +27,7 @@ function GenerateApiKey() {
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
     const [nameLabel, setNameLabel] = useState('');
+    const [apiKeyId, setApiKeyId] = useState('');
     const [validationError, setValidationError] = useState("");
     const [nameValidationError, setNameValidationError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -34,20 +37,19 @@ function GenerateApiKey() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-          if (isSubmitClicked) {
-            setIsSubmitClicked(false);
-            return false;
-          }
-    
-          return (
-            (partnerId !== "" || nameLabel !== "" || policyName !== "") && currentLocation.pathname !== nextLocation.pathname
-          );
+            if (isSubmitClicked) {
+                setIsSubmitClicked(false);
+                return false;
+            }
+            return (
+                (partnerId !== "" || nameLabel !== "" || policyName !== "") && currentLocation.pathname !== nextLocation.pathname
+            );
         }
     );
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
-            return partnerId !== "" || 
+            return partnerId !== "" ||
                 nameLabel !== "" ||
                 policyName !== "";
         };
@@ -192,29 +194,29 @@ function GenerateApiKey() {
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
-        setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
             label: nameLabel
         });
         try {
             const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
-              headers: {
-                'Content-Type': 'application/json'
-              }
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
                     console.log(`Response data: ${resData.length}`);
+                    setApiKeyId(responseData.response.apiKey);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
                 setErrorMsg(t('generateApiKey.errorInGenerateApiKey'));
             }
+            setShowPopup(true);
             setDataLoaded(true);
         } catch (err) {
             setErrorMsg(err);
@@ -239,14 +241,14 @@ function GenerateApiKey() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
                             <div className="flex items-start gap-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToOidcClientsList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToApiKeysList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
                                     <h1 className="font-semibold text-lg max-[450px]:text-md text-dark-blue">{t('generateApiKey.generateApiKey')}</h1>
                                     <div className="flex space-x-1 max-[450px]:flex-col">
                                         <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                             {t('commons.home')} /
                                         </p>
-                                        <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                                        <p onClick={() => moveToApiKeysList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
                                             {t('authenticationServices.authenticationServices')}
                                         </p>
                                     </div>
@@ -329,6 +331,9 @@ function GenerateApiKey() {
                                 <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
                                     <button onClick={() => moveToApiKeysList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                    {showPopup && (
+                                        <ApiKeyIdPopup closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} apiKeyId={apiKeyId}/>
+                                    )}
                                 </div>
                             </div>
                         </div>
