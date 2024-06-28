@@ -8,7 +8,8 @@ import { isLangRTL } from '../../utils/AppUtils.js';
 
 function RuntimeError() {
     const { state } = useLocation();
-    const { messageType, errorCode, errorText } = state || { messageType: 'somethingWentWrong', errorCode: null, errorText: null };
+    const { messageType, errorCode } = state || { messageType: 'somethingWentWrong', errorCode: null };
+    const { errorText } = state || { errorText: null };
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -24,36 +25,37 @@ function RuntimeError() {
         },
         timeout: {
             title: t('commons.timeout'),
-            description: t('commons.somethingWentWrongDesc')
+            description: t('commons.timeoutDesc')
         }
     };
 
     const message = messages[messageType] || messages.somethingWentWrong;
 
     return (
-        <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-2" : "ml-20 mr-2"} overflow-x-scroll relative flex items-center`}>
-            <div className="flex flex-col items-center justify-center bg-white w-2/6 min-h-fit min-w-fit mx-auto rounded-xl shadow-lg p-4">
+        <div className={`w-full bg-white my-6 ${isLoginLanguageRTL ? "mr-24 ml-5" : "ml-24 mr-5"} overflow-x-scroll relative flex items-center justify-center`}>
+            <div className="flex flex-col items-center justify-center p-4 ">
                 <img src={somethingWentWrongIcon} alt="" className="max-w-32 min-w-24" />
-                {errorCode && errorText && (
-                    <div className="flex items-center justify-center">
-                        <p className="text-xl font-semibold">{errorText}</p>
-                        <p className="text-xl font-semibold mx-1">{errorCode}</p>
+                {(errorCode || errorText) && (
+                    <div className="flex items-center justify-center text-base">
+                        {errorCode && <p className="font-semibold mx-1">{errorCode}</p>}
+                        {errorText && <p className="font-semibold">{errorText}</p>}
                     </div>
                 )}
-                <p className="text-base font-semibold">{message.title}</p>
-                <p className="text-sm text-vulcan font-semibold mt-1">{message.description}</p>
-                <div className="p-1 flex flex-wrap justify-center relative items-center mt-1">
-                    <button
-                        className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
-                        onClick={() => moveToHome(navigate)}
-                    >
-                        {t('commons.goBack')}
-                    </button>
+                <p className="text-xl font-semibold">{message.title}</p>
+                <p className="text-base text-vulcan font-semibold">{message.description}</p>
+                <div className="p-1 flex flex-wrap justify-center relative items-center my-1">
                     <button
                         className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
                         onClick={logout}
                     >
                         {t('commons.logout')}
+                    </button>
+                    <button
+                        className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md text-white text-sm font-semibold
+                               bg-tory-blue cursor-pointer"
+                        onClick={() => moveToHome(navigate)}
+                    >
+                        {t('commons.goBack')}
                     </button>
                 </div>
             </div>

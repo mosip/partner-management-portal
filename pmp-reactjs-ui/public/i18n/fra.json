@@ -7,10 +7,11 @@
         "logout": "Se déconnecter",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
-        "somethingWentWrongDesc": "Veuillez réessayer plus tard",
+        "somethingWentWrongDesc": "Nos experts travaillent dur pour que tout fonctionne à nouveau",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
-        "timeout": "Le serveur a mis trop de temps à répondre"
+        "timeout": "La demande a expiré",
+        "timeoutDesc": "Le serveur a mis trop de temps à répondre, veuillez réessayer plus tard"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",

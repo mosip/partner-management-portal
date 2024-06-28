@@ -7,10 +7,11 @@
         "logout": "Logout",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "somethingWentWrong": "Something went wrong!",
-        "somethingWentWrongDesc": "Please try again later",
+        "somethingWentWrongDesc": "Our experts are working hard to make things working again",
         "noAccess": "You do not have privilege to access this page",
         "noAccessDesc": "Please contact your administrator",
-        "timeout": "Server took too long to respond"
+        "timeout": "Request timed out",
+        "timeoutDesc": "Server took too long to respond, please try again later"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
