@@ -7,7 +7,7 @@
         "logout": "Se déconnecter",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
-        "somethingWentWrongDesc": "Nos experts travaillent dur pour que tout fonctionne à nouveau",
+        "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
         "timeout": "La demande a expiré",

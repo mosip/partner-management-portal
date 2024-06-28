@@ -71,17 +71,23 @@ export const setupResponseInterceptor = (navigate) => {
 }
 
 export const changeHttpServiceTimeout = async () => {
-  const configData = await getAppConfig();
-  let axiosTimeout;
-  const AXIOS_TIMEOUT = 'axiosTimeout';
-  if (configData && configData[AXIOS_TIMEOUT] !== undefined) {
-    // Convert minutes to milliseconds
-    axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
-  } else {
-    axiosTimeout = 3 * 60 * 1000;
-    console.error("axios timeout config properties not found, setting to default values");
+  try {
+    const configData = await getAppConfig();
+    let axiosTimeout;
+    const AXIOS_TIMEOUT = 'axiosTimeout';
+    
+    if (configData && configData[AXIOS_TIMEOUT] !== undefined) {
+      // Convert minutes to milliseconds
+      axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
+    } else {
+      axiosTimeout = 3 * 60 * 1000;
+      console.error("axios timeout config properties not found, setting to default values");
+    }
+    
+    HttpService.defaults.timeout = axiosTimeout;
+  } catch (error) {
+    console.error("An error occurred while setting axios timeout:", error);
   }
-  HttpService.defaults.timeout = axiosTimeout;
 };
 
 changeHttpServiceTimeout();

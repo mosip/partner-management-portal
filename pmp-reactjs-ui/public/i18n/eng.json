@@ -7,7 +7,7 @@
         "logout": "Logout",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "somethingWentWrong": "Something went wrong!",
-        "somethingWentWrongDesc": "Our experts are working hard to make things working again",
+        "somethingWentWrongDesc": "Please try again later",
         "noAccess": "You do not have privilege to access this page",
         "noAccessDesc": "Please contact your administrator",
         "timeout": "Request timed out",

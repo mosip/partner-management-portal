@@ -7,7 +7,7 @@
         "logout": "تسجيل خروج",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "somethingWentWrong": "هناك خطأ ما!",
-        "somethingWentWrongDesc": "يعمل خبراؤنا بجد لجعل الأمور تعمل مرة أخرى",
+        "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
         "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",
         "noAccessDesc": "يرجى الاتصال بالمسؤول الخاص بك",
         "timeout": "الطلب منتهي المدة",
