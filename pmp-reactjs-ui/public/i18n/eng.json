@@ -258,7 +258,7 @@
         "policyName":"Policy Name",
         "policyGroupDescription":"Policy Group Description",
         "policyNameDescription":"Policy Name Description",
-        "name":"Name",
+        "clientName":"Client Name",
         "publicKey":"Public Key",
         "logoUri": "Logo URI",
         "redirectUri": "Redirect URI",
