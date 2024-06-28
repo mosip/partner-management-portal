@@ -5,7 +5,12 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك"
+        "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
+        "somethingWentWrong": "هناك خطأ ما!",
+        "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
+        "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",
+        "noAccessDesc": "Veuillez contacter votre administrateur",
+        "timeout": "استغرق الخادم وقتًا طويلاً للرد"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
