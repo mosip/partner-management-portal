@@ -70,6 +70,7 @@ function GenerateApiKey() {
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
+        setShowPopup(false)
     };
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
@@ -234,6 +235,7 @@ function GenerateApiKey() {
                     {errorMsg && (
                         <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
                             <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
+                                {console.log(errorCode, errorMsg)}
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
@@ -331,7 +333,7 @@ function GenerateApiKey() {
                                 <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
                                     <button onClick={() => moveToApiKeysList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
-                                    {showPopup && (
+                                    {(showPopup && !errorMsg) && (
                                         <ApiKeyIdPopup closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} apiKeyId={apiKeyId}/>
                                     )}
                                 </div>

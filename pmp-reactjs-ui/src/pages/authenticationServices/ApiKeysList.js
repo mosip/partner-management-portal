@@ -15,7 +15,6 @@ import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
 import ApiClientsFilter from './ApiClientsFilter';
-import ApiKeyIdPopup from './ApiKeyIdPopup';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
 
 function ApiKeysList() {
@@ -36,11 +35,9 @@ function ApiKeysList() {
     const [isDescending, setIsDescending] = useState(true);
     const [apiKeysList, setApiKeysList] = useState([]);
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
-    const [showPopup, setShowPopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const itemsPerPageOptions = [8, 16, 24, 32];
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
-    const [currentClient, setCurrentClient] = useState(null);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
     const defaultFilterQuery = {
         partnerId: "",
@@ -168,13 +165,6 @@ function ApiKeysList() {
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
     };
-    const showApiKeyIdPopUp = (client) => {
-        if (client.status.toLowerCase() === "active") {
-            console.log(client);
-            setCurrentClient(client);
-            setShowPopup(true);
-        }
-    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -288,7 +278,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "action" && 'pl-12'} `}>
+                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && (isLoginLanguageRTL?"pr-12":"pl-12")} ${header.id === "action" && (isLoginLanguageRTL?"pr-12":"pl-12")} `}>
                                                                 <div className="flex gap-x-1 items-center">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
