@@ -5,7 +5,12 @@
         "goBack": "Go Back",
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
-        "sessionIdleLogout": "Due to inactivity, you will be logged out"
+        "sessionIdleLogout": "Due to inactivity, you will be logged out",
+        "somethingWentWrong": "Something went wrong!",
+        "somethingWentWrongDesc": "Please try again later",
+        "noAccess": "You do not have privilege to access this page",
+        "noAccessDesc": "Please contact your administrator",
+        "timeout": "Server took too long to respond"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

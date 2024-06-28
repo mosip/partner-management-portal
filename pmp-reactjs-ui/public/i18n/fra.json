@@ -5,7 +5,12 @@
         "goBack": "Retourner",
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
-        "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté"
+        "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
+        "somethingWentWrong": "Quelque chose s'est mal passé !",
+        "somethingWentWrongDesc": "Veuillez réessayer plus tard",
+        "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
+        "noAccessDesc": "Veuillez contacter votre administrateur",
+        "timeout": "Le serveur a mis trop de temps à répondre"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
