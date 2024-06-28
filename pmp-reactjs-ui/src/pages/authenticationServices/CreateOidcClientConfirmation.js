@@ -14,7 +14,7 @@ function CreateOidcClientConfirmation() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     return (
-        <div className="ml-32 mr-5 mt-5 w-[100%] h-[100%] font-inter">
+        <div className={`mt-5 w-[100%]  ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex-col">
                 <div className="flex items-start space-x-3">
                     <img src={backArrow} onClick={() => moveToOidcClientsList(navigate)} alt="" className="mt-[1%] cursor-pointer" />
@@ -32,7 +32,7 @@ function CreateOidcClientConfirmation() {
                 </div>
                 <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                     <div className="flex-col justify-center">
-                        <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-56" : "ml-[90px]"} h-40`} />
+                        <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? "mr-[24%] max-[450px]:mr-20" : "ml-[24%] max-[450px]:ml-20"} h-40`} />
                         <div className="text-center">
                             <h1 className="font-bold text-black text-lg">
                                 {t('createOidcClient.requestSuccessHeader')}
@@ -40,7 +40,7 @@ function CreateOidcClientConfirmation() {
                             <p className="text-[#666666] text-sm font-semibold">
                                 {t('createOidcClient.requestSuccessMsg')}
                             </p>
-                            <div className="flex space-x-3 mt-12 justify-center">
+                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 ${isLoginLanguageRTL ? "justify-center" :"justify-center"}`}>
                                 <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-sm px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
