@@ -185,7 +185,7 @@ function ViewOidcClientDetails() {
                         <div className="space-y-6">
                             <div className="my-4">
                                 <p className="font-[600] text-suva-gray text-xs">
-                                    {t("viewOidcClientDetails.name")}
+                                    {t("viewOidcClientDetails.clientName")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.oidcClientName}

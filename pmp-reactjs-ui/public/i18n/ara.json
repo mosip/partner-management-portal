@@ -253,7 +253,7 @@
         "policyName": "اسم السياسة",
         "policyGroupDescription": "وصف مجموعة السياسات",
         "policyNameDescription": "وصف اسم السياسة",
-        "name": "اسم",
+        "clientName":"اسم العميل",
         "publicKey": "المفتاح العمومي",
         "logoUri": "عنوان URL للشعار",
         "redirectUri": "إعادة توجيه URI",

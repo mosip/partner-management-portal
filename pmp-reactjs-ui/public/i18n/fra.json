@@ -253,7 +253,7 @@
         "policyName": "Nom de la politique",
         "policyGroupDescription": "Description du groupe de stratégies",
         "policyNameDescription": "Nom de la stratégie Description",
-        "name": "Nom",
+        "clientName":"Nom du client",
         "publicKey": "Clé publique",
         "logoUri": "URI du logo",
         "redirectUri": "URI de redirection",
