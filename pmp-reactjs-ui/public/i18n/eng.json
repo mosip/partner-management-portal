@@ -267,7 +267,6 @@
     },
     "viewApiKeyDetails": {
         "viewApiKeyDetails": "View API Key Details",
-        "apiKeyNameGoeshere": "API Key Name Goes Here",
         "viewApiKeyId": "View API Key ID",
         "label": "Label",
         "copyApiKeyMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view."
@@ -299,7 +298,7 @@
         "name": "Name",
         "enterNameForApiKey": "Enter a name for API key",
         "generateApiKeySuccessHeader":"Request Submitted Successfully",
-        "apiKeySuccessMsg": "Your API key generation request has been sent to admin for approval.",
+        "apiKeySuccessMsg": "API Key details has been submitted successfully.",
         "errorInGenerateApiKey": "While generating API Key, we have encountered with an error.",
         "nameTooLong": "Name should not allow more than 36 characters."
     },
@@ -394,6 +393,7 @@
         "PMS_PMS_022": "Given Partner api key is not active.",
         "PMS_PMP_018": "Policy expired.",
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
+        "PMS_PRT_110": "Given label already exists.Provide unique label.",
         "PMS_AUT_002": "Device provider id not found from the partners list",
         "PMS_AUT_003": "Device Details already exists",
         "PMS_AUT_004": "Duplicate request received",

@@ -17,6 +17,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
         } else {
             setErrorMsg(errorMessage);
         }
+        console.log(errorCode, errorMessage)
     }, [t, errorCode, errorMessage]);
 
     return (
