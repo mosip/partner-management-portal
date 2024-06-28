@@ -47,10 +47,10 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+            <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
             {t(fieldNameKey)}{containsAsterisk && <span className="text-crimson-red">*</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className= {`ml-1 cursor-pointer`} 
+                    <img src={infoIcon} alt="" className= {`ml-1 cursor-pointer h-[13px] w-[13px]`} 
                         onMouseEnter={() => setShowTooltip(true)}
                         onMouseLeave={() => setShowTooltip(false)}>
                     </img>

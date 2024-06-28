@@ -300,9 +300,9 @@ function EditOidcClient() {
                                     <div className="flex flex-col">
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                             <div className="flex flex-col w-[48%]">
-                                                <label className={`flex text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.partnerId')}
+                                                <label className={`flex text-dark-blue items-center text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.partnerId')}
                                                     <span className="text-crimson-red">*</span>
-                                                    <img src={info} alt="" className= {`ml-1 cursor-pointer`} 
+                                                    <img src={info} alt="" className= {`ml-1 cursor-pointer h-[13px] w-[13px]`} 
                                                         onMouseEnter={() => setShowPartnerIdTooltip(true)}
                                                         onMouseLeave={() => setShowPartnerIdTooltip(false)}>
                                                     </img>
@@ -343,9 +343,9 @@ function EditOidcClient() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <label className={`flex text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.policyName')}
+                                                <label className={`flex text-dark-blue items-center text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.policyName')}
                                                     <span className="text-crimson-red">*</span>
-                                                    <img src={info} alt="" className= {`ml-1 cursor-pointer`} 
+                                                    <img src={info} alt="" className= {`ml-1 cursor-pointer h-[13px] w-[13px]`} 
                                                         onMouseEnter={() => setShowPolicyNameToolTip(true)}
                                                         onMouseLeave={() => setShowPolicyNameToolTip(false)}>
                                                     </img>
@@ -377,7 +377,7 @@ function EditOidcClient() {
                                             <div className="flex flex-col w-full">
                                                 <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
                                                 {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
-                                                <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} 
+                                                <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer h-[13px] w-[13px]`} 
                                                     onMouseEnter={() => setShowPublicKeyToolTip(true)}
                                                     onMouseLeave={() => setShowPublicKeyToolTip(false)} />
                                                 </label>

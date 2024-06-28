@@ -517,7 +517,7 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
                           {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
-                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer`} 
+                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer h-[13px] w-[13px]`} 
                             onMouseEnter={() => setShowPublicKeyToolTip(true)}
                             onMouseLeave={() => setShowPublicKeyToolTip(false)} />
                         </label>
