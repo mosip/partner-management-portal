@@ -70,7 +70,7 @@ function GenerateApiKey() {
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
-        setShowPopup(false)
+        setShowPopup(false);
     };
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
@@ -192,6 +192,7 @@ function GenerateApiKey() {
     };
 
     const clickOnSubmit = async () => {
+        setShowPopup(false);
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
