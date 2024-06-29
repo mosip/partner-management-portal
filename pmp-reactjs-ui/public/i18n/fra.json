@@ -10,7 +10,8 @@
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
-        "timeout": "Le serveur a mis trop de temps à répondre"
+        "timeout": "La demande a expiré",
+        "timeoutDesc": "Le serveur a mis trop de temps à répondre, veuillez réessayer plus tard"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",

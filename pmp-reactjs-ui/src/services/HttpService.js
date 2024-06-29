@@ -2,11 +2,11 @@ import axios from 'axios';
 import { getLoginRedirectUrl } from './LoginRedirectService.js';
 import { jwtDecode } from 'jwt-decode';
 import { setUserProfile, getUserProfile } from './UserProfileService.js';
+import { getAppConfig } from './ConfigService.js';
 
 export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL,
-  timeout: 120000
 })
 
 export const setupResponseInterceptor = (navigate) => {
@@ -50,7 +50,7 @@ export const setupResponseInterceptor = (navigate) => {
     (error) => { // block to handle error case
       if (error.code === 'ECONNABORTED') {
         // Handle timeout error
-        navigate('/partnermanagement/runtimeError', { state: { messageType: 'timeout', errorCode: '408', errorText: 'Request timed out' } });
+        navigate('/partnermanagement/runtimeError', { state: { messageType: 'timeout'} });
       } else if (error.response) {
         if (error.response.status === 401) {
           console.log(error);
@@ -70,4 +70,24 @@ export const setupResponseInterceptor = (navigate) => {
     });
 }
 
+export const changeHttpServiceTimeout = async () => {
+  try {
+    const configData = await getAppConfig();
+    let axiosTimeout;
+    const AXIOS_TIMEOUT = 'axiosTimeout';
+    
+    if (configData && configData[AXIOS_TIMEOUT] !== undefined) {
+      // Convert minutes to milliseconds
+      axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
+    } else {
+      axiosTimeout = 3 * 60 * 1000;
+      console.error("axios timeout config properties not found, setting to default values");
+    }
+    
+    HttpService.defaults.timeout = axiosTimeout;
+  } catch (error) {
+    console.error("An error occurred while setting axios timeout:", error);
+  }
+};
 
+changeHttpServiceTimeout();

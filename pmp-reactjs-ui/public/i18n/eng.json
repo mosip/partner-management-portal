@@ -10,7 +10,8 @@
         "somethingWentWrongDesc": "Please try again later",
         "noAccess": "You do not have privilege to access this page",
         "noAccessDesc": "Please contact your administrator",
-        "timeout": "Server took too long to respond"
+        "timeout": "Request timed out",
+        "timeoutDesc": "Server took too long to respond, please try again later"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

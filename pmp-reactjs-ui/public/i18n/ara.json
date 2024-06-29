@@ -9,8 +9,9 @@
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
         "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",
-        "noAccessDesc": "Veuillez contacter votre administrateur",
-        "timeout": "استغرق الخادم وقتًا طويلاً للرد"
+        "noAccessDesc": "يرجى الاتصال بالمسؤول الخاص بك",
+        "timeout": "الطلب منتهي المدة",
+        "timeoutDesc": "استغرق الخادم وقتا طويلا للرد، يرجى المحاولة مرة أخرى في وقت لاحق"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
