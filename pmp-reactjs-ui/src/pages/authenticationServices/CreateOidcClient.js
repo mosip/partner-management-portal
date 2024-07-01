@@ -450,7 +450,7 @@ function CreateOidcClient() {
             </div>
             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
               <div className="px-[2.5%] py-[2%]">
-                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red mx-1">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                 <form>
                   <div className="flex flex-col">
                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
@@ -468,7 +468,7 @@ function CreateOidcClient() {
                         </DropdownComponent>
                       </div>
                       <div className="flex flex-col w-[48%]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                         <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                         <span>{partnerType || t('requestPolicy.partnerType')}</span>
@@ -480,11 +480,11 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex flex-row justify-between space-x-4 my-2">
                       <div className="flex flex-col w-[48%]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 mx-1`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
                         <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                         <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
-                          <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                          <svg className={`w-3 h-2 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                           </svg>
                         </button>
@@ -506,7 +506,7 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex my-2">
                       <div className="flex flex-col w-[562px]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
@@ -516,14 +516,14 @@ function CreateOidcClient() {
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
                         <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
-                          {t('createOidcClient.publicKey')}<span className="text-crimson-red">*</span>
+                          {t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL?"mr-1":"ml-1"}`}>*</span>
                           <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer h-[13px] w-[13px]`} 
                             onMouseEnter={() => setShowPublicKeyToolTip(true)}
                             onMouseLeave={() => setShowPublicKeyToolTip(false)} />
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[10%]" :"ml-[120px]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" :"ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
@@ -536,7 +536,7 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
@@ -547,7 +547,7 @@ function CreateOidcClient() {
                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
                       <div className="flex flex-col w-[48%]">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
-                          {t('createOidcClient.redirectUrl')}<span className="text-crimson-red">*</span>
+                          {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                         </label>
                         {redirectUrls.map((url, index) => (
                           <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">

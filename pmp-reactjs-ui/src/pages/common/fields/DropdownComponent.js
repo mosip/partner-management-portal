@@ -43,16 +43,16 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1":"ml-1"}`}>
-            {t(fieldNameKey)}{containsAsterisk && <span className="text-crimson-red">*</span>}
+            {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className= {`ml-1 cursor-pointer h-[13px] w-[13px]`} 
+                    <img src={infoIcon} alt="" className= {`cursor-pointer h-[13px] w-[13px]`} 
                         onMouseEnter={() => setShowTooltip(true)}
                         onMouseLeave={() => setShowTooltip(false)}>
                     </img>
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[9.5%]":"ml-[115px]"} shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[8%]":"ml-[7.5%]"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}
