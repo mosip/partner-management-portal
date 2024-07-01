@@ -221,14 +221,14 @@ function ApiKeysList() {
                                     activeApiKey && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
-                                                <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
                                                 <h6>{t('apiKeysList.apiKeyLabel')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
                                                 <h6>{t('apiKeysList.apiKeyId')}</h6>
-                                                <h6 className="mr-5">{t('authenticationServices.action')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -251,7 +251,7 @@ function ApiKeysList() {
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
-                                        <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
+                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" :"pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
                                             {t('apiKeysList.listOfApiKeyRequests') + ' (' + filteredApiKeysList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
@@ -317,10 +317,10 @@ function ApiKeysList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-4">{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pl-2":"pr-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4 break-all break-words`}>{client.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9":"pl-9"}`}>{formatDate(client.crDtimes, 'dateTime')}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
