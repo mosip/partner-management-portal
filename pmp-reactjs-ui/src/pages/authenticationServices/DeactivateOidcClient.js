@@ -59,7 +59,7 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg md:h-[240px] h-[260px]`}>
+            <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg`}>
                 {!dataLoaded && (
                     <LoadingIcon styleSet={styles}></LoadingIcon>
                 )}
@@ -72,9 +72,9 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
                                 </div>
                             </div>
                         )}
-                        <div className={`p-[10%] flex-col text-center justify-center items-center`}>
+                        <div className={`p-[7%] flex-col text-center justify-center items-center`}>
                             <p className="text-[17px] font-semibold text-black break-words px-[6%]">
-                                {t('deactivateOidcClient.oidcClientName')} - '{clientData.oidcClientName}'?
+                                {t('deactivateOidcClient.oidcClientName')} - '{clientData.oidcClientName}' ?
                             </p>
                             <p className="text-sm text-[#666666] break-words py-[6%]">
                                 {t('deactivateOidcClient.description')}
