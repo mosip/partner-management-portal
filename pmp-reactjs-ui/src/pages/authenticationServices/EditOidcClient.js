@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome, isLangFra } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import info from '../../svg/info_icon.svg';
@@ -14,6 +14,7 @@ import DropdownComponent from "../common/fields/DropdownComponent";
 function EditOidcClient() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageFra = isLangFra(getUserProfile().langCode);
     const navigate = useNavigate();
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
@@ -400,7 +401,7 @@ function EditOidcClient() {
                                                 </label>
                                                 {showPublicKeyToolTip &&
                                                     (
-                                                        <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.2%]" : "ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                                                        <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%]" : "ml-[7.5%]"} ${isLoginLanguageFra ? "left-[11.5%]" : ""}  shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                                                             <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                                                         </div>
                                                     )}
