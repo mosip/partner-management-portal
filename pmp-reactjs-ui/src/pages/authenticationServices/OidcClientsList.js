@@ -262,14 +262,14 @@ function OidcClientsList() {
                                     activeOidcClient && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
-                                                <h6 className="ml-5">{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL?"mr-5":"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
                                                 <h6>{t('authenticationServices.oidcClientName')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
                                                 <h6>{t('authenticationServices.oidcClientId')}</h6>
-                                                <h6 className="mr-5">{t('authenticationServices.action')}</h6>
+                                                <h6 className={isLoginLanguageRTL?"ml-5":"mr-5"}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -292,7 +292,7 @@ function OidcClientsList() {
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
-                                        <div className="flex w-full pl-[2%] pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm" >
+                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" :"pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
                                             {t('oidcClientsList.listOfOidcClients') + ' (' + filteredOidcClientsList.length + ")"}
                                         </div>
                                         <div className="w-full flex justify-end relative ">
@@ -358,16 +358,16 @@ function OidcClientsList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pr-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={isLoginLanguageRTL ?"pl-2" :"pr-2"}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-4">{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="pl-9">{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 break-all break-words">{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" :"pl-9"}`}>{formatDate(client.crDtimes, 'dateTime')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
-                                                                <td className={`${isLoginLanguageRTL ? "pr-2" : "pl-2"}`}>
+                                                                <td className={`${isLoginLanguageRTL ? "pr-4" : "pl-4"}`}>
                                                                     <svg onClick={() => showCopyPopUp(client)}
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"
