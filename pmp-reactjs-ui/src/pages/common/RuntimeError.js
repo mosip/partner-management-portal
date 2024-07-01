@@ -3,30 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { logout, moveToHome } from '../../utils/AppUtils.js';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
-import { getUserProfile } from '../../services/UserProfileService.js';
 
 function RuntimeError() {
-    const { i18n, t } = useTranslation();
+    const { t } = useTranslation();
     const { state } = useLocation();
     const { messageType, errorCode } = state || { messageType: 'somethingWentWrong', errorCode: null };
     const { errorText } = state || { errorText: null };
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const userProfile = getUserProfile();
-        const langCode = userProfile && userProfile.langCode ? userProfile.langCode : 'eng';
-        if (langCode != null) {
-            if (langCode === "ara") {
-                document.body.dir = 'rtl';
-                i18n.changeLanguage(langCode);
-            }
-            else{
-                document.body.dir = 'ltr';
-                i18n.changeLanguage(langCode);
-            }
-            i18n.changeLanguage(langCode);
-        }
-    }, [i18n]);
 
     const messages = {
         somethingWentWrong: {
