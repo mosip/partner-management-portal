@@ -45,6 +45,12 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
         };
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    };
+
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
@@ -82,7 +88,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
                                     </svg>
                                 </span>
-                                <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
+                                <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
                                     className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
