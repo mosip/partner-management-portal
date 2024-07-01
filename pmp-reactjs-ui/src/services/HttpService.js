@@ -33,7 +33,6 @@ export const setupResponseInterceptor = (navigate) => {
         setUserProfile(profile);
         console.log(profile);
       }
-      //Example: navigate('/partnermanagement/policies');
     }
     //in case user has a new started session on any page other than dashboard 
     //and he is not a registered user, then we want to forecfully redirect him to dashboard 
@@ -41,7 +40,7 @@ export const setupResponseInterceptor = (navigate) => {
     if (originalRequestUrl.split('/').includes('verify')) {
       const emailResp = response.data.response;
       const reqUrl = window.location.href.split('/');
-      if (!emailResp.emailExists && !reqUrl.includes("dashboard")) {
+      if (emailResp && !emailResp.emailExists && !reqUrl.includes("dashboard")) {
         window.location.href = '/';
       }
     }
@@ -73,20 +72,14 @@ export const setupResponseInterceptor = (navigate) => {
 export const changeHttpServiceTimeout = async () => {
   try {
     const configData = await getAppConfig();
-    let axiosTimeout;
     const AXIOS_TIMEOUT = 'axiosTimeout';
-    
-    if (configData && configData[AXIOS_TIMEOUT] !== undefined) {
-      // Convert minutes to milliseconds
-      axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
-    } else {
-      axiosTimeout = 3 * 60 * 1000;
-      console.error("axios timeout config properties not found, setting to default values");
-    }
-    
+    // Convert minutes to milliseconds
+    const axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
     HttpService.defaults.timeout = axiosTimeout;
   } catch (error) {
-    console.error("An error occurred while setting axios timeout:", error);
+    console.error("An error occurred while setting axios timeout :", error);
+    // Set default timeout in case of error or invalid config
+    HttpService.defaults.timeout = 3 * 60 * 1000;
   }
 };
 

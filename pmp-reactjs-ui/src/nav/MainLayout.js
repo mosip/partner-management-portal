@@ -46,19 +46,14 @@ function MainLayout({ children }) {
     const getTimerValues = async () => {
         try {
             const configData = await getAppConfig();
-            
-            if (configData && configData[INACTIVITY_TIMER] !== undefined && configData[INACTIVITY_PROMPT_TIMER] !== undefined) {
-                // Convert minutes to milliseconds
-                inActivityTimer.current = Number(configData[INACTIVITY_TIMER]) * 60 * 1000;
-                inActivityPromptTimer.current = Number(configData[INACTIVITY_PROMPT_TIMER]) * 60 * 1000;
-            } else {
-                // Convert minutes to milliseconds
-                inActivityTimer.current = 25 * 60 * 1000;
-                inActivityPromptTimer.current = 5 * 60 * 1000;
-                console.error("User session idle timer config properties not found, setting to default values");
-            }
+            // Convert minutes to milliseconds
+            inActivityTimer.current = Number(configData[INACTIVITY_TIMER]) * 60 * 1000;
+            inActivityPromptTimer.current = Number(configData[INACTIVITY_PROMPT_TIMER]) * 60 * 1000;
         } catch (error) {
-            console.error("Error fetching app config:", error);
+            console.error("Error fetching or parsing app config for user session idle timers :", error);
+            // Set default values or handle the error as needed
+            inActivityTimer.current = 25 * 60 * 1000;
+            inActivityPromptTimer.current = 5 * 60 * 1000;
         }
     };
 
