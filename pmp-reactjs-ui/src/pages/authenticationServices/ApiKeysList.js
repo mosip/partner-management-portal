@@ -16,6 +16,7 @@ import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
 import ApiClientsFilter from './ApiClientsFilter';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
+import DeactivateApiKey from './DeactivateApiKey';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -39,6 +40,7 @@ function ApiKeysList() {
     const itemsPerPageOptions = [8, 16, 24, 32];
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const defaultFilterQuery = {
         partnerId: "",
         policyGroupName: ""
@@ -109,6 +111,12 @@ function ApiKeysList() {
     const onClickView = (selectedApiKeyClientdata) => {
         localStorage.setItem('selectedApiKeyClientdata', JSON.stringify(selectedApiKeyClientdata));
         navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+    };
+
+    const onClickDeactivate = (selectedApiKeyClientdata) => {
+        if (selectedApiKeyClientdata.status === "ACTIVE") {
+            setShowDeactivatePopup(true);
+        }
     };
 
     function bgOfStatus(status) {
@@ -328,9 +336,12 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
+                                                                                <p onClick={() => onClickDeactivate(client)} className={`px-5 py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#D8ADAD]'}`}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivateApiKey closePopUp={setShowDeactivatePopup} apiKeyData={client}></DeactivateApiKey>
+                                                                                )}
                                                                             </div>
                                                                         )}
                                                                     </div>

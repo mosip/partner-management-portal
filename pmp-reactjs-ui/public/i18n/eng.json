@@ -308,6 +308,10 @@
         "errorInGenerateApiKey": "While generating API Key, we have encountered with an error.",
         "nameTooLong": "Name should not allow more than 36 characters."
     },
+    "deactivateApiKey": {
+       "apiKeyName": "Do you want to Deactivate API Key",
+       "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
