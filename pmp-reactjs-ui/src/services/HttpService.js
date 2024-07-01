@@ -73,16 +73,11 @@ export const changeHttpServiceTimeout = async () => {
   try {
     const configData = await getAppConfig();
     const AXIOS_TIMEOUT = 'axiosTimeout';
-
-    if (configData && configData[AXIOS_TIMEOUT] !== undefined && !isNaN(Number(configData[AXIOS_TIMEOUT]))) {
-      // Convert minutes to milliseconds
-      const axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
-      HttpService.defaults.timeout = axiosTimeout;
-    } else {
-      throw new Error("Invalid axios timeout config properties");
-    }
+    // Convert minutes to milliseconds
+    const axiosTimeout = Number(configData[AXIOS_TIMEOUT]) * 60 * 1000;
+    HttpService.defaults.timeout = axiosTimeout;
   } catch (error) {
-    console.error("An error occurred while setting axios timeout:", error.message);
+    console.error("An error occurred while setting axios timeout :", error);
     // Set default timeout in case of error or invalid config
     HttpService.defaults.timeout = 3 * 60 * 1000;
   }
