@@ -332,7 +332,7 @@ function ApiKeysList() {
                                                                         <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
-                                                                                <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E]">
+                                                                                <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
