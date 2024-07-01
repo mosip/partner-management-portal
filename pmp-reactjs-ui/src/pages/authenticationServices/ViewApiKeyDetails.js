@@ -72,7 +72,7 @@ function ViewApiKeyDetails() {
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
                             <p className="font-bold text-sm text-dark-blue mb-2">
-                                {apiKeyDetails.apiKeyLabel ? apiKeyDetails.apiKeyLabel.toUpperCase() : apiKeyDetails.apiKeyLabel}
+                                {apiKeyDetails.apiKeyLabel}
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
