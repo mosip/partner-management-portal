@@ -50,7 +50,7 @@ function MainLayout({ children }) {
             inActivityTimer.current = Number(configData[INACTIVITY_TIMER]) * 60 * 1000;
             inActivityPromptTimer.current = Number(configData[INACTIVITY_PROMPT_TIMER]) * 60 * 1000;
         } catch (error) {
-            console.error("Error fetching or parsing app config for timers :", error);
+            console.error("Error fetching or parsing app config for user session idle timers :", error);
             // Set default values or handle the error as needed
             inActivityTimer.current = 25 * 60 * 1000;
             inActivityPromptTimer.current = 5 * 60 * 1000;
