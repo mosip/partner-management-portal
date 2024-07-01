@@ -97,7 +97,7 @@ function AppRoutes() {
         },
         {
           path: 'runtimeError',
-          element: <GuardedRoute><MainLayout><RuntimeError/></MainLayout></GuardedRoute>,
+          element: <RuntimeError/>,
         },
       ],
     },
