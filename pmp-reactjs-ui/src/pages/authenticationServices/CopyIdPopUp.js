@@ -28,10 +28,10 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
             <div className={`bg-white md:w-[378px] w-[35%] mx-auto rounded-lg shadow-lg md:h-[290px] h-[40%]`}>
                 <header className={`flex justify-between p-[5%]`}>
                     <div className={`flex-col`}>
-                        <h1 className={`font-bold text-base text-[#333333]`}>{policyName}</h1>
+                        <h1 className={`font-bold text-base text-[#333333] break-all`}>{policyName}</h1>
                         <p className={`text-xs font-bold text-[#717171] text-left`}># {partnerId}</p>
                     </div>
-                    <img src={close_icon} alt="" className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
+                    <img src={close_icon} alt="" onClick={() => dismiss()} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ?"pr-2 ":"pl-2"}`}/>
                 </header>
                 <hr className={`py-[3.5%]`} />
 
