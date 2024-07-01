@@ -142,6 +142,15 @@ export const isLangRTL = (langCode) => {
     }
 }
 
+export const isLangFra = (langCode) => {
+    if(langCode==='fra'){
+    return true;
+    }
+    else{
+        return false;
+    }
+}
+
 export const moveToHome = (navigate) => {
     navigate('/partnermanagement')
 };
