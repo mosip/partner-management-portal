@@ -117,7 +117,7 @@ function EditOidcClient() {
             setInvalidLogoUrl("");
         } else if (value.length > 2048) {
             setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value)) {
+        } else if (!urlPattern.test(value.trim())) {
             setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
         } else if (/^\s+$/.test(value)) {
             setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
@@ -144,7 +144,7 @@ function EditOidcClient() {
             setInvalidRedirectUrl("");
         } else if (value.length > 2048) {
             setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value)) {
+        } else if (!urlPattern.test(value.trim())) {
             setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
         } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
             setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
@@ -246,7 +246,7 @@ function EditOidcClient() {
             clientName: oidcClientDetails.oidcClientName.trim(),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: {
-                "eng": oidcClientDetails.oidcClientName
+                "eng": oidcClientDetails.oidcClientName.trim()
             }
         });
         console.log(request);

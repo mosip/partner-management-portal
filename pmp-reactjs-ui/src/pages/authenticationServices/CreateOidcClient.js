@@ -264,7 +264,7 @@ function CreateOidcClient() {
       setInvalidRedirectUrl("");
     } else if (value.length > 2048) {
       setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-    } else if (!urlPattern.test(value)) {
+    } else if (!urlPattern.test(value.trim())) {
       setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
     } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
       setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
@@ -346,7 +346,7 @@ function CreateOidcClient() {
     setErrorMsg("");
     setDataLoaded(false);
     let request = createRequest({
-      name: oidcClientName,
+      name: oidcClientName.trim(),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -355,7 +355,7 @@ function CreateOidcClient() {
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
-        "eng": oidcClientName
+        "eng": oidcClientName.trim()
       }
     });
     console.log(request);
