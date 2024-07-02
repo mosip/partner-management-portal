@@ -6,8 +6,10 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
-  moveToOidcClientsList, getGrantTypes, moveToHome } from '../../utils/AppUtils';
+import {
+  getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
+  moveToOidcClientsList, getGrantTypes, moveToHome
+} from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../common/LoadingIcon";
@@ -116,7 +118,7 @@ function CreateOidcClient() {
   const defaultGrantTypesList = useCallback((dataList) => {
     const list = [];
     dataList.forEach(item => {
-      if(item === grantTypes) {
+      if (item === grantTypes) {
         list.push(item);
       }
     })
@@ -127,12 +129,12 @@ function CreateOidcClient() {
     const config = localStorage.getItem('appConfig');
     if (config) {
       try {
-          const configData = JSON.parse(config);
-          const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
-          const configClientAuthMethods = configData.clientAuthMethods.split(',').map(item => item.trim());
-          setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
-          defaultGrantTypesList(configGrantTypes);
-          setClientAuthMethods(configClientAuthMethods);
+        const configData = JSON.parse(config);
+        const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
+        const configClientAuthMethods = configData.clientAuthMethods.split(',').map(item => item.trim());
+        setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
+        defaultGrantTypesList(configGrantTypes);
+        setClientAuthMethods(configClientAuthMethods);
       } catch (error) {
         console.log("Error in config: ", error)
       }
@@ -258,14 +260,16 @@ function CreateOidcClient() {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    if (value.trim() === "") {
+    if (value === "") {
       setInvalidRedirectUrl("");
     } else if (value.length > 2048) {
       setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-    } else if (!urlPattern.test(value)) {
+    } else if (!urlPattern.test(value.trim())) {
       setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
     } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
       setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+    } else if (/^\s+$/.test(value)) {
+      setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
     } else {
       setInvalidRedirectUrl("");
     }
@@ -289,7 +293,7 @@ function CreateOidcClient() {
   const validateUrls = (urls) => {
     const filteredUrls = urls.filter(url => url.trim() !== "");
     const hasDuplicate = filteredUrls.some((url, index) => urls.indexOf(url) !== index);
-  
+
     if (hasDuplicate) {
       setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
     } else {
@@ -318,14 +322,16 @@ function CreateOidcClient() {
   const handleLogoUrlChange = (value) => {
     setLogoUrl(value);
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
-    if (value.trim() === "") {
+    if (value === "") {
       setInvalidLogoUrl("");
     } else if (value.length > 2048) {
-        setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
-    } else if (!urlPattern.test(value)) {
-        setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+      setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
+    } else if (!urlPattern.test(value.trim())) {
+      setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+    } else if (/^\s+$/.test(value)) {
+      setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
     } else {
-        setInvalidLogoUrl("");
+      setInvalidLogoUrl("");
     }
   };
 
@@ -340,7 +346,7 @@ function CreateOidcClient() {
     setErrorMsg("");
     setDataLoaded(false);
     let request = createRequest({
-      name: oidcClientName,
+      name: oidcClientName.trim(),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -349,7 +355,7 @@ function CreateOidcClient() {
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
-        "eng": oidcClientName
+        "eng": oidcClientName.trim()
       }
     });
     console.log(request);
@@ -360,21 +366,21 @@ function CreateOidcClient() {
         }
       });
       if (response) {
-          const responseData = response.data;
-          if (responseData && responseData.response) {
-              const resData = responseData.response;
-              navigate('/partnermanagement/authenticationServices/createOidcClientConfirmation');
-              console.log(`Response data: ${resData.length}`);
-          } else {
-              handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          }
+        const responseData = response.data;
+        if (responseData && responseData.response) {
+          const resData = responseData.response;
+          navigate('/partnermanagement/authenticationServices/createOidcClientConfirmation');
+          console.log(`Response data: ${resData.length}`);
+        } else {
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+        }
       } else {
-          setErrorMsg(t('createOidcClient.errorInCreateOIDC'));
+        setErrorMsg(t('createOidcClient.errorInCreateOIDC'));
       }
       setDataLoaded(true);
     } catch (err) {
-        setErrorMsg(err);
-        console.log("Error fetching data: ", err);
+      setErrorMsg(err);
+      console.log("Error fetching data: ", err);
     }
   }
 
@@ -398,16 +404,16 @@ function CreateOidcClient() {
   };
 
   const redirectUrlsNotEmpty = () => {
-      const validUris = redirectUrls.filter(uri => uri !== '');
-      if (validUris.length > 0) {
-        return true;
-      } else {
-        return false;
-      }
+    const validUris = redirectUrls.filter(uri => uri !== '');
+    if (validUris.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes 
+    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes
       && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
   };
 
@@ -421,16 +427,16 @@ function CreateOidcClient() {
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
-          <LoadingIcon></LoadingIcon>
+        <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-              <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL? "left-0" : "right-2"}`}>
-                  <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
-                      <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                  </div>
+            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
+              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
+                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>
+            </div>
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
@@ -473,10 +479,10 @@ function CreateOidcClient() {
                         </DropdownComponent>
                       </div>
                       <div className="flex flex-col w-[48%]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                         <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
-                        <span>{partnerType || t('requestPolicy.partnerType')}</span>
+                          <span>{partnerType || t('requestPolicy.partnerType')}</span>
                           <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                           </svg>
@@ -488,14 +494,14 @@ function CreateOidcClient() {
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 mx-1`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
                         <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
-                        <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
+                          <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
                           <svg className={`w-3 h-2 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                           </svg>
                         </button>
                       </div>
                       <div className="flex flex-col w-[48%]">
-                      <DropdownWithSearchComponent
+                        <DropdownWithSearchComponent
                           fieldName='policyName'
                           dropdownDataList={policiesDropdownData}
                           onDropDownChangeEvent={onChangePolicyName}
@@ -506,12 +512,12 @@ function CreateOidcClient() {
                           styleSet={styles}
                           addInfoIcon={true}
                           disabled={!partnerId}
-                          infoKey={t('createOidcClient.policyNameToolTip')}/>
+                          infoKey={t('createOidcClient.policyNameToolTip')} />
                       </div>
                     </div>
                     <div className="flex my-2">
                       <div className="flex flex-col w-[562px]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red mx-1">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
@@ -520,15 +526,15 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
-                        <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+                        <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                           {t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span>
-                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" :"ml-2"} cursor-pointer h-[13px] w-[13px]`} 
+                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`}
                             onMouseEnter={() => setShowPublicKeyToolTip(true)}
                             onMouseLeave={() => setShowPublicKeyToolTip(false)} />
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" :"ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" : "ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
@@ -541,7 +547,7 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
@@ -551,7 +557,7 @@ function CreateOidcClient() {
 
                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
                       <div className="flex flex-col w-[48%]">
-                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
+                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                           {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                         </label>
                         {redirectUrls.map((url, index) => (
@@ -601,13 +607,13 @@ function CreateOidcClient() {
               <div className="flex flex-row px-[3%] py-[2%] justify-between">
                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                  <button onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                  <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ?"ml-2" :"mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                  <button onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                  <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                 </div>
               </div>
             </div>
           </div>
-        </>  
+        </>
       )}
       <BlockerPrompt blocker={blocker} />
     </div>

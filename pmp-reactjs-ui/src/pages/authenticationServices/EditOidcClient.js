@@ -113,12 +113,14 @@ function EditOidcClient() {
             logoUri: value
         }));
         const urlPattern = /^(http|https):\/\/[^ "]+$/;
-        if (value.trim() === "") {
+        if (value === "") {
             setInvalidLogoUrl("");
         } else if (value.length > 2048) {
             setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value)) {
+        } else if (!urlPattern.test(value.trim())) {
             setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
+        } else if (/^\s+$/.test(value)) {
+            setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
         } else {
             setInvalidLogoUrl("");
         }
@@ -138,14 +140,16 @@ function EditOidcClient() {
         const urlPattern = /^(http|https):\/\/[^ "]+$/;
         const newRedirectUrls = [...oidcClientDetails.redirectUris];
         newRedirectUrls[index] = value;
-        if (value.trim() === "") {
+        if (value === "") {
             setInvalidRedirectUrl("");
         } else if (value.length > 2048) {
             setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value)) {
+        } else if (!urlPattern.test(value.trim())) {
             setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
         } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
             setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
+        } else if (/^\s+$/.test(value)) {
+            setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
         } else {
             setInvalidRedirectUrl("");
         }
@@ -201,16 +205,16 @@ function EditOidcClient() {
     }
     const isRedirectUriNotEmpty = () => {
         const filteredOidcUris = oidcClientDetails.redirectUris.filter(uri => uri !== '');
-        if(filteredOidcUris.length === 0) {
+        if (filteredOidcUris.length === 0) {
             return false;
         }
         return true;
     }
 
     const isFormValid = () => {
-        return (checkIfRedirectUrisIsUpdated() || 
+        return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
-            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) || 
+            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
             (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName))
             && oidcClientDetails.oidcClientName !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
@@ -239,10 +243,10 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: oidcClientDetails.oidcClientName,
+            clientName: oidcClientDetails.oidcClientName.trim(),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: {
-                "eng": oidcClientDetails.oidcClientName
+                "eng": oidcClientDetails.oidcClientName.trim()
             }
         });
         console.log(request);
