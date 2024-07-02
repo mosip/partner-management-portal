@@ -186,23 +186,33 @@ function EditOidcClient() {
     };
 
     const checkIfRedirectUrisIsUpdated = () => {
-        const filteredOidcUris = oidcClientDetails.redirectUris.filter(uri => uri !== '');
-        const filteredSelectedUris = selectedClientDetails.redirectUris.filter(uri => uri !== '');
+        const oidcUris = oidcClientDetails.redirectUris.filter(uri => uri !== '');
+        const selectedUris = selectedClientDetails.redirectUris.filter(uri => uri !== '');
         // Check if the lengths of the filtered arrays are different
-        if (filteredOidcUris.length !== filteredSelectedUris.length) {
+        if (oidcUris.length !== selectedUris.length) {
             return true;
         }
-        for (let i = 0; i < filteredOidcUris.length; i++) {
-            if (filteredOidcUris[i] !== filteredSelectedUris[i]) {
+        for (let i = 0; i < oidcUris.length; i++) {
+            if (oidcUris[i] !== selectedUris[i]) {
                 return true;
             }
         }
         return false;
     }
+    const isRedirectUriNotEmpty = () => {
+        const filteredOidcUris = oidcClientDetails.redirectUris.filter(uri => uri !== '');
+        if(filteredOidcUris.length === 0) {
+            return false;
+        }
+        return true;
+    }
 
     const isFormValid = () => {
-        return (checkIfRedirectUrisIsUpdated() || (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
-            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) || (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName))
+        return (checkIfRedirectUrisIsUpdated() || 
+            (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) || 
+            (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName))
+            && oidcClientDetails.oidcClientName !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
     }
 
@@ -215,13 +225,18 @@ function EditOidcClient() {
         setOidcClientDetails(selectedClientDetails);
     }
 
+    const getRedirectUris = () => {
+        const uriList = oidcClientDetails.redirectUris.filter(uri => uri !== '');
+        return uriList;
+    }
+
     const clickOnSubmit = async () => {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
         const request = createRequest({
             logoUri: oidcClientDetails.logoUri,
-            redirectUris: oidcClientDetails.redirectUris,
+            redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
             clientName: oidcClientDetails.oidcClientName,
@@ -369,7 +384,7 @@ function EditOidcClient() {
                                         <div className="flex my-2">
                                             <div className="flex flex-col w-[562px]">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.name')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
+                                                <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                 />
                                                 {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
@@ -397,7 +412,7 @@ function EditOidcClient() {
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <input value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)}
+                                                <input value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)} placeholder={t('createOidcClient.logoUrlPlaceHolder')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar" />
                                                 {invalidLogoUrl && <span className="text-sm text-crimson-red font-medium">{invalidLogoUrl}</span>}
                                             </div>

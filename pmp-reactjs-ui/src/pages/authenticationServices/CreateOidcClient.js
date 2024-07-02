@@ -329,6 +329,11 @@ function CreateOidcClient() {
     }
   };
 
+  const getRedirectUris = () => {
+    const uriList = redirectUrls.filter(uri => uri !== '');
+    return uriList;
+  }
+
   const clickOnSubmit = async () => {
     setIsSubmitClicked(true);
     setErrorCode("");
@@ -340,7 +345,7 @@ function CreateOidcClient() {
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
       logoUri: logoUrl,
-      redirectUris: redirectUrls,
+      redirectUris: getRedirectUris(),
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
