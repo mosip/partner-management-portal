@@ -341,7 +341,7 @@
         "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
         "PMS_PRT_051": " Un partenaire est déjà enregistré avec le même identifiant",
-        "PMS_PRT_052": "La longueur maximale de PartnerId doit être",
+        "PMS_PRT_052": "La longueur maximale du PartnerId doit être 36",
         "PMS_ATH_053": "Une exception d'E/S s'est produite lors de la transmission de la demande de pagination",
         "PMS_ATH_054": "Utilisateur non trouvé",
         "PMS_ATH_500": "Une erreur de serveur s'est produite, veuillez vérifier les journaux",
