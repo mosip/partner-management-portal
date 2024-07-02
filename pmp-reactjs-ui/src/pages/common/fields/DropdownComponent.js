@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { handleMouseClickForDropdown, isLangFra } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
 import infoIcon from '../../../svg/info_icon.svg';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -10,8 +10,8 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
 
     const { t } = useTranslation();
+    const selectedLang = getUserProfile().langCode;
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const isLoginLanguageFra = isLangFra(getUserProfile().langCode);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -53,7 +53,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[8.3%]":"ml-[7.5%]"}  ${isLoginLanguageFra ? "left-[11.5%]" : ""} shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[8.3%]":"ml-[7.5%]"} ${selectedLang==='fra'?"left-[11.5%]":""} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}

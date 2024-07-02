@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangFra, isLangRTL } from '../../utils/AppUtils';
+import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest, 
@@ -252,7 +252,7 @@ function CreateOidcClient() {
 
   const navigate = useNavigate();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const isLoginLanguageFra = isLangFra(getUserProfile().langCode);
+  const selectedLang = getUserProfile().langCode;
 
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
@@ -529,7 +529,7 @@ function CreateOidcClient() {
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%]" :"ml-[7.5%]"} ${isLoginLanguageFra ? "left-[11.5%]" : ""} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%]" :"ml-[7.5%]"} ${selectedLang?"left-[11.5%]":""} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
