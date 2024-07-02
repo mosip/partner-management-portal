@@ -33,7 +33,7 @@ function RuntimeError() {
             <div className="flex flex-col items-center justify-center p-4 ">
                 <img src={somethingWentWrongIcon} alt="" className="max-w-60 min-w-52 my-2" />
                 {(errorCode || errorText) && (
-                    <div className="flex items-center justify-center text-base">
+                    <div className="flex items-center justify-center text-base mb-3">
                         {errorCode && <p className="font-semibold mx-1">{errorCode}</p>}
                         {errorText && <p className="font-semibold">{errorText}</p>}
                     </div>
