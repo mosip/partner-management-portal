@@ -14,6 +14,7 @@ import DropdownComponent from "../common/fields/DropdownComponent";
 function EditOidcClient() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const selectedLang = getUserProfile().langCode;
     const navigate = useNavigate();
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
@@ -400,7 +401,7 @@ function EditOidcClient() {
                                                 </label>
                                                 {showPublicKeyToolTip &&
                                                     (
-                                                        <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.2%]" : "ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                                                        <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%]" : "ml-[7.5%]"} ${selectedLang==='fra' ?"left-[11.5%]":""} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                                                             <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                                                         </div>
                                                     )}

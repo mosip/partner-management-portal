@@ -341,7 +341,7 @@
         "KER-PCM-008": "Partner Organization Name not Matched.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
         "PMS_PRT_051": " A Partner is already registered with the same Id",
-        "PMS_PRT_052": "PartnerId max length should be ",
+        "PMS_PRT_052": "PartnerId max length should be 36",
         "PMS_ATH_053": " IO Exception occured while passing paging request",
         "PMS_ATH_054": " User not found",
         "PMS_ATH_500": " Server error occurred,Please check the logs ",
