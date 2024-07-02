@@ -41,11 +41,10 @@ function DeactivateOidcClient({ closePopUp, clientData }) {
             });
             const responseData = response.data;
             if (responseData && responseData.response) {
-                setDataLoaded(true);
                 window.location.reload();
             } else {
-                setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                setDataLoaded(true);
             }
         } catch (err) {
             setDataLoaded(true);
