@@ -53,13 +53,34 @@ function PartnerCertificatesList() {
         }
     }
 
-    const getOriginalCertificate = () => {
-        setErrorMsg(t('partnerCertificatesList.errorMsgForOriginalCertificate'))
+    const getOriginalCertificate = async (partner) => {
+        const response = await getCertificate(partner.partnerId);
+        downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
     }
 
     const getMosipSignedCertificate = async (partner) => {
+        const response = await getCertificate(partner.partnerId);
+        downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+    }
+
+    const downloadCertificate = (certificateData, fileName) => {
+        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    }
+
+    const getCertificate = async (partnerId) => {
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partner.partnerId + '/certificate', process.env.NODE_ENV));
+            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/originalPartnerCertificate', process.env.NODE_ENV));
             if (response != null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
@@ -71,18 +92,7 @@ function PartnerCertificatesList() {
                 } else {
                     const resData = responseData.response;
                     console.log('Response data:', resData);
-                    const blob = new Blob([resData.certificateData], { type: 'application/x-x509-ca-cert' });
-                    const url = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = 'mosip_signed_certificate.cer';
-
-                    document.body.appendChild(link);
-                    link.click();
-
-                    // Cleanup
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(link);
+                    return resData;
                 }
 
             } else {
@@ -93,7 +103,7 @@ function PartnerCertificatesList() {
             console.error('Error fetching certificate:', err);
             setErrorMsg(err);
         }
-    };
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -196,7 +206,7 @@ function PartnerCertificatesList() {
 
                                                             {downloadBtnId === index && (
                                                                 <div ref={dropdownRef} className={`w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[11.5rem] ml-2" : "origin-bottom-left right-[11.5rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
-                                                                    <div onClick={() => getOriginalCertificate()} className="flex items-center border-b justify-between cursor-pointer">
+                                                                    <div onClick={() => getOriginalCertificate(partner)} className="flex items-center border-b justify-between cursor-pointer">
                                                                         <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('partnerCertificatesList.originalCertificate')}</button>
                                                                         <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
                                                                     </div>

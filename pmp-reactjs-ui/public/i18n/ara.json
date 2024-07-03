@@ -64,7 +64,7 @@
         "expiryDate": "تاريخ الانتهاء",
         "timeOfUpload": "وقت التحميل",
         "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
-        "errorWhileDownloadingCertificate": "يوجد خطأ ما في جلب شهادة mosip الموقعة. حاول مرة أخرى في وقت لاحق!",
+        "errorWhileDownloadingCertificate": "هناك خطأ ما في جلب شهادات الشريك الأصلية. حاول مرة أخرى في وقت لاحق!",
         "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!"
     },
     "uploadCertificate": {
