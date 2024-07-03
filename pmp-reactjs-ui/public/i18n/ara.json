@@ -76,8 +76,11 @@
         "expiryDate": "تاريخ الانتهاء",
         "timeOfUpload": "وقت التحميل",
         "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
-        "errorWhileDownloadingCertificate": "هناك خطأ ما في جلب شهادات الشريك الأصلية. حاول مرة أخرى في وقت لاحق!",
-        "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!"
+        "errorWhileDownloadingCertificate": "هناك خطأ ما في تنزيل الشهادة. حاول مرة أخرى في وقت لاحق!",
+        "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!",
+        "originalCertificateSuccessMsg": "تم تنزيل الشهادة الموقعة من CA التي تم تحميلها في الأصل بنجاح.",
+        "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
+        "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -480,10 +483,13 @@
         "PMS_CERTIFICATE_ERROR_003": "معرف الشريك فارغ أو فارغ.",
         "PMS_CERTIFICATE_ERROR_004": "نوع الشريك فارغ أو فارغ",
         "PMS_CERTIFICATE_ERROR_005": "حالة الموافقة فارغة أو فارغة",
+        "PMS_CERTIFICATE_ERROR_006": "غير قادر على فك تشفير بيانات الشهادة",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
         "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",
         "PMS_POLICY_ERROR_004": "لم يتم العثور على سياسة المطابقة.",
-        "PMS_POLICY_ERROR_005": "معرف مجموعة السياسات فارغ."
+        "PMS_POLICY_ERROR_005": "معرف مجموعة السياسات فارغ.",
+        "PMS_POLICY_ERROR_006": "حدث خطأ أثناء جلب قائمة عملاء OIDC.",
+        "PMS_POLICY_ERROR_007": "حدث خطأ أثناء جلب طلبات مفتاح API"
     }
 }

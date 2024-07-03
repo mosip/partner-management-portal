@@ -76,8 +76,11 @@
         "expiryDate": "Expiry Date",
         "timeOfUpload": "Time of Upload",
         "errorMsgForOriginalCertificate": "This feature is under development.",
-        "errorWhileDownloadingCertificate": "There is some error in fetching the original partner certificates. Try again later!",
-        "errorInCertificateList": "There is some error in fetching the certificates. Try again later!"
+        "errorWhileDownloadingCertificate": "There is some error in downloading the certificate. Try again later!",
+        "errorInCertificateList": "There is some error in fetching the certificates. Try again later!",
+        "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
+        "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
+        "certificateExpired": "Certificate has expired. Please upload a valid certificate"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -480,10 +483,13 @@
         "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty.",
         "PMS_CERTIFICATE_ERROR_004": "Partner Type is null or empty",
         "PMS_CERTIFICATE_ERROR_005": "Approval Status is null or empty",
+        "PMS_CERTIFICATE_ERROR_006": "Unable to decode the certificate data",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
         "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",
         "PMS_POLICY_ERROR_004": "Matching Policy not found.",
-        "PMS_POLICY_ERROR_005": "Policy Group Id is empty."
+        "PMS_POLICY_ERROR_005": "Policy Group Id is empty.",
+        "PMS_POLICY_ERROR_006": "Error while fetching OIDC clients list.",
+        "PMS_POLICY_ERROR_007": "Error while fetching API Key requests"
     }
 }
