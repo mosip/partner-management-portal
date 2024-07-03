@@ -76,8 +76,11 @@
         "expiryDate": "Expiry Date",
         "timeOfUpload": "Time of Upload",
         "errorMsgForOriginalCertificate": "This feature is under development.",
-        "errorWhileDownloadingCertificate": "There is some error in fetching the original partner certificates. Try again later!",
-        "errorInCertificateList": "There is some error in fetching the certificates. Try again later!"
+        "errorWhileDownloadingCertificate": "There is some error in downloading the certificate. Try again later!",
+        "errorInCertificateList": "There is some error in fetching the certificates. Try again later!",
+        "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
+        "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
+        "certificateExpired": "Certificate has expired. Please upload a valid certificate"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",

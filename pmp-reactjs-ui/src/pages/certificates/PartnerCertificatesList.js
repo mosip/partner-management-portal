@@ -5,6 +5,7 @@ import { HttpService } from "../../services/HttpService";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
+import SuccessMessage from "../common/SuccessMessage";
 import LoadingIcon from "../common/LoadingIcon";
 import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, moveToHome } from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
@@ -25,6 +26,7 @@ function PartnerCertificatesList() {
     const [certificatesData, setcertificatesData] = useState([]);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -55,12 +57,26 @@ function PartnerCertificatesList() {
 
     const getOriginalCertificate = async (partner) => {
         const response = await getCertificate(partner.partnerId);
-        downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+        if (response !== null) {
+            if (response.isCaSignedCertificateExpired) {
+                setErrorMsg("Certificate has expired. Please upload a valid certificate");
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+            }
+        }
     }
 
     const getMosipSignedCertificate = async (partner) => {
         const response = await getCertificate(partner.partnerId);
-        downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+        if (response !== null) {
+            if (response.isMosipSignedCertificateExpired) {
+                setErrorMsg("Certificate has expired. Please upload a valid certificate");
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+            }
+        }
     }
 
     const downloadCertificate = (certificateData, fileName) => {
@@ -79,9 +95,12 @@ function PartnerCertificatesList() {
     }
 
     const getCertificate = async (partnerId) => {
+        setErrorCode("");
+        setErrorMsg("");
+        setSuccessMsg("");
         try {
             const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/originalPartnerCertificate', process.env.NODE_ENV));
-            if (response != null) {
+            if (response !== null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;
@@ -89,16 +108,16 @@ function PartnerCertificatesList() {
                     setErrorCode(errorCode);
                     setErrorMsg(errorMessage);
                     console.error('Error:', errorMessage);
+                    return null;
                 } else {
                     const resData = responseData.response;
                     console.log('Response data:', resData);
                     return resData;
                 }
-
             } else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
             }
-
         } catch (err) {
             console.error('Error fetching certificate:', err);
             setErrorMsg(err);
@@ -138,6 +157,10 @@ function PartnerCertificatesList() {
         setErrorMsg("");
     };
 
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
+
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (
@@ -149,6 +172,13 @@ function PartnerCertificatesList() {
                         <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
                             <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                            </div>
+                        </div>
+                    )}
+                    {successMsg && (
+                        <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-0"}`}>
+                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl p-4">
+                                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
                             </div>
                         </div>
                     )}

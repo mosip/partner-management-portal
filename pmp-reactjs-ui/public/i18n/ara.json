@@ -76,8 +76,11 @@
         "expiryDate": "تاريخ الانتهاء",
         "timeOfUpload": "وقت التحميل",
         "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
-        "errorWhileDownloadingCertificate": "هناك خطأ ما في جلب شهادات الشريك الأصلية. حاول مرة أخرى في وقت لاحق!",
-        "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!"
+        "errorWhileDownloadingCertificate": "هناك خطأ ما في تنزيل الشهادة. حاول مرة أخرى في وقت لاحق!",
+        "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!",
+        "originalCertificateSuccessMsg": "تم تنزيل الشهادة الموقعة من CA التي تم تحميلها في الأصل بنجاح.",
+        "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
+        "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",

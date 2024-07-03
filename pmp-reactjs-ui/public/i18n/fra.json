@@ -76,8 +76,11 @@
         "expiryDate": "Date d'expiration",
         "timeOfUpload": "Heure de téléchargement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
-        "errorWhileDownloadingCertificate": "Une erreur s'est produite lors de la récupération des certificats partenaires d'origine. Réessayez plus tard!",
-        "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!"
+        "errorWhileDownloadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!",
+        "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!",
+        "originalCertificateSuccessMsg": "Le certificat signé par l'autorité de certification initialement téléchargé a été téléchargé avec succès.",
+        "mosipSignedCertificateSuccessMsg": "Certificat signé MOSIP téléchargé avec succès.",
+        "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
