@@ -29,8 +29,20 @@
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى"
     },
     "header": {
-        "partnerProfile": "الملف التعريفي للشريك",
+        "userProfile": "ملف تعريفي للمستخدم",
         "changePassword": "تغيير كلمة المرور"
+    },
+    "userProfile": {
+        "myProfile": "ملفي",
+        "profileInformation": "معلومات الملف الشخصي",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "organisationName": "اسم المنظمة",
+        "address": "عنوان",
+        "partnerType":"نوع الشريك",
+        "phoneNumber": "رقم التليفون",
+        "emailAddress": "عنوان البريد الإلكتروني",
+        "userName": "اسم المستخدم"
     },
     "footer": {
         "allRightsReserved": "كل الحقوق محفوظة.",

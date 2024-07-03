@@ -29,8 +29,20 @@
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
     },
     "header": {
-        "partnerProfile": "Profil du partenaire",
+        "userProfile": "Profil de l'utilisateur",
         "changePassword": "Changer le mot de passe"
+    },
+    "userProfile": {
+        "myProfile": "Mon profil",
+        "profileInformation": "Informations sur le profil",
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "organisationName": "Nom de l'organisme",
+        "address": "Adresse",
+        "partnerType":"Type de partenaire",
+        "phoneNumber": "Numéro de téléphone",
+        "emailAddress": "Adresse e-mail",
+        "userName": "Nom d'utilisateur"
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",

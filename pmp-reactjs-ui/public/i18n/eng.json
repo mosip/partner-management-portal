@@ -29,8 +29,20 @@
         "verifyEmailError": "Error during user's email verification. Try login again!"
     },
     "header": {
-        "partnerProfile": "Partner Profile",
+        "userProfile": "User Profile",
         "changePassword": "Change Password"
+    },
+    "userProfile": {
+        "myProfile": "My Profile",
+        "profileInformation": "Profile Information",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "organisationName": "Organisation Name",
+        "address": "Address",
+        "partnerType":"Partner Type",
+        "phoneNumber": "Phone Number",
+        "emailAddress": "Email Address",
+        "userName": "User Name"
     },
     "footer": {
         "allRightsReserved": "All rights reserved.",
