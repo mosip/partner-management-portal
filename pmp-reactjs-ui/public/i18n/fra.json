@@ -64,7 +64,7 @@
         "expiryDate": "Date d'expiration",
         "timeOfUpload": "Heure de téléchargement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
-        "errorWhileDownloadingCertificate": "Une erreur s'est produite lors de la récupération du certificat signé par mosip. Réessayez plus tard!",
+        "errorWhileDownloadingCertificate": "Une erreur s'est produite lors de la récupération des certificats partenaires d'origine. Réessayez plus tard!",
         "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!"
     },
     "uploadCertificate": {
