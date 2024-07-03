@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { isLangRTL } from '../utils/AppUtils.js';
 import { handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
@@ -10,6 +10,7 @@ import orgIcon from '../svg/org_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 
 function HeaderNav({ open, setOpen }) {
+    const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,6 +22,10 @@ function HeaderNav({ open, setOpen }) {
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const moveToMyProfile = () => {
+        navigate('/partnermanagement/userProfile')
     };
 
     return (
@@ -75,7 +80,9 @@ function HeaderNav({ open, setOpen }) {
                     </svg>
                     {isDropdownOpen && (
                         <div className={`absolute top-14 ${isLoginLanguageRTL ? "left-7 origin-top-left" : "right-7 origin-top-right"} z-10 w-40 h-33 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
-                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.partnerProfile')}</button>
+                            <button onClick={() => moveToMyProfile()} className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                {t('header.userProfile')}
+                            </button>
                             <div className="border-gray-100 border-t mx-2"></div>
                             <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
                             <div className="border-t border-gray-100 mx-2"></div>

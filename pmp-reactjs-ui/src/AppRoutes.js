@@ -18,6 +18,7 @@ import GenerateApiKey from './pages/authenticationServices/GenerateApiKey.js';
 import GenerateApiKeyConfirmation from './pages/authenticationServices/GenerateApiKeyConfirmation.js';
 import ViewApiKeyDetails from './pages/authenticationServices/ViewApiKeyDetails.js';
 import RuntimeError from './pages/common/RuntimeError.js';
+import UserProfile from './nav/UserProfile.js';
 
 
 function AppRoutes() {
@@ -33,15 +34,19 @@ function AppRoutes() {
         { path: '', loader: () => redirect('/partnermanagement/dashboard') },
         {
           path: 'dashboard',
-          element: <GuardedRoute><MainLayout><Dashboard /></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Dashboard/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'userProfile',
+          element: <GuardedRoute><MainLayout><UserProfile/></MainLayout></GuardedRoute>,
         },
         {
           path: 'partnerCertificate',
-          element: <GuardedRoute><MainLayout><PartnerCertificatesList /></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies',
-          element: <GuardedRoute><MainLayout><Policies /></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Policies/></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/viewPolicyDetails',
