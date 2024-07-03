@@ -59,7 +59,7 @@ function PartnerCertificatesList() {
         const response = await getCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
-                setErrorMsg("Certificate has expired. Please upload a valid certificate");
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
                 downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
@@ -71,7 +71,7 @@ function PartnerCertificatesList() {
         const response = await getCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isMosipSignedCertificateExpired) {
-                setErrorMsg("Certificate has expired. Please upload a valid certificate");
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
                 downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
