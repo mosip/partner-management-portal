@@ -26,6 +26,7 @@ function HeaderNav({ open, setOpen }) {
 
     const moveToMyProfile = () => {
         navigate('/partnermanagement/userProfile')
+        setIsDropdownOpen(false)
     };
 
     return (
@@ -84,8 +85,6 @@ function HeaderNav({ open, setOpen }) {
                                 {t('header.userProfile')}
                             </button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <button className={`block px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('header.changePassword')}</button>
-                            <div className="border-t border-gray-100 mx-2"></div>
                             <button className={`block px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} onClick={logout}>{t('commons.logout')}</button>
                         </div>
                     )}
