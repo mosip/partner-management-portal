@@ -52,7 +52,7 @@ function RuntimeError() {
                                bg-tory-blue cursor-pointer"
                         onClick={() => moveToHome(navigate)}
                     >
-                        {t('commons.goBack')}
+                        {t('commons.home')}
                     </button>
                 </div>
             </div>
