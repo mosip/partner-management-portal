@@ -4,11 +4,11 @@ export const formatDate = (dateString, format) => {
 
     switch (format) {
         case 'dateTime':
-            return date.toLocaleString();
+            return date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
         case 'date':
             return date.toLocaleDateString();
         case 'time':
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
         default:
             return '-';
     }
