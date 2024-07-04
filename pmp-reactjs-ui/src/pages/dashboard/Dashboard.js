@@ -20,7 +20,6 @@ function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [firstLoginFlow, setFirstLoginFlow] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -89,17 +88,15 @@ function Dashboard() {
           setErrorMsg(t('dashboard.verifyEmailError'));
         }
         setDataLoaded(true);
-        setFirstLoginFlow(true);
       } catch (err) {
         console.error('Error fetching data:', err);
         setErrorMsg(err);
         setDataLoaded(true);
-        setFirstLoginFlow(true);
       }
     };
     fetchData();
 
-  }, [firstLoginFlow, t]);
+  }, []);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/partnerCertificate')

@@ -24,7 +24,6 @@ function ApiKeysList() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [firstTimeLoad, setFirstTimeLoad] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [activeOidcClient, setActiveOicdClient] = useState(false);
     const [activeApiKey, setActiveApiKey] = useState(true);
@@ -59,7 +58,6 @@ function ApiKeysList() {
             try {
                 setDataLoaded(false);
                 const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApiKeysForAuthPartners', process.env.NODE_ENV));
-                setFirstTimeLoad(true);
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -81,7 +79,7 @@ function ApiKeysList() {
             }
         };
         fetchData();
-    }, [firstTimeLoad, t]);
+    }, []);
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },

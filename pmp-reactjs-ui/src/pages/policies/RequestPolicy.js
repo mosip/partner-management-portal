@@ -98,7 +98,7 @@ function RequestPolicy() {
             }
         };
         fetchData();
-    }, [partnerData.length, t]);
+    }, []);
 
     const createPartnerIdDropdownData = (fieldName, dataList) => {
         let dataArr = [];

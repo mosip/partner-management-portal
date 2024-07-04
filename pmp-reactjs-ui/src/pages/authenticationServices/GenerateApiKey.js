@@ -128,7 +128,7 @@ function GenerateApiKey() {
         };
 
         fetchData();
-    }, [t]);
+    }, []);
 
     const createPartnerIdDropdownData = (fieldName, dataList) => {
         let dataArr = [];

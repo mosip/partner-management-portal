@@ -62,7 +62,7 @@ function SelectPolicyPopup() {
             }
         };
         fetchData();
-    }, [t]);
+    }, []);
 
     const createPolicyGroupDropdownData = (dataList) => {
         let dataArr = [];

@@ -20,7 +20,6 @@ function Policies() {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const navigate = useNavigate();
-  const [firstTimeLoad, setFirstTimeLoad] = useState(false);
   const [filter, setFilter] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -99,7 +98,6 @@ function Policies() {
       try {
         setDataLoaded(false);
         const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllRequestedPolicies', process.env.NODE_ENV));
-        setFirstTimeLoad(true);
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
@@ -121,7 +119,7 @@ function Policies() {
       }
     };
     fetchData();
-  }, [firstTimeLoad, t]);
+  }, []);
 
   const showRequestPolicy = () => {
     navigate('/partnermanagement/policies/requestPolicy')
