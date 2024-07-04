@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService';
-import { isLangRTL, moveToHome } from '../utils/AppUtils';
+import { isLangRTL, moveToHome, getPartnerTypeDescription } from '../utils/AppUtils';
 import backArrow from '.././svg/back_arrow.svg';
 
 function UserProfile() {
@@ -10,7 +10,6 @@ function UserProfile() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const userData = getUserProfile();
-    console.log(userData);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
@@ -77,7 +76,7 @@ function UserProfile() {
                             {t("userProfile.partnerType")}
                         </p>
                         <p className="font-[600] text-vulcan text-sm">
-                        {t("partnerTypes.authPartner")}
+                        {getPartnerTypeDescription(userData.partnerType, t)}
                         </p>
                     </div>
                     <div className="w-[50%] max-[600px]:w-[100%] mb-3">
