@@ -149,7 +149,7 @@ function PartnerCertificatesList() {
             }
         };
         fetchData();
-    }, [t]);
+    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
