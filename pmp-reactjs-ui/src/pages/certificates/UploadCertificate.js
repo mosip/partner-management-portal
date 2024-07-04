@@ -28,14 +28,14 @@ function UploadCertificate({ closePopup, partnerData }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const clickOnCancel = () => {
-        closePopup(true, "cancel");
+        closePopup(true);
     };
     const clickOnSubmit = async () => {
         setSuccessMsg("");
         setErrorCode("");
         setErrorMsg("");
         if (uploadSuccess) {
-            closePopup(true, "close");
+            closePopup(true);
         } else {
             setDataLoaded(false);
             let request = {
@@ -90,6 +90,9 @@ function UploadCertificate({ closePopup, partnerData }) {
             }
             else if (partnerType === "FTM_Provider".toUpperCase()) {
                 return 'FTM';
+            }
+            else if (partnerType === "MISP_type".toUpperCase()) {
+                return 'MISP';
             }
             else {
                 return 'AUTH';

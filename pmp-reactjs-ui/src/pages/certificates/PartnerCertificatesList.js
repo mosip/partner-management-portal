@@ -39,12 +39,10 @@ function PartnerCertificatesList() {
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = (state, buttonName) => {
+    const closePopup = (state) => {
         if (state) {
             setShowPopup(false);
-            if (buttonName === "close") {
-                window.location.reload();
-            }
+            window.location.reload();
         }
     };
 

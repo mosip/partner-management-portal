@@ -24,6 +24,8 @@ function Dashboard() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [showPolicies, setShowPolicies] = useState(false);
+  const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
 
   const [showPopup, setShowPopup] = useState(false);
   const closePopup = (reload) => {
@@ -37,6 +39,9 @@ function Dashboard() {
     const fetchData = async () => {
       try {
         const userProfile = getUserProfile();
+        if (userProfile.partnerType === "AUTH_PARTNER") {
+          setShowAuthenticationServices(true);
+        }
         //1. verify that the logged in user's email is registered in PMS table or not
         // using the email id
         const verifyEmailRequest = createRequest({
@@ -51,6 +56,7 @@ function Dashboard() {
             if (
               resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
               console.log(`show policy group selection popup`);
+              setShowPolicies(true);
               //3. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
@@ -75,6 +81,10 @@ function Dashboard() {
             }
           }
           //if email exists then do nothing
+          if (
+            resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
+            setShowPolicies(true);
+          } 
         } else {
           setErrorMsg(t('dashboard.verifyEmailError'));
         }
@@ -119,11 +129,11 @@ function Dashboard() {
           )}
           <div className="mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700">
             <p >
-              {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}
+              {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
-            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+            {/* <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerTypeRequestIcon} alt="" className="w-8 h-8"></img>
               </div>
@@ -148,7 +158,7 @@ function Dashboard() {
                   {t('dashboard.organisationUsersDesc')}
                 </p>
               </div>
-            </div>
+            </div> */}
             <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
@@ -162,32 +172,36 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-            <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
-              <div className="flex justify-center mb-5">
-                <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+            {showPolicies && (
+              <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="flex justify-center mb-5">
+                  <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+                </div>
+                <div>
+                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                    {t('dashboard.policies')}
+                  </h5>
+                  <p className="mb-3 text-xs font-normal text-gray-400">
+                    {t('dashboard.policiesDesc')}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                  {t('dashboard.policies')}
-                </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
-                  {t('dashboard.policiesDesc')}
-                </p>
+            )}
+            {showAuthenticationServices && (
+              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="flex justify-center mb-5">
+                  <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
+                </div>
+                <div>
+                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                    {t('dashboard.authenticationServices')}
+                  </h5>
+                  <p className="mb-3 text-xs font-normal text-gray-400">
+                    {t('dashboard.authenticationServicesDesc')}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
-              <div className="flex justify-center mb-5">
-                <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
-              </div>
-              <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                  {t('dashboard.authenticationServices')}
-                </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
-                  {t('dashboard.authenticationServicesDesc')}
-                </p>
-              </div>
-            </div>
+            )}
           </div>
           {showPopup && (
             <SelectPolicyPopup closePopup={closePopup} />
