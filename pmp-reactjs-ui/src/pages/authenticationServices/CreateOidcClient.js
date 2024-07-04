@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL } from '../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import info from '../../svg/info_icon.svg';
 import {
@@ -45,6 +45,10 @@ function CreateOidcClient() {
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const publicKeyTooltipRef = useRef(null);
+  useEffect(() => {
+    handleMouseClickForDropdown(publicKeyTooltipRef, () => setShowPublicKeyToolTip(false));
+  }, [publicKeyTooltipRef]);
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
@@ -528,9 +532,7 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                           {t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span>
-                          <img src={info} alt="" className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`}
-                            onMouseEnter={() => setShowPublicKeyToolTip(true)}
-                            onMouseLeave={() => setShowPublicKeyToolTip(false)} />
+                          <img src={info} ref={publicKeyTooltipRef} alt="" onClick={()=> setShowPublicKeyToolTip(!showPublicKeyToolTip)} className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`}/>
                         </label>
                         {showPublicKeyToolTip &&
                           (

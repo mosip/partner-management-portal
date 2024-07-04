@@ -5,8 +5,8 @@ import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils'
 import { getUserProfile } from '../../../services/UserProfileService';
 import infoIcon from '../../../svg/info_icon.svg';
 
-function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey, 
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled}) {
+function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -16,6 +16,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     const [showTooltip, setShowTooltip] = useState(false);
     const [searchItem, setSearchItem] = useState("");
     const dropdownRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
@@ -25,9 +26,9 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     );
 
     useEffect(() => {
-        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-        return clickOutSideDropdown;
-    }, [dropdownRef]);
+        handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
+        handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
+    }, [dropdownRef, tooltipRef]);
 
     useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
@@ -53,17 +54,14 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>
-            {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
+            <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className= {`cursor-pointer h-[13px] w-[13px]`} 
-                        onMouseEnter={() => setShowTooltip(true)}
-                        onMouseLeave={() => setShowTooltip(false)}>
-                    </img>
+                    <img src={infoIcon} ref={tooltipRef} onClick={() => setShowTooltip(!showTooltip)} alt="" className={`cursor-pointer h-[13px] w-[13px]`}/>
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[7.5%]":"ml-[8.2%]"} shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[7.5%]" : "ml-[8.2%]"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}
@@ -72,8 +70,8 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span>{
                         selectedDropdownEntry ?
-                        dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
-                        : t(placeHolderKey)}
+                            dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
+                            : t(placeHolderKey)}
                     </span>
                     <svg className={`w-3 h-2 ml-3 transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
@@ -102,7 +100,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                         <div key={index} className="min-h-2">
                                             <button
                                                 className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto no-scrollbar
-                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}
+                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
                                                 {dropdownItem.fieldDescription && (

@@ -330,7 +330,7 @@ function Policies() {
                           <tbody>
                             {tableRows.map((partner, index) => {
                               return (
-                                <tr key={index} className={`border-t border-[#E5EBFA] relative cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
@@ -347,7 +347,7 @@ function Policies() {
                                       {
                                         viewPolicyId === index && (
                                           <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-[5%] p-2 z-20 flex items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
                                             <p className="cursor-pointer">
                                               {t('policies.view')}
                                             </p>

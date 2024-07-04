@@ -16,14 +16,15 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const dropdownRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     useEffect(() => {
-        const clickOutSideDropdown = handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-        return clickOutSideDropdown;
-    }, [dropdownRef]);
+        handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
+        handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
+    }, [dropdownRef, tooltipRef]);
 
     useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
@@ -45,10 +46,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1":"ml-1"}`}>
             {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} alt="" className= {`cursor-pointer h-[13px] w-[13px]`} 
-                        onMouseEnter={() => setShowTooltip(true)}
-                        onMouseLeave={() => setShowTooltip(false)}>
-                    </img>
+                    <img src={infoIcon} ref={tooltipRef} onClick={() => setShowTooltip(!showTooltip)} alt="" className= {`cursor-pointer h-[13px] w-[13px]`}/>
                 )}
             </label>
             {showTooltip && (
