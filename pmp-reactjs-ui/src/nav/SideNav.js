@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
 
-function SideNav({ open }) {
+function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeIcon, setActiveIcon] = useState("");
     let selectedPath = location.pathname;
     const { t } = useTranslation();
+    const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
+    const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
 
     useEffect(() => {
         //console.log(selectedPath);
@@ -29,6 +31,16 @@ function SideNav({ open }) {
         }
     }, [selectedPath]);
 
+    useEffect(() => {
+        console.log("called");
+        if (policyRequiredPartnerTypes.indexOf(partnerType) > -1) {
+            setEnablePoliciesMenu(true);
+        }
+        if (partnerType === "AUTH_PARTNER") {
+            setEnableAuthenticationServicesMenu(true);
+        }
+    }, [policyRequiredPartnerTypes, partnerType]);
+
     function showHome() {
         navigate('/partnermanagement/dashboard');
         setActiveIcon("home");
@@ -37,14 +49,15 @@ function SideNav({ open }) {
         navigate('/partnermanagement/partnerCertificate');
         setActiveIcon("partnerCertificate");
     };
-    const showPartnerTypeRequest = () => {
-        //navigate('/partnermanagement/partnerTypeRequest');
-        setActiveIcon("partnerTypeRequest");
-    };
-    const showOrganisationUsers = () => {
-        //navigate('/partnermanagement/organisationUsers');
-        setActiveIcon("organisationUsers");
-    };
+    /*
+     const showPartnerTypeRequest = () => {
+         //navigate('/partnermanagement/partnerTypeRequest');
+         setActiveIcon("partnerTypeRequest");
+     };
+     const showOrganisationUsers = () => {
+         //navigate('/partnermanagement/organisationUsers');
+         setActiveIcon("organisationUsers");
+     }; */
     const showPolicies = () => {
         navigate('/partnermanagement/policies');
         setActiveIcon("policies");
@@ -61,21 +74,25 @@ function SideNav({ open }) {
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
-                    <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
+                    {/* <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
                         <SideNavMenuItem title={t('dashboard.partnerTypeRequest')} id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
                     </li>
                     <li className="duration-700 cursor-pointer" onClick={() => showOrganisationUsers()}>
                         <SideNavMenuItem title={t('dashboard.organisationUsers')} id='organisationUsers' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
+                    </li> */}
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()}>
                         <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
                     </li>
-                    <li className="duration-700 cursor-pointer" onClick={() => showPolicies()}>
-                        <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
-                    <li className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
-                        <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
+                    {enablePoliciesMenu &&
+                        <li className="duration-700 cursor-pointer" onClick={() => showPolicies()}>
+                            <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
+                        </li>
+                    }
+                    {enableAuthenticationServicesMenu &&
+                        <li className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
+                            <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

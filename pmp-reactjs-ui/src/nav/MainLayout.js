@@ -7,13 +7,16 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useRef } from 'react';
 import { logout } from '../utils/AppUtils.js';
 import { getAppConfig } from '../services/ConfigService.js';
+import { HttpService } from "../services/HttpService";
+import { getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 
 function MainLayout({ children }) {
     const { i18n } = useTranslation();
     const [open, setOpen] = useState(false);
     const [showPrompt, setShowPrompt] = useState(false);
     const { t } = useTranslation();
-
+    const [policyRequiredPartnerTypes, setPolicyRequiredPartnerTypes] = useState([]);
+    const [partnerType, setPartnerType] = useState("");
     const timer = useRef(null);
     const promptTimer = useRef(null);
     const inActivityTimer = useRef(null);
@@ -58,13 +61,13 @@ function MainLayout({ children }) {
     };
 
     useEffect(() => {
-        const langCode = getUserProfile().langCode;
+        const langCode = getUserProfile() ? getUserProfile().langCode: null;
         if (langCode != null) {
             if (langCode === "ara") {
                 document.body.dir = 'rtl';
                 i18n.changeLanguage(langCode);
             }
-            else{
+            else {
                 document.body.dir = 'ltr';
                 i18n.changeLanguage(langCode);
             }
@@ -95,11 +98,33 @@ function MainLayout({ children }) {
         };
     }, [i18n]);
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userProfile = getUserProfile();
+                const verifyEmailRequest = createRequest({
+                    "emailId": userProfile.email
+                });
+                const response = await HttpService.put(
+                    getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV), verifyEmailRequest);
+                if (response && response.data && response.data.response) {
+                    const resData = response.data.response;
+                    setPolicyRequiredPartnerTypes(resData.policyRequiredPartnerTypes);
+                    setPartnerType(userProfile.partnerType);
+                }
+
+            } catch (err) {
+                console.log('email verify error in MainLayout:', err);
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="flex flex-col justify-evenly bg-anti-flash-white font-inter">
             <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
             <div className='flex flex-row justify-stretch h-full'>
-                <SideNav open={open}></SideNav>
+                <SideNav open={open} policyRequiredPartnerTypes={policyRequiredPartnerTypes} partnerType={partnerType}></SideNav>
                 {children}
             </div>
             <Footer></Footer>
