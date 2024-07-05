@@ -46,6 +46,7 @@ function ConsentPopup() {
             setErrorMsg(err);
             console.log("Error: ", err);
         }
+        setDataLoaded(true);
     }
 
     return (
@@ -58,7 +59,7 @@ function ConsentPopup() {
                     <>
                         {errorMsg && (
                             <div className="flex justify-end absolute w-3/5 mt-2 px-2">
-                                <div className="flex justify-between items-center min-h-13 bg-[#C61818] rounded-xl p-3 w-4/6">
+                                <div className="flex justify-between items-center min-h-13 bg-[#C61818] rounded-xl p-3 w-6/12">
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                 </div>
                             </div>
