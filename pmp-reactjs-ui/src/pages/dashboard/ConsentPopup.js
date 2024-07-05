@@ -26,7 +26,7 @@ function ConsentPopup() {
         setIsChecked(!isChecked);
     };
 
-    const clickOnSubmit = async () => {
+    const saveUserConsent = async () => {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
@@ -83,7 +83,7 @@ function ConsentPopup() {
                                 className={`w-40 h-10 mx-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
                                 ${isChecked ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                 disabled={!isChecked}
-                                onClick={clickOnSubmit}
+                                onClick={saveUserConsent}
                             >
                                 {t('consentPopup.proceed')}
                             </button>
