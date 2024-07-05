@@ -26,7 +26,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[16%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default !ml-0">
             <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
                 <header className={`flex justify-between px-[5%] py-[4%]`}>
                     <div className={`flex-col`}>

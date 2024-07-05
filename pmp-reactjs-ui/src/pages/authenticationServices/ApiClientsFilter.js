@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import DropdownComponent from '../common/fields/DropdownComponent.js';
+import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import { useTranslation } from 'react-i18next';
 import { getStatusCode } from "../../utils/AppUtils.js";
 
@@ -86,14 +87,15 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectPolicyName'
                     styleSet={styles}>
                 </DropdownComponent>
-                <DropdownComponent
+                <DropdownWithSearchComponent
                     fieldName='apiKeyLabel'
                     dropdownDataList={apiKeyLabelData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='apiKeysList.apiKeyLabel'
                     placeHolderKey='apiKeysList.selectApiKeyLabel'
+                    searchKey='commons.search'
                     styleSet={styles}>
-                </DropdownComponent>
+                </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='status' 
                     dropdownDataList={statusData} 

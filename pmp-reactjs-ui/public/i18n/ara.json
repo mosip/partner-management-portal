@@ -308,17 +308,17 @@
         "apiKeyId": "معرف مفتاح API",
         "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",
-        "listOfApiKeyRequests": "قائمة طلبات مفتاح API",
+        "listOfApiKeyRequests": "قائمة مفاتيح API",
         "selectApiKeyLabel": "حدد اسم مفتاح API",
-        "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأنه بمجرد إغلاقها، سيتم تعطيل فتح هذه النافذة وعرضها مرة أخرى.",
+        "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأن مفتاح API لن يكون مرئيًا بعد الآن بمجرد إغلاق النافذة.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ."
     },
     "generateApiKey": {
         "generateApiKey": "إنشاء مفتاح API",
-        "selectedPolicyName": "حدد اسم السياسة",
+        "selectedPolicyName": "حدد السياسة التي يلزم فيها مفتاح واجهة برمجة التطبيقات API.",
         "name": "اسم",
         "enterNameForApiKey": "أدخل اسمًا لمفتاح API",
-        "generateApiKeySuccessHeader":"تم تقديم الطلب بنجاح",
+        "generateApiKeySuccessHeader":"تم إرسال التفاصيل بنجاح!",
         "apiKeySuccessMsg": "تم إرسال تفاصيل مفتاح API بنجاح",
         "errorInGenerateApiKey": "أثناء إنشاء مفتاح API، واجهنا خطأ.",
         "nameTooLong": "يجب ألا يسمح الاسم بأكثر من 36 حرفًا."

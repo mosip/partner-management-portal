@@ -308,17 +308,17 @@
         "apiKeyId": "ID de clé API",
         "apiKey": "clé API",
         "generateApiKey": "Générer une clé API",
-        "listOfApiKeyRequests": "Liste des demandes de clés API",
+        "listOfApiKeyRequests": "Liste des clés API",
         "selectApiKeyLabel": "Sélectionnez le nom de la clé API",
-        "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car une fois fermée, cette fenêtre sera désactivée pour s'ouvrir et s'afficher à nouveau.",
+        "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
     },
     "generateApiKey": {
         "generateApiKey": "Générer une clé API",
-        "selectedPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectedPolicyName": "Sélectionnez la stratégie pour laquelle la clé API est requise",
         "name": "nom",
         "enterNameForApiKey": "Entrez un nom pour la clé API",
-        "generateApiKeySuccessHeader":"Demande soumise avec succès",
+        "generateApiKeySuccessHeader":"Détails soumis avec succès !",
         "apiKeySuccessMsg": "Les détails de la clé API ont été soumis avec succès.",
         "errorInGenerateApiKey": "Lors de la génération de la clé API, nous avons rencontré une erreur.",
         "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
