@@ -4,7 +4,7 @@ export const formatDate = (dateString, format) => {
 
     switch (format) {
         case 'dateTime':
-            return date.toLocaleDateString();
+            return date.toLocaleString();
         case 'date':
             return date.toLocaleDateString();
         case 'time':
