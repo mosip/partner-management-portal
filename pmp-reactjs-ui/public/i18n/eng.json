@@ -329,9 +329,12 @@
     },
     "consentPopup": {
         "title": "Terms and Conditions",
-        "description": "I understand that the data shared at the time of registration will be used by Partner Management Portal (PMP), which includes Name, Phone Number, Email Address, Organisation Name, and Address. I also understand that this information will be stored and processed by PMP for the purpose of verifying my identity and organisation in order to access various services of this application. I provide consent for collecting my data for this purpose.",
-        "checkBoxDesc": "I have read the terms and conditions and accept to provide consent to use the data shared during registration",
-        "proceed": "Proceed"
+        "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
+        "checkBoxDesc": "I have read the terms & conditions and consent to submitting my data to be stored and processed for the stated purpose.",
+        "proceed": "Proceed",
+        "logoutMsg": "Incase if you do not wish to proceed further, you can",
+        "consentFetchError": "Error while fetching user consent",
+        "consentSaveError": "Error while saving user consent"
      },
      "blockerMessage": {
         "description": "Are you sure you want to leave?",

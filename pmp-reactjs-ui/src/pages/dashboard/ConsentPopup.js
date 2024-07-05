@@ -4,13 +4,14 @@ import { logout } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
+import { getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 
 function ConsentPopup() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
-    const [isChecked, setIsChecked] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
 
     const consentText = t('consentPopup.description');
 
@@ -24,6 +25,28 @@ function ConsentPopup() {
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
       };
+
+      const clickOnSubmit = async () => {
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/saveUserConsentGiven`, process.env.NODE_ENV));
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    window.location.reload();
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('consentPopup.consentSetError'));
+            }
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error: ", err);
+        }
+    }
 
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
@@ -53,13 +76,14 @@ function ConsentPopup() {
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
                         <div className="p-4 flex justify-between relative items-center">
-                            <p className="text-[#333333] text-sm font-medium">{t('selectPolicyPopup.logoutMsg')}
-                                <span className="text-tory-blue font-semibold cursor-pointer underline  underline-offset-2" onClick={logout}> {t('commons.logout')}</span>
+                            <p className="text-[#333333] text-sm font-medium">{t('consentPopup.logoutMsg')}
+                                <span className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout}> {t('commons.logout')}</span>
                             </p>
                             <button
                                 className={`w-40 h-10 mx-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
                                 ${isChecked ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                 disabled={!isChecked}
+                                onClick={clickOnSubmit}
                             >
                                 {t('consentPopup.proceed')}
                             </button>

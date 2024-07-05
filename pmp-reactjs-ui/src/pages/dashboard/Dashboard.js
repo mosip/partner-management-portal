@@ -15,6 +15,7 @@ import orgUsersIcon from '../../svg/org_user_icon.svg';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
+import ConsentPopup from './ConsentPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -25,14 +26,40 @@ function Dashboard() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
+  const [showConsentPopup, setShowConsentPopup] = useState(false);
+  let isSelectPolicyPopupVisible = false;
+  let isUserConsentGiven = false;
 
   const [showPopup, setShowPopup] = useState(false);
-  const closePopup = (reload) => {
-    setShowPopup(false);
-    if (reload) {
-      window.location.reload();
+
+  const fetchUserConsent = async () => {
+    setDataLoaded(false);
+    setErrorCode("");
+    setErrorMsg("");
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/isUserConsentGiven`, process.env.NODE_ENV));
+        if (response) {
+          console.log(response)
+            const responseData = response.data;
+            console.log(responseData)
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                let consentGiven = resData.consentGiven;
+                console.log(consentGiven)
+                isUserConsentGiven = consentGiven;
+                console.log(isUserConsentGiven)
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('consentPopup.consentFetchError'));
+        }
+        setDataLoaded(true);
+    } catch (err) {
+        setErrorMsg(err.toString());
+        console.log("Error: ", err);
     }
-  };
+}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +86,7 @@ function Dashboard() {
               //3. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
+              isSelectPolicyPopupVisible = true;
             } else {
               //4. register the new user in PMS
               const registerUserRequest = createRequest({
@@ -79,6 +107,12 @@ function Dashboard() {
               }
             }
           }
+          if (!isSelectPolicyPopupVisible) {
+            await fetchUserConsent();
+            if (!isUserConsentGiven) {
+              setShowConsentPopup(true);
+            }
+          }
           //if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
@@ -90,7 +124,7 @@ function Dashboard() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err);
+        setErrorMsg(err.toString());
         setDataLoaded(true);
       }
     };
@@ -201,9 +235,11 @@ function Dashboard() {
             )}
           </div>
           {showPopup && (
-            <SelectPolicyPopup closePopup={closePopup} />
+            <SelectPolicyPopup />
           )}
-
+          {showConsentPopup && (
+            <ConsentPopup />
+          )}
         </>)}
     </div>
   )
