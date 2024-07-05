@@ -318,7 +318,7 @@ function ApiKeysList() {
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pl-2":"pr-2"}`}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4 break-all break-words`}>{client.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9":"pl-9"}`}>{formatDate(client.crDtimes, 'dateTime')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9":"pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
