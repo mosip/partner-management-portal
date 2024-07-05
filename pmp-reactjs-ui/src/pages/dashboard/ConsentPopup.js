@@ -40,7 +40,7 @@ function ConsentPopup() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('consentPopup.consentSetError'));
+                setErrorMsg(t('consentPopup.consentSaveError'));
             }
         } catch (err) {
             setErrorMsg(err);
