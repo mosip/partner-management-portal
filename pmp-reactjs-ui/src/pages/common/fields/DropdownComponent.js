@@ -57,7 +57,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <div className="relative w-full" ref={dropdownRef}>
                 <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-10 px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight focus:outline-none
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
-                    <span>{
+                    <span className='break-all break-words text-wrap'>{
                         selectedDropdownEntry ?
                         dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
                         : t(placeHolderKey)}
