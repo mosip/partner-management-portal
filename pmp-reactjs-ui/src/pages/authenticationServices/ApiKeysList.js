@@ -218,14 +218,13 @@ function ApiKeysList() {
                                 {
                                     activeApiKey && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
-                                            <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
+                                            <div className={`flex sm:gap-x-3 md:gap-x-12 lg:gap-x-20 xl:gap-x-28`}>
                                                 <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
                                                 <h6>{t('apiKeysList.apiKeyLabel')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
-                                                <h6>{t('apiKeysList.apiKeyId')}</h6>
                                                 <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
@@ -316,7 +315,7 @@ function ApiKeysList() {
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pl-2":"pr-2"}`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4 break-all break-words`}>{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4`}>{client.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9":"pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">

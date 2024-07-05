@@ -196,6 +196,7 @@ function GenerateApiKey() {
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
+        setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
             label: nameLabel
@@ -262,7 +263,7 @@ function GenerateApiKey() {
                                 <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                 <form>
                                     <div className="flex flex-col">
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[700px]:flex-col">
+                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='partnerId'
@@ -287,7 +288,7 @@ function GenerateApiKey() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[500px]:flex-col">
+                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[450px]:flex-col">
                                             <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
