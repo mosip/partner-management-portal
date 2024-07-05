@@ -24,9 +24,9 @@ function ConsentPopup() {
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
-      };
+    };
 
-      const clickOnSubmit = async () => {
+    const clickOnSubmit = async () => {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);

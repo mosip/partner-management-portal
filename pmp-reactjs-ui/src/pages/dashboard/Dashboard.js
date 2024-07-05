@@ -37,29 +37,29 @@ function Dashboard() {
     setErrorCode("");
     setErrorMsg("");
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/isUserConsentGiven`, process.env.NODE_ENV));
-        if (response) {
-          console.log(response)
-            const responseData = response.data;
-            console.log(responseData)
-            if (responseData && responseData.response) {
-                const resData = responseData.response;
-                let consentGiven = resData.consentGiven;
-                console.log(consentGiven)
-                isUserConsentGiven = consentGiven;
-                console.log(isUserConsentGiven)
-            } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-            }
+      const response = await HttpService.get(getPartnerManagerUrl(`/partners/isUserConsentGiven`, process.env.NODE_ENV));
+      if (response) {
+        console.log(response)
+        const responseData = response.data;
+        console.log(responseData)
+        if (responseData && responseData.response) {
+          const resData = responseData.response;
+          let consentGiven = resData.consentGiven;
+          console.log(consentGiven)
+          isUserConsentGiven = consentGiven;
+          console.log(isUserConsentGiven)
         } else {
-            setErrorMsg(t('consentPopup.consentFetchError'));
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
-        setDataLoaded(true);
+      } else {
+        setErrorMsg(t('consentPopup.consentFetchError'));
+      }
+      setDataLoaded(true);
     } catch (err) {
-        setErrorMsg(err.toString());
-        console.log("Error: ", err);
+      setErrorMsg(err.toString());
+      console.log("Error: ", err);
     }
-}
+  }
 
   useEffect(() => {
     const fetchData = async () => {
