@@ -32,7 +32,7 @@ function ApiKeysList() {
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("");
-    const [isDescending, setIsDescending] = useState(true);
+    const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [firstIndex, setFirstIndex] = useState(0);
@@ -151,12 +151,12 @@ function ApiKeysList() {
 
     const sortAscOrder = (header) => {
         const isDateCol = (header === "crDtimes") ? true : false;
-        toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
         const isDateCol = (header === "crDtimes") ? true : false;
-        toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc);
+        toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     //This part related to Pagination Logic
@@ -292,13 +292,13 @@ function ApiKeysList() {
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 width="8" height="8" viewBox="0 0 7 6">
                                                                                 <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                                                                    fill={`${(activeSortDesc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
+                                                                                    fill={`${(activeSortAsc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
                                                                             </svg>
                                                                             <svg className="cursor-pointer" onClick={() => sortDescOrder(header.id)} alt="Descending"
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 width="8" height="8" viewBox="0 0 7 6">
                                                                                 <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                                                                    transform="translate(7 6) rotate(180)" fill={`${(activeSortAsc === header.id && order === "DESC") ? "#1447b2" : "#969696"}`} />
+                                                                                    transform="translate(7 6) rotate(180)" fill={`${(activeSortDesc === header.id && order === "DESC") ? "#1447b2" : "#969696"}`} />
                                                                             </svg>
                                                                         </div>
                                                                     )}

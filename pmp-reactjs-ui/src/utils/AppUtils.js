@@ -166,55 +166,48 @@ export const logout = async () => {
     window.location.href = redirectUrl;
 }
 
-export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc) => {
-    if (order === 'ASC') {
+export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc) => {
+    if (order !== 'DESC' || activeSortDesc !== sortItem) {
+        let sortedList;
         if (isDateCol) {
-            const sortedList = [...filteredList].sort((a, b) => {
+            sortedList = [...filteredList].sort((a, b) => {
                 const dateA = new Date(a[sortItem]);
                 const dateB = new Date(b[sortItem]);
-                return isDescending ? dateA - dateB : dateB - dateA;
+                return dateA - dateB;
             });
-            setFilteredList(sortedList);
-            setOrder("DESC")
-            setIsDescending(!isDescending);
-            setActiveSortDesc(sortItem);
-            setActiveSortAsc(sortItem);
         }
         else {
-            const sortedList = [...filteredList].sort((a, b) =>
+            sortedList = [...filteredList].sort((a, b) =>
                 a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
             );
-            setFilteredList(sortedList);
-            setOrder("DESC")
-            setActiveSortDesc(sortItem);
-            setActiveSortAsc(sortItem);
         }
+        setFilteredList(sortedList);
+        setOrder("DESC")
+        setIsDescending(true);
+        setActiveSortDesc(sortItem);
+        setActiveSortAsc("");
     }
 }
 
-export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, setActiveSortAsc, setActiveSortDesc) => {
-    if (order === 'DESC') {
+export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc) => {
+    if (order !== 'ASC' || activeSortAsc !== sortItem) {
+        let sortedList;
         if (isDateCol) {
-            const sortedList = [...filteredList].sort((a, b) => {
+            sortedList = [...filteredList].sort((a, b) => {
                 const dateA = new Date(a[sortItem]);
                 const dateB = new Date(b[sortItem]);
-                return isDescending ? dateA - dateB : dateB - dateA;
+                return dateB - dateA;
             });
-
-            setFilteredList(sortedList);
-            setOrder("ASC")
-            setIsDescending(!isDescending);
-            setActiveSortDesc(sortItem);
-            setActiveSortAsc(sortItem);
         }
         else {
-            const sortedList = [...filteredList].sort((a, b) =>
+            sortedList = [...filteredList].sort((a, b) =>
                 a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
             );
-            setFilteredList(sortedList);
-            setOrder("ASC")
-            setActiveSortDesc(sortItem);
-            setActiveSortAsc(sortItem);
         }
+        setFilteredList(sortedList);
+        setOrder("ASC")
+        setIsDescending(false);
+        setActiveSortDesc("");
+        setActiveSortAsc(sortItem);
     }
 };
