@@ -11,7 +11,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-
+    const [isFraLang, setIsFraLang] = useState(false);
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
@@ -41,16 +41,23 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         }
     };
 
+    const actionOfTooltip = () => {
+        setShowTooltip(!showTooltip);
+        if(getUserProfile().langCode === 'fra') {
+            setIsFraLang(true)
+        }
+    };
+
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1":"ml-1"}`}>
             {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
                 {addInfoIcon && (
-                    <img src={infoIcon} ref={tooltipRef} onClick={() => setShowTooltip(!showTooltip)} alt="" className= {`cursor-pointer h-[13px] w-[13px]`}/>
+                    <img src={infoIcon} ref={tooltipRef} onClick={() => actionOfTooltip()} alt="" className= {`cursor-pointer h-[13px] w-[13px]`}/>
                 )}
             </label>
             {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[8rem]":"ml-[7rem]"} shadow-lg bg-white border border-gray-300 rounded`}>
+                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[22%] overflow-y-auto absolute ${isLoginLanguageRTL?"mr-[8.5%]":"ml-[7.5%]"} ${isFraLang && "ml-[7.5rem] overflow-y-scroll"} shadow-lg bg-white border border-gray-300 rounded`}>
                     <p className="text-black text-sm">{t(infoKey)}</p>
                 </div>
             )}

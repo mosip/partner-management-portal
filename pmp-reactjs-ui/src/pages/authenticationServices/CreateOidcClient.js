@@ -27,6 +27,7 @@ function CreateOidcClient() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { t } = useTranslation();
+  const [isFraLang, setIsFraLang] = useState(false);
   const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
   const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
   const [partnerId, setPartnerId] = useState("");
@@ -70,6 +71,13 @@ function CreateOidcClient() {
       );
     }
   );
+
+  const actionOfPublicKeyToolTip = () => {
+    setShowPublicKeyToolTip(!showPublicKeyToolTip);
+    if (getUserProfile().langCode === 'fra') {
+      setIsFraLang(true)
+    }
+  };
 
   useEffect(() => {
     const shouldWarnBeforeUnload = () => {
@@ -532,11 +540,11 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                           {t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span>
-                          <img src={info} ref={publicKeyTooltipRef} alt="" onClick={()=> setShowPublicKeyToolTip(!showPublicKeyToolTip)} className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`}/>
+                          <img src={info} ref={publicKeyTooltipRef} alt="" onClick={() => actionOfPublicKeyToolTip()} className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`} />
                         </label>
                         {showPublicKeyToolTip &&
                           (
-                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" : "ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
+                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" : "ml-[7.5%]"} ${isFraLang && "ml-[7.5rem]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
                               <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
                             </div>
                           )}
