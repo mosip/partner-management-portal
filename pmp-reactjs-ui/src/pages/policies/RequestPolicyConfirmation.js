@@ -17,7 +17,7 @@ function RequestPolicyConfirmation() {
         <div className={`mt-5 w-[100%]  ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex-col">
                 <div className={`flex items-start space-x-3`}>
-                    <img src={backArrow} onClick={() => moveToPolicies(navigate)} alt="" className={`cursor-pointer max-[450px]:h-3 ${isLoginLanguageRTL ? "ml-2" :""} mt-[1%] max-[450px]:mt-[3%]`} />
+                    <img src={backArrow} onClick={() => moveToPolicies(navigate)} alt="" className={`cursor-pointer max-[450px]:h-3 ${isLoginLanguageRTL ? "ml-2 rotate-180" :""} mt-[1%] max-[450px]:mt-[3%]`} />
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue max-[450px]:text-sm">{t('requestPolicy.requestPolicy')}</h1>
                         <div className="flex space-x-1  max-[350px]:flex-col">
@@ -40,7 +40,7 @@ function RequestPolicyConfirmation() {
                             <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                                 {t('requestPolicy.policySuccessMsg')}
                             </p>
-                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 ${isLoginLanguageRTL ? "justify-center" :"justify-center"}`}>
+                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                                 <button onClick={() => moveToPolicies(navigate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                     {t('commons.goBack')}
                                 </button>

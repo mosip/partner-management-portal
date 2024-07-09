@@ -18,8 +18,6 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, oidcClientId }) {
         });
     };
     const dismiss = () => {
-        policyName = '';
-        partnerId = '';
         closePopUp(false);
     }
 

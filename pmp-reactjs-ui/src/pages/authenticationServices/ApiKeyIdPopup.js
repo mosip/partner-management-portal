@@ -20,8 +20,6 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
         });
     };
     const dismiss = () => {
-        policyName = '';
-        partnerId = '';
         navigate('/partnermanagement/authenticationServices/generateApiKeyConfirmation');
     }
 

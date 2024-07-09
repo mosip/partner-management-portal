@@ -3,12 +3,11 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
-import { handleMouseClickForDropdown, isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
-import info from '../../svg/info_icon.svg';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
-  moveToOidcClientsList, getGrantTypes, moveToHome
+  moveToOidcClientsList, getGrantTypes, moveToHome,
+  isLangRTL
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -22,7 +21,6 @@ function CreateOidcClient() {
   const [oidcClientName, setOidcClientName] = useState("");
   const [publicKey, setPublicKey] = useState("");
   const [publicKeyInJson, setPublicKeyInJson] = useState(null);
-  const [showPublicKeyToolTip, setShowPublicKeyToolTip] = useState(false);
   const [logoUrl, setLogoUrl] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
@@ -46,10 +44,6 @@ function CreateOidcClient() {
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const publicKeyTooltipRef = useRef(null);
-  useEffect(() => {
-    handleMouseClickForDropdown(publicKeyTooltipRef, () => setShowPublicKeyToolTip(false));
-  }, [publicKeyTooltipRef]);
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
