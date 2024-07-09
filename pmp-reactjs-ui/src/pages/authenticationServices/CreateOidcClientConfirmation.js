@@ -17,7 +17,7 @@ function CreateOidcClientConfirmation() {
         <div className={`mt-5 w-[100%]  ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex-col">
                 <div className="flex items-start space-x-3">
-                    <img src={backArrow} onClick={() => moveToOidcClientsList(navigate)} alt="" className="mt-[1%] cursor-pointer" />
+                    <img src={backArrow} onClick={() => moveToOidcClientsList(navigate)} alt="" className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue">{t('createOidcClient.createOidcClient')}</h1>
                         <div className="flex space-x-1">
@@ -40,7 +40,7 @@ function CreateOidcClientConfirmation() {
                             <p className="text-[#666666] text-sm font-semibold">
                                 {t('createOidcClient.requestSuccessMsg')}
                             </p>
-                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 ${isLoginLanguageRTL ? "justify-center" :"justify-center"}`}>
+                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                                 <button onClick={() => moveToOidcClientsList(navigate)} type="button" className="text-white font-semibold border bg-tory-blue rounded-md text-sm px-12 py-4">
                                     {t('commons.goBack')}
                                 </button>
