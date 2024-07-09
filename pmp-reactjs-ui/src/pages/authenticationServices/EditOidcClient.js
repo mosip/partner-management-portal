@@ -366,7 +366,7 @@ function EditOidcClient() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col w-[48%]">
-                                                <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyName')}
+                                                <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     <p className={`font-semibold`}>{t('requestPolicy.policyName')}<span className={`text-crimson-red mx-1`}>*</span></p>
                                                     <Information infoKey={t('createOidcClient.policyNameToolTip')} tooltipRef={policyNameTooltipRef} />
                                                 </label>
