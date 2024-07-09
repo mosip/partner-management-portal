@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import infoIcon from '../../../svg/info_icon.svg';
+import Information from './Information';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
     placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
@@ -54,17 +55,12 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue font-semibold text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
+            <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+            <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
-                    <img src={infoIcon} ref={tooltipRef} onClick={() => setShowTooltip(!showTooltip)} alt="" className={`cursor-pointer h-[13px] w-[13px]`}/>
+                    <Information infoKey={infoKey} tooltipRef={tooltipRef} />
                 )}
             </label>
-            {showTooltip && (
-                <div className={`z-20 p-4 -mt-[4.5%] w-[20%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[7.5rem]" : "ml-[8.2rem]"} shadow-lg bg-white border border-gray-300 rounded`}>
-                    <p className="text-black text-sm">{t(infoKey)}</p>
-                </div>
-            )}
             <div className="relative w-full" ref={dropdownRef}>
                 <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight focus:outline-none 
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
