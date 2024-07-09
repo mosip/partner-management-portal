@@ -16,6 +16,7 @@ import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import { importJWK } from 'jose';
 import BlockerPrompt from "../common/BlockerPrompt";
+import Information from "../common/fields/Information";
 
 function CreateOidcClient() {
   const [oidcClientName, setOidcClientName] = useState("");
@@ -530,16 +531,10 @@ function CreateOidcClient() {
                     </div>
                     <div className="flex my-[1%]">
                       <div className="flex flex-col w-full">
-                        <label className={`flex space-x-1 items-center text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                          {t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span>
-                          <img src={info} ref={publicKeyTooltipRef} alt="" onClick={()=> setShowPublicKeyToolTip(!showPublicKeyToolTip)} className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"} cursor-pointer h-[13px] w-[13px]`}/>
+                        <label className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                          <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
+                          <Information infoKey={t('createOidcClient.publicKeyTooltip')} tooltipRef={publicKeyTooltipRef} />
                         </label>
-                        {showPublicKeyToolTip &&
-                          (
-                            <div className={`z-20 -mt-2 w-[15%] max-h-[32%] overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9%]" : "ml-[7.5%]"} shadow-lg bg-white border border-gray-300 p-3 rounded`}>
-                              <p className="text-black text-sm">{t('createOidcClient.publicKeyToolTip')}</p>
-                            </div>
-                          )}
                         <textarea value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                           className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
