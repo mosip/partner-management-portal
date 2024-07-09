@@ -19,21 +19,10 @@ function EditOidcClient() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [showPublicKeyToolTip, setShowPublicKeyToolTip] = useState(false);
     const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
     const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
-    const [showPartnerIdTooltip, setShowPartnerIdTooltip] = useState(false);
-    const [showPolicyNameToolTip, setShowPolicyNameToolTip] = useState(false);
     const [nameValidationError, setNameValidationError] = useState("");
     const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
-    const partnerIdTooltipRef = useRef(null);
-    const policyNameTooltipRef = useRef(null);
-    const publicKeyTooltipRef = useRef(null);
-    useEffect(() => {
-        handleMouseClickForDropdown(partnerIdTooltipRef, () => setShowPartnerIdTooltip(false));
-        handleMouseClickForDropdown(policyNameTooltipRef, () => setShowPolicyNameToolTip(false));
-        handleMouseClickForDropdown(publicKeyTooltipRef, () => setShowPublicKeyToolTip(false));
-    }, [partnerIdTooltipRef, policyNameTooltipRef, publicKeyTooltipRef]);
 
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
@@ -331,7 +320,7 @@ function EditOidcClient() {
                                             <div className="flex flex-col w-[48%]">
                                                 <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     <p className={`font-semibold`}>{t('requestPolicy.partnerId')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                    <Information infoKey={t('createOidcClient.partnerIdTooltip')} tooltipRef={partnerIdTooltipRef} />
+                                                    <Information infoKey={t('createOidcClient.partnerIdTooltip')} />
                                                 </label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
@@ -368,7 +357,7 @@ function EditOidcClient() {
                                             <div className="flex flex-col w-[48%]">
                                                 <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     <p className={`font-semibold`}>{t('requestPolicy.policyName')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                    <Information infoKey={t('createOidcClient.policyNameToolTip')} tooltipRef={policyNameTooltipRef} />
+                                                    <Information infoKey={t('createOidcClient.policyNameToolTip')} />
                                                 </label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
@@ -392,7 +381,7 @@ function EditOidcClient() {
                                             <div className="flex flex-col w-full">
                                                 <label className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                    <Information infoKey={t('createOidcClient.publicKeyToolTip')} tooltipRef={publicKeyTooltipRef} />
+                                                    <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
                                                 </label>
                                                 <textarea value={oidcClientDetails.publicKey} readOnly
                                                     className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar">

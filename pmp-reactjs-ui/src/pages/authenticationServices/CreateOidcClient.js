@@ -533,7 +533,7 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                           <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                          <Information infoKey={t('createOidcClient.publicKeyTooltip')} tooltipRef={publicKeyTooltipRef} />
+                          <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
                         </label>
                         <textarea value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                           className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
