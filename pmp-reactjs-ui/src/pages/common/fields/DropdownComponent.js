@@ -15,17 +15,14 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [showTooltip, setShowTooltip] = useState(false);
     const dropdownRef = useRef(null);
-    const tooltipRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-        handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
-    }, [dropdownRef, tooltipRef]);
+    }, [dropdownRef]);
 
     useEffect(() => {
         setSelectedDropdownEntry(selectedDropdownValue || "");
@@ -47,7 +44,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
-                    <Information infoKey={infoKey} tooltipRef={tooltipRef} />
+                    <Information infoKey={infoKey}/>
                 )}
             </label>
 

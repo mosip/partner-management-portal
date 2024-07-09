@@ -30,7 +30,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
             <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
                 <header className={`flex justify-between px-[5%] py-[4%]`}>
                     <div className={`flex-col`}>
-                        <h1 className={`font-bold text-base text-[#333333]`}>{policyName}</h1>
+                        <h1 className={`font-bold text-base break-all break-words mx-1 text-[#333333]`}>{policyName}</h1>
                         <p className={`text-xs font-bold text-[#717171]`}># {partnerId}</p>
                     </div>
                     <img src={close_icon} alt="" className={`h-7 cursor-pointer`} onClick={() => dismiss()} />
