@@ -374,7 +374,7 @@ function EditOidcClient() {
                                                 <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                 />
-                                                {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
+                                                {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                                             </div>
                                         </div>
                                         <div className="flex my-[1%]">
@@ -393,7 +393,7 @@ function EditOidcClient() {
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)} placeholder={t('createOidcClient.logoUrlPlaceHolder')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar" />
-                                                {invalidLogoUrl && <span className="text-sm text-crimson-red font-medium">{invalidLogoUrl}</span>}
+                                                {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                                             </div>
                                         </div>
                                         <div className="flex flex-row justify-between space-x-4 my-[1%]">
@@ -421,7 +421,7 @@ function EditOidcClient() {
                                                         </div>
                                                     </div>
                                                 ))}
-                                                {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
+                                                {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                 {oidcClientDetails.redirectUris.length < 5 && (
                                                     <p className="text-[#1447b2] font-bold text-xs">
                                                         <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>

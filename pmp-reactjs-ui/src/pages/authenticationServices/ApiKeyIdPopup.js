@@ -36,7 +36,7 @@ function ApiKeyIdPopup({ closePopUp, policyName, partnerId, apiKeyId }) {
                 <hr className={`pt-[4%]`} />
                 <div className={`px-5 pt-1 pb-6 flex-col text-center justify-center items-center`}>
                     <div className="w-full border border-[#EDDCAF] bg-[#FFF7E5] rounded-md p-2 text-left">
-                        <p className="test-[13px] font-medium text-[#8B6105]">{t('apiKeysList.apiKeyIdAlertMsg')}</p>
+                        <p className="test-[13px] font-semibold text-[#8B6105]">{t('apiKeysList.apiKeyIdAlertMsg')}</p>
                     </div>
                     <h1 className={`text-[#6A6A6A] font-bold text-sm opacity-8 mb-[0.5%] pt-3`}>{t('apiKeysList.apiKey')}</h1>
                     <p className={`font-bold text-sm text-black break-words px-6`}>{apiKeyId}</p>

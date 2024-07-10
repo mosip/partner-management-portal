@@ -93,19 +93,19 @@ function ViewOidcClientDetails() {
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
                                 </div>
-                                <div className={`font-medium ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(oidcClientDetails.crDtimes, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
-                                <div className="font-medium text-sm text-dark-blue">
+                                <div className="font-semibold text-sm text-dark-blue">
                                     {formatDate(oidcClientDetails.crDtimes, "time")}
                                 </div>
                             </div>
                         </div>
                         <div
                             className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}>
-                            <p className="text-sm font-medium text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
+                            <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                     {oidcClientDetails.oidcClientId}
@@ -119,7 +119,7 @@ function ViewOidcClientDetails() {
                         </div>
                         {copied &&
                             (
-                                <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-medium overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
                                     <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                 </div>
                             )
@@ -217,7 +217,7 @@ function ViewOidcClientDetails() {
                                             return (
                                                 <ul>
                                                     <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                        <p className="text-sm max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] py-1">
+                                                        <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
                                                             {uri}
                                                         </p>
                                                         {(oidcClientDetails.redirectUris).length > 1 &&
@@ -238,7 +238,7 @@ function ViewOidcClientDetails() {
                                             return (
                                                 <ul>
                                                     <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                        <p className="max-[450px]:text-xs max-[450px]:font-medium font-[600] text-[#36393E] text-sm py-1">
+                                                        <p className="max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] text-sm py-1">
                                                             {getGrantTypes(type, t)}
                                                         </p>
                                                         {(oidcClientDetails.grantTypes).length > 1 &&
@@ -254,73 +254,6 @@ function ViewOidcClientDetails() {
                         </div>
                     </div>
 
-                    {/* <hr className="h-px w-full bg-gray-200 border-0" />
-                        <div className="py-6">
-                            <p className="font-medium text-vulcan text-lg mb-4">
-                                {t("viewOidcClientDetails.comments")}
-                            </p>
-                            <div>
-                                <div className="flex font-medium w-full ">
-                                    <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
-                                        <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
-                                        <img src={adminImage} alt="Example" className="" />
-                                    </span>
-                                    <div className="flex bg-floral-white w-full flex-col px-4 relative rounded-md">
-                                        <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                        <h4 className="text-lg  text-[#031640]">
-                                            {t("viewOidcClientDetails.adminComment") + " / " + t("viewOidcClientDetails.adminName")}
-                                        </h4>
-                                        <div className="flex-col items-center justify-start my-2">
-                                            <p className="text-[#666666] text-sm ">{t('viewOidcClientDetails.commentsOfAdmin')}</p>
-                                            <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md my-2`}>
-                                                {oidcClientDetails.status}
-                                            </div>
-                                            <div>
-                                                {oidcClientDetails.updDtimes && (
-                                                    <div className="flex">
-                                                        <div className={`font-medium ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(oidcClientDetails.updDtimes, "date")}
-                                                        </div>
-                                                        <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-medium text-sm text-dark-blue">
-                                                            {formatDate(oidcClientDetails.updDtimes, "time")}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex font-medium w-full">
-                                        <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
-                                            <img src={clientImage} alt="Example" className="" />
-                                        </span>
-                                        <div className="flex bg-alice-green w-full flex-col px-4 py-3 relative rounded-md">
-                                            <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
-                                            <h4 className="text-lg  text-[#031640]">
-                                                {t("viewOidcClientDetails.partnersComment")}
-                                            </h4>
-
-                                            <span className="text-sm mt-3 break-all">
-                                                {oidcClientDetails.partnerComments}
-                                            </span>
-                                            <hr className="h-px w-full bg-gray-200 border-0 my-1" />
-                                            <div className="flex items-center justify-start">
-                                                <div className="font-medium text-sm text-dark-blue">
-                                                    {t("viewOidcClientDetails.createdOn") + ' ' +
-                                                        formatDate(oidcClientDetails.crDtimes, "date")}
-                                                </div>
-                                                <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-medium text-sm text-dark-blue">
-                                                    {formatDate(oidcClientDetails.crDtimes, "time")}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
                         <button onClick={() => moveToOidcClientsList(navigate)}

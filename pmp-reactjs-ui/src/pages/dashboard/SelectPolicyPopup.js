@@ -177,7 +177,7 @@ function SelectPolicyPopup() {
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
                         <div className="p-3 flex justify-between relative">
-                            <p className="text-[#333333] text-sm font-medium ml-2">{t('selectPolicyPopup.logoutMsg')}
+                            <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
                                 <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
                             </p>
                             <button

@@ -258,7 +258,7 @@ function OidcClientsList() {
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 {
                                     activeOidcClient && (
-                                        <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
+                                        <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
                                                 <h6 className={`${isLoginLanguageRTL?"mr-5":"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
@@ -325,8 +325,8 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs font-medium text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
-                                                                <div className="flex gap-x-1 items-center">
+                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
+                                                                <div className="flex gap-x-1 items-center font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <div>
@@ -354,14 +354,14 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-medium ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ?"pl-2" :"pr-2"} break-all break-word`}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-4 break-all break-words">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-1 break-all break-words">{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" :"pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
-                                                                    <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-medium rounded-md`}>
+                                                                    <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
@@ -381,7 +381,7 @@ function OidcClientsList() {
                                                                     <div>
                                                                         <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                                                         {viewClientId === index && (
-                                                                            <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-medium rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
+                                                                            <div ref={submenuRef} className={`absolute ${isLoginLanguageRTL ? "mr-16" : null} bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-20" : "right-20"}`}>
                                                                                 <p onClick={() => onClickView(client)} className="px-4 py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100">
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
@@ -432,7 +432,7 @@ function OidcClientsList() {
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
                                             {isItemsPerPageOpen && (
-                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}
@@ -444,7 +444,7 @@ function OidcClientsList() {
                                                     }
                                                 </div>
                                             )}
-                                            <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                                            <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
                                                 onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
                                                 <p>
                                                     {selectedRecordsPerPage}

@@ -209,7 +209,7 @@ function PartnerCertificatesList() {
                                                     }
 
                                                     <div className="flex-col p-3 items-center">
-                                                        <h6 className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-medium text-charcoal-gray'}`}>
+                                                        <h6 className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                             {partner.isCertificateAvailable ? partner.certificateName : t('partnerCertificatesList.uploadPartnerCertificate')}
                                                         </h6>
                                                         <p className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
@@ -259,15 +259,15 @@ function PartnerCertificatesList() {
                                             <hr className="border bg-medium-gray" />
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col">
-                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
                                                     <p className="font-bold text-sm text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
                                                 <div className="flex-col ml-[5%]">
-                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
+                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
                                                 </div>
                                                 <div className="flex-col ml-[10%]">
-                                                    <p className="font-medium text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
                                                 </div>
                                             </div>

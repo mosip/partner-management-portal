@@ -375,7 +375,7 @@ function RequestPolicy() {
                                                 <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
-                                                {validationError && <span className="text-sm text-crimson-red font-medium">{validationError}</span>}
+                                                {validationError && <span className="text-sm text-crimson-red font-semibold">{validationError}</span>}
                                             </div>
                                         </div>
                                     </div>
