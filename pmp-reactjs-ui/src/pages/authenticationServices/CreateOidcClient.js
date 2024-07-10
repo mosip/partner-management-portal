@@ -368,6 +368,18 @@ function CreateOidcClient() {
         const responseData = response.data;
         if (responseData && responseData.response) {
           const resData = responseData.response;
+          const confirmationData = {
+            title: "createOidcClient.createOidcClient",
+            backUrl: "/partnermanagement/authenticationServices/oidcClientsList",
+            header: "createOidcClient.requestSuccessHeader",
+            description: "createOidcClient.requestSuccessMsg",
+            subNavigation: "authenticationServices.authenticationServices",
+            styleSet: {
+              imgIconLtr: "ml-[24%] max-[450px]:ml-20",
+              imgIconRtl: "mr-[24%] max-[450px]:mr-20"
+            }
+          }
+          localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
           navigate('/partnermanagement/authenticationServices/createOidcClientConfirmation');
           console.log(`Response data: ${resData.length}`);
         } else {
