@@ -10,7 +10,7 @@ import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, m
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
-import ApiKeyIdPopup from "./ApiKeyIdPopup";
+import CopyIdPopUp from "../common/CopyIdPopup";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
@@ -227,6 +227,10 @@ function GenerateApiKey() {
         }
     }
 
+    const copyIdPopupStyle = {
+        outerDiv: "!bg-opacity-[50%]"
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
             {!dataLoaded && (
@@ -335,7 +339,8 @@ function GenerateApiKey() {
                                     <button onClick={() => moveToApiKeysList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     {(showPopup && !errorMsg) && (
-                                        <ApiKeyIdPopup closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} apiKeyId={apiKeyId}/>
+                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} id={apiKeyId} navigateUrl='/partnermanagement/authenticationServices/generateApiKeyConfirmation' 
+                                            header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle}/>
                                     )}
                                 </div>
                             </div>

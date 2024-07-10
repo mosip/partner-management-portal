@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -16,7 +16,7 @@ import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
 import ApiClientsFilter from './ApiClientsFilter';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
-import DeactivateApiKey from './DeactivateApiKey';
+import DeactivatePopup from '../common/DeactivatePopup';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -40,6 +40,7 @@ function ApiKeysList() {
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const defaultFilterQuery = {
         partnerId: "",
         policyGroupName: ""
@@ -113,6 +114,11 @@ function ApiKeysList() {
 
     const onClickDeactivate = (selectedApiKeyClientdata) => {
         if (selectedApiKeyClientdata.status === "ACTIVE") {
+            const request = createRequest({
+                label: selectedApiKeyClientdata.apiKeyLabel,
+                status: "De-Active"
+            });
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
         }
     };
@@ -337,7 +343,7 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivateApiKey closePopUp={setShowDeactivatePopup} apiKeyData={client}></DeactivateApiKey>
+                                                                                    <DeactivatePopup closePopUp={setShowDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' clientName={client.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}
