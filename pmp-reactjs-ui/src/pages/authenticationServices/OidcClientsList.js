@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, 
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome } from '../../utils/AppUtils';
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -12,10 +12,10 @@ import { IconContext } from "react-icons"; // for customizing icons
 import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ReactPaginate from 'react-paginate';
-import CopyIdPopUp from './CopyIdPopUp';
+import CopyIdPopUp from '../common/CopyIdPopup.js';
 import OidcClientsFilter from './OidcClientsFilter';
-import DeactivateOidcClient from './DeactivateOidcClient.js';
 import AuthenticationServicesTab from './AuthenticationServicesTab.js';
+import DeactivatePopup from '../common/DeactivatePopup.js';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -41,6 +41,7 @@ function OidcClientsList() {
     const [currentClient, setCurrentClient] = useState(null);
     const [viewClientId, setViewClientId] = useState(-1);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const defaultFilterQuery = {
         partnerId: "",
         policyGroupName: ""
@@ -148,6 +149,18 @@ function OidcClientsList() {
 
     const showDeactivateOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
+            const request = createRequest({
+                logoUri: selectedClientdata.logoUri,
+                redirectUris: selectedClientdata.redirectUris,
+                status: "INACTIVE",
+                grantTypes: selectedClientdata.grantTypes,
+                clientName: selectedClientdata.oidcClientName,
+                clientAuthMethods: selectedClientdata.clientAuthMethods,
+                clientNameLangMap: {
+                    "eng" : selectedClientdata.oidcClientName
+                }
+            });
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
         }
     };
@@ -213,6 +226,10 @@ function OidcClientsList() {
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
     };
+
+    const styles = {
+        outerDiv: "!bg-opacity-[16%]"
+    }
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -373,7 +390,7 @@ function OidcClientsList() {
                                                                             transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                     </svg>
                                                                     {showPopup && (
-                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} oidcClientId={currentClient.oidcClientId}/>
+                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles}/>
                                                                     )}
                                                                 </td>
 
@@ -394,7 +411,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivateOidcClient closePopUp={setShowDeactivatePopup} clientData={client}></DeactivateOidcClient>
+                                                                                    <DeactivatePopup closePopUp={setShowDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' clientName={client.oidcClientName}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}
