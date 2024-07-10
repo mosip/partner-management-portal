@@ -258,6 +258,18 @@ function EditOidcClient() {
             const responseData = response.data;
             if (responseData && responseData.response) {
                 setDataLoaded(true);
+                const confirmationData = {
+                    title: "editOidcClient.editOidcClient",
+                    backUrl: "/partnermanagement/authenticationServices/oidcClientsList",
+                    header: "editOidcClient.editSuccessHeader",
+                    description: "editOidcClient.editSuccessMsg",
+                    subNavigation: "authenticationServices.authenticationServices",
+                    styleSet: {
+                        imgIconLtr: "ml-[30%] max-[450px]:ml-20",
+                        imgIconRtl: "mr-[18%] max-[450px]:mr-20"
+                    }
+                }
+                localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
                 navigate('/partnermanagement/authenticationServices/editOidcClientConfirmation');
             } else {
                 setDataLoaded(true);

@@ -217,6 +217,18 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    const confirmationData = {
+                        title: "requestPolicy.requestPolicy",
+                        backUrl: "/partnermanagement/policies",
+                        header: "requestPolicy.policySuccessHeader",
+                        description: "requestPolicy.policySuccessMsg",
+                        subNavigation: "requestPolicy.policies",
+                        styleSet: {
+                            imgIconLtr: "ml-[33%] max-[450px]:ml-20",
+                            imgIconRtl: "mr-[25%] max-[450px]:mr-20"
+                        }
+                    }
+                    localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
                     navigate('/partnermanagement/policies/requestPolicyConfirmation');
                     console.log(`Response data: ${resData.length}`);
                 } else {

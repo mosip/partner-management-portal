@@ -6,19 +6,16 @@ import Policies from './pages/policies/Policies.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
-import RequestPolicyConfirmation from './pages/policies/RequestPolicyConfirmation.js';
 import OidcClientsList from './pages/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/authenticationServices/CreateOidcClient.js';
-import CreateOidcClientConfirmation from './pages/authenticationServices/CreateOidcClientConfirmation.js';
 import ViewOidcClientDetails from './pages/authenticationServices/ViewOidcClientDetails.js';
 import EditOidcClient from './pages/authenticationServices/EditOidcClient.js';
-import EditOidcClientConfirmation from './pages/authenticationServices/EditOidcClientConfirmation.js';
 import ApiKeysList from './pages/authenticationServices/ApiKeysList.js';
 import GenerateApiKey from './pages/authenticationServices/GenerateApiKey.js';
-import GenerateApiKeyConfirmation from './pages/authenticationServices/GenerateApiKeyConfirmation.js';
 import ViewApiKeyDetails from './pages/authenticationServices/ViewApiKeyDetails.js';
 import RuntimeError from './pages/common/RuntimeError.js';
 import UserProfile from './nav/UserProfile.js';
+import Confirmation from './pages/common/Confirmation.js';
 
 
 function AppRoutes() {
@@ -58,7 +55,7 @@ function AppRoutes() {
         },
         {
           path: 'policies/requestPolicyConfirmation',
-          element: <GuardedRoute><MainLayout><RequestPolicyConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/oidcClientsList',
@@ -70,7 +67,7 @@ function AppRoutes() {
         },
         {
           path: 'authenticationServices/createOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><CreateOidcClientConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewOidcClienDetails',
@@ -82,7 +79,7 @@ function AppRoutes() {
         },
         {
           path: 'authenticationServices/editOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><EditOidcClientConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/apiKeysList',
@@ -94,7 +91,7 @@ function AppRoutes() {
         },
         {
           path: 'authenticationServices/generateApiKeyConfirmation',
-          element: <GuardedRoute><MainLayout><GenerateApiKeyConfirmation/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewApiKeyDetails',

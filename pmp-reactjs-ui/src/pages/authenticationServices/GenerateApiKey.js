@@ -212,6 +212,18 @@ function GenerateApiKey() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     console.log(`Response data: ${resData.length}`);
+                    const confirmationData = {
+                        title: "generateApiKey.generateApiKey",
+                        backUrl: "/partnermanagement/authenticationServices/apiKeysList",
+                        header: "generateApiKey.generateApiKeySuccessHeader",
+                        description: "generateApiKey.apiKeySuccessMsg",
+                        subNavigation: "authenticationServices.authenticationServices",
+                        styleSet: {
+                            imgIconLtr: "ml-[24%] max-[450px]:mr-12",
+                            imgIconRtl: "mr-[24%] max-[450px]:mr-12"
+                        }
+                    }
+                    localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
                     setApiKeyId(responseData.response.apiKey);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
