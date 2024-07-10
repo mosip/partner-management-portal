@@ -88,12 +88,12 @@ function ViewPolicyDetails() {
                             >
                                 {getStatusCode(policyDetails.status, t)}
                             </div>
-                            <div className={`font-medium ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-xs text-dark-blue`}>
+                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-xs text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
                                     formatDate(policyDetails.createDate, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
-                            <div className="font-medium text-xs text-dark-blue">
+                            <div className="font-semibold text-xs text-dark-blue">
                                 {formatDate(policyDetails.createDate, "time")}
                             </div>
                         </div>
@@ -155,11 +155,11 @@ function ViewPolicyDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="mt-3">
-                            <p className="font-medium text-vulcan text-base mb-3">
+                            <p className="font-semibold text-vulcan text-base mb-3">
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
-                                <div className="flex font-medium w-full ">
+                                <div className="flex font-semibold w-full ">
                                     <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL?"ml-3":"mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
                                         <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL?"after:right-[1.2rem]":"after:left-[1.2rem]"} after:mt-7`}></div>
                                         <img src={adminImage} alt="Example" className="w-8 h-8" />
@@ -180,11 +180,11 @@ function ViewPolicyDetails() {
                                             <div>
                                                 {policyDetails.updDtimes && (
                                                     <div className="flex">
-                                                        <div className={`font-medium ${isLoginLanguageRTL?"mr-3":"ml-3"} text-sm text-dark-blue`}>
+                                                        <div className={`font-semibold ${isLoginLanguageRTL?"mr-3":"ml-3"} text-sm text-dark-blue`}>
                                                             {formatDate(policyDetails.updDtimes, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-medium text-sm text-dark-blue">
+                                                        <div className="font-semibold text-sm text-dark-blue">
                                                             {formatDate(policyDetails.updDtimes, "time")}
                                                         </div>
                                                     </div>
@@ -194,7 +194,7 @@ function ViewPolicyDetails() {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex font-medium w-full">
+                                    <div className="flex font-semibold w-full">
                                         <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL?"ml-3":"mr-3"} text-sm lg:w-10 lg:h-10`}>
                                             <img src={partnerImage} alt="Example" className="w-8 h-8" />
                                         </span>
@@ -208,12 +208,12 @@ function ViewPolicyDetails() {
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-medium text-xs text-dark-blue">
+                                                <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyDetails.createDate, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-medium text-xs text-dark-blue">
+                                                <div className="font-semibold text-xs text-dark-blue">
                                                     {formatDate(policyDetails.createDate, "time")}
                                                 </div>
                                             </div>

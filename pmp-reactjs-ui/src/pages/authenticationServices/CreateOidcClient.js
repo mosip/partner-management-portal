@@ -520,7 +520,7 @@ function CreateOidcClient() {
                         <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
-                        {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
+                        {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                       </div>
                     </div>
                     <div className="flex my-[1%]">
@@ -533,7 +533,7 @@ function CreateOidcClient() {
                           className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
                         </textarea>
-                        {jsonError && <span className="text-sm text-crimson-red font-medium">{jsonError}</span>}
+                        {jsonError && <span className="text-sm text-crimson-red font-semibold">{jsonError}</span>}
                       </div>
                     </div>
                     <div className="flex my-[1%]">
@@ -542,7 +542,7 @@ function CreateOidcClient() {
                         <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
-                        {invalidLogoUrl && <span className="text-sm text-crimson-red font-medium">{invalidLogoUrl}</span>}
+                        {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                       </div>
                     </div>
 
@@ -571,7 +571,7 @@ function CreateOidcClient() {
                             </div>
                           </div>
                         ))}
-                        {invalidRedirectUrl && <span className="text-sm text-crimson-red font-medium">{invalidRedirectUrl}</span>}
+                        {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                         {redirectUrls.length < 5 && (
                           <p className="text-[#1447b2] font-bold text-xs">
                             <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>

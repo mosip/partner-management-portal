@@ -321,7 +321,7 @@ function GenerateApiKey() {
                                                     <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />
-                                                    {nameValidationError && <span className="text-sm text-crimson-red font-medium">{nameValidationError}</span>}
+                                                    {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                                                 </div>
                                             </div>
                                         </div>

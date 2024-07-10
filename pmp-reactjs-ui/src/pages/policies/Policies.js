@@ -238,7 +238,7 @@ function Policies() {
               {policiesList.length === 0
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                  <div className="flex justify-between py-2 pt-4 text-sm font-medium text-[#6F6E6E]">
+                  <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full justify-between">
                       <h6 className="ml-5 mr-3">{t('policies.partnerId')}</h6>
                       <h6>{t('policies.partnerType')}</h6>
@@ -300,7 +300,7 @@ function Policies() {
                             <tr>
                               {tableHeaders.map((header, index) => {
                                 return (
-                                  <th key={index} className="py-4 text-sm font-medium text-[#6F6E6E] w-[16%]">
+                                  <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
                                     <div className="mx-2 flex gap-x-0 items-center">
                                       {t(header.headerNameKey)}
                                       {header.id !== "action" && (
@@ -328,14 +328,14 @@ function Policies() {
                           <tbody>
                             {tableRows.map((partner, index) => {
                               return (
-                                <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-medium ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2 break-all break-word">{partner.policyName}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
                                   <td onClick={() => showViewPolicyDetails(partner)} className="">
-                                    <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-medium rounded-md`}>
+                                    <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                       {getStatusCode(partner.status, t)}
                                     </div>
                                   </td>
@@ -345,7 +345,7 @@ function Policies() {
                                       {
                                         viewPolicyId === index && (
                                           <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-medium rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                            className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
                                             <p className="cursor-pointer">
                                               {t('policies.view')}
                                             </p>
@@ -386,7 +386,7 @@ function Policies() {
                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                         <div>
                           {isItemsPerPageOpen && (
-                            <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-medium rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                            <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                               {itemsPerPageOptions.map((num, i) => {
                                 return (
                                   <p key={i} onClick={() => changeItemsPerPage(num)}
@@ -399,7 +399,7 @@ function Policies() {
                             </div>
                           )}
                           <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-medium"
+                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
                             onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
                             <p>
                               {selectedRecordsPerPage}

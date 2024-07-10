@@ -78,12 +78,12 @@ function ViewApiKeyDetails() {
                                 <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(apiKeyDetails.status, t)}
                                 </div>
-                                <div className={`font-medium ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(apiKeyDetails.crDtimes, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
-                                <div className="font-medium text-sm text-dark-blue">
+                                <div className="font-semibold text-sm text-dark-blue">
                                     {formatDate(apiKeyDetails.crDtimes, "time")}
                                 </div>
                             </div>

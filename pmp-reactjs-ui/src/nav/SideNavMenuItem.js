@@ -67,7 +67,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                     </svg>}
             </div>
             {isExpanded &&
-                <p className={`duration-200 ${!isExpanded && 'scale-0'} text-nowrap font-medium text-xs text-dark-blue`}>
+                <p className={`duration-200 ${!isExpanded && 'scale-0'} text-nowrap font-semibold text-xs text-dark-blue`}>
                     {title}
                 </p>}
         </div>
