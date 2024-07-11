@@ -157,9 +157,9 @@ function UploadCertificate({ closePopup, partnerData }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
             <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                 {!dataLoaded && (
-                        <div className="flex items-center h-[30rem]">
-                            <LoadingIcon></LoadingIcon>
-                        </div>
+                    <div className="flex items-center h-[30rem]">
+                        <LoadingIcon></LoadingIcon>
+                    </div>
                 )}
                 {dataLoaded && (
                     <>
@@ -169,6 +169,20 @@ function UploadCertificate({ closePopup, partnerData }) {
                         </div>
                         <div className="border-gray-200 border-opacity-75 border-t"></div>
                         <div className="relative">
+                            {uploadFailure && errorMsg && (
+                                <div className="flex justify-center inset-0">
+                                    <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                                    </div>
+                                </div>
+                            )}
+                            {uploadSuccess && successMsg && (
+                                <div className="flex justify-center inset-0">
+                                    <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
+                                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
+                                    </div>
+                                </div>
+                            )}
                             <div className="px-[4%] py-[2%]">
                                 <form>
                                     <div className="mb-2">
@@ -177,7 +191,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             value={partnerType} disabled />
                                     </div>
                                     <div className="mb-3">
-                                    <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainType')}</label>
+                                        <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainType')}</label>
                                         <input type="text" className="w-full h-10 px-3 py-2 border border-[#C1C1C1] rounded-md text-base text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
                                             value={partnerDomainType} disabled />
                                     </div>
@@ -231,25 +245,11 @@ function UploadCertificate({ closePopup, partnerData }) {
                             </div>
                             <div className="border-gray-200 border-opacity-50 border-t"></div>
                             <div className="px-[4%] flex justify-center mt-2 my-3">
-                                <button className={`${isLoginLanguageRTL? "ml-2": "mr-2"} w-36 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                                <button className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                 {(!uploading && fileName) ? (
                                     <button className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                 ) : (
                                     <button disabled className="w-36 h-10 border-[#A5A5A5] border bg-[#A5A5A5] rounded-md text-white text-sm font-semibold">{t('uploadCertificate.submit')}</button>
-                                )}
-                                {uploadSuccess && successMsg && (
-                                    <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
-                                        </div>
-                                    </div>
-                                )}
-                                {uploadFailure && errorMsg && (
-                                    <div className="absolute inset-0 flex justify-center">
-                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                        </div>
-                                    </div>
                                 )}
                             </div>
                         </div>
