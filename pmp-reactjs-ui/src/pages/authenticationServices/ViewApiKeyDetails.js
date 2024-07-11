@@ -145,7 +145,7 @@ function ViewApiKeyDetails() {
                         </div>
                         <div className="my-4">
                             <p className="font-[600] text-suva-gray text-xs">
-                                {t("viewOidcClientDetails.clientName")}
+                                {t("viewApiKeyDetails.apiKeyName")}
                             </p>
                             <p className="font-[600] text-vulcan text-sm">
                                 {apiKeyDetails.apiKeyLabel}

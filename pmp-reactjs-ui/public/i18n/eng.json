@@ -290,6 +290,7 @@
         "viewApiKeyDetails": "View API Key Details",
         "viewApiKeyId": "View API Key ID",
         "label": "Label",
+        "apiKeyName": "API Key Name",
         "copyApiKeyMsg": "API Key contains sensitive information. Make sure you copy the API key before closing this window because once closed - the API Key pop up window will be disabled for view."
     },
     "editOidcClient": {
