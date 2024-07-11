@@ -272,7 +272,7 @@ function Policies() {
                       </div>
                       <div className="w-full flex justify-end relative items-center">
                         {filter && <p onClick={() => onResetFilter()} type="button"
-                          className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
+                          className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
                           {t('policies.resetFilter')}
                         </p>}
                         <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
