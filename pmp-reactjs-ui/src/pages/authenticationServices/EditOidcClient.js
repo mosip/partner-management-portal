@@ -1,14 +1,13 @@
 import React from "react";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
 import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome, handleMouseClickForDropdown } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome, validateName, validateUrl } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import info from '../../svg/info_icon.svg';
 import DropdownComponent from "../common/fields/DropdownComponent";
 import Information from "../common/fields/Information";
 
@@ -92,14 +91,7 @@ function EditOidcClient() {
     };
 
     const onChangeOidcClientName = (value) => {
-        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
-        if (value.length > 256) {
-            setNameValidationError(t('createOidcClient.nameTooLong'))
-        } else if (!regexPattern.test(value)) {
-            setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
-        } else {
-            setNameValidationError("");
-        }
+        setNameValidationError(validateName(value, 256, t));
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
             oidcClientName: value
@@ -107,22 +99,11 @@ function EditOidcClient() {
     }
 
     const handleLogoUrlChange = (value) => {
+        setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
             logoUri: value
         }));
-        const urlPattern = /^(http|https):\/\/[^ "]+$/;
-        if (value === "") {
-            setInvalidLogoUrl("");
-        } else if (value.length > 2048) {
-            setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value.trim())) {
-            setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
-        } else if (/^\s+$/.test(value)) {
-            setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
-        } else {
-            setInvalidLogoUrl("");
-        }
     };
 
     const handleGrantTypesChange = (fieldName, selectedValue) => {
@@ -136,22 +117,9 @@ function EditOidcClient() {
 
     // Below code related to adding & deleting of Redirect URLs
     const onChangeRedirectUrl = (index, value) => {
-        const urlPattern = /^(http|https):\/\/[^ "]+$/;
         const newRedirectUrls = [...oidcClientDetails.redirectUris];
         newRedirectUrls[index] = value;
-        if (value === "") {
-            setInvalidRedirectUrl("");
-        } else if (value.length > 2048) {
-            setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-        } else if (!urlPattern.test(value.trim())) {
-            setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
-        } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
-            setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
-        } else if (/^\s+$/.test(value)) {
-            setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
-        } else {
-            setInvalidRedirectUrl("");
-        }
+        setInvalidRedirectUrl(validateUrl(index, value, 2048, newRedirectUrls, t));
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
             redirectUris: newRedirectUrls

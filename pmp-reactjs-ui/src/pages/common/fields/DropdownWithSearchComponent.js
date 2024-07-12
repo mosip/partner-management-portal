@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
-import infoIcon from '../../../svg/info_icon.svg';
 import Information from './Information';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,

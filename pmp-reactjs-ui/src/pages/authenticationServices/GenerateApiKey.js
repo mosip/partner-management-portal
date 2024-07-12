@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
@@ -6,7 +6,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import backArrow from '../../svg/back_arrow.svg';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, moveToOidcClientsList, isLangRTL, moveToApiKeysList, moveToHome, createRequest } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList, moveToHome, createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData, validateName } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -31,7 +31,6 @@ function GenerateApiKey() {
     const [validationError, setValidationError] = useState("");
     const [nameValidationError, setNameValidationError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-    const textareaRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -81,7 +80,7 @@ function GenerateApiKey() {
         if (selectedPartner) {
             setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
             setPolicyGroupName(selectedPartner.policyGroupName);
-            setPoliciesDropdownData(createPoliciesDropdownData('policyName', selectedPartner.activePolicies));
+            setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
         }
     };
 
@@ -90,14 +89,7 @@ function GenerateApiKey() {
     };
 
     const onChangeNameLabel = (value) => {
-        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
-        if (value.length > 36) {
-            setNameValidationError(t('generateApiKey.nameTooLong'))
-        } else if (!regexPattern.test(value)) {
-            setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
-        } else {
-            setNameValidationError("");
-        }
+        setNameValidationError(validateName(value, 36, t));
         setNameLabel(value)
     }
 
@@ -105,20 +97,12 @@ function GenerateApiKey() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedAuthPartnerPolicies', process.env.NODE_ENV));
-
-                if (response && response.data) {
-                    const responseData = response.data;
-
-                    if (responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerData(resData);
-                        setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                const resData = await getAllApprovedAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPartnerData(resData);
+                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
                 } else {
-                    setErrorMsg(t('createOidcClient.errorInResponse'));
+                    setErrorMsg(t('commons.errorInResponse'));
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
@@ -126,48 +110,8 @@ function GenerateApiKey() {
                 setDataLoaded(true);
             }
         };
-
         fetchData();
     }, []);
-
-    const createPartnerIdDropdownData = (fieldName, dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-            let alreadyAdded = false;
-            dataArr.forEach(item1 => {
-                if (item1.fieldValue === item[fieldName]) {
-                    alreadyAdded = true;
-                }
-            });
-            if (!alreadyAdded) {
-                dataArr.push({
-                    fieldCode: item[fieldName],
-                    fieldValue: item[fieldName]
-                });
-            }
-        });
-        return dataArr;
-    }
-
-    const createPoliciesDropdownData = (fieldName, dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-            let alreadyAdded = false;
-            dataArr.forEach(item1 => {
-                if (item1.fieldValue === item[fieldName]) {
-                    alreadyAdded = true;
-                }
-            });
-            if (!alreadyAdded) {
-                dataArr.push({
-                    fieldCode: item[fieldName],
-                    fieldValue: item[fieldName],
-                    fieldDescription: item.policyDescription
-                });
-            }
-        });
-        return dataArr;
-    };
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",

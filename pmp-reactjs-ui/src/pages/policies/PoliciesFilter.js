@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { getPartnerTypeDescription, getStatusCode } from '../../utils/AppUtils.js';
+import { createDropdownData } from '../../utils/AppUtils.js';
 
 function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
     const { t } = useTranslation();
@@ -13,46 +13,12 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
     const [statusData, setStatusData] = useState([]);
 
     useEffect(() => {
-        const getData = (fieldName) => {
-            let dataArr = [];
-            dataArr.push({
-                fieldCode: "",
-                fieldValue: ""
-            });
-            filteredPoliciesList.forEach(item => {
-                let alreadyAdded = false;
-                dataArr.forEach(item1 => {
-                    if (item1.fieldValue === item[fieldName]) {
-                        alreadyAdded = true;
-                    }
-                });
-                if (!alreadyAdded) {
-                    if (fieldName === "partnerType") {
-                        dataArr.push({
-                            fieldCode: getPartnerTypeDescription(item[fieldName], t),
-                            fieldValue: item[fieldName]
-                        });
-                    } else if (fieldName === "status") {
-                        dataArr.push({
-                            fieldCode: getStatusCode(item[fieldName], t),
-                            fieldValue: item[fieldName]
-                        });
-                    } else {
-                        dataArr.push({
-                            fieldCode: item[fieldName],
-                            fieldValue: item[fieldName]
-                        });
-                    }
-                }
-            });
-            return dataArr;
-        }
         const fetchData = async () => {
-            setPartnerIdData(getData('partnerId'));
-            setPartnerTypeData(getData('partnerType'));
-            setPolicyGroupNameData(getData('policyGroupName'));
-            setPolicyNameData(getData('policyName'));
-            setStatusData(getData('status'));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredPoliciesList, t));
+            setPartnerTypeData(createDropdownData('partnerType', '', true, filteredPoliciesList, t));
+            setPolicyGroupNameData(createDropdownData('policyGroupName', '', true, filteredPoliciesList, t));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredPoliciesList, t));
+            setStatusData(createDropdownData('status', '', true, filteredPoliciesList, t));
         };
         fetchData();
     }, [t]);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from '../common/fields/DropdownComponent.js';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import { useTranslation } from 'react-i18next';
-import { getStatusCode } from "../../utils/AppUtils.js";
+import { createDropdownData } from "../../utils/AppUtils.js";
 
 function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
     const { t } = useTranslation();
@@ -13,41 +13,12 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
     const [statusData, setStatusData] = useState([]);
 
     useEffect(() => {
-        const getData = (fieldName) => {
-            let dataArr = [];
-            dataArr.push({
-                fieldCode: "",
-                fieldValue: ""
-            });
-            filteredApiKeysList.forEach(item => {
-                let alreadyAdded = false;
-                dataArr.forEach(item1 => {
-                    if (item1.fieldValue === item[fieldName]) {
-                        alreadyAdded = true;
-                    }
-                });
-                if (!alreadyAdded) {
-                    if (fieldName === "status") {
-                        dataArr.push({
-                            fieldCode: getStatusCode(item[fieldName], t),
-                            fieldValue: item[fieldName]
-                        });
-                    } else {
-                        dataArr.push({
-                            fieldCode: item[fieldName],
-                            fieldValue: item[fieldName]
-                        });
-                    }
-                }
-            });
-            return dataArr;
-        }
         const fetchData = async () => {
-            setPartnerIdData(getData('partnerId'));
-            setpolicyGroupData(getData('policyGroupName'));
-            setPolicyNameData(getData('policyName'));
-            setApiKeyLabelData(getData('apiKeyLabel'));
-            setStatusData(getData('status'));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredApiKeysList, t));
+            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t));
+            setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t));
+            setStatusData(createDropdownData('status', '', true, filteredApiKeysList, t));
         };
         fetchData();
     }, [t]);

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors, logout
+    getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors, logout, createDropdownData
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
@@ -46,7 +46,7 @@ function SelectPolicyPopup() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        setPolicyGroupList(createPolicyGroupDropdownData(resData));
+                        setPolicyGroupList(createDropdownData('name', 'desc', false, resData, t));
                         console.log(`Response data: ${resData.length}`);
                     } else {
                       handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -63,26 +63,6 @@ function SelectPolicyPopup() {
         };
         fetchData();
     }, []);
-
-    const createPolicyGroupDropdownData = (dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-            let alreadyAdded = false;
-            dataArr.forEach(item1 => {
-                if (item1.fieldValue === item.name) {
-                    alreadyAdded = true;
-                }
-            });
-            if (!alreadyAdded) {
-                dataArr.push({
-                    fieldCode: item.name,
-                    fieldValue: item.name,
-                    fieldDescription: item.desc
-                });
-            }
-        });
-        return dataArr;
-    }
 
     const changePolicyGroupSelection = (fieldName, policyGrpId) => {
         setSelectedPolicyGroup(policyGrpId);
