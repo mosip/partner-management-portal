@@ -239,14 +239,14 @@ function RequestPolicy() {
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
-        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
+        dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     }
 
     const styleForSearch = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
-        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
+        dropdownButton: "!w-full !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     }
 
@@ -283,9 +283,9 @@ function RequestPolicy() {
                             <div className="p-7">
                                 <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                 <form>
-                                    <div className="flex flex-col">
-                                        <div className="flex flex-row justify-between space-x-4 my-[1%]">
-                                            <div className="flex flex-col w-[48%]">
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
+                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='partnerId'
                                                     dropdownDataList={partnerIdDropdownData}
@@ -298,7 +298,7 @@ function RequestPolicy() {
                                                     infoKey='requestPolicy.info'>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex flex-col w-[48%]">
+                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
@@ -309,8 +309,8 @@ function RequestPolicy() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row justify-between space-x-4">
-                                            <div className="flex flex-col w-[48%]">
+                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
+                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
@@ -320,7 +320,7 @@ function RequestPolicy() {
                                                     </svg>
                                                 </button>
                                             </div>
-                                            <div className="flex flex-col w-[48%]">
+                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <DropdownWithSearchComponent
                                                     fieldName='policyName'
                                                     dropdownDataList={policiesDropdownData}
