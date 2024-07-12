@@ -6,7 +6,10 @@ import { getUserProfile } from '../../services/UserProfileService';
 import backArrow from '../../svg/back_arrow.svg';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList, moveToHome, createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData, validateName } from "../../utils/AppUtils";
+import {
+    getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList, moveToHome,
+    createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData, validateName
+} from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -116,7 +119,7 @@ function GenerateApiKey() {
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
-        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
+        dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     }
 
