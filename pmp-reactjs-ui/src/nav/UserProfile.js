@@ -39,7 +39,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.firstName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.firstName}
                         </p>
                     </div>
@@ -47,7 +47,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.lastName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.lastName}
                         </p>
                     </div>
@@ -57,7 +57,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.organisationName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.orgName}
                         </p>
                     </div>
@@ -65,7 +65,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.address")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.address}
                         </p>
                     </div>
@@ -75,7 +75,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.partnerType")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                         {getPartnerTypeDescription(userData.partnerType, t)}
                         </p>
                     </div>
@@ -83,7 +83,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.phoneNumber")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.phoneNumber}
                         </p>
                     </div>
@@ -93,7 +93,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.emailAddress")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.email}
                         </p>
                     </div>
@@ -101,7 +101,7 @@ function UserProfile() {
                         <p className="font-[600] text-suva-gray text-xs">
                             {t("userProfile.userName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-all break-normal breal-words">
+                        <p className="font-[600] text-vulcan text-sm break-all break-normal break-words">
                             {userData.userName}
                         </p>
                     </div>
