@@ -323,7 +323,7 @@ function ApiKeysList() {
 
                                                                 <td className="text-center">
                                                                     <div>
-                                                                        <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                                                        <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-32 max-[800px]:right-20 max-[400px]:right-8 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3":"pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>

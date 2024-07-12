@@ -389,7 +389,7 @@ function OidcClientsList() {
 
                                                                 <td className="text-center">
                                                                     <div>
-                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewClientId === index && (
                                                                             <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ?"pr-3" :"pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
