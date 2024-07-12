@@ -332,7 +332,7 @@ function Policies() {
                                     {
                                       viewPolicyId === index && (
                                         <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-32 max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-32 max-[800px]:right-20 max-[400px]:right-8 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}
                                           </p>
