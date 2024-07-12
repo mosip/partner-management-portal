@@ -34,7 +34,7 @@ function ViewApiKeyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -101,11 +101,11 @@ function ViewApiKeyDetails() {
                         </div>
                         <hr className={`h-px w-full bg-gray-200 border-0`} />
                         <div className={`flex flex-wrap pt-3`}>
-                            <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                            <div className={`w-[49%] max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyGroupName}
                                 </p>
                             </div>
@@ -113,23 +113,23 @@ function ViewApiKeyDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyName}
                                 </p>
                             </div>
-                            <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
+                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyGroupDescription}
                                 </p>
                             </div>
-                            <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
+                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyNameDescription}
                                 </p>
                             </div>

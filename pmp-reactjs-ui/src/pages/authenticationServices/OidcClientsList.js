@@ -366,9 +366,9 @@ function OidcClientsList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"} break-all break-word`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4 break-all break-words">{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-1 break-all break-words">{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"} break-all break-normal break-word`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4 break-all break-normal break-words">{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-1 break-all break-normal break-words">{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -400,7 +400,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showDeactivateOidcClient(client)} className={`${isLoginLanguageRTL ?"pr-3" :"pl-3"} break-all py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer hover:bg-gray-100' : 'text-[#D8ADAD]'}`}>
+                                                                                <p onClick={() => showDeactivateOidcClient(client)} className={`${isLoginLanguageRTL ?"pr-3" :"pl-3"} break-all break-normal py-2 ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer hover:bg-gray-100' : 'text-[#D8ADAD]'}`}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (

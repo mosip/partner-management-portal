@@ -32,7 +32,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[6%]"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all break-normal font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[6%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-x-2">
                         <img
@@ -105,11 +105,11 @@ function ViewPolicyDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="flex flex-wrap pt-4">
-                            <div className="w-[50%]">
+                            <div className={`w-[49%] ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
                                 <p className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
@@ -117,15 +117,15 @@ function ViewPolicyDetails() {
                                 <p className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyName}
                                 </p>
                             </div>
-                            <div className="w-[50%] my-5">
+                            <div className={`w-[49%] my-5 ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
                                 <p className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
@@ -133,7 +133,7 @@ function ViewPolicyDetails() {
                                 <p className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyDescription}
                                 </p>
                             </div>
@@ -188,7 +188,7 @@ function ViewPolicyDetails() {
                                             <h4 className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-all break-words">
+                                            <span className="text-sm mt-3 break-all break-normal break-words">
                                                 {policyDetails.partnerComments}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
