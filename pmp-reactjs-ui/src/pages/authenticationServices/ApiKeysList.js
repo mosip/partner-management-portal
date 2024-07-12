@@ -98,7 +98,7 @@ function ApiKeysList() {
 
     const generateApiKey = () => {
         navigate('/partnermanagement/authenticationServices/generateApiKey')
-    }; 
+    };
 
     const showViewApiKeyClientDetails = (selectedApiKeyClientdata) => {
         if (selectedApiKeyClientdata.status === "ACTIVE") {
@@ -205,7 +205,7 @@ function ApiKeysList() {
                             </div>
                             {apiKeysList.length > 0 ?
                                 <button type="button" onClick={() => generateApiKey()}
-                                className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                    className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('apiKeysList.generateApiKey')}
                                 </button>
                                 : null
@@ -225,13 +225,13 @@ function ApiKeysList() {
                                     activeApiKey && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-12 lg:gap-x-20 xl:gap-x-28`}>
-                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
                                                 <h6>{t('apiKeysList.apiKeyLabel')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
-                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" :"ml-5"}`}>{t('authenticationServices.action')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -254,14 +254,14 @@ function ApiKeysList() {
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
-                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" :"pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
+                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" : "pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
                                             {t('apiKeysList.listOfApiKeyRequests') + ' (' + filteredApiKeysList.length + ")"}
                                         </div>
-                                        <div className="w-full flex justify-end relative ">
-                                            {filter && <button onClick={() => onResetFilter()} type="button"
-                                                className="flex justify-center items-center w-[23%] text-sm py-2 font-semibold text-cente text-tory-blue">
+                                        <div className="w-full flex justify-end relative items-center">
+                                            {filter && <p onClick={() => onResetFilter()} type="button"
+                                                className={`flex ${isLoginLanguageRTL ? "ml-[7%]" : "mr-[7%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
                                                 {t('policies.resetFilter')}
-                                            </button>}
+                                            </p>}
                                             <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                                 {t('oidcClientsList.filterBtn')}
@@ -289,7 +289,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && (isLoginLanguageRTL?"pr-12":"pl-12")} ${header.id === "action" && (isLoginLanguageRTL?"pr-12":"pl-12")} `}>
+                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} ${header.id === "action" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} `}>
                                                                 <div className="flex gap-x-1 items-center font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -320,10 +320,10 @@ function ApiKeysList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pl-2":"pr-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4`}>{client.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9":"pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}

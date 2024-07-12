@@ -290,6 +290,7 @@
         "viewApiKeyDetails": "Afficher les détails de la clé API",
         "viewApiKeyId": "Afficher l'ID de clé API",
         "label": "Étiquette",
+        "apiKeyName": "Nom de la clé API",
         "copyApiKeyMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre, car une fois fermée, la fenêtre contextuelle de la clé API sera désactivée."
     },
     "editOidcClient": {

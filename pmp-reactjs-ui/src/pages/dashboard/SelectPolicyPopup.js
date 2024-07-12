@@ -169,6 +169,7 @@ function SelectPolicyPopup() {
                                             fieldNameKey='selectPolicyPopup.policyGroup*' 
                                             placeHolderKey='selectPolicyPopup.title' 
                                             searchKey='commons.search'
+                                            selectPolicyPopup
                                             styleSet={styles}>
                                         </DropdownWithSearchComponent>
                                     </div>

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode, 
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest } from '../../utils/AppUtils';
+import {
+    isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest
+} from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -157,7 +159,7 @@ function OidcClientsList() {
                 clientName: selectedClientdata.oidcClientName,
                 clientAuthMethods: selectedClientdata.clientAuthMethods,
                 clientNameLangMap: {
-                    "eng" : selectedClientdata.oidcClientName
+                    "eng": selectedClientdata.oidcClientName
                 }
             });
             setDeactivateRequest(request);
@@ -277,14 +279,14 @@ function OidcClientsList() {
                                     activeOidcClient && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
-                                                <h6 className={`${isLoginLanguageRTL?"mr-5":"ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
                                                 <h6>{t('authenticationServices.policyGroup')}</h6>
                                                 <h6>{t('authenticationServices.policyName')}</h6>
                                                 <h6>{t('authenticationServices.oidcClientName')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
                                                 <h6>{t('authenticationServices.oidcClientId')}</h6>
-                                                <h6 className={isLoginLanguageRTL?"ml-5":"mr-5"}>{t('authenticationServices.action')}</h6>
+                                                <h6 className={isLoginLanguageRTL ? "ml-5" : "mr-5"}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -307,14 +309,14 @@ function OidcClientsList() {
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                                     <div className="flex w-full p-2">
-                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" :"pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
+                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" : "pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
                                             {t('oidcClientsList.listOfOidcClients') + ' (' + filteredOidcClientsList.length + ")"}
                                         </div>
-                                        <div className="w-full flex justify-end relative ">
-                                            {filter && <button onClick={() => onResetFilter()} type="button"
-                                                className="flex justify-center items-center w-[23%] text-sm py-2 font-semibold text-cente text-tory-blue">
+                                        <div className="w-full flex justify-end relative items-center">
+                                            {filter && <p onClick={() => onResetFilter()} type="button"
+                                                className={`flex ${isLoginLanguageRTL ? "ml-[7%]" : "mr-[7%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
                                                 {t('policies.resetFilter')}
-                                            </button>}
+                                            </p>}
                                             <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
                                                 ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                                                 {t('oidcClientsList.filterBtn')}
@@ -373,10 +375,10 @@ function OidcClientsList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ?"pl-2" :"pr-2"} break-all break-word`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"} break-all break-word`}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-4 break-all break-words">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-1 break-all break-words">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" :"pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
@@ -390,7 +392,7 @@ function OidcClientsList() {
                                                                             transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                     </svg>
                                                                     {showPopup && (
-                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles}/>
+                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
                                                                     )}
                                                                 </td>
 
@@ -449,7 +451,7 @@ function OidcClientsList() {
                                         <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
                                         <div>
                                             {isItemsPerPageOpen && (
-                                                <div ref={itemsCountSelectionRef}  className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                                                <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                                                     {itemsPerPageOptions.map((num, i) => {
                                                         return (
                                                             <p key={i} onClick={() => changeItemsPerPage(num)}

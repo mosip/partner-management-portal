@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
-import { getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, moveToHome } from '../../utils/AppUtils';
+import {
+  getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
+  toggleSortAscOrder, toggleSortDescOrder, moveToHome
+} from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ReactPaginate from 'react-paginate';
@@ -44,9 +46,9 @@ function Policies() {
   const itemsCountSelectionRef = useRef(null);
 
   useEffect(() => {
-     handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
-     handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
-  }, [submenuRef,itemsCountSelectionRef]);
+    handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
+    handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
+  }, [submenuRef, itemsCountSelectionRef]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -153,7 +155,7 @@ function Policies() {
   const sortAscOrder = (header) => {
     const isDateCol = (header === "createDate") ? true : false;
     toggleSortAscOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
-}
+  }
 
   const sortDescOrder = (header) => {
     const isDateCol = (header === "createDate") ? true : false;
@@ -262,160 +264,160 @@ function Policies() {
                   </div>
                 </div>
                 :
-                  <>
-                    <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
-                      <div className="flex w-full p-2">
-                        <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base" >
-                          {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
-                        </div>
-                        <div className="w-full flex justify-end relative ">
-                          {filter && <button onClick={() => onResetFilter()} type="button"
-                            className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[23%] text-sm py-3 font-semibold text-center text-tory-blue`}>
-                            {t('policies.resetFilter')}
-                          </button>}
-                          <button onClick={() => setFilter(!filter)} type="button" className={`flex ${isLoginLanguageRTL ? "ml-2" :"mr-2"} justify-center items-center w-[20%] h-10 min-w-20 text-sm py-3 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                            ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} `}>
-                            {t('policies.filterBtn')}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
-                              width="10" height="8" viewBox="0 0 10 8">
-                              <path id="Polygon_8"
-                                data-name="Polygon 8"
-                                d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
-                                transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
-                            </svg>
-                          </button>
-                        </div>
+                <>
+                  <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
+                    <div className="flex w-full p-2">
+                      <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base" >
+                        {t('policies.listOfPolicies') + ' (' + filteredPoliciesList.length + ")"}
                       </div>
-                      <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                      {filter &&
-                        <PoliciesFilter
-                          filteredPoliciesList={filteredPoliciesList}
-                          onFilterChange={onFilterChange}>
-                        </PoliciesFilter>}
+                      <div className="w-full flex justify-end relative items-center">
+                        {filter && <p onClick={() => onResetFilter()} type="button"
+                          className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
+                          {t('policies.resetFilter')}
+                        </p>}
+                        <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+                            ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
+                          {t('policies.filterBtn')}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
+                            width="10" height="8" viewBox="0 0 10 8">
+                            <path id="Polygon_8"
+                              data-name="Polygon 8"
+                              d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
+                              transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                    {filter &&
+                      <PoliciesFilter
+                        filteredPoliciesList={filteredPoliciesList}
+                        onFilterChange={onFilterChange}>
+                      </PoliciesFilter>}
 
-                      <div className="mx-[2%] overflow-x-scroll">
-                        <table className="table-fixed">
-                          <thead>
-                            <tr>
-                              {tableHeaders.map((header, index) => {
-                                return (
-                                  <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
-                                    <div className="mx-2 flex gap-x-0 items-center">
-                                      {t(header.headerNameKey)}
-                                      {header.id !== "action" && (
-                                        <div>
-                                          <svg className="cursor-pointer mx-2 mb-0.5" onClick={() => sortDescOrder(header.id)} alt="Descending"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="8" height="8" viewBox="0 0 7 6">
-                                            <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                              fill={`${(activeSortDesc === header.id && order === "DESC") ? "#1447b2" : "#969696"}`} />
-                                          </svg>
-                                          <svg className="cursor-pointer mx-2" onClick={() => sortAscOrder(header.id)} alt="Ascending"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="8" height="8" viewBox="0 0 7 6">
-                                            <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                              transform="translate(7 6) rotate(180)" fill={`${(activeSortAsc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
-                                          </svg>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </th>
-                                )
-                              })}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {tableRows.map((partner, index) => {
+                    <div className="mx-[2%] overflow-x-scroll">
+                      <table className="table-fixed">
+                        <thead>
+                          <tr>
+                            {tableHeaders.map((header, index) => {
                               return (
-                                <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2 break-all break-word">{partner.policyName}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
-                                  <td onClick={() => showViewPolicyDetails(partner)} className="">
-                                    <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
-                                      {getStatusCode(partner.status, t)}
-                                    </div>
-                                  </td>
-                                  <td className="text-center">
-                                    <div>
-                                      <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
-                                      {
-                                        viewPolicyId === index && (
-                                          <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
-                                            className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
-                                            <p className="cursor-pointer">
-                                              {t('policies.view')}
-                                            </p>
-                                          </div>
-                                        )
-                                      }
-                                    </div>
-                                  </td>
-                                </tr>
+                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
+                                  <div className="mx-2 flex gap-x-0 items-center">
+                                    {t(header.headerNameKey)}
+                                    {header.id !== "action" && (
+                                      <div>
+                                        <svg className="cursor-pointer mx-2 mb-0.5" onClick={() => sortDescOrder(header.id)} alt="Descending"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="8" height="8" viewBox="0 0 7 6">
+                                          <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                            fill={`${(activeSortDesc === header.id && order === "DESC") ? "#1447b2" : "#969696"}`} />
+                                        </svg>
+                                        <svg className="cursor-pointer mx-2" onClick={() => sortAscOrder(header.id)} alt="Ascending"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="8" height="8" viewBox="0 0 7 6">
+                                          <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
+                                            transform="translate(7 6) rotate(180)" fill={`${(activeSortAsc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
+                                        </svg>
+                                      </div>
+                                    )}
+                                  </div>
+                                </th>
+                              )
+                            })}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tableRows.map((partner, index) => {
+                            return (
+                              <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2 break-all break-word">{partner.policyName}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="">
+                                  <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                    {getStatusCode(partner.status, t)}
+                                  </div>
+                                </td>
+                                <td className="text-center">
+                                  <div>
+                                    <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                    {
+                                      viewPolicyId === index && (
+                                        <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
+                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "-mr-14" : null}`}>
+                                          <p className="cursor-pointer">
+                                            {t('policies.view')}
+                                          </p>
+                                        </div>
+                                      )
+                                    }
+                                  </div>
+                                </td>
+                              </tr>
+                            )
+                          })
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
+                    <div></div>
+                    <ReactPaginate
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      activeClassName={"active"}
+                      onPageChange={(event) => handlePageChange(event)}
+                      pageCount={Math.ceil(filteredPoliciesList.length / selectedRecordsPerPage)}
+                      breakLabel="..."
+                      previousLabel={
+                        <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                          {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
+                        </IconContext.Provider>
+                      }
+                      nextLabel={
+                        <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
+                          {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
+                        </IconContext.Provider>
+                      }
+                    />
+                    <div className="flex items-center gap-x-3">
+                      <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
+                      <div>
+                        {isItemsPerPageOpen && (
+                          <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                            {itemsPerPageOptions.map((num, i) => {
+                              return (
+                                <p key={i} onClick={() => changeItemsPerPage(num)}
+                                  className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
+                                  {num}
+                                </p>
                               )
                             })
                             }
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
-                      <div></div>
-                      <ReactPaginate
-                        containerClassName={"pagination"}
-                        pageClassName={"page-item"}
-                        activeClassName={"active"}
-                        onPageChange={(event) => handlePageChange(event)}
-                        pageCount={Math.ceil(filteredPoliciesList.length / selectedRecordsPerPage)}
-                        breakLabel="..."
-                        previousLabel={
-                          <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
-                          </IconContext.Provider>
-                        }
-                        nextLabel={
-                          <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                            {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
-                          </IconContext.Provider>
-                        }
-                      />
-                      <div className="flex items-center gap-x-3">
-                        <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                        <div>
-                          {isItemsPerPageOpen && (
-                            <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
-                              {itemsPerPageOptions.map((num, i) => {
-                                return (
-                                  <p key={i} onClick={() => changeItemsPerPage(num)}
-                                    className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
-                                    {num}
-                                  </p>
-                                )
-                              })
-                              }
-                            </div>
-                          )}
-                          <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
-                            onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
-                            <p>
-                              {selectedRecordsPerPage}
-                            </p>
-                            <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
-                              <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                                transform="translate(-12 -16.6)" fill="#1447b2" />
-                            </svg>
                           </div>
+                        )}
+                        <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
+                          onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
+                          <p>
+                            {selectedRecordsPerPage}
+                          </p>
+                          <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
+                            <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
+                              d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
+                              transform="translate(-12 -16.6)" fill="#1447b2" />
+                          </svg>
                         </div>
                       </div>
                     </div>
-                  </>
+                  </div>
+                </>
               }
             </div>
           </div>
