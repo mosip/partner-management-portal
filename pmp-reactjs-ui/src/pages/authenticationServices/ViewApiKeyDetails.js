@@ -41,7 +41,7 @@ function ViewApiKeyDetails() {
                             src={backArrow}
                             alt=""
                             onClick={() => moveToApiKeysList(navigate)}
-                            className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
+                            className={`cursor-pointer -mt-[4%] ${isLoginLanguageRTL ? "rotate-180" : null}`}
                         />
                         <div className="flex-col">
                             <h1 className="font-bold text-lg text-dark-blue">

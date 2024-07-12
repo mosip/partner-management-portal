@@ -56,7 +56,7 @@ function ViewOidcClientDetails() {
                             src={backArrow}
                             alt=""
                             onClick={() => moveToOidcClientsList(navigate)}
-                            className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
+                            className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null} -mt-[4%]`}
                         />
                         <div className="flex-col">
                             <h1 className="font-bold text-lg text-dark-blue">
