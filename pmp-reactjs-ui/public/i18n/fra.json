@@ -483,6 +483,7 @@
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PV_005": "Paramètre d'entrée non valide - errorCode dans les données de stratégie",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
+        "PMS_PRT_060": "Cette politique a déjà été approuvée par rapport à votre identifiant de partenaire.",
         "PMS_AUT_028": "Les détails de l'appareil pour l'identifiant $ID sont rejetés. Impossible d'utiliser les mêmes détails pour le mappage.",
         "PMS_CERTIFICATE_ERROR_001": "Erreur lors de la récupération des certificats partenaires.",
         "PMS_CERTIFICATE_ERROR_002": "L'ID utilisateur n'existe pas.",
