@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome, createDropdownData } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome, createDropdownData, createRequest } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -20,7 +20,6 @@ function RequestPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerId, setPartnerId] = useState("");
-    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
@@ -116,7 +115,6 @@ function RequestPolicy() {
         const selectedPolicy = policyList.find(item => item.name === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedValue);
-            setPolicyId(selectedPolicy.id);
         }
     };
 
@@ -163,15 +161,10 @@ function RequestPolicy() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        let request = {
-            request: {
-                partnerId: partnerId,
-                policyId: policyId,
-                policyName: policyName,
-                requestDetail: partnerComments,
-                useCaseDescription: partnerComments
-            },
-        }
+        let request = createRequest({
+            policyName: policyName,
+            useCaseDescription: partnerComments
+        });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policy/map`, process.env.NODE_ENV), request);
             if (response) {

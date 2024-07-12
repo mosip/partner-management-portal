@@ -483,6 +483,7 @@
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PV_005": "Invalid input parameter - errorCode in policy data",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",
+        "PMS_PRT_060": "This policy has already been approved against your partner ID.",
         "PMS_AUT_028": "Device details for id $ID are rejected. Can't use same details for mapping.",
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
         "PMS_CERTIFICATE_ERROR_002": "User Id does not exists.",
