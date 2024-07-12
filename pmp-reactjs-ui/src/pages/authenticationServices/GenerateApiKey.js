@@ -238,7 +238,7 @@ function GenerateApiKey() {
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{partnerType || t("partnerTypes.authPartner")}</span>
@@ -250,7 +250,7 @@ function GenerateApiKey() {
                                         </div>
                                         <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[450px]:flex-col">
                                             <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                                                     <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
@@ -277,7 +277,7 @@ function GenerateApiKey() {
                                         <div className="space-y-6">
                                             <div className="my-4">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('generateApiKey.name')}<span className="text-crimson-red">*</span></label>
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('generateApiKey.name')}<span className="text-crimson-red mx-1">*</span></label>
                                                     <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />

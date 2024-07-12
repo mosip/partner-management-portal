@@ -360,7 +360,7 @@ function EditOidcClient() {
                                         <div className="flex my-[1%]">
                                             <div className="flex flex-col w-full">
                                                 <label className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                    <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
+                                                    <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL?"mr-1":"ml-1"}`}>*</span></p>
                                                     <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
                                                 </label>
                                                 <textarea value={oidcClientDetails.publicKey} readOnly

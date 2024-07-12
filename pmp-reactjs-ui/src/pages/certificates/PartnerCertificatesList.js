@@ -183,7 +183,7 @@ function PartnerCertificatesList() {
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
                             <div className="flex items-start space-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
+                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[6%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
                                 <div className="flex-col">
                                     <h1 className="font-semibold text-lg text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
                                     <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">

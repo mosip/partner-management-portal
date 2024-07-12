@@ -29,10 +29,6 @@ function SelectPolicyPopup() {
         setIsExpanded(!isExpanded);
     };
 
-    const handleDropdownClick = () => {
-        setIsExpanded(false);
-    };
-
     useEffect(() => {
         const fetchData = async () => {
             setDataLoaded(false);
@@ -141,7 +137,7 @@ function SelectPolicyPopup() {
                                             <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                         </button>
                                     </div>
-                                    <div className="flex flex-col" onClick={handleDropdownClick}>
+                                    <div className="flex flex-col">
                                         <DropdownWithSearchComponent 
                                             fieldName='policyGroup' 
                                             dropdownDataList={policyGroupList} 

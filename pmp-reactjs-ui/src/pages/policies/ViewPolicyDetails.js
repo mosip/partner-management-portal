@@ -39,7 +39,7 @@ function ViewPolicyDetails() {
                             src={backArrow}
                             alt=""
                             onClick={() => moveToPolicies(navigate)}
-                            className={`mt-[9%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
+                            className={`-mt-[6%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
                         />
                         <div className="flex-col">
                             <h1 className="font-semibold text-lg text-dark-blue">
