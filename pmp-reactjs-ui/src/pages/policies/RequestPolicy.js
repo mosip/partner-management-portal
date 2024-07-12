@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome, createDropdownData } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -83,7 +83,7 @@ function RequestPolicy() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setPartnerData(resData);
-                        setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
+                        setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
                         console.log('Response data:', partnerData.length);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -99,45 +99,6 @@ function RequestPolicy() {
         };
         fetchData();
     }, []);
-
-    const createPartnerIdDropdownData = (fieldName, dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-            let alreadyAdded = false;
-            dataArr.forEach(item1 => {
-                if (item1.fieldValue === item[fieldName]) {
-                    alreadyAdded = true;
-                }
-            });
-            if (!alreadyAdded) {
-                dataArr.push({
-                    fieldCode: item[fieldName],
-                    fieldValue: item[fieldName]
-                });
-            }
-        });
-        return dataArr;
-    }
-
-    const createPoliciesDropdownData = (fieldName, dataList) => {
-        let dataArr = [];
-        dataList.forEach(item => {
-            let alreadyAdded = false;
-            dataArr.forEach(item1 => {
-                if (item1.fieldValue === item[fieldName]) {
-                    alreadyAdded = true;
-                }
-            });
-            if (!alreadyAdded) {
-                dataArr.push({
-                    fieldCode: item[fieldName],
-                    fieldValue: item[fieldName],
-                    fieldDescription: item.descr
-                });
-            }
-        });
-        return dataArr;
-    }
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
@@ -172,7 +133,7 @@ function RequestPolicy() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     setPolicyList(resData);
-                    setPoliciesDropdownData(createPoliciesDropdownData('name', resData));
+                    setPoliciesDropdownData(createDropdownData('name', 'descr', false, resData, t));
                     console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -256,7 +217,7 @@ function RequestPolicy() {
         if (comments.length > maxLength) {
             error = t('requestPolicy.commentTooLong');
         } else if (!regexPattern.test(comments)) {
-            error = t('requestPolicy.specialCharNotAllowed');
+            error = t('commons.specialCharNotAllowed');
         }
         setValidationError(error);
         return error === "";

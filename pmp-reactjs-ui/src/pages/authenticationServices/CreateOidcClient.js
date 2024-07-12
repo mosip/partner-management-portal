@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
@@ -7,7 +7,7 @@ import backArrow from '../../svg/back_arrow.svg';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes, moveToHome,
-  isLangRTL
+  isLangRTL, createDropdownData, validateName, validateUrl, getAllApprovedAuthPartnerPolicies
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -143,70 +143,22 @@ function CreateOidcClient() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedAuthPartnerPolicies', process.env.NODE_ENV));
-
-        if (response && response.data) {
-          const responseData = response.data;
-
-          if (responseData.response) {
-            const resData = responseData.response;
-            setPartnerData(resData);
-            setPartnerIdDropdownData(createPartnerIdDropdownData('partnerId', resData));
+          setDataLoaded(false);
+          const resData = await getAllApprovedAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+          if (resData) {
+              setPartnerData(resData);
+              setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
           } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+              setErrorMsg(t('commons.errorInResponse'));
           }
-        } else {
-          setErrorMsg(t('createOidcClient.errorInResponse'));
-        }
       } catch (err) {
-        console.error('Error fetching data:', err);
+          console.error('Error fetching data:', err);
       } finally {
-        setDataLoaded(true);
+          setDataLoaded(true);
       }
     };
-
     fetchData();
-  }, []);
-
-  const createPartnerIdDropdownData = (fieldName, dataList) => {
-    let dataArr = [];
-    dataList.forEach(item => {
-      let alreadyAdded = false;
-      dataArr.forEach(item1 => {
-        if (item1.fieldValue === item[fieldName]) {
-          alreadyAdded = true;
-        }
-      });
-      if (!alreadyAdded) {
-        dataArr.push({
-          fieldCode: item[fieldName],
-          fieldValue: item[fieldName]
-        });
-      }
-    });
-    return dataArr;
-  }
-
-  const createPoliciesDropdownData = (fieldName, dataList) => {
-    let dataArr = [];
-    dataList.forEach(item => {
-      let alreadyAdded = false;
-      dataArr.forEach(item1 => {
-        if (item1.fieldValue === item[fieldName]) {
-          alreadyAdded = true;
-        }
-      });
-      if (!alreadyAdded) {
-        dataArr.push({
-          fieldCode: item[fieldName],
-          fieldValue: item[fieldName],
-          fieldDescription: item.policyDescription
-        });
-      }
-    });
-    return dataArr;
-  };
+}, []);
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
@@ -216,7 +168,7 @@ function CreateOidcClient() {
     if (selectedPartner) {
       setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
       setPolicyGroupName(selectedPartner.policyGroupName);
-      setPoliciesDropdownData(createPoliciesDropdownData('policyName', selectedPartner.activePolicies));
+      setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
     }
   };
 
@@ -232,14 +184,7 @@ function CreateOidcClient() {
   };
 
   const onChangeOidcClientName = (value) => {
-    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
-    if (value.length > 256) {
-      setNameValidationError(t('createOidcClient.nameTooLong'))
-    } else if (!regexPattern.test(value)) {
-      setNameValidationError(t('requestPolicy.specialCharNotAllowed'))
-    } else {
-      setNameValidationError("");
-    }
+    setNameValidationError(validateName(value, 256, t));
     setOidcClientName(value);
   }
 
@@ -256,22 +201,9 @@ function CreateOidcClient() {
 
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
-    const urlPattern = /^(http|https):\/\/[^ "]+$/;
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    if (value === "") {
-      setInvalidRedirectUrl("");
-    } else if (value.length > 2048) {
-      setInvalidRedirectUrl(t('createOidcClient.urlTooLong'));
-    } else if (!urlPattern.test(value.trim())) {
-      setInvalidRedirectUrl(t('createOidcClient.invalidUrl'));
-    } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
-      setInvalidRedirectUrl(t('createOidcClient.duplicateUrl'));
-    } else if (/^\s+$/.test(value)) {
-      setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
-    } else {
-      setInvalidRedirectUrl("");
-    }
+    setInvalidRedirectUrl(validateUrl(index, value, 2048, newRedirectUrls, t));
     setRedirectUrls(newRedirectUrls);
   };
 
@@ -319,19 +251,8 @@ function CreateOidcClient() {
   }
 
   const handleLogoUrlChange = (value) => {
+    setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
     setLogoUrl(value);
-    const urlPattern = /^(http|https):\/\/[^ "]+$/;
-    if (value === "") {
-      setInvalidLogoUrl("");
-    } else if (value.length > 2048) {
-      setInvalidLogoUrl(t('createOidcClient.urlTooLong'));
-    } else if (!urlPattern.test(value.trim())) {
-      setInvalidLogoUrl(t('createOidcClient.invalidUrl'));
-    } else if (/^\s+$/.test(value)) {
-      setInvalidLogoUrl(t('createOidcClient.invalidUrl')); // Show error for input with only spaces
-    } else {
-      setInvalidLogoUrl("");
-    }
   };
 
   const getRedirectUris = () => {

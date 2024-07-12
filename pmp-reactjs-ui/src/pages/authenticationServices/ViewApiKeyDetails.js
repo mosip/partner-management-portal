@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, moveToApiKeysList, getStatusCode, formatDate} from "../../utils/AppUtils";
+import { isLangRTL, moveToApiKeysList, getStatusCode, formatDate, bgOfStatus} from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 
 function ViewApiKeyDetails() {
@@ -30,15 +30,6 @@ function ViewApiKeyDetails() {
 
     const moveToHome = () => {
         navigate("/partnermanagement");
-    };
-
-    function bgOfStatus(status) {
-        if (status === "ACTIVE") {
-            return ("bg-[#D1FADF] text-[#155E3E]")
-        }
-        else if (status === "INACTIVE") {
-            return ("bg-[#EAECF0] text-[#525252]")
-        }
     };
 
     return (

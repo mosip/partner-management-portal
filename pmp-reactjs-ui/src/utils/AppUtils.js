@@ -229,3 +229,112 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
         }
     }
 };
+
+
+export const validateName = (value, length, t) => {
+    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
+    if (value.length > length) {
+        return t('commons.nameTooLong', {length: length});
+    } else if (!regexPattern.test(value)) {
+        return t('commons.specialCharNotAllowed');
+    } else {
+      return "";
+    }
+};
+
+export const validateUrl = (index, value, length, newRedirectUrls, t) => {
+    const urlPattern = /^(http|https):\/\/[^ "]+$/;
+    if (value === "") {
+        return "";
+    } else if (value.length > length) {
+        return t('commons.urlTooLong', {length: length});
+    } else if (!urlPattern.test(value.trim())) {
+        return t('commons.invalidUrl');
+    } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
+        return t('commons.duplicateUrl');
+    } else if (/^\s+$/.test(value)) {
+        return t('commons.invalidUrl'); // Show error for input with only spaces
+    } else {
+        return "";
+    }
+}
+
+export const bgOfStatus = (status) => {
+    if (status === "approved" || status === "ACTIVE") {
+      return ("bg-[#D1FADF] text-[#155E3E]")
+    }
+    else if (status === "rejected") {
+      return ("bg-[#FAD6D1] text-[#5E1515]")
+    }
+    else if (status === "InProgress") {
+      return ("bg-[#FEF1C6] text-[#6D1C00]")
+    }
+    else if (status === "deactivated" || status === "INACTIVE") {
+      return ("bg-[#EAECF0] text-[#525252]")
+    }
+}
+
+export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, dataList, t) => {
+    let dataArr = [];
+    if (isBlankEntryRequired) {
+        dataArr.push({
+            fieldCode: "",
+            fieldValue: ""
+        });
+    }
+    dataList.forEach(item => {
+        let alreadyAdded = false;
+        dataArr.forEach(item1 => {
+            if (item1.fieldValue === item[fieldName]) {
+                alreadyAdded = true;
+            }
+        });
+        if (!alreadyAdded) {
+            if (fieldName === "partnerType") {
+                dataArr.push({
+                    fieldCode: getPartnerTypeDescription(item[fieldName], t),
+                    fieldValue: item[fieldName]
+                });
+            } else if (fieldName === "status") {
+                dataArr.push({
+                    fieldCode: getStatusCode(item[fieldName], t),
+                    fieldValue: item[fieldName]
+                });
+            } else {
+                if(fieldDesc) {
+                    dataArr.push({
+                        fieldCode: item[fieldName],
+                        fieldValue: item[fieldName],
+                        fieldDescription: item[fieldDesc]
+                    });
+                } else {
+                    dataArr.push({
+                        fieldCode: item[fieldName],
+                        fieldValue: item[fieldName]
+                    });
+                }
+            }
+        }
+    });
+    return dataArr;
+}
+
+export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedAuthPartnerPolicies', process.env.NODE_ENV));
+        if (response && response.data) {
+            const responseData = response.data;
+            if (responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error in getAllApprovedAuthPartnerPolicies:', error);
+        return null;
+    }
+};

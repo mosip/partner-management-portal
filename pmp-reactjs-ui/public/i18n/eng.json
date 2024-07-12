@@ -11,7 +11,13 @@
         "noAccess": "You do not have privilege to access this page",
         "noAccessDesc": "Please contact your administrator",
         "timeout": "Request timed out",
-        "timeoutDesc": "Server took too long to respond, please try again later"
+        "timeoutDesc": "Server took too long to respond, please try again later",
+        "nameTooLong": "Name should not allow more than {{length}} characters.",
+        "specialCharNotAllowed": "Special characters are not allowed.",
+        "urlTooLong": "URI should not allow more than {{length}} characters.",
+        "invalidUrl": "Enter a valid URI",
+        "duplicateUrl": "Duplicate URIs are not allowed",
+        "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -181,8 +187,7 @@
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "commentTooLong": "Comments should not allow more than 500 characters.",
-        "specialCharNotAllowed": "Special characters are not allowed."
+        "commentTooLong": "Comments should not allow more than 500 characters."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -225,14 +230,11 @@
         "enterGrantTypes": "Enter Grant Types",
         "delete": "Delete",
         "addNew": "Add New",
-        "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error",
         "requestSuccessHeader": "Details Submitted Successfully!",
         "requestSuccessMsg": "OIDC Client details has been successfully submitted.",
         "commentBoxDesc": "Mention the purpose of requesting the OIDC Client",
         "errorInCreateOIDC": "While requesting OIDC Client, we have encountered with an error",
         "invalidJwkFormat": "Enter valid public key in JWK format",
-        "invalidUrl": "Enter a valid URI",
-        "urlTooLong": "URI should not allow more than 2048 characters.",
         "duplicateUrl": "Duplicate URIs are not allowed",
         "partnerIdTooltip": "Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first"
     },

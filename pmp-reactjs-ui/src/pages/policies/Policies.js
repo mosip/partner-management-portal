@@ -5,7 +5,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
 import {
   getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, moveToHome
+  toggleSortAscOrder, toggleSortDescOrder, moveToHome, bgOfStatus
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -135,21 +135,6 @@ function Policies() {
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
-
-  function bgOfStatus(status) {
-    if (status === "approved") {
-      return ("bg-[#D1FADF] text-[#155E3E]")
-    }
-    else if (status === "rejected") {
-      return ("bg-[#FAD6D1] text-[#5E1515]")
-    }
-    else if (status === "InProgress") {
-      return ("bg-[#FEF1C6] text-[#6D1C00]")
-    }
-    else if (status === "deactivated") {
-      return ("bg-[#EAECF0] text-[#525252]")
-    }
-  }
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {

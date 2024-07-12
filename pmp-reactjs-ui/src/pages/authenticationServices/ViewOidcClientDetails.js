@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, moveToHome } from "../../utils/AppUtils";
+import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, moveToHome, bgOfStatus } from "../../utils/AppUtils";
 import backArrow from "../../svg/back_arrow.svg";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
@@ -35,15 +35,6 @@ function ViewOidcClientDetails() {
             navigate('/partnermanagement/authenticationServices/oidcClientsList');
         }
     }, [navigate, copyToolTipRef]);
-
-    function bgOfStatus(status) {
-        if (status === "ACTIVE") {
-            return ("bg-[#D1FADF] text-[#155E3E]")
-        }
-        else if (status === "INACTIVE") {
-            return ("bg-[#EAECF0] text-[#525252]")
-        }
-    };
 
     const copyId = () => {
         if (oidcClientDetails.status === "ACTIVE") {

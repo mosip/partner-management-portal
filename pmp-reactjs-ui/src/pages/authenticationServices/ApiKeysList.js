@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest, bgOfStatus
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -120,15 +120,6 @@ function ApiKeysList() {
             });
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-        }
-    };
-
-    function bgOfStatus(status) {
-        if (status === "ACTIVE") {
-            return ("bg-[#D1FADF] text-[#155E3E]")
-        }
-        else if (status === "INACTIVE") {
-            return ("bg-[#EAECF0] text-[#525252]")
         }
     };
 

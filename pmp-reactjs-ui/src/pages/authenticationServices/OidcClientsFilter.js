@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DropdownComponent from '../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { getStatusCode } from "../../utils/AppUtils.js";
+import { createDropdownData } from "../../utils/AppUtils.js";
 
 function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     const { t } = useTranslation();
@@ -12,41 +12,12 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     const [statusData, setStatusData] = useState([]);
 
     useEffect(() => {
-        const getData = (fieldName) => {
-            let dataArr = [];
-            dataArr.push({
-                fieldCode: "",
-                fieldValue: ""
-            });
-            filteredOidcClientsList.forEach(item => {
-                let alreadyAdded = false;
-                dataArr.forEach(item1 => {
-                    if (item1.fieldValue === item[fieldName]) {
-                        alreadyAdded = true;
-                    }
-                });
-                if (!alreadyAdded) {
-                    if (fieldName === "status") {
-                        dataArr.push({
-                            fieldCode: getStatusCode(item[fieldName], t),
-                            fieldValue: item[fieldName]
-                        });
-                    } else {
-                        dataArr.push({
-                            fieldCode: item[fieldName],
-                            fieldValue: item[fieldName]
-                        });
-                    }
-                }
-            });
-            return dataArr;
-        }
         const fetchData = async () => {
-            setPartnerIdData(getData('partnerId'));
-            setOidcClientNameData(getData('oidcClientName'));
-            setpolicyGroupData(getData('policyGroupName'));
-            setPolicyNameData(getData('policyName'));
-            setStatusData(getData('status'));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredOidcClientsList, t));
+            setOidcClientNameData(createDropdownData('oidcClientName', '', true, filteredOidcClientsList, t));
+            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredOidcClientsList, t));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredOidcClientsList, t));
+            setStatusData(createDropdownData('status', '', true, filteredOidcClientsList, t));
         };
         fetchData();
     }, [t]);
