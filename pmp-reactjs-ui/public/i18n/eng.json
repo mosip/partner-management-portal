@@ -424,7 +424,7 @@
         "PMS_PMS_022": "Given Partner api key is not active.",
         "PMS_PMP_018": "Policy expired.",
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
-        "PMS_PRT_110": "Given label already exists.Provide unique label.",
+        "PMS_PRT_110": "Entered name already exists. Provide a unique name and submit.",
         "PMS_AUT_002": "Device provider id not found from the partners list",
         "PMS_AUT_003": "Device Details already exists",
         "PMS_AUT_004": "Duplicate request received",

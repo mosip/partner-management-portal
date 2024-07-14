@@ -21,16 +21,16 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
     }, [t, errorCode, errorMessage]);
 
     return (
-        <>
+        <div className="flex items-center">
             <div className="h-full mr-8">
                 <p className="text-white text-sm/4 max-[450px]:text-xs/4 break-words font-inter line-clamp-6">
                     {errorMsg}
                 </p>
             </div>
-            <div className="mr-3 ml-5 absolute top-4 right-2">
+            <div className="mr-3 ml-5 absolute top-4 right-2 mt-1">
                 <img src={cancelIcon} alt="" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel}/>
             </div>
-        </>
+        </div>
     );
 }
 
