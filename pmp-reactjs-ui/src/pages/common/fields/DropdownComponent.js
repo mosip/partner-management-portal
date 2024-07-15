@@ -61,7 +61,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 </button>
                 {isDropdownOpen && (
                     <div className={`absolute z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-md shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                        <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4">
                                     <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
@@ -72,7 +72,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block w-full h-9 px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-nowrap no-scrollbar
+                                                className={`block w-full min-h-9 px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 {dropdownItem.fieldCode}
