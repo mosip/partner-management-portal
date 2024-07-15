@@ -116,6 +116,7 @@ function ApiKeysList() {
             });
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
         }
     };
 
@@ -154,8 +155,6 @@ function ApiKeysList() {
 
     //This part related to Pagination Logic
     let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
-
-    showDeactivatePopup ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>

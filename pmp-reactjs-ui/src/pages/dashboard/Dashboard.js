@@ -86,6 +86,7 @@ function Dashboard() {
               //3. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
+              document.body.style.overflow = "hidden";
               isSelectPolicyPopupVisible = true;
             } else {
               //4. register the new user in PMS
@@ -111,13 +112,14 @@ function Dashboard() {
             await fetchUserConsent();
             if (!isUserConsentGiven) {
               setShowConsentPopup(true);
+              document.body.style.overflow="hidden";
             }
           }
           //if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
             setShowPolicies(true);
-          } 
+          }
         } else {
           setErrorMsg(t('dashboard.verifyEmailError'));
         }
@@ -144,17 +146,17 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  showPopup || showConsentPopup ? document.body.style.overflow="hidden" : document.body.style.overflow="auto";
+
 
   return (
-    <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28": "ml-20"} overflow-x-scroll relative`}>
+    <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28" : "ml-20"} overflow-x-scroll relative`}>
       {!dataLoaded && (
         <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mt-3 absolute ${isLoginLanguageRTL ?"left-2" :"right-2"}`}>
+            <div className={`flex justify-end max-w-7xl mt-3 absolute ${isLoginLanguageRTL ? "left-2" : "right-2"}`}>
               <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
               </div>

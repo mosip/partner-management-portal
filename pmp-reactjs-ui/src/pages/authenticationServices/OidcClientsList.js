@@ -161,6 +161,7 @@ function OidcClientsList() {
             });
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
+            document.body.style.overflow="hidden";
         }
     };
 
@@ -168,6 +169,7 @@ function OidcClientsList() {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
             setShowPopup(true);
+            document.body.style.overflow="hidden"
         }
     };
 
@@ -210,8 +212,6 @@ function OidcClientsList() {
     const styles = {
         outerDiv: "!bg-opacity-[16%]"
     }
-
-    showPopup || showDeactivatePopup ? document.body.style.overflow="hidden" : document.body.style.overflow="auto";
     
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>

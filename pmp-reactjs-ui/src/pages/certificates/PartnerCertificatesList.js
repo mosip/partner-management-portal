@@ -35,6 +35,7 @@ function PartnerCertificatesList() {
     }, [dropdownRef]);
 
     const clickOnUpload = (partner) => {
+        document.body.style.overflow = "hidden";
         setShowPopup(!showPopup);
         setSelectedPartnerData(partner);
     };
@@ -42,6 +43,7 @@ function PartnerCertificatesList() {
     const closePopup = (state) => {
         if (state) {
             setShowPopup(false);
+            document.body.style.overflow = "auto";
             window.location.reload();
         }
     };
@@ -158,8 +160,6 @@ function PartnerCertificatesList() {
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
-
-    showPopup ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
 
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative`}>

@@ -24,6 +24,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, navigateUrl, heade
             navigate(navigateUrl);
         } else {
             closePopUp(false);
+            document.body.style.overflow="auto"
         }
     }
 
