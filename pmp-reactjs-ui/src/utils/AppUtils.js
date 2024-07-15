@@ -274,12 +274,12 @@ export const bgOfStatus = (status) => {
     }
 }
 
-export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, dataList, t) => {
+export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, dataList, t, defaultPlaceholder) => {
     let dataArr = [];
     if (isBlankEntryRequired) {
         dataArr.push({
-            fieldCode: "",
-            fieldValue: ""
+            fieldCode: defaultPlaceholder,
+            fieldValue: "",
         });
     }
     dataList.forEach(item => {

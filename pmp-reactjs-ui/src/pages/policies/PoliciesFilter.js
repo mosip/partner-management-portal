@@ -14,11 +14,11 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setPartnerIdData(createDropdownData('partnerId', '', true, filteredPoliciesList, t));
-            setPartnerTypeData(createDropdownData('partnerType', '', true, filteredPoliciesList, t));
-            setPolicyGroupNameData(createDropdownData('policyGroupName', '', true, filteredPoliciesList, t));
-            setPolicyNameData(createDropdownData('policyName', '', true, filteredPoliciesList, t));
-            setStatusData(createDropdownData('status', '', true, filteredPoliciesList, t));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredPoliciesList, t, t('policies.selectPartnerId')));
+            setPartnerTypeData(createDropdownData('partnerType', '', true, filteredPoliciesList, t, t('policies.selectPartnerType')));
+            setPolicyGroupNameData(createDropdownData('policyGroupName', '', true, filteredPoliciesList, t, t('policies.selectPolicyGroup')));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredPoliciesList, t, t('policies.selectPolicyName')));
+            setStatusData(createDropdownData('status', '', true, filteredPoliciesList, t, t('policies.selectStatus')));
         };
         fetchData();
     }, [t]);
@@ -41,7 +41,8 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.partnerId' 
                     placeHolderKey='policies.selectPartnerId'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='partnerType' 
@@ -49,7 +50,8 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.partnerType' 
                     placeHolderKey='policies.selectPartnerType'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyGroupName' 
@@ -57,7 +59,8 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.policyGroupName' 
                     placeHolderKey='policies.selectPolicyGroup'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -65,7 +68,8 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.policyName' 
                     placeHolderKey='policies.selectPolicyName'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -73,7 +77,8 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='policies.status' 
                     placeHolderKey='policies.selectStatus'
-                    styleSet={styles}> 
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}> 
                 </DropdownComponent>
             </div>
         </>
