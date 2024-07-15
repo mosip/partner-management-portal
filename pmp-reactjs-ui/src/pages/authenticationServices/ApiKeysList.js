@@ -9,14 +9,14 @@ import {
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
-import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
-import { IconContext } from "react-icons"; // for customizing icons
 import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
-import ReactPaginate from 'react-paginate';
 import ApiClientsFilter from './ApiClientsFilter';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
 import DeactivatePopup from '../common/DeactivatePopup';
+import FilterButtons from '../common/FilterButtons.js';
+import SortingIcon from '../common/SortingIcon.js';
+import Pagination from '../common/Pagination.js';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -36,8 +36,6 @@ function ApiKeysList() {
     const [apiKeysList, setApiKeysList] = useState([]);
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [firstIndex, setFirstIndex] = useState(0);
-    const itemsPerPageOptions = [8, 16, 24, 32];
-    const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
@@ -47,12 +45,10 @@ function ApiKeysList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef(null);
-    const itemsCountSelectionRef = useRef(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewApiKeyId(null));
-        handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
-    }, [submenuRef, itemsCountSelectionRef]);
+    }, [submenuRef]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -159,16 +155,6 @@ function ApiKeysList() {
     //This part related to Pagination Logic
     let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
-    const handlePageChange = (event) => {
-        const newIndex = (event.selected * selectedRecordsPerPage) % filteredApiKeysList.length;
-        setFirstIndex(newIndex);
-    };
-    const changeItemsPerPage = (num) => {
-        setIsItemsPerPageOpen(false);
-        setSelectedRecordsPerPage(num);
-        setFirstIndex(0);
-    };
-
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -244,29 +230,7 @@ function ApiKeysList() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <div className="flex w-full p-2">
-                                        <div className={`flex w-full ${isLoginLanguageRTL ? "pr-[2%]" : "pl-[2%]"} pt-[1%] items-center justify-start font-semibold text-dark-blue text-sm`}>
-                                            {t('apiKeysList.listOfApiKeyRequests') + ' (' + filteredApiKeysList.length + ")"}
-                                        </div>
-                                        <div className="w-full flex justify-end relative items-center">
-                                            {filter && <p onClick={() => onResetFilter()} type="button"
-                                                className={`flex ${isLoginLanguageRTL ? "ml-[7%]" : "mr-[7%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
-                                                {t('policies.resetFilter')}
-                                            </p>}
-                                            <button onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
-                                                ${filter ? 'bg-tory-blue text-white' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
-                                                {t('oidcClientsList.filterBtn')}
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg" className={`${filter ? 'rotate-180 text-white duration-700' : null} ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
-                                                    width="10" height="8" viewBox="0 0 10 8">
-                                                    <path id="Polygon_8"
-                                                        data-name="Polygon 8"
-                                                        d="M3.982,1.628a1.2,1.2,0,0,1,2.035,0L8.853,6.164A1.2,1.2,0,0,1,7.835,8H2.165A1.2,1.2,0,0,1,1.147,6.164Z"
-                                                        transform="translate(10 8) rotate(180)" fill={`${filter ? '#ffff' : '#1447b2'}`} />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataList={filteredApiKeysList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <ApiClientsFilter
@@ -284,20 +248,7 @@ function ApiKeysList() {
                                                                 <div className="flex gap-x-1 items-center font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
-                                                                        <div>
-                                                                            <svg className="cursor-pointer mb-0.5" onClick={() => sortDescOrder(header.id)} alt="Descending"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                width="8" height="8" viewBox="0 0 7 6">
-                                                                                <path id="Polygon_3" data-name="Polygon 3" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                                                                    fill={`${(activeSortDesc === header.id && order === "DESC") ? "#1447b2" : "#969696"}`} />
-                                                                            </svg>
-                                                                            <svg className="cursor-pointer" onClick={() => sortAscOrder(header.id)} alt="Ascending"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                width="8" height="8" viewBox="0 0 7 6">
-                                                                                <path id="Polygon_4" data-name="Polygon 4" d="M2.636,1.481a1,1,0,0,1,1.728,0L6.123,4.5A1,1,0,0,1,5.259,6H1.741A1,1,0,0,1,.877,4.5Z"
-                                                                                    transform="translate(7 6) rotate(180)" fill={`${(activeSortAsc === header.id && order === "ASC") ? "#1447b2" : "#969696"}`} />
-                                                                            </svg>
-                                                                        </div>
+                                                                        <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
                                                                     )}
                                                                 </div>
                                                             </th>
@@ -348,58 +299,7 @@ function ApiKeysList() {
                                         </table>
                                     </div>
                                 </div>
-                                <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
-                                    <div></div>
-                                    <ReactPaginate
-                                        containerClassName={"pagination"}
-                                        pageClassName={"page-item"}
-                                        activeClassName={"active"}
-                                        onPageChange={(event) => handlePageChange(event)}
-                                        pageCount={Math.ceil(filteredApiKeysList.length / selectedRecordsPerPage)}
-                                        breakLabel="..."
-                                        previousLabel={
-                                            <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                                                {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
-                                            </IconContext.Provider>
-                                        }
-                                        nextLabel={
-                                            <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                                                {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
-                                            </IconContext.Provider>
-                                        }
-                                    />
-                                    <div className="flex items-center gap-x-3">
-                                        <h6 className="text-gray-500 text-xs">{t('policies.itemsPerPage')}</h6>
-                                        <div>
-                                            {isItemsPerPageOpen && (
-                                                <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
-                                                    {itemsPerPageOptions.map((num, i) => {
-                                                        return (
-                                                            <p key={i} onClick={() => changeItemsPerPage(num)}
-                                                                className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
-                                                                {num}
-                                                            </p>
-                                                        )
-                                                    })
-                                                    }
-                                                </div>
-                                            )}
-                                            <div className="cursor-pointer flex justify-between w-10 h-6 items-center text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
-                                                onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
-                                                <p>
-                                                    {selectedRecordsPerPage}
-                                                </p>
-                                                <svg className={`${isItemsPerPageOpen ? "rotate-180" : null}`}
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="10.359" height="5.697" viewBox="0 0 11.359 6.697">
-                                                    <path id="expand_more_FILL0_wght400_GRAD0_opsz48"
-                                                        d="M17.68,23.3,12,17.618,13.018,16.6l4.662,4.686,4.662-4.662,1.018,1.018Z"
-                                                        transform="translate(-12 -16.6)" fill="#1447b2" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Pagination dataList={filteredApiKeysList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                             </>
                         }
                     </div>

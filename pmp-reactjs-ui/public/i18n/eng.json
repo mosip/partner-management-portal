@@ -17,7 +17,10 @@
         "urlTooLong": "URI should not allow more than {{length}} characters.",
         "invalidUrl": "Enter a valid URI",
         "duplicateUrl": "Duplicate URIs are not allowed",
-        "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error"
+        "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error",
+        "filterBtn": "Filter",
+        "resetFilter": "Reset Filter",
+        "itemsPerPage": "Items per page"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -131,8 +134,6 @@
         "policies": "Policies",
         "requestPolicyBtn": "Request Policy",
         "listOfPolicies": "List of Policy Requests",
-        "filterBtn": "Filter",
-        "resetFilter": "Reset Filter",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroupName": "Policy Group",
@@ -146,7 +147,6 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
-        "itemsPerPage": "Items per page",
         "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
     "viewPolicyDetails": {
@@ -421,7 +421,7 @@
         "PMS_PMP_51": "Given policy is not belongs to partner's policy group",
         "PMS_PMP_052": "Partner Certificate not available",
         "PMS_PMP_014": "Policy does not exist",
-        "PMS_PMS_022": "Given Partner api key is not active.",
+        "PMS_PMS_022": "API key has already been deactivated",
         "PMS_PMP_018": "Policy expired.",
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
         "PMS_PRT_110": "Entered name already exists. Provide a unique name and submit.",
@@ -497,6 +497,24 @@
         "PMS_POLICY_ERROR_004": "Matching Policy not found.",
         "PMS_POLICY_ERROR_005": "Policy Group Id is empty.",
         "PMS_POLICY_ERROR_006": "Error while fetching OIDC clients list.",
-        "PMS_POLICY_ERROR_007": "Error while fetching API Key requests"
+        "PMS_POLICY_ERROR_007": "Error while fetching API Key requests",
+        "PMS_ESI_001": "Client public key already exists.",
+        "PMS_ESI_002": "Partner policy mapping is not approved. Please check mapping status.",
+        "PMS_ESI_003": "Policy having mandatory auths. So client can't be created for the same.",
+        "PMS_ESI_004": "Client not exists with given id.",
+        "PMS_ESI_005": "Partner has no user claims",
+        "PMS_ESI_006": "Partner has no Authentication Context Refrences",
+        "PMS_ESI_007": "Failed to process the Public Key",
+        "PMS_ESI_008": "Client already deactivated.",
+        "PMS_PRT_056": "Given langCode is not supported",
+        "PMS_PRT_057": "Policy Type Mismatch. Only Auth policy can be used to create OIDC Client.",
+        "PMS_PRT_058": "AuthPartner doesn't exists with this Id",
+        "PMS_PRT_059": "Only Auth_partner can Create OIDC Client. Other partner types are not allowed to create OIDC Client.",
+        "PMS_PRT_066": "PartnerId should not have any spaces",
+        "PMS_PRT_096": "Json is not valid",
+        "PMS_CONSENT_ERROR_001": "Error while fetching partner consent.",
+        "PMS_CONSENT_ERROR_002": "Error while saving partner consent.",
+        "PMP-AUT-020": "Parse Error exception",
+        "PMP-AUT-021": "Audit Exception from client"
     }
 }

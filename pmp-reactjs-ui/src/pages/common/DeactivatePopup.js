@@ -61,10 +61,10 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                     <LoadingIcon styleSet={styles}></LoadingIcon>
                 )}
                 {dataLoaded && (
-                    <>
-                        {errorMsg && (
-                            <div className="flex justify-end items-center absolute w-[55%] md:w-[390px]">
-                                <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
+                    <div className="relative">
+                        {!errorMsg && (
+                            <div className="flex justify-end">
+                                <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                                 <button onClick={() => clickOnConfirm()}type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
