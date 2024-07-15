@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import backArrow from "../../svg/back_arrow.svg";
-import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, moveToHome, bgOfStatus } from "../../utils/AppUtils";
+import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, bgOfStatus } from "../../utils/AppUtils";
 import adminImage from "../../svg/admin.png";
 import partnerImage from "../../svg/partner.png";
+import Title from "../common/Title";
 
 function ViewPolicyDetails() {
     const { t } = useTranslation();
@@ -30,37 +30,15 @@ function ViewPolicyDetails() {
         }
     }, [navigate]);
 
+    const style = {
+        backArrowIcon: "!mt-[6%]"
+      }
+
     return (
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all break-normal font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[6%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
-                    <div className="flex items-center gap-x-2">
-                        <img
-                            src={backArrow}
-                            alt=""
-                            onClick={() => moveToPolicies(navigate)}
-                            className={`-mt-[6%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`}
-                        />
-                        <div className="flex-col">
-                            <h1 className="font-semibold text-lg text-dark-blue">
-                                {t("viewPolicyDetails.viewPolicyDetails")}
-                            </h1>
-                            <div className="flex space-x-1">
-                                <p
-                                    onClick={() => moveToHome(navigate)}
-                                    className="font-semibold text-tory-blue text-xs cursor-pointer"
-                                >
-                                    {t("commons.home")} /
-                                </p>
-                                <p
-                                    onClick={() => moveToPolicies(navigate)}
-                                    className="font-semibold text-tory-blue text-xs cursor-pointer"
-                                >
-                                    {t("viewPolicyDetails.policySection")}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies' styleSet={style}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>

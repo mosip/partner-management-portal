@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import { logout } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';

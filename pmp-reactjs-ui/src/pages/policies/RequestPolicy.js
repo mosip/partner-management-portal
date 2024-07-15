@@ -3,14 +3,14 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL } from "../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, moveToHome, createDropdownData, createRequest } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import backArrow from '../../svg/back_arrow.svg';
 import DropdownComponent from "../common/fields/DropdownComponent";
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
+import Title from "../common/Title";
 
 function RequestPolicy() {
     const navigate = useNavigate();
@@ -265,20 +265,7 @@ function RequestPolicy() {
                         </div>
                     )}
                     <div className="flex-col mt-7">
-                        <div className="flex items-start gap-x-2">
-                            <img src={backArrow} alt="" onClick={() => moveToPolicies(navigate)} className={`mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                            <div className="flex-col">
-                                <h1 className="font-semibold text-lg text-dark-blue">{t('requestPolicy.requestPolicy')}</h1>
-                                <div className="flex space-x-1">
-                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')} /
-                                    </p>
-                                    <p onClick={() => moveToPolicies(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('requestPolicy.policies')}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies'></Title>
                         <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                             <div className="p-7">
                                 <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>

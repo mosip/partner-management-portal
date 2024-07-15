@@ -3,17 +3,17 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
-import backArrow from '../../svg/back_arrow.svg';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import {
-    getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList, moveToHome,
+    getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
     createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData, validateName
 } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
 import CopyIdPopUp from "../common/CopyIdPopup";
+import Title from "../common/Title";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
@@ -190,6 +190,10 @@ function GenerateApiKey() {
         outerDiv: "!bg-opacity-[50%]"
     }
 
+    const styleForTitle = {
+        backArrowIcon: "!mt-[5%]"
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
             {!dataLoaded && (
@@ -206,20 +210,7 @@ function GenerateApiKey() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <div className="flex items-start gap-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToApiKeysList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                                <div className="flex-col">
-                                    <h1 className="font-semibold text-lg max-[450px]:text-md text-dark-blue">{t('generateApiKey.generateApiKey')}</h1>
-                                    <div className="flex space-x-1 max-[450px]:flex-col">
-                                        <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                            {t('commons.home')} /
-                                        </p>
-                                        <p onClick={() => moveToApiKeysList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                            {t('authenticationServices.authenticationServices')}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' styleSet={styleForTitle}></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">

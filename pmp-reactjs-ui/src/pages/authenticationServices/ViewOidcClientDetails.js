@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, moveToHome, bgOfStatus } from "../../utils/AppUtils";
-import backArrow from "../../svg/back_arrow.svg";
+import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, bgOfStatus } from "../../utils/AppUtils";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../svg/disabled_copy_icon.svg";
+import Title from "../common/Title";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -47,34 +47,15 @@ function ViewOidcClientDetails() {
         }
     };
 
+    const styleForTitle = {
+        backArrowIcon: "!mt-[4%]"
+    }
+
     return (
         <>
             <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <div className="flex items-center gap-x-2">
-                        <img
-                            src={backArrow}
-                            alt=""
-                            onClick={() => moveToOidcClientsList(navigate)}
-                            className={`cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null} -mt-[4%]`}
-                        />
-                        <div className="flex-col">
-                            <h1 className="font-bold text-lg text-dark-blue">
-                                {t("viewOidcClientDetails.viewOidcClientDetails")}
-                            </h1>
-                            <div className="flex space-x-1">
-                                <p
-                                    onClick={() => moveToHome(navigate)}
-                                    className="font-semibold text-tory-blue text-xs cursor-pointer"
-                                >
-                                    {t("commons.home")} /
-                                </p>
-                                <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                    {t("viewOidcClientDetails.authenticationServiceSection")}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
