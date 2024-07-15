@@ -35,6 +35,7 @@ function PartnerCertificatesList() {
     }, [dropdownRef]);
 
     const clickOnUpload = (partner) => {
+        document.body.style.overflow = "hidden";
         setShowPopup(!showPopup);
         setSelectedPartnerData(partner);
     };
@@ -42,6 +43,7 @@ function PartnerCertificatesList() {
     const closePopup = (state) => {
         if (state) {
             setShowPopup(false);
+            document.body.style.overflow = "auto";
             window.location.reload();
         }
     };
