@@ -159,6 +159,8 @@ function PartnerCertificatesList() {
         setSuccessMsg("");
     };
 
+    showPopup ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
+
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (

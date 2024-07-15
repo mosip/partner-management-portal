@@ -144,6 +144,8 @@ function Dashboard() {
     setErrorMsg("");
   };
 
+  showPopup || showConsentPopup ? document.body.style.overflow="hidden" : document.body.style.overflow="auto";
+
   return (
     <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28": "ml-20"} overflow-x-scroll relative`}>
       {!dataLoaded && (
