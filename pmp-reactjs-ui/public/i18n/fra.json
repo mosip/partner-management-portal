@@ -17,7 +17,10 @@
         "urlTooLong": "L'URI ne doit pas autoriser plus de {{length}} caractères.",
         "invalidUrl": "Entrez un URI valide",
         "duplicateUrl": "Les URI en double ne sont pas autorisés",
-        "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires d'authentification approuvées, nous avons rencontré une erreur"
+        "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires d'authentification approuvées, nous avons rencontré une erreur",
+        "filterBtn": "Filtre",
+        "resetFilter": "Réinitialiser le filtre",
+        "itemsPerPage": "Objets par page"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
@@ -131,8 +134,6 @@
         "policies": "Stratégies",
         "requestPolicyBtn": "Politique de demande",
         "listOfPolicies": "Liste des demandes de politique",
-        "filterBtn": "Filtre",
-        "resetFilter": "Réinitialiser le filtre",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
@@ -146,7 +147,6 @@
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "selectStatus": "Sélectionnez le statut",
-        "itemsPerPage": "Objets par page",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
     },
     "viewPolicyDetails": {
@@ -421,7 +421,7 @@
         "PMS_PMP_51": "La stratégie donnée n'appartient pas au groupe de stratégies du partenaire",
         "PMS_PMP_052": "Certificat de partenaire non disponible",
         "PMS_PMP_014": "La politique n'existe pas",
-        "PMS_PMS_022": "La clé API du partenaire donné n'est pas active.",
+        "PMS_PMS_022": "La clé API a déjà été désactivée",
         "PMS_PMP_018": "La politique a expiré.",
         "PMS_PRT_108": "Le groupe de stratégies est obligatoire pour Auth_Partner",
         "PMS_PRT_110": "Le nom saisi existe déjà. Fournissez un nom unique et soumettez-le.",
@@ -497,6 +497,24 @@
         "PMS_POLICY_ERROR_004": "Politique correspondante introuvable.",
         "PMS_POLICY_ERROR_005": "LID du groupe de stratégies est vide.",
         "PMS_POLICY_ERROR_006": "Erreur lors de la récupération de la liste des clients OIDC.",
-        "PMS_POLICY_ERROR_007": "Error while fetching API Key requestsErreur lors de la récupération des demandes de clé API"
+        "PMS_POLICY_ERROR_007": "Error while fetching API Key requestsErreur lors de la récupération des demandes de clé API",
+        "PMS_ESI_001": "La clé publique du client existe déjà.",
+        "PMS_ESI_002": "Le mappage des règles du partenaire n'est pas approuvé. Veuillez vérifier l'état du mappage.",
+        "PMS_ESI_003": "Politique ayant des autorisations obligatoires. Le client ne peut donc pas être créé pour la même chose.",
+        "PMS_ESI_004": "Le client n'existe pas avec l'identifiant donné.",
+        "PMS_ESI_005": "Le partenaire n'a aucune revendication d'utilisateur",
+        "PMS_ESI_006": "Le partenaire n'a pas de référence de contexte d'authentification",
+        "PMS_ESI_007": "Échec du traitement de la clé publique",
+        "PMS_ESI_008": "Client déjà désactivé.",
+        "PMS_PRT_056": "Étant donné que langCode n'est pas pris en charge",
+        "PMS_PRT_057": "Incompatibilité des types de stratégie. Seule la stratégie d'authentification peut être utilisée pour créer un client OIDC.",
+        "PMS_PRT_058": "Le partenaire d'authentification n'existe pas avec cet identifiant",
+        "PMS_PRT_059": "Seul Auth_partner peut créer un client OIDC. Les autres types de partenaires ne sont pas autorisés à créer un client OIDC.",
+        "PMS_PRT_066": "PartnerId ne doit contenir aucun espace",
+        "PMS_PRT_096": "Json n'est pas valide",
+        "PMS_CONSENT_ERROR_001": "Erreur lors de la récupération du consentement du partenaire.",
+        "PMS_CONSENT_ERROR_002": "Erreur lors de l'enregistrement du consentement du partenaire.",
+        "PMP-AUT-020": "Exception d'erreur d'analyse",
+        "PMP-AUT-021": "Exception d'audit du client"
     }
 }

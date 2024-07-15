@@ -23,7 +23,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel }) {
     return (
         <div className="flex items-center">
             <div className="h-full mr-8">
-                <p className="text-white text-sm/4 max-[450px]:text-xs/4 break-words font-inter line-clamp-6">
+                <p className="text-white text-sm/4 max-[450px]:text-xs/4 break-words break-all font-inter line-clamp-6">
                     {errorMsg}
                 </p>
             </div>
