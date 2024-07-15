@@ -7,7 +7,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
-    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled }) {
+    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, isPlaceHolderPresent}) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -72,7 +72,8 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block w-full min-h-9 px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar
+                                                className={`block w-full h-9 px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-nowrap no-scrollbar
+                                                    ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 {dropdownItem.fieldCode}

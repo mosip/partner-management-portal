@@ -14,11 +14,11 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setPartnerIdData(createDropdownData('partnerId', '', true, filteredApiKeysList, t));
-            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t));
-            setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t));
-            setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t));
-            setStatusData(createDropdownData('status', '', true, filteredApiKeysList, t));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPartnerId')));
+            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectOidcClientType')));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyGroup')));
+            setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t, t('apiKeysList.selectApiKeyLabel')));
+            setStatusData(createDropdownData('status', '', true, filteredApiKeysList, t, t('oidcClientsList.selectStatus')));
         };
         fetchData();
     }, [t]);
@@ -40,7 +40,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.partnerId'
                     placeHolderKey='oidcClientsList.selectPartnerId'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='policyGroupName'
@@ -48,7 +49,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.policyGroup'
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -56,7 +58,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='oidcClientsList.policyName' 
                     placeHolderKey='oidcClientsList.selectPolicyName'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownWithSearchComponent
                     fieldName='apiKeyLabel'
@@ -65,7 +68,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldNameKey='apiKeysList.apiKeyLabel'
                     placeHolderKey='apiKeysList.selectApiKeyLabel'
                     searchKey='commons.search'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -73,7 +77,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='oidcClientsList.status' 
                     placeHolderKey='oidcClientsList.selectStatus'
-                    styleSet={styles}> 
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}> 
                 </DropdownComponent>
             </div>
         </>

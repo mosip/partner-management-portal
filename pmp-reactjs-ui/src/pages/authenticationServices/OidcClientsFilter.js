@@ -13,11 +13,11 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setPartnerIdData(createDropdownData('partnerId', '', true, filteredOidcClientsList, t));
-            setOidcClientNameData(createDropdownData('oidcClientName', '', true, filteredOidcClientsList, t));
-            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredOidcClientsList, t));
-            setPolicyNameData(createDropdownData('policyName', '', true, filteredOidcClientsList, t));
-            setStatusData(createDropdownData('status', '', true, filteredOidcClientsList, t));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPartnerId')));
+            setOidcClientNameData(createDropdownData('oidcClientName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectOidcClientType')));
+            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyGroup')));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyName')));
+            setStatusData(createDropdownData('status', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectStatus')));
         };
         fetchData();
     }, [t]);
@@ -39,7 +39,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.partnerId'
                     placeHolderKey='oidcClientsList.selectPartnerId'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='policyGroupName'
@@ -47,7 +48,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.policyGroup'
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -55,7 +57,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='oidcClientsList.policyName' 
                     placeHolderKey='oidcClientsList.selectPolicyName'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='oidcClientName'
@@ -63,7 +66,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.oidcClientName'
                     placeHolderKey='oidcClientsList.selectOidcClientType'
-                    styleSet={styles}>
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -71,7 +75,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='oidcClientsList.status' 
                     placeHolderKey='oidcClientsList.selectStatus'
-                    styleSet={styles}> 
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}> 
                 </DropdownComponent>
             </div>
         </>

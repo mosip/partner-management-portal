@@ -6,7 +6,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup }) {
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -94,7 +94,9 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                                 className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
-                                                <span className={`${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'}`}>{dropdownItem.fieldCode}</span>
+                                                <span className={` ${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'} 
+                                                    ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
+                                                `}>{dropdownItem.fieldCode}</span>
                                                 {dropdownItem.fieldDescription && (
                                                     <>
                                                         <br />
