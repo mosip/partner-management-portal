@@ -62,7 +62,7 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                 )}
                 {dataLoaded && (
                     <div className="relative">
-                        {!errorMsg && (
+                        {errorMsg && (
                             <div className="flex justify-end">
                                 <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
