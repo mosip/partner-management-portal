@@ -280,7 +280,7 @@ function GenerateApiKey() {
                                         <div className="space-y-6">
                                             <div className="my-4">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('generateApiKey.name')}<span className="text-crimson-red mx-1">*</span></label>
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
                                                     <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />
