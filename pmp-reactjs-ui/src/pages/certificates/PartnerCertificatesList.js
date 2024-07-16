@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../services/HttpService";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -7,20 +6,19 @@ import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
 import SuccessMessage from "../common/SuccessMessage";
 import LoadingIcon from "../common/LoadingIcon";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, moveToHome } from "../../utils/AppUtils";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl} from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../svg/rectangle_box.svg';
 import fileUpload from '../../svg/file_upload_icon.svg';
 import file from '../../svg/file_icon.svg';
 import downloadIcon from '../../svg/download_icon.svg';
-import backArrow from '../../svg/back_arrow.svg';
+import Title from "../common/Title";
 
 function PartnerCertificatesList() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [downloadBtnId, setDownloadBtnId] = useState(-1);
-    const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
     const [certificatesData, setcertificatesData] = useState([]);
@@ -161,6 +159,10 @@ function PartnerCertificatesList() {
         setSuccessMsg("");
     };
 
+    const style = {
+        backArrowIcon: "!mt-[6%]"
+    }
+
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative`}>
             {!dataLoaded && (
@@ -184,15 +186,7 @@ function PartnerCertificatesList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
-                            <div className="flex items-start space-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[6%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                                <div className="flex-col">
-                                    <h1 className="font-semibold text-lg text-dark-blue">{t('partnerCertificatesList.partnerCertificate')}</h1>
-                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')}
-                                    </p>
-                                </div>
-                            </div>
+                            <Title title='partnerCertificatesList.partnerCertificate' backLink='/partnermanagement' styleSet={style}></Title>
                         </div>
                         <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
                             {certificatesData.length === 0 ?

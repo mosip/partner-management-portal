@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest, bgOfStatus
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
-import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import ApiClientsFilter from './ApiClientsFilter';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
@@ -17,6 +16,7 @@ import DeactivatePopup from '../common/DeactivatePopup';
 import FilterButtons from '../common/FilterButtons.js';
 import SortingIcon from '../common/SortingIcon.js';
 import Pagination from '../common/Pagination.js';
+import Title from '../common/Title.js';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -156,6 +156,10 @@ function ApiKeysList() {
     //This part related to Pagination Logic
     let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
+    const styleForTitle = {
+        backArrowIcon: "!mt-[5%]"
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -172,15 +176,7 @@ function ApiKeysList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <div className={`flex items-start gap-x-2`}>
-                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[8%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                                <div className="flex-col mt-[3%]">
-                                    <h1 className="font-semibold text-lg text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
-                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')}
-                                    </p>
-                                </div>
-                            </div>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
                             {apiKeysList.length > 0 ?
                                 <button type="button" onClick={() => generateApiKey()}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">

@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, moveToHome, createRequest, bgOfStatus
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
-import backArrow from '../../svg/back_arrow.svg';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import CopyIdPopUp from '../common/CopyIdPopup.js';
 import OidcClientsFilter from './OidcClientsFilter';
@@ -18,6 +17,7 @@ import DeactivatePopup from '../common/DeactivatePopup.js';
 import FilterButtons from '../common/FilterButtons.js';
 import SortingIcon from '../common/SortingIcon.js';
 import Pagination from '../common/Pagination.js';
+import Title from '../common/Title.js';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -53,32 +53,6 @@ function OidcClientsList() {
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
     }, [submenuRef]);
-
-    // const tableValues = [
-    //     { "partnerId": "P28394091", "policyGroup": "Policy Group 01", "policyName": "Full KYC", "oidcClientName": "Client 13", "createdDate": "11/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394092", "policyGroup": "Policy Group 02", "policyName": "KYC", "oidcClientName": "Client 22", "createdDate": "21/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394093", "policyGroup": "Policy Group 03", "policyName": "KYC1", "oidcClientName": "Client 11", "createdDate": "06/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394094", "policyGroup": "Policy Group 04", "policyName": "Full KYC", "oidcClientName": "Client 03", "createdDate": "30/09/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394095", "policyGroup": "Policy Group 05", "policyName": "KYC1", "oidcClientName": "Client 05", "createdDate": "12/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394096", "policyGroup": "Policy Group 06", "policyName": "KYC", "oidcClientName": "Client 16", "createdDate": "07/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394097", "policyGroup": "Policy Group 07", "policyName": "Full KYC", "oidcClientName": "Client 07", "createdDate": "01/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394098", "policyGroup": "Policy Group 08", "policyName": "KYC", "oidcClientName": "Client 04", "createdDate": "17/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394099", "policyGroup": "Policy Group 09", "policyName": "KYC1", "oidcClientName": "Client 12", "createdDate": "13/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394100", "policyGroup": "Policy Group 10", "policyName": "KYC", "oidcClientName": "Client 09", "createdDate": "02/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394101", "policyGroup": "Policy Group 11", "policyName": "Full KYC", "oidcClientName": "Client 02", "createdDate": "08/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394102", "policyGroup": "Policy Group 12", "policyName": "KYC", "oidcClientName": "Client 06", "createdDate": "18/10/2025", "status": "Deactivated", "oidcClientId": "0" },
-    //     { "partnerId": "P28394103", "policyGroup": "Policy Group 13", "policyName": "KYC", "oidcClientName": "Client 01", "createdDate": "14/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394104", "policyGroup": "Policy Group 14", "policyName": "Full KYC", "oidcClientName": "Client 10", "createdDate": "03/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394105", "policyGroup": "Policy Group 15", "policyName": "KYC1", "oidcClientName": "Client 08", "createdDate": "09/10/2025", "status": "Rejected", "oidcClientId": "0" },
-    //     { "partnerId": "P28394106", "policyGroup": "Policy Group 16", "policyName": "Full KYC", "oidcClientName": "Client 20", "createdDate": "19/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394107", "policyGroup": "Policy Group 17", "policyName": "KYC", "oidcClientName": "Client 17", "createdDate": "04/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394108", "policyGroup": "Policy Group 18", "policyName": "Full KYC", "oidcClientName": "Client 14", "createdDate": "15/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394109", "policyGroup": "Policy Group 19", "policyName": "KYC", "oidcClientName": "Client 19", "createdDate": "10/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394110", "policyGroup": "Policy Group 20", "policyName": "Full KYC", "oidcClientName": "Client 18", "createdDate": "20/10/2025", "status": "Approved", "oidcClientId": "1" },
-    //     { "partnerId": "P28394111", "policyGroup": "Policy Group 21", "policyName": "KYC1", "oidcClientName": "Client 21", "createdDate": "05/10/2025", "status": "Pending for Approval", "oidcClientId": "0" },
-    //     { "partnerId": "P28394112", "policyGroup": "Policy Group 22", "policyName": "Full KYC", "oidcClientName": "Client 15", "createdDate": "16/10/2025", "status": "Rejected", "oidcClientId": "0" }
-
-    // ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -212,7 +186,10 @@ function OidcClientsList() {
     const styles = {
         outerDiv: "!bg-opacity-[16%]"
     }
-    
+
+    const styleForTitle = {
+        backArrowIcon: "!mt-[5%]"
+    }
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -229,15 +206,7 @@ function OidcClientsList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <div className={`flex items-start gap-x-2`}>
-                                <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[7%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                                <div className="flex-col mt-[3%]">
-                                    <h1 className="font-semibold text-lg text-dark-blue">{t('authenticationServices.authenticationServices')}</h1>
-                                    <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                        {t('commons.home')}
-                                    </p>
-                                </div>
-                            </div>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
                             {oidcClientsList.length > 0 ?
                                 <button onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('createOidcClient.createOidcClient')}

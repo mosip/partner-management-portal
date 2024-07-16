@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL, moveToApiKeysList, getStatusCode, formatDate, bgOfStatus} from "../../utils/AppUtils";
-import backArrow from "../../svg/back_arrow.svg";
+import Title from "../common/Title";
 
 function ViewApiKeyDetails() {
     const { t } = useTranslation();
@@ -28,36 +28,15 @@ function ViewApiKeyDetails() {
         }
     }, [navigate]);
 
-    const moveToHome = () => {
-        navigate("/partnermanagement");
-    };
+    const styleForTitle = {
+        backArrowIcon: "!mt-[4%]"
+    }
 
     return (
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-[7%]" : "ml-[7%]"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <div className="flex items-center gap-x-2">
-                        <img
-                            src={backArrow}
-                            alt=""
-                            onClick={() => moveToApiKeysList(navigate)}
-                            className={`cursor-pointer -mt-[4%] ${isLoginLanguageRTL ? "rotate-180" : null}`}
-                        />
-                        <div className="flex-col">
-                            <h1 className="font-bold text-lg text-dark-blue">
-                                {t("viewApiKeyDetails.viewApiKeyDetails")}
-                            </h1>
-                            <div className="flex space-x-1">
-                                <p onClick={() => moveToHome()}
-                                    className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                    {t("commons.home")} /
-                                </p>
-                                <p onClick={() => moveToApiKeysList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                    {t("viewOidcClientDetails.authenticationServiceSection")}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' styleSet={styleForTitle}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">

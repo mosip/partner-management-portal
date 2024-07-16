@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
-import backArrow from "../../svg/back_arrow.svg";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, moveToHome, validateName, validateUrl } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateName, validateUrl } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import DropdownComponent from "../common/fields/DropdownComponent";
 import Information from "../common/fields/Information";
+import Title from "../common/Title";
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -255,6 +255,9 @@ function EditOidcClient() {
         dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
         selectionBox: "!top-10"
     }
+    const styleForTitle = {
+        backArrowIcon: "!mt-[5%]"
+    }
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -272,20 +275,7 @@ function EditOidcClient() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <div className="flex items-start gap-x-3">
-                                <img src={backArrow} alt="" onClick={() => moveToOidcClientsList(navigate)} className={`mt-[5%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                                <div className="flex-col">
-                                    <h1 className="font-semibold text-lg text-dark-blue">{t('editOidcClient.editOidcClient')}</h1>
-                                    <div className="flex space-x-1">
-                                        <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                            {t('commons.home')} /
-                                        </p>
-                                        <p onClick={() => moveToOidcClientsList(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                            {t('authenticationServices.authenticationServices')}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
                             {/* <div className="flex items-center space-x-2 px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
                                 <img src={help_icon} className="h-4"/>
                                 <p>{t('createOidcClient.help')}</p>
