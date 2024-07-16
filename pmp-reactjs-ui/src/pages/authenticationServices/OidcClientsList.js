@@ -286,17 +286,17 @@ function OidcClientsList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"} break-all break-normal break-word`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-4 break-all break-normal break-words">{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-1 break-all break-normal break-words">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-12">
+                                                                <td onClick={() => showViewOidcClientDetails(client)}>{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-12" : "pl-2"} break-all break-normal break-word`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`px-4 break-all break-normal break-words`}>{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL?"pl-3":"pr-1"} break-all break-normal break-words`}>{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-5":"pl-10"}`}>
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
-                                                                <td className={`${isLoginLanguageRTL ? "pr-4" : "pl-4"}`}>
+                                                                <td className={`${isLoginLanguageRTL ? "pr-9" : "pl-4"}`}>
                                                                     <svg onClick={() => showCopyPopUp(client)}
                                                                         xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                         <path id="visibility_FILL0_wght400_GRAD0_opsz48"
