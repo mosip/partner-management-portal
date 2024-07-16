@@ -49,7 +49,6 @@ function CreateOidcClient() {
     ({ currentLocation, nextLocation }) => {
       if (isSubmitClicked) {
         setIsSubmitClicked(false);
-        console.log("ugwdugwd")
         return false;
       }
 
