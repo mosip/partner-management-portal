@@ -276,10 +276,6 @@ function EditOidcClient() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
-                            {/* <div className="flex items-center space-x-2 px-4 py-2 bg-snow-white border-2 border-[#1447B2] rounded-md text-sm text-[#1447B2] font-semibold opacity-md shadow-[#1447b2] cursor-pointer">
-                                <img src={help_icon} className="h-4"/>
-                                <p>{t('createOidcClient.help')}</p>
-                            </div> */}
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">

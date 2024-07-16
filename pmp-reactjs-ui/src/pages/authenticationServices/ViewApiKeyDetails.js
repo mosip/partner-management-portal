@@ -14,7 +14,6 @@ function ViewApiKeyDetails() {
 
     useEffect(() => {
         const clientData = localStorage.getItem('selectedApiKeyClientdata');
-        // handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
         if (clientData) {
             try {
                 const selectedApiKeyClientdata = JSON.parse(clientData);

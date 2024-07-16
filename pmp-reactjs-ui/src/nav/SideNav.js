@@ -49,15 +49,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/partnerCertificate');
         setActiveIcon("partnerCertificate");
     };
-    /*
-     const showPartnerTypeRequest = () => {
-         //navigate('/partnermanagement/partnerTypeRequest');
-         setActiveIcon("partnerTypeRequest");
-     };
-     const showOrganisationUsers = () => {
-         //navigate('/partnermanagement/organisationUsers');
-         setActiveIcon("organisationUsers");
-     }; */
     const showPolicies = () => {
         navigate('/partnermanagement/policies');
         setActiveIcon("policies");
@@ -74,12 +65,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     <li className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
-                    {/* <li className="duration-700 cursor-pointer" onClick={() => showPartnerTypeRequest()}>
-                        <SideNavMenuItem title={t('dashboard.partnerTypeRequest')} id='partnerTypeRequest' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
-                    <li className="duration-700 cursor-pointer" onClick={() => showOrganisationUsers()}>
-                        <SideNavMenuItem title={t('dashboard.organisationUsers')} id='organisationUsers' isExpanded={open} activeIcon={activeIcon} />
-                    </li> */}
                     <li className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()}>
                         <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
                     </li>
