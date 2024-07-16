@@ -314,6 +314,7 @@ function CreateOidcClient() {
       setErrorMsg(err);
       console.log("Error fetching data: ", err);
     }
+    setIsSubmitClicked(false);
   }
 
 
