@@ -83,7 +83,6 @@ function RequestPolicy() {
                         const resData = responseData.response;
                         setPartnerData(resData);
                         setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
-                        console.log('Response data:', partnerData.length);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -132,7 +131,6 @@ function RequestPolicy() {
                     const resData = responseData.response;
                     setPolicyList(resData);
                     setPoliciesDropdownData(createDropdownData('name', 'descr', false, resData, t));
-                    console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }

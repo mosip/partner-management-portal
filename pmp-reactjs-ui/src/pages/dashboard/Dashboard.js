@@ -9,9 +9,6 @@ import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 
 import SelectPolicyPopup from './SelectPolicyPopup.js';
-
-import partnerTypeRequestIcon from '../../svg/partner_type_request_icon.svg';
-import orgUsersIcon from '../../svg/org_user_icon.svg';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
@@ -168,32 +165,6 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
-            {/* <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
-              <div className="flex justify-center mb-5">
-                <img src={partnerTypeRequestIcon} alt="" className="w-8 h-8"></img>
-              </div>
-              <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                  {t('dashboard.partnerTypeRequest')}
-                </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
-                  {t('dashboard.partnerTypeRequestDesc')}
-                </p>
-              </div>
-            </div>
-            <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
-              <div className="flex justify-center mb-5">
-                <img src={orgUsersIcon} alt="" className="w-8 h-8"></img>
-              </div>
-              <div>
-                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                  {t('dashboard.organisationUsers')}
-                </h5>
-                <p className="mb-3 text-xs font-normal text-gray-400">
-                  {t('dashboard.organisationUsersDesc')}
-                </p>
-              </div>
-            </div> */}
             <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>

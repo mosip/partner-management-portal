@@ -61,8 +61,7 @@ function ApiKeysList() {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
                         setApiKeysList(sortedData);
-                        setFilteredApiKeysList(sortedData)
-                        // console.log('Response data:', apiKeysList.length);
+                        setFilteredApiKeysList(sortedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -130,7 +129,6 @@ function ApiKeysList() {
     useEffect(() => {
         let filteredRows = apiKeysList;
         Object.keys(filterQuery).forEach(key => {
-            //console.log(`${key} : ${filterQuery[key]}`);
             if (filterQuery[key] !== '') {
                 filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
             }

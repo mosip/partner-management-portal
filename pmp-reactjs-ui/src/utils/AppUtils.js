@@ -15,40 +15,25 @@ export const formatDate = (dateString, format) => {
 };
 
 export const getPartnerTypeDescription = (partnerType, t) => {
+    const partnerTypeMap = {
+        "DEVICE_PROVIDER": 'partnerTypes.deviceProvider',
+        "FTM_PROVIDER": 'partnerTypes.ftmProvider',
+        "AUTH_PARTNER": 'partnerTypes.authPartner',
+        "CREDENTIAL_PARTNER": 'partnerTypes.credentialPartner',
+        "ONLINE_VERIFICATION_PARTNER": 'partnerTypes.onlineVerficationPartner',
+        "ABIS_PARTNER": 'partnerTypes.abisPartner',
+        "MISP_PARTNER": 'partnerTypes.mispPartner',
+        "SDK_PARTNER": 'partnerTypes.sdkPartner',
+        "PRINT_PARTNER": 'partnerTypes.printPartner',
+        "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
+        "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication'
+    };
+
     if (partnerType) {
         partnerType = partnerType.toUpperCase();
-        if (partnerType === "Device_Provider".toUpperCase()) {
-            return t('partnerTypes.deviceProvider');
-        }
-        else if (partnerType === "FTM_Provider".toUpperCase()) {
-            return t('partnerTypes.ftmProvider');
-        }
-        else if (partnerType === "Auth_Partner".toUpperCase()) {
-            return t('partnerTypes.authPartner');
-        }
-        else if (partnerType === "Credential_Partner".toUpperCase()) {
-            return t('partnerTypes.credentialPartner');
-        }
-        else if (partnerType === "Online_Verification_Partner".toUpperCase()) {
-            return t('partnerTypes.onlineVerficationPartner');
-        }
-        else if (partnerType === "ABIS_Partner".toUpperCase()) {
-            return t('partnerTypes.abisPartner');
-        }
-        else if (partnerType === "MISP_Partner".toUpperCase()) {
-            return t('partnerTypes.mispPartner');
-        }
-        else if (partnerType === "SDK_Partner".toUpperCase()) {
-            return t('partnerTypes.sdkPartner');
-        }
-        else if (partnerType === "Print_Partner".toUpperCase()) {
-            return t('partnerTypes.printPartner');
-        }
-        else if (partnerType === "Internal_Partner".toUpperCase()) {
-            return t('partnerTypes.internalPartner');
-        }
-        else if (partnerType === "Manual_Adjudication".toUpperCase()) {
-            return t('partnerTypes.manualAdjudication');
+        const description = partnerTypeMap[partnerType];
+        if (description) {
+            return t(description);
         }
     }
 }
@@ -242,7 +227,7 @@ export const validateName = (value, length, t) => {
     }
 };
 
-export const validateUrl = (index, value, length, newRedirectUrls, t) => {
+export const validateUrl = (index, value, length, urlArr, t) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     if (value === "") {
         return "";
@@ -250,7 +235,7 @@ export const validateUrl = (index, value, length, newRedirectUrls, t) => {
         return t('commons.urlTooLong', {length: length});
     } else if (!urlPattern.test(value.trim())) {
         return t('commons.invalidUrl');
-    } else if (newRedirectUrls.some((url, i) => url === value && i !== index)) {
+    } else if (urlArr.some((url, i) => url === value && i !== index)) {
         return t('commons.duplicateUrl');
     } else if (/^\s+$/.test(value)) {
         return t('commons.invalidUrl'); // Show error for input with only spaces

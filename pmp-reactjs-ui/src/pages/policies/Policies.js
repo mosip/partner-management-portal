@@ -68,7 +68,6 @@ function Policies() {
             const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
             setPoliciesList(sortedData);
             setFilteredPoliciesList(sortedData);
-            // console.log('Response data:', policiesList.length);
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -110,8 +109,6 @@ function Policies() {
 
   //This part is related to Filter
   const onFilterChange = (fieldName, selectedFilter) => {
-    //console.log(`onFilterChange called`);
-    //console.log(`${fieldName} : ${selectedFilter}`);
     setFilterQuery(oldFilterQuery => ({
       ...oldFilterQuery,
       [fieldName]: selectedFilter
@@ -122,7 +119,6 @@ function Policies() {
   useEffect(() => {
     let filteredRows = policiesList;
     Object.keys(filterQuery).forEach(key => {
-      //console.log(`${key} : ${filterQuery[key]}`);
       if (filterQuery[key] !== '') {
         filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
       }

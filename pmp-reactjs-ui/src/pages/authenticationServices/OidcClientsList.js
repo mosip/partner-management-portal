@@ -65,8 +65,7 @@ function OidcClientsList() {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
                         setOidcClientsList(sortedData);
-                        setFilteredOidcClientsList(sortedData)
-                        // console.log('Response data:', oidcClientsList.length);
+                        setFilteredOidcClientsList(sortedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -157,7 +156,6 @@ function OidcClientsList() {
     useEffect(() => {
         let filteredRows = oidcClientsList;
         Object.keys(filterQuery).forEach(key => {
-            //console.log(`${key} : ${filterQuery[key]}`);
             if (filterQuery[key] !== '') {
                 filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
             }
