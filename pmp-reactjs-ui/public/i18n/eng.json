@@ -215,7 +215,6 @@
         "policyNameToolTip": "Make sure to request policy for given partner ID in POLICIES screen first. Only those policies in APPROVED status is available in dropdown.",
         "policyNamePlaceHolder": "Select policy for which OIDC Client ID is required",
         "selectPolicyName": "Select Policy Name",
-        "name": "Name",
         "nameTooLong": "Name should not allow more than 256 characters.",
         "enterNameForOidcClient": "Enter a name for OIDC Client",
         "publicKey": "Public Key",
@@ -319,7 +318,6 @@
     "generateApiKey": {
         "generateApiKey": "Generate API Key",
         "selectedPolicyName": "Select policy for which API Key is required",
-        "name": "Name",
         "enterNameForApiKey": "Enter a name for API key",
         "generateApiKeySuccessHeader":"Details submitted successfully!",
         "apiKeySuccessMsg": "API Key details has been submitted successfully.",

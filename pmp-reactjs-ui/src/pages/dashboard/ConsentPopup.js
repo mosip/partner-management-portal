@@ -30,6 +30,7 @@ function ConsentPopup() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
+        document.body.style.overflow="auto";
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/partners/saveUserConsentGiven`, process.env.NODE_ENV));
             if (response) {

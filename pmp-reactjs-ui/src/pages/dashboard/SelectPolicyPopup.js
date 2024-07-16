@@ -69,6 +69,7 @@ function SelectPolicyPopup() {
 
     const clickOnSubmit = async () => {
         setDataLoaded(false);
+        document.body.style.overflow="auto";
         const userProfile = getUserProfile();
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,

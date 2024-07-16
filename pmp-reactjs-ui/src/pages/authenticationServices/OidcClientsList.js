@@ -35,6 +35,7 @@ function OidcClientsList() {
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
+
     const [firstIndex, setFirstIndex] = useState(0);
     const [oidcClientsList, setOidcClientsList] = useState([]);
     const [filteredOidcClientsList, setFilteredOidcClientsList] = useState([]);
@@ -134,6 +135,7 @@ function OidcClientsList() {
             });
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
+            document.body.style.overflow="hidden";
         }
     };
 
@@ -141,6 +143,7 @@ function OidcClientsList() {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
             setShowPopup(true);
+            document.body.style.overflow="hidden"
         }
     };
 
@@ -187,7 +190,6 @@ function OidcClientsList() {
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
     }
-
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -312,7 +314,7 @@ function OidcClientsList() {
                                                                     <div>
                                                                         <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewClientId === index && (
-                                                                            <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                                                            <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ?"pr-3" :"pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
