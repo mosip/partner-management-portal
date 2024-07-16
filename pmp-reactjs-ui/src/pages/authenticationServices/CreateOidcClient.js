@@ -49,6 +49,7 @@ function CreateOidcClient() {
     ({ currentLocation, nextLocation }) => {
       if (isSubmitClicked) {
         setIsSubmitClicked(false);
+        console.log("ugwdugwd")
         return false;
       }
 
@@ -314,6 +315,7 @@ function CreateOidcClient() {
       setErrorMsg(err);
       console.log("Error fetching data: ", err);
     }
+    setIsSubmitClicked(false);
   }
 
 
