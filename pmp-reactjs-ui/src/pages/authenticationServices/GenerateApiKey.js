@@ -195,6 +195,10 @@ function GenerateApiKey() {
         backArrowIcon: "!mt-[5%]"
     }
 
+      const handleFormSubmit = (event) => {
+        event.preventDefault();
+      };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
             {!dataLoaded && (
@@ -216,7 +220,7 @@ function GenerateApiKey() {
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
                                 <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                <form>
+                                <form onSubmit={handleFormSubmit}>
                                     <div className="flex flex-col">
                                         <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
