@@ -239,7 +239,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} ${header.id === "action" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} `}>
+                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "apiKeyLabel" && (isLoginLanguageRTL?"pr-9":"pl-9")} ${header.id === "crDtimes" && (isLoginLanguageRTL?"pr-7":"pl-7")} ${header.id === "status" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} ${header.id === "action" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} `}>
                                                                 <div className="flex gap-x-1 items-center font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -256,11 +256,13 @@ function ApiKeysList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`px-4`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)}>{client.partnerId}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pr-9":"pl-2"} break-all break-normal`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL?"pl-8":"px-4"} break-all break-normal`}>{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"} break-all break-normal`}>
+                                                                    {client.apiKeyLabel}
+                                                                </td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-8" : "pl-8"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
