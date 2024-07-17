@@ -76,7 +76,7 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                             </div>
                         )}
                         <div className={`p-[10%] flex-col text-center justify-center items-center`}>
-                            <p className="text-[17px] font-semibold text-black break-words px-[6%]">
+                            <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
                                 {t(headerMsg)} - '{clientName}'?
                             </p>
                             <p className="text-sm text-[#666666] break-words py-[6%]">
