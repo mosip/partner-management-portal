@@ -82,7 +82,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                     className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
-                                <div className="min-h-3 p-4">
+                                <div className="min-h-3 p-4 cursor-auto">
                                     <p className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
