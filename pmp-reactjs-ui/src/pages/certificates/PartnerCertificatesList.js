@@ -258,11 +258,11 @@ function PartnerCertificatesList() {
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
                                                     <p className="font-bold text-sm text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
-                                                <div className="flex-col ml-[5%]">
+                                                <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
                                                 </div>
-                                                <div className="flex-col ml-[10%]">
+                                                <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
                                                 </div>
