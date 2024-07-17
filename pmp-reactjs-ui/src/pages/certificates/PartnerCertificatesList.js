@@ -21,16 +21,24 @@ function PartnerCertificatesList() {
     const [downloadBtnId, setDownloadBtnId] = useState(-1);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
-    const [certificatesData, setcertificatesData] = useState([]);
+    const [certificatesData, setCertificatesData] = useState([]);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownRefs = useRef([]);
 
     useEffect(() => {
-        handleMouseClickForDropdown(dropdownRef, () => setDownloadBtnId(-1));
-    }, [dropdownRef]);
+        const handleMouseClickOutside = (event) => {
+            if (dropdownRefs.current.every(ref => ref && !ref.contains(event.target))) {
+                setDownloadBtnId(-1);
+            }
+        };
+        document.addEventListener('mousedown', handleMouseClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleMouseClickOutside);
+        };
+    }, []);
 
     const clickOnUpload = (partner) => {
         document.body.style.overflow = "hidden";
@@ -136,7 +144,7 @@ function PartnerCertificatesList() {
                         console.error('Error:', errorMessage);
                     } else {
                         const resData = responseData.response;
-                        setcertificatesData(resData);
+                        setCertificatesData(resData);
                         console.log('Response data:', resData);
                     }
                 } else {
@@ -213,7 +221,7 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 {partner.isCertificateAvailable
                                                     ? <div className=" flex space-x-4">
-                                                        <div ref={dropdownRef} className="flex-col">
+                                                        <div ref={el => dropdownRefs.current[index] = el} className="flex-col">
                                                             <button onClick={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
                                                                 className={`h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} flex items-center ${downloadBtnId === index ? 'bg-blue-800 text-white' : 'text-tory-blue bg-white'} text-xs px-[10%] py-[1%] ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-tory-blue border border-blue-800 font-semibold rounded-lg text-center`}>
                                                                 {t('partnerCertificatesList.download')}

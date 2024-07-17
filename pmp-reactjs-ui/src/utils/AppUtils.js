@@ -1,3 +1,6 @@
+import { HttpService } from "../services/HttpService";
+import { getLoginRedirectUrl } from "../services/LoginRedirectService";
+
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
     const date = new Date(dateString);
@@ -146,10 +149,23 @@ export const moveToApiKeysList = (navigate) => {
 export const logout = async () => {
     localStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
-    redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
-    console.log(redirectUrl);
+
+    try {
+        const apiResp = await HttpService.get(getPartnerManagerUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
+
+        if (apiResp && apiResp.status === 200 && apiResp.data.response) {
+            redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+        } else {
+            console.error('Token validation failed');
+            redirectUrl = redirectUrl + getLoginRedirectUrl(window.location.href);
+        }
+    } catch (error) {
+        console.error('Error during token validation:', error);
+        redirectUrl = redirectUrl + getLoginRedirectUrl(window.location.href);
+    }
+
     window.location.href = redirectUrl;
-}
+};
 const areAllValuesSame = (list, column) => {
     const firstValue = list[0][column];
     return list.every(item => item[column] === firstValue);
