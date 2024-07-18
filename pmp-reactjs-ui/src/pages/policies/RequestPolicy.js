@@ -281,7 +281,6 @@ function RequestPolicy() {
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon
-                                                    overlapOptions
                                                     infoKey='requestPolicy.info'>
                                                 </DropdownComponent>
                                             </div>
@@ -316,7 +315,6 @@ function RequestPolicy() {
                                                     placeHolderKey='requestPolicy.selectPolicyName'
                                                     selectedDropdownValue={policyName}
                                                     searchKey='commons.search'
-                                                    overlapOptions
                                                     styleSet={styleForSearch}>
                                                 </DropdownWithSearchComponent>
                                             </div>
