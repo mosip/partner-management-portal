@@ -40,10 +40,10 @@ function Policies() {
     policyGroupName: ""
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-  const submenuRef = useRef(null);
+  const submenuRef = useRef([]);
 
   useEffect(() => {
-    handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(null));
+    handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(-1));
   }, [submenuRef]);
 
   const tableHeaders = [
@@ -235,11 +235,11 @@ function Policies() {
                                   </div>
                                 </td>
                                 <td className="text-center">
-                                  <div>
-                                    <p onClick={() => setViewPolicyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                  <div ref={el => submenuRef.current[index] = el}>
+                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div ref={submenuRef} onClick={() => showViewPolicyDetails(partner)}
+                                        <div onClick={() => showViewPolicyDetails(partner)}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-[5%] p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-32 max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}

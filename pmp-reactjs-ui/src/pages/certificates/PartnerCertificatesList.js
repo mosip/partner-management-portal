@@ -29,16 +29,8 @@ function PartnerCertificatesList() {
     const dropdownRefs = useRef([]);
 
     useEffect(() => {
-        const handleMouseClickOutside = (event) => {
-            if (dropdownRefs.current.every(ref => ref && !ref.contains(event.target))) {
-                setDownloadBtnId(-1);
-            }
-        };
-        document.addEventListener('mousedown', handleMouseClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleMouseClickOutside);
-        };
-    }, []);
+        handleMouseClickForDropdown(dropdownRefs, () => setDownloadBtnId(-1));
+    }, [dropdownRefs]);
 
     const clickOnUpload = (partner) => {
         document.body.style.overflow = "hidden";

@@ -48,10 +48,10 @@ function OidcClientsList() {
         policyGroupName: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-    const submenuRef = useRef(null);
+    const submenuRef = useRef([]);
 
     useEffect(() => {
-        handleMouseClickForDropdown(submenuRef, () => setViewClientId(null));
+        handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
 
     useEffect(() => {
@@ -181,6 +181,11 @@ function OidcClientsList() {
     //This part related to Pagination Logic
     let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
+    const closeDeactivatePopup = () => {
+        setViewClientId(-1);
+        setShowDeactivatePopup(false);
+    };
+
     const styles = {
         outerDiv: "!bg-opacity-[16%]"
     }
@@ -309,10 +314,10 @@ function OidcClientsList() {
                                                                 </td>
 
                                                                 <td className="text-center">
-                                                                    <div>
-                                                                        <p onClick={() => setViewClientId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
+                                                                    <div ref={el => submenuRef.current[index] = el}>
+                                                                        <p onClick={() => setViewClientId(index === viewClientId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewClientId === index && (
-                                                                            <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
@@ -329,7 +334,7 @@ function OidcClientsList() {
                                                                                     )
                                                                                 }
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={setShowDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' clientName={client.oidcClientName}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' clientName={client.oidcClientName}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

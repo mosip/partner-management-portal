@@ -20,7 +20,7 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
     
     const closingPopUp = () => {
         document.body.style.overflow="auto"
-        closePopUp(false)
+        closePopUp()
     };
 
     const clickOnConfirm = async () => {
