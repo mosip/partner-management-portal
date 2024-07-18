@@ -233,6 +233,7 @@ function GenerateApiKey() {
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon={true}
+                                                    overlapOptions={true}
                                                     infoKey='createOidcClient.partnerIdTooltip'>
                                                 </DropdownComponent>
                                             </div>
@@ -269,6 +270,7 @@ function GenerateApiKey() {
                                                     searchKey='commons.search'
                                                     styleSet={styles}
                                                     addInfoIcon={true}
+                                                    overlapOptions={true}
                                                     disabled={!partnerId}
                                                     infoKey={t('createOidcClient.policyNameToolTip')} />
                                             </div>
