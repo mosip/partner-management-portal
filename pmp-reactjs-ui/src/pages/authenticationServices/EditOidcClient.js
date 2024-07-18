@@ -402,7 +402,8 @@ function EditOidcClient() {
                                                     onDropDownChangeEvent={handleGrantTypesChange}
                                                     fieldNameKey='createOidcClient.grantTypes*'
                                                     selectedDropdownValue={oidcClientDetails.grantTypes[0]}
-                                                    styleSet={styles}>
+                                                    styleSet={styles}
+                                                    overlapOptions={true}>
                                                 </DropdownComponent>
                                             </div>
                                         </div>

@@ -395,7 +395,7 @@ function CreateOidcClient() {
                           selectedDropdownValue={partnerId}
                           styleSet={styles}
                           addInfoIcon={true}
-                          noOverLapTheOptions={true}
+                          overlapOptions={true}
                           infoKey='createOidcClient.partnerIdTooltip'>
                         </DropdownComponent>
                       </div>
@@ -432,6 +432,7 @@ function CreateOidcClient() {
                           searchKey='commons.search'
                           styleSet={styles}
                           addInfoIcon={true}
+                          overlapOptions={true}
                           disabled={!partnerId}
                           infoKey={t('createOidcClient.policyNameToolTip')} />
                       </div>
