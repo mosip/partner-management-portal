@@ -395,6 +395,7 @@ function CreateOidcClient() {
                           selectedDropdownValue={partnerId}
                           styleSet={styles}
                           addInfoIcon={true}
+                          noOverLapTheOptions={true}
                           infoKey='createOidcClient.partnerIdTooltip'>
                         </DropdownComponent>
                       </div>

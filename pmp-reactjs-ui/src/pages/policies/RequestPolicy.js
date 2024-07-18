@@ -281,6 +281,7 @@ function RequestPolicy() {
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon
+                                                    noOverLapTheOptions
                                                     infoKey='requestPolicy.info'>
                                                 </DropdownComponent>
                                             </div>
