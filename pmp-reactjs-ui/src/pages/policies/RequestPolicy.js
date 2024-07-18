@@ -59,7 +59,7 @@ function RequestPolicy() {
         };
 
         const handleBeforeUnload = (event) => {
-            if (shouldWarnBeforeUnload()) {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -70,7 +70,7 @@ function RequestPolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, partnerComments, policyName]);
+    }, [partnerId, partnerComments, policyName, isSubmitClicked]);
 
     useEffect(() => {
         const fetchData = async () => {
