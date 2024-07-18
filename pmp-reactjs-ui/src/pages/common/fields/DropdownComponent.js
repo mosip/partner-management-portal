@@ -61,7 +61,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 </button>
                 {isDropdownOpen && (
                     <div className={`z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full dark:bg-gray-700 cursor-pointer">
+                        <div className="absolute mt-auto z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
                                     <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>

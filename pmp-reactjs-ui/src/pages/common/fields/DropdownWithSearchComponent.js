@@ -70,8 +70,8 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`${!selectPolicyPopup && 'absolute'} z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
+                    <div className={`${!selectPolicyPopup && 'absolute'}mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                        <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
                             <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
