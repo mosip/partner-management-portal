@@ -50,7 +50,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <div className="relative w-full" ref={dropdownRef}>
                 <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
-                    <span className='break-all break-normal break-words text-wrap text-start'>{
+                    <span className='w-full break-all break-normal break-words text-wrap text-start'>{
                         selectedDropdownEntry ?
                             dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
                             : t(placeHolderKey)}
@@ -60,7 +60,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`absolute z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                    <div className={`z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                         <div className="z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full dark:bg-gray-700 cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
