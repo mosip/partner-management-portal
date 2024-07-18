@@ -44,10 +44,10 @@ function ApiKeysList() {
         policyGroupName: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-    const submenuRef = useRef(null);
+    const submenuRef = useRef([]);
 
     useEffect(() => {
-        handleMouseClickForDropdown(submenuRef, () => setViewApiKeyId(null));
+        handleMouseClickForDropdown(submenuRef, () => setViewApiKeyId(-1));
     }, [submenuRef]);
 
     useEffect(() => {
@@ -150,6 +150,11 @@ function ApiKeysList() {
         const isDateCol = (header === "crDtimes") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
+
+    const closeDeactivatePopup = () => {
+        setViewApiKeyId(-1);
+        setShowDeactivatePopup(false);
+    };
 
     //This part related to Pagination Logic
     let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
@@ -270,10 +275,10 @@ function ApiKeysList() {
                                                                 </td>
 
                                                                 <td className="text-center">
-                                                                    <div>
-                                                                        <p onClick={() => setViewApiKeyId(index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
+                                                                    <div ref={el => submenuRef.current[index] = el}>
+                                                                        <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div ref={submenuRef} className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-20 max-[780px]:w-fit max-[400px]:left-8 text-right" : "right-32 max-[1100px]:right-20 max-[780px]:w-fit max-[400px]:right-8 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-20 max-[780px]:w-fit max-[400px]:left-8 text-right" : "right-32 max-[1100px]:right-20 max-[780px]:w-fit max-[400px]:right-8 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
@@ -284,7 +289,7 @@ function ApiKeysList() {
                                                                                     </p>
                                                                                     )}
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={setShowDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' clientName={client.apiKeyLabel}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' clientName={client.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

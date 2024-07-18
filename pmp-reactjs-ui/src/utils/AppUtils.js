@@ -69,9 +69,14 @@ export const getGrantTypes = (type, t) => {
     }
 }
 
-export const handleMouseClickForDropdown = (ref, callback) => {
+export const handleMouseClickForDropdown = (refs, callback) => {
     const handleClickOutside = (event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+        if (Array.isArray(refs.current)) {
+            if (refs.current.every(ref => ref && !ref.contains(event.target))) {
+                callback();
+            }
+        } else
+        if (refs.current && !refs.current.contains(event.target)) {
             callback();
         }
     };
