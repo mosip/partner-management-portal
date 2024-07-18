@@ -78,7 +78,7 @@ function CreateOidcClient() {
     };
 
     const handleBeforeUnload = (event) => {
-      if (shouldWarnBeforeUnload()) {
+      if (shouldWarnBeforeUnload() && !isSubmitClicked) {
         event.preventDefault();
         event.returnValue = '';
       }
@@ -89,7 +89,7 @@ function CreateOidcClient() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [partnerId, oidcClientName, publicKey, logoUrl, policyId, policyName, redirectUrls]);
+  }, [partnerId, oidcClientName, publicKey, logoUrl, policyId, policyName, redirectUrls, isSubmitClicked]);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");

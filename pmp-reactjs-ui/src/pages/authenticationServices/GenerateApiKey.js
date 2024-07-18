@@ -57,7 +57,7 @@ function GenerateApiKey() {
         };
 
         const handleBeforeUnload = (event) => {
-            if (shouldWarnBeforeUnload()) {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -68,7 +68,7 @@ function GenerateApiKey() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, nameLabel, policyName]);
+    }, [partnerId, nameLabel, policyName, isSubmitClicked]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -137,6 +137,12 @@ function GenerateApiKey() {
     const isFormValid = () => {
         return partnerId && policyName && nameLabel && !validationError && !nameValidationError;
     };
+
+    useEffect(() => {
+        if (showPopup && !errorMsg) {
+            setIsSubmitClicked(true);
+        }
+    }, [showPopup, errorMsg]);
 
     const clickOnSubmit = async () => {
         setShowPopup(false);
