@@ -368,7 +368,7 @@ function EditOidcClient() {
                                                     {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                                                 </label>
                                                 {(oidcClientDetails.redirectUris).map((url, index) => (
-                                                    <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
+                                                    <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
                                                         <input
                                                             value={url}
                                                             onChange={(e) => onChangeRedirectUrl(index, e.target.value)}
