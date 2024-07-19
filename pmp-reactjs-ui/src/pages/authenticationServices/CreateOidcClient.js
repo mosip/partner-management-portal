@@ -439,7 +439,7 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-[562px]">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
-                          className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
                         {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                       </div>
@@ -451,7 +451,7 @@ function CreateOidcClient() {
                           <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
                         </label>
                         <textarea value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
-                          className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
                         </textarea>
                         {jsonError && <span className="text-sm text-crimson-red font-semibold">{jsonError}</span>}
@@ -461,7 +461,7 @@ function CreateOidcClient() {
                       <div className="flex flex-col w-full">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
-                          className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
                         {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                       </div>
@@ -473,7 +473,7 @@ function CreateOidcClient() {
                           {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                         </label>
                         {redirectUrls.map((url, index) => (
-                          <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
+                          <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar focus:shadow-outline mb-2">
                             <input
                               value={url}
                               onChange={(e) => onChangeRedirectUrl(index, e.target.value)}

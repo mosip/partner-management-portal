@@ -324,7 +324,7 @@ function RequestPolicy() {
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                     {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
                                                 </label>
-                                                <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue dark:placeholder-gray-400 bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                <textarea ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                 </textarea>
                                                 {validationError && <span className="text-sm text-crimson-red font-semibold">{validationError}</span>}
