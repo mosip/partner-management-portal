@@ -208,7 +208,7 @@ function ApiKeysList() {
                                                 <h6>{t('apiKeysList.apiKeyLabel')}</h6>
                                                 <h6>{t('authenticationServices.createdDate')}</h6>
                                                 <h6>{t('authenticationServices.status')}</h6>
-                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.action')}</h6>
+                                                <h6 className={`${isLoginLanguageRTL ? "mr-5 ml-5" : "mr-5 ml-5"}`}>{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
