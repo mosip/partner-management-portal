@@ -196,7 +196,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             value={partnerDomainType} disabled />
                                     </div>
                                 </form>
-                                <div className="flex items-center justify-center mt-[2%] w-full min-h-36 h-fit p-3 border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
+                                <div className="flex items-center justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
                                     {uploading && (
                                         <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                             <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -212,8 +212,8 @@ function UploadCertificate({ closePopup, partnerData }) {
                                         </div>
                                     )}
                                     {!uploading && fileName === '' && (
-                                        <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
-                                            <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
+                                        <div className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
+                                            <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
                                                 <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
                                                 <h5 className="text-charcoal-gray text-base font-normal">
                                                     {t('uploadCertificate.selectCertificate')}
