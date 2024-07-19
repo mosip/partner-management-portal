@@ -21,6 +21,12 @@ function HeaderNav({ open, setOpen }) {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
     }, [dropdownRef]);
 
+    useEffect(() => {
+        if (dropdownRef.current) {
+            document.documentElement.style.setProperty('--dropdown-width', `${dropdownRef.current.offsetWidth}px`);
+        }
+    }, [isDropdownOpen, getUserProfile().userName]);
+
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -75,7 +81,7 @@ function HeaderNav({ open, setOpen }) {
                     <img src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`}/>
 
                     {isDropdownOpen && (
-                        <div className={`absolute top-14 ${isLoginLanguageRTL ? "left-1 origin-top-left" : "right-1 origin-top-right"} z-10 w-40 h-33 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
+                        <div className={`absolute top-14 ${isLoginLanguageRTL ? "left-1 origin-top-left" : "right-1 origin-top-right"} z-10 w-dynamic rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
                             <button onClick={() => moveToMyProfile()} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`}>
                                 {t('header.userProfile')}
                             </button>

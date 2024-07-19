@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        'dynamic': 'var(--dropdown-width)',
+      },
       backgroundColor: theme => ({
         ...theme('colors'),
         'anti-flash-white': '#F1F3F6',
