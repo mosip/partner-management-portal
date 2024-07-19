@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 
 const BlockerPrompt = ({ blocker }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [blocker.state]);
 
   return blocker.state === "blocked" ? (
     <div className="fixed min-w-36 h-full inset-0 w-full flex flex-col z-50 font-inter">

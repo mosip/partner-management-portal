@@ -57,7 +57,6 @@ function CreateOidcClient() {
           oidcClientName !== "" ||
           publicKey !== "" ||
           logoUrl !== "" ||
-          policyId !== "" ||
           policyName !== "" ||
           redirectUrls.some(url => url !== "")
         ) &&
@@ -72,7 +71,6 @@ function CreateOidcClient() {
         oidcClientName !== "" ||
         publicKey !== "" ||
         logoUrl !== "" ||
-        policyId !== "" ||
         policyName !== "" ||
         redirectUrls.some(url => url !== "");
     };
