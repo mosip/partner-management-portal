@@ -72,7 +72,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button
-                                                className={`block w-full h-9 px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-nowrap no-scrollbar
+                                                className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
