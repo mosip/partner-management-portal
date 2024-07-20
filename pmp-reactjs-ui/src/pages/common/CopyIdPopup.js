@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
@@ -24,9 +24,15 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, navigateUrl, heade
             navigate(navigateUrl);
         } else {
             closePopUp(false);
-            document.body.style.overflow="auto"
         }
     }
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 
     return (
         <div className={`fixed inset-0 flex items-center justify-center bg-black ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''} z-50 font-inter cursor-default !ml-0`}>
