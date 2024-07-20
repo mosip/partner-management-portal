@@ -286,9 +286,9 @@ function RequestPolicy() {
                                             </div>
                                             <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
-                                                    <span>{partnerType || t('requestPolicy.partnerType')}</span>
+                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>
@@ -298,9 +298,9 @@ function RequestPolicy() {
                                         <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
                                             <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
-                                                    <span>{policyGroupName || t('requestPolicy.policyGroup')}</span>
+                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{policyGroupName || t('requestPolicy.policyGroup')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                     </svg>
