@@ -278,8 +278,8 @@ function ApiKeysList() {
                                                                     <div ref={el => submenuRef.current[index] = el}>
                                                                         <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-20 max-[780px]:w-fit max-[400px]:left-8 text-right" : "right-32 max-[1100px]:right-20 max-[780px]:w-fit max-[400px]:right-8 text-left"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-32 max-[780px]:left-10 max-[400px]:left-10 text-right pl-1" : "right-32 max-[780px]:right-10 text-left pr-1"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
