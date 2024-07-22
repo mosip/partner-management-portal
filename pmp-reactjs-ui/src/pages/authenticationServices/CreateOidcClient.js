@@ -492,7 +492,7 @@ function CreateOidcClient() {
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                         {redirectUrls.length < 5 && (
-                          <p className="text-[#1447b2] font-bold text-xs">
+                          <p className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e)=>{e.key==='Enter' && addNewRedirectUrl()}}>
                             <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
                             <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                           </p>
