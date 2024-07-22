@@ -317,12 +317,12 @@ function OidcClientsList() {
                                                                     <div ref={el => submenuRef.current[index] = el}>
                                                                         <p onClick={() => setViewClientId(index === viewClientId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right pl-1" : "right-20 text-left pr-1"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 break-all break-normal`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showEditOidcClient(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
+                                                                                <p onClick={() => showEditOidcClient(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
