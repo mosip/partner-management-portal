@@ -236,10 +236,11 @@ function Policies() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e)=>{e.key==='Enter' && setViewPolicyId(index === viewPolicyId ? null : index)}}>
+                                      ...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div onClick={() => showViewPolicyDetails(partner)}
+                                        <div onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyPress={(e)=>{e.key==='Enter' && showViewPolicyDetails(partner)}}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}
