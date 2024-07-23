@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, bgOfStatus } from "../../utils/AppUtils";
+import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, bgOfStatus, onPressEnterKey } from "../../utils/AppUtils";
 import { formatDate, moveToOidcClientsList, getStatusCode } from "../../utils/AppUtils";
 import content_copy_icon from "../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../svg/disabled_copy_icon.svg";
@@ -75,15 +75,16 @@ function ViewOidcClientDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div
-                            className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}>
+
+                        <div className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
+                         tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,copyId())}>
                             <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                             <div className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                     {oidcClientDetails.oidcClientId}
                                 </p>
                                 {oidcClientDetails.status === "ACTIVE" ? (
-                                    <img src={content_copy_icon} alt="" onClick={() => copyId()} />
+                                    <img src={content_copy_icon} alt="" onClick={() => copyId()}/>
                                 ) : (
                                     <img src={disabled_copy_icon} alt="" />
                                 )}

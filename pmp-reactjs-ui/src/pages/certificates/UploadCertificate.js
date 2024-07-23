@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl } from '../../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, onPressEnterKey } from '../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
@@ -214,7 +214,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                     {!uploading && fileName === '' && (
                                         <div className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
                                             <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
-                                                <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
+                                                <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" tabIndex="0"/>
                                                 <h5 className="text-charcoal-gray text-base font-normal">
                                                     {t('uploadCertificate.selectCertificate')}
                                                 </h5>
@@ -222,7 +222,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                                                     {t('uploadCertificate.certificateFormat')}
                                                 </p>
                                             </label>
-                                            <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
+                                            <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange}/>
                                         </div>
                                     )}
                                     {!uploading && fileName && (
