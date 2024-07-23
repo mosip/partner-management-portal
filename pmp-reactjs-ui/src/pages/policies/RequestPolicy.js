@@ -31,6 +31,7 @@ function RequestPolicy() {
     const [validationError, setValidationError] = useState("");
     const textareaRef = useRef(null);
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -38,8 +39,9 @@ function RequestPolicy() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked) {
+            if (isSubmitClicked || isCancelledClicked) {
                 setIsSubmitClicked(false);
+                isCancelledClicked = false;
                 return false;
             }
 
@@ -154,6 +156,10 @@ function RequestPolicy() {
         setValidationError("");
     };
 
+    const clickOnCancel = () => {
+        isCancelledClicked = true;
+        moveToPolicies(navigate);
+    }
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
         setErrorCode("");
@@ -337,7 +343,7 @@ function RequestPolicy() {
                             <div className="flex flex-row px-[3%] py-5 justify-between">
                                 <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                 <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => moveToPolicies(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
