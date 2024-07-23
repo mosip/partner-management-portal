@@ -42,7 +42,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
 }
 
 export const getStatusCode = (status, t) => {
-    if(status) {
+    if (status) {
         status = status.toLowerCase();
         if (status === "approved") {
             return t('statusCodes.approved');
@@ -69,6 +69,12 @@ export const getGrantTypes = (type, t) => {
     }
 }
 
+export const onPressEnterKey = (e, action) => {
+    if (e.key === 'Enter') {
+        return action
+    }
+}
+
 export const handleMouseClickForDropdown = (refs, callback) => {
     const handleClickOutside = (event) => {
         if (Array.isArray(refs.current)) {
@@ -76,9 +82,9 @@ export const handleMouseClickForDropdown = (refs, callback) => {
                 callback();
             }
         } else
-        if (refs.current && !refs.current.contains(event.target)) {
-            callback();
-        }
+            if (refs.current && !refs.current.contains(event.target)) {
+                callback();
+            }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -127,10 +133,10 @@ export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => 
 }
 
 export const isLangRTL = (langCode) => {
-    if(langCode==='ara'){
-    return true;
+    if (langCode === 'ara') {
+        return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -240,11 +246,11 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
 export const validateName = (value, length, t) => {
     const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
     if (value.length > length) {
-        return t('commons.nameTooLong', {length: length});
+        return t('commons.nameTooLong', { length: length });
     } else if (!regexPattern.test(value)) {
         return t('commons.specialCharNotAllowed');
     } else {
-      return "";
+        return "";
     }
 };
 
@@ -253,7 +259,7 @@ export const validateUrl = (index, value, length, urlArr, t) => {
     if (value === "") {
         return "";
     } else if (value.length > length) {
-        return t('commons.urlTooLong', {length: length});
+        return t('commons.urlTooLong', { length: length });
     } else if (!urlPattern.test(value.trim())) {
         return t('commons.invalidUrl');
     } else if (urlArr.some((url, i) => url === value && i !== index)) {
@@ -267,16 +273,16 @@ export const validateUrl = (index, value, length, urlArr, t) => {
 
 export const bgOfStatus = (status) => {
     if (status === "approved" || status === "ACTIVE") {
-      return ("bg-[#D1FADF] text-[#155E3E]")
+        return ("bg-[#D1FADF] text-[#155E3E]")
     }
     else if (status === "rejected") {
-      return ("bg-[#FAD6D1] text-[#5E1515]")
+        return ("bg-[#FAD6D1] text-[#5E1515]")
     }
     else if (status === "InProgress") {
-      return ("bg-[#FEF1C6] text-[#6D1C00]")
+        return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === "deactivated" || status === "INACTIVE") {
-      return ("bg-[#EAECF0] text-[#525252]")
+        return ("bg-[#EAECF0] text-[#525252]")
     }
 }
 
@@ -307,7 +313,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldValue: item[fieldName]
                 });
             } else {
-                if(fieldDesc) {
+                if (fieldDesc) {
                     dataArr.push({
                         fieldCode: item[fieldName],
                         fieldValue: item[fieldName],

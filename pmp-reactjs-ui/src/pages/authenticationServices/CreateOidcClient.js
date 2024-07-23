@@ -6,7 +6,8 @@ import { getUserProfile } from '../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
-  isLangRTL, createDropdownData, validateName, validateUrl, getAllApprovedAuthPartnerPolicies
+  isLangRTL, createDropdownData, validateName, validateUrl, getAllApprovedAuthPartnerPolicies,
+  onPressEnterKey
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -499,7 +500,7 @@ function CreateOidcClient() {
                         ))}
                         {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                         {redirectUrls.length < 5 && (
-                          <p className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e)=>{e.key==='Enter' && addNewRedirectUrl()}}>
+                          <p className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,addNewRedirectUrl())}>
                             <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
                             <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                           </p>

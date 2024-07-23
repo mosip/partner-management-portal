@@ -1,7 +1,7 @@
 
 export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
     return (
-        <div className="flex items-center gap-x-2 mt-2 font-inter">
+        <div className="flex items-center gap-x-2 mt-2 font-inter" tabIndex="0">
             <div className={`h-6 pl-1 w-1 ${activeIcon === id ? 'bg-tory-blue' : null} rounded-e-md`}></div>
             <div className="h-9 w-9 p-[0.65rem] bg-white ml-2 rounded-md shadow-md">
                 {id === 'home' &&
