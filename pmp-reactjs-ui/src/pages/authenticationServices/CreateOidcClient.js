@@ -44,10 +44,12 @@ function CreateOidcClient() {
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
   const [nameValidationError, setNameValidationError] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  let isCancelledClicked = false;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
-      if (isSubmitClicked) {
+      if (isSubmitClicked || isCancelledClicked) {
+        isCancelledClicked = false;
         setIsSubmitClicked(false);
         return false;
       }
@@ -218,6 +220,11 @@ function CreateOidcClient() {
       validateUrls(newRedirectUrls);
     }
   };
+
+  const clickOnCancel = () => {
+    isCancelledClicked = true;
+    moveToOidcClientsList(navigate)
+}
 
   const validateUrls = (urls) => {
     const filteredUrls = urls.filter(url => url.trim() !== "");
@@ -517,7 +524,7 @@ function CreateOidcClient() {
               <div className="flex flex-row px-[3%] py-[2%] justify-between">
                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                  <button onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                  <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                   <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                 </div>
               </div>

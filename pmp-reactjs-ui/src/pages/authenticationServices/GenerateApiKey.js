@@ -34,13 +34,15 @@ function GenerateApiKey() {
     const [validationError, setValidationError] = useState("");
     const [nameValidationError, setNameValidationError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    let isCancelledClicked = false;
 
     const navigate = useNavigate();
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked) {
+            if (isSubmitClicked || isCancelledClicked) {
                 setIsSubmitClicked(false);
+                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -143,6 +145,11 @@ function GenerateApiKey() {
             setIsSubmitClicked(true);
         }
     }, [showPopup, errorMsg]);
+
+    const clickOnCancel = () => {
+        isCancelledClicked = true;
+        moveToApiKeysList(navigate);
+    }
 
     const clickOnSubmit = async () => {
         setShowPopup(false);
@@ -297,7 +304,7 @@ function GenerateApiKey() {
                             <div className="flex flex-row max-[450px]:flex-col px-[3%] py-5 justify-between max-[450px]:space-y-2">
                                 <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                 <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => moveToApiKeysList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     {(showPopup && !errorMsg) && (
                                         <CopyIdPopUp closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} id={apiKeyId} navigateUrl='/partnermanagement/authenticationServices/generateApiKeyConfirmation' 
