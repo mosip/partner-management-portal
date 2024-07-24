@@ -6,6 +6,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import { getPartnerManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
+import FocusTrap from "focus-trap-react";
 
 function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descriptionMsg, clientName }) {
     const { t } = useTranslation();
@@ -62,34 +63,36 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
-                {!dataLoaded && (
-                    <LoadingIcon styleSet={styles}></LoadingIcon>
-                )}
-                {dataLoaded && (
-                    <div className="relative">
-                        {errorMsg && (
-                            <div className="flex justify-end">
-                                <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
+                <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
+                    {!dataLoaded && (
+                        <LoadingIcon styleSet={styles}></LoadingIcon>
+                    )}
+                    {dataLoaded && (
+                        <div className="relative">
+                            {errorMsg && (
+                                <div className="flex justify-end">
+                                    <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                                    </div>
+                                </div>
+                            )}
+                            <div className={`p-[10%] flex-col text-center justify-center items-center`}>
+                                <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
+                                    {t(headerMsg)} - '{clientName}'?
+                                </p>
+                                <p className="text-sm text-[#666666] break-words py-[6%]">
+                                    {t(descriptionMsg)}
+                                </p>
+                                <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
+                                    <button onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                                    <button onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                                 </div>
                             </div>
-                        )}
-                        <div className={`p-[10%] flex-col text-center justify-center items-center`}>
-                            <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                {t(headerMsg)} - '{clientName}'?
-                            </p>
-                            <p className="text-sm text-[#666666] break-words py-[6%]">
-                                {t(descriptionMsg)}
-                            </p>
-                            <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
-                                <button onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
-                                <button onClick={() => clickOnConfirm()}type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
-                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
+            </FocusTrap>
         </div>
     )
 

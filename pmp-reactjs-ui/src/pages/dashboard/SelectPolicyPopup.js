@@ -9,6 +9,7 @@ import { getUserProfile } from '../../services/UserProfileService.js';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
 import DropdownWithSearchComponent from '../common/fields/DropdownWithSearchComponent.js';
+import FocusTrap from 'focus-trap-react';
 
 function SelectPolicyPopup() {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState("");
@@ -102,74 +103,76 @@ function SelectPolicyPopup() {
 
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
-            <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
-                {!dataLoaded && (
-                    <LoadingIcon styleSet={styles}></LoadingIcon>
-                )}
-                {dataLoaded && (
-                    <>
-                        {errorMsg && (
-                            <div className="flex justify-end items-center absolute w-1/3">
-                                <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
+                <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
+                    {!dataLoaded && (
+                        <LoadingIcon styleSet={styles}></LoadingIcon>
+                    )}
+                    {dataLoaded && (
+                        <>
+                            {errorMsg && (
+                                <div className="flex justify-end items-center absolute w-1/3">
+                                    <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                        <div className="px-4 py-2">
-                            <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
-                        </div>
-                        <div className="border-gray-200 border-opacity-75 border-t"></div>
-                        <div className="py-3 px-4 text-sm text-[#414141]">
-                            <p>
-                                {displayText}
-                            </p>
-                            {descriptionText.split(' ').length > maxWords && (
-                                <button className="text-tory-blue text-sm font-semibold" onClick={expandDescription}>
-                                    {isExpanded ? t('selectPolicyPopup.viewLess'): t('selectPolicyPopup.viewMore')}
-                                </button>
                             )}
-                            <form>
-                                <div className="pt-2 w-full mb-1 flex flex-col">
-                                    <div className="flex flex-col">
-                                        <label className="block text-dark-blue text-sm font-semibold mb-2">
-                                            {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
-                                        </label>
-                                        <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                            <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
-                                        </button>
+                            <div className="px-4 py-2">
+                                <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
+                            </div>
+                            <div className="border-gray-200 border-opacity-75 border-t"></div>
+                            <div className="py-3 px-4 text-sm text-[#414141]">
+                                <p>
+                                    {displayText}
+                                </p>
+                                {descriptionText.split(' ').length > maxWords && (
+                                    <button className="text-tory-blue text-sm font-semibold" onClick={expandDescription}>
+                                        {isExpanded ? t('selectPolicyPopup.viewLess') : t('selectPolicyPopup.viewMore')}
+                                    </button>
+                                )}
+                                <form>
+                                    <div className="pt-2 w-full mb-1 flex flex-col">
+                                        <div className="flex flex-col">
+                                            <label className="block text-dark-blue text-sm font-semibold mb-2">
+                                                {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
+                                            </label>
+                                            <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                                <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
+                                            </button>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <DropdownWithSearchComponent
+                                                fieldName='policyGroup'
+                                                dropdownDataList={policyGroupList}
+                                                onDropDownChangeEvent={changePolicyGroupSelection}
+                                                fieldNameKey='selectPolicyPopup.policyGroup*'
+                                                placeHolderKey='selectPolicyPopup.title'
+                                                searchKey='commons.search'
+                                                selectPolicyPopup
+                                                styleSet={styles}>
+                                            </DropdownWithSearchComponent>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <DropdownWithSearchComponent 
-                                            fieldName='policyGroup' 
-                                            dropdownDataList={policyGroupList} 
-                                            onDropDownChangeEvent={changePolicyGroupSelection}
-                                            fieldNameKey='selectPolicyPopup.policyGroup*' 
-                                            placeHolderKey='selectPolicyPopup.title' 
-                                            searchKey='commons.search'
-                                            selectPolicyPopup
-                                            styleSet={styles}>
-                                        </DropdownWithSearchComponent>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div className="border-[#E5EBFA] border-t mx-2"></div>
-                        <div className="p-3 flex justify-between relative">
-                            <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
-                            </p>
-                            <button
-                                className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
+                                </form>
+                            </div>
+                            <div className="border-[#E5EBFA] border-t mx-2"></div>
+                            <div className="p-3 flex justify-between relative">
+                                <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
+                                    <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                                </p>
+                                <button
+                                    className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
                                 ${selectedPolicyGroup ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
-                                onClick={clickOnSubmit}
-                                disabled={!selectedPolicyGroup}
-                            >
-                                {t('selectPolicyPopup.submit')}
-                            </button>
-                        </div>
-                    </>
-                )}
-            </div>
+                                    onClick={clickOnSubmit}
+                                    disabled={!selectedPolicyGroup}
+                                >
+                                    {t('selectPolicyPopup.submit')}
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
+            </FocusTrap>
         </div>
 
     );
