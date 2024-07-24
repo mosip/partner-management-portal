@@ -261,11 +261,11 @@ function ApiKeysList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-2"} break-all break-normal`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-8" : "px-4"} break-all break-normal`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"} break-all break-normal`}>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-8" : "px-4"}`}>{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>
                                                                     {client.apiKeyLabel}
                                                                 </td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-8" : "pl-8"}`}>{formatDate(client.crDtimes, 'date')}</td>
@@ -280,13 +280,13 @@ function ApiKeysList() {
                                                                         <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-32 max-[780px]:left-10 max-[400px]:left-10 text-right pl-1" : "right-32 max-[780px]:right-10 text-left pr-1"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickView(client))}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit pr-[2.5%] ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-32 max-[780px]:left-10 max-[400px]:left-10 text-right pl-1" : "right-32 max-[780px]:right-10 text-left pr-1"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 {client.status === "ACTIVE" &&
-                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickDeactivate(client))}>
+                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickDeactivate(client))}>
                                                                                         {t('oidcClientsList.deActivate')}
                                                                                     </p>
                                                                                     )}

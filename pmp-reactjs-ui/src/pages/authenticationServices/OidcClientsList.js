@@ -291,11 +291,11 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-12" : "pl-2"} break-all break-normal break-words`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`px-4 break-all break-normal break-words`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-3" : "pr-1"} break-all break-normal break-words`}>{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-12" : "pl-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`px-4`}>{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-3" : "pr-1"}`}>{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-5" : "pl-10"}`}>
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -320,18 +320,18 @@ function OidcClientsList() {
                                                                             tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,setViewClientId(index === viewClientId ? null : index))}>
                                                                             ...</p>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right pl-1" : "right-20 text-left pr-1"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 break-all break-normal`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickView(client))}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs px-4 font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p onClick={() => showEditOidcClient(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`} tabIndex="0" onKeyPress={(e) =>onPressEnterKey(e,showEditOidcClient(client))}>
+                                                                                <p onClick={() => showEditOidcClient(client)} className={`py-2 ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`} tabIndex="0" onKeyPress={(e) =>onPressEnterKey(e,showEditOidcClient(client))}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 {client.status === "ACTIVE" &&
                                                                                     (
-                                                                                        <p onClick={() => showDeactivateOidcClient(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,showDeactivateOidcClient(client))}>
+                                                                                        <p onClick={() => showDeactivateOidcClient(client)} className={`py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,showDeactivateOidcClient(client))}>
                                                                                             {t('oidcClientsList.deActivate')}
                                                                                         </p>
                                                                                     )
