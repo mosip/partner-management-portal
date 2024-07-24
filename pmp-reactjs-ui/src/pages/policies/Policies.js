@@ -223,11 +223,11 @@ function Policies() {
                         <tbody>
                           {tableRows.map((partner, index) => {
                             return (
-                              <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                              <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
-                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2 break-all break-normal break-word">{partner.policyName}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
                                   <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>

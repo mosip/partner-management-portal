@@ -16,7 +16,7 @@ function FilterButtons({ listTitle, dataList, filter, onResetFilter, setFilter})
                 className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
                 {t('commons.resetFilter')}
             </p>}
-            <button disabled={filter} onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center
+            <button disabled={filter} onClick={() => setFilter(!filter)} type="button" className={`flex justify-center items-center w-[23%] text-sm py-2 mt-2 text-tory-blue border border-[#1447B2] font-semibold rounded-md text-center min-w-fit px-2
                 ${filter ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-auto' : 'text-tory-blue bg-white'} ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                 {t('commons.filterBtn')}
                 <svg
