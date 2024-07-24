@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService';
 import { isLangRTL, moveToHome, getPartnerTypeDescription } from '../utils/AppUtils';
 import backArrow from '.././svg/back_arrow.svg';
+import Title from '../pages/common/Title';
 
 function UserProfile() {
     const navigate = useNavigate('');
@@ -13,19 +14,7 @@ function UserProfile() {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
-            <div className="flex-col mt-7">
-                <div className="flex justify-between mb-5">
-                    <div className={`flex items-start gap-x-2`}>
-                        <img src={backArrow} alt="" onClick={() => moveToHome(navigate)} className={`mt-[12%] cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} />
-                        <div className="flex-col mt-[3%]">
-                            <h1 className="font-semibold text-lg text-dark-blue">{t('userProfile.myProfile')}</h1>
-                            <p onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
-                                {t('commons.home')}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Title title='userProfile.myProfile' backLink='/partnermanagement'></Title>
             <div className="bg-snow-white h-fit my-0.5 rounded-t-lg shadow-sm font-inter">
                 <div className="flex justify-between px-7 py-2 border-b max-[450px]:flex-col">
                     <p className="font-semibold text-md text-[#031640] my-2 text-left">

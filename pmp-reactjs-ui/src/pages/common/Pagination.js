@@ -2,7 +2,7 @@ import ReactPaginate from 'react-paginate';
 import { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, handleMouseClickForDropdown } from '../../utils/AppUtils';
+import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../utils/AppUtils';
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
 
@@ -55,7 +55,7 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
                     <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                         {itemsPerPageOptions.map((num, i) => {
                         return (
-                            <p key={i} onClick={() => changeItemsPerPage(num)}
+                            <p key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e,changeItemsPerPage(num))}
                             className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                             {num}
                             </p>
@@ -66,7 +66,7 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
                     )}
                     <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
                         text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
-                        onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}>
+                        onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e,setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                         <p>
                             {selectedRecordsPerPage}
                         </p>

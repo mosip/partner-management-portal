@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
+    onPressEnterKey
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -181,7 +182,7 @@ function ApiKeysList() {
                         <div className="flex justify-between mb-5">
                             <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
                             {apiKeysList.length > 0 ?
-                                <button type="button" onClick={() => generateApiKey()}
+                                <button type="button" onClick={() => generateApiKey()} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,generateApiKey())}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('apiKeysList.generateApiKey')}
                                 </button>
@@ -219,7 +220,7 @@ function ApiKeysList() {
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activeApiKey &&
-                                            (<button onClick={() => generateApiKey()} type="button"
+                                            (<button onClick={() => generateApiKey()} type="button" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,generateApiKey())}
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                 {t('apiKeysList.generateApiKey')}
                                             </button>)
@@ -276,15 +277,16 @@ function ApiKeysList() {
 
                                                                 <td className="text-center">
                                                                     <div ref={el => submenuRef.current[index] = el}>
-                                                                        <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>...</p>
+                                                                        <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,setViewApiKeyId(index === viewApiKeyId ? null : index))}>
+                                                                            ...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-20 max-[780px]:w-fit max-[400px]:left-8 text-right" : "right-32 max-[1100px]:right-20 max-[780px]:w-fit max-[400px]:right-8 text-left"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-32 max-[780px]:left-10 max-[400px]:left-10 text-right pl-1" : "right-32 max-[780px]:right-10 text-left pr-1"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 {client.status === "ACTIVE" &&
-                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 text-crimson-red cursor-pointer hover:bg-gray-100`}>
+                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} break-all break-normal py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onClickDeactivate(client))}>
                                                                                         {t('oidcClientsList.deActivate')}
                                                                                     </p>
                                                                                     )}

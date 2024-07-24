@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL } from '../../utils/AppUtils';
+import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 
 function FilterButtons({ listTitle, dataList, filter, onResetFilter, setFilter}) {
 
@@ -12,7 +12,7 @@ function FilterButtons({ listTitle, dataList, filter, onResetFilter, setFilter})
             {t(listTitle) + ' (' + dataList.length + ")"}
             </div>
             <div className="w-full flex justify-end relative items-center">
-            {filter && <p onClick={() => onResetFilter()} type="button"
+            {filter && <p onClick={() => onResetFilter()} type="button" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onResetFilter())}
                 className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} mt-1.5 justify-center items-center text-sm h-0 font-semibold text-center text-tory-blue cursor-pointer`}>
                 {t('commons.resetFilter')}
             </p>}

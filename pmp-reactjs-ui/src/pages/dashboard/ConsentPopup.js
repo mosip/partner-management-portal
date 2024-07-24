@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { HttpService } from "../../services/HttpService.js";
-import { logout } from '../../utils/AppUtils.js';
+import { logout, onPressEnterKey } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
@@ -30,7 +30,7 @@ function ConsentPopup() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow="auto";
+        document.body.style.overflow = "auto";
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/partners/saveUserConsentGiven`, process.env.NODE_ENV));
             if (response) {
@@ -72,14 +72,16 @@ function ConsentPopup() {
                         <div className="text-sm text-[#414141] w-full">
                             <div className="p-4"> <p>{consentText}</p></div>
                             <div className="flex items-center mt-3 bg-alice-green w-full px-4 py-3">
-                                <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
+                                <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" tabIndex="0"
+                                    onKeyPress={(e) => onPressEnterKey(e, handleCheckboxChange())} />
                                 <label className="ms-2 text-sm font-semibold">{t('consentPopup.checkBoxDesc')}</label>
                             </div>
                         </div>
                         <div className="border-[#E5EBFA] border-t mx-2"></div>
                         <div className="p-4 flex justify-between relative items-center">
                             <p className="text-[#333333] text-sm font-semibold">{t('consentPopup.logoutMsg')}
-                                <span className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout}> {t('commons.logout')}</span>
+                                <span className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
+                                onKeyPress={(e)=>onPressEnterKey(e,logout())}> {t('commons.logout')}</span>
                             </p>
                             <button
                                 className={`w-40 h-10 mx-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 

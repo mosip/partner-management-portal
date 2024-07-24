@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL } from '../../utils/AppUtils';
+import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 import {
   getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
   toggleSortAscOrder, toggleSortDescOrder, bgOfStatus
@@ -236,10 +236,11 @@ function Policies() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>...</p>
+                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e,setViewPolicyId(index === viewPolicyId ? null : index))}>
+                                      ...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div onClick={() => showViewPolicyDetails(partner)}
+                                        <div onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e,showViewPolicyDetails(partner))}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}

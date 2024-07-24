@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateName, validateUrl } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateName, validateUrl, onPressEnterKey } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import DropdownComponent from "../common/fields/DropdownComponent";
@@ -375,7 +375,7 @@ function EditOidcClient() {
                                                             placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                                                             className="w-[85%] focus:outline-none"
                                                         />
-                                                        <div className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)}>
+                                                        <div className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,onDeleteRedirectUrl(index))}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                                                 stroke={oidcClientDetails.redirectUris.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${oidcClientDetails.redirectUris.length > 1 ? 'cursor-pointer' : ''}`}>
                                                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -389,7 +389,7 @@ function EditOidcClient() {
                                                 ))}
                                                 {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                 {oidcClientDetails.redirectUris.length < 5 && (
-                                                    <p className="text-[#1447b2] font-bold text-xs">
+                                                    <p className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,addNewRedirectUrl())}>
                                                         <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
                                                         <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                                                     </p>
