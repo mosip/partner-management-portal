@@ -1,5 +1,5 @@
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -18,9 +18,9 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
-    
+
     const closingPopUp = () => {
-        document.body.style.overflow="auto"
+        document.body.style.overflow = "auto"
         closePopUp()
     };
 
@@ -28,7 +28,7 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow="auto"
+        document.body.style.overflow = "auto"
         try {
             let response;
             if (clientData.apiKeyLabel) {
@@ -78,9 +78,15 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                                 </div>
                             )}
                             <div className={`p-[10%] flex-col text-center justify-center items-center`}>
-                                <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                    {t(headerMsg)} - '{clientName}'?
-                                </p>
+                                {!isLoginLanguageRTL ?
+                                        <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
+                                            {t(headerMsg)} - '{clientName}'?
+                                        </p>
+                                       : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
+                                            {t(headerMsg)} - {clientName}
+                                        </p>
+                                }
+
                                 <p className="text-sm text-[#666666] break-words py-[6%]">
                                     {t(descriptionMsg)}
                                 </p>
