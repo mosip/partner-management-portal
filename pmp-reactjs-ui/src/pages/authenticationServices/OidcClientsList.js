@@ -293,9 +293,9 @@ function OidcClientsList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL && "pr-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL && "pr-2"} break-normal`}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`px-4`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-3" : "pr-1"} break-normal break-all`}>{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-3" : "pr-1"} break-normal`}>{client.oidcClientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-2" : "pl-11"}`}>
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
