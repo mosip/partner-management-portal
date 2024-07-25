@@ -263,7 +263,7 @@ function ApiKeysList() {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-2"}`}>{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL && "pr-2"}`}>{'mosip-auth policy group 47394738539430'}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-8" : "px-4"}`}>{client.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>
                                                                     {client.apiKeyLabel}
