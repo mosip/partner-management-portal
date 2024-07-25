@@ -15,8 +15,8 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
     useEffect(() => {
         const fetchData = async () => {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPartnerId')));
-            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectOidcClientType')));
-            setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyGroup')));
+            setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyGroup')));
+            setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyName')));
             setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t, t('apiKeysList.selectApiKeyLabel')));
             setStatusData(createDropdownData('status', '', true, filteredApiKeysList, t, t('oidcClientsList.selectStatus')));
         };
