@@ -95,7 +95,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
                                                 <span className={` ${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'} 
-                                                    ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
+                                                    ${isPlaceHolderPresent && index === 0 && searchItem === "" ? 'text-gray-500' : 'text-dark-blue'}
                                                 `}>{dropdownItem.fieldCode}</span>
                                                 {dropdownItem.fieldDescription && (
                                                     <>
