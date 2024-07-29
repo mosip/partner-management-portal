@@ -44,7 +44,7 @@ function HeaderNav({ open, setOpen }) {
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
                         <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" className="w-8 h-8" />
                         <div className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5 w-5 h-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,setOpen(!open))}/>
+                            <img className="min-w-5 w-5 h-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ()=>setOpen(!open))} />
                         </div>
                     </div>
                 )}
@@ -55,7 +55,7 @@ function HeaderNav({ open, setOpen }) {
                             <img src={side_menu_title} alt="" className="w-32 h-10" />
                         </div>
                         <div className="cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,setOpen(!open))}/>
+                            <img className="min-w-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setOpen(!open))}/>
                         </div>
                     </div>
                 )}
