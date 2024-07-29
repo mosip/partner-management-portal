@@ -246,7 +246,7 @@ function ApiKeysList() {
                                                     {tableHeaders.map((header, index) => {
                                                         return (
                                                             <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "apiKeyLabel" && (isLoginLanguageRTL ? "pr-9" : "pl-9")} ${header.id === "crDtimes" && (isLoginLanguageRTL ? "pr-7" : "pl-7")} ${header.id === "status" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} ${header.id === "action" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} `}>
-                                                                <div className="flex gap-x-7 items-center font-semibold">
+                                                                <div className="flex gap-x-1 items-center font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
                                                                         <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
