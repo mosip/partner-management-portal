@@ -276,7 +276,7 @@ function OidcClientsList() {
                                                     {tableHeaders.map((header, index) => {
                                                         return (
                                                             <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]`}>
-                                                                <div className="flex items-center gap-x-1 font-semibold">
+                                                                <div className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
