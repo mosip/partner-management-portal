@@ -165,7 +165,7 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
-            <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,partnerCertificatesList())}>
+            <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => partnerCertificatesList())}>
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
               </div>
@@ -179,7 +179,7 @@ function Dashboard() {
               </div>
             </div>
             {showPolicies && (
-              <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,policies())}>
+              <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => policies())}>
                 <div className="flex justify-center mb-5">
                   <img src={policiesIcon} alt="" className="w-8 h-8"></img>
                 </div>
@@ -194,7 +194,7 @@ function Dashboard() {
               </div>
             )}
             {showAuthenticationServices && (
-              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,moveToOidcClientsList(navigate))}>
+              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                 </div>
