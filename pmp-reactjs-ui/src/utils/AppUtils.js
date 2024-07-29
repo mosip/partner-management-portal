@@ -71,7 +71,7 @@ export const getGrantTypes = (type, t) => {
 
 export const onPressEnterKey = (e, action) => {
     if (e.key === 'Enter') {
-        return action
+        return action();
     }
 }
 
