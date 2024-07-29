@@ -232,14 +232,14 @@ function OidcClientsList() {
                                     activeOidcClient && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-8 lg:gap-x-16 xl:gap-x-24`}>
-                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
-                                                <h6>{t('authenticationServices.policyGroup')}</h6>
-                                                <h6>{t('authenticationServices.policyName')}</h6>
-                                                <h6>{t('authenticationServices.oidcClientName')}</h6>
-                                                <h6>{t('authenticationServices.createdDate')}</h6>
-                                                <h6>{t('authenticationServices.status')}</h6>
-                                                <h6>{t('authenticationServices.oidcClientId')}</h6>
-                                                <h6 className={isLoginLanguageRTL ? "ml-5" : "mr-5"}>{t('authenticationServices.action')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyGroup')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyName')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.oidcClientName')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.createdDate')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.status')}</h6>
+                                                <h6 className="px-2 mx-2 text-center">{t('authenticationServices.oidcClientId')}</h6>
+                                                <h6 className="px-2 mx-2 text-center">{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -275,8 +275,8 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "crDtimes" && 'pl-9'} ${header.id === "status" && 'pl-12'} ${header.id === "oidcClientId" && 'pr-2'}`}>
-                                                                <div className="flex gap-x-1 items-center font-semibold">
+                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]`}>
+                                                                <div className="flex items-center gap-x-1 font-semibold">
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
@@ -292,35 +292,36 @@ function OidcClientsList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL && "pr-2"}`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`px-4`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-3" : "pr-1"}`}>{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-9"}`}>{formatDate(client.crDtimes, 'date')}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-2" : "pl-11"}`}>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
-                                                                <td className={`${isLoginLanguageRTL ? "pr-9" : "pl-4"}`}>
-                                                                    <svg onClick={() => showCopyPopUp(client)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCopyPopUp(client))}
-                                                                        xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
-                                                                        <path id="visibility_FILL0_wght400_GRAD0_opsz48"
-                                                                            d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                            transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
-                                                                    </svg>
-                                                                    {showPopup && (
-                                                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
-                                                                    )}
+                                                                <td className="px-2 mx-2">
+                                                                    <div className="flex items-center justify-center">
+                                                                        <svg onClick={() => showCopyPopUp(client)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCopyPopUp(client))}
+                                                                            xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
+                                                                            <path id="visibility_FILL0_wght400_GRAD0_opsz48"
+                                                                                d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
+                                                                                transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
+                                                                        </svg>
+                                                                        {showPopup && (
+                                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                        )}
+                                                                    </div>
                                                                 </td>
-
-                                                                <td className="text-center">
-                                                                    <div ref={el => submenuRef.current[index] = el}>
-                                                                        <p onClick={() => setViewClientId(index === viewClientId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}
+                                                                <td className="px-2 mx-2">
+                                                                    <div className="flex items-center justify-center" ref={el => submenuRef.current[index] = el}>
+                                                                        <p onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                             tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewClientId(index === viewClientId ? null : index))}>
                                                                             ...</p>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] bg-white text-xs px-4 font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "mr-16 left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] bg-white text-xs px-4 font-semibold rounded-lg shadow-md border min-w-fit left-20 max-[1100px]:left-20 max-[780px]:w-fit max-[800px]:left-10 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
