@@ -157,6 +157,10 @@ export const moveToApiKeysList = (navigate) => {
     navigate('/partnermanagement/authenticationServices/apiKeysList')
 };
 
+export const moveTOSbisList = (navigate) => {
+    navigate('/partnermanagement/deviceProviderServices/listOfSbis');
+};
+
 export const logout = async () => {
     localStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;

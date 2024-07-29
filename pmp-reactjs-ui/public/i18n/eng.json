@@ -34,6 +34,8 @@
         "policiesDesc": "Request and view your policies",
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
+        "deviceProviderServices":"Device Provider Services",
+        "deviceProviderServicesDesc":"Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!"
     },
@@ -327,6 +329,21 @@
     "deactivateApiKey": {
        "apiKeyName": "Do you want to Deactivate API Key",
        "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
+    },
+    "deviceProviderServices": {
+        "listOfSbisAndDevices": "List Of SBIs And Devices",
+        "addSbiDevices": "Add SBI - Device"
+    },
+    "addSbis": {
+        "addSbi": "Add SBI",
+        "guidence": "On clicking “Save & Add Device” button after filling the details, the SBI request will be sent to admin for approval. Meanwhile, you can add the devices under the newly created SBI.",
+        "partnerIdTooltip": "Select partner ID Dropdown should only display the list of partner IDs of DEVICE PROVIDERS whose partner certificate is successfully uploaded.",
+        "sbiVersion": "SBI Version",
+        "enterVersionOfSoftware": "Enter version of software",
+        "sbiCreatedDateTime": "SBI Created Date & Time",
+        "selectDateAndTime": "Select Date And Time",
+        "sbiExpiryDateTime": "SBI Expiry Date & Time",
+        "saveAndAddDevices": "Save And Add Devices"
     },
     "consentPopup": {
         "title": "Terms and Conditions",

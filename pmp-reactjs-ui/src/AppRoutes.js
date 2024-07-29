@@ -16,6 +16,8 @@ import ViewApiKeyDetails from './pages/authenticationServices/ViewApiKeyDetails.
 import RuntimeError from './pages/common/RuntimeError.js';
 import UserProfile from './nav/UserProfile.js';
 import Confirmation from './pages/common/Confirmation.js';
+import ListOfSbis from './pages/deviceProviderServices/ListOfSbis.js';
+import AddSbis from './pages/deviceProviderServices/AddSbis.js';
 
 
 function AppRoutes() {
@@ -96,6 +98,14 @@ function AppRoutes() {
         {
           path: 'authenticationServices/viewApiKeyDetails',
           element: <GuardedRoute><MainLayout><ViewApiKeyDetails/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'deviceProviderServices/listOfSbis',
+          element: <GuardedRoute><MainLayout><ListOfSbis/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'deviceProviderServices/addSbis',
+          element: <GuardedRoute><MainLayout><AddSbis/></MainLayout></GuardedRoute>,
         },
         {
           path: 'runtimeError',

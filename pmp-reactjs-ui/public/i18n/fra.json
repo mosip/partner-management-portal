@@ -34,6 +34,8 @@
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
         "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "deviceProviderServices":"Services du fournisseur d'appareils",
+        "deviceProviderServicesDesc":"Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
     },
@@ -329,6 +331,22 @@
     "deactivateApiKey": {
        "apiKeyName": "Voulez-vous désactiver la clé API",
        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
+    },
+    "deviceProviderServices": {
+        "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
+        "addSbiDevices": "Ajouter SBI - Appareil"
+    },
+    "addSbis": {
+        "addSbi": "Ajouter un SBI",
+        "guidence": "En cliquant sur le bouton « Enregistrer et ajouter un appareil » après avoir rempli les détails, la demande SBI sera envoyée à l'administrateur pour approbation. Pendant ce temps, vous pouvez ajouter les appareils sous le SBI nouvellement créé.",
+        "partnerIdTooltip": "La liste déroulante Sélectionner l'ID de partenaire ne doit afficher que la liste des ID de partenaire des FOURNISSEURS D'APPAREILS dont le certificat de partenaire a été téléchargé avec succès.",
+        "sbiVersion": "Version SBI",
+        "enterVersionOfSoftware": "Entrez la version du logiciel",
+        "enterVersion": "Entrez la version",
+        "sbiCreatedDateTime": "Date et heure de création du SBI",
+        "selectDateAndTime": "Sélectionnez la date et l'heure",
+        "sbiExpiryDateTime": "Date et heure d’expiration du SBI",
+        "saveAndAddDevices": "Enregistrer et ajouter des appareils"
     },
     "consentPopup": {
         "title": "Termes et conditions",
