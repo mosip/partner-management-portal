@@ -73,7 +73,7 @@ function HeaderNav({ open, setOpen }) {
 
                     <h2 className={`text-xs font-bold text-gray-600 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{getUserProfile().orgName}</h2>
                 </div>
-                <div onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,openDropdown())}>
+                <div onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,openDropdown)}>
                     <button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent">
                         <img className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
                     </button>
@@ -82,11 +82,11 @@ function HeaderNav({ open, setOpen }) {
 
                     {isDropdownOpen && (
                         <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 w-dynamic rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
-                            <button onClick={() => moveToMyProfile()} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,moveToMyProfile())}>
+                            <button onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,moveToMyProfile)}>
                                 {t('header.userProfile')}
                             </button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <button className={`block w-full px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} onClick={logout} onKeyPress={(e)=>onPressEnterKey(e,logout())}>{t('commons.logout')}</button>
+                            <button className={`block w-full px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} onClick={logout} onKeyPress={(e)=>onPressEnterKey(e,logout)}>{t('commons.logout')}</button>
                         </div>
                     )}
                 </div>
