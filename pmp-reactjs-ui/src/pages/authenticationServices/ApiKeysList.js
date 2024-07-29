@@ -203,13 +203,13 @@ function ApiKeysList() {
                                     activeApiKey && (
                                         <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                             <div className={`flex sm:gap-x-3 md:gap-x-12 lg:gap-x-20 xl:gap-x-28`}>
-                                                <h6 className={`${isLoginLanguageRTL ? "mr-5" : "ml-5"}`}>{t('authenticationServices.partnerId')}</h6>
-                                                <h6>{t('authenticationServices.policyGroup')}</h6>
-                                                <h6>{t('authenticationServices.policyName')}</h6>
-                                                <h6>{t('apiKeysList.apiKeyLabel')}</h6>
-                                                <h6>{t('authenticationServices.createdDate')}</h6>
-                                                <h6>{t('authenticationServices.status')}</h6>
-                                                <h6 className="mr-5 ml-5">{t('authenticationServices.action')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.partnerId')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyGroup')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyName')}</h6>
+                                                <h6 className="px-2 mx-2">{t('apiKeysList.apiKeyLabel')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.createdDate')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.status')}</h6>
+                                                <h6 className="px-2 mx-2">{t('authenticationServices.action')}</h6>
                                             </div>
                                         </div>)
                                 }
@@ -245,8 +245,8 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] lg:w-[14%] ${header.id === "policyName" && 'pl-4'} ${header.id === "apiKeyLabel" && (isLoginLanguageRTL ? "pr-9" : "pl-9")} ${header.id === "crDtimes" && (isLoginLanguageRTL ? "pr-7" : "pl-7")} ${header.id === "status" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} ${header.id === "action" && (isLoginLanguageRTL ? "pr-12" : "pl-12")} `}>
-                                                                <div className="flex gap-x-7 items-center font-semibold">
+                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]`}>
+                                                                <div className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
                                                                         <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
@@ -262,20 +262,20 @@ function ApiKeysList() {
                                                     tableRows.map((client, index) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)}>{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL && "pr-2"}`}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pl-8" : "px-4"}`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-9" : "pl-9"}`}>{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className={`${isLoginLanguageRTL ? "pr-8" : "pl-8"}`}>{formatDate(client.crDtimes, 'date')}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-12">
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.apiKeyLabel}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
 
-                                                                <td className="text-center">
-                                                                    <div ref={el => submenuRef.current[index] = el}>
-                                                                        <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setViewApiKeyId(index === viewApiKeyId ? null : index))}>
+                                                                <td className="px-2 mx-2">
+                                                                    <div className="flex items-center justify-center" ref={el => submenuRef.current[index] = el}>
+                                                                        <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "mr-16 left-32 max-[1100px]:left-32 max-[780px]:left-10 max-[400px]:left-10 text-right pl-1" : "right-32 max-[780px]:right-10 text-left pr-1"}`}>
