@@ -278,13 +278,13 @@ function ApiKeysList() {
                                                                         <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7%] top-7 z-10 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right pl-10" : "right-10 text-left pr-10"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickView(client))}>
+                                                                            <div className={`absolute w-[7%] top-7 z-10 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
+                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 {client.status === "ACTIVE" &&
-                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pr-3" : "pl-3"} py-2 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(client))}>
+                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(client))}>
                                                                                         {t('oidcClientsList.deActivate')}
                                                                                     </p>
                                                                                     )}
