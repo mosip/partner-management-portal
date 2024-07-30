@@ -270,7 +270,7 @@ function RequestPolicy() {
                         </div>
                     )}
                     <div className="flex-col mt-7">
-                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies'></Title>
+                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policiesList'></Title>
                         <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                             <div className="p-7">
                                 <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>

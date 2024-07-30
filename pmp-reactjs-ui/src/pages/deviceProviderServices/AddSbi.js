@@ -13,7 +13,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import BlockerPrompt from "../common/BlockerPrompt";
 import CalendarInput from "../common/CalendarInput";
 
-function AddSbis() {
+function AddSbi() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -137,7 +137,7 @@ function AddSbis() {
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
-                            <Title title='addSbis.addSbi' subTitle='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/listOfSbis' styleSet={styleForTitle}></Title>
+                            <Title title='addSbis.addSbi' subTitle='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -219,4 +219,4 @@ function AddSbis() {
     )
 }
 
-export default AddSbis
+export default AddSbi;

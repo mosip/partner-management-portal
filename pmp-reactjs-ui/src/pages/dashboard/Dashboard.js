@@ -140,11 +140,11 @@ function Dashboard() {
   };
 
   const policies = () => {
-    navigate('/partnermanagement/policies')
+    navigate('/partnermanagement/policies/policiesList')
   };
 
   const deviceProviderServices = () => {
-    navigate('/partnermanagement/deviceProviderServices/listOfSbis')
+    navigate('/partnermanagement/deviceProviderServices/sbiList')
   };
 
   const cancelErrorMsg = () => {

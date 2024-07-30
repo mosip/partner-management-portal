@@ -348,6 +348,23 @@
         "sbiExpiryDateTime": "Date et heure d’expiration du SBI",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils"
     },
+    "sbiList": {
+        "addSbiDevice": "Ajouter un périphérique SBI",
+        "addSbi": "Ajouter un SBI",
+        "devices": "appareils",
+        "devicesCountTxt": "sont associés à ce SBI",
+        "addDevices": "Ajouter des périphériques",
+        "viewDevices": "Afficher les périphériques",
+        "partnerId": "ID partenaire",
+        "partnerType": "Type de partenaire",
+        "createdDate": "Date et heure de création du SBI",
+        "expiryDate": "Date et heure d'expiration du SBI",
+        "deactivate": "Désactiver",
+        "submittedOn": "Soumis le"
+    },
+    "addDevices": {
+        "addDevices": "Ajouter des périphériques"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",

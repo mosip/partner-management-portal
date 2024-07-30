@@ -146,7 +146,7 @@ export const moveToHome = (navigate) => {
 };
 
 export const moveToPolicies = (navigate) => {
-    navigate('/partnermanagement/policies')
+    navigate('/partnermanagement/policies/policiesList')
 };
 
 export const moveToOidcClientsList = (navigate) => {
@@ -158,7 +158,7 @@ export const moveToApiKeysList = (navigate) => {
 };
 
 export const moveTOSbisList = (navigate) => {
-    navigate('/partnermanagement/deviceProviderServices/listOfSbis');
+    navigate('/partnermanagement/deviceProviderServices/sbiList');
 };
 
 export const logout = async () => {

@@ -2,7 +2,7 @@ import { createHashRouter, RouterProvider, redirect } from 'react-router-dom';
 import GuardedRoute from './auth/GuardedRoute.js';
 import MainLayout from './nav/MainLayout.js';
 import PartnerCertificatesList from './pages/certificates/PartnerCertificatesList.js';
-import Policies from './pages/policies/Policies.js';
+import PoliciesList from './pages/policies/PoliciesList.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/policies/RequestPolicy';
@@ -16,8 +16,10 @@ import ViewApiKeyDetails from './pages/authenticationServices/ViewApiKeyDetails.
 import RuntimeError from './pages/common/RuntimeError.js';
 import UserProfile from './nav/UserProfile.js';
 import Confirmation from './pages/common/Confirmation.js';
-import ListOfSbis from './pages/deviceProviderServices/ListOfSbis.js';
-import AddSbis from './pages/deviceProviderServices/AddSbis.js';
+import AddSbi from './pages/deviceProviderServices/AddSbi.js';
+import SbiList from './pages/deviceProviderServices/SbiList.js';
+import AddDevices from './pages/deviceProviderServices/AddDevices.js';
+import ViewDevices from './pages/deviceProviderServices/ViewDevices.js';
 
 
 function AppRoutes() {
@@ -44,8 +46,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'policies',
-          element: <GuardedRoute><MainLayout><Policies/></MainLayout></GuardedRoute>,
+          path: 'policies/policiesList',
+          element: <GuardedRoute><MainLayout><PoliciesList/></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/viewPolicyDetails',
@@ -100,12 +102,20 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewApiKeyDetails/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'deviceProviderServices/listOfSbis',
-          element: <GuardedRoute><MainLayout><ListOfSbis/></MainLayout></GuardedRoute>,
+          path: 'deviceProviderServices/sbiList',
+          element: <GuardedRoute><MainLayout><SbiList/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'deviceProviderServices/addSbis',
-          element: <GuardedRoute><MainLayout><AddSbis/></MainLayout></GuardedRoute>,
+          path: 'deviceProviderServices/addSbi',
+          element: <GuardedRoute><MainLayout><AddSbi/></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'deviceProviderServices/addDevices',
+          element: <GuardedRoute><MainLayout><AddDevices/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'deviceProviderServices/viewDevices',
+          element: <GuardedRoute><MainLayout><ViewDevices/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
