@@ -360,7 +360,8 @@
         "createdDate": "تاريخ ووقت إنشاء SBI",
         "expiryDate": "تاريخ ووقت انتهاء صلاحية SBI",
         "deactivate": "إلغاء التنشيط",
-        "submittedOn": "تم إرساله"
+        "submittedOn": "تم إرساله",
+        "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
     "addDevices": {
         "addDevices": "إضافة أجهزة"
