@@ -5,9 +5,8 @@ import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
-import { HttpService } from '../../services/HttpService';
 import {
-    isLangRTL, getAllApprovedAuthPartnerPolicies, createDropdownData, getPartnerTypeDescription, moveTOSbisList
+    isLangRTL, getPartnerTypeDescription, moveTOSbisList
 } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -23,13 +22,18 @@ function AddSbis() {
     const [partnerData, setPartnerData] = useState([]);
     const [partnerType, setPartnerType] = useState("");
     const [sbiVersion, setSbiVersion] = useState("");
-    const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [partnerId, setPartnerId] = useState("");
     const [validationError, setValidationError] = useState("");
     const [isCreateCalendarOpen, setIsCreateCalendarOpen] = useState(false);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [createdDate, setCreatedDate] = useState(new Date());
-    const [expiryDate, setExpiryDate] = useState(new Date())
+    const [expiryDate, setExpiryDate] = useState(new Date());
+
+    const partnerIdDropdownData =
+        [
+            { fieldValue: 'a', fieldCode: 'A' }, { fieldValue: 'b', fieldCode: 'BB' },
+            { fieldValue: 'c', fieldCode: 'CCC' }, { fieldValue: 'd', fieldCode: 'DDDD' }
+        ];
 
     let isCancelledClicked = false;
 
@@ -71,26 +75,6 @@ function AddSbis() {
     const onChangeSbiVersion = (value) => {
         setSbiVersion(value)
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setDataLoaded(false);
-                const resData = await getAllApprovedAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
-                if (resData) {
-                    setPartnerData(resData);
-                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
-                } else {
-                    setErrorMsg(t('commons.errorInResponse'));
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-            } finally {
-                setDataLoaded(true);
-            }
-        };
-        fetchData();
-    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
