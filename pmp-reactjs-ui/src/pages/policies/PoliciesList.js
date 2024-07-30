@@ -17,7 +17,7 @@ import SortingIcon from '../common/SortingIcon';
 import Pagination from '../common/Pagination';
 import Title from '../common/Title';
 
-function Policies() {
+function PoliciesList() {
 
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -272,4 +272,4 @@ function Policies() {
 
 }
 
-export default Policies;
+export default PoliciesList;
