@@ -360,7 +360,8 @@
         "createdDate": "Date et heure de création du SBI",
         "expiryDate": "Date et heure d'expiration du SBI",
         "deactivate": "Désactiver",
-        "submittedOn": "Soumis le"
+        "submittedOn": "Soumis le",
+        "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
     "addDevices": {
         "addDevices": "Ajouter des périphériques"

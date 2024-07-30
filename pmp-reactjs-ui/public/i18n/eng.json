@@ -357,7 +357,8 @@
         "createdDate": "SBI Created Date & Time",
         "expiryDate": "SBI Expiry Date & Time",
         "deactivate": "Deactivate",
-        "submittedOn": "Submitted On"
+        "submittedOn": "Submitted On",
+        "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
     "addDevices": {
         "addDevices": "Add Devices"

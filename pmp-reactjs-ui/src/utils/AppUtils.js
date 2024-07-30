@@ -46,7 +46,7 @@ export const getStatusCode = (status, t) => {
         status = status.toLowerCase();
         if (status === "approved") {
             return t('statusCodes.approved');
-        } else if (status === "inprogress" || status === 'pending for approval') {
+        } else if (status === "inprogress" || status === 'pending for approval' || status === 'pending_approval') {
             return t('statusCodes.inProgress');
         } else if (status === "rejected") {
             return t('statusCodes.rejected');
@@ -282,7 +282,7 @@ export const bgOfStatus = (status) => {
     else if (status === "rejected") {
         return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress") {
+    else if (status === "InProgress" || status === 'pending_approval') {
         return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === "deactivated" || status === "INACTIVE") {

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import Title from '../common/Title.js';
-import { isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription } from '../../utils/AppUtils.js';
+import { HttpService } from '../../services/HttpService';
+import { isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl, 
+    handleMouseClickForDropdown } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
@@ -15,23 +17,47 @@ function SbiList () {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [dataLoaded, setDataLoaded] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [open, setOpen] = useState(-1);
-    const [deactivateBtnId, setDeactivateBtnId] = useState(false);
+    const [deactivateBtnId, setDeactivateBtnId] = useState(-1);
+    const [sbiList, setSbiList] = useState([]);
+    const submenuRef = useRef([]);
+
+    useEffect(() => {
+        handleMouseClickForDropdown(submenuRef, () => setDeactivateBtnId(-1));
+    }, [submenuRef]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
-    const listOfSbis = [
-        { "sbiVersion": "1.0.0", "status": "approved", "listOfDevices": 24, "partnerId": "P28394091", "partnerType": "Device_Provider", "submittedOn": "2024-07-23", "crDtimes": "2024-04-26 T00:00:00.435Z", "expDtimes": "2024-04-26 T00:00:00.435Z"},
-        { "sbiVersion": "2.0.0", "status": "InProgress", "listOfDevices": 4, "partnerId": "P28394092", "partnerType": "Device_Provider", "submittedOn": "2024-07-23", "crDtimes": "2024-04-27 T00:00:00.435Z", "expDtimes": "2024-04-27 T00:00:00.435Z"},
-        { "sbiVersion": "3.0.0", "status": "rejected", "listOfDevices": 20, "partnerId": "P28394093", "partnerType": "Device_Provider", "submittedOn": "2024-07-23", "crDtimes": "2024-04-28 T00:00:00.435Z", "expDtimes": "2024-04-28 T00:00:00.435Z"},
-        { "sbiVersion": "4.0.0", "status": "deactivated", "listOfDevices": 23, "partnerId": "P28394094", "partnerType": "Device_Provider", "submittedOn": "2024-07-23", "crDtimes": "2024-04-29 T00:00:00.435Z", "expDtimes": "2024-04-29 T00:00:00.435Z"},
-        { "sbiVersion": "5.0.0", "status": "approved", "listOfDevices": 32, "partnerId": "P28394095", "partnerType": "Device_Provider", "submittedOn": "2024-07-23", "crDtimes": "2024-04-30 T00:00:00.435Z", "expDtimes": "2024-04-30 T00:00:00.435Z"}
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            setDataLoaded(false);
+            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllSBIDetails', process.env.NODE_ENV));
+            if (response) {
+              const responseData = response.data;
+              if (responseData && responseData.response) {
+                const resData = responseData.response;
+                const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                setSbiList(sortedData);
+              } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+              }
+            } else {
+              setErrorMsg(t('sbiList.errorInSbiList'));
+            }
+            setDataLoaded(true);
+          } catch (err) {
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
+          }
+        };
+        fetchData();
+    }, []);
 
     const addSbi = () => {
         navigate('/partnermanagement/deviceProviderServices/addSbi');
@@ -49,7 +75,7 @@ function SbiList () {
 
     const onClickAction = (sbi, index) => {
         if (sbi.status !== "deactivated") {
-            setDeactivateBtnId(deactivateBtnId === index ? null : index)
+            setDeactivateBtnId(deactivateBtnId === index ? null : index);
         }
     };
 
@@ -74,7 +100,7 @@ function SbiList () {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
                             <Title title='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
-                            {listOfSbis.length > 0 ?
+                            {sbiList.length > 0 ?
                                 <button type="button" onClick={() => addSbi()} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,addSbi())}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('sbiList.addSbi')}
@@ -82,7 +108,7 @@ function SbiList () {
                                 : null
                             }
                         </div>
-                        {listOfSbis.length === 0 ? 
+                        {sbiList.length === 0 ? 
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <div className="flex items-center justify-center p-44">
                                     <div className="flex flex-col items-center">
@@ -93,7 +119,7 @@ function SbiList () {
                                     </div>
                                 </div>
                             </div> :
-                            listOfSbis.map((sbi, index) => {
+                            sbiList.map((sbi, index) => {
                                 return (
                                     <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll">
                                         <div className="p-4">
@@ -103,10 +129,10 @@ function SbiList () {
                                                     <div className="flex flex-col">
                                                         <p className={`text-base font-bold ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
                                                         <div className="flex flex-row items-center justify-between">
-                                                            <div className={`${bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
+                                                            <div className={`${bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
-                                                            <p className="text-xs font-semibold text-[#505E7C]"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.listOfDevices} {t('sbiList.devices')}</span> {t('sbiList.devicesCountTxt')}</p>
+                                                            <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfDevices} {t('sbiList.devices')}</span> {t('sbiList.devicesCountTxt')}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,7 +140,7 @@ function SbiList () {
                                                     <div className="flex flex-row justify-between items-center space-x-3">
                                                         <button onClick={() => addDevices(sbi)} className={`${sbi.status === "deactivated" ? 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue border-[#1447B2]'} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                         <button onClick={() => viewDevices()} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
-                                                        <button onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
+                                                        <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
                                                         {deactivateBtnId === index && (
                                                             <div className={`w-[17rem] min-w-fit absolute top-full mt-2 ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
                                                                 <div className="flex items-center justify-between cursor-pointer">
@@ -134,30 +160,30 @@ function SbiList () {
                                         {open === index && (
                                             <div>
                                                 <hr className="border bg-medium-gray" />
-                                                <div className="p-6">
+                                                <div className="p-4">
                                                     <div className="flex flex-col">
-                                                        <div className="flex flex-row justify-between items-center">
-                                                            <div className="flex flex-col w-1/3">
+                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:pt-2">
+                                                            <div className="flex flex-col w-1/3 max-[530px]:w-full">
                                                                 <p className="font-semibold text-sm text-suva-gray">{t('sbiList.partnerId')}</p>
                                                                 <p className="font-semibold text-base text-vulcan">{sbi.partnerId}</p>
                                                             </div>
-                                                            <div className={`flex flex-col w-1/3`}>
+                                                            <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="font-semibold text-sm text-suva-gray">{t('sbiList.partnerType')}</p>
                                                                 <p className="font-semibold text-base text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
                                                             </div>
-                                                            <div className={`flex flex-col w-1/3`}>
+                                                            <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="font-semibold text-sm text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.submittedOn}</p>
+                                                                <p className="font-semibold text-base text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-row justify-between items-center pt-2">
-                                                            <div className={`flex flex-col w-1/3`}>
+                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start pt-2">
+                                                            <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="font-semibold text-sm text-suva-gray">{t('sbiList.createdDate')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.crDtimes}</p>
+                                                                <p className="font-semibold text-base text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
                                                             </div>
-                                                            <div className={`flex flex-col w-1/3`}>
+                                                            <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="font-semibold text-sm text-suva-gray">{t('sbiList.expiryDate')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.expDtimes}</p>
+                                                                <p className="font-semibold text-base text-vulcan">{sbi.sbiSoftwareExpiryDtimes}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>
