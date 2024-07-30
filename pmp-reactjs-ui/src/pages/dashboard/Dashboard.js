@@ -59,9 +59,6 @@ function Dashboard() {
       console.log("Error: ", err);
     }
   }
-
-  console.log(getUserProfile().partnerType + '------sscs---sd----');
-
   useEffect(() => {
     const fetchData = async () => {
       try {
