@@ -15,6 +15,7 @@
     "jose": "^5.4.0",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
+    "react-calendar": "^5.0.0",
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.1",

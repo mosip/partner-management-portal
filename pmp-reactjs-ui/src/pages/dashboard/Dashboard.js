@@ -12,6 +12,7 @@ import SelectPolicyPopup from './SelectPolicyPopup.js';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
+import sBIsIcon from '../../svg/sbis_icon.svg'
 import ConsentPopup from './ConsentPopup.js';
 
 function Dashboard() {
@@ -109,7 +110,7 @@ function Dashboard() {
             await fetchUserConsent();
             if (!isUserConsentGiven) {
               setShowConsentPopup(true);
-              document.body.style.overflow="hidden";
+              document.body.style.overflow = "hidden";
             }
           }
           //if email exists then do nothing
@@ -139,6 +140,10 @@ function Dashboard() {
     navigate('/partnermanagement/policies')
   };
 
+  const deviceProviderServices = () => {
+    navigate('/partnermanagement/deviceProviderServices/listOfSbis')
+  };
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -165,7 +170,7 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
-            <div onClick={partnerCertificatesList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,partnerCertificatesList)}>
+            <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
               </div>
@@ -179,7 +184,7 @@ function Dashboard() {
               </div>
             </div>
             {showPolicies && (
-              <div onClick={policies} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,policies)}>
+              <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
                 <div className="flex justify-center mb-5">
                   <img src={policiesIcon} alt="" className="w-8 h-8"></img>
                 </div>
@@ -194,7 +199,7 @@ function Dashboard() {
               </div>
             )}
             {showAuthenticationServices && (
-              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
+              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                 </div>
@@ -208,6 +213,19 @@ function Dashboard() {
                 </div>
               </div>
             )}
+            <div onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
+              <div className="flex justify-center mb-5">
+                <img src={sBIsIcon} alt="" className="w-8 h-8"/>
+              </div>
+              <div>
+                <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  {t('dashboard.deviceProviderServices')}
+                </h5>
+                <p className="mb-3 text-xs font-normal text-gray-400">
+                  {t('dashboard.deviceProviderServicesDesc')}
+                </p>
+              </div>
+            </div>
           </div>
           {showPopup && (
             <SelectPolicyPopup />
