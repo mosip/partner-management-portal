@@ -41,7 +41,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, navigateUrl, heade
                 <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
                     <header className={`flex justify-between p-[5%]`}>
                         <div className={`flex-col`}>
-                            <h1 className={`font-bold text-base text-[#333333] break-all break-normal break-words`}>{policyName}</h1>
+                            <h1 className={`font-bold text-base text-[#333333] break-normal break-words`}>{policyName}</h1>
                             <p className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
                         <img src={close_icon} alt="" onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, dismiss)} />
