@@ -22,6 +22,7 @@ function AddSbi() {
     const [partnerData, setPartnerData] = useState([]);
     const [partnerType, setPartnerType] = useState("");
     const [sbiVersion, setSbiVersion] = useState("");
+    const [binaryHash, setBinaryHash] = useState("");
     const [partnerId, setPartnerId] = useState("");
     const [validationError, setValidationError] = useState("");
     const [isCreateCalendarOpen, setIsCreateCalendarOpen] = useState(false);
@@ -46,7 +47,7 @@ function AddSbi() {
                 return false;
             }
             return (
-                (partnerId !== "" || sbiVersion !== "") &&
+                (partnerId !== "" || sbiVersion !== "" || binaryHash !== "") &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
@@ -55,7 +56,8 @@ function AddSbi() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
-                sbiVersion !== "";
+                sbiVersion !== "" ||
+                binaryHash !== "";
         };
 
         const handleBeforeUnload = (event) => {
@@ -70,10 +72,14 @@ function AddSbi() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, sbiVersion]);
+    }, [partnerId, sbiVersion, binaryHash]);
 
     const onChangeSbiVersion = (value) => {
         setSbiVersion(value)
+    };
+
+    const onChangeBinaryHash = (value) => {
+        setBinaryHash(value)
     };
 
     const cancelErrorMsg = () => {
@@ -103,6 +109,7 @@ function AddSbi() {
         setPartnerId("");
         setPartnerType("");
         setSbiVersion("");
+        setBinaryHash("");
         setValidationError("");
         setCreatedDate(new Date());
         setExpiryDate(new Date());
@@ -113,7 +120,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && validationError
+        return partnerId && sbiVersion && binaryHash && validationError
     };
 
     const clickOnCancel = () => {
@@ -172,14 +179,21 @@ function AddSbi() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex my-2">
-                                            <div className="flex flex-col w-[48%]">
+                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                            <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')}</label>
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
-                                                    className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                    className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
                                             </div>
+                                            <div className="flex-col w-[48%] max-[450px]:w-full">
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')}</label>
+                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)}
+                                                    className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                    placeholder={t('addSbis.enterBinaryHash')} />
+                                            </div>
                                         </div>
+
                                         <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <CalendarInput
                                                 label={t('addSbis.sbiCreatedDateTime')}

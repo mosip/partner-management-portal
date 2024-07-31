@@ -4,7 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { isLangRTL, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
 import { useTranslation } from 'react-i18next';
-import calendar_icon from '../../svg/calendar_icon.svg' 
+import calendar_icon from '../../svg/calendar_icon.svg'
 
 function CalendarInput({ showCalendar, setShowCalender, label, onChange, value }) {
 
@@ -33,6 +33,7 @@ function CalendarInput({ showCalendar, setShowCalender, label, onChange, value }
         </span>
         {showCalendar &&
           <Calendar inputRef={calendarRef}
+            onClickDay={openCalendar}
             onChange={onChange}
             value={value}
             defaultView="month"
@@ -41,7 +42,7 @@ function CalendarInput({ showCalendar, setShowCalender, label, onChange, value }
             className={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
           />
         }
-        <img onClick={openCalendar} src={calendar_icon} className={`h-[48%] mb-1 ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-blue-500 font-bold text-sm`}/>
+        <img onClick={openCalendar} src={calendar_icon} className={`h-[48%] mb-1 ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-blue-500 font-bold text-sm`} />
       </button>
     </div>
   )
