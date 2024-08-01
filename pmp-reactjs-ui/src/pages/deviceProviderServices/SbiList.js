@@ -9,7 +9,6 @@ import { isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDe
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
-import downArrow from '../../svg/down_arrow.svg';
 import upArrow from '../../svg/up_arrow.svg';
 import verifiedIcon from '../../svg/verified_icon.svg';
 
@@ -149,11 +148,7 @@ function SbiList () {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    {open === index ? 
-                                                        <img src={upArrow} alt="" className="cursor-pointer" onClick={() => setOpen(index === open ? null : index)}></img>
-                                                        :
-                                                        <img src={downArrow} alt="" className="cursor-pointer" onClick={() => setOpen(index === open ? null : index)}></img>
-                                                    }                              
+                                                        <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180 duration-300" : "duration-300"}`} onClick={() => setOpen(index === open ? null : index)}/>                         
                                                 </div>
                                             </div>
                                         </div>

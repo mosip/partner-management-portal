@@ -348,7 +348,8 @@
         "sbiCreatedDateTime": "Date et heure de création du SBI",
         "selectDateAndTime": "Sélectionnez la date et l'heure",
         "sbiExpiryDateTime": "Date et heure d’expiration du SBI",
-        "saveAndAddDevices": "Enregistrer et ajouter des appareils"
+        "saveAndAddDevices": "Enregistrer et ajouter des appareils",
+        "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
     "sbiList": {
         "addSbiDevice": "Ajouter un périphérique SBI",

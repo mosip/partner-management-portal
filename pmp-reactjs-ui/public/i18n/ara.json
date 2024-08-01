@@ -348,7 +348,8 @@
         "sbiCreatedDateTime": "تاريخ ووقت إنشاء الهيئة الفرعية للتنفيذ",
         "selectDateAndTime": "حدد التاريخ والوقت",
         "sbiExpiryDateTime": "تاريخ ووقت انتهاء صلاحية الهيئة الفرعية للتنفيذ",
-        "saveAndAddDevices": "حفظ وإضافة الأجهزة"
+        "saveAndAddDevices": "حفظ وإضافة الأجهزة",
+        "errorInAddingSbi": "أثناء إضافة واجهة القياسات الحيوية الآمنة (SBI) واجهنا خطأ."
     },
     "sbiList": {
         "addSbiDevice": "إضافة جهاز SBI",

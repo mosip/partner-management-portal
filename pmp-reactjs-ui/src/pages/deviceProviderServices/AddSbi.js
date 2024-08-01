@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
-import {
-    isLangRTL, getPartnerTypeDescription, moveTOSbisList
-} from "../../utils/AppUtils";
+import {isLangRTL, getPartnerTypeDescription, moveTOSbisList, getPartnerManagerUrl, createDropdownData,
+    handleServiceErrors, createRequest} from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import BlockerPrompt from "../common/BlockerPrompt";
 import CalendarInput from "../common/CalendarInput";
+import { HttpService } from "../../services/HttpService";
 
 function AddSbi() {
     const { t } = useTranslation();
@@ -24,17 +24,12 @@ function AddSbi() {
     const [sbiVersion, setSbiVersion] = useState("");
     const [binaryHash, setBinaryHash] = useState("");
     const [partnerId, setPartnerId] = useState("");
-    const [validationError, setValidationError] = useState("");
     const [isCreateCalendarOpen, setIsCreateCalendarOpen] = useState(false);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [createdDate, setCreatedDate] = useState(new Date());
     const [expiryDate, setExpiryDate] = useState(new Date());
-
-    const partnerIdDropdownData =
-        [
-            { fieldValue: 'a', fieldCode: 'A' }, { fieldValue: 'b', fieldCode: 'BB' },
-            { fieldValue: 'c', fieldCode: 'CCC' }, { fieldValue: 'd', fieldCode: 'DDDD' }
-        ];
+    const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
+    const [isClickedOnSave, setIsClickedOnSave] = useState(false);
 
     let isCancelledClicked = false;
 
@@ -42,8 +37,9 @@ function AddSbi() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isCancelledClicked) {
+            if (isClickedOnSave || isCancelledClicked) {
                 isCancelledClicked = false;
+                setIsClickedOnSave(false);
                 return false;
             }
             return (
@@ -57,11 +53,13 @@ function AddSbi() {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
                 sbiVersion !== "" ||
-                binaryHash !== "";
+                binaryHash !== "" ||
+                createdDate !== "" ||
+                expiryDate !== new Date();
         };
 
         const handleBeforeUnload = (event) => {
-            if (shouldWarnBeforeUnload()) {
+            if (shouldWarnBeforeUnload() && !isClickedOnSave) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -72,7 +70,32 @@ function AddSbi() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, sbiVersion, binaryHash]);
+    }, [partnerId, sbiVersion, binaryHash, createdDate, expiryDate, isClickedOnSave]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedDeviceProviderIds', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+                    } else {
+                        handleServiceErrors(response, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('commons.errorInResponse'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     const onChangeSbiVersion = (value) => {
         setSbiVersion(value)
@@ -105,12 +128,51 @@ function AddSbi() {
         selectionBox: "!top-10"
     };
 
+    const clickOnSaveAndAdd = async () => {
+        setIsClickedOnSave(true);
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+        let request = createRequest(
+            {
+                swBinaryHash: binaryHash,
+                swVersion: sbiVersion,
+                swCreateDateTime: createdDate,
+                swExpiryDateTime: expiryDate,
+                providerId: partnerId
+            }
+        );
+        console.log(request);
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/securebiometricinterface`, process.env.NODE_ENV), request, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response) {
+                const responseData = response.data;
+                console.log(responseData);
+                if (responseData && response.response) {
+                    // navigate('/partnermanagement/deviceProviderServices/sbiList')
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg('addSbis.errorInAddingSbi')
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
+        setIsClickedOnSave(false);
+    };
+
     const clearForm = () => {
         setPartnerId("");
         setPartnerType("");
         setSbiVersion("");
         setBinaryHash("");
-        setValidationError("");
         setCreatedDate(new Date());
         setExpiryDate(new Date());
     };
@@ -120,7 +182,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && binaryHash && validationError
+        return partnerId && sbiVersion && binaryHash
     };
 
     const clickOnCancel = () => {
@@ -137,7 +199,7 @@ function AddSbi() {
                 <>
                     {errorMsg && (
                         <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
+                            <div className="flex justify-between items-center max-[800px]:w- min-h-14  max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
@@ -188,7 +250,7 @@ function AddSbi() {
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')}</label>
-                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)}
+                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={36}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
                                             </div>
@@ -201,6 +263,7 @@ function AddSbi() {
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={setCreatedDate}
                                                 value={createdDate}
+                                                styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDateTime')}
@@ -208,6 +271,7 @@ function AddSbi() {
                                                 setShowCalender={setIsExpiryCalenderOpen}
                                                 onChange={setExpiryDate}
                                                 value={expiryDate}
+                                                styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
                                             />
                                         </div>
                                     </div>
@@ -218,7 +282,7 @@ function AddSbi() {
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                     <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSaveAndAdd()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-[60%] h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                         {t('addSbis.saveAndAddDevices')}
                                     </button>
                                 </div>
