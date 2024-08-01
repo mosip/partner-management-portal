@@ -465,6 +465,7 @@
         "PMS_AUT_003": "Device Details already exists",
         "PMS_AUT_004": "Duplicate request received",
         "PMS_AUT_005": "Device detail for id %s does not exist",
+        "PMS_AUT_512": "SBI details exists for given version. Can't add the records with the same version.",
         "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate;",
         "PMP_AUT_030": "ftp provider not exists.",
         "PMP_AUT_031": "ftp chip id not exists.",

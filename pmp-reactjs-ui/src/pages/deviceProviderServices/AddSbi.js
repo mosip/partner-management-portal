@@ -55,7 +55,7 @@ function AddSbi() {
                 sbiVersion !== "" ||
                 binaryHash !== "" ||
                 createdDate !== "" ||
-                expiryDate !== new Date();
+                expiryDate !== "";
         };
 
         const handleBeforeUnload = (event) => {
@@ -153,7 +153,7 @@ function AddSbi() {
                 const responseData = response.data;
                 console.log(responseData);
                 if (responseData && response.response) {
-                    // navigate('/partnermanagement/deviceProviderServices/sbiList')
+                    navigate('/partnermanagement/deviceProviderServices/sbiList')
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
