@@ -177,7 +177,7 @@ function RequestPolicy() {
                     const resData = responseData.response;
                     const confirmationData = {
                         title: "requestPolicy.requestPolicy",
-                        backUrl: "/partnermanagement/policies",
+                        backUrl: "/partnermanagement/policies/policiesList",
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",

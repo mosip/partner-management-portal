@@ -22,11 +22,11 @@ function ViewPolicyDetails() {
                 const selectedPartner = JSON.parse(partnerData);
                 setPolicyDetails(selectedPartner);
             } catch (error) {
-                navigate('/partnermanagement/policies');
+                navigate('/partnermanagement/policies/policiesList');
                 console.error('Error in viewPolicyDetails page :', error);
             }
         } else {
-            navigate('/partnermanagement/policies');
+            navigate('/partnermanagement/policies/policiesList');
         }
     }, [navigate]);
 
