@@ -19,8 +19,8 @@ import Confirmation from './pages/common/Confirmation.js';
 import AddSbi from './pages/deviceProviderServices/AddSbi.js';
 import SbiList from './pages/deviceProviderServices/SbiList.js';
 import AddDevices from './pages/deviceProviderServices/AddDevices.js';
-import ViewDevices from './pages/deviceProviderServices/ViewDevices.js';
 import ViewDeviceDetails from './pages/deviceProviderServices/ViewDeviceDetails.js';
+import DevicesList from './pages/deviceProviderServices/DevicesList.js';
 
 
 function AppRoutes() {
@@ -115,8 +115,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><AddDevices/></MainLayout></GuardedRoute>
         },
         {
-          path: 'deviceProviderServices/viewDevices',
-          element: <GuardedRoute><MainLayout><ViewDevices/></MainLayout></GuardedRoute>
+          path: 'deviceProviderServices/devicesList',
+          element: <GuardedRoute><MainLayout><DevicesList/></MainLayout></GuardedRoute>
         },,
         {
           path: 'deviceProviderServices/viewDeviceDetails',

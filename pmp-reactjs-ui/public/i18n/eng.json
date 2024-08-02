@@ -363,7 +363,7 @@
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "Add a Device",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",

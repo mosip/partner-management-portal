@@ -366,7 +366,7 @@
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "أضف أداة",
         "listOfDevices": "قائمة الأجهزة",
         "deviceType": "نوع الجهاز",

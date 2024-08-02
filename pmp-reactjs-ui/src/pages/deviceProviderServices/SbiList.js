@@ -68,8 +68,8 @@ function SbiList () {
         }
     };
 
-    const viewDevices = () => {
-        navigate('/partnermanagement/deviceProviderServices/viewDevices');
+    const devicesList = () => {
+        navigate('/partnermanagement/deviceProviderServices/devicesList');
     };
 
     const onClickAction = (sbi, index) => {
@@ -138,7 +138,7 @@ function SbiList () {
                                                 <div className="flex flex-row justify-between items-center space-x-6 relative">
                                                     <div className="flex flex-row justify-between items-center space-x-3">
                                                         <button onClick={() => addDevices(sbi)} className={`${sbi.status === "deactivated" ? 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue border-[#1447B2]'} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
-                                                        <button onClick={() => viewDevices()} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
+                                                        <button onClick={() => devicesList()} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                         <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
                                                         {deactivateBtnId === index && (
                                                             <div className={`w-[17rem] min-w-fit absolute top-full mt-2 ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>

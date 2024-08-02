@@ -4,7 +4,7 @@ import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComp
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from "../../utils/AppUtils.js";
 
-function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
+function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
     const { t } = useTranslation();
     const [deviceTypeData, setDeviceTypeData] = useState([]);
     const [deviceSubTypeData, setDeviceSubTypeData] = useState([]);
@@ -14,11 +14,11 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setDeviceTypeData(createDropdownData('deviceTypeCode', '', true, filteredDevicesList, t, t('viewDevices.selectDeviceType')));
-            setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('viewDevices.selectDeviceSubType')));
-            setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('viewDevices.selectMakeName')));
-            setModelData(createDropdownData('model', '', true, filteredDevicesList, t, t('viewDevices.selectModelName')));
-            setStatusData(createDropdownData('status', '', true, filteredDevicesList, t, t('viewDevices.selectStatus')));
+            setDeviceTypeData(createDropdownData('deviceTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceType')));
+            setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceSubType')));
+            setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('devicesList.selectMakeName')));
+            setModelData(createDropdownData('model', '', true, filteredDevicesList, t, t('devicesList.selectModelName')));
+            setStatusData(createDropdownData('status', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
         };
         fetchData();
     }, []);
@@ -38,8 +38,8 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='deviceType'
                     dropdownDataList={deviceTypeData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='viewDevices.deviceType'
-                    placeHolderKey='viewDevices.selectDeviceType'
+                    fieldNameKey='devicesList.deviceType'
+                    placeHolderKey='devicesList.selectDeviceType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
                 </DropdownComponent>
@@ -47,8 +47,8 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='deviceSubType'
                     dropdownDataList={deviceSubTypeData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='viewDevices.deviceSubType'
-                    placeHolderKey='viewDevices.selectDeviceSubType'
+                    fieldNameKey='devicesList.deviceSubType'
+                    placeHolderKey='devicesList.selectDeviceSubType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
                 </DropdownComponent>
@@ -56,8 +56,8 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='make' 
                     dropdownDataList={makeData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
-                    fieldNameKey='viewDevices.make' 
-                    placeHolderKey='viewDevices.selectMakeName'
+                    fieldNameKey='devicesList.make' 
+                    placeHolderKey='devicesList.selectMakeName'
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
@@ -66,8 +66,8 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='model'
                     dropdownDataList={modelData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='viewDevices.model'
-                    placeHolderKey='viewDevices.selectModelName'
+                    fieldNameKey='devicesList.model'
+                    placeHolderKey='devicesList.selectModelName'
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
@@ -76,8 +76,8 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='status' 
                     dropdownDataList={statusData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
-                    fieldNameKey='viewDevices.status' 
-                    placeHolderKey='viewDevices.selectStatus'
+                    fieldNameKey='devicesList.status' 
+                    placeHolderKey='devicesList.selectStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}> 
                 </DropdownComponent>
@@ -86,4 +86,4 @@ function ViewDevicesFilter({ filteredDevicesList, onFilterChange }) {
     )
 }
 
-export default ViewDevicesFilter;
+export default DevicesListFilter;

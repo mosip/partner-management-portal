@@ -366,7 +366,7 @@
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "Ajouter un périphérique",
         "listOfDevices": "Liste des appareils",
         "deviceType": "Type d'appareil",

@@ -20,11 +20,11 @@ function ViewDeviceDetails() {
                 setDeviceDetails(selectedDevice);
                 console.log(selectedDevice);
             } catch (error) {
-                navigate('/partnermanagement/deviceProviderServices/viewDevices');
+                navigate('/partnermanagement/deviceProviderServices/devicesList');
                 console.error('Error in view device details', error);
             }
         } else {
-            navigate('/partnermanagement/deviceProviderServices/viewDevices');
+            navigate('/partnermanagement/deviceProviderServices/devicesList');
         }
     }, [navigate]);
 
@@ -36,7 +36,7 @@ function ViewDeviceDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll font-inter`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='deviceProviderServices.listOfSbisAndDevices' subTitle2='viewDeviceDetails.sbiVersionGoesHere1' backLink='/partnermanagement/deviceProviderServices/viewDevices' backLink2='' styleSet={styleForTitle}></Title>
+                    <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='deviceProviderServices.listOfSbisAndDevices' subTitle2='viewDeviceDetails.sbiVersionGoesHere1' backLink='/partnermanagement/deviceProviderServices/devicesList' backLink2='' styleSet={styleForTitle}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
@@ -98,7 +98,7 @@ function ViewDeviceDetails() {
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-xs">
-                                    {t("viewDevices.createdDate")}
+                                    {t("devicesList.createdDate")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
                                     {deviceDetails.crDtimes}
