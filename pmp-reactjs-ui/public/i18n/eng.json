@@ -6,6 +6,7 @@
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
         "back": "Back",
+        "submit": "Submit",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "somethingWentWrong": "Something went wrong!",
         "somethingWentWrongDesc": "Please try again later",
@@ -343,10 +344,10 @@
         "enterVersionOfSoftware": "Enter version of software",
         "binaryHash": "Binary Hash",
         "enterBinaryHash": "Enter Binary Hash",
-        "sbiCreatedDateTime": "SBI Created Date & Time",
-        "selectDateAndTime": "Select Date And Time",
-        "sbiExpiryDateTime": "SBI Expiry Date & Time",
-        "saveAndAddDevices": "Save And Add Devices",
+        "sbiCreatedDate": "SBI Created Date",
+        "selectDate": "Select Date",
+        "sbiExpiryDate": "SBI Expiry Date",
+        "addSbiInfoKey":"Expiry date should be atleast one year greater to the created date.",
         "errorInAddingSbi": "While adding SBI, we have encountered with an error."
     },
     "sbiList": {

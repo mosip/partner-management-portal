@@ -6,6 +6,7 @@
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
         "back": "خلف",
+        "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
@@ -35,8 +36,8 @@
         "policiesDesc": "طلب وعرض السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
-        "deviceProviderServices":"خدمات مزودي الأجهزة",
-        "deviceProviderServicesDesc":"إضافة وعرض وإلغاء تنشيط SBI (الواجهة البيومترية الآمنة) والأجهزة المرتبطة بها",
+        "deviceProviderServices": "خدمات مزودي الأجهزة",
+        "deviceProviderServicesDesc": "إضافة وعرض وإلغاء تنشيط SBI (الواجهة البيومترية الآمنة) والأجهزة المرتبطة بها",
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى"
     },
@@ -51,7 +52,7 @@
         "lastName": "اسم العائلة",
         "organisationName": "اسم المنظمة",
         "address": "عنوان",
-        "partnerType":"نوع الشريك",
+        "partnerType": "نوع الشريك",
         "phoneNumber": "رقم التليفون",
         "emailAddress": "عنوان البريد الإلكتروني",
         "userName": "اسم المستخدم"
@@ -279,12 +280,12 @@
         "policyName": "اسم السياسة",
         "policyGroupDescription": "وصف مجموعة السياسات",
         "policyNameDescription": "وصف اسم السياسة",
-        "clientName":"اسم العميل",
+        "clientName": "اسم العميل",
         "publicKey": "المفتاح العمومي",
         "logoUri": "عنوان URL للشعار",
         "redirectUri": "إعادة توجيه URI",
         "grantTypes": "أنواع المنح",
-        "comments":"تعليقات",
+        "comments": "تعليقات",
         "adminComment": "تعليقات المشرف",
         "adminName": "اسم المشرف",
         "commentsOfAdmin": "تعليقات المشرف",
@@ -305,11 +306,11 @@
         "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح."
     },
     "deactivateOidcClient": {
-       "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
-       "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام معرف عميل OIDC للمصادقة بعد الآن.",
-       "confirm": "يتأكد"
+        "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
+        "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام معرف عميل OIDC للمصادقة بعد الآن.",
+        "confirm": "يتأكد"
     },
-    "apiKeysList" : {
+    "apiKeysList": {
         "apiKeyLabel": "اسم مفتاح API",
         "apiKeyId": "معرف مفتاح API",
         "apiKey": "مفتاح API",
@@ -324,14 +325,14 @@
         "selectedPolicyName": "حدد السياسة التي يلزم فيها مفتاح واجهة برمجة التطبيقات API.",
         "name": "اسم",
         "enterNameForApiKey": "أدخل اسمًا لمفتاح API",
-        "generateApiKeySuccessHeader":"تم إرسال التفاصيل بنجاح!",
+        "generateApiKeySuccessHeader": "تم إرسال التفاصيل بنجاح!",
         "apiKeySuccessMsg": "تم إرسال تفاصيل مفتاح API بنجاح",
         "errorInGenerateApiKey": "أثناء إنشاء مفتاح API، واجهنا خطأ.",
         "nameTooLong": "يجب ألا يسمح الاسم بأكثر من 36 حرفًا."
     },
     "deactivateApiKey": {
-       "apiKeyName": "هل تريد إلغاء تنشيط مفتاح API",
-       "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح API للمصادقة بعد الآن."
+        "apiKeyName": "هل تريد إلغاء تنشيط مفتاح API",
+        "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح API للمصادقة بعد الآن."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
@@ -346,9 +347,10 @@
         "binaryHash": "التجزئة الثنائية",
         "enterBinaryHash": "أدخل التجزئة الثنائية",
         "enterVersion": "أدخل الإصدار",
-        "sbiCreatedDateTime": "تاريخ ووقت إنشاء الهيئة الفرعية للتنفيذ",
-        "selectDateAndTime": "حدد التاريخ والوقت",
-        "sbiExpiryDateTime": "تاريخ ووقت انتهاء صلاحية الهيئة الفرعية للتنفيذ",
+        "sbiCreatedDate": "تاريخ إنشاء الهيئة الفرعية للتنفيذ",
+        "selectDate": "حدد تاريخ",
+        "sbiExpiryDate": "تاريخ انتهاء الهيئة الفرعية للتنفيذ",
+        "addSbiInfoKey": "يجب أن يكون تاريخ انتهاء الصلاحية أكبر بسنة واحدة على الأقل من تاريخ الإنشاء",
         "saveAndAddDevices": "حفظ وإضافة الأجهزة",
         "errorInAddingSbi": "أثناء إضافة واجهة القياسات الحيوية الآمنة (SBI) واجهنا خطأ."
     },
