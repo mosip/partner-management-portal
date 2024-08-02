@@ -363,6 +363,25 @@
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
+    "viewDevices": {
+        "addDevice": "Add a Device",
+        "listOfDevices": "List of Devices",
+        "deviceType": "Device Type",
+        "deviceSubType": "Device Sub Type",
+        "make": "Make",
+        "model": "Model",
+        "createdDate": "Created Date",
+        "status": "Status",
+        "action": "Action",
+        "errorInViewDevices": "While fetching Devices List, we have encountered with an error.",
+        "view": "View",
+        "deActivate": "Deactivate",
+        "selectDeviceType": "Select Device Type",
+        "selectDeviceSubType": "Select Device Sub Type",
+        "selectMakeName": "Select Make Name",
+        "selectModelName": "Select Model Name",
+        "selectStatus": "Select Status"
+    },
     "addDevices": {
         "addDevices": "Add Devices"
     },

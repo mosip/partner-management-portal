@@ -366,6 +366,25 @@
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
+    "viewDevices": {
+        "addDevice": "Ajouter un périphérique",
+        "listOfDevices": "Liste des appareils",
+        "deviceType": "Type d'appareil",
+        "deviceSubType": "Sous-type d'appareil",
+        "make": "Faire",
+        "model": "Modèle",
+        "createdDate": "Date de création",
+        "status": "Statut",
+        "action": "Action",
+        "errorInViewDevices": "Lors de la récupération de la liste des appareils, nous avons rencontré une erreur.",
+        "view": "Voir",
+        "deActivate": "Désactiver",
+        "selectDeviceType": "Sélectionnez le type d'appareile",
+        "selectDeviceSubType": "Sélectionnez le sous-type de périphérique",
+        "selectMakeName": "Sélectionnez Créer un nom",
+        "selectModelName": "Sélectionnez le nom du modèle",
+        "selectStatus": "Sélectionnez le statut"
+    },
     "addDevices": {
         "addDevices": "Ajouter des périphériques"
     },

@@ -366,6 +366,25 @@
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
+    "viewDevices": {
+        "addDevice": "أضف أداة",
+        "listOfDevices": "قائمة الأجهزة",
+        "deviceType": "نوع الجهاز",
+        "deviceSubType": "نوع الجهاز الفرعي",
+        "make": "يصنع",
+        "model": "نموذج",
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
+        "errorInViewDevices": "Lors de la récupération de la liste des appareils, nous avons rencontré une erreur.",
+        "view": "منظر",
+        "deActivate": "إلغاء التنشيط",
+        "selectDeviceType": "حدد نوع الجهاز",
+        "selectDeviceSubType": "حدد النوع الفرعي للجهاز",
+        "selectMakeName": "حدد إنشاء اسم",
+        "selectModelName": "حدد اسم النموذج",
+        "selectStatus": "حدد الحالة"
+    },
     "addDevices": {
         "addDevices": "إضافة أجهزة"
     },
