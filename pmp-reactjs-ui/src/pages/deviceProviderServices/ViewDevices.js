@@ -38,8 +38,8 @@ function ViewDevices() {
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const defaultFilterQuery = {
-        partnerId: "",
-        policyGroupName: ""
+        deviceType: "",
+        deviceSubType: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
