@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile } from '../../services/UserProfileService.js';
+import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
     onPressEnterKey
 } from '../../utils/AppUtils.js';
-import { HttpService } from '../../services/HttpService.js';
-import ErrorMessage from '../common/ErrorMessage.js';
-import LoadingIcon from "../common/LoadingIcon.js";
+import { HttpService } from '../../services/HttpService';
+import ErrorMessage from '../common/ErrorMessage';
+import LoadingIcon from "../common/LoadingIcon";
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import DeactivatePopup from '../common/DeactivatePopup.js';
 import FilterButtons from '../common/FilterButtons.js';

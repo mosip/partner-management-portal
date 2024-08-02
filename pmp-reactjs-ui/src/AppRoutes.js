@@ -117,7 +117,7 @@ function AppRoutes() {
         {
           path: 'deviceProviderServices/devicesList',
           element: <GuardedRoute><MainLayout><DevicesList/></MainLayout></GuardedRoute>
-        },,
+        },
         {
           path: 'deviceProviderServices/viewDeviceDetails',
           element: <GuardedRoute><MainLayout><ViewDeviceDetails/></MainLayout></GuardedRoute>
