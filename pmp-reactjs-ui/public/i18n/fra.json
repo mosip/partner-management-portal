@@ -5,6 +5,8 @@
         "goBack": "Retourner",
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
+        "back": "Dos",
+        "submit": "Soumettre",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
@@ -345,9 +347,10 @@
         "binaryHash": "Hachage binaire",
         "enterBinaryHash": "Entrez le hachage binaire",
         "enterVersion": "Entrez la version",
-        "sbiCreatedDateTime": "Date et heure de création du SBI",
-        "selectDateAndTime": "Sélectionnez la date et l'heure",
-        "sbiExpiryDateTime": "Date et heure d’expiration du SBI",
+        "sbiCreatedDate": "Date de création du SBI",
+        "selectDate": "Sélectionner une date",
+        "sbiExpiryDate": "Date d'expiration du SBI",
+        "addSbiInfoKey":"La date d'expiration doit être supérieure d'au moins un an à la date de création.",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils",
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
@@ -407,10 +410,7 @@
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
         "sbiVersionGoesHere1": "La version SBI va ici 1",
-        "createdOn": "Créé sur",
-        "comments":"commentaires",
-        "adminComments":"Commentaire de l'administrateur",
-        "adminName": "Nom de l'administrateur"
+        "createdOn": "Créé sur"
     },
     "consentPopup": {
         "title": "Termes et conditions",

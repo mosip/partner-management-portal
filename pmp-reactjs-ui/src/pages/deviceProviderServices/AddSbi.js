@@ -118,7 +118,7 @@ function AddSbi() {
     };
 
     const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
+        backArrowIcon: "!mt-[4%]"
     };
 
     const styles = {
@@ -241,7 +241,7 @@ function AddSbi() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')}</label>
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
@@ -256,9 +256,9 @@ function AddSbi() {
                                             </div>
                                         </div>
 
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <CalendarInput
-                                                label={t('addSbis.sbiCreatedDateTime')}
+                                                label={t('addSbis.sbiCreatedDate')}
                                                 showCalendar={isCreateCalendarOpen}
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={setCreatedDate}
@@ -266,11 +266,12 @@ function AddSbi() {
                                                 styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
                                             />
                                             <CalendarInput
-                                                label={t('addSbis.sbiExpiryDateTime')}
+                                                label={t('addSbis.sbiExpiryDate')}
                                                 showCalendar={isExpiryCalenderOpen}
                                                 setShowCalender={setIsExpiryCalenderOpen}
                                                 onChange={setExpiryDate}
                                                 value={expiryDate}
+                                                addInfoIcon
                                                 styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
                                             />
                                         </div>
@@ -278,12 +279,12 @@ function AddSbi() {
                                 </form>
                             </div>
                             <div className="border bg-medium-gray" />
-                            <div className="flex flex-row px-[3%] py-[2%] justify-between">
+                            <div className="flex flex-row px-[3%] py-[2%] justify-between max-[500px]:flex-col">
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
-                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
+                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col">
                                     <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSaveAndAdd()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-[60%] h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
-                                        {t('addSbis.saveAndAddDevices')}
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSaveAndAdd()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                        {t('commons.submit')}
                                     </button>
                                 </div>
                             </div>

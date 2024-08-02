@@ -12,6 +12,10 @@ function ViewDeviceDetails() {
     const navigate = useNavigate();
     const [deviceDetails, setDeviceDetails] = useState([]);
 
+    const moveToDevicesList = () => {
+        navigate('/partnermanagement/deviceProviderServices/devicesList');
+    };
+
     useEffect(() => {
         const deviceData = localStorage.getItem('selectedDeviceData');
         if (deviceData) {
@@ -29,7 +33,7 @@ function ViewDeviceDetails() {
     }, [navigate]);
 
     const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
+        backArrowIcon: "!mt-[5%]"
     }
 
     return (
@@ -106,45 +110,10 @@ function ViewDeviceDetails() {
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
-                        <div className="mt-3">
-                            <p className="font-semibold text-vulcan text-base mb-3">
-                                {t("viewDeviceDetails.comments")}
-                            </p>
-                            <div>
-                                <div className="flex font-semibold w-full ">
-                                    <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
-                                        <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
-                                        <img src={adminImage} alt="Example" className="w-8 h-8" />
-                                    </span>
-                                    <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
-                                        <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                        <h4 className="text-sm  text-[#031640]">
-                                            {t("viewDeviceDetails.adminComments")} / {t('viewDeviceDetails.adminName')}
-                                        </h4>
-
-                                        <p className='break-normal text-md text-[#666666] font-normal'>
-                                            Comment goes here
-                                        </p>
-                                        <div className="flex items-center justify-start mt-4">
-                                            <div
-                                                className={`${bgOfStatus(deviceDetails.status, t)}flex w-fit py-1.5 px-3 text-xs rounded-md`}>
-                                                {getStatusCode(deviceDetails.status, t)}
-                                            </div>
-                                            <div>
-                                                <div className="flex">
-                                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                        {formatDate(deviceDetails.crDtimes, "date")}
-                                                    </div>
-                                                    <div className="mx-3 text-gray-300">|</div>
-                                                    <div className="font-semibold text-sm text-dark-blue">
-                                                        {formatDate(deviceDetails.crDtimes, "time")}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
+                            <button onClick={() => moveToDevicesList()} className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                                {t("commons.back")}
+                            </button>
                         </div>
                     </div>
                 </div>
