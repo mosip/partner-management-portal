@@ -100,7 +100,7 @@ function SbiList () {
                         <div className="flex justify-between mb-5">
                             <Title title='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
                             {sbiList.length > 0 ?
-                                <button type="button" onClick={() => addSbi()} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,addSbi())}
+                                <button type="button" onClick={addSbi}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('sbiList.addSbi')}
                                 </button>
@@ -148,7 +148,7 @@ function SbiList () {
                                                             </div>
                                                         )}
                                                     </div>
-                                                        <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180 duration-300" : "duration-300"}`} onClick={() => setOpen(index === open ? null : index)}/>                         
+                                                    <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => setOpen(index === open ? null : index))}/>
                                                 </div>
                                             </div>
                                         </div>

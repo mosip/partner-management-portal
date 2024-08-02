@@ -367,7 +367,23 @@
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
     "addDevices": {
-        "addDevices": "Ajouter des périphériques"
+        "addDevices": "Ajouter des appareils",
+        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
+        "deviceType": "Type d'appareil",
+        "selectDeviceType": "Sélectionner le type d'appareil",
+        "deviceSubType": "Sous-type d'appareil",
+        "selectDeviceSubType": "Sélectionner le sous-type d'appareil",
+        "make": "Marque",
+        "enterMake": "Entrer la marque",
+        "model": "Modèle",
+        "enterModel": "Entrer le modèle",
+        "submit": "Soumettre",
+        "clear": "Effacer",
+        "addDevice": "Ajouter un appareil",
+        "backToSBIList": "Retour à la liste des SBI",
+        "successMsg": "L'appareil a été soumis avec succès et est en attente de administrateur pour approbation.",
+        "errorInDeviceSubType": "Lors de la récupération des sous-types d'appareils, nous avons rencontré une erreur.",
+        "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur."
     },
     "consentPopup": {
         "title": "Termes et conditions",
