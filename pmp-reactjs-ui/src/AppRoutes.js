@@ -20,6 +20,7 @@ import AddSbi from './pages/deviceProviderServices/AddSbi.js';
 import SbiList from './pages/deviceProviderServices/SbiList.js';
 import AddDevices from './pages/deviceProviderServices/AddDevices.js';
 import ViewDevices from './pages/deviceProviderServices/ViewDevices.js';
+import ViewDeviceDetails from './pages/deviceProviderServices/ViewDeviceDetails.js';
 
 
 function AppRoutes() {
@@ -116,6 +117,10 @@ function AppRoutes() {
         {
           path: 'deviceProviderServices/viewDevices',
           element: <GuardedRoute><MainLayout><ViewDevices/></MainLayout></GuardedRoute>
+        },,
+        {
+          path: 'deviceProviderServices/viewDeviceDetails',
+          element: <GuardedRoute><MainLayout><ViewDeviceDetails/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

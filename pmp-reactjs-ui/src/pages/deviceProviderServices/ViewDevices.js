@@ -174,6 +174,11 @@ function ViewDevices() {
         toggleSortDescOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
+    const clickOnView = (selectedDeviceData) => {
+        localStorage.setItem('selectedDeviceData',JSON.stringify(selectedDeviceData));
+        navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
+    }
+
     //This part related to Pagination Logic
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
@@ -285,7 +290,7 @@ function ViewDevices() {
                                                                             ...</p>
                                                                         {viewDeviceId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
-                                                                                <p onClick={() => console.log('view', device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
+                                                                                <p onClick={() => clickOnView(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,() => clickOnView(device))}>
                                                                                     {t('viewDevices.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
