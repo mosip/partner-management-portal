@@ -5,6 +5,7 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
+        "back": "خلف",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",

@@ -5,6 +5,7 @@
         "goBack": "Go Back",
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
+        "back": "Back",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "somethingWentWrong": "Something went wrong!",
         "somethingWentWrongDesc": "Please try again later",
