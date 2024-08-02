@@ -18,6 +18,7 @@ function ViewDeviceDetails() {
             try {
                 const selectedDevice = JSON.parse(deviceData);
                 setDeviceDetails(selectedDevice);
+                console.log(selectedDevice);
             } catch (error) {
                 navigate('/partnermanagement/deviceProviderServices/viewDevices');
                 console.error('Error in view device details', error);
@@ -41,19 +42,19 @@ function ViewDeviceDetails() {
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
                             <p className="font-bold text-sm text-dark-blue mb-2">
-                                Face-Face 123
+                                {deviceDetails.deviceProviderId}
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus('APPROVED', t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                    {getStatusCode('APPROVED', t)}
+                                <div className={`${bgOfStatus(deviceDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                    {getStatusCode(deviceDetails.status, t)}
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewDeviceDetails.createdOn") + ' ' +
-                                        formatDate('30/05/2024', "date")}
+                                        formatDate(deviceDetails.crDtimes, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate('14:52:30', "time")}
+                                    {formatDate(deviceDetails.crDtimes, "time")}
                                 </div>
                             </div>
                         </div>
@@ -65,7 +66,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.deviceType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Face
+                                    {deviceDetails.deviceType}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
@@ -73,7 +74,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.deviceSubType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    Face 123
+                                    {deviceDetails.deviceSubType}
                                 </p>
                             </div>
                         </div>
@@ -84,7 +85,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.make")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    MOSIP 123
+                                    {deviceDetails.make}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%]`}>
@@ -92,7 +93,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.model")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    MOSIP 123
+                                    {deviceDetails.model}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
@@ -100,7 +101,7 @@ function ViewDeviceDetails() {
                                     {t("viewDevices.createdDate")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    Created On
+                                    {deviceDetails.crDtimes}
                                 </p>
                             </div>
                         </div>
@@ -126,21 +127,19 @@ function ViewDeviceDetails() {
                                         </p>
                                         <div className="flex items-center justify-start mt-4">
                                             <div
-                                                className={`${bgOfStatus('APPROVED')}flex w-fit py-1.5 px-3 text-xs rounded-md`}>
-                                                {getStatusCode('APPROVED', t)}
+                                                className={`${bgOfStatus(deviceDetails.status, t)}flex w-fit py-1.5 px-3 text-xs rounded-md`}>
+                                                {getStatusCode(deviceDetails.status, t)}
                                             </div>
                                             <div>
-                                                {deviceDetails.updDtimes && (
-                                                    <div className="flex">
-                                                        <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate('30/05/2024', "date")}
-                                                        </div>
-                                                        <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate('14:52:30', "time")}
-                                                        </div>
+                                                <div className="flex">
+                                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                                        {formatDate(deviceDetails.crDtimes, "date")}
                                                     </div>
-                                                )}
+                                                    <div className="mx-3 text-gray-300">|</div>
+                                                    <div className="font-semibold text-sm text-dark-blue">
+                                                        {formatDate(deviceDetails.crDtimes, "time")}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
