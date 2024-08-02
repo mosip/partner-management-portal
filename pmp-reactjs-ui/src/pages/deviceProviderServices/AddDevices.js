@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../services/UserProfileService.js';
+import { HttpService } from '../../services/HttpService.js';
 import Title from '../common/Title.js';
-import { isLangRTL, createDropdownData } from '../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import SuccessMessage from "../common/SuccessMessage";
@@ -17,18 +18,61 @@ function AddDevices() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [deviceEntries, setDeviceEntries] = useState([createEmptyDeviceEntry()]);
+    const [deviceEntries, setDeviceEntries] = useState([]);
     const [addDeviceEnabled, setAddDeviceEnabled] = useState(false);
     const [backToSBIListEnabled, setBackToSBIListEnabled] = useState(false);
 
-    function createEmptyDeviceEntry() {
-        const resData = [{ "deviceType": "Finger" }, { "deviceType": "Face" }, { "deviceType": "Iris" }];
+    useEffect(() => {
+        async function initialize() {
+            const initialEntry = await createEmptyDeviceEntry();
+            setDeviceEntries([initialEntry]);
+            setDataLoaded(true);
+        }
+        initialize();
+    }, []);
+
+    async function fetchDeviceTypeDropdownData() {
+        const request = createRequest({
+            filters: [
+                {
+                    columnName: "name",
+                    type: "unique",
+                    text: ""
+                }
+            ],
+            optionalFilters: [],
+            purpose: "REGISTRATION"
+        });
+    
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    return responseData.response.filters;
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    return [];
+                }
+            } else {
+                setErrorMsg(t('addDevices.errorInDeviceType'));
+                return [];
+            }
+        } catch (err) {
+            setErrorMsg(err.message);
+            console.log("Error fetching data: ", err);
+            return [];
+        }
+    }
+    
+    async function createEmptyDeviceEntry() {
+        const resData = await fetchDeviceTypeDropdownData();
         return {
             deviceType: "",
             deviceSubType: "",
             make: "",
             model: "",
-            deviceTypeDropdownData: createDropdownData('deviceType', '', false, resData, t),
+            deviceTypeDropdownData: createDropdownData('fieldCode', '', false, resData, t),
             deviceSubTypeDropdownData: [],
             isSubmitted: false,
         };
@@ -38,26 +82,43 @@ function AddDevices() {
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
         if (field === 'deviceType') {
-            createDeviceSubTypeList(index, value);
+            createDeviceSubTypeDropdownData(index, value);
         }
         setDeviceEntries(newEntries);
         updateButtonStates();
     };
 
-    const createDeviceSubTypeList = (index, type) => {
-        let deviceSubTypeList = [];
-        if (type === "Finger") {
-            deviceSubTypeList = [{ "deviceSubType": "Slap" }, { "deviceSubType": "Single" }, { "deviceSubType": "Touchless" }];
+    const createDeviceSubTypeDropdownData = async (index, type) => {
+        let request = createRequest({
+            filters : [
+            {
+                columnName : "deviceType",
+                type : "unique",
+                text : type
+            }
+            ],
+            optionalFilters : [],
+            purpose : "REGISTRATION"
+        });
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceSubType/filtervalues`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.filters;
+                    const newEntries = [...deviceEntries];
+                    newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, resData, t);
+                    setDeviceEntries(newEntries);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('addDevices.errorInDeviceSubType'));
+            }
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
         }
-        if (type === "Face") {
-            deviceSubTypeList = [{ "deviceSubType": "Full face" }];
-        }
-        if (type === "Iris") {
-            deviceSubTypeList = [{ "deviceSubType": "Single" }, { "deviceSubType": "Double" }];
-        }
-        const newEntries = [...deviceEntries];
-        newEntries[index].deviceSubTypeDropdownData = createDropdownData('deviceSubType', '', false, deviceSubTypeList, t);
-        setDeviceEntries(newEntries);
     };
 
     const isFormValid = (index) => {
@@ -65,9 +126,9 @@ function AddDevices() {
         return entry.deviceType && entry.deviceSubType && entry.make && entry.model;
     };
 
-    const clearForm = (index) => {
+    const clearForm = async (index) => {
         const newEntries = [...deviceEntries];
-        newEntries[index] = createEmptyDeviceEntry();
+        newEntries[index] = await createEmptyDeviceEntry();
         setDeviceEntries(newEntries);
         updateButtonStates();
     };
@@ -92,9 +153,10 @@ function AddDevices() {
         setBackToSBIListEnabled(anySubmitted);
     };
 
-    const addDeviceEntry = () => {
+    const addDeviceEntry = async () => {
         setSuccessMsg("");
-        setDeviceEntries([...deviceEntries, createEmptyDeviceEntry()]);
+        const newEntry = await createEmptyDeviceEntry();
+        setDeviceEntries([...deviceEntries, newEntry]);
         setAddDeviceEnabled(false);
     };
 
