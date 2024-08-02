@@ -89,7 +89,7 @@ function RequestPolicy() {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
-                    setErrorMsg(t('policies.errorInResponse'));
+                    setErrorMsg(t('commons.errorInResponse'));
                 }
                 setDataLoaded(true);
             } catch (err) {
