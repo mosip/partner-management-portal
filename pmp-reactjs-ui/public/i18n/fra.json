@@ -348,7 +348,8 @@
         "sbiCreatedDateTime": "Date et heure de création du SBI",
         "selectDateAndTime": "Sélectionnez la date et l'heure",
         "sbiExpiryDateTime": "Date et heure d’expiration du SBI",
-        "saveAndAddDevices": "Enregistrer et ajouter des appareils"
+        "saveAndAddDevices": "Enregistrer et ajouter des appareils",
+        "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
     "sbiList": {
         "addSbiDevice": "Ajouter un périphérique SBI",
@@ -467,6 +468,7 @@
         "PMS_AUT_003": "Les détails de l'appareil existent déjà",
         "PMS_AUT_004": "Demande en double reçue",
         "PMS_AUT_005": "Les détails du périphérique pour l'ID %s n'existent pas",
+        "PMS_AUT_512": "Les détails SBI existent pour une version donnée. Impossible d'ajouter les enregistrements avec la même version",
         "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver ;",
         "PMP_AUT_030": "le fournisseur ftp n'existe pas.",
         "PMP_AUT_031": "l'identifiant de la puce ftp n'existe pas.",
