@@ -242,7 +242,7 @@
     "oidcClientsList": {
         "partnerId": "Partner ID",
         "policyGroup": "Policy Group",
-        "policyName": "Policy NdeviceTypeame",
+        "policyName": "Policy Name",
         "oidcClientName": "OIDC Client Name",
         "createdDate": "Created Date",
         "status": "Status",
@@ -366,7 +366,7 @@
     "viewDevices": {
         "addDevice": "Add a Device",
         "listOfDevices": "List of Devices",
-        "": "Device Type",
+        "deviceType": "Device Type",
         "deviceSubType": "Device Sub Type",
         "make": "Make",
         "model": "Model",
