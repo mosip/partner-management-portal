@@ -363,7 +363,7 @@
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "Add a Device",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",
@@ -400,6 +400,14 @@
         "successMsg": "Device has been successfully submitted and is pending with admin for approval.",
         "errorInDeviceSubType": "While fetching device sub types, we have encountered with an error.",
         "errorInDeviceType": "While fetching device types, we have encountered with an error."
+    },
+    "viewDeviceDetails": {
+        "viewDeviceDetails": "View Device Details",
+        "sbiVersionGoesHere1": "SBI Version goes here 1",
+        "createdOn": "Created On",
+        "comments":"Comments",
+        "adminComments":"Admin's Comment",
+        "adminName": "Admin Name"
     },
     "consentPopup": {
         "title": "Terms and Conditions",

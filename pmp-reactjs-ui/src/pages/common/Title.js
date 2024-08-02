@@ -4,7 +4,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, moveToHome, onPressEnterKey } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 
-function Title({ title, subTitle, backLink, styleSet}) {
+function Title({ title, subTitle, subTitle2, backLink, backLink2, styleSet}) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -20,6 +20,11 @@ function Title({ title, subTitle, backLink, styleSet}) {
                     {subTitle && (
                         <p onClick={() => navigate(backLink)} className="font-semibold text-tory-blue text-xs cursor-pointer"  tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,() => navigate(backLink))}>
                             / {t(subTitle)}
+                        </p>
+                    )}
+                    {subTitle2 && (
+                        <p onClick={() => navigate(backLink2)} className="font-semibold text-tory-blue text-xs cursor-pointer"  tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,() => navigate(backLink))}>
+                            / {t(subTitle2)}
                         </p>
                     )}
                 </div>

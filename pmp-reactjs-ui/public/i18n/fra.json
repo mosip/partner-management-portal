@@ -366,7 +366,7 @@
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "Ajouter un périphérique",
         "listOfDevices": "Liste des appareils",
         "deviceType": "Type d'appareil",
@@ -403,6 +403,14 @@
         "successMsg": "L'appareil a été soumis avec succès et est en attente de administrateur pour approbation.",
         "errorInDeviceSubType": "Lors de la récupération des sous-types d'appareils, nous avons rencontré une erreur.",
         "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur."
+    },
+    "viewDeviceDetails": {
+        "viewDeviceDetails": "Afficher les détails de l'appareil",
+        "sbiVersionGoesHere1": "La version SBI va ici 1",
+        "createdOn": "Créé sur",
+        "comments":"commentaires",
+        "adminComments":"Commentaire de l'administrateur",
+        "adminName": "Nom de l'administrateur"
     },
     "consentPopup": {
         "title": "Termes et conditions",

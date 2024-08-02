@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
     onPressEnterKey
-} from '../../utils/AppUtils';
+} from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
@@ -16,9 +16,9 @@ import FilterButtons from '../common/FilterButtons.js';
 import SortingIcon from '../common/SortingIcon.js';
 import Pagination from '../common/Pagination.js';
 import Title from '../common/Title.js';
-import ViewDevicesFilter from './viewDevicesFilter.js';
+import DevicesListFilter from './DevicesListFilter.js';
 
-function ViewDevices() {
+function DevicesList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -125,13 +125,13 @@ function ViewDevices() {
     }, []);
 
     const tableHeaders = [
-        { id: "deviceType", headerNameKey: 'viewDevices.deviceType' },
-        { id: "deviceSubType", headerNameKey: "viewDevices.deviceSubType" },
-        { id: "make", headerNameKey: "viewDevices.make" },
-        { id: "model", headerNameKey: "viewDevices.model" },
-        { id: "crDtimes", headerNameKey: "viewDevices.createdDate" },
-        { id: "status", headerNameKey: "viewDevices.status" },
-        { id: "action", headerNameKey: 'viewDevices.action' }
+        { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
+        { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
+        { id: "make", headerNameKey: "devicesList.make" },
+        { id: "model", headerNameKey: "devicesList.model" },
+        { id: "crDtimes", headerNameKey: "devicesList.createdDate" },
+        { id: "status", headerNameKey: "devicesList.status" },
+        { id: "action", headerNameKey: 'devicesList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -174,6 +174,11 @@ function ViewDevices() {
         toggleSortDescOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
+    const clickOnView = (selectedDeviceData) => {
+        localStorage.setItem('selectedDeviceData',JSON.stringify(selectedDeviceData));
+        navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
+    }
+
     //This part related to Pagination Logic
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
@@ -199,7 +204,7 @@ function ViewDevices() {
                             <Title title='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
                             {devicesList.length > 0 ?
                                 <button onClick={() => addDevice()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                    {t('viewDevices.addDevice')}
+                                    {t('devicesList.addDevice')}
                                 </button>
                                 : null
                             }
@@ -211,13 +216,13 @@ function ViewDevices() {
                                 {
                                     <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                         <div className={`flex w-full justify-between`}>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.deviceType')}</h6>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.deviceSubType')}</h6>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.make')}</h6>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.model')}</h6>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.createdDate')}</h6>
-                                            <h6 className="px-2 mx-2">{t('viewDevices.status')}</h6>
-                                            <h6 className="px-2 mx-2 text-center">{t('viewDevices.action')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.deviceType')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.deviceSubType')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.make')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.model')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.createdDate')}</h6>
+                                            <h6 className="px-2 mx-2">{t('devicesList.status')}</h6>
+                                            <h6 className="px-2 mx-2 text-center">{t('devicesList.action')}</h6>
                                         </div>
                                     </div>
                                 }
@@ -229,7 +234,7 @@ function ViewDevices() {
                                         <img src={rectangleGrid} alt="" />
                                         <button onClick={() => addDevice()} type="button"
                                             className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                            {t('viewDevices.addDevice')}
+                                            {t('devicesList.addDevice')}
                                         </button>
                                     </div>
                                 </div>
@@ -237,13 +242,13 @@ function ViewDevices() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='viewDevices.listOfDevices' dataList={filteredDevicesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons listTitle='devicesList.listOfDevices' dataList={filteredDevicesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
-                                        <ViewDevicesFilter
+                                        <DevicesListFilter
                                             filteredDevicesList={filteredDevicesList}
                                             onFilterChange={onFilterChange}>
-                                        </ViewDevicesFilter>
+                                        </DevicesListFilter>
                                     }
                                     <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
@@ -285,14 +290,14 @@ function ViewDevices() {
                                                                             ...</p>
                                                                         {viewDeviceId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
-                                                                                <p onClick={() => console.log('view', device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
-                                                                                    {t('viewDevices.view')}
+                                                                                <p onClick={() => clickOnView(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,() => clickOnView(device))}>
+                                                                                    {t('devicesList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 {device.status !== "inactive" &&
                                                                                     (
                                                                                         <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
-                                                                                            {t('viewDevices.deActivate')}
+                                                                                            {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                     )
                                                                                 }
@@ -319,4 +324,4 @@ function ViewDevices() {
     )
 }
 
-export default ViewDevices;
+export default DevicesList;

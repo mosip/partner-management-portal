@@ -366,7 +366,7 @@
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
-    "viewDevices": {
+    "devicesList": {
         "addDevice": "أضف أداة",
         "listOfDevices": "قائمة الأجهزة",
         "deviceType": "نوع الجهاز",
@@ -403,6 +403,14 @@
         "successMsg": "تم إرسال الجهاز بنجاح وهو معلق لدى المشرف للموافقة.",
         "errorInDeviceSubType": "أثناء جلب أنواع فرعية للجهاز، واجهنا خطأً.",
         "errorInDeviceType": "أثناء جلب أنواع الأجهزة، واجهنا خطأً."
+    },
+    "viewDeviceDetails": {
+        "viewDeviceDetails": "عرض تفاصيل الجهاز",
+        "sbiVersionGoesHere1": "نسخة SBI هنا 1",
+        "createdOn": "تم إنشاؤها على",
+        "comments":"تعليقات",
+        "adminComments":"تعليق المشرفين",
+        "adminName": "اسم المشرف"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
