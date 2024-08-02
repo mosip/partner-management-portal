@@ -5,6 +5,7 @@
         "goBack": "Retourner",
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
+        "back": "Dos",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
@@ -407,10 +408,7 @@
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
         "sbiVersionGoesHere1": "La version SBI va ici 1",
-        "createdOn": "Créé sur",
-        "comments":"commentaires",
-        "adminComments":"Commentaire de l'administrateur",
-        "adminName": "Nom de l'administrateur"
+        "createdOn": "Créé sur"
     },
     "consentPopup": {
         "title": "Termes et conditions",

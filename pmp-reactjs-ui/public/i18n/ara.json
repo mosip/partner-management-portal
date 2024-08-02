@@ -5,6 +5,7 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
+        "back": "خلف",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
@@ -407,10 +408,7 @@
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",
         "sbiVersionGoesHere1": "نسخة SBI هنا 1",
-        "createdOn": "تم إنشاؤها على",
-        "comments":"تعليقات",
-        "adminComments":"تعليق المشرفين",
-        "adminName": "اسم المشرف"
+        "createdOn": "تم إنشاؤها على"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",

@@ -5,6 +5,7 @@
         "goBack": "Go Back",
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
+        "back": "Back",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "somethingWentWrong": "Something went wrong!",
         "somethingWentWrongDesc": "Please try again later",
@@ -404,10 +405,7 @@
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",
         "sbiVersionGoesHere1": "SBI Version goes here 1",
-        "createdOn": "Created On",
-        "comments":"Comments",
-        "adminComments":"Admin's Comment",
-        "adminName": "Admin Name"
+        "createdOn": "Created On"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
