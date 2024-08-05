@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
-import {isLangRTL, getPartnerTypeDescription, moveTOSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest} from "../../utils/AppUtils";
+import {
+    isLangRTL, getPartnerTypeDescription, moveTOSbisList, getPartnerManagerUrl, createDropdownData,
+    handleServiceErrors, createRequest
+} from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -29,7 +31,7 @@ function AddSbi() {
     const [createdDate, setCreatedDate] = useState(new Date());
     const [expiryDate, setExpiryDate] = useState(new Date());
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
-    const [isClickedOnSave, setIsClickedOnSave] = useState(false);
+    const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
 
     let isCancelledClicked = false;
 
@@ -37,9 +39,9 @@ function AddSbi() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isClickedOnSave || isCancelledClicked) {
+            if (IsSubmitClicked || isCancelledClicked) {
                 isCancelledClicked = false;
-                setIsClickedOnSave(false);
+                setIsSubmitClicked(false);
                 return false;
             }
             return (
@@ -59,7 +61,7 @@ function AddSbi() {
         };
 
         const handleBeforeUnload = (event) => {
-            if (shouldWarnBeforeUnload() && !isClickedOnSave) {
+            if (shouldWarnBeforeUnload() && !IsSubmitClicked) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -70,7 +72,7 @@ function AddSbi() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, sbiVersion, binaryHash, createdDate, expiryDate, isClickedOnSave]);
+    }, [partnerId, sbiVersion, binaryHash, createdDate, expiryDate, IsSubmitClicked]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -117,6 +119,14 @@ function AddSbi() {
         }
     };
 
+    const onHandleChangeCreateDate = (date) => {
+        setCreatedDate(date);
+    };
+
+    const onHandleChangeExpiryDate = (date) => {
+        setExpiryDate(date);
+    };
+
     const styleForTitle = {
         backArrowIcon: "!mt-[4%]"
     };
@@ -128,8 +138,8 @@ function AddSbi() {
         selectionBox: "!top-10"
     };
 
-    const clickOnSaveAndAdd = async () => {
-        setIsClickedOnSave(true);
+    const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
@@ -152,7 +162,7 @@ function AddSbi() {
             if (response) {
                 const responseData = response.data;
                 console.log(responseData);
-                if (responseData && response.response) {
+                if (responseData && responseData.response) {
                     navigate('/partnermanagement/deviceProviderServices/sbiList')
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -165,7 +175,7 @@ function AddSbi() {
             setErrorMsg(err);
             console.log("Error fetching data: ", err);
         }
-        setIsClickedOnSave(false);
+        setIsSubmitClicked(false);
     };
 
     const clearForm = () => {
@@ -261,7 +271,7 @@ function AddSbi() {
                                                 label={t('addSbis.sbiCreatedDate')}
                                                 showCalendar={isCreateCalendarOpen}
                                                 setShowCalender={setIsCreateCalendarOpen}
-                                                onChange={setCreatedDate}
+                                                onChange={onHandleChangeCreateDate}
                                                 value={createdDate}
                                                 styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
                                             />
@@ -269,7 +279,7 @@ function AddSbi() {
                                                 label={t('addSbis.sbiExpiryDate')}
                                                 showCalendar={isExpiryCalenderOpen}
                                                 setShowCalender={setIsExpiryCalenderOpen}
-                                                onChange={setExpiryDate}
+                                                onChange={onHandleChangeExpiryDate}
                                                 value={expiryDate}
                                                 addInfoIcon
                                                 styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
@@ -283,7 +293,7 @@ function AddSbi() {
                                 <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col">
                                     <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSaveAndAdd()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                         {t('commons.submit')}
                                     </button>
                                 </div>
