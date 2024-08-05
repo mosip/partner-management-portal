@@ -596,6 +596,12 @@
         "PMS_CONSENT_ERROR_002": "Error while saving partner consent.",
         "PMP-AUT-020": "Parse Error exception",
         "PMP-AUT-021": "Audit Exception from client",
-        "KER-AUD-001": "PartnerId max length should be 36"
+        "KER-AUD-001": "PartnerId max length should be 36",
+        "PMS_DP_FETCH_001": "Unable to fetch approved device provider Ids.",
+        "PMS_DEVICE_ERROR_001": "Partner id is not associated with user.",
+        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_003": "Invalid partner type.",
+        "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
+        "PMS_SBI_ERROR_001": "Unable to fetch SBI details."
     }
 }
