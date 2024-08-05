@@ -49,8 +49,8 @@ function ViewDeviceDetails() {
                                 {deviceDetails.deviceProviderId}
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus(deviceDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                    {getStatusCode(deviceDetails.status, t)}
+                                <div className={`${bgOfStatus(deviceDetails.approvalStatus, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                    {getStatusCode(deviceDetails.approvalStatus, t)}
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewDeviceDetails.createdOn") + ' ' +
@@ -70,7 +70,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.deviceType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    {deviceDetails.deviceType}
+                                    {deviceDetails.deviceTypeCode}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
@@ -78,7 +78,7 @@ function ViewDeviceDetails() {
                                     {t("addDevices.deviceSubType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    {deviceDetails.deviceSubType}
+                                    {deviceDetails.deviceSubTypeCode}
                                 </p>
                             </div>
                         </div>

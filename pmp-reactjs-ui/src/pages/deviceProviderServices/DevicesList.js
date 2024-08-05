@@ -5,7 +5,8 @@ import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
-    onPressEnterKey
+    onPressEnterKey,
+    moveToSbisList
 } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -36,10 +37,10 @@ function DevicesList() {
     const [devicesList, setDevicesList] = useState([]);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+
     const defaultFilterQuery = {
-        deviceType: "",
-        deviceSubType: ""
+        deviceTypeCode: "",
+        deviceSubTypeCode: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
@@ -50,87 +51,54 @@ function DevicesList() {
 
     useEffect(() => {
         const fetchData = async () => {
+            try {
+                setDataLoaded(false);
 
-            setDataLoaded(false);
-            const response = [
-                {
-                    "id": "46146",
-                    "deviceProviderId": "mayuradevice",
-                    "deviceType": "Finger",
-                    "deviceSubType": "Slap",
-                    "make": "MOSIP48",
-                    "model": "XYZS",
-                    "partnerOrganizationName": "ABCDEF",
-                    "isActive": true,
-                    "status": "approved",
-                    "crDtimes": "2022-07-01T00:00:00.000+00:00"
-                },
-                {
-                    "id": "64895",
-                    "deviceProviderId": "mayuradevice",
-                    "deviceType": "Finger",
-                    "deviceSubType": "Slap",
-                    "make": "MOSIP123",
-                    "model": "XYZE",
-                    "partnerOrganizationName": "ABCDEF",
-                    "isActive": true,
-                    "status": "approved",
-                    "crDtimes": "2023-01-01T00:00:00.000+00:00"
-                },
-                {
-                    "id": "mdevice_detail_default_finger",
-                    "deviceProviderId": "MOSIP.PROXY.SBI",
-                    "deviceType": "Finger",
-                    "deviceSubType": "Slap",
-                    "make": "MOSIP",
-                    "model": "SLAP01",
-                    "partnerOrganizationName": "MOSIP",
-                    "isActive": true,
-                    "status": "rejected",
-                    "crDtimes": "2025-01-01T00:00:00.000+00:00"
-                },
-                {
-                    "id": "70913",
-                    "deviceProviderId": "Tech-123",
-                    "deviceType": "Iris",
-                    "deviceSubType": "Single",
-                    "make": "abcde",
-                    "model": "FRO90000",
-                    "partnerOrganizationName": "Techno",
-                    "isActive": false,
-                    "status": "pending_approval",
-                    "crDtimes": "2020-01-01T00:00:00.000+00:00"
-                },
-                {
-                    "id": "70913",
-                    "deviceProviderId": "Tech-123",
-                    "deviceType": "Iris",
-                    "deviceSubType": "Single",
-                    "make": "abcde",
-                    "model": "FRO90000",
-                    "partnerOrganizationName": "Techno",
-                    "isActive": false,
-                    "status": "inactive",
-                    "crDtimes": "2020-01-01T00:00:00.000+00:00"
-                },
-            ]
+                const sbiData = localStorage.getItem('selectedSbiData');
+                if (!sbiData) {
+                    moveToSbisList(navigate);
+                }
 
-            const sortedData = response.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-            setDevicesList(sortedData);
-            setFilteredDevicesList(sortedData);
-            setDataLoaded(true);
+                const selectedSbi = JSON.parse(sbiData);
+                console.log(selectedSbi);
 
+                let sbiId = selectedSbi.sbiId;
+                const response = await HttpService.get(getPartnerManagerUrl(`/partners/getAllDevicesForSBI/${sbiId}`, process.env.NODE_ENV), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (response) {
+                    const responseData = response.data;
+                    console.log(responseData)
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        setDevicesList(sortedData);
+                        setFilteredDevicesList(sortedData);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('devicesList.errorInViewDevices'));
+                }
+
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
         };
         fetchData();
     }, []);
 
     const tableHeaders = [
-        { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
-        { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
+        { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
+        { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
         { id: "crDtimes", headerNameKey: "devicesList.createdDate" },
-        { id: "status", headerNameKey: "devicesList.status" },
+        { id: "approvalStatus", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
 
@@ -174,8 +142,8 @@ function DevicesList() {
         toggleSortDescOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
-    const clickOnView = (selectedDeviceData) => {
-        localStorage.setItem('selectedDeviceData',JSON.stringify(selectedDeviceData));
+    const showDeviceDetails = (selectedDeviceData) => {
+        localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
         navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
     }
 
@@ -256,7 +224,7 @@ function DevicesList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]  ${header.id === "status" && '!w-[10%]'}`}>
+                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]  ${header.id === "approvalStatus" && '!w-[10%]'}`}>
                                                                 <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (
@@ -272,15 +240,15 @@ function DevicesList() {
                                                 {
                                                     tableRows.map((device, index, currentArray) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${device.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">{device.deviceType}</td>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">{device.deviceSubType}</td>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">{device.make}</td>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">{device.model}</td>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">{formatDate(device.crDtimes, 'date')}</td>
-                                                                <td onClick={() => console.log('show device details', device)} className="px-2 mx-2">
-                                                                    <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                        {getStatusCode(device.status, t)}
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${device.active === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.model}</td>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">
+                                                                    <div className={`${bgOfStatus(device.approvalStatus)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                        {getStatusCode(device.approvalStatus, t)}
                                                                     </div>
                                                                 </td>
                                                                 <td className="px-2 mx-2">
@@ -290,11 +258,11 @@ function DevicesList() {
                                                                             ...</p>
                                                                         {viewDeviceId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
-                                                                                <p onClick={() => clickOnView(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,() => clickOnView(device))}>
+                                                                                <p onClick={() => showDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeviceDetails(device))}>
                                                                                     {t('devicesList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                {device.status !== "inactive" &&
+                                                                                {device.active !== false &&
                                                                                     (
                                                                                         <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
                                                                                             {t('devicesList.deActivate')}

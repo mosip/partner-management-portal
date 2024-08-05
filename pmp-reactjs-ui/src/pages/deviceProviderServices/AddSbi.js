@@ -5,10 +5,8 @@ import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
-import {
-    isLangRTL, getPartnerTypeDescription, moveTOSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest
-} from "../../utils/AppUtils";
+import {isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
+    handleServiceErrors, createRequest} from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -197,7 +195,7 @@ function AddSbi() {
 
     const clickOnCancel = () => {
         isCancelledClicked = true;
-        moveTOSbisList(navigate)
+        moveToSbisList(navigate)
     }
 
     return (

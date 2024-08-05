@@ -600,6 +600,12 @@
         "PMS_CONSENT_ERROR_002": "Erreur lors de l'enregistrement du consentement du partenaire.",
         "PMP-AUT-020": "Exception d'erreur d'analyse",
         "PMP-AUT-021": "Exception d'audit du client",
-        "KER-AUD-001": "La longueur maximale du PartnerId doit être 36"
+        "KER-AUD-001": "La longueur maximale du PartnerId doit être 36",
+        "PMS_DP_FETCH_001": "Impossible de récupérer les identifiants des fournisseurs d'appareils approuvés.",
+        "PMS_DEVICE_ERROR_001": "L'identifiant du partenaire n'est pas associé à l'utilisateur.",
+        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_003": "Type de partenaire invalide.",
+        "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
+        "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI."
     }
 }

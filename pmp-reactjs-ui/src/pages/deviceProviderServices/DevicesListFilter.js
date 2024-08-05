@@ -18,7 +18,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
             setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceSubType')));
             setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('devicesList.selectMakeName')));
             setModelData(createDropdownData('model', '', true, filteredDevicesList, t, t('devicesList.selectModelName')));
-            setStatusData(createDropdownData('status', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
+            setStatusData(createDropdownData('approvalStatus', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
         };
         fetchData();
     }, []);
@@ -35,7 +35,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
         <>
             <div className="flex w-full p-2 justify-start bg-gray-50 flex-wrap">
                 <DropdownComponent
-                    fieldName='deviceType'
+                    fieldName='deviceTypeCode'
                     dropdownDataList={deviceTypeData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='devicesList.deviceType'
@@ -44,7 +44,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent
-                    fieldName='deviceSubType'
+                    fieldName='deviceSubTypeCode'
                     dropdownDataList={deviceSubTypeData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='devicesList.deviceSubType'
@@ -73,7 +73,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     isPlaceHolderPresent={true}>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
-                    fieldName='status' 
+                    fieldName='approvalStatus' 
                     dropdownDataList={statusData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='devicesList.status' 
