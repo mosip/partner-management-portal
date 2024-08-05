@@ -157,7 +157,7 @@ export const moveToApiKeysList = (navigate) => {
     navigate('/partnermanagement/authenticationServices/apiKeysList')
 };
 
-export const moveTOSbisList = (navigate) => {
+export const moveToSbisList = (navigate) => {
     navigate('/partnermanagement/deviceProviderServices/sbiList');
 };
 
