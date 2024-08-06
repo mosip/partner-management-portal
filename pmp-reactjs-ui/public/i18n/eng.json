@@ -556,7 +556,7 @@
         "PMS_POL_057": "Active apiKey exists under the policy.",
         "PMS_POL_058": "Status cannot be changed for published policy.;",
         "PMS_POL_059": "There are no active policy groups.",
-	    "PMS_POL_060": "Error while fetching policy groups.",
+        "PMS_POL_060": "Error while fetching policy groups.",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-004": "Certificate Date is not valid.",
