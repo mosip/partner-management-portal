@@ -128,7 +128,11 @@ function SbiList() {
                                         <div className="p-4">
                                             <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
-                                                    <img src={sbi.status !== 'rejected' ? verifiedIcon : expiredIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`}></img>
+                                                    {sbi.status !== 'rejected' ? (
+                                                        <img src={sbi.expired ? expiredIcon : verifiedIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
+                                                    )
+                                                        : <img src={expiredIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
+                                                    }
                                                     <div className="flex flex-col">
                                                         <p className={`text-base font-bold ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
                                                         <div className="flex flex-row items-center gap-1">
@@ -144,7 +148,7 @@ function SbiList() {
                                                 </div>
                                                 <div className="flex flex-row justify-between items-center space-x-6 relative">
                                                     <div className="flex flex-row justify-between items-center space-x-3">
-                                                        <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
+                                                        <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                         <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                         <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
                                                         {deactivateBtnId === index && (
