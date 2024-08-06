@@ -240,7 +240,7 @@ function DevicesList() {
                                                 {
                                                     tableRows.map((device, index, currentArray) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${device.active === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${device.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                 <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                 <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
@@ -262,7 +262,7 @@ function DevicesList() {
                                                                                     {t('devicesList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                {device.active !== false &&
+                                                                                {device.isActive !== false &&
                                                                                     (
                                                                                         <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
                                                                                             {t('devicesList.deActivate')}
