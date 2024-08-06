@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import Title from '../common/Title.js';
 import { HttpService } from '../../services/HttpService';
-import { isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl, 
-    handleMouseClickForDropdown } from '../../utils/AppUtils.js';
+import {
+    isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
+    handleMouseClickForDropdown
+} from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import rectangleGrid from '../../svg/rectangle_grid.svg';
 import upArrow from '../../svg/up_arrow.svg';
 import verifiedIcon from '../../svg/verified_icon.svg';
+import expiredIcon from '../../svg/expiry_icon.svg';
 
-function SbiList () {
+function SbiList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -34,26 +37,26 @@ function SbiList () {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            setDataLoaded(false);
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllSBIDetails', process.env.NODE_ENV));
-            if (response) {
-              const responseData = response.data;
-              if (responseData && responseData.response) {
-                const resData = responseData.response;
-                const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                setSbiList(sortedData);
-              } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-              }
-            } else {
-              setErrorMsg(t('sbiList.errorInSbiList'));
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllSBIDetails', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        setSbiList(sortedData);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('sbiList.errorInSbiList'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
             }
-            setDataLoaded(true);
-          } catch (err) {
-            console.error('Error fetching data:', err);
-            setErrorMsg(err);
-          }
         };
         fetchData();
     }, []);
@@ -108,7 +111,7 @@ function SbiList () {
                                 : null
                             }
                         </div>
-                        {sbiList.length === 0 ? 
+                        {sbiList.length === 0 ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <div className="flex items-center justify-center p-44">
                                     <div className="flex flex-col items-center">
@@ -125,20 +128,27 @@ function SbiList () {
                                         <div className="p-4">
                                             <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
-                                                    <img src={verifiedIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`}></img>
+                                                    {sbi.status !== 'rejected' ? (
+                                                        <img src={sbi.expired ? expiredIcon : verifiedIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
+                                                    )
+                                                        : <img src={expiredIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
+                                                    }
                                                     <div className="flex flex-col">
                                                         <p className={`text-base font-bold ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
-                                                        <div className="flex flex-row items-center justify-between">
+                                                        <div className="flex flex-row items-center gap-1">
                                                             <div className={`${bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
-                                                            <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfDevices} {t('sbiList.devices')}</span> {t('sbiList.devicesCountTxt')}</p>
+                                                            <div>
+                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfApprovedDevices} {t('sbiList.devices')}</span> {t('sbiList.approvedDevicesCountTxt')}</p>
+                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfPendingDevices} {t('sbiList.devices')}</span> {t('sbiList.pendingDevicesCountTxt')}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-row justify-between items-center space-x-6 relative">
                                                     <div className="flex flex-row justify-between items-center space-x-3">
-                                                        <button onClick={() => addDevices(sbi)} className={`${sbi.status === "deactivated" ? 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue border-[#1447B2]'} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
+                                                        <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                         <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                         <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
                                                         {deactivateBtnId === index && (
@@ -149,7 +159,7 @@ function SbiList () {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e, () => setOpen(index === open ? null : index))}/>
+                                                    <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                 </div>
                                             </div>
                                         </div>

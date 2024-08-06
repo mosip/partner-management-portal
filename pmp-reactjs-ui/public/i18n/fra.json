@@ -358,6 +358,8 @@
         "addSbiDevice": "Ajouter un périphérique SBI",
         "addSbi": "Ajouter un SBI",
         "devices": "appareils",
+        "approvedDevicesCountTxt": "les appareils associés à ce SBI sont approuvés",
+        "pendingDevicesCountTxt": "les appareils associés à ce SBI sont en attente d'approbation",
         "devicesCountTxt": "sont associés à ce SBI",
         "addDevices": "Ajouter des périphériques",
         "viewDevices": "Afficher les périphériques",

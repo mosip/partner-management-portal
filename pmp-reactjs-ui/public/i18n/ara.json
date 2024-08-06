@@ -358,6 +358,8 @@
         "addSbiDevice": "إضافة جهاز SBI",
         "addSbi": "إضافة SBI",
         "devices": "الأجهزة",
+        "approvedDevicesCountTxt": "تمت الموافقة على الأجهزة المرتبطة بهذه الهيئة الفرعية للتنفيذ",
+        "pendingDevicesCountTxt": "الأجهزة المرتبطة بهذه الهيئة الفرعية للتنفيذ في انتظار الموافقة",
         "devicesCountTxt": "مرتبطة بجهاز SBI هذا",
         "addDevices": "إضافة أجهزة",
         "viewDevices": "عرض الأجهزة",
