@@ -258,7 +258,7 @@ function AddSbi() {
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')}</label>
-                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={36}
+                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
                                             </div>

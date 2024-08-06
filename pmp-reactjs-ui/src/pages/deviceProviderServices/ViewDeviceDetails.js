@@ -122,4 +122,4 @@ function ViewDeviceDetails() {
     )
 }
 
-export default ViewDeviceDetails
+export default ViewDeviceDetails;
