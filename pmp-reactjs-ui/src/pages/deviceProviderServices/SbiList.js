@@ -24,9 +24,7 @@ function SbiList() {
     const [open, setOpen] = useState(-1);
     const [deactivateBtnId, setDeactivateBtnId] = useState(-1);
     const [sbiList, setSbiList] = useState([]);
-    const [onHoverApprovedCount, setOnHoverApprovedCount] = useState(false);
     const [approvedCountHyperLink, setApprovedCountHyperLink] = useState(-1);
-    const [onHoverPendingCount, setOnHoverPendingCount] = useState(false);
     const [pendingCountHyperLink, setPendingCountHyperLink] = useState(-1);
     const submenuRef = useRef([]);
 
