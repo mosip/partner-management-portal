@@ -125,7 +125,7 @@ function SbiList() {
                             sbiList.map((sbi, index) => {
                                 return (
                                     <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll">
-                                        <div className={`p-4 ${(sbi.status === 'rejected' || sbi.expired) && 'bg-[#f4e8eb]'}`}>
+                                        <div className={`p-4 ${(sbi.status === 'rejected' || sbi.expired) && 'bg-[#fef1f1]'}`}>
                                             <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
                                                     {sbi.status !== 'rejected' ? (
@@ -143,7 +143,7 @@ function SbiList() {
                                                                 <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
                                                                     <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>
                                                                         {sbi.countOfApprovedDevices} {t('sbiList.devices')}
-                                                                    </span> {t('sbiList.approved') + ' |'}
+                                                                    </span> {t('sbiList.approved')} <span className='mx-1'>{'|'}</span>
                                                                 </p>
                                                                 <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
                                                                     <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04] cursor-pointer'} `}>
@@ -178,26 +178,26 @@ function SbiList() {
                                                     <div className="flex flex-col">
                                                         <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:pt-2">
                                                             <div className="flex flex-col w-1/3 max-[530px]:w-full">
-                                                                <p className="font-semibold text-sm text-suva-gray">{t('sbiList.partnerId')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.partnerId}</p>
+                                                                <p className="text-md text-suva-gray">{t('sbiList.partnerId')}</p>
+                                                                <p className="font-normal text-lg text-vulcan">{sbi.partnerId}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="font-semibold text-sm text-suva-gray">{t('sbiList.partnerType')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
+                                                                <p className="text-md text-suva-gray">{t('sbiList.partnerType')}</p>
+                                                                <p className="font-normal text-lg text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="font-semibold text-sm text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
+                                                                <p className="text-md text-suva-gray">{t('sbiList.submittedOn')}</p>
+                                                                <p className="font-normal text-lg text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start pt-2">
+                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start mt-6">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="font-semibold text-sm text-suva-gray">{t('sbiList.createdDate')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
+                                                                <p className="text-md text-suva-gray">{t('sbiList.createdDate')}</p>
+                                                                <p className="font-normal text-lg text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="font-semibold text-sm text-suva-gray">{t('sbiList.expiryDate')}</p>
-                                                                <p className="font-semibold text-base text-vulcan">{sbi.sbiSoftwareExpiryDtimes}</p>
+                                                                <p className="text-md text-suva-gray">{t('sbiList.expiryDate')}</p>
+                                                                <p className="font-normal text-lg text-vulcan">{sbi.sbiSoftwareExpiryDtimes}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>
