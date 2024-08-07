@@ -6,7 +6,7 @@ import Title from '../common/Title.js';
 import { HttpService } from '../../services/HttpService';
 import {
     isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
-    handleMouseClickForDropdown
+    handleMouseClickForDropdown,
 } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
@@ -125,7 +125,7 @@ function SbiList() {
                             sbiList.map((sbi, index) => {
                                 return (
                                     <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll">
-                                        <div className="p-4">
+                                        <div className={`p-4 ${(sbi.status === 'rejected' || sbi.expired) && 'bg-[#f4e8eb]'}`}>
                                             <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
                                                     {sbi.status !== 'rejected' ? (
@@ -139,9 +139,17 @@ function SbiList() {
                                                             <div className={`${bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
-                                                            <div>
-                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfApprovedDevices} {t('sbiList.devices')}</span> {t('sbiList.approvedDevicesCountTxt')}</p>
-                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit"><span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>{sbi.countOfPendingDevices} {t('sbiList.devices')}</span> {t('sbiList.pendingDevicesCountTxt')}</p>
+                                                            <div className='flex'>
+                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
+                                                                    <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>
+                                                                        {sbi.countOfApprovedDevices} {t('sbiList.devices')}
+                                                                    </span> {t('sbiList.approved') + ' |'}
+                                                                </p>
+                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
+                                                                    <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04] cursor-pointer'} `}>
+                                                                        {sbi.countOfPendingDevices} {t('sbiList.devices')}
+                                                                    </span> {t('sbiList.pendingForApprovalContx')}
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
