@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import 'react-calendar/dist/Calendar.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
-import {isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest} from "../../utils/AppUtils";
+import {
+    isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
+    handleServiceErrors, createRequest
+} from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -26,8 +28,8 @@ function AddSbi() {
     const [partnerId, setPartnerId] = useState("");
     const [isCreateCalendarOpen, setIsCreateCalendarOpen] = useState(false);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
-    const [createdDate, setCreatedDate] = useState(new Date());
-    const [expiryDate, setExpiryDate] = useState(new Date());
+    const [createdDate, setCreatedDate] = useState("");
+    const [expiryDate, setExpiryDate] = useState("");
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
 
@@ -117,12 +119,14 @@ function AddSbi() {
         }
     };
 
-    const onHandleChangeCreateDate = (date) => {
-        setCreatedDate(date);
+    const onHandleChangeCreateDate = (dateStr) => {
+        console.log(`onHandleChangeCreateDate ${dateStr}`);
+        setCreatedDate(dateStr);
     };
 
-    const onHandleChangeExpiryDate = (date) => {
-        setExpiryDate(date);
+    const onHandleChangeExpiryDate = (dateStr) => {
+        console.log(`onHandleChangeExpiryDate ${dateStr}`);
+        setExpiryDate(dateStr);
     };
 
     const styleForTitle = {
@@ -181,8 +185,8 @@ function AddSbi() {
         setPartnerType("");
         setSbiVersion("");
         setBinaryHash("");
-        setCreatedDate(new Date());
-        setExpiryDate(new Date());
+        setCreatedDate("");
+        setExpiryDate("");
     };
 
     const handleFormSubmit = (event) => {
@@ -270,17 +274,17 @@ function AddSbi() {
                                                 showCalendar={isCreateCalendarOpen}
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={onHandleChangeCreateDate}
-                                                value={createdDate}
-                                                styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
+                                                selectedDateStr={createdDate}
+                                                styles={`absolute rounded-lg bg-white shadow-lg w-auto h-auto`}
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
                                                 showCalendar={isExpiryCalenderOpen}
                                                 setShowCalender={setIsExpiryCalenderOpen}
                                                 onChange={onHandleChangeExpiryDate}
-                                                value={expiryDate}
+                                                selectedDateStr={expiryDate}
                                                 addInfoIcon
-                                                styles={`absolute rounded-lg bg-white shadow-lg -mt-[24%] ${isLoginLanguageRTL ? "mr-56" : "ml-56"} w-auto h-auto`}
+                                                styles={`absolute rounded-lg bg-white shadow-lg w-auto h-auto`}
                                             />
                                         </div>
                                     </div>
