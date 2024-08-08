@@ -133,15 +133,43 @@ function AddDevices() {
         updateButtonStates();
     };
 
-    const submitForm = (index) => {
-        const newEntries = [...deviceEntries];
-        newEntries[index].isSubmitted = true;
-        setDeviceEntries(newEntries);
-        setSuccessMsg(t('addDevices.successMsg'));
-        updateButtonStates();
+    const submitForm = async (index, entry) => {
+        setErrorCode("");
+        setErrorMsg("");
+        setSuccessMsg("");
+        let request = createRequest({
+            id: null,
+            deviceProviderId: getUserProfile().userName,
+            deviceTypeCode: entry.deviceType,
+            deviceSubTypeCode: entry.deviceSubType,
+            make: entry.make,
+            model: entry.model
+        });
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const newEntries = [...deviceEntries];
+                    newEntries[index].isSubmitted = true;
+                    setDeviceEntries(newEntries);
+                    setSuccessMsg(t('addDevices.successMsg'));
+                    updateButtonStates();
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('addDevices.errorInDeviceSubType'));
+            }
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
     };
 
     const deleteEntry = (index) => {
+        setErrorCode("");
+        setErrorMsg("");
         const newEntries = deviceEntries.filter((_, i) => i !== index);
         setDeviceEntries(newEntries);
         updateButtonStates();
@@ -178,7 +206,7 @@ function AddDevices() {
 
     const styles = {
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!min-w-[19.5rem] !h-11 !rounded-md !text-base !text-start",
+        dropdownButton: "!w-full !h-11 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     };
 
@@ -222,7 +250,7 @@ function AddDevices() {
                                     )}
                                     <form>
                                         <div className="flex justify-start flex-wrap p-2">
-                                            <div className="flex-col">
+                                            <div className="flex-col w-[25%] max-[1064px]:min-w-[19.5rem]">
                                                 <DropdownComponent
                                                     fieldName='deviceType'
                                                     dropdownDataList={entry.deviceTypeDropdownData}
@@ -235,7 +263,7 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex-col">
+                                            <div className="flex-col w-[25%] max-[1064px]:min-w-[19.5rem]">
                                                 <DropdownComponent
                                                     fieldName='deviceSubType'
                                                     dropdownDataList={entry.deviceSubTypeDropdownData}
@@ -248,13 +276,13 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex flex-col min-w-[19.5rem] ml-4 mb-2">
+                                            <div className="flex flex-col w-[23%] max-[1064px]:min-w-[18.5rem] ml-4 mb-2">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
                                             </div>
-                                            <div className="flex flex-col min-w-[19.5rem] ml-4 mb-2">
+                                            <div className="flex flex-col w-[23%] max-[1064px]:min-w-[18.5rem] ml-4 mb-2">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
@@ -265,7 +293,7 @@ function AddDevices() {
                                     {!entry.isSubmitted && (
                                         <div className="flex px-5 py-4 justify-between">
                                             <div>
-                                                <button disabled={!isFormValid(index)} onClick={() => submitForm(index)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid(index) ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                                <button disabled={!isFormValid(index)} onClick={() => submitForm(index, entry)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid(index) ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                                     {t('addDevices.submit')}
                                                 </button>
                                                 <button onClick={() => clearForm(index)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>
