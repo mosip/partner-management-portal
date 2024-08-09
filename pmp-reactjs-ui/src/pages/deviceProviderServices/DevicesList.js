@@ -37,6 +37,8 @@ function DevicesList() {
     const [devicesList, setDevicesList] = useState([]);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
+    const [validSbiStatus, setValidSbiStatus] = useState(true);
+    const [selectedSbidata, setSelectedSbidata] = useState(true);
 
     const defaultFilterQuery = {
         deviceTypeCode: "",
@@ -50,19 +52,21 @@ function DevicesList() {
     }, [submenuRef]);
 
     useEffect(() => {
+        const selectedSbi = localStorage.getItem('selectedSbiData');
+        let sbiData = JSON.parse(selectedSbi);
+        setSelectedSbidata(sbiData);
+        console.log(sbiData)
+        if (!sbiData) {
+            moveToSbisList(navigate);
+        }
+        if(sbiData.status !== "approved" || sbiData.expired){
+            setValidSbiStatus(false);
+        }
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
 
-                const sbiData = localStorage.getItem('selectedSbiData');
-                if (!sbiData) {
-                    moveToSbisList(navigate);
-                }
-
-                const selectedSbi = JSON.parse(sbiData);
-                console.log(selectedSbi);
-
-                let sbiId = selectedSbi.sbiId;
+                let sbiId = sbiData.sbiId;
                 const response = await HttpService.get(getPartnerManagerUrl(`/partners/getAllDevicesForSBI/${sbiId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
@@ -70,7 +74,6 @@ function DevicesList() {
                 });
                 if (response) {
                     const responseData = response.data;
-                    console.log(responseData)
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
@@ -106,8 +109,8 @@ function DevicesList() {
         setErrorMsg("");
     };
 
-    const addDevice = () => {
-        console.log('addDevice');
+    const addDevices = () => {
+        navigate('/partnermanagement/deviceProviderServices/addDevices');
     }
 
     //This part is related to Filter
@@ -169,10 +172,11 @@ function DevicesList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
+                            <Title title={`${t('deviceProviderServices.listOfDevices')} ${selectedSbidata.sbiVersion}`} backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
                             {devicesList.length > 0 ?
-                                <button onClick={() => addDevice()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                    {t('devicesList.addDevice')}
+                                <button onClick={() => addDevices()} type="button" disabled={!validSbiStatus}
+                                className={`h-10 text-sm font-semibold px-7  rounded-md ${validSbiStatus ? "bg-tory-blue text-white" : "bg-gray-400 cursor-not-allowed opacity-55"}`}>
+                                    {t('devicesList.addDevices')}
                                 </button>
                                 : null
                             }
@@ -200,9 +204,10 @@ function DevicesList() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
-                                        <button onClick={() => addDevice()} type="button"
-                                            className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                            {t('devicesList.addDevice')}
+                                        {validSbiStatus}
+                                        <button onClick={() => addDevices()} type="button" disabled={!validSbiStatus}
+                                            className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 ${validSbiStatus ? "bg-tory-blue text-white" : "bg-gray-400 cursor-not-allowed opacity-55"}`}>
+                                            {t('devicesList.addDevices')}
                                         </button>
                                     </div>
                                 </div>

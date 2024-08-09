@@ -334,7 +334,8 @@
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",
-        "addSbiDevices": "Add SBI - Device"
+        "addSbiDevices": "Add SBI - Device",
+        "listOfDevices":"List of Devices for"
     },
     "addSbis": {
         "addSbi": "Add SBI",
@@ -367,7 +368,7 @@
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
     "devicesList": {
-        "addDevice": "Add a Device",
+        "addDevices": "Add Devices",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",
         "deviceSubType": "Device Sub Type",

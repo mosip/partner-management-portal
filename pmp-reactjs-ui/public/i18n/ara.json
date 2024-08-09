@@ -336,7 +336,8 @@
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
-        "addSbiDevices": "إضافة SBI - الجهاز"
+        "addSbiDevices": "إضافة SBI - الجهاز",
+        "listOfDevices":"قائمة الأجهزة ل"
     },
     "addSbis": {
         "addSbi": "أضف الهيئة الفرعية للتنفيذ",
@@ -372,7 +373,7 @@
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
     "devicesList": {
-        "addDevice": "أضف أداة",
+        "addDevices": "إضافة أجهزة",
         "listOfDevices": "قائمة الأجهزة",
         "deviceType": "نوع الجهاز",
         "deviceSubType": "نوع الجهاز الفرعي",
