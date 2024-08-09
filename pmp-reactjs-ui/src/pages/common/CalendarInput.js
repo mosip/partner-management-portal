@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import calendar_icon from '../../svg/calendar_icon.svg'
 import Information from './fields/Information';
 
-function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onChange, selectedDateStr, styles }) {
+function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onChange, selectedDateStr}) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
@@ -37,20 +37,14 @@ function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onCh
           <Information infoKey={t('addSbis.addSbiInfoKey')} />
         )}
       </label>
-      <div className={`flex items-center justify-between h-10 px-2 border border-[#707070] rounded-md text-md text-dark-blue bg-white text-start cursor-pointer`}>
-        <span className="text-start ">
-          {selectedDateStr !== "" ? new Date(selectedDateStr).toDateString()
-           : <p className={`text-gray-400`}>{t('addSbis.selectDate')}</p>
-          }
-        </span>
-        {showCalendar &&
-          <DatePicker 
-            selected={selectedDateStr == "" ? new Date() : new Date(selectedDateStr)}
-            onChange={(date) => onDateChange(date)}
-            className={styles}
-             />
-        }
-        <img onClick={openCalendar} src={calendar_icon} className={`h-[48%] mb-1 ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-blue-500 font-bold text-sm`} />
+      <div className="w-full">
+        <DatePicker
+          selected={selectedDateStr === "" ? new Date() : new Date(selectedDateStr)}
+          onChange={(date) => onDateChange(date)}
+          dateFormat="dd/MM/yyyy"
+          className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+          wrapperClassName="w-full" 
+        />
       </div>
     </div>
   )
