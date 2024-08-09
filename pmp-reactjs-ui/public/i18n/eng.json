@@ -573,6 +573,7 @@
         "PMS_CERTIFICATE_ERROR_005": "Approval Status is null or empty",
         "PMS_CERTIFICATE_ERROR_006": "Unable to decode the certificate data",
         "PMS_CERTIFICATE_ERROR_007": "The given partner ID does not belong to the user.So unable to get the original partner certificates",
+        "PMS_CERTIFICATE_ERROR_008":"Error while fetching certificate.",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
         "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",
@@ -603,7 +604,18 @@
         "PMS_DEVICE_ERROR_001": "Partner id is not associated with user.",
         "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
         "PMS_DEVICE_ERROR_003": "Invalid partner type.",
+        "PMS_DEVICE_ERROR_004": "SBI and Device mapping already exists.",
+        "PMS_DEVICE_ERROR_005": "SBI do not exists.",
+        "PMS_DEVICE_ERROR_006": "Device do not exists.",
+        "PMS_DEVICE_ERROR_007": "Device is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_008": "Error while adding inactive device mapping for sbi.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
-        "PMS_SBI_ERROR_001": "Unable to fetch SBI details."
+        "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
+        "PMS_REQUEST_ERROR_001": "Invalid request.",
+        "PMS_REQUEST_ERROR_002": "Invalid Request Id",
+        "PMS_REQUEST_ERROR_003": "Request version is invalid",
+        "PMS_REQUEST_ERROR_004": "Invalid request time",
+        "PMS_REQUEST_ERROR_005": "Request body is invalid",
+        "PMS_REQUEST_ERROR_006": "Request date should be current date"
     }
 }

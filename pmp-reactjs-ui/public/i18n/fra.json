@@ -578,6 +578,7 @@
         "PMS_CERTIFICATE_ERROR_005": "Le statut d'approbation est nul ou vide",
         "PMS_CERTIFICATE_ERROR_006": "Impossible de décoder les données du certificat",
         "PMS_CERTIFICATE_ERROR_007": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les certificats de partenaire d'origine",
+        "PMS_CERTIFICATE_ERROR_008":"Erreur lors de la récupération du certificat.",
         "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
         "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
         "PMS_POLICY_ERROR_003": "Erreur lors de la récupération de tous les identifiants de partenaires approuvés avec les groupes de stratégies.",
@@ -608,7 +609,18 @@
         "PMS_DEVICE_ERROR_001": "L'identifiant du partenaire n'est pas associé à l'utilisateur.",
         "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
         "PMS_DEVICE_ERROR_003": "Type de partenaire invalide.",
+        "PMS_DEVICE_ERROR_004": "Le mappage SBI et périphérique existe déjà.",
+        "PMS_DEVICE_ERROR_005": "SBI n'existe pas.",
+        "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
+        "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
+        "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout du mappage de périphériques inactifs pour sbi.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
-        "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI."
+        "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
+        "PMS_REQUEST_ERROR_001": "Requête invalide.",
+        "PMS_REQUEST_ERROR_002": "Identifiant de demande invalide",
+        "PMS_REQUEST_ERROR_003": "La version de la demande n'est pas valide",
+        "PMS_REQUEST_ERROR_004": "Heure de demande invalide",
+        "PMS_REQUEST_ERROR_005": "Le corps de la demande n'est pas valide",
+        "PMS_REQUEST_ERROR_006": "La date de la demande doit être la date du jour"
     }
 }
