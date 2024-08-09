@@ -149,8 +149,8 @@ function AddSbi() {
             {
                 swBinaryHash: binaryHash,
                 swVersion: sbiVersion,
-                swCreateDateTime: createdDate,
-                swExpiryDateTime: expiryDate,
+                swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
+                swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId
             }
         );
