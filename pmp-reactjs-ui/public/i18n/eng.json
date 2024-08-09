@@ -129,7 +129,8 @@
     },
     "statusCodes": {
         "approved": "Approved",
-        "inProgress": "Pending For Approval",
+        "inProgress": "Pending for Approval",
+        "pendingForApproval": "Pending for Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
         "activated": "Activated"
@@ -367,8 +368,8 @@
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
     },
     "devicesList": {
-        "addDevice": "Add a Device",
-        "listOfDevices": "List of Devices",
+        "addDevices": "Add Devices",
+        "listOfDevices": "List of Devices for ",
         "deviceType": "Device Type",
         "deviceSubType": "Device Sub Type",
         "make": "Make",

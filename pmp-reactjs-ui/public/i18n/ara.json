@@ -130,6 +130,7 @@
     "statusCodes": {
         "approved": "موافقة",
         "inProgress": "في انتظار لموافقة",
+        "pendingForApproval": "في انتظار الموافقة",
         "rejected": "مرفوض",
         "deactivated": "معطل",
         "activated": "نشط"
@@ -372,8 +373,8 @@
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً."
     },
     "devicesList": {
-        "addDevice": "أضف أداة",
-        "listOfDevices": "قائمة الأجهزة",
+        "addDevices": "إضافة أجهزة",
+        "listOfDevices": " قائمة الأجهزة لf",
         "deviceType": "نوع الجهاز",
         "deviceSubType": "نوع الجهاز الفرعي",
         "make": "يصنع",

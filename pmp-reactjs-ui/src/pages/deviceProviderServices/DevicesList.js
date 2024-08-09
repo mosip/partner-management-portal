@@ -35,6 +35,7 @@ function DevicesList() {
 
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
+    const [deviceData, setDeviceData] = useState(null);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
 
@@ -55,6 +56,7 @@ function DevicesList() {
                 setDataLoaded(false);
 
                 const sbiData = localStorage.getItem('selectedSbiData');
+                setDeviceData(JSON.parse(sbiData));
                 if (!sbiData) {
                     moveToSbisList(navigate);
                 }
@@ -106,8 +108,8 @@ function DevicesList() {
         setErrorMsg("");
     };
 
-    const addDevice = () => {
-        console.log('addDevice');
+    const addDevices = () => {
+        navigate('/partnermanagement/deviceProviderServices/addDevices')
     }
 
     //This part is related to Filter
@@ -171,11 +173,10 @@ function DevicesList() {
                         <div className="flex justify-between mb-5">
                             <Title title='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
                             {devicesList.length > 0 ?
-                                <button onClick={() => addDevice()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                    {t('devicesList.addDevice')}
+                                <button onClick={() => addDevices()} type="button" className={`h-10 text-sm font-semibold px-7 ${deviceData.status === 'approved' ? 'text-white bg-tory-blue' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'} rounded-md`}>
+                                    {t('devicesList.addDevices')}
                                 </button>
-                                : null
-                            }
+                                : null}
                         </div>
 
                         {devicesList.length === 0
@@ -200,9 +201,9 @@ function DevicesList() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
-                                        <button onClick={() => addDevice()} type="button"
-                                            className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                            {t('devicesList.addDevice')}
+                                        <button onClick={() => addDevices()} type="button"
+                                            className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 ${deviceData.status === 'approved' ? 'text-white bg-tory-blue' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>
+                                            {t('devicesList.addDevices')}
                                         </button>
                                     </div>
                                 </div>
@@ -210,7 +211,7 @@ function DevicesList() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='devicesList.listOfDevices' dataList={filteredDevicesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons sbiVersion={deviceData.sbiVersion} listTitle='devicesList.listOfDevices' dataList={filteredDevicesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <DevicesListFilter
@@ -218,6 +219,7 @@ function DevicesList() {
                                             onFilterChange={onFilterChange}>
                                         </DevicesListFilter>
                                     }
+                                    
                                     <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
                                             <thead>

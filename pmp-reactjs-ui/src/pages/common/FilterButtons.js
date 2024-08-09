@@ -1,15 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
+import { useState } from 'react';
 
-function FilterButtons({ listTitle, dataList, filter, onResetFilter, setFilter}) {
+function FilterButtons({ listTitle, dataList, filter, onResetFilter, setFilter, sbiVersion}) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    
     return (
         <div className="flex w-full p-2">
             <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base" >
-            {t(listTitle) + ' (' + dataList.length + ")"}
+            {t(listTitle) + sbiVersion + ' '  + ' (' + dataList.length + ")"}
             </div>
             <div className="w-full flex justify-end relative items-center">
             {filter && <p onClick={onResetFilter} type="button" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,onResetFilter)}

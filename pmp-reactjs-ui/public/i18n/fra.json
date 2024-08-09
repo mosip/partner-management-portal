@@ -130,6 +130,7 @@
     "statusCodes": {
         "approved": "Approuvée",
         "inProgress": "En attente d'approbation",
+        "pendingForApproval": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
         "activated": "Actif"
@@ -372,8 +373,8 @@
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
     "devicesList": {
-        "addDevice": "Ajouter un périphérique",
-        "listOfDevices": "Liste des appareils",
+        "addDevices": "Ajouter des appareils",
+        "listOfDevices": "Liste des appareils pour ",
         "deviceType": "Type d'appareil",
         "deviceSubType": "Sous-type d'appareil",
         "make": "Faire",
