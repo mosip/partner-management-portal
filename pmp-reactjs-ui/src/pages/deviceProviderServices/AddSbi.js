@@ -275,7 +275,6 @@ function AddSbi() {
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={onHandleChangeCreateDate}
                                                 selectedDateStr={createdDate}
-                                                styles={`absolute rounded-lg bg-white shadow-lg w-auto h-auto`}
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -284,7 +283,6 @@ function AddSbi() {
                                                 onChange={onHandleChangeExpiryDate}
                                                 selectedDateStr={expiryDate}
                                                 addInfoIcon
-                                                styles={`absolute rounded-lg bg-white shadow-lg w-auto h-auto`}
                                             />
                                         </div>
                                     </div>
