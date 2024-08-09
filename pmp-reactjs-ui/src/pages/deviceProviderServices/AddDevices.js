@@ -90,15 +90,15 @@ function AddDevices() {
 
     const createDeviceSubTypeDropdownData = async (index, type) => {
         let request = createRequest({
-            filters : [
-            {
-                columnName : "deviceType",
-                type : "unique",
-                text : type
-            }
+            filters: [
+                {
+                    columnName: "deviceType",
+                    type: "unique",
+                    text: type
+                }
             ],
-            optionalFilters : [],
-            purpose : "REGISTRATION"
+            optionalFilters: [],
+            purpose: "REGISTRATION"
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceSubType/filtervalues`, process.env.NODE_ENV), request);
@@ -134,10 +134,11 @@ function AddDevices() {
     };
 
     const submitForm = async (index, entry) => {
+        setDataLoaded(false);
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
-        let request = createRequest({
+        const request = createRequest({
             id: null,
             deviceProviderId: getUserProfile().userName,
             deviceTypeCode: entry.deviceType,
@@ -147,25 +148,59 @@ function AddDevices() {
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    const newEntries = [...deviceEntries];
-                    newEntries[index].isSubmitted = true;
-                    setDeviceEntries(newEntries);
-                    setSuccessMsg(t('addDevices.successMsg'));
-                    updateButtonStates();
-                } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                }
+    
+            if (response?.data?.response?.id) {
+                addInactiveDeviceMappingToSbi(response.data.response.id, index);
             } else {
-                setErrorMsg(t('addDevices.errorInDeviceSubType'));
+                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            setErrorMsg(err);
-            console.log("Error fetching data: ", err);
+            setErrorMsg(t('addDevices.errorInAddingDevice'));
+            console.error("Error fetching data: ", err);
         }
+        setDataLoaded(true);
     };
+    
+    const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
+        setDataLoaded(false);
+        try {
+            const sbiData = localStorage.getItem('selectedSbiData');
+    
+            if (!sbiData) {
+                setErrorMsg(t('devicesList.errorInAddingDevice'));
+                return;
+            }
+    
+            const selectedSbi = JSON.parse(sbiData);
+            const { sbiId, partnerId } = selectedSbi;
+    
+            const request = createRequest({
+                deviceDetailId: deviceDetailId,
+                sbiId: sbiId,
+                partnerId: partnerId
+            }, "mosip.pms.multi.partner.service.post");
+    
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/addInactiveDeviceMappingToSbi`, process.env.NODE_ENV), request, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (response?.data?.response) {
+                const newEntries = [...deviceEntries];
+                newEntries[index].isSubmitted = true;
+                setDeviceEntries(newEntries);
+                setSuccessMsg(t('addDevices.successMsg'));
+                updateButtonStates();
+            } else {
+                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+            }
+        } catch (err) {
+            setErrorMsg(t('devicesList.errorInAddingDevice'));
+            console.error('Error fetching data:', err);
+        }
+        setDataLoaded(true);
+    };    
 
     const deleteEntry = (index) => {
         setErrorCode("");

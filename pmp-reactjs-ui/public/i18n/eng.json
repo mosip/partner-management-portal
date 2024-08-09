@@ -402,7 +402,8 @@
         "backToSBIList": "Back to SBI List",
         "successMsg": "Device has been successfully submitted and is pending with admin for approval.",
         "errorInDeviceSubType": "While fetching device sub types, we have encountered with an error.",
-        "errorInDeviceType": "While fetching device types, we have encountered with an error."
+        "errorInDeviceType": "While fetching device types, we have encountered with an error.",
+        "errorInAddingDevice": "While adding device, we have encountered with an error."
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",

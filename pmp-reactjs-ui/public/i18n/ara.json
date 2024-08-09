@@ -407,7 +407,8 @@
         "backToSBIList": "العودة إلى قائمة SBI",
         "successMsg": "تم إرسال الجهاز بنجاح وهو معلق لدى المشرف للموافقة.",
         "errorInDeviceSubType": "أثناء جلب أنواع فرعية للجهاز، واجهنا خطأً.",
-        "errorInDeviceType": "أثناء جلب أنواع الأجهزة، واجهنا خطأً."
+        "errorInDeviceType": "أثناء جلب أنواع الأجهزة، واجهنا خطأً.",
+        "errorInAddingDevice": "أثناء إضافة الجهاز، واجهنا خطأ."
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",
