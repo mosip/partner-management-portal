@@ -152,13 +152,13 @@ function AddDevices() {
             if (response?.data?.response?.id) {
                 addInactiveDeviceMappingToSbi(response.data.response.id, index);
             } else {
-                handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
             }
         } catch (err) {
             setErrorMsg(t('addDevices.errorInAddingDevice'));
             console.error("Error fetching data: ", err);
         }
-        setDataLoaded(false);
+        setDataLoaded(true);
     };
     
     const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
@@ -193,7 +193,7 @@ function AddDevices() {
                 setSuccessMsg(t('addDevices.successMsg'));
                 updateButtonStates();
             } else {
-                handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
             }
         } catch (err) {
             setErrorMsg(t('devicesList.errorInAddingDevice'));
