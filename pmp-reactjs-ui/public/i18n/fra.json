@@ -407,7 +407,8 @@
         "backToSBIList": "Retour à la liste des SBI",
         "successMsg": "L'appareil a été soumis avec succès et est en attente de administrateur pour approbation.",
         "errorInDeviceSubType": "Lors de la récupération des sous-types d'appareils, nous avons rencontré une erreur.",
-        "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur."
+        "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur.",
+        "errorInAddingDevice": "Lors de l'ajout d'un appareil, nous avons rencontré une erreur."
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",

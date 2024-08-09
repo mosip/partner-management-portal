@@ -67,6 +67,7 @@ function SbiList() {
 
     const addDevices = (sbi) => {
         if (sbi.status !== "deactivated") {
+            localStorage.setItem('selectedSbiData', JSON.stringify(sbi));
             navigate('/partnermanagement/deviceProviderServices/addDevices');
         }
     };
