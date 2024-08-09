@@ -53,12 +53,12 @@ function DevicesList() {
 
     useEffect(() => {
         const selectedSbi = localStorage.getItem('selectedSbiData');
+        if (!selectedSbi) {
+            moveToSbisList(navigate);
+        }
         let sbiData = JSON.parse(selectedSbi);
         setSelectedSbidata(sbiData);
         console.log(sbiData)
-        if (!sbiData) {
-            moveToSbisList(navigate);
-        }
         if(sbiData.status !== "approved" || sbiData.expired){
             setValidSbiStatus(false);
         }
@@ -136,12 +136,12 @@ function DevicesList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "crDtimes");
         toggleSortAscOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "crDtimes");
         toggleSortDescOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
