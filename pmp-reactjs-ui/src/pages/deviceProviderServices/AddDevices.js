@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { HttpService } from '../../services/HttpService.js';
 import Title from '../common/Title.js';
@@ -9,6 +9,8 @@ import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import SuccessMessage from "../common/SuccessMessage";
 import DropdownComponent from '../common/fields/DropdownComponent.js';
+import WarningPopup from './WarningPopup.js';
+import BlockerPrompt from "../common/BlockerPrompt";
 
 function AddDevices() {
     const navigate = useNavigate();
@@ -21,6 +23,54 @@ function AddDevices() {
     const [deviceEntries, setDeviceEntries] = useState([]);
     const [addDeviceEnabled, setAddDeviceEnabled] = useState(false);
     const [backToSBIListEnabled, setBackToSBIListEnabled] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    let isCancelledClicked = false;
+
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked || isCancelledClicked) {
+                setIsSubmitClicked(false);
+                isCancelledClicked = false;
+                return false;
+            }
+            const checkValuesAreEntered = deviceEntries.some(entry => (
+                (entry.deviceType !== "" ||
+                entry.deviceSubType !== "" ||
+                entry.make !== "" ||
+                entry.model !== "") && !entry.isSubmitted
+            ));
+            return (
+                checkValuesAreEntered &&
+                currentLocation.pathname !== nextLocation.pathname
+            );
+        }
+    );
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () => {
+            const checkValuesAreEntered = deviceEntries.some(entry => (
+                entry.deviceType !== "" ||
+                entry.deviceSubType !== "" ||
+                entry.make !== "" ||
+                entry.model !== ""
+            ));
+            return checkValuesAreEntered;
+        };
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [deviceEntries, isSubmitClicked]);
 
     useEffect(() => {
         async function initialize() {
@@ -134,6 +184,7 @@ function AddDevices() {
     };
 
     const submitForm = async (index, entry) => {
+        setIsSubmitClicked(true);
         setDataLoaded(false);
         setErrorCode("");
         setErrorMsg("");
@@ -159,6 +210,7 @@ function AddDevices() {
             console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);
+        setIsSubmitClicked(false);
     };
     
     const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
@@ -218,9 +270,15 @@ function AddDevices() {
 
     const addDeviceEntry = async () => {
         setSuccessMsg("");
-        const newEntry = await createEmptyDeviceEntry();
-        setDeviceEntries([...deviceEntries, newEntry]);
-        setAddDeviceEnabled(false);
+        const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
+        if (deviceEntries.length === 25 && allSubmitted) {
+            setShowPopup(true);
+        } else {
+            const newEntry = await createEmptyDeviceEntry();
+            setDeviceEntries([...deviceEntries, newEntry]);
+            setAddDeviceEnabled(false);
+        }
+        
     };
 
     const cancelErrorMsg = () => {
@@ -358,10 +416,14 @@ function AddDevices() {
                                     {t('addDevices.backToSBIList')}
                                 </button>
                             )}
+                            {showPopup && (
+                                <WarningPopup closePopUp={() => setShowPopup(false)}></WarningPopup>
+                            )}
                         </div>
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div>
     )
 }
