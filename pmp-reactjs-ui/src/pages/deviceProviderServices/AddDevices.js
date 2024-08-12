@@ -34,14 +34,14 @@ function AddDevices() {
                 isCancelledClicked = false;
                 return false;
             }
-            const isValuesEntered = deviceEntries.some(entry => (
+            const checkValuesAreEntered = deviceEntries.some(entry => (
                 (entry.deviceType !== "" ||
                 entry.deviceSubType !== "" ||
                 entry.make !== "" ||
                 entry.model !== "") && !entry.isSubmitted
             ));
             return (
-                isValuesEntered &&
+                checkValuesAreEntered &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
@@ -49,13 +49,13 @@ function AddDevices() {
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
-            const isValuesEntered = deviceEntries.some(entry => (
+            const checkValuesAreEntered = deviceEntries.some(entry => (
                 entry.deviceType !== "" ||
                 entry.deviceSubType !== "" ||
                 entry.make !== "" ||
                 entry.model !== ""
             ));
-            return isValuesEntered;
+            return checkValuesAreEntered;
         };
 
         const handleBeforeUnload = (event) => {
