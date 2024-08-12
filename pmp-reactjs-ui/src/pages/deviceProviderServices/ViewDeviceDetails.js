@@ -38,7 +38,7 @@ function ViewDeviceDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll font-inter`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll font-inter`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='deviceProviderServices.listOfSbisAndDevices' subTitle2='viewDeviceDetails.sbiVersionGoesHere1' backLink='/partnermanagement/deviceProviderServices/devicesList' backLink2='' styleSet={styleForTitle}></Title>
                 </div>
@@ -88,7 +88,7 @@ function ViewDeviceDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("addDevices.make")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {deviceDetails.make}
                                 </p>
                             </div>
@@ -96,7 +96,7 @@ function ViewDeviceDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("addDevices.model")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {deviceDetails.model}
                                 </p>
                             </div>
@@ -104,7 +104,7 @@ function ViewDeviceDetails() {
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("devicesList.createdDate")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-sm">
                                     {deviceDetails.crDtimes}
                                 </p>
                             </div>

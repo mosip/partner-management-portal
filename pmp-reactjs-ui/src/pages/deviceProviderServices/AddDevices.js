@@ -216,15 +216,15 @@ function AddDevices() {
     const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
         setDataLoaded(false);
         try {
-            const sbiData = localStorage.getItem('selectedSbiData');
+            const selectedSbi = localStorage.getItem('selectedSbiData');
     
-            if (!sbiData) {
+            if (!selectedSbi) {
                 setErrorMsg(t('devicesList.errorInAddingDevice'));
                 return;
             }
     
-            const selectedSbi = JSON.parse(sbiData);
-            const { sbiId, partnerId } = selectedSbi;
+            const sbiData = JSON.parse(selectedSbi);
+            const { sbiId, partnerId } = sbiData;
     
             const request = createRequest({
                 deviceDetailId: deviceDetailId,

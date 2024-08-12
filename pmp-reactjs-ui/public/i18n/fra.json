@@ -336,7 +336,8 @@
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
-        "addSbiDevices": "Ajouter SBI - Appareil"
+        "addSbiDevices": "Ajouter SBI - Appareil",
+        "listOfDevices": "Liste des appareils pour"
     },
     "addSbis": {
         "addSbi": "Ajouter un SBI",
@@ -372,7 +373,7 @@
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
     },
     "devicesList": {
-        "addDevice": "Ajouter un périphérique",
+        "addDevices": "Ajouter des périphériques",
         "listOfDevices": "Liste des appareils",
         "deviceType": "Type d'appareil",
         "deviceSubType": "Sous-type d'appareil",
