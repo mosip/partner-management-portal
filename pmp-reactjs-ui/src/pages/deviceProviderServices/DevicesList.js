@@ -55,7 +55,7 @@ function DevicesList() {
         const selectedSbi = localStorage.getItem('selectedSbiData');
         if (!selectedSbi) {
             moveToSbisList(navigate);
-            setErrorMsg(t('devicesList.errorInViewDevices'))
+            return;
         }
         let sbiData = JSON.parse(selectedSbi);
         setSelectedSbidata(sbiData);
