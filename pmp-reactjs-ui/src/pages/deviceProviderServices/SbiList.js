@@ -182,14 +182,14 @@ function SbiList() {
                                                             </div>
                                                             <div className='flex'>
                                                                 <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
-                                                                    <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>
+                                                                    <button onClick={() => devicesList(sbi)} disabled={(sbi.status === 'deactivated' || sbi.expired)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>
                                                                         {sbi.countOfApprovedDevices} {t('sbiList.devices')}
-                                                                    </span> {t('sbiList.approved')} <span className='mx-1'>{'|'}</span>
+                                                                    </button> {t('sbiList.approved')} <span className='mx-1'>{'|'}</span>
                                                                 </p>
                                                                 <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
-                                                                    <span onClick={() => devicesList(sbi)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04] cursor-pointer'} `}>
+                                                                    <button onClick={() => devicesList(sbi)} disabled={(sbi.status === 'deactivated' || sbi.expired)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04] cursor-pointer'} `}>
                                                                         {sbi.countOfPendingDevices} {t('sbiList.devices')}
-                                                                    </span> {t('sbiList.pendingForApprovalContx')}
+                                                                    </button> {t('sbiList.pendingForApprovalContx')}
                                                                 </p>
                                                             </div>
                                                         </div>
