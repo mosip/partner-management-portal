@@ -126,6 +126,8 @@ function SbiList() {
         }
         else if (sbi.expired) {
             return 'bg-[#fef1f1]';
+        } else {
+            return 'bg-[#FCFCFC]';
         }
     }
 
