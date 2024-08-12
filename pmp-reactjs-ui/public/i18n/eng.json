@@ -338,16 +338,16 @@
     },
     "addSbis": {
         "addSbi": "Add SBI",
-        "guidence": "On clicking “Save & Add Device” button after filling the details, the SBI request will be sent to admin for approval. Meanwhile, you can add the devices under the newly created SBI.",
-        "partnerIdTooltip": "Select partner ID Dropdown should only display the list of partner IDs of DEVICE PROVIDERS whose partner certificate is successfully uploaded.",
+        "guidence": "After the below details are successfully submitted, the SBI request will be sent to admin for approval.",
+        "partnerIdTooltip": "Only those partner IDs of Device Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "sbiVersion": "SBI Version",
-        "enterVersionOfSoftware": "Enter version of software",
+        "enterVersionOfSoftware": "Enter version of SBI",
         "binaryHash": "Binary Hash",
-        "enterBinaryHash": "Enter Binary Hash",
+        "enterBinaryHash": "Enter binary hash of SBI",
         "sbiCreatedDate": "SBI Created Date",
         "selectDate": "Select Date",
         "sbiExpiryDate": "SBI Expiry Date",
-        "addSbiInfoKey":"Expiry date should be atleast one year greater to the created date.",
+        "addSbiInfoKey":"SBI Expiry date should be atleast one year greater than the SBI created date",
         "errorInAddingSbi": "While adding SBI, we have encountered with an error."
     },
     "sbiList": {
@@ -403,7 +403,8 @@
         "successMsg": "Device has been successfully submitted and is pending with admin for approval.",
         "errorInDeviceSubType": "While fetching device sub types, we have encountered with an error.",
         "errorInDeviceType": "While fetching device types, we have encountered with an error.",
-        "errorInAddingDevice": "While adding device, we have encountered with an error."
+        "errorInAddingDevice": "While adding device, we have encountered with an error.",
+        "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page"
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",
@@ -506,10 +507,10 @@
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
         "PMS_PRT_110": "Entered API Key name already exists. Provide a unique API Key name and submit.",
         "PMS_AUT_002": "Device provider id not found from the partners list",
-        "PMS_AUT_003": "Device Details already exists",
+        "PMS_AUT_003": "Device Details already exists for the same make and/or model",
         "PMS_AUT_004": "Duplicate request received",
         "PMS_AUT_005": "Device detail for id %s does not exist",
-        "PMS_AUT_512": "SBI details exists for given version. Can't add the records with the same version.",
+        "PMS_AUT_512": "SBI details exists for given SBI Version. Multiple SBI with same SBI Version cannot be added.",
         "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate;",
         "PMP_AUT_030": "ftp provider not exists.",
         "PMP_AUT_031": "ftp chip id not exists.",
