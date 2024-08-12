@@ -14,6 +14,7 @@ import rectangleGrid from '../../svg/rectangle_grid.svg';
 import upArrow from '../../svg/up_arrow.svg';
 import verifiedIcon from '../../svg/verified_icon.svg';
 import expiredIcon from '../../svg/expiry_icon.svg';
+import deactivatedIcon from '../../svg/deactivated_shield_icon.svg';
 
 function SbiList() {
     const { t } = useTranslation();
@@ -36,6 +37,7 @@ function SbiList() {
     };
 
     useEffect(() => {
+        localStorage.removeItem('selectedSbiData');
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
@@ -66,15 +68,34 @@ function SbiList() {
     };
 
     const addDevices = (sbi) => {
-        if (sbi.status !== "deactivated") {
-            localStorage.setItem('selectedSbiData', JSON.stringify(sbi));
-            navigate('/partnermanagement/deviceProviderServices/addDevices');
-        }
+        const sbiData = {
+            sbiId: sbi.sbiId,
+            sbiVersion: sbi.sbiVersion,
+            canAddDevices: canAddDevices(sbi),
+            partnerId: sbi.partnerId
+        };
+    
+        localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
+        navigate('/partnermanagement/deviceProviderServices/addDevices');
     };
-
+    
     const devicesList = (sbi) => {
-        localStorage.setItem('selectedSbiData', JSON.stringify(sbi));
+        const sbiData = {
+            sbiId: sbi.sbiId,
+            sbiVersion: sbi.sbiVersion,
+            canAddDevices: canAddDevices(sbi),
+            partnerId: sbi.partnerId
+        };
+    
+        localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
         navigate('/partnermanagement/deviceProviderServices/devicesList');
+    }
+
+    const canAddDevices = (sbi) => {
+        if (sbi.status !== "approved" || sbi.expired) {
+            return false;
+        }
+        return true;
     };
 
     const onClickAction = (sbi, index) => {
@@ -85,6 +106,27 @@ function SbiList() {
 
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
+    }
+
+    const getIcon = (sbi) => {
+        if (sbi.status === "deactivated") {
+            return deactivatedIcon;
+        }
+        else if (sbi.expired) {
+            return expiredIcon;
+        }
+        else  {
+            return verifiedIcon;
+        }
+    }
+
+    const getbgOfStatus = (sbi) => {
+        if (sbi.status === "deactivated") {
+            return 'bg-[#EAECF0] border rounded-lg';
+        }
+        else if (sbi.expired) {
+            return 'bg-[#fef1f1]';
+        }
     }
 
     return (
@@ -125,19 +167,15 @@ function SbiList() {
                             </div> :
                             sbiList.map((sbi, index) => {
                                 return (
-                                    <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll">
-                                        <div className={`p-4 ${(sbi.status === 'rejected' || sbi.expired) && 'bg-[#fef1f1]'}`}>
+                                    <div key={index} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll`}>
+                                        <div className={`p-4 ${getbgOfStatus(sbi)}`}>
                                             <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
-                                                    {sbi.status !== 'rejected' ? (
-                                                        <img src={sbi.expired ? expiredIcon : verifiedIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
-                                                    )
-                                                        : <img src={expiredIcon} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
-                                                    }
+                                                    <img src={getIcon(sbi)} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
                                                     <div className="flex flex-col">
                                                         <p className={`text-base font-bold ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
                                                         <div className="flex flex-row items-center gap-1">
-                                                            <div className={`${bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
+                                                            <div className={`${(sbi.status === 'deactivated' || sbi.expired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
                                                             <div className='flex'>
@@ -175,30 +213,30 @@ function SbiList() {
                                         {open === index && (
                                             <div>
                                                 <hr className="border bg-medium-gray" />
-                                                <div className="p-4">
+                                                <div className="p-4 bg-[#FCFCFC]">
                                                     <div className="flex flex-col">
                                                         <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:pt-2">
                                                             <div className="flex flex-col w-1/3 max-[530px]:w-full">
-                                                                <p className="text-md text-suva-gray">{t('sbiList.partnerId')}</p>
-                                                                <p className="font-normal text-lg text-vulcan">{sbi.partnerId}</p>
+                                                                <p className="text-xs text-suva-gray">{t('sbiList.partnerId')}</p>
+                                                                <p className="font-normal text-sm text-vulcan">{sbi.partnerId}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-md text-suva-gray">{t('sbiList.partnerType')}</p>
-                                                                <p className="font-normal text-lg text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
+                                                                <p className="text-xs text-suva-gray">{t('sbiList.partnerType')}</p>
+                                                                <p className="font-normal text-sm text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-md text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="font-normal text-lg text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
+                                                                <p className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
+                                                                <p className="font-normal text-sm text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
                                                             </div>
                                                         </div>
                                                         <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start mt-6">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-md text-suva-gray">{t('sbiList.createdDate')}</p>
-                                                                <p className="font-normal text-lg text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
+                                                                <p className="text-xs text-suva-gray">{t('sbiList.createdDate')}</p>
+                                                                <p className="font-normal text-sm text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-md text-suva-gray">{t('sbiList.expiryDate')}</p>
-                                                                <p className="font-normal text-lg text-vulcan">{sbi.sbiSoftwareExpiryDtimes}</p>
+                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.expired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
+                                                                <p className={`text-sm ${(sbi.status !== "deactivated" && sbi.expired) ? 'text-red-700 font-bold' : 'text-vulcan'} `}>{sbi.sbiSoftwareExpiryDtimes}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>
