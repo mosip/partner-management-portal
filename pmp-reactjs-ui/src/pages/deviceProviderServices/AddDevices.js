@@ -21,6 +21,7 @@ function AddDevices() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [deviceEntries, setDeviceEntries] = useState([]);
+    const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [addDeviceEnabled, setAddDeviceEnabled] = useState(false);
     const [backToSBIListEnabled, setBackToSBIListEnabled] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -74,7 +75,9 @@ function AddDevices() {
 
     useEffect(() => {
         async function initialize() {
-            const initialEntry = await createEmptyDeviceEntry();
+            const deviceTypeData = await fetchDeviceTypeDropdownData();
+            setDeviceTypeDropdownData(deviceTypeData);
+            const initialEntry = await createEmptyDeviceEntry(deviceTypeData);
             setDeviceEntries([initialEntry]);
             setDataLoaded(true);
         }
@@ -114,32 +117,9 @@ function AddDevices() {
             return [];
         }
     }
-    
-    async function createEmptyDeviceEntry() {
-        const resData = await fetchDeviceTypeDropdownData();
-        return {
-            deviceType: "",
-            deviceSubType: "",
-            make: "",
-            model: "",
-            deviceTypeDropdownData: createDropdownData('fieldCode', '', false, resData, t),
-            deviceSubTypeDropdownData: [],
-            isSubmitted: false,
-        };
-    }
 
-    const handleInputChange = (index, field, value) => {
-        const newEntries = [...deviceEntries];
-        newEntries[index][field] = value;
-        if (field === 'deviceType') {
-            createDeviceSubTypeDropdownData(index, value);
-        }
-        setDeviceEntries(newEntries);
-        updateButtonStates();
-    };
-
-    const createDeviceSubTypeDropdownData = async (index, type) => {
-        let request = createRequest({
+    async function fetchDeviceSubTypeDropdownData(type) {
+        const request = createRequest({
             filters: [
                 {
                     columnName: "deviceType",
@@ -155,20 +135,43 @@ function AddDevices() {
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
-                    const resData = responseData.response.filters;
-                    const newEntries = [...deviceEntries];
-                    newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, resData, t);
-                    setDeviceEntries(newEntries);
+                    return responseData.response.filters;
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    return [];
                 }
             } else {
                 setErrorMsg(t('addDevices.errorInDeviceSubType'));
+                return [];
             }
         } catch (err) {
             setErrorMsg(err);
             console.log("Error fetching data: ", err);
+            return [];
         }
+    }
+    
+    async function createEmptyDeviceEntry(deviceTypeData) {
+        return {
+            deviceType: "",
+            deviceSubType: "",
+            make: "",
+            model: "",
+            deviceTypeDropdownData: createDropdownData('fieldCode', '', false, deviceTypeData, t),
+            deviceSubTypeDropdownData: [],
+            isSubmitted: false,
+        };
+    }
+
+    const handleInputChange = async (index, field, value) => {
+        const newEntries = [...deviceEntries];
+        newEntries[index][field] = value;
+        if (field === 'deviceType') {
+            const subtypeData = await fetchDeviceSubTypeDropdownData(value);
+            newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
+        }
+        setDeviceEntries(newEntries);
+        updateButtonStates();
     };
 
     const isFormValid = (index) => {
@@ -178,7 +181,7 @@ function AddDevices() {
 
     const clearForm = async (index) => {
         const newEntries = [...deviceEntries];
-        newEntries[index] = await createEmptyDeviceEntry();
+        newEntries[index] = await createEmptyDeviceEntry(deviceTypeDropdownData);
         setDeviceEntries(newEntries);
         updateButtonStates();
     };
@@ -274,11 +277,11 @@ function AddDevices() {
         if (deviceEntries.length === 25 && allSubmitted) {
             setShowPopup(true);
         } else {
-            const newEntry = await createEmptyDeviceEntry();
+            const newEntry = await createEmptyDeviceEntry(deviceTypeDropdownData);
             setDeviceEntries([...deviceEntries, newEntry]);
             setAddDeviceEnabled(false);
         }
-        
+
     };
 
     const cancelErrorMsg = () => {
@@ -298,8 +301,9 @@ function AddDevices() {
     };
 
     const styles = {
+        outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-11 !rounded-md !text-base !text-start",
+        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     };
 
@@ -342,8 +346,8 @@ function AddDevices() {
                                         <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     )}
                                     <form>
-                                        <div className="flex justify-start max-[850px]:flex-wrap p-2">
-                                            <div className="flex-col w-[25%] max-[850px]:w-[50%] max-[585px]:w-full">
+                                        <div className="flex justify-between max-[850px]:flex-wrap pl-5 pr-2 py-2">
+                                            <div className="flex-col w-[23%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='deviceType'
                                                     dropdownDataList={entry.deviceTypeDropdownData}
@@ -356,7 +360,7 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex-col w-[25%] max-[850px]:w-[50%] max-[585px]:w-full">
+                                            <div className="flex-col w-[23%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='deviceSubType'
                                                     dropdownDataList={entry.deviceSubTypeDropdownData}
@@ -369,16 +373,16 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex flex-col w-[24%] max-[850px]:w-[47%] max-[714px]:w-[46%] max-[585px]:w-[98%] ml-4 mb-2">
+                                            <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
-                                                    className={`h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
+                                                    className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
                                             </div>
-                                            <div className="flex flex-col w-[24%] max-[850px]:w-[47%] max-[714px]:w-[46%] max-[585px]:w-[98%] ml-4 mb-2">
+                                            <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
-                                                    className={`h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
+                                                    className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} />
                                             </div>
                                         </div>
