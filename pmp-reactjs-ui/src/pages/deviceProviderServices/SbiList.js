@@ -68,18 +68,17 @@ function SbiList() {
     };
 
     const addDevices = (sbi) => {
-        const sbiData = {
-            sbiId: sbi.sbiId,
-            sbiVersion: sbi.sbiVersion,
-            canAddDevices: canAddDevices(sbi),
-            partnerId: sbi.partnerId
-        };
-    
-        localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
+        console.log(sbi)
+        setSelectedSbiData(sbi);
         navigate('/partnermanagement/deviceProviderServices/addDevices');
     };
     
     const devicesList = (sbi) => {
+        setSelectedSbiData(sbi);
+        navigate('/partnermanagement/deviceProviderServices/devicesList');
+    }
+
+    const setSelectedSbiData = (sbi) => {
         const sbiData = {
             sbiId: sbi.sbiId,
             sbiVersion: sbi.sbiVersion,
@@ -88,8 +87,7 @@ function SbiList() {
         };
     
         localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
-        navigate('/partnermanagement/deviceProviderServices/devicesList');
-    }
+    };
 
     const canAddDevices = (sbi) => {
         if (sbi.status !== "approved" || sbi.expired) {
@@ -197,7 +195,7 @@ function SbiList() {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-row justify-between items-center relative space-x-3">
-                                                    <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
+                                                    <button disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                     {sbi.status !== "deactivated" && (
                                                         <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>

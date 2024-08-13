@@ -389,7 +389,8 @@
         "selectDeviceSubType": "Sélectionnez le sous-type de périphérique",
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
-        "selectStatus": "Sélectionnez le statut"
+        "selectStatus": "Sélectionnez le statut",
+        "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer."
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
@@ -410,7 +411,8 @@
         "errorInDeviceSubType": "Lors de la récupération des sous-types d'appareils, nous avons rencontré une erreur.",
         "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur.",
         "errorInAddingDevice": "Lors de l'ajout d'un appareil, nous avons rencontré une erreur.",
-        "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils."
+        "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils.",
+        "inActiveDeviceMappingToSbiError": "Nous avons rencontré une erreur, veuillez contacter votre administrateur."
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
