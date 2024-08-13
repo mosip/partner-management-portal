@@ -263,11 +263,13 @@ function AddDevices() {
         const newEntries = deviceEntries.filter((_, i) => i !== index);
         setDeviceEntries(newEntries);
         updateButtonStates();
+        setAddDeviceEnabled(true);
     };
 
     const updateButtonStates = () => {
         const anySubmitted = deviceEntries.some(entry => entry.isSubmitted);
-        setAddDeviceEnabled(anySubmitted);
+        const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
+        setAddDeviceEnabled(allSubmitted);
         setBackToSBIListEnabled(anySubmitted);
     };
 
