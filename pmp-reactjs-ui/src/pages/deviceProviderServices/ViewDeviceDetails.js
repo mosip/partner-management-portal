@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../utils/AppUtils';
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, moveToSbisList } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
-import adminImage from "../../svg/admin.png";
 import Title from '../common/Title';
 
 function ViewDeviceDetails() {
@@ -11,6 +10,7 @@ function ViewDeviceDetails() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
     const [deviceDetails, setDeviceDetails] = useState([]);
+    const [selectedSbidata, setSelectedSbidata] = useState(true);
 
     const moveToDevicesList = () => {
         navigate('/partnermanagement/deviceProviderServices/devicesList');
@@ -18,6 +18,13 @@ function ViewDeviceDetails() {
 
     useEffect(() => {
         const deviceData = localStorage.getItem('selectedDeviceData');
+        const selectedSbi = localStorage.getItem('selectedSbiData');
+        if (!selectedSbi) {
+            moveToSbisList(navigate);
+            return;
+        }
+        let sbiData = JSON.parse(selectedSbi);
+        setSelectedSbidata(sbiData);
         if (deviceData) {
             try {
                 const selectedDevice = JSON.parse(deviceData);
@@ -40,7 +47,7 @@ function ViewDeviceDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll font-inter`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='deviceProviderServices.listOfSbisAndDevices' subTitle2='viewDeviceDetails.sbiVersionGoesHere1' backLink='/partnermanagement/deviceProviderServices/devicesList' backLink2='' styleSet={styleForTitle}></Title>
+                    <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='deviceProviderServices.listOfSbisAndDevices' subTitle2={selectedSbidata.sbiVersion} backLink='/partnermanagement/deviceProviderServices/devicesList' backLink2='' styleSet={styleForTitle}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
@@ -83,8 +90,8 @@ function ViewDeviceDetails() {
                             </div>
                         </div>
                         <hr className={`h-px w-full bg-gray-200 border-0`} />
-                        <div className={`flex flex-wrap pt-3`}>
-                            <div className={`w-[49%] max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                        <div className={`flex flex-wrap pt-2`}>
+                            <div className={`w-[49%] pt-2 max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("addDevices.make")}
                                 </p>
@@ -92,7 +99,7 @@ function ViewDeviceDetails() {
                                     {deviceDetails.make}
                                 </p>
                             </div>
-                            <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                            <div className={`w-[50%] pt-2 max-[600px]:w-[100%]`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("addDevices.model")}
                                 </p>

@@ -169,24 +169,25 @@ function SbiList() {
                             </div> :
                             sbiList.map((sbi, index) => {
                                 return (
-                                    <div key={index} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center max-[510px]:overflow-x-scroll`}>
+                                    <div key={index} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                                         <div className={`p-4 ${getbgOfStatus(sbi)}`}>
-                                            <div className="flex flex-row max-[670px]:flex-col justify-between items-center max-[670px]:items-start">
+                                            <div className="flex flex-row max-[720px]:flex-col justify-between items-center max-[720px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
                                                     <img src={getIcon(sbi)} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
                                                     <div className="flex flex-col">
-                                                        <p className={`text-base font-bold ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
-                                                        <div className="flex flex-row items-center gap-1">
-                                                            <div className={`${(sbi.status === 'deactivated' || sbi.expired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit max-[900px]:w-min py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
+                                                        <p className={`text-base font-bold pb-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
+                                                        <div className="flex flex-row items-center justify-between">
+                                                            <div className={`${(sbi.status === 'deactivated' || sbi.expired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
-                                                            <div className='flex'>
-                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
+                                                            <div className='flex items-center w-fit px-2 mx-1'>
+                                                                <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <button onClick={() => devicesList(sbi)} disabled={(sbi.status === 'deactivated' || sbi.expired)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue cursor-pointer'} `}>
                                                                         {sbi.countOfApprovedDevices} {t('sbiList.devices')}
-                                                                    </button> {t('sbiList.approved')} <span className='mx-1'>{'|'}</span>
+                                                                    </button> {t('sbiList.approved')}
                                                                 </p>
-                                                                <p className="text-xs font-semibold text-[#505E7C] max-[830px]:w-min max-[670px]:w-fit">
+                                                                <span className='mx-1'>{'|'}</span>
+                                                                <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <button onClick={() => devicesList(sbi)} disabled={(sbi.status === 'deactivated' || sbi.expired)} className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04] cursor-pointer'} `}>
                                                                         {sbi.countOfPendingDevices} {t('sbiList.devices')}
                                                                     </button> {t('sbiList.pendingForApprovalContx')}
@@ -195,20 +196,20 @@ function SbiList() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-row justify-between items-center space-x-6 relative">
-                                                    <div className="flex flex-row justify-between items-center space-x-3">
-                                                        <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
-                                                        <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
+                                                <div className="flex flex-row justify-between items-center relative space-x-3">
+                                                    <button onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
+                                                    <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
+                                                    {sbi.status !== "deactivated" && (
                                                         <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] text-dim-gray cursor-auto' : 'text-tory-blue border-[#1447B2]'} bg-white border font-bold rounded-md text-center`}>...</button>
-                                                        {deactivateBtnId === index && (
-                                                            <div className={`w-[17rem] min-w-fit absolute top-full mt-2 ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
-                                                                <div className="flex items-center justify-between cursor-pointer">
-                                                                    <button className="block px-4 py-2 text-sm font-medium text-crimson-red">{t('sbiList.deactivate')}</button>
-                                                                </div>
+                                                    )}
+                                                    <img src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
+                                                    {deactivateBtnId === index && (
+                                                        <div className={`w-[17rem] min-w-fit absolute top-full mt-2 ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
+                                                            <div className="flex items-center justify-between cursor-pointer">
+                                                                <button className="block px-4 py-2 text-sm font-medium text-crimson-red">{t('sbiList.deactivate')}</button>
                                                             </div>
-                                                        )}
-                                                    </div>
-                                                    <img src={upArrow} alt="" className={`cursor-pointer ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -216,8 +217,8 @@ function SbiList() {
                                             <div>
                                                 <hr className="border bg-medium-gray" />
                                                 <div className="p-4 bg-[#FCFCFC]">
-                                                    <div className="flex flex-col">
-                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:pt-2">
+                                                    <div className="flex flex-col space-y-1">
+                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className="flex flex-col w-1/3 max-[530px]:w-full">
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.partnerId')}</p>
                                                                 <p className="font-normal text-sm text-vulcan">{sbi.partnerId}</p>
@@ -231,7 +232,7 @@ function SbiList() {
                                                                 <p className="font-normal text-sm text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-row justify-between items-center max-[530px]:flex-col max-[530px]:items-start mt-6">
+                                                        <div className="flex flex-row justify-between pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.createdDate')}</p>
                                                                 <p className="font-normal text-sm text-vulcan">{sbi.sbiSoftwareCreatedDtimes}</p>
