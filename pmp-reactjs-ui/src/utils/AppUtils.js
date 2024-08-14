@@ -258,6 +258,15 @@ export const validateName = (value, length, t) => {
     }
 };
 
+export const validateInput = (value, t) => {
+    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&:]*$/;
+    if (!regexPattern.test(value)) {
+        return t('commons.specialCharNotAllowed');
+    } else {
+        return "";
+    }
+};
+
 export const validateUrl = (index, value, length, urlArr, t) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     if (value === "") {

@@ -7,7 +7,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
 import {
     isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest
+    handleServiceErrors, createRequest, validateInput
 } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -32,6 +32,7 @@ function AddSbi() {
     const [expiryDate, setExpiryDate] = useState("");
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [invalidVersion, setInvalidVersion] = useState("");
 
     let isCancelledClicked = false;
 
@@ -100,6 +101,7 @@ function AddSbi() {
     }, []);
 
     const onChangeSbiVersion = (value) => {
+        setInvalidVersion(validateInput(value, t));
         setSbiVersion(value)
     };
 
@@ -194,7 +196,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && binaryHash
+        return partnerId && sbiVersion && binaryHash && !invalidVersion;
     };
 
     const clickOnCancel = () => {
@@ -218,7 +220,7 @@ function AddSbi() {
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
-                            <Title title='addSbis.addSbi' subTitle='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
+                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -255,14 +257,15 @@ function AddSbi() {
                                         </div>
                                         <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')}</label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
+                                                {invalidVersion && <span className="text-sm text-crimson-red font-semibold">{invalidVersion}</span>}
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')}</label>
-                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={36}
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
+                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
                                             </div>
