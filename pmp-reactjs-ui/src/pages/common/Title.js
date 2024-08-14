@@ -23,8 +23,8 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
             <div className="flex-col">
                 <h1 className="font-semibold text-lg text-dark-blue">{t(title)}</h1>
                 {(status && version) && (
-                    <div className="flex -mt-1">
-                        <h1 className="font-semibold text-lg text-dark-blue">{version} | </h1>
+                    <div className="flex mb-2">
+                        <h1 className="font-semibold text-lg text-[#707070]">{version} | </h1>
                         <div className={`${(status === 'deactivated') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1 ml-2"} text-xs font-semibold rounded-md`}>
                             {getStatusCode(status, t)}
                         </div>
