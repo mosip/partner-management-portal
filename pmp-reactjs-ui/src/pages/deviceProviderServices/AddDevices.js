@@ -4,7 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { HttpService } from '../../services/HttpService.js';
 import Title from '../common/Title.js';
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInput } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import SuccessMessage from "../common/SuccessMessage";
@@ -23,9 +23,11 @@ function AddDevices() {
     const [deviceEntries, setDeviceEntries] = useState([]);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [addDeviceEnabled, setAddDeviceEnabled] = useState(false);
-    const [backToSBIListEnabled, setBackToSBIListEnabled] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [previousPath, setPreviousPath] = useState(true);
+    const [invalidMake, setInvalidMake] = useState("");
+    const [invalidModel, setInvalidModel] = useState("");
     let isCancelledClicked = false;
 
     const blocker = useBlocker(
@@ -74,7 +76,18 @@ function AddDevices() {
     }, [deviceEntries, isSubmitClicked]);
 
     useEffect(() => {
+        const pathData = localStorage.getItem('previousPath');
+        if (!pathData) {
+            setErrorMsg(t('devicesList.unexpectedError'));
+            return;
+        }
+        let path = JSON.parse(pathData);
+        setPreviousPath(path);
+    }, []);
+
+    useEffect(() => {
         async function initialize() {
+            setDataLoaded(false);
             const deviceTypeData = await fetchDeviceTypeDropdownData();
             setDeviceTypeDropdownData(deviceTypeData);
             const initialEntry = await createEmptyDeviceEntry(deviceTypeData);
@@ -166,6 +179,12 @@ function AddDevices() {
     const handleInputChange = async (index, field, value) => {
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
+        if (field === 'make') {
+            setInvalidMake(validateInput(value, t));
+        }
+        if (field === 'model') {
+            setInvalidModel(validateInput(value, t));
+        }
         if (field === 'deviceType') {
             const subtypeData = await fetchDeviceSubTypeDropdownData(value);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
@@ -176,7 +195,7 @@ function AddDevices() {
 
     const isFormValid = (index) => {
         const entry = deviceEntries[index];
-        return entry.deviceType && entry.deviceSubType && entry.make && entry.model;
+        return entry.deviceType && entry.deviceSubType && entry.make && entry.model && !invalidMake && !invalidModel;
     };
 
     const clearForm = async (index) => {
@@ -197,8 +216,8 @@ function AddDevices() {
             deviceProviderId: getUserProfile().userName,
             deviceTypeCode: entry.deviceType,
             deviceSubTypeCode: entry.deviceSubType,
-            make: entry.make,
-            model: entry.model
+            make: entry.make.trim(),
+            model: entry.model.trim()
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
@@ -267,10 +286,8 @@ function AddDevices() {
     };
 
     const updateButtonStates = () => {
-        const anySubmitted = deviceEntries.some(entry => entry.isSubmitted);
         const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
         setAddDeviceEnabled(allSubmitted);
-        setBackToSBIListEnabled(anySubmitted);
     };
 
     const addDeviceEntry = async () => {
@@ -332,7 +349,7 @@ function AddDevices() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='addDevices.addDevices' subTitle='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
+                            <Title title='addDevices.addDevices' subTitle={previousPath.name} backLink={previousPath.path} styleSet={styleForTitle}></Title>
                         </div>
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
@@ -380,12 +397,14 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
+                                                {invalidMake && <span className="text-sm text-crimson-red font-semibold">{invalidMake}</span>}
                                             </div>
                                             <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} />
+                                                {invalidModel && <span className="text-sm text-crimson-red font-semibold">{invalidModel}</span>}
                                             </div>
                                         </div>
                                     </form>
@@ -417,11 +436,9 @@ function AddDevices() {
                             <button onClick={addDeviceEntry} disabled={!addDeviceEnabled} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold ${addDeviceEnabled ? 'border-[#1447B2] bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                 {t('addDevices.addDevice')}
                             </button>
-                            {backToSBIListEnabled && (
-                                <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
-                                    {t('addDevices.backToSBIList')}
-                                </button>
-                            )}
+                            <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
+                                {t('addDevices.backToSBIList')}
+                            </button>
                             {showPopup && (
                                 <WarningPopup closePopUp={() => setShowPopup(false)}></WarningPopup>
                             )}

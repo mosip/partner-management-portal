@@ -339,11 +339,12 @@
     },
     "addSbis": {
         "addSbi": "Add SBI",
+        "addSbiDetails": "Add SBI details",
         "guidence": "After the below details are successfully submitted, the SBI request will be sent to admin for approval.",
         "partnerIdTooltip": "Only those partner IDs of Device Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "sbiVersion": "SBI Version",
         "enterVersionOfSoftware": "Enter version of SBI",
-        "binaryHash": "Binary Hash",
+        "binaryHash": "SBI Binary Hash",
         "enterBinaryHash": "Enter binary hash of SBI",
         "sbiCreatedDate": "SBI Created Date",
         "selectDate": "Select Date",
@@ -352,6 +353,7 @@
         "errorInAddingSbi": "While adding SBI, we have encountered with an error."
     },
     "sbiList": {
+        "listOfSbi": "List of SBI",
         "addSbiDevice": "Add SBI-Device",
         "addSbi": "Add SBI",
         "devices": "devices",
@@ -363,7 +365,7 @@
         "partnerType": "Partner Type",
         "createdDate": "SBI Created Date & Time",
         "expiryDate": "SBI Expiry Date & Time",
-        "deactivate": "Deactivate",
+        "deactivate": "Deactivate SBI",
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error.",
         "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired"
@@ -407,7 +409,7 @@
         "errorInDeviceSubType": "While fetching device sub types, we have encountered with an error.",
         "errorInDeviceType": "While fetching device types, we have encountered with an error.",
         "errorInAddingDevice": "While adding device, we have encountered with an error.",
-        "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page",
+        "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.",
         "inActiveDeviceMappingToSbiError": "We have encountered with an error, please contact your administrator."
     },
     "viewDeviceDetails": {

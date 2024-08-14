@@ -341,11 +341,12 @@
     },
     "addSbis": {
         "addSbi": "Ajouter un SBI",
+        "addSbiDetails": "Ajouter les détails SBI",
         "guidence": "Une fois les détails ci-dessous soumis avec succès, la demande SBI sera envoyée à l'administrateur pour approbation.",
         "partnerIdTooltip": "Seuls les identifiants de partenaire du fournisseur d'appareils dont le certificat partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat partenaire",
         "sbiVersion": "Version SBI",
         "enterVersionOfSoftware": "Entrez la version de SBI",
-        "binaryHash": "Hachage binaire",
+        "binaryHash": "Hachage binaire SBI",
         "enterBinaryHash": "Entrez le hachage binaire de SBI",
         "enterVersion": "Entrez la version",
         "sbiCreatedDate": "Date de création du SBI",
@@ -356,6 +357,7 @@
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
     "sbiList": {
+        "listOfSbi": "Liste des SBI",
         "addSbiDevice": "Ajouter un périphérique SBI",
         "addSbi": "Ajouter un SBI",
         "devices": "appareils",
@@ -368,7 +370,7 @@
         "partnerType": "Type de partenaire",
         "createdDate": "Date et heure de création du SBI",
         "expiryDate": "Date et heure d'expiration du SBI",
-        "deactivate": "Désactiver",
+        "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
         "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
