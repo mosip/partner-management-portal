@@ -370,7 +370,8 @@
         "expiryDate": "Date et heure d'expiration du SBI",
         "deactivate": "Désactiver",
         "submittedOn": "Soumis le",
-        "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur."
+        "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
+        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
     },
     "devicesList": {
         "addDevices": "Ajouter des périphériques",

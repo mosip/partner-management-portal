@@ -365,7 +365,8 @@
         "expiryDate": "SBI Expiry Date & Time",
         "deactivate": "Deactivate",
         "submittedOn": "Submitted On",
-        "errorInSbiList": "While fetching SBI Lists, we have encountered with an error."
+        "errorInSbiList": "While fetching SBI Lists, we have encountered with an error.",
+        "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired"
     },
     "devicesList": {
         "addDevices": "Add Devices",
