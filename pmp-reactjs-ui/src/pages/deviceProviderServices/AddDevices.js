@@ -222,7 +222,7 @@ function AddDevices() {
             const selectedSbi = localStorage.getItem('selectedSbiData');
     
             if (!selectedSbi) {
-                setErrorMsg(t('devicesList.errorInAddingDevice'));
+                setErrorMsg(t('addDevices.errorInAddingDevice'));
                 return;
             }
     
@@ -248,10 +248,10 @@ function AddDevices() {
                 setSuccessMsg(t('addDevices.successMsg'));
                 updateButtonStates();
             } else {
-                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+                setErrorMsg(t('addDevices.inActiveDeviceMappingToSbiError'));
             }
         } catch (err) {
-            setErrorMsg(t('devicesList.errorInAddingDevice'));
+            setErrorMsg(t('addDevices.inActiveDeviceMappingToSbiError'));
             console.error('Error fetching data:', err);
         }
         setDataLoaded(true);
