@@ -358,10 +358,15 @@ function AddDevices() {
         }
     }
 
-    const reloadPage = () => {
+    const onClickConfirm = () => {
         setIsConfirmClicked(true);
-        window.location.reload();
     };
+
+    useEffect(() => {
+        if (isConfirmClicked) {
+            window.location.reload();
+        }
+    }, [isConfirmClicked]);
 
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
@@ -509,7 +514,7 @@ function AddDevices() {
                                 </button>
                             }
                             {showPopup && (
-                                <WarningPopup closePopUp={() => setShowPopup(false)} clickOnConfirm={reloadPage}></WarningPopup>
+                                <WarningPopup closePopUp={() => setShowPopup(false)} clickOnConfirm={onClickConfirm}></WarningPopup>
                             )}
                         </div>
                     </div>
