@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
+    handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
     moveToSbisList
 } from '../../utils/AppUtils.js';
@@ -12,7 +12,6 @@ import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
 import rectangleGrid from '../../svg/rectangle_grid.svg';
-import DeactivatePopup from '../common/DeactivatePopup.js';
 import FilterButtons from '../common/FilterButtons.js';
 import SortingIcon from '../common/SortingIcon.js';
 import Pagination from '../common/Pagination.js';
@@ -274,7 +273,7 @@ function DevicesList() {
                                                         <tr>
                                                             {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]  ${header.id === "approvalStatus" && '!w-[10%]'}`}>
+                                                                    <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
                                                                         <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
@@ -307,7 +306,7 @@ function DevicesList() {
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
-                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
+                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-4 text-right" : "right-4 text-left"}`}>
                                                                                         <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             {t('devicesList.view')}
                                                                                         </p>

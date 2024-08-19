@@ -26,8 +26,6 @@ function AddDevices() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [isConfirmClicked, setIsConfirmClicked] = useState(false);
     const [previousPath, setPreviousPath] = useState(true);
-    const [invalidMake, setInvalidMake] = useState("");
-    const [invalidModel, setInvalidModel] = useState("");
     const [selectedSbidata, setSelectedSbidata] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
     let isCancelledClicked = false;
@@ -197,6 +195,8 @@ function AddDevices() {
             successMsg: "",
             errorCode: "",
             errorMsg: "",
+            invalidMake: "",
+            invalidModel: "",
         };
     }
 
@@ -204,10 +204,10 @@ function AddDevices() {
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
         if (field === 'make') {
-            setInvalidMake(validateInput(value, t));
+            newEntries[index].invalidMake = validateInput(value, t);
         }
         if (field === 'model') {
-            setInvalidModel(validateInput(value, t));
+            newEntries[index].invalidModel = validateInput(value, t);
         }
         if (field === 'deviceType') {
             const subtypeData = await fetchDeviceSubTypeDropdownData(value, index);
@@ -219,7 +219,7 @@ function AddDevices() {
 
     const isFormValid = (index) => {
         const entry = deviceEntries[index];
-        return entry.deviceType && entry.deviceSubType && entry.make && entry.model && !invalidMake && !invalidModel;
+        return entry.deviceType && entry.deviceSubType && entry.make && entry.model && !entry.invalidMake && !entry.invalidModel;
     };
 
     const clearForm = async (index) => {
@@ -460,14 +460,14 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
-                                                {invalidMake && <span className="text-sm text-crimson-red font-semibold">{invalidMake}</span>}
+                                                {entry.invalidMake && <span className="text-sm text-crimson-red font-semibold">{entry.invalidMake}</span>}
                                             </div>
                                             <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} />
-                                                {invalidModel && <span className="text-sm text-crimson-red font-semibold">{invalidModel}</span>}
+                                                {entry.invalidModel && <span className="text-sm text-crimson-red font-semibold">{entry.invalidModel}</span>}
                                             </div>
                                         </div>
                                     </form>
