@@ -4,17 +4,13 @@ import { isLangRTL } from "../../utils/AppUtils";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function WarningPopup({ closePopUp }) {
+function WarningPopup({ closePopUp, clickOnConfirm }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const closingPopUp = () => {
         closePopUp()
     };
-
-    const clickOnConfirm = async () => {
-        window.location.reload();
-    }
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';

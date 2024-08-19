@@ -19,15 +19,17 @@ function AddDevices() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [successMsg, setSuccessMsg] = useState("");
     const [deviceEntries, setDeviceEntries] = useState([]);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [addDeviceEnabled, setAddDeviceEnabled] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [isConfirmClicked, setIsConfirmClicked] = useState(false);
     const [previousPath, setPreviousPath] = useState(true);
     const [invalidMake, setInvalidMake] = useState("");
     const [invalidModel, setInvalidModel] = useState("");
+    const [selectedSbidata, setSelectedSbidata] = useState(true);
+    const [unexpectedError, setUnexpectedError] = useState(false);
     let isCancelledClicked = false;
 
     const blocker = useBlocker(
@@ -62,7 +64,7 @@ function AddDevices() {
         };
 
         const handleBeforeUnload = (event) => {
-            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+            if (shouldWarnBeforeUnload() && !isConfirmClicked) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -73,14 +75,23 @@ function AddDevices() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [deviceEntries, isSubmitClicked]);
+    }, [deviceEntries, isConfirmClicked]);
 
     useEffect(() => {
+        const selectedSbi = localStorage.getItem('selectedSbiData');
         const pathData = localStorage.getItem('previousPath');
+        if (!selectedSbi) {
+            setDataLoaded(true);
+            setUnexpectedError(true);
+            setErrorMsg(t('devicesList.unexpectedError'));
+            return;
+        }
         if (!pathData) {
             setErrorMsg(t('devicesList.unexpectedError'));
             return;
         }
+        let sbiData = JSON.parse(selectedSbi);
+        setSelectedSbidata(sbiData);
         let path = JSON.parse(pathData);
         setPreviousPath(path);
     }, []);
@@ -131,7 +142,8 @@ function AddDevices() {
         }
     }
 
-    async function fetchDeviceSubTypeDropdownData(type) {
+    async function fetchDeviceSubTypeDropdownData(type, index) {
+        const newEntries = [...deviceEntries];
         const request = createRequest({
             filters: [
                 {
@@ -150,15 +162,24 @@ function AddDevices() {
                 if (responseData && responseData.response) {
                     return responseData.response.filters;
                 } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    if (responseData && responseData.errors && responseData.errors.length > 0) {
+                        const errorCode = responseData.errors[0].errorCode;
+                        const errorMessage = responseData.errors[0].message;
+                        newEntries[index].errorCode = errorCode;
+                        newEntries[index].errorMsg = errorMessage;
+                        setDeviceEntries(newEntries);
+                        console.error('Error:', errorMessage);
+                    }
                     return [];
                 }
             } else {
-                setErrorMsg(t('addDevices.errorInDeviceSubType'));
+                newEntries[index].errorMsg = t('addDevices.errorInDeviceSubType');
+                setDeviceEntries(newEntries);
                 return [];
             }
         } catch (err) {
-            setErrorMsg(err);
+            newEntries[index].errorMsg = err;
+            setDeviceEntries(newEntries);
             console.log("Error fetching data: ", err);
             return [];
         }
@@ -173,6 +194,9 @@ function AddDevices() {
             deviceTypeDropdownData: createDropdownData('fieldCode', '', false, deviceTypeData, t),
             deviceSubTypeDropdownData: [],
             isSubmitted: false,
+            successMsg: "",
+            errorCode: "",
+            errorMsg: "",
         };
     }
 
@@ -186,7 +210,7 @@ function AddDevices() {
             setInvalidModel(validateInput(value, t));
         }
         if (field === 'deviceType') {
-            const subtypeData = await fetchDeviceSubTypeDropdownData(value);
+            const subtypeData = await fetchDeviceSubTypeDropdownData(value, index);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
         }
         setDeviceEntries(newEntries);
@@ -206,11 +230,15 @@ function AddDevices() {
     };
 
     const submitForm = async (index, entry) => {
+        const newEntries = [...deviceEntries];
+        newEntries[index].successMsg = "";
+        newEntries[index].errorMsg = "";
+        newEntries[index].errorCode = "";
+        setDeviceEntries(newEntries);
         setIsSubmitClicked(true);
         setDataLoaded(false);
         setErrorCode("");
         setErrorMsg("");
-        setSuccessMsg("");
         const request = createRequest({
             id: null,
             deviceProviderId: getUserProfile().userName,
@@ -225,10 +253,19 @@ function AddDevices() {
             if (response?.data?.response?.id) {
                 addInactiveDeviceMappingToSbi(response.data.response.id, index);
             } else {
-                handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+                const responseData = response.data;
+                if (responseData && responseData.errors && responseData.errors.length > 0) {
+                    const errorCode = responseData.errors[0].errorCode;
+                    const errorMessage = responseData.errors[0].message;
+                    newEntries[index].errorCode = errorCode;
+                    newEntries[index].errorMsg = errorMessage;
+                    setDeviceEntries(newEntries);
+                    console.error('Error:', errorMessage);
+                }
             }
         } catch (err) {
-            setErrorMsg(t('addDevices.errorInAddingDevice'));
+            newEntries[index].errorMsg = t('addDevices.errorInAddingDevice');
+            setDeviceEntries(newEntries);
             console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);
@@ -236,22 +273,13 @@ function AddDevices() {
     };
     
     const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
+        const newEntries = [...deviceEntries];
         setDataLoaded(false);
         try {
-            const selectedSbi = localStorage.getItem('selectedSbiData');
-    
-            if (!selectedSbi) {
-                setErrorMsg(t('addDevices.errorInAddingDevice'));
-                return;
-            }
-    
-            const sbiData = JSON.parse(selectedSbi);
-            const { sbiId, partnerId } = sbiData;
-    
             const request = createRequest({
                 deviceDetailId: deviceDetailId,
-                sbiId: sbiId,
-                partnerId: partnerId
+                sbiId: selectedSbidata.sbiId,
+                partnerId: selectedSbidata.partnerId
             }, "mosip.pms.multi.partner.service.post");
     
             const response = await HttpService.post(getPartnerManagerUrl(`/partners/addInactiveDeviceMappingToSbi`, process.env.NODE_ENV), request, {
@@ -261,16 +289,17 @@ function AddDevices() {
             });
     
             if (response?.data?.response) {
-                const newEntries = [...deviceEntries];
                 newEntries[index].isSubmitted = true;
+                newEntries[index].successMsg = t('addDevices.successMsg');
                 setDeviceEntries(newEntries);
-                setSuccessMsg(t('addDevices.successMsg'));
                 updateButtonStates();
             } else {
-                setErrorMsg(t('addDevices.inActiveDeviceMappingToSbiError'));
+                newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
+                setDeviceEntries(newEntries);
             }
         } catch (err) {
-            setErrorMsg(t('addDevices.inActiveDeviceMappingToSbiError'));
+            newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
+            setDeviceEntries(newEntries);
             console.error('Error fetching data:', err);
         }
         setDataLoaded(true);
@@ -291,7 +320,9 @@ function AddDevices() {
     };
 
     const addDeviceEntry = async () => {
-        setSuccessMsg("");
+        const newEntries = [...deviceEntries];
+        newEntries[deviceEntries.length-1].successMsg = "";
+        setDeviceEntries(newEntries);
         const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
         if (deviceEntries.length === 25 && allSubmitted) {
             setShowPopup(true);
@@ -307,13 +338,30 @@ function AddDevices() {
         setErrorMsg("");
     };
 
-    const cancelSuccessMsg = () => {
-        setSuccessMsg("");
+    const cancelError = (index) => {
+        const newEntries = [...deviceEntries];
+        newEntries[index].errorMsg = "";
+        setDeviceEntries(newEntries);
+    };
+
+    const cancelSuccessMsg = (index) => {
+        const newEntries = [...deviceEntries];
+        newEntries[index].successMsg = "";
+        setDeviceEntries(newEntries);
     };
 
     const clickOnBack = () => {
-        navigate('/partnermanagement/deviceProviderServices/sbiList');
+        if (previousPath.backToSbiList) {
+            navigate('/partnermanagement/deviceProviderServices/sbiList');
+        } else {
+            navigate('/partnermanagement/deviceProviderServices/devicesList');
+        }
     }
+
+    const reloadPage = () => {
+        setIsConfirmClicked(true);
+        window.location.reload();
+    };
 
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
@@ -340,16 +388,15 @@ function AddDevices() {
                             </div>
                         </div>
                     )}
-                    {successMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
-                                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
-                            </div>
-                        </div>
-                    )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='addDevices.addDevices' subTitle={previousPath.name} backLink={previousPath.path} styleSet={styleForTitle}></Title>
+                            <Title 
+                                title='addDevices.addDevices' 
+                                subTitle={previousPath.name} 
+                                backLink={previousPath.path} 
+                                status={!unexpectedError ? selectedSbidata.status : ''}
+                                version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
+                                styleSet={styleForTitle}></Title>
                         </div>
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
@@ -361,9 +408,25 @@ function AddDevices() {
                         {deviceEntries.map((entry, index) => (
                             <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <div className="flex flex-col p-2">
-                                    {!entry.isSubmitted && (
-                                        <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                    )}
+                                    <div className={`flex justify-between ${entry.successMsg ? 'mb-16' : 'mb-2'} ${entry.errorMsg && 'mb-4'}`}>
+                                        {!entry.isSubmitted && (
+                                            <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                        )}
+                                        {entry.successMsg && (
+                                            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
+                                                    <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)}></SuccessMessage>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {entry.errorMsg && (
+                                            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
+                                                    <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)}></ErrorMessage>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                     <form>
                                         <div className="flex justify-between max-[850px]:flex-wrap pl-5 pr-2 py-2">
                                             <div className="flex-col w-[23%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -436,11 +499,17 @@ function AddDevices() {
                             <button onClick={addDeviceEntry} disabled={!addDeviceEnabled} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold ${addDeviceEnabled ? 'border-[#1447B2] bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                 {t('addDevices.addDevice')}
                             </button>
-                            <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
-                                {t('addDevices.backToSBIList')}
-                            </button>
+                            {previousPath.backToSbiList ?
+                                <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
+                                    {t('addDevices.backToSBIList')}
+                                </button>
+                            :
+                                <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
+                                    {t('addDevices.backToViewDevices')}
+                                </button>
+                            }
                             {showPopup && (
-                                <WarningPopup closePopUp={() => setShowPopup(false)}></WarningPopup>
+                                <WarningPopup closePopUp={() => setShowPopup(false)} clickOnConfirm={reloadPage}></WarningPopup>
                             )}
                         </div>
                     </div>
