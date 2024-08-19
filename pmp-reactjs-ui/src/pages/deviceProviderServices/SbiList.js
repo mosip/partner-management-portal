@@ -72,7 +72,8 @@ function SbiList() {
         setSelectedSbiData(sbi);
         const previousPath = {
             name: 'sbiList.listOfSbi',
-            path: '/partnermanagement/deviceProviderServices/sbiList'
+            path: '/partnermanagement/deviceProviderServices/sbiList',
+            backToSbiList: true
         };
         localStorage.setItem('previousPath', JSON.stringify(previousPath));
         navigate('/partnermanagement/deviceProviderServices/addDevices');
@@ -248,7 +249,7 @@ function SbiList() {
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.expired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
-                                                                <p className={`text-sm ${(sbi.status !== "deactivated" && sbi.expired) ? 'text-red-700 font-bold' : 'text-vulcan'} `}>{sbi.sbiSoftwareExpiryDtimes}</p>
+                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.expired) ? 'font-bold' : ''} `}>{sbi.sbiSoftwareExpiryDtimes}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>

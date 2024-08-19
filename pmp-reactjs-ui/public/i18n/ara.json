@@ -410,6 +410,7 @@
         "clear": "مسح",
         "addDevice": "إضافة جهاز",
         "backToSBIList": "العودة إلى قائمة SBI",
+        "backToViewDevices": "العودة إلى عرض الأجهزة",
         "successMsg": "تم إرسال الجهاز بنجاح وهو معلق لدى المشرف للموافقة.",
         "errorInDeviceSubType": "أثناء جلب أنواع فرعية للجهاز، واجهنا خطأً.",
         "errorInDeviceType": "أثناء جلب أنواع الأجهزة، واجهنا خطأً.",

@@ -116,7 +116,8 @@ function DevicesList() {
     const addDevices = () => {
         const previousPath = {
             name: 'devicesList.listOfDevices',
-            path: '/partnermanagement/deviceProviderServices/devicesList'
+            path: '/partnermanagement/deviceProviderServices/devicesList',
+            backToSbiList: false
         };
         localStorage.setItem('previousPath', JSON.stringify(previousPath));
         navigate('/partnermanagement/deviceProviderServices/addDevices');
@@ -155,7 +156,7 @@ function DevicesList() {
     }
 
     const showDeviceDetails = (selectedDeviceData) => {
-        if (selectedDeviceData.approvalStatus !== "deactivated" && selectedDeviceData.approvalStatus !== "rejected") {
+        if (selectedDeviceData.approvalStatus !== "deactivated") {
             localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
             navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
         }
@@ -220,6 +221,13 @@ function DevicesList() {
                         )}
                         {!unexpectedError && (
                             <>
+                                <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                                    <div className="flex items-center justify-center p-2">
+                                        <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                            <p className="text-sm font-medium text-[#8B6105]">{t('sbiList.guidence')}</p>
+                                        </div>
+                                    </div>
+                                </div>
                                 {devicesList.length === 0
                                     ?
                                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -282,7 +290,7 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.approvalStatus === "deactivated" || device.approvalStatus === "rejected") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.approvalStatus === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
@@ -304,7 +312,7 @@ function DevicesList() {
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        {device.isActive !== false &&
+                                                                                        { device.approvalStatus !== "deactivated" &&
                                                                                             (
                                                                                                 <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
                                                                                                     {t('devicesList.deActivate')}

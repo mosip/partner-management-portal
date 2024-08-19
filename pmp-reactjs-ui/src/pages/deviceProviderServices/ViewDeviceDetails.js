@@ -88,6 +88,22 @@ function ViewDeviceDetails() {
                                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                     <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                         <p className="font-[600] text-suva-gray text-xs">
+                                            {t("viewOidcClientDetails.partnerId")}
+                                        </p>
+                                        <p className="font-[600] text-vulcan text-sm">
+                                            {selectedSbidata.partnerId}
+                                        </p>
+                                    </div>
+                                    <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                        <p className="font-[600] text-suva-gray text-xs">
+                                            {t("viewOidcClientDetails.partnerType")}
+                                        </p>
+                                        <p className="font-[600] text-vulcan text-sm">
+                                            {t("partnerTypes.deviceProvider")}
+                                        </p>
+                                    </div>
+                                    <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                        <p className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.deviceType")}
                                         </p>
                                         <p className="font-[600] text-vulcan text-sm">
