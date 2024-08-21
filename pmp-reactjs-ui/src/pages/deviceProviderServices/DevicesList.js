@@ -80,8 +80,15 @@ function DevicesList() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        setDevicesList(sortedData);
-                        setFilteredDevicesList(sortedData);
+                        // Updating the status based on the condition
+                        const updatedData = sortedData.map(item => {
+                            if (item.approvalStatus === 'approved' && item.isActive === false) {
+                                return { ...item, approvalStatus: 'deactivated' };
+                            }
+                            return item;
+                        });
+                        setDevicesList(updatedData);
+                        setFilteredDevicesList(updatedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -311,7 +318,7 @@ function DevicesList() {
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        { device.approvalStatus !== "deactivated" &&
+                                                                                        { device.approvalStatus === "approved" &&
                                                                                             (
                                                                                                 <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
                                                                                                     {t('devicesList.deActivate')}

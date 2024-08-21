@@ -47,7 +47,14 @@ function SbiList() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        setSbiList(sortedData);
+                        // Updating the status based on the condition
+                        const updatedData = sortedData.map(item => {
+                            if (item.status === 'approved' && item.active === false) {
+                                return { ...item, status: 'deactivated' };
+                            }
+                            return item;
+                        });
+                        setSbiList(updatedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -104,7 +111,7 @@ function SbiList() {
     };
 
     const onClickAction = (sbi, index) => {
-        if (sbi.status !== "deactivated") {
+        if (sbi.status === "approved") {
             setDeactivateBtnId(deactivateBtnId === index ? null : index);
         }
     };
@@ -211,7 +218,7 @@ function SbiList() {
                                                 <div className="flex flex-row justify-between items-center relative space-x-3">
                                                     <button disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
-                                                    <button disabled={sbi.status === "deactivated"} ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status === "deactivated" ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-auto' : 'text-tory-blue border-[#1447B2] bg-white'}  border font-bold rounded-md text-center`}>...</button>
+                                                    <button disabled={sbi.status !== "approved"} ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 ${sbi.status !== "approved" ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-auto' : 'text-tory-blue border-[#1447B2] bg-white'}  border font-bold rounded-md text-center`}>...</button>
                                                     <img src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-180" : "rotate-0"}`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
                                                         <div className={`w-[17rem] min-w-fit absolute top-full mt-2 ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`}>
