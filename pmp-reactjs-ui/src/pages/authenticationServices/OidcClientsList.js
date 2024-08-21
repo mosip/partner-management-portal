@@ -275,7 +275,7 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]  ${header.id === "status" && '!w-[10%]'} ${header.id === "oidcClientId" && '!w-[10%]'}`}>
+                                                            <th key={index} className={`py-4 ${isLoginLanguageRTL ? `${header.id === "status" ?'pr-3':'pr-1'}` :`${header.id === "status" ?'pl-2':'pl-1'}`} text-xs text-[#6F6E6E] lg:w-[14%]  ${header.id === "status" && '!w-[10%]'} ${header.id === "oidcClientId" && '!w-[10%]'}`}>
                                                                 <div className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
