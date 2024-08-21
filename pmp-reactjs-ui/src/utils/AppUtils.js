@@ -363,3 +363,14 @@ export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCod
         return null;
     }
 };
+
+export const updateDeactivatedStatus = (data, status, active) => {
+    // Updating the status based on the condition
+    const updatedData = data.map(item => {
+        if (item[status] === 'approved' && item[active] === false) {
+            return { ...item, [status]: 'deactivated' };
+        }
+        return item;
+    });
+    return updatedData;
+};

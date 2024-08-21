@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
-    moveToSbisList
+    moveToSbisList, updateDeactivatedStatus
 } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -80,15 +80,8 @@ function DevicesList() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        // Updating the status based on the condition
-                        const updatedData = sortedData.map(item => {
-                            if (item.approvalStatus === 'approved' && item.isActive === false) {
-                                return { ...item, approvalStatus: 'deactivated' };
-                            }
-                            return item;
-                        });
-                        setDevicesList(updatedData);
-                        setFilteredDevicesList(updatedData);
+                        setDevicesList(updateDeactivatedStatus(sortedData, "approvalStatus", "isActive"));
+                        setFilteredDevicesList(updateDeactivatedStatus(sortedData, "approvalStatus", "isActive"));
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
