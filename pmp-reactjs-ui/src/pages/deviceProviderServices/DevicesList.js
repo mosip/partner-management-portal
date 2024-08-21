@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
-    moveToSbisList
+    moveToSbisList, populateDeactivatedStatus
 } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -79,7 +79,8 @@ function DevicesList() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const populatedData = populateDeactivatedStatus(resData, "approvalStatus", "isActive");
+                        const sortedData = populatedData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
                         setDevicesList(sortedData);
                         setFilteredDevicesList(sortedData);
                     } else {
@@ -311,7 +312,7 @@ function DevicesList() {
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        { device.approvalStatus !== "deactivated" &&
+                                                                                        { device.approvalStatus === "approved" &&
                                                                                             (
                                                                                                 <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
                                                                                                     {t('devicesList.deActivate')}

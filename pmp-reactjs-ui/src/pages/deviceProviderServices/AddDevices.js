@@ -418,14 +418,14 @@ function AddDevices() {
                                             <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
-                                            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
                                                 <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
                                                     <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)}></SuccessMessage>
                                                 </div>
                                             </div>
                                         )}
                                         {entry.errorMsg && (
-                                            <div className={`flex justify-end max-w-7xl absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
                                                 <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                                                     <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)}></ErrorMessage>
                                                 </div>
