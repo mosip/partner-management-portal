@@ -6,7 +6,7 @@ import Title from '../common/Title.js';
 import { HttpService } from '../../services/HttpService';
 import {
     isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
-    handleMouseClickForDropdown, updateDeactivatedStatus
+    handleMouseClickForDropdown, populateDeactivatedStatus
 } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
@@ -46,8 +46,9 @@ function SbiList() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        setSbiList(updateDeactivatedStatus(sortedData, "status", "active"));
+                        const populatedData = populateDeactivatedStatus(resData, "status", "active");
+                        const sortedData = populatedData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        setSbiList(sortedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }

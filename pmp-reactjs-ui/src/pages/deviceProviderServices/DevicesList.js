@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
-    moveToSbisList, updateDeactivatedStatus
+    moveToSbisList, populateDeactivatedStatus
 } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -79,9 +79,10 @@ function DevicesList() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
-                        setDevicesList(updateDeactivatedStatus(sortedData, "approvalStatus", "isActive"));
-                        setFilteredDevicesList(updateDeactivatedStatus(sortedData, "approvalStatus", "isActive"));
+                        const populatedData = populateDeactivatedStatus(resData, "approvalStatus", "isActive");
+                        const sortedData = populatedData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        setDevicesList(sortedData);
+                        setFilteredDevicesList(sortedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
