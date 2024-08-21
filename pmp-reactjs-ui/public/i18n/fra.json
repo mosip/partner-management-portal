@@ -362,7 +362,7 @@
         "addSbi": "Ajouter un SBI",
         "devices": "appareils",
         "approved": "Approuvée",
-        "pendingForApproval": "en attente d'approbation dans le cadre de ce SBI",
+        "pendingForApprovalContx": "en attente d'approbation dans le cadre de ce SBI",
         "devicesCountTxt": "sont associés à ce SBI",
         "addDevices": "Ajouter des périphériques",
         "viewDevices": "Afficher les périphériques",
