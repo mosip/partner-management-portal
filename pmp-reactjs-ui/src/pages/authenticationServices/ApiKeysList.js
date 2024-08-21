@@ -245,7 +245,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] lg:w-[14%]`}>
+                                                            <th key={index} className={`py-4 ${isLoginLanguageRTL ? `${header.id === "status" ?'pr-2':'pr-1'}` :`pl-1.5`} text-xs text-[#6F6E6E] lg:w-[14%]`}>
                                                                 <div className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
