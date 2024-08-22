@@ -246,16 +246,20 @@ function AddSbi() {
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-[0.63rem] border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-[0.63rem] border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t("partnerTypes.deviceProvider")}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
+                                                    {partnerId &&
+                                                        <>
+                                                            <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t("partnerTypes.deviceProvider")}</span>
+                                                            <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                            </svg>
+                                                        </>
+                                                    }
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
