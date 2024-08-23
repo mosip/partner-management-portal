@@ -331,7 +331,6 @@ function DevicesList() {
                                                                                         {showDeactivatePopup && (
                                                                                             <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={device} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' deviceMake={device.make} deviceModel={device.model} />
                                                                                         )}
-                                                                                        {console.log(device)}
                                                                                     </div>
                                                                                 )}
                                                                             </div>
