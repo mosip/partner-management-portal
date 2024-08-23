@@ -17,6 +17,7 @@ import SortingIcon from '../common/SortingIcon.js';
 import Pagination from '../common/Pagination.js';
 import Title from '../common/Title.js';
 import DevicesListFilter from './DevicesListFilter.js';
+import DeactivatePopup from '../common/DeactivatePopup.js';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
 
 function DevicesList() {
@@ -33,7 +34,7 @@ function DevicesList() {
     const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
-
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
@@ -169,6 +170,16 @@ function DevicesList() {
 
     //This part related to Pagination Logic
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
+
+    const showDeactivateDevice = () => {
+        setShowDeactivatePopup(true);
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeDeactivatePopup = () => {
+        setViewDeviceId(-1);
+        setShowDeactivatePopup(false);
+    };
 
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
@@ -312,14 +323,15 @@ function DevicesList() {
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        { device.approvalStatus === "approved" &&
-                                                                                            (
-                                                                                                <p onClick={() => console.log("deactivate", device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => console.log(""))}>
-                                                                                                    {t('devicesList.deActivate')}
-                                                                                                </p>
-                                                                                            )
+                                                                                        {device.approvalStatus === "approved" &&
+                                                                                            (<p onClick={() => showDeactivateDevice()} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice())}>
+                                                                                                {t('devicesList.deActivate')}
+                                                                                            </p>)
                                                                                         }
-
+                                                                                        {showDeactivatePopup && (
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={device} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' deviceMake={device.make} deviceModel={device.model} />
+                                                                                        )}
+                                                                                        {console.log(device)}
                                                                                     </div>
                                                                                 )}
                                                                             </div>

@@ -395,6 +395,10 @@
         "selectStatus": "Sélectionnez le statut",
         "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer."
     },
+    "deactivateDevicePopup": {
+        "headerMsg": "Voulez-vous désactiver l'appareil ",
+        "description": "En cliquant sur Confirmer, les détails de votre appareil seront désactivés."
+    },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
         "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
