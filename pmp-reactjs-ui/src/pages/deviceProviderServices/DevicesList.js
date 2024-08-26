@@ -6,7 +6,8 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
-    moveToSbisList, populateDeactivatedStatus
+    moveToSbisList, populateDeactivatedStatus,
+    createRequest
 } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
@@ -37,6 +38,7 @@ function DevicesList() {
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [canAddDevices, setCanAddDevices] = useState(true);
@@ -171,7 +173,11 @@ function DevicesList() {
     //This part related to Pagination Logic
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
-    const showDeactivateDevice = () => {
+    const showDeactivateDevice = (selectedDevice) => {
+        const request = createRequest({
+            deviceId: selectedDevice.id,
+        },"mosip.pms.deactivate.device.put");
+        setDeactivateRequest(request);
         setShowDeactivatePopup(true);
         document.body.style.overflow = "hidden";
     };
@@ -324,12 +330,12 @@ function DevicesList() {
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         {device.approvalStatus === "approved" &&
-                                                                                            (<p onClick={() => showDeactivateDevice()} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice())}>
+                                                                                            (<p onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
                                                                                                 {t('devicesList.deActivate')}
                                                                                             </p>)
                                                                                         }
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={device} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' deviceMake={device.make} deviceModel={device.model} />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={device} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' isDeactivateDevice />
                                                                                         )}
                                                                                     </div>
                                                                                 )}

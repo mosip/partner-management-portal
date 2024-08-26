@@ -8,7 +8,7 @@ import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descriptionMsg, clientName, deviceMake, deviceModel }) {
+function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descriptionMsg, clientName, isDeactivateDevice }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -43,8 +43,8 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                         'Content-Type': 'application/json'
                     }
                 });
-            }  else if (clientData.deviceTypeCode) {
-                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateDevice/${clientData.id}`, process.env.NODE_ENV), {
+            } else if (isDeactivateDevice) {
+                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateDevice`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -84,23 +84,13 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                                 </div>
                             )}
                             <div className={`p-[10%] flex-col text-center justify-center items-center`}>
-                                {clientData.model
-                                ? (!isLoginLanguageRTL ?
-                                        <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                            {t(headerMsg)} - '{deviceMake} {deviceModel}'?
-                                        </p>
-                                        : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                            {t(headerMsg)} - {deviceMake} {deviceModel}
-                                        </p>
-                                    )
-                                : (!isLoginLanguageRTL ?
+                                {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - '{clientName}'?
+                                        {t(headerMsg)} - '{isDeactivateDevice ? clientData.make + ' - ' + clientData.model : clientName}'?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - {clientName}
+                                        {t(headerMsg)} - {isDeactivateDevice ? clientData.make + ' - ' + clientData.model : clientName}
                                     </p>
-                                    )
                                 }
 
                                 <p className="text-sm text-[#666666] break-words py-[6%]">
