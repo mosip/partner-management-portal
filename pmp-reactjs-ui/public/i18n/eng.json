@@ -36,8 +36,8 @@
         "policiesDesc": "Request and view your policies",
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
-        "deviceProviderServices":"Device Provider Services",
-        "deviceProviderServicesDesc":"Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
+        "deviceProviderServices": "Device Provider Services",
+        "deviceProviderServicesDesc": "Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!"
     },
@@ -52,7 +52,7 @@
         "lastName": "Last Name",
         "organisationName": "Organisation Name",
         "address": "Address",
-        "partnerType":"Partner Type",
+        "partnerType": "Partner Type",
         "phoneNumber": "Phone Number",
         "emailAddress": "Email Address",
         "userName": "User Name"
@@ -269,23 +269,23 @@
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",
         "authenticationServiceSection": "Authentication Services",
-        "createdOn":"Created On",
-        "oidcClientId":"OIDC Client ID",
+        "createdOn": "Created On",
+        "oidcClientId": "OIDC Client ID",
         "copied!": "Copied!",
-        "partnerId":"Partner ID",
+        "partnerId": "Partner ID",
         "partnerIdAlias": "Partner ID Alias",
-        "partnerType":"Partner Type",
-        "policyGroup":"Policy Group",
-        "policyName":"Policy Name",
-        "policyGroupDescription":"Policy Group Description",
-        "policyNameDescription":"Policy Name Description",
-        "clientName":"Client Name",
-        "publicKey":"Public Key",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "policyGroupDescription": "Policy Group Description",
+        "policyNameDescription": "Policy Name Description",
+        "clientName": "Client Name",
+        "publicKey": "Public Key",
         "logoUri": "Logo URI",
         "redirectUri": "Redirect URI",
-        "grantTypes":"Grant Types",
-        "comments":"Comments",
-        "adminComment":"Admin Comments",
+        "grantTypes": "Grant Types",
+        "comments": "Comments",
+        "adminComment": "Admin Comments",
         "adminName": "Admin Name",
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
@@ -305,11 +305,11 @@
         "editSuccessMsg": "OIDC Client details has been successfully modified and submitted."
     },
     "deactivateOidcClient": {
-       "oidcClientName": "Do you want to Deactivate OIDC Client",
-       "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
-       "confirm": "Confirm"
+        "oidcClientName": "Do you want to Deactivate OIDC Client",
+        "description": "On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.",
+        "confirm": "Confirm"
     },
-    "apiKeysList" : {
+    "apiKeysList": {
         "apiKeyLabel": "API Key Name",
         "apiKeyId": "API Key ID",
         "apiKey": "API Key",
@@ -323,14 +323,14 @@
         "generateApiKey": "Generate API Key",
         "selectedPolicyName": "Select policy for which API Key is required",
         "enterNameForApiKey": "Enter a name for API key",
-        "generateApiKeySuccessHeader":"Details submitted successfully!",
+        "generateApiKeySuccessHeader": "Details submitted successfully!",
         "apiKeySuccessMsg": "API Key details has been submitted successfully.",
         "errorInGenerateApiKey": "While generating API Key, we have encountered with an error.",
         "nameTooLong": "Name should not allow more than 36 characters."
     },
     "deactivateApiKey": {
-       "apiKeyName": "Do you want to Deactivate API Key",
-       "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
+        "apiKeyName": "Do you want to Deactivate API Key",
+        "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",
@@ -349,7 +349,7 @@
         "sbiCreatedDate": "SBI Created Date",
         "selectDate": "Select Date",
         "sbiExpiryDate": "SBI Expiry Date",
-        "addSbiInfoKey":"SBI Expiry date should be atleast one year greater than the SBI created date",
+        "addSbiInfoKey": "SBI Expiry date should be atleast one year greater than the SBI created date",
         "errorInAddingSbi": "While adding SBI, we have encountered with an error."
     },
     "sbiList": {
@@ -416,6 +416,14 @@
         "errorInAddingDevice": "While adding device, we have encountered with an error.",
         "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.",
         "inActiveDeviceMappingToSbiError": "We have encountered with an error, please contact your administrator."
+    },
+    "deactivateSbi": {
+        "headerMsg": "Do you want to deactivate SBI Version ",
+        "description1": "On clicking Confirm, your SBI details and the ",
+        "devicesMapped": "devices mapped ",
+        "description2": "to it will be deactivated",
+        "deactivateSbiHintSingular": " {{devicesCount}} device associated to this SBI will be deactivated",
+        "deactivateSbiHintPlural": "All {{devicesCount}} devices associated to this SBI will be deactivated"
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",
@@ -586,7 +594,7 @@
         "PMS_CERTIFICATE_ERROR_005": "Approval Status is null or empty",
         "PMS_CERTIFICATE_ERROR_006": "Unable to decode the certificate data",
         "PMS_CERTIFICATE_ERROR_007": "The given partner ID does not belong to the user.So unable to get the original partner certificates",
-        "PMS_CERTIFICATE_ERROR_008":"Error while fetching certificate.",
+        "PMS_CERTIFICATE_ERROR_008": "Error while fetching certificate.",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
         "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",

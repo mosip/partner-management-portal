@@ -422,6 +422,14 @@
         "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils.",
         "inActiveDeviceMappingToSbiError": "Nous avons rencontré une erreur, veuillez contacter votre administrateur."
     },
+    "deactivateSbi": {
+        "headerMsg": "Voulez-vous désactiver la version SBI ",
+        "description1": "En cliquant sur Confirmer, vos détails SBI et le ",
+        "devicesMapped": "appareils mappés",
+        "description2": "il sera désactivé",
+        "deactivateSbiHintSingular": " {{devicesCount}} appareil associé à ce SBI sera désactivé",
+        "deactivateSbiHintPlural": "Tous les {{devicesCount}} appareils associés à ce SBI seront désactivés"
+     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
         "sbiVersionGoesHere1": "La version SBI va ici 1",
