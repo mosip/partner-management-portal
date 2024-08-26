@@ -427,8 +427,7 @@
         "description1": "عند النقر فوق تأكيد، تفاصيل SBI الخاصة بك و",
         "devicesMapped": "الأجهزة المعينة",
         "description2": "سيتم إلغاء تنشيطه",
-        "deactivateSbiHintSingular": "سيتم إلغاء تنشيط الجهاز {{devicesCount}} المرتبط بـ SBI هذا",
-        "deactivateSbiHintPlural": "سيتم إلغاء تنشيط جميع الأجهزة {{devicesCount}} المرتبطة بـ SBI هذا"
+        "deactivateSbiHint": "سيتم إلغاء تنشيط جميع الأجهزة {{devicesCount}} المرتبطة بـ SBI هذا"
      },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",

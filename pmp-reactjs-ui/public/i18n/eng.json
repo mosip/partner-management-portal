@@ -422,8 +422,7 @@
         "description1": "On clicking Confirm, your SBI details and the ",
         "devicesMapped": "devices mapped ",
         "description2": "to it will be deactivated",
-        "deactivateSbiHintSingular": " {{devicesCount}} device associated to this SBI will be deactivated",
-        "deactivateSbiHintPlural": "All {{devicesCount}} devices associated to this SBI will be deactivated"
+        "deactivateSbiHint": "All {{devicesCount}} devices associated to this SBI will be deactivated"
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",

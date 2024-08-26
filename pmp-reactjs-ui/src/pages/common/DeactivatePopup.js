@@ -103,11 +103,11 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                     </p>
                                 }
                                 <p className="text-sm text-[#666666] break-words py-[6%]">
-                                    {t(descriptionMsg)} {popupData.isDeactivateSbi && <span className="font-bold break-words">{t('deactivateSbi.devicesMapped')}</span>} {popupData.isDeactivateSbi && (t('deactivateSbi.description2'))}
+                                    {t(descriptionMsg)} {popupData.isDeactivateSbi && <span className="font-bold break-words">{t('deactivateSbi.devicesMapped') (t('deactivateSbi.description2'))}</span>}
                                 </p>
                                 {popupData.isDeactivateSbi &&
                                     (<div className="bg-[#FFF7E5] py-1 px-0.5 border-2 break-words border-[#EDDCAF] rounded-md w-full">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t('deactivateSbi.deactivateSbiHintPlural')} {!isLoginLanguageRTL && t('!')}</p>
+                                        <p className="text-sm font-inter text-[#8B6105]">{t('deactivateSbi.deactivateSbiHint')} {!isLoginLanguageRTL && t('!')}</p>
                                     </div>)
                                 }
                                 <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
