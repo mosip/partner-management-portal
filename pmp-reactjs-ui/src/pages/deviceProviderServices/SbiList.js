@@ -6,7 +6,8 @@ import Title from '../common/Title.js';
 import { HttpService } from '../../services/HttpService';
 import {
     isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
-    handleMouseClickForDropdown, populateDeactivatedStatus
+    handleMouseClickForDropdown, populateDeactivatedStatus,
+    createRequest
 } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
@@ -15,6 +16,7 @@ import upArrow from '../../svg/up_arrow.svg';
 import verifiedIcon from '../../svg/verified_icon.svg';
 import expiredIcon from '../../svg/expiry_icon.svg';
 import deactivatedIcon from '../../svg/deactivated_shield_icon.svg';
+import DeactivatePopup from '../common/DeactivatePopup.js';
 
 function SbiList() {
     const { t } = useTranslation();
@@ -25,6 +27,8 @@ function SbiList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [open, setOpen] = useState(-1);
     const [deactivateBtnId, setDeactivateBtnId] = useState(-1);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [sbiList, setSbiList] = useState([]);
     const submenuRef = useRef([]);
 
@@ -79,7 +83,7 @@ function SbiList() {
         localStorage.setItem('previousPath', JSON.stringify(previousPath));
         navigate('/partnermanagement/deviceProviderServices/addDevices');
     };
-    
+
     const devicesList = (sbi) => {
         setSelectedSbiData(sbi);
         navigate('/partnermanagement/deviceProviderServices/devicesList');
@@ -93,7 +97,7 @@ function SbiList() {
             canAddDevices: canAddDevices(sbi),
             partnerId: sbi.partnerId
         };
-    
+
         localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
     };
 
@@ -108,6 +112,17 @@ function SbiList() {
         setDeactivateBtnId(deactivateBtnId === index ? null : index);
     };
 
+    const onClickDeactivate = (sbi) => {
+        if (sbi.status === "approved") {
+            const request = createRequest({
+                sbiId: sbi.sbiId,
+            }, "mosip.pms.deactivate.sbi.put");
+            setDeactivateRequest(request);
+            setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
     const styleForTitle = {
         backArrowIcon: "!mt-[5%]"
     }
@@ -119,7 +134,7 @@ function SbiList() {
         else if (sbi.expired) {
             return expiredIcon;
         }
-        else  {
+        else {
             return verifiedIcon;
         }
     }
@@ -207,16 +222,19 @@ function SbiList() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-row justify-between items-center relative space-x-3">
+                                                <div ref={el => submenuRef.current[index] = el} className="flex flex-row justify-between items-center relative space-x-3">
                                                     <button disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
-                                                    <button ref={el => submenuRef.current[index] = el} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
+                                                    <button onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
                                                     <img src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
-                                                        <div className={`w-[17rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg ring-gray-50 border duration-500`}>
-                                                            <div className="flex items-center justify-between">
-                                                                <button className={`block w-full text-left px-4 py-2 text-sm font-medium ${sbi.status !== "approved" && ' cursor-not-allowed'}`}>{t('sbiList.deactivate')}</button>
-                                                            </div>
+                                                        <div className={`z-20 w-[17rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg ring-gray-50 border duration-500`}>
+                                                            <p onClick={() => onClickDeactivate(sbi)} className={`text-left px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
+                                                                {t('sbiList.deactivate')}
+                                                            </p>
+                                                            {showDeactivatePopup && (
+                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description1' headerKeyName={sbi.sbiVersion}/>
+                                                            )}
                                                         </div>
                                                     )}
                                                 </div>

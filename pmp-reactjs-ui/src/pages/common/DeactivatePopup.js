@@ -8,7 +8,7 @@ import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descriptionMsg, clientName }) {
+function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -24,6 +24,10 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
         closePopUp()
     };
 
+    if (popupData.isDeactivateSbi) {
+        var countOfDevicesGetDeactivate = JSON.parse(popupData.countOfApprovedDevices)
+    }
+
     const clickOnConfirm = async () => {
         setErrorCode("");
         setErrorMsg("");
@@ -31,14 +35,26 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
         document.body.style.overflow = "auto"
         try {
             let response;
-            if (clientData.apiKeyLabel) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${clientData.partnerId}/policy/${clientData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
+            if (popupData.apiKeyLabel) {
+                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policy/${popupData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (clientData.oidcClientName) {
-                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${clientData.oidcClientId}`, process.env.NODE_ENV), request, {
+            } else if (popupData.oidcClientName) {
+                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.oidcClientId}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else if (popupData.isDeactivateDevice) {
+                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateDevice`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else if (popupData.isDeactivateSbi) {
+                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateSbi`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -79,17 +95,21 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                             )}
                             <div className={`p-[10%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
-                                        <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                            {t(headerMsg)} - '{clientName}'?
-                                        </p>
-                                       : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                            {t(headerMsg)} - {clientName}
-                                        </p>
+                                    <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
+                                        {t(headerMsg)} - '{popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
+                                    </p>
+                                    : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
+                                        {t(headerMsg)} - {popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}
+                                    </p>
                                 }
-
                                 <p className="text-sm text-[#666666] break-words py-[6%]">
-                                    {t(descriptionMsg)}
+                                    {t(descriptionMsg)} {popupData.isDeactivateSbi && <span className="font-bold break-words">{t('deactivateSbi.devicesMapped') (t('deactivateSbi.description2'))}</span>}
                                 </p>
+                                {popupData.isDeactivateSbi &&
+                                    (<div className="bg-[#FFF7E5] py-1 px-0.5 border-2 break-words border-[#EDDCAF] rounded-md w-full">
+                                        <p className="text-sm font-inter text-[#8B6105]">{t('deactivateSbi.deactivateSbiHint')} {!isLoginLanguageRTL && t('!')}</p>
+                                    </div>)
+                                }
                                 <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
                                     <button onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
                                     <button onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
