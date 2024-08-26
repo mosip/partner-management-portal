@@ -335,7 +335,7 @@ function DevicesList() {
                                                                                             </p>)
                                                                                         }
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={device} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' isDeactivateDevice />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{...device, isDeactivateDevice:true}} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}

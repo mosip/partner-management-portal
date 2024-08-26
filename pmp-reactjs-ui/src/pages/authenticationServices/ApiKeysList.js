@@ -11,7 +11,7 @@ import { HttpService } from '../../services/HttpService';
 import ErrorMessage from '../common/ErrorMessage';
 import LoadingIcon from "../common/LoadingIcon";
 import rectangleGrid from '../../svg/rectangle_grid.svg';
-import ApiClientsFilter from './ApiClientsFilter';
+import ApiKeysFilter from '../authenticationServices/ApiKeysFilter.js';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
 import DeactivatePopup from '../common/DeactivatePopup';
 import FilterButtons from '../common/FilterButtons.js';
@@ -96,22 +96,22 @@ function ApiKeysList() {
         navigate('/partnermanagement/authenticationServices/generateApiKey')
     };
 
-    const showViewApiKeyClientDetails = (selectedApiKeyClientdata) => {
-        if (selectedApiKeyClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedApiKeyClientdata', JSON.stringify(selectedApiKeyClientdata));
+    const showViewApiKeyDetails = (selectedApiKeyData) => {
+        if (selectedApiKeyData.status === "ACTIVE") {
+            localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
         }
     };
 
-    const onClickView = (selectedApiKeyClientdata) => {
-        localStorage.setItem('selectedApiKeyClientdata', JSON.stringify(selectedApiKeyClientdata));
+    const onClickView = (selectedApiKeyData) => {
+        localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
         navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
     };
 
-    const onClickDeactivate = (selectedApiKeyClientdata) => {
-        if (selectedApiKeyClientdata.status === "ACTIVE") {
+    const onClickDeactivate = (selectedApiKeyData) => {
+        if (selectedApiKeyData.status === "ACTIVE") {
             const request = createRequest({
-                label: selectedApiKeyClientdata.apiKeyLabel,
+                label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
             setDeactivateRequest(request);
@@ -234,10 +234,10 @@ function ApiKeysList() {
                                     <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataList={filteredApiKeysList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
-                                        <ApiClientsFilter
+                                        <ApiKeysFilter
                                             filteredApiKeysList={filteredApiKeysList}
                                             onFilterChange={onFilterChange}>
-                                        </ApiClientsFilter>
+                                        </ApiKeysFilter>
                                     }
                                     <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
@@ -259,17 +259,17 @@ function ApiKeysList() {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    tableRows.map((client, index) => {
+                                                    tableRows.map((apiKey, index) => {
                                                         return (
-                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.policyName}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{client.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">{formatDate(client.crDtimes, 'date')}</td>
-                                                                <td onClick={() => showViewApiKeyClientDetails(client)} className="px-2 mx-2">
-                                                                    <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                        {getStatusCode(client.status, t)}
+                                                            <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
+                                                                    <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                        {getStatusCode(apiKey.status, t)}
                                                                     </div>
                                                                 </td>
 
@@ -279,17 +279,17 @@ function ApiKeysList() {
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] top-7 z-10 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
-                                                                                <p onClick={() => onClickView(client)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickView(client))}>
+                                                                                <p onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickView(apiKey))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                {client.status === "ACTIVE" &&
-                                                                                    (<p onClick={() => onClickDeactivate(client)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(client))}>
+                                                                                {apiKey.status === "ACTIVE" &&
+                                                                                    (<p onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(apiKey))}>
                                                                                         {t('oidcClientsList.deActivate')}
                                                                                     </p>
                                                                                     )}
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' clientName={client.apiKeyLabel}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

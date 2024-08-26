@@ -8,7 +8,7 @@ import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descriptionMsg, clientName, isDeactivateDevice }) {
+function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -31,19 +31,19 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
         document.body.style.overflow = "auto"
         try {
             let response;
-            if (clientData.apiKeyLabel) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${clientData.partnerId}/policy/${clientData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
+            if (popupData.apiKeyLabel) {
+                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policy/${popupData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (clientData.oidcClientName) {
-                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${clientData.oidcClientId}`, process.env.NODE_ENV), request, {
+            } else if (popupData.oidcClientName) {
+                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.oidcClientId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (isDeactivateDevice) {
+            } else if (popupData.isDeactivateDevice) {
                 response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateDevice`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -86,10 +86,10 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                             <div className={`p-[10%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - '{isDeactivateDevice ? clientData.make + ' - ' + clientData.model : clientName}'?
+                                        {t(headerMsg)} - '{popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - {isDeactivateDevice ? clientData.make + ' - ' + clientData.model : clientName}
+                                        {t(headerMsg)} - {popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}
                                     </p>
                                 }
 

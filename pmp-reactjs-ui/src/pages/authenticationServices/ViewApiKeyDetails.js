@@ -13,11 +13,11 @@ function ViewApiKeyDetails() {
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
     useEffect(() => {
-        const clientData = localStorage.getItem('selectedApiKeyClientdata');
-        if (clientData) {
+        const apiKeyData = localStorage.getItem('selectedApiKeyData');
+        if (apiKeyData) {
             try {
-                const selectedApiKeyClientdata = JSON.parse(clientData);
-                setApiKeyDetails(selectedApiKeyClientdata);
+                const selectedApiKeyData = JSON.parse(apiKeyData);
+                setApiKeyDetails(selectedApiKeyData);
             } catch (error) {
                 navigate('/partnermanagement/authenticationServices/apiKeysList');
                 console.error('Error in viewApiKeyDetails page :', error);
