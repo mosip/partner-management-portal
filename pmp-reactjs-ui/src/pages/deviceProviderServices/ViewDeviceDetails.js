@@ -139,14 +139,6 @@ function ViewDeviceDetails() {
                                     </div>
                                     <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                         <p className="font-[600] text-suva-gray text-xs">
-                                            {t("devicesList.createdDate")}
-                                        </p>
-                                        <p className="font-[600] text-vulcan text-sm">
-                                            {deviceDetails.crDtimes}
-                                        </p>
-                                    </div>
-                                    <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                        <p className="font-[600] text-suva-gray text-xs">
                                             {t("addSbis.sbiVersion")}
                                         </p>
                                         <p className="font-[600] text-vulcan text-sm">
