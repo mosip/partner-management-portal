@@ -187,9 +187,6 @@ function DevicesList() {
         setShowDeactivatePopup(false);
     };
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -212,7 +209,6 @@ function DevicesList() {
                                 backLink='/partnermanagement/deviceProviderServices/sbiList'
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
-                                styleSet={styleForTitle}
                             />
                             {devicesList.length > 0 ?
                                 <button onClick={() => addDevices()} type="button" disabled={!canAddDevices}

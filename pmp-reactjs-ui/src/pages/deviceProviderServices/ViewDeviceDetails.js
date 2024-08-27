@@ -36,9 +36,7 @@ function ViewDeviceDetails() {
         setDeviceDetails(selectedDevice);
     }, []);
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
     return (
         <>
@@ -46,7 +44,7 @@ function ViewDeviceDetails() {
 
                 <>
                     <div className="flex justify-between mb-3">
-                        <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='sbiList.listOfSbi' subTitle2='devicesList.listOfDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' backLink2='/partnermanagement/deviceProviderServices/devicesList' styleSet={styleForTitle}></Title>
+                        <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='sbiList.listOfSbi' subTitle2='devicesList.listOfDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' backLink2='/partnermanagement/deviceProviderServices/devicesList' ></Title>
                     </div>
                     {unexpectedError && (
                         <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

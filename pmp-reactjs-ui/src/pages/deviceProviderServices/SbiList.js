@@ -123,9 +123,7 @@ function SbiList() {
         }
     };
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
     const getIcon = (sbi) => {
         if (sbi.status === "deactivated") {
@@ -166,7 +164,7 @@ function SbiList() {
                     )}
                     <div className="flex-col mt-7 !mb-4">
                         <div className="flex justify-between mb-5">
-                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
+                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement' ></Title>
                             {sbiList.length > 0 ?
                                 <button type="button" onClick={addSbi}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">

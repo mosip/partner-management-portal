@@ -160,9 +160,7 @@ function ApiKeysList() {
     //This part related to Pagination Logic
     let tableRows = filteredApiKeysList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -180,7 +178,7 @@ function ApiKeysList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' ></Title>
                             {apiKeysList.length > 0 ?
                                 <button type="button" onClick={generateApiKey} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,generateApiKey)}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">

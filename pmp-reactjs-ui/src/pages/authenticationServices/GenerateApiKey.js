@@ -204,9 +204,7 @@ function GenerateApiKey() {
         outerDiv: "!bg-opacity-[50%]"
     }
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
       const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -228,7 +226,7 @@ function GenerateApiKey() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' styleSet={styleForTitle}></Title>
+                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' ></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
