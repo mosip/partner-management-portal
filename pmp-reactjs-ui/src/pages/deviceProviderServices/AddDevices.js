@@ -253,15 +253,7 @@ function AddDevices() {
             if (response?.data?.response?.id) {
                 addInactiveDeviceMappingToSbi(response.data.response.id, index);
             } else {
-                const responseData = response.data;
-                if (responseData && responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    newEntries[index].errorCode = errorCode;
-                    newEntries[index].errorMsg = errorMessage;
-                    setDeviceEntries(newEntries);
-                    console.error('Error:', errorMessage);
-                }
+                handleError(response.data, index, newEntries);
             }
         } catch (err) {
             newEntries[index].errorMsg = t('addDevices.errorInAddingDevice');
@@ -294,8 +286,7 @@ function AddDevices() {
                 setDeviceEntries(newEntries);
                 updateButtonStates();
             } else {
-                newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
-                setDeviceEntries(newEntries);
+                handleError(response.data, index, newEntries);
             }
         } catch (err) {
             newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
@@ -303,7 +294,18 @@ function AddDevices() {
             console.error('Error fetching data:', err);
         }
         setDataLoaded(true);
-    };    
+    };  
+    
+    const handleError = (responseData, index, newEntries) => {
+        if (responseData && responseData.errors && responseData.errors.length > 0) {
+            const errorCode = responseData.errors[0].errorCode;
+            const errorMessage = responseData.errors[0].message;
+            newEntries[index].errorCode = errorCode;
+            newEntries[index].errorMsg = errorMessage;
+            setDeviceEntries(newEntries);
+            console.error('Error:', errorMessage);
+        }
+    };
 
     const deleteEntry = (index) => {
         setErrorCode("");
