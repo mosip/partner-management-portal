@@ -199,8 +199,8 @@ function SbiList() {
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
                                                     <img src={getIcon(sbi)} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
                                                     <div className="flex flex-col">
-                                                        <p className={`text-base break-all font-bold pb-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
-                                                        <div className="flex flex-row items-center justify-between">
+                                                        <p className={`text-base break-all font-bold p-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
+                                                        <div className="flex flex-row items-center space-x-1">
                                                             <div className={`${(sbi.status === 'deactivated' || sbi.expired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
