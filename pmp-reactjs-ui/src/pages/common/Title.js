@@ -24,7 +24,7 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
                 <h1 className="font-semibold text-lg text-dark-blue">{t(title)}</h1>
             </div>
 
-            <div className={`flex-col w-full ${status && version ? (!isLoginLanguageRTL ? 'ml-[19%]' : 'mr-[21%]') :(!isLoginLanguageRTL ? 'ml-7' : 'mr-7')}`}>
+            <div className={`flex-col w-full ${status && version ? (!isLoginLanguageRTL ? 'ml-[11%]' : 'mr-[21%]') :(!isLoginLanguageRTL ? 'ml-7' : 'mr-7')}`}>
                 {(status && version) && (
                     <div className="flex mb-2">
                         <h1 className={`font-semibold text-lg text-[#707070]`}>{version} | </h1>
