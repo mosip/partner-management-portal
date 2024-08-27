@@ -370,8 +370,6 @@ function AddDevices() {
         }
     }, [isConfirmClicked]);
 
-;
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
