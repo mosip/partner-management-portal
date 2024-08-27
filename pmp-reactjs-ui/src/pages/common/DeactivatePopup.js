@@ -77,7 +77,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
-                    {dataLoaded && (
+                    {!dataLoaded && (
                         <LoadingIcon styleSet={styles}></LoadingIcon>
                     )}
                     {dataLoaded && (
