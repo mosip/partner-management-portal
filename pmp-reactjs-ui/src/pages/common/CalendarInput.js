@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import calendar_icon from '../../svg/calendar_icon.svg'
 import Information from './fields/Information';
 
-function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onChange, selectedDateStr}) {
+function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onChange, selectedDateStr, containsAsterisk}) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
@@ -31,8 +31,8 @@ function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onCh
   
   return (
     <div className="flex flex-col w-[48%] overflow-x-auto">
-      <label className={`flex items-center gap-x-1 text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-        <p className={`mb-0.5`}>{label}</p>
+      <label className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+        <p className={`mb-0.5`}>{label}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
         {addInfoIcon && (
           <Information infoKey={t('addSbis.addSbiInfoKey')} />
         )}
