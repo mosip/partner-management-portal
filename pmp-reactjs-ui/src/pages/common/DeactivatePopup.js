@@ -24,10 +24,6 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         closePopUp()
     };
 
-    if (popupData.isDeactivateSbi) {
-        var countOfDevicesGetDeactivate = JSON.parse(popupData.countOfApprovedDevices)
-    }
-
     const clickOnConfirm = async () => {
         setErrorCode("");
         setErrorMsg("");
