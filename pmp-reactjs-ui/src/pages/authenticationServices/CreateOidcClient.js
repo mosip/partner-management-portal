@@ -383,7 +383,7 @@ function CreateOidcClient() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
             </div>
             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
               <div className="px-[2.5%] py-[2%]">

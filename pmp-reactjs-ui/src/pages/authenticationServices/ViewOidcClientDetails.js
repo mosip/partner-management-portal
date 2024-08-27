@@ -55,7 +55,7 @@ function ViewOidcClientDetails() {
         <>
             <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
+                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">

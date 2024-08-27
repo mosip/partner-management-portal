@@ -191,9 +191,7 @@ function OidcClientsList() {
         outerDiv: "!bg-opacity-[16%]"
     }
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -210,7 +208,7 @@ function OidcClientsList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' styleSet={styleForTitle}></Title>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' ></Title>
                             {oidcClientsList.length > 0 ?
                                 <button onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('createOidcClient.createOidcClient')}

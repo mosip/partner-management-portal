@@ -255,9 +255,7 @@ function EditOidcClient() {
         dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
         selectionBox: "!top-10"
     }
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -275,7 +273,7 @@ function EditOidcClient() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
+                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">

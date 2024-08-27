@@ -220,7 +220,7 @@ function AddSbi() {
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
-                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
+                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/deviceProviderServices/sbiList'/>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -282,6 +282,7 @@ function AddSbi() {
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={onHandleChangeCreateDate}
                                                 selectedDateStr={createdDate}
+                                                containsAsterisk
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -290,6 +291,7 @@ function AddSbi() {
                                                 onChange={onHandleChangeExpiryDate}
                                                 selectedDateStr={expiryDate}
                                                 addInfoIcon
+                                                containsAsterisk
                                             />
                                         </div>
                                     </div>

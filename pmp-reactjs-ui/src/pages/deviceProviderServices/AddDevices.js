@@ -370,10 +370,6 @@ function AddDevices() {
         }
     }, [isConfirmClicked]);
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    };
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
@@ -403,7 +399,7 @@ function AddDevices() {
                                 backLink={previousPath.path} 
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
-                                styleSet={styleForTitle}></Title>
+                                ></Title>
                         </div>
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
