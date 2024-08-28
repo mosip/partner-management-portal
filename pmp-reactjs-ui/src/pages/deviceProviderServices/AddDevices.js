@@ -373,7 +373,7 @@ function AddDevices() {
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-base !mb-1",
-        dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-start",
+        dropdownButton: "!w-full !h-fit !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     };
 
