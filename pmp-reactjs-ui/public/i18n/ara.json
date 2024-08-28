@@ -368,6 +368,7 @@
         "viewDevices": "عرض الأجهزة",
         "partnerId": "معرف الشريك",
         "partnerType": "نوع الشريك",
+        "device": "جهاز",
         "createdDate": "تاريخ ووقت إنشاء SBI",
         "expiryDate": "تاريخ ووقت انتهاء صلاحية SBI",
         "deactivate": "إلغاء تنشيط SBI",
@@ -427,7 +428,8 @@
         "description1": "عند النقر فوق تأكيد، تفاصيل SBI الخاصة بك و",
         "devicesMapped": "الأجهزة المعينة",
         "description2": "سيتم إلغاء تنشيطه",
-        "deactivateSbiHint": "سيتم إلغاء تنشيط جميع الأجهزة {{devicesCount}} المرتبطة بـ SBI هذا"
+        "deactivateSbiHintPlural": "سيتم إلغاء تنشيط جميع الأجهزة {{devicesCount}} المرتبطة بـ SBI هذا",
+        "deactivateSbiHintSingular": "سيتم إلغاء تنشيط {{devicesCount}} جهاز مرتبط بجهاز SBI هذا"
      },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",

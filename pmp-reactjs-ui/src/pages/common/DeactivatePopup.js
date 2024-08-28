@@ -24,6 +24,15 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         closePopUp()
     };
 
+    const validateCountOfApprovedDevices = (countOfDevices) => {
+        if (countOfDevices > 1) {
+            return ('deactivateSbi.deactivateSbiHintPlural')
+        }
+        else {
+            return ('deactivateSbi.deactivateSbiHintSingular')
+        }
+    };
+
     const clickOnConfirm = async () => {
         setErrorCode("");
         setErrorMsg("");
@@ -89,7 +98,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                     </div>
                                 </div>
                             )}
-                            <div className={`p-[10%] flex-col text-center justify-center items-center`}>
+                            <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
                                         {t(headerMsg)} - '{popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
@@ -102,8 +111,8 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                     {t(descriptionMsg)} {popupData.isDeactivateSbi && <span className="font-bold break-words">{t('deactivateSbi.devicesMapped')}</span>} {popupData.isDeactivateSbi && t('deactivateSbi.description2')}
                                 </p>
                                 {popupData.isDeactivateSbi &&
-                                    (<div className="bg-[#FFF7E5] py-1 px-0.5 border-2 break-words border-[#EDDCAF] rounded-md w-full">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t('deactivateSbi.deactivateSbiHint', {devicesCount:popupData.countOfApprovedDevices})} {!isLoginLanguageRTL && t('!')}</p>
+                                    (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] rounded-md w-full p-[2%]">
+                                        <p className="text-sm font-inter text-[#8B6105]">{t(validateCountOfApprovedDevices(popupData.countOfApprovedDevices), {devicesCount: popupData.countOfApprovedDevices})} {!isLoginLanguageRTL && t('!')}</p>
                                     </div>)
                                 }
                                 <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">

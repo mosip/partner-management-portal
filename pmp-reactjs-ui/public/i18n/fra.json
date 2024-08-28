@@ -368,6 +368,7 @@
         "viewDevices": "Afficher les périphériques",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
+        "device": "appareil",
         "createdDate": "Date et heure de création du SBI",
         "expiryDate": "Date et heure d'expiration du SBI",
         "deactivate": "Désactiver SBI",
@@ -427,7 +428,8 @@
         "description1": "En cliquant sur Confirmer, vos détails SBI et le ",
         "devicesMapped": "appareils mappés",
         "description2": "il sera désactivé",
-        "deactivateSbiHint": "Tous les {{devicesCount}} appareils associés à ce SBI seront désactivés"
+        "deactivateSbiHintPlural": "Tous les {{devicesCount}} appareils associés à ce SBI seront désactivés",
+        "deactivateSbiHintSingular": "{{devicesCount}} appareil associé à ce SBI sera désactivé"
      },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
