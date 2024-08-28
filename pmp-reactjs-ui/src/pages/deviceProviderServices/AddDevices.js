@@ -399,7 +399,7 @@ function AddDevices() {
                                 backLink={previousPath.path} 
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
-                                ></Title>
+                            />
                         </div>
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
@@ -432,7 +432,7 @@ function AddDevices() {
                                     </div>
                                     <form>
                                         <div className="flex justify-between max-[850px]:flex-wrap pl-5 pr-2 py-2">
-                                            <div className="flex-col w-[23%] max-[850px]:w-[47%] max-[585px]:w-full">
+                                            <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='deviceType'
                                                     dropdownDataList={entry.deviceTypeDropdownData}
@@ -445,7 +445,7 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex-col w-[23%] max-[850px]:w-[47%] max-[585px]:w-full">
+                                            <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <DropdownComponent
                                                     fieldName='deviceSubType'
                                                     dropdownDataList={entry.deviceSubTypeDropdownData}
