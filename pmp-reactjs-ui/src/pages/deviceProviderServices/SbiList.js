@@ -164,7 +164,7 @@ function SbiList() {
                     )}
                     <div className="flex-col mt-7 !mb-4">
                         <div className="flex justify-between mb-5">
-                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement' ></Title>
+                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement'/>
                             {sbiList.length > 0 ?
                                 <button type="button" onClick={addSbi}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
@@ -207,13 +207,13 @@ function SbiList() {
                                                             <div className='flex items-center w-fit px-2 mx-1'>
                                                                 <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue'} `}>
-                                                                        {sbi.countOfApprovedDevices} {t('sbiList.devices')}
+                                                                        {sbi.countOfApprovedDevices} {sbi.countOfApprovedDevices <=1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.approved')}
                                                                 </p>
                                                                 <span className='mx-1'>{'|'}</span>
                                                                 <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04]'} `}>
-                                                                        {sbi.countOfPendingDevices} {t('sbiList.devices')}
+                                                                        {sbi.countOfPendingDevices} {sbi.countOfPendingDevices <=1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.pendingForApprovalContx')}
                                                                 </p>
                                                             </div>
