@@ -416,14 +416,14 @@ function AddDevices() {
                                             <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
                                                 <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
                                                     <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)}></SuccessMessage>
                                                 </div>
                                             </div>
                                         )}
                                         {entry.errorMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-0" : "right-6"}`}>
+                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
                                                 <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
                                                     <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)}></ErrorMessage>
                                                 </div>
@@ -458,14 +458,14 @@ function AddDevices() {
                                                     styleSet={styles}>
                                                 </DropdownComponent>
                                             </div>
-                                            <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
+                                            <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
                                                 {entry.invalidMake && <span className="text-sm text-crimson-red font-semibold">{entry.invalidMake}</span>}
                                             </div>
-                                            <div className="flex flex-col w-[21.5%] max-[850px]:w-[47%] max-[585px]:w-full">
+                                            <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
