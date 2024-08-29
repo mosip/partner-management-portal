@@ -33,6 +33,7 @@ function AddSbi() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
     const [invalidVersion, setInvalidVersion] = useState("");
+    const [invalidSbiHash, setInvalidSbiHash] = useState("");
 
     let isCancelledClicked = false;
 
@@ -106,6 +107,12 @@ function AddSbi() {
     };
 
     const onChangeBinaryHash = (value) => {
+        const trimmedValue = value.trim();
+        if (trimmedValue.length === 0 && value.length > 0) {
+            setInvalidSbiHash(t('commons.specialCharNotAllowed'));
+        } else {
+            setInvalidSbiHash('');
+        }
         setBinaryHash(value)
     };
 
@@ -189,6 +196,8 @@ function AddSbi() {
         setBinaryHash("");
         setCreatedDate("");
         setExpiryDate("");
+        setInvalidSbiHash("");
+        setInvalidVersion("");
     };
 
     const handleFormSubmit = (event) => {
@@ -196,7 +205,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && binaryHash && !invalidVersion;
+        return partnerId && sbiVersion && binaryHash && !invalidVersion && !invalidSbiHash;
     };
 
     const clickOnCancel = () => {
@@ -272,6 +281,7 @@ function AddSbi() {
                                                 <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
+                                                {invalidSbiHash && <span className="text-sm text-crimson-red font-semibold">{invalidSbiHash}</span>}
                                             </div>
                                         </div>
 
