@@ -50,9 +50,9 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
             />
             <div className="flex items-center gap-x-3">
                 <h6 className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
-                <div>
+                <div ref={itemsCountSelectionRef}>
                     {isItemsPerPageOpen && (
-                    <div ref={itemsCountSelectionRef} className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                    <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                         {itemsPerPageOptions.map((num, i) => {
                         return (
                             <p key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => changeItemsPerPage(num))}

@@ -49,7 +49,7 @@ function DevicesList() {
         deviceSubTypeCode: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-    const submenuRef = useRef([]);
+    const submenuRef = useRef(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewDeviceId(-1));
@@ -315,7 +315,7 @@ function DevicesList() {
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2">
-                                                                            <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                                                            <div className="flex items-center justify-center relative" ref={submenuRef}>
                                                                                 <p onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
