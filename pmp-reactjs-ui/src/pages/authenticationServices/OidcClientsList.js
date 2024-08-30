@@ -328,13 +328,9 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                {client.status === "ACTIVE" &&
-                                                                                    (
-                                                                                        <p onClick={() => showDeactivateOidcClient(client)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateOidcClient(client))}>
-                                                                                            {t('oidcClientsList.deActivate')}
-                                                                                        </p>
-                                                                                    )
-                                                                                }
+                                                                                <p onClick={() => showDeactivateOidcClient(client)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateOidcClient(client))}>
+                                                                                    {t('oidcClientsList.deActivate')}
+                                                                                </p>
                                                                                 {showDeactivatePopup && (
                                                                                     <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.oidcClientName}></DeactivatePopup>
                                                                                 )}

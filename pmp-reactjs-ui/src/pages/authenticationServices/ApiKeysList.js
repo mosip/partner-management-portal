@@ -281,11 +281,9 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                {apiKey.status === "ACTIVE" &&
-                                                                                    (<p onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 text-crimson-red cursor-pointer hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(apiKey))}>
-                                                                                        {t('oidcClientsList.deActivate')}
-                                                                                    </p>
-                                                                                    )}
+                                                                                <p onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickDeactivate(apiKey))}>
+                                                                                    {t('oidcClientsList.deActivate')}
+                                                                                </p>
                                                                                 {showDeactivatePopup && (
                                                                                     <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
