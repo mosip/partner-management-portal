@@ -226,7 +226,7 @@ function SbiList() {
                                                     <button onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
                                                     <img src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
-                                                        <div className={`z-20 w-[17rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg ring-gray-50 border duration-500`}>
+                                                        <div className={`z-50 w-[17rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg ring-gray-50 border duration-500`}>
                                                             <p onClick={() => onClickDeactivate(sbi)} className={`text-left px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
                                                                 {t('sbiList.deactivate')}
                                                             </p>
