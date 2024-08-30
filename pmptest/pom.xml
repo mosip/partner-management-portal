@@ -4,7 +4,7 @@
   <artifactId>uitest-pmp</artifactId>
   <version>1.2.1</version>
   <name>uitest-pmp</name>
-  <description>uitest-pmp</description>
+  <description>Parent project of MOSIP Partner Management Portal - UI Tests</description>
   <url>https://github.com/mosip/Partner-management-portal</url>
 	
   <licenses>
