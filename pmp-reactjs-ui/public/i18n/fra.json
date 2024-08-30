@@ -352,7 +352,8 @@
         "sbiCreatedDate": "Date de création du SBI",
         "selectDate": "Sélectionner une date",
         "sbiExpiryDate": "Date d'expiration du SBI",
-        "addSbiInfoKey":"La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI",
+        "dateFormatInfoKey": "Entrez la date au format MM/DD/YYYY",
+        "expiryDateInfoKey":"La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils",
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
