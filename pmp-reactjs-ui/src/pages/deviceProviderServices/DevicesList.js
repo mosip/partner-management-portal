@@ -49,7 +49,7 @@ function DevicesList() {
         deviceSubTypeCode: ""
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
-    const submenuRef = useRef(null);
+    const submenuRef = useRef([]);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewDeviceId(-1));
@@ -315,12 +315,12 @@ function DevicesList() {
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2">
-                                                                            <div className="flex items-center justify-center relative" ref={submenuRef}>
+                                                                            <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                                 <p onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
-                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'}  z-20 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-4 text-right" : "right-4 text-left"}`}>
+                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-4 text-right" : "right-4 text-left"}`}>
                                                                                         <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             {t('devicesList.view')}
                                                                                         </p>
