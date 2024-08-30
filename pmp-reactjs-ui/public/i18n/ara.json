@@ -425,11 +425,11 @@
     },
     "deactivateSbi": {
         "headerMsg": "هل تريد إلغاء تنشيط إصدار SBI ",
-        "description1": "عند النقر فوق تأكيد، تفاصيل SBI الخاصة بك و",
-        "devicesMapped": "الأجهزة المعينة",
-        "description2": "سيتم إلغاء تنشيطه",
-        "deactivateSbiHintPlural": "سيتم إلغاء تنشيط جميع الأجهزة {{devicesCount}} المرتبطة بـ SBI هذا",
-        "deactivateSbiHintSingular": "سيتم إلغاء تنشيط {{devicesCount}} جهاز مرتبط بجهاز SBI هذا"
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل SBI الخاصة بك والأجهزة المعتمدة المعينة لها. سيتم رفض الأجهزة المعلقة للموافقة تلقائيًا.",
+        "deactivateApprovedDevicesPlural": " {{devicesCount}} سيتم إلغاء تنشيط الأجهزة المعتمدة المرتبطة بهذا SBI ",
+        "deactivateApprovedDevicesSingular": "{{devicesCount}} سيتم إلغاء تنشيط الجهاز المعتمد المرتبط بهذا SBI ",
+        "deactivatePendingDevicesPlural": " {{devicesCount}} سيتم رفض الأجهزة التي تنتظر الموافقة تلقائيًا",
+        "deactivatePendingDevicesSingular": "{{devicesCount}} سيتم رفض الجهاز المعلق للموافقة تلقائيًا"
      },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",

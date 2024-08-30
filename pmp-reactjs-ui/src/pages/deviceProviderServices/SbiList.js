@@ -231,7 +231,7 @@ function SbiList() {
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (
-                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description1' headerKeyName={sbi.sbiVersion}/>
+                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion}/>
                                                             )}
                                                         </div>
                                                     )}

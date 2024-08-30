@@ -425,11 +425,11 @@
     },
     "deactivateSbi": {
         "headerMsg": "Voulez-vous désactiver la version SBI ",
-        "description1": "En cliquant sur Confirmer, vos détails SBI et le ",
-        "devicesMapped": "appareils mappés",
-        "description2": "il sera désactivé",
-        "deactivateSbiHintPlural": "Tous les {{devicesCount}} appareils associés à ce SBI seront désactivés",
-        "deactivateSbiHintSingular": "{{devicesCount}} appareil associé à ce SBI sera désactivé"
+        "description": "En cliquant sur Confirmer, vos informations SBI et les appareils approuvés qui y sont associés seront désactivés. Les appareils en attente d'approbation seront automatiquement rejetés.",
+        "deactivateApprovedDevicesPlural": " {{devicesCount}} les appareils approuvés associés à ce SBI seront désactivés ",
+        "deactivateApprovedDevicesSingular": "{{devicesCount}} l'appareil approuvé associé à ce SBI sera désactivé ",
+        "deactivatePendingDevicesPlural": " {{devicesCount}} les appareils en attente d'approbation seront automatiquement rejetés",
+        "deactivatePendingDevicesSingular": "{{devicesCount}} les appareils en attente d'approbation seront automatiquement rejetés"
      },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
