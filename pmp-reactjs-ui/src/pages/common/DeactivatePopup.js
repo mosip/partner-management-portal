@@ -24,7 +24,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         closePopUp()
     };
 
-    const validateCountOfDevices = (countOfDevices, singularText, pluralText) => {
+    const formatDeviceCountMessage = (countOfDevices, singularText, pluralText) => {
         if (countOfDevices > 1) {
             return pluralText;
         }
@@ -112,8 +112,8 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                 </p>
                                 {popupData.isDeactivateSbi &&
                                     (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] rounded-md w-full p-[2%] mb-2">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t(validateCountOfDevices(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), {devicesCount: popupData.countOfApprovedDevices})}
-                                            | {t(validateCountOfDevices(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), {devicesCount: popupData.countOfPendingDevices})}
+                                        <p className="text-sm font-inter text-[#8B6105]">{t(formatDeviceCountMessage(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), {devicesCount: popupData.countOfApprovedDevices})}
+                                            | {t(formatDeviceCountMessage(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), {devicesCount: popupData.countOfPendingDevices})}
                                         </p>
                                     </div>)
                                 }
