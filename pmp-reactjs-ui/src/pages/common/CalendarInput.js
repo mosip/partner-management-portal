@@ -41,7 +41,7 @@ function CalendarInput({ showCalendar, addInfoIcon, setShowCalender, label, onCh
         <DatePicker
           selected={selectedDateStr === "" ? new Date() : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
-          dateFormat="dd/MM/yyyy"
+          dateFormat="MM/dd/yyyy"
           className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
           wrapperClassName="w-full" 
         />
