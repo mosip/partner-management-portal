@@ -420,11 +420,11 @@
     },
     "deactivateSbi": {
         "headerMsg": "Do you want to deactivate SBI Version ",
-        "description1": "On clicking Confirm, your SBI details and the ",
-        "devicesMapped": "devices mapped ",
-        "description2": "to it will be deactivated",
-        "deactivateSbiHintPlural": "All {{devicesCount}} devices associated to this SBI will be deactivated",
-        "deactivateSbiHintSingular": "{{devicesCount}} device associated to this SBI will be deactivated"
+        "description": "On clicking Confirm, your SBI details and the approved devices mapped to it will be deactivated. Pending for approval devices will be auto- rejected.",
+        "deactivateApprovedDevicesPlural": " {{devicesCount}} approved devices associated to this SBI will be deactivated ",
+        "deactivateApprovedDevicesSingular": "{{devicesCount}} approved device associated to this SBI will be deactivated ",
+        "deactivatePendingDevicesPlural": " {{devicesCount}} devices pending for approval will be auto-rejected",
+        "deactivatePendingDevicesSingular": "{{devicesCount}} device pending for approval will be auto-rejected"
     },
     "viewDeviceDetails": {
         "viewDeviceDetails": "View Device Details",

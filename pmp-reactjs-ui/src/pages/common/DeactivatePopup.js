@@ -24,12 +24,12 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         closePopUp()
     };
 
-    const validateCountOfApprovedDevices = (countOfDevices) => {
+    const formatDeviceCountMessage = (countOfDevices, singularText, pluralText) => {
         if (countOfDevices > 1) {
-            return ('deactivateSbi.deactivateSbiHintPlural')
+            return pluralText;
         }
         else {
-            return ('deactivateSbi.deactivateSbiHintSingular')
+            return singularText;
         }
     };
 
@@ -107,12 +107,14 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                         {t(headerMsg)} - {popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}
                                     </p>
                                 }
-                                <p className="text-sm text-[#666666] break-words py-[6%]">
-                                    {t(descriptionMsg)} {popupData.isDeactivateSbi && <span className="font-bold break-words">{t('deactivateSbi.devicesMapped')}</span>} {popupData.isDeactivateSbi && t('deactivateSbi.description2')}
+                                <p className="text-sm text-[#666666] break-words py-[5%]">
+                                    {t(descriptionMsg)}
                                 </p>
                                 {popupData.isDeactivateSbi &&
-                                    (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] rounded-md w-full p-[2%]">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t(validateCountOfApprovedDevices(popupData.countOfApprovedDevices), {devicesCount: popupData.countOfApprovedDevices})} {!isLoginLanguageRTL && t('!')}</p>
+                                    (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] rounded-md w-full p-[2%] mb-2">
+                                        <p className="text-sm font-inter text-[#8B6105]">{t(formatDeviceCountMessage(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), {devicesCount: popupData.countOfApprovedDevices})}
+                                            | {t(formatDeviceCountMessage(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), {devicesCount: popupData.countOfPendingDevices})}
+                                        </p>
                                     </div>)
                                 }
                                 <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
