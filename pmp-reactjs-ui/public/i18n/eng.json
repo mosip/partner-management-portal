@@ -349,7 +349,8 @@
         "sbiCreatedDate": "SBI Created Date",
         "selectDate": "Select Date",
         "sbiExpiryDate": "SBI Expiry Date",
-        "addSbiInfoKey": "SBI Expiry date should be atleast one year greater than the SBI created date",
+        "dateFormatInfoKey": "Enter date in MM/DD/YYYY",
+        "expiryDateInfoKey": "SBI Expiry date should be atleast one year greater than the SBI created date.",
         "errorInAddingSbi": "While adding SBI, we have encountered with an error."
     },
     "sbiList": {

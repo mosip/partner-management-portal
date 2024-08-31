@@ -292,6 +292,8 @@ function AddSbi() {
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={onHandleChangeCreateDate}
                                                 selectedDateStr={createdDate}
+                                                addInfoIcon
+                                                infoKey='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
                                             />
                                             <CalendarInput
@@ -301,6 +303,8 @@ function AddSbi() {
                                                 onChange={onHandleChangeExpiryDate}
                                                 selectedDateStr={expiryDate}
                                                 addInfoIcon
+                                                infoKey='addSbis.expiryDateInfoKey'
+                                                infoKey1='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
                                             />
                                         </div>
