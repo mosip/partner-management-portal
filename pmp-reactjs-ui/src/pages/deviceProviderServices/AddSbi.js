@@ -7,7 +7,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
 import {
     isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest, validateInput
+    handleServiceErrors, createRequest
 } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -32,8 +32,6 @@ function AddSbi() {
     const [expiryDate, setExpiryDate] = useState("");
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
-    const [invalidVersion, setInvalidVersion] = useState("");
-    const [invalidSbiHash, setInvalidSbiHash] = useState("");
 
     let isCancelledClicked = false;
 
@@ -102,17 +100,10 @@ function AddSbi() {
     }, []);
 
     const onChangeSbiVersion = (value) => {
-        setInvalidVersion(validateInput(value, t));
         setSbiVersion(value)
     };
 
     const onChangeBinaryHash = (value) => {
-        const trimmedValue = value.trim();
-        if (trimmedValue.length === 0 && value.length > 0) {
-            setInvalidSbiHash(t('commons.specialCharNotAllowed'));
-        } else {
-            setInvalidSbiHash('');
-        }
         setBinaryHash(value)
     };
 
@@ -196,8 +187,6 @@ function AddSbi() {
         setBinaryHash("");
         setCreatedDate("");
         setExpiryDate("");
-        setInvalidSbiHash("");
-        setInvalidVersion("");
     };
 
     const handleFormSubmit = (event) => {
@@ -205,7 +194,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && binaryHash && !invalidVersion && !invalidSbiHash;
+        return partnerId && sbiVersion.trim() && binaryHash.trim();
     };
 
     const clickOnCancel = () => {
@@ -274,14 +263,12 @@ function AddSbi() {
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
-                                                {invalidVersion && <span className="text-sm text-crimson-red font-semibold">{invalidVersion}</span>}
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
                                                 <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
-                                                {invalidSbiHash && <span className="text-sm text-crimson-red font-semibold">{invalidSbiHash}</span>}
                                             </div>
                                         </div>
 

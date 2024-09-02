@@ -204,18 +204,15 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComments && !validationError;
+        return partnerId && policyName && partnerComments.trim() && !validationError;
     };
 
     const validateComments = (comments) => {
         let error = "";
         const maxLength = 500;
-        const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
         
         if (comments.length > maxLength) {
             error = t('requestPolicy.commentTooLong');
-        } else if (!regexPattern.test(comments)) {
-            error = t('commons.specialCharNotAllowed');
         }
         setValidationError(error);
         return error === "";
