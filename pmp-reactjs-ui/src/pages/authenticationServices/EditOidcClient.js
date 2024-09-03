@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateName, validateUrl, onPressEnterKey } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import DropdownComponent from "../common/fields/DropdownComponent";
@@ -20,7 +20,6 @@ function EditOidcClient() {
     const [errorMsg, setErrorMsg] = useState("");
     const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
     const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
-    const [nameValidationError, setNameValidationError] = useState("");
     const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
 
     const [oidcClientDetails, setOidcClientDetails] = useState({
@@ -91,7 +90,6 @@ function EditOidcClient() {
     };
 
     const onChangeOidcClientName = (value) => {
-        setNameValidationError(validateName(value, 256, t));
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
             oidcClientName: value
@@ -182,13 +180,12 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName))
-            && oidcClientDetails.oidcClientName !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
-            && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
+            (oidcClientDetails.oidcClientName.trim() !== selectedClientDetails.oidcClientName))
+            && oidcClientDetails.oidcClientName.trim() !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
     const clearForm = () => {
-        setNameValidationError("");
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
         setErrorCode("");
@@ -255,9 +252,7 @@ function EditOidcClient() {
         dropdownButton: "!w-full !h-10 !rounded-md !text-base !text-left",
         selectionBox: "!top-10"
     }
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -275,7 +270,7 @@ function EditOidcClient() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
+                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -340,7 +335,6 @@ function EditOidcClient() {
                                                 <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                 />
-                                                {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                                             </div>
                                         </div>
                                         <div className="flex my-[1%]">

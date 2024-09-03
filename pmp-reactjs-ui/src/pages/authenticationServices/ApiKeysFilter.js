@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import DropdownComponent from '../common/fields/DropdownComponent.js';
-import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
+import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent.js";
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from "../../utils/AppUtils.js";
 
-function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
+function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
     const { t } = useTranslation();
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [policyGroupData, setpolicyGroupData] = useState([]);
@@ -84,4 +84,4 @@ function ApiClientsFilter({ filteredApiKeysList, onFilterChange }) {
         </>
     )
 }
-export default ApiClientsFilter;
+export default ApiKeysFilter;

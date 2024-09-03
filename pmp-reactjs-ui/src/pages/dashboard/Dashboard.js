@@ -7,12 +7,13 @@ import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcCli
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
-
 import SelectPolicyPopup from './SelectPolicyPopup.js';
+
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
-import deviceProviderServices_icon from '../../svg/deviceProviderServices_icon.svg'
+import deviceProviderServices_icon from '../../svg/deviceProviderServices_icon.svg';
+import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import ConsentPopup from './ConsentPopup.js';
 
 function Dashboard() {
@@ -25,6 +26,7 @@ function Dashboard() {
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
+  const [showFtmServices,setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
@@ -68,6 +70,9 @@ function Dashboard() {
         }
         if (getUserProfile().partnerType === "DEVICE_PROVIDER") {
           setShowDeviceProviderServices(true);
+        }
+        if (getUserProfile().partnerType === "FTM_PROVIDER") {
+          setShowFtmServices(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
         // using the email id
@@ -147,11 +152,13 @@ function Dashboard() {
     navigate('/partnermanagement/deviceProviderServices/sbiList')
   };
 
+  const ftmChipProviderServices = () => {
+    navigate('/partnermanagement/ftmChipProviderServices/ftmList')
+  };
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
-
-
 
   return (
     <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28" : "ml-20"} overflow-x-scroll relative`}>
@@ -231,7 +238,21 @@ function Dashboard() {
                 </div>
               </div>
             )}
-
+            {showFtmServices && (
+              <div onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+                <div className="flex justify-center mb-5">
+                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                </div>
+                <div>
+                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                    {t('dashboard.ftmChipProviderServices')}
+                  </h5>
+                  <p className="mb-3 text-xs font-normal text-gray-400">
+                    {t('dashboard.ftmChipProviderServicesDesc')}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           {showPopup && (
             <SelectPolicyPopup />

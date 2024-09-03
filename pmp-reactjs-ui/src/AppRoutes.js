@@ -21,6 +21,8 @@ import SbiList from './pages/deviceProviderServices/SbiList.js';
 import AddDevices from './pages/deviceProviderServices/AddDevices.js';
 import ViewDeviceDetails from './pages/deviceProviderServices/ViewDeviceDetails.js';
 import DevicesList from './pages/deviceProviderServices/DevicesList.js';
+import FtmList from './pages/ftmProviderServices/FtmList.js';
+import AddFtm from './pages/ftmProviderServices/AddFtm.js';
 
 
 function AppRoutes() {
@@ -121,6 +123,14 @@ function AppRoutes() {
         {
           path: 'deviceProviderServices/viewDeviceDetails',
           element: <GuardedRoute><MainLayout><ViewDeviceDetails/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'ftmChipProviderServices/ftmList',
+          element: <GuardedRoute><MainLayout><FtmList/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'ftmChipProviderServices/addFtm',
+          element: <GuardedRoute><MainLayout><AddFtm/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

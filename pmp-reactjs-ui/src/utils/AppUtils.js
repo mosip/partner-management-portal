@@ -11,7 +11,9 @@ export const formatDate = (dateString, format) => {
         case 'date':
             return date.toLocaleDateString();
         case 'time':
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            return date.toLocaleTimeString();
+        case 'iso':
+            return date.toISOString();
         default:
             return '-';
     }
@@ -246,18 +248,6 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
     }
 };
 
-
-export const validateName = (value, length, t) => {
-    const regexPattern = /^(?!\s+$)[a-zA-Z0-9-_ ,.&()]*$/;
-    if (value.length > length) {
-        return t('commons.nameTooLong', { length: length });
-    } else if (!regexPattern.test(value)) {
-        return t('commons.specialCharNotAllowed');
-    } else {
-        return "";
-    }
-};
-
 export const validateUrl = (index, value, length, urlArr, t) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
     if (value === "") {
@@ -311,7 +301,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status") {
+            } else if (fieldName === "status" || fieldName === "approvalStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
@@ -353,4 +343,15 @@ export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCod
         console.error('Error in getAllApprovedAuthPartnerPolicies:', error);
         return null;
     }
+};
+
+export const populateDeactivatedStatus = (data, statusAttributeName, activeAttributeName) => {
+    // Updating the status based on the condition
+    const updatedData = data.map(item => {
+        if (item[statusAttributeName] === 'approved' && item[activeAttributeName] === false) {
+            return { ...item, [statusAttributeName]: 'deactivated' };
+        }
+        return item;
+    });
+    return updatedData;
 };

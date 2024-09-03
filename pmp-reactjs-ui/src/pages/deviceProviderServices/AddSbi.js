@@ -147,8 +147,8 @@ function AddSbi() {
         setDataLoaded(false);
         let request = createRequest(
             {
-                swBinaryHash: binaryHash,
-                swVersion: sbiVersion,
+                swBinaryHash: binaryHash.trim(),
+                swVersion: sbiVersion.trim(),
                 swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
                 swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId
@@ -194,7 +194,7 @@ function AddSbi() {
     };
 
     const isFormValid = () => {
-        return partnerId && sbiVersion && binaryHash
+        return partnerId && sbiVersion.trim() && binaryHash.trim();
     };
 
     const clickOnCancel = () => {
@@ -211,14 +211,14 @@ function AddSbi() {
                 <>
                     {errorMsg && (
                         <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-[800px]:w- min-h-14  max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
+                            <div className="flex justify-between items-center min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                             </div>
                         </div>
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
-                            <Title title='addSbis.addSbi' subTitle='deviceProviderServices.listOfSbisAndDevices' backLink='/partnermanagement/deviceProviderServices/sbiList' styleSet={styleForTitle}></Title>
+                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/deviceProviderServices/sbiList'/>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -244,37 +244,44 @@ function AddSbi() {
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-[0.63rem] border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t("partnerTypes.deviceProvider")}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
+                                                    {partnerId &&
+                                                        <>
+                                                            <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t("partnerTypes.deviceProvider")}</span>
+                                                            <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                            </svg>
+                                                        </>
+                                                    }
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')}</label>
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
                                                 <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')}</label>
-                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={36}
+                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
+                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
                                             </div>
                                         </div>
 
-                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                        <div className="flex justify-between space-x-4 max-[450px]:space-x-0 my-[1%]">
                                             <CalendarInput
                                                 label={t('addSbis.sbiCreatedDate')}
                                                 showCalendar={isCreateCalendarOpen}
                                                 setShowCalender={setIsCreateCalendarOpen}
                                                 onChange={onHandleChangeCreateDate}
                                                 selectedDateStr={createdDate}
+                                                addInfoIcon
+                                                infoKey='addSbis.dateFormatInfoKey'
+                                                containsAsterisk
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -283,16 +290,19 @@ function AddSbi() {
                                                 onChange={onHandleChangeExpiryDate}
                                                 selectedDateStr={expiryDate}
                                                 addInfoIcon
+                                                infoKey='addSbis.expiryDateInfoKey'
+                                                infoKey1='addSbis.dateFormatInfoKey'
+                                                containsAsterisk
                                             />
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div className="border bg-medium-gray" />
-                            <div className="flex flex-row px-[3%] py-[2%] justify-between max-[500px]:flex-col">
-                                <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
-                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col">
-                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                            <div className="flex flex-row px-[3%] py-[2%] justify-between max-[500px]:flex-col max-[500px]:items-center">
+                                <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2">{t('requestPolicy.clearForm')}</button>
+                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col max-[500px]:space-x-0 max-[500px]:items-center">
+                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2`}>{t('requestPolicy.cancel')}</button>
                                     <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                         {t('commons.submit')}
                                     </button>

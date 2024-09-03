@@ -7,7 +7,7 @@ import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData, validateName
+    createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData
 } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -32,7 +32,6 @@ function GenerateApiKey() {
     const [nameLabel, setNameLabel] = useState('');
     const [apiKeyId, setApiKeyId] = useState('');
     const [validationError, setValidationError] = useState("");
-    const [nameValidationError, setNameValidationError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     let isCancelledClicked = false;
 
@@ -94,7 +93,6 @@ function GenerateApiKey() {
     };
 
     const onChangeNameLabel = (value) => {
-        setNameValidationError(validateName(value, 36, t));
         setNameLabel(value)
     }
 
@@ -133,11 +131,10 @@ function GenerateApiKey() {
         setNameLabel("");
         setPoliciesDropdownData([]);
         setValidationError("");
-        setNameValidationError("");
     };
 
     const isFormValid = () => {
-        return partnerId && policyName && nameLabel && !validationError && !nameValidationError;
+        return partnerId && policyName && nameLabel.trim() && !validationError;
     };
 
     useEffect(() => {
@@ -204,9 +201,7 @@ function GenerateApiKey() {
         outerDiv: "!bg-opacity-[50%]"
     }
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[5%]"
-    }
+
 
       const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -228,7 +223,7 @@ function GenerateApiKey() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' styleSet={styleForTitle}></Title>
+                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' ></Title>
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
@@ -293,7 +288,6 @@ function GenerateApiKey() {
                                                     <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('generateApiKey.enterNameForApiKey')} />
-                                                    {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                                                 </div>
                                             </div>
                                         </div>

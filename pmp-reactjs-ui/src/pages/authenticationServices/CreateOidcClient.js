@@ -6,7 +6,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
-  isLangRTL, createDropdownData, validateName, validateUrl, getAllApprovedAuthPartnerPolicies,
+  isLangRTL, createDropdownData, validateUrl, getAllApprovedAuthPartnerPolicies,
   onPressEnterKey
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
@@ -43,7 +43,6 @@ function CreateOidcClient() {
   const [jsonError, setJsonError] = useState("");
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
-  const [nameValidationError, setNameValidationError] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   let isCancelledClicked = false;
 
@@ -185,7 +184,6 @@ function CreateOidcClient() {
   };
 
   const onChangeOidcClientName = (value) => {
-    setNameValidationError(validateName(value, 256, t));
     setOidcClientName(value);
   }
 
@@ -339,7 +337,6 @@ function CreateOidcClient() {
     setJsonError("");
     setInvalidLogoUrl("");
     setInvalidRedirectUrl("");
-    setNameValidationError("");
   };
 
   const redirectUrlsNotEmpty = () => {
@@ -352,8 +349,8 @@ function CreateOidcClient() {
   };
 
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes
-      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
+    return partnerId && policyName && oidcClientName.trim() && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
   };
 
   const styles = {
@@ -383,7 +380,7 @@ function CreateOidcClient() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' styleSet={styleForTitle}></Title>
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
             </div>
             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
               <div className="px-[2.5%] py-[2%]">
@@ -447,7 +444,6 @@ function CreateOidcClient() {
                         <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
                           className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('createOidcClient.enterNameForOidcClient')} />
-                        {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}
                       </div>
                     </div>
                     <div className="flex my-[1%]">
