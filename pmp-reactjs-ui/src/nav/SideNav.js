@@ -12,6 +12,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
     const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
+    const [enableFtmServices, setEnableFtmServices] = useState(false);
+
     useEffect(() => {
         //console.log(selectedPath);
         if (selectedPath.includes('dashboard')) {
@@ -28,7 +30,10 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("authenticationServices");
         } else if (selectedPath.includes('deviceProviderServices')) {
             setActiveIcon('deviceProviderServices');
-        } else {
+        } else if (selectedPath.includes('ftmChipProviderServices')) {
+            setActiveIcon('ftmChipProviderServices');
+        } 
+        else {
             setActiveIcon("home");
         }
     }, [selectedPath]);
@@ -43,6 +48,9 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         }
         if (partnerType === "DEVICE_PROVIDER") {
             setEnableDeviceProviderServicesMenu(true);
+        }
+        if (partnerType === "FTM_PROVIDER") {
+            setEnableFtmServices(true);
         }
     }, [policyRequiredPartnerTypes, partnerType]);
 
@@ -64,6 +72,9 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     };
     const showDeviceProviderServices = () => {
         navigate('/partnermanagement/deviceProviderServices/sbiList');
+    };
+    const showFtmServices = () => {
+        navigate('/partnermanagement/ftmChipProviderServices/ftmList');
     };
 
     return (
@@ -90,6 +101,11 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     {enableDeviceProviderServicesMenu &&
                         <li className="duration-700 cursor-pointer" onClick={() => showDeviceProviderServices()} onKeyPress={(e) => { e.key === 'Enter' && showDeviceProviderServices() }}>
                             <SideNavMenuItem title={t('dashboard.deviceProviderServices')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
+                        </li>
+                    }
+                    {enableFtmServices &&
+                        <li className="duration-700 cursor-pointer" onClick={() => showFtmServices()} onKeyPress={(e) => { e.key === 'Enter' && showFtmServices() }}>
+                            <SideNavMenuItem title={t('dashboard.ftmChipProviderServices')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                         </li>
                     }
                 </ul>
