@@ -37,6 +37,8 @@
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
         "deviceProviderServices": "Device Provider Services",
+        "ftmChipProviderServices": "FTM Chip Provider Services",
+        "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
         "deviceProviderServicesDesc": "Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!"
@@ -431,6 +433,11 @@
         "viewDeviceDetails": "View Device Details",
         "sbiVersionGoesHere1": "SBI Version goes here 1",
         "createdOn": "Created On"
+    },
+    "ftmList": {
+        "addDeviceBtn": "Add a Device",
+        "ftmChipProviderServices": "FTM Chip Provider Services",
+        "addFtm": "Add FTM"
     },
     "consentPopup": {
         "title": "Terms and Conditions",

@@ -37,6 +37,8 @@
         "authenticationServices": "خدمات المصادقة",
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
+        "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
+        "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
         "deviceProviderServicesDesc": "إضافة وعرض وإلغاء تنشيط SBI (الواجهة البيومترية الآمنة) والأجهزة المرتبطة بها",
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى"
@@ -436,6 +438,11 @@
         "viewDeviceDetails": "عرض تفاصيل الجهاز",
         "sbiVersionGoesHere1": "نسخة SBI هنا 1",
         "createdOn": "تم إنشاؤها على"
+    },
+    "ftmList": {
+        "addDeviceBtn": "إضافة جهاز",
+        "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
+        "addFtm": "إضافة FTM"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",

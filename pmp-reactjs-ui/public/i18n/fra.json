@@ -37,6 +37,8 @@
         "authenticationServices": "Services d'authentification",
         "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
         "deviceProviderServices":"Services du fournisseur d'appareils",
+        "ftmChipProviderServices": "Services de fournisseur de puces FTM",
+        "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
         "deviceProviderServicesDesc":"Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
@@ -436,6 +438,11 @@
         "viewDeviceDetails": "Afficher les détails de l'appareil",
         "sbiVersionGoesHere1": "La version SBI va ici 1",
         "createdOn": "Créé sur"
+    },
+    "ftmList": {
+        "addDeviceBtn": "Ajouter un appareil",
+        "ftmChipProviderServices": "Services de fournisseur de puces FTM",
+        "addFtm": "Ajouter FTM"
     },
     "consentPopup": {
         "title": "Termes et conditions",
