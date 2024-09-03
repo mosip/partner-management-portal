@@ -4,7 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { HttpService } from '../../services/HttpService.js';
 import Title from '../common/Title.js';
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInput } from '../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import SuccessMessage from "../common/SuccessMessage";
@@ -195,20 +195,12 @@ function AddDevices() {
             successMsg: "",
             errorCode: "",
             errorMsg: "",
-            invalidMake: "",
-            invalidModel: "",
         };
     }
 
     const handleInputChange = async (index, field, value) => {
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
-        if (field === 'make') {
-            newEntries[index].invalidMake = validateInput(value, t);
-        }
-        if (field === 'model') {
-            newEntries[index].invalidModel = validateInput(value, t);
-        }
         if (field === 'deviceType') {
             const subtypeData = await fetchDeviceSubTypeDropdownData(value, index);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
@@ -219,7 +211,7 @@ function AddDevices() {
 
     const isFormValid = (index) => {
         const entry = deviceEntries[index];
-        return entry.deviceType && entry.deviceSubType && entry.make && entry.model && !entry.invalidMake && !entry.invalidModel;
+        return entry.deviceType && entry.deviceSubType && entry.make.trim() && entry.model.trim();
     };
 
     const clearForm = async (index) => {
@@ -463,14 +455,12 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} />
-                                                {entry.invalidMake && <span className="text-sm text-crimson-red font-semibold">{entry.invalidMake}</span>}
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} />
-                                                {entry.invalidModel && <span className="text-sm text-crimson-red font-semibold">{entry.invalidModel}</span>}
                                             </div>
                                         </div>
                                     </form>
