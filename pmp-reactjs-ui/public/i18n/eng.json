@@ -437,7 +437,16 @@
     "ftmList": {
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
-        "addFtm": "Add FTM"
+        "addFtmBtn": "Add FTM"
+    },
+    "addFtm": {
+        "addFtmChipDetails": "Add FTM Chip Details",
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "infoPartnerId": "Only those partner IDs of FTM Chip Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "makeBoxHelp": "Enter Make",
+        "modelBoxHelp": "Enter Model",
+        "uploadFtmCertificate": "Upload FTM Chip Certificate",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
