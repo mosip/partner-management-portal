@@ -442,7 +442,16 @@
     "ftmList": {
         "addDeviceBtn": "Ajouter un appareil",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
-        "addFtm": "Ajouter FTM"
+        "addFtmBtn": "Ajouter FTM"
+    },
+    "addFtm": {
+        "addFtmChipDetails": "Ajouter les détails de la puce FTM",
+        "listOfFtmChipDetails": "Liste des détails de la puce FTM",
+        "infoPartnerId": "Seuls les identifiants de partenaire du fournisseur de puces FTM dont le certificat partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat partenaire",
+        "makeBoxHelp": "Entrez la marque",
+        "modelBoxHelp": "Entrez le modèle",
+        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM.",
+        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
     "consentPopup": {
         "title": "Termes et conditions",

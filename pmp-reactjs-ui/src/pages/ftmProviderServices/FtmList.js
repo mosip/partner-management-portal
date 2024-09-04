@@ -69,7 +69,7 @@ function FtmList() {
                 <img src={rectangleGrid} alt="" />
                 <button onClick={() => addFtm()} type="button"
                   className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                  {t('devicesList.addDevices')}
+                  {t('ftmList.addFtmBtn')}
                 </button>
               </div>
             </div>

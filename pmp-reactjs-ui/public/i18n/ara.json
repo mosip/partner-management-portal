@@ -442,7 +442,16 @@
     "ftmList": {
         "addDeviceBtn": "إضافة جهاز",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
-        "addFtm": "إضافة FTM"
+        "addFtmBtn": "إضافة FTM"
+    },
+    "addFtm": {
+        "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
+        "infoPartnerId": "تتوفر فقط معرفات الشركاء لمزود شريحة FTM الذي تم تحميل شهادة الشريك الخاصة به في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
+        "makeBoxHelp": "أدخل العلامة التجارية",
+        "modelBoxHelp": "أدخل النموذج",
+        "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
+        "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
