@@ -442,7 +442,23 @@
     "ftmList": {
         "addDeviceBtn": "إضافة جهاز",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
-        "addFtmBtn": "إضافة FTM"
+        "addFtmBtn": "إضافة FTM",
+        "partnerId":"معرف الشريك",
+        "listOfFtm": "قائمة تفاصيل شريحة FTM",
+        "make": "يصنع",
+        "model": "نموذج",
+        "createdDate": "تاريخ الإنشاء",
+        "certificateExpiryDate": "تاريخ انتهاء صلاحية الشهادة",
+        "certificateUploadDate": "وقت تحميل الشهادة",
+        "status": "حالة",
+        "action": "فعل",
+        "view": "منظر",
+        "manageCertificate": "إدارة الشهادة",
+        "deActivate": "إلغاء التنشيط",
+        "selectPartnerId":"حدد معرف الشريك",
+        "selectMakeName": "حدد إنشاء اسم",
+        "selectModelName": "حدد اسم النموذج",
+        "selectStatus": "حدد الحالة"
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -452,6 +468,14 @@
         "modelBoxHelp": "أدخل النموذج",
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة"
+    },
+    "viewFtmChipDetails": {
+        "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM"
+    },
+    "manageFtmChipCertificate": {
+        "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
@@ -568,6 +592,8 @@
         "PMS_AUT_510": "لا يوجد تعيين للبيانات المقدمة.",
         "PMS_AUT_511": "لم تتم الموافقة على SBI الذي يتم تعيين الجهاز له",
         "PMS_AUT_513": "انتهت صلاحية SBI التي يتم تعيين الجهاز لها",
+        "PMS_AUT_514": "يجب أن يكون تاريخ الإنشاء أقل من أو يساوي التاريخ الحالي.",
+        "PMS_AUT_515": "لا ينبغي أن يكون تاريخ انتهاء الصلاحية أكبر من 10 سنوات من اليوم",
         "PMS_POL_002": "عدم تطابق بيانات اعتماد مدير السياسة",
         "PMS_POL_004": "اسم النهج موجود بالفعل في مجموعة السياسة. الاسم:",
         "PMS_POL_005": "سمة KYC غير مدعومة في ملف السياسة",

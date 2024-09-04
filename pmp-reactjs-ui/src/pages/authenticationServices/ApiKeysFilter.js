@@ -33,7 +33,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
 
     return (
         <>
-            <div className="flex w-full p-2 justify-start bg-gray-50 flex-wrap">
+            <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
                 <DropdownComponent
                     fieldName='partnerId'
                     dropdownDataList={partnerIdData}
