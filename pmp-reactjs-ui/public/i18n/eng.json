@@ -437,7 +437,23 @@
     "ftmList": {
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
-        "addFtmBtn": "Add FTM"
+        "addFtmBtn": "Add FTM",
+        "partnerId":"Partner ID",
+        "listOfFtm": "List of FTM Chip details",
+        "make": "Make",
+        "model": "Model",
+        "createdDate": "Created Date",
+        "certificateExpiryDate": "Cert Expiry Date",
+        "certificateUploadDate": "Cert Time of Upload",
+        "status": "Status",
+        "action": "Action",
+        "view": "View",
+        "manageCertificate": "Manage Certificate",
+        "deActivate": "Deactivate",
+        "selectPartnerId":"Select Partner ID",
+        "selectMakeName": "Select Make Name",
+        "selectModelName": "Select Model Name",
+        "selectStatus": "Select Status"
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip Details",
@@ -447,6 +463,14 @@
         "modelBoxHelp": "Enter Model",
         "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
+    },
+    "viewFtmChipDetails": {
+        "viewFtmChipDetails": "View FTM Chip Device Details",
+        "listOfFtmChipDetails": "List of FTM Chip details"
+    },
+    "manageFtmChipCertificate": {
+        "manageFtmChipCertificate": "Manage FTM Chip Certificate",
+        "listOfFtmChipDetails": "List of FTM Chip details"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -564,6 +588,8 @@
         "PMS_AUT_510": "Mapping not exists for given data.",
         "PMS_AUT_511": "SBI for which device is being mapped is not approved",
         "PMS_AUT_513": "SBI for which device is being mapped is expired",
+        "PMS_AUT_514": "The created date should be less than or equal to the current date.",
+        "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
         "PMS_POL_004": "Policy Name already exists in the policy Group.Name : ",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",

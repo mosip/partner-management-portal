@@ -23,6 +23,8 @@ import ViewDeviceDetails from './pages/deviceProviderServices/ViewDeviceDetails.
 import DevicesList from './pages/deviceProviderServices/DevicesList.js';
 import FtmList from './pages/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/ftmProviderServices/AddFtm.js';
+import ViewFtmChipDetails from './pages/ftmProviderServices/ViewFtmChipDetails.js';
+import ManageFtmChipCertificate from './pages/ftmProviderServices/ManageFtmChipCertificate.js';
 
 
 function AppRoutes() {
@@ -131,6 +133,14 @@ function AppRoutes() {
         {
           path: 'ftmChipProviderServices/addFtm',
           element: <GuardedRoute><MainLayout><AddFtm/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'ftmChipProviderServices/viewFtmChipDetails',
+          element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'ftmChipProviderServices/manageFtmChipCertificate',
+          element: <GuardedRoute><MainLayout><ManageFtmChipCertificate/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
