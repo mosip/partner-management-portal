@@ -36,10 +36,10 @@
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
         "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
-        "deviceProviderServices":"Services du fournisseur d'appareils",
+        "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
-        "deviceProviderServicesDesc":"Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
+        "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
     },
@@ -54,7 +54,7 @@
         "lastName": "Nom de famille",
         "organisationName": "Nom de l'organisme",
         "address": "Adresse",
-        "partnerType":"Type de partenaire",
+        "partnerType": "Type de partenaire",
         "phoneNumber": "Numéro de téléphone",
         "emailAddress": "Adresse e-mail",
         "userName": "Nom d'utilisateur"
@@ -282,7 +282,7 @@
         "policyName": "Nom de la politique",
         "policyGroupDescription": "Description du groupe de stratégies",
         "policyNameDescription": "Nom de la stratégie Description",
-        "clientName":"Nom du client",
+        "clientName": "Nom du client",
         "publicKey": "Clé publique",
         "logoUri": "URI du logo",
         "redirectUri": "URI de redirection",
@@ -327,14 +327,14 @@
         "selectedPolicyName": "Sélectionnez la stratégie pour laquelle la clé API est requise",
         "name": "nom",
         "enterNameForApiKey": "Entrez un nom pour la clé API",
-        "generateApiKeySuccessHeader":"Détails soumis avec succès !",
+        "generateApiKeySuccessHeader": "Détails soumis avec succès !",
         "apiKeySuccessMsg": "Les détails de la clé API ont été soumis avec succès.",
         "errorInGenerateApiKey": "Lors de la génération de la clé API, nous avons rencontré une erreur.",
         "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
     },
     "deactivateApiKey": {
-       "apiKeyName": "Voulez-vous désactiver la clé API",
-       "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
+        "apiKeyName": "Voulez-vous désactiver la clé API",
+        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
@@ -355,7 +355,7 @@
         "selectDate": "Sélectionner une date",
         "sbiExpiryDate": "Date d'expiration du SBI",
         "dateFormatInfoKey": "Entrez la date au format MM/DD/YYYY",
-        "expiryDateInfoKey":"La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI.",
+        "expiryDateInfoKey": "La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI.",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils",
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
     },
@@ -433,7 +433,7 @@
         "deactivateApprovedDevicesSingular": "{{devicesCount}} l'appareil approuvé associé à ce SBI sera désactivé ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} les appareils en attente d'approbation seront automatiquement rejetés",
         "deactivatePendingDevicesSingular": "{{devicesCount}} les appareils en attente d'approbation seront automatiquement rejetés"
-     },
+    },
     "viewDeviceDetails": {
         "viewDeviceDetails": "Afficher les détails de l'appareil",
         "sbiVersionGoesHere1": "La version SBI va ici 1",
@@ -443,7 +443,7 @@
         "addDeviceBtn": "Ajouter un appareil",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "addFtmBtn": "Ajouter FTM",
-        "partnerId":"ID partenaire",
+        "partnerId": "ID partenaire",
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
         "model": "Modèle",
@@ -455,7 +455,7 @@
         "view": "Voir",
         "manageCertificate": "Gérer le certificat",
         "deActivate": "Désactiver",
-        "selectPartnerId":"Sélectionnez l'ID du partenaire",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut"
@@ -464,10 +464,13 @@
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
         "listOfFtmChipDetails": "Liste des détails de la puce FTM",
         "infoPartnerId": "Seuls les identifiants de partenaire du fournisseur de puces FTM dont le certificat partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat partenaire",
-        "makeBoxHelp": "Entrez la marque",
-        "modelBoxHelp": "Entrez le modèle",
+        "enterMake": "Entrez la marque",
+        "enterModel": "Entrez le modèle",
         "uploadFtmCertificate": "Télécharger le certificat de la puce FTM.",
-        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
+        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement.",
+        "errorInAddingFtm": "Lors de l'ajout de SBI, nous avons rencontré une erreur.",
+        "addFtmSuccessHeader": "Détails de la puce FTM soumis avec succès!",
+        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
@@ -647,7 +650,7 @@
         "PMS_CERTIFICATE_ERROR_005": "Le statut d'approbation est nul ou vide",
         "PMS_CERTIFICATE_ERROR_006": "Impossible de décoder les données du certificat",
         "PMS_CERTIFICATE_ERROR_007": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les certificats de partenaire d'origine",
-        "PMS_CERTIFICATE_ERROR_008":"Erreur lors de la récupération du certificat.",
+        "PMS_CERTIFICATE_ERROR_008": "Erreur lors de la récupération du certificat.",
         "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
         "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
         "PMS_POLICY_ERROR_003": "Erreur lors de la récupération de tous les identifiants de partenaires approuvés avec les groupes de stratégies.",
