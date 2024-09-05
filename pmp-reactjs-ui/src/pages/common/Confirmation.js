@@ -34,7 +34,7 @@ function Confirmation() {
         <div className={`mt-5 w-[100%]  ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex-col">
                 <div className={`flex items-start space-x-3`}>
-                    <img src={backArrow} onClick={() => navigate(confirmationData.backUrl)} alt="" className={`cursor-pointer max-[450px]:h-3 ${isLoginLanguageRTL ? "ml-2 rotate-180" :""} mt-[1%] max-[450px]:mt-[3%]`} />
+                    <img src={backArrow} onClick={() => navigate(confirmationData.backUrl)} alt="" className={`cursor-pointer max-[450px]:h-3 ${isLoginLanguageRTL ? "ml-2 rotate-180" : ""} mt-[1%] max-[450px]:mt-[3%]`} />
                     <div className="flex-col">
                         <h1 className="font-semibold text-xl text-dark-blue max-[450px]:text-sm">{t(confirmationData.title)}</h1>
                         <div className="flex space-x-1  max-[350px]:flex-col">
@@ -57,14 +57,24 @@ function Confirmation() {
                             <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                                 {t(confirmationData.description)}
                             </p>
-                            <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
-                                <button onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
-                                    {t('commons.goBack')}
-                                </button>
-                                <button onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
-                                {t('commons.home')}
-                                </button>
-                            </div>
+                            {!confirmationData.addFtmSuccess &&
+                                <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
+                                    <button onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
+                                        {t('commons.goBack')}
+                                    </button>
+                                    <button onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
+                                        {t('commons.home')}
+                                    </button>
+                                </div>
+                            }
+
+                            {confirmationData.addFtmSuccess &&
+                                <div>
+                                    <button onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
+                                        {t(confirmationData.uploadFtm)}
+                                    </button>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

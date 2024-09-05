@@ -459,10 +459,13 @@
         "addFtmChipDetails": "Add FTM Chip Details",
         "listOfFtmChipDetails": "List of FTM Chip details",
         "infoPartnerId": "Only those partner IDs of FTM Chip Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "makeBoxHelp": "Enter Make",
-        "modelBoxHelp": "Enter Model",
-        "uploadFtmCertificate": "Upload FTM Chip Certificate",
-        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
+        "enterMake": "Enter Make",
+        "enterModel": "Enter Model",
+        "uploadFtmCertificate": "Upload FTM Certificate",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload",
+        "errorInAddingFtm": "While adding SBI, we have encountered with an error.",
+        "addFtmSuccessHeader": "FTM Chip details submitted successfully!",
+        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "View FTM Chip Device Details",

@@ -433,7 +433,7 @@
         "deactivateApprovedDevicesSingular": "{{devicesCount}} سيتم إلغاء تنشيط الجهاز المعتمد المرتبط بهذا SBI ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} سيتم رفض الأجهزة التي تنتظر الموافقة تلقائيًا",
         "deactivatePendingDevicesSingular": "{{devicesCount}} سيتم رفض الجهاز المعلق للموافقة تلقائيًا"
-     },
+    },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",
         "sbiVersionGoesHere1": "نسخة SBI هنا 1",
@@ -443,7 +443,7 @@
         "addDeviceBtn": "إضافة جهاز",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "addFtmBtn": "إضافة FTM",
-        "partnerId":"معرف الشريك",
+        "partnerId": "معرف الشريك",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
@@ -455,7 +455,7 @@
         "view": "منظر",
         "manageCertificate": "إدارة الشهادة",
         "deActivate": "إلغاء التنشيط",
-        "selectPartnerId":"حدد معرف الشريك",
+        "selectPartnerId": "حدد معرف الشريك",
         "selectMakeName": "حدد إنشاء اسم",
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة"
@@ -464,10 +464,13 @@
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "infoPartnerId": "تتوفر فقط معرفات الشركاء لمزود شريحة FTM الذي تم تحميل شهادة الشريك الخاصة به في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
-        "makeBoxHelp": "أدخل العلامة التجارية",
-        "modelBoxHelp": "أدخل النموذج",
+        "enterMake": "أدخل العلامة التجارية",
+        "enterModel": "أدخل النموذج",
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
-        "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة"
+        "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
+        "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
+        "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
+        "addFtmSuccessMsg": "تم إرسال طلب إنشاء شريحة FTM بنجاح وهو في انتظار موافقة المشرف"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
@@ -647,7 +650,7 @@
         "PMS_CERTIFICATE_ERROR_005": "حالة الموافقة فارغة أو فارغة",
         "PMS_CERTIFICATE_ERROR_006": "غير قادر على فك تشفير بيانات الشهادة",
         "PMS_CERTIFICATE_ERROR_007": "معرف الشريك المحدد لا ينتمي إلى المستخدم. لذلك غير قادر على الحصول على شهادات الشريك الأصلية",
-        "PMS_CERTIFICATE_ERROR_008":"حدث خطأ أثناء جلب الشهادة.",
+        "PMS_CERTIFICATE_ERROR_008": "حدث خطأ أثناء جلب الشهادة.",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
         "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",

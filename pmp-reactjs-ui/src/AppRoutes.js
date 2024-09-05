@@ -143,6 +143,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ManageFtmChipCertificate/></MainLayout></GuardedRoute>
         },
         {
+          path: 'ftmChipProviderServices/addFtmConfirmation',
+          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
+        },
+        {
           path: 'runtimeError',
           element: <RuntimeError/>,
         },
