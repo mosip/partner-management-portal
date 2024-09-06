@@ -87,7 +87,7 @@ function Confirmation() {
 
                             {confirmationData.ftmPartnerData &&
                                 <div>
-                                    <button onClick={() => clickOnUpload(confirmationData.dataToUploadCertificate)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
+                                    <button onClick={() => clickOnUpload(confirmationData.ftmPartnerData)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
                                         {t(confirmationData.uploadFtm)}
                                     </button>
                                 </div>
