@@ -249,7 +249,7 @@ function PartnerCertificatesList() {
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
-                                                    <UploadCertificate closePopup={closePopup} partnerData={selectedPartnerData} />
+                                                    <UploadCertificate header={t('uploadCertificate.uploadPartnerCertificate')} reUploadHeader={t('uploadCertificate.reUploadPartnerCertificate')} closePopup={closePopup} partnerData={selectedPartnerData} />
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />

@@ -11,7 +11,7 @@ import fileUploadImg from '../../svg/file_upload_certificate.svg';
 import fileDescription from '../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
 
-function UploadCertificate({ closePopup, partnerData }) {
+function UploadCertificate({header, reUploadHeader, closePopup, partnerData }) {
     const [partnerDomainType, setPartnerDomainType] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [uploading, setUploading] = useState(false);
@@ -166,7 +166,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{partnerData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
+                                <h3 className="text-base font-bold text-[#333333]">{partnerData.isCertificateAvailable ? reUploadHeader : header}</h3>
                                 <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>

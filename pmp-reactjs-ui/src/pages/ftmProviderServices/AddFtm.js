@@ -5,26 +5,35 @@ import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { createDropdownData, createRequest, getAllApprovedAuthPartnerPolicies, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import { HttpService } from "../../services/HttpService";
-import file from '../../svg/file_icon.svg';
 import BlockerPrompt from "../common/BlockerPrompt";
 
 function AddFtm() {
+  const dropdownData = [
+    { fieldCode: 'anilftmtest', fieldValue: 'anilftmtest' },
+    { fieldCode: 'ftmtest3', fieldValue: 'ftmtest3' }
+  ];
+  const ftmPartnersData = [
+    { isCertificateAvailable: true, partnerId: "anilftmtest", partnerType: "FTM_Provider" },
+    { isCertificateAvailable: true, partnerId: "ftmtest3", partnerType: "FTM_Provider" }
+  ];
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [partnerData, setPartnerData] = useState([]);
-  const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([{ fieldCode: 'anilftmtest', fieldValue: 'anilftmtest' }]);
+  const [partnerData, setPartnerData] = useState(ftmPartnersData);
+  const [partnerIdDropdownData, setPartnerIdDropdownData] = useState(dropdownData);
   const [partnerId, setPartnerId] = useState("");
   const [partnerType, setPartnerType] = useState("");
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [selectedFtmPartnerData, setSelectedFtmPartnerData] = useState({});
   let isCancelledClicked = false;
 
   const blocker = useBlocker(
@@ -66,6 +75,7 @@ function AddFtm() {
     setPartnerId(selectedValue);
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
+      setSelectedFtmPartnerData(selectedPartner);
       setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
     }
   };
@@ -134,16 +144,16 @@ function AddFtm() {
         if (responseData && responseData.response) {
           const confirmationData = {
             title: "addFtm.addFtmChipDetails",
-            addFtmSuccess: true,
-            backUrl: '/partnermanagement/ftmChipProviderServices/ftmList',
+            backUrl: "/partnermanagement/ftmChipProviderServices/ftmList",
             header: "addFtm.addFtmSuccessHeader",
             description: "addFtm.addFtmSuccessMsg",
             subNavigation: 'ftmList.ftmChipProviderServices',
             uploadFtm: "addFtm.uploadFtmCertificate",
+            ftmPartnerData: selectedFtmPartnerData,
             styleSet: {
-              imgIconLtr: "ml-[24%] max-[450px]:mr-12",
-              imgIconRtl: "mr-[24%] max-[450px]:mr-12"
-          }
+              imgIconLtr: "ml-[38%] max-[450px]:mr-12",
+              imgIconRtl: "mr-[31%] max-[450px]:mr-12"
+            }
           }
           localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
           navigate('/partnermanagement/ftmChipProviderServices/addFtmConfirmation')
