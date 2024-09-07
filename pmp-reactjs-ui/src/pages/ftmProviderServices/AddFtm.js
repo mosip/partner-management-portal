@@ -148,8 +148,8 @@ function AddFtm() {
             header: "addFtm.addFtmSuccessHeader",
             description: "addFtm.addFtmSuccessMsg",
             subNavigation: 'ftmList.ftmChipProviderServices',
-            uploadFtm: "addFtm.uploadFtmCertificate",
-            ftmPartnerData: selectedFtmPartnerData,
+            customBtnName: "addFtm.uploadFtmCertificate",
+            customBtnOnClick: selectedFtmPartnerData,
             styleSet: {
               imgIconLtr: "ml-[38%] max-[450px]:mr-12",
               imgIconRtl: "mr-[31%] max-[450px]:mr-12"

@@ -74,7 +74,7 @@ function Confirmation() {
                             <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                                 {t(confirmationData.description)}
                             </p>
-                            {!confirmationData.ftmPartnerData &&
+                            {!confirmationData.customBtnOnClick &&
                                 <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                                     <button onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                         {t('commons.goBack')}
@@ -84,11 +84,10 @@ function Confirmation() {
                                     </button>
                                 </div>
                             }
-
-                            {confirmationData.ftmPartnerData &&
+                            {confirmationData.customBtnOnClick &&
                                 <div>
-                                    <button onClick={() => clickOnUpload(confirmationData.ftmPartnerData)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
-                                        {t(confirmationData.uploadFtm)}
+                                    <button onClick={() => clickOnUpload(confirmationData.customBtnOnClick)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
+                                        {t(confirmationData.customBtnName)}
                                     </button>
                                 </div>
                             }
@@ -97,7 +96,7 @@ function Confirmation() {
                 </div>
             </div>
             {showPopup && (
-                <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} partnerData={confirmationData.ftmPartnerData} />
+                <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} partnerData={confirmationData.customBtnOnClick} />
             )}
         </div>
     )
