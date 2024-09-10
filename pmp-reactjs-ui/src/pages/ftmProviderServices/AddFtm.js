@@ -19,7 +19,7 @@ function AddFtm() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [partnerData, setPartnerData] = useState([]);
-  const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([{ fieldCode: 'anilftmtest', fieldValue: 'anilftmtest' }]);
+  const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
   const [partnerId, setPartnerId] = useState("");
   const [partnerType, setPartnerType] = useState("");
   const [make, setMake] = useState('');
@@ -82,25 +82,31 @@ function AddFtm() {
     event.preventDefault();
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setDataLoaded(false);
-  //       const resData = await getAllApprovedFtmProviderIds(HttpService, setErrorCode, setErrorMsg, t);
-  //       if (resData) {
-  //         setPartnerData(resData);
-  //         setPartnerIdDropdownData(createDropdownData('partnerId', '', false.resData, t));
-  //       } else {
-  //         setErrorMsg(t('commons.errorInResponse'));
-  //       }
-  //     } catch (err) {
-  //       console.error('Error fetching data:', err);
-  //     } finally {
-  //       setDataLoaded(true);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setDataLoaded(false);
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/approved-ftm-provider-ids', process.env.NODE_ENV));
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            const resData = responseData.response;
+            setPartnerData(resData);
+            setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+          } else {
+            handleServiceErrors(response, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('commons.errorInResponse'));
+        }
+        setDataLoaded(true);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setErrorMsg(err);
+      }
+    };
+    fetchData();
+  }, []);
 
   const styles = {
     outerDiv: "!ml-0 !mb-0",
@@ -216,16 +222,12 @@ function AddFtm() {
                       </div>
                       <div className="flex-col w-[48%] max-[450px]:w-full">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                        <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-[0.63rem] border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                        <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                          {partnerId &&
-                            <>
-                              <span className="w-full break-all break-normal break-words text-wrap text-start">{t("partnerTypes.ftmProvider")}</span>
-                              <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                              </svg>
-                            </>
-                          }
+                          <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
+                          <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                          </svg>
                         </button>
                       </div>
                     </div>
@@ -233,13 +235,13 @@ function AddFtm() {
                       <div className="flex flex-col w-[48%] max-[450px]:w-full">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={make} onChange={(e) => onChangeMake(e.target.value)}
-                          className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('addFtm.enterMake')} />
                       </div>
                       <div className="flex flex-col w-[48%] max-[450px]:w-full">
                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                         <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
-                          className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                           placeholder={t('addFtm.enterModel')} />
                       </div>
                     </div>

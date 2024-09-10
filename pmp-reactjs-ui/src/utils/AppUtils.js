@@ -56,6 +56,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.deactivated');
         } else if (status === "active") {
             return t('statusCodes.activated');
+        } else if (status === "pending_cert_upload") {
+            return t('statusCodes.pendingCertUpload');
         }
     }
 
@@ -272,7 +274,7 @@ export const bgOfStatus = (status) => {
     else if (status === "rejected") {
         return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress" || status === 'pending_approval') {
+    else if (status === "InProgress" || status === 'pending_approval' || status === 'pending_cert_upload') {
         return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === "deactivated" || status === "INACTIVE") {

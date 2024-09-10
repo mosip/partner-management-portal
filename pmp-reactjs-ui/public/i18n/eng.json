@@ -134,7 +134,8 @@
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
-        "activated": "Activated"
+        "activated": "Activated",
+        "pendingCertUpload": "Pending For certificate upload"
     },
     "policies": {
         "policies": "Policies",
@@ -453,7 +454,8 @@
         "selectPartnerId":"Select Partner ID",
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
-        "selectStatus": "Select Status"
+        "selectStatus": "Select Status",
+        "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip Details",
@@ -701,6 +703,8 @@
         "PMS_REQUEST_ERROR_003": "Request version is invalid",
         "PMS_REQUEST_ERROR_004": "Invalid request time",
         "PMS_REQUEST_ERROR_005": "Request body is invalid",
-        "PMS_REQUEST_ERROR_006": "Request date should be current date"
+        "PMS_REQUEST_ERROR_006": "Request date should be current date",
+        "PMS_FTM_ERROR_001": "Error while fetching the FTM chip details",
+        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider Ids."
     }
 }

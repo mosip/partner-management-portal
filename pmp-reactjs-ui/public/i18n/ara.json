@@ -134,7 +134,8 @@
         "inProgress": "في انتظار لموافقة",
         "rejected": "مرفوض",
         "deactivated": "معطل",
-        "activated": "نشط"
+        "activated": "نشط",
+        "pendingCertUpload": "في انتظار تحميل الشهادة"
     },
     "policies": {
         "policies": "سياسات",
@@ -470,7 +471,8 @@
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
         "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
         "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
-        "addFtmSuccessMsg": "تم إرسال طلب إنشاء شريحة FTM بنجاح وهو في انتظار موافقة المشرف"
+        "addFtmSuccessMsg": "تم إرسال طلب إنشاء شريحة FTM بنجاح وهو في انتظار موافقة المشرف",
+        "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
@@ -706,6 +708,8 @@
         "PMS_REQUEST_ERROR_003": "إصدار الطلب غير صالح",
         "PMS_REQUEST_ERROR_004": "وقت الطلب غير صالح",
         "PMS_REQUEST_ERROR_005": "نص الطلب غير صالح",
-        "PMS_REQUEST_ERROR_006": "يجب أن يكون تاريخ الطلب هو التاريخ الحالي"
+        "PMS_REQUEST_ERROR_006": "يجب أن يكون تاريخ الطلب هو التاريخ الحالي",
+        "PMS_FTM_ERROR_001": "خطأ أثناء جلب تفاصيل شريحة FTM",
+        "PMS_FTM_ERROR_002": "غير قادر على جلب معرفات مقدمي FTM المعتمدة."
     }
 }
