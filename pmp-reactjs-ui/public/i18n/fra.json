@@ -134,7 +134,8 @@
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
-        "activated": "Actif"
+        "activated": "Actif",
+        "pendingCertUpload": "En attente de téléchargement du certificat"
     },
     "policies": {
         "policies": "Stratégies",
@@ -458,7 +459,8 @@
         "selectPartnerId": "Sélectionnez l'ID du partenaire",
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
-        "selectStatus": "Sélectionnez le statut"
+        "selectStatus": "Sélectionnez le statut",
+        "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur."
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -706,6 +708,8 @@
         "PMS_REQUEST_ERROR_003": "La version de la demande n'est pas valide",
         "PMS_REQUEST_ERROR_004": "Heure de demande invalide",
         "PMS_REQUEST_ERROR_005": "Le corps de la demande n'est pas valide",
-        "PMS_REQUEST_ERROR_006": "La date de la demande doit être la date du jour"
+        "PMS_REQUEST_ERROR_006": "La date de la demande doit être la date du jour",
+        "PMS_FTM_ERROR_001": "Erreur lors de la récupération des détails de la puce FTM",
+        "PMS_FTM_ERROR_002": "Impossible de récupérer les identifiants des fournisseurs FTM approuvés."
     }
 }
