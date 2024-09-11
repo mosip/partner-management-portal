@@ -471,7 +471,9 @@
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "View FTM Chip Device Details",
-        "listOfFtmChipDetails": "List of FTM Chip details"
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "ftmChipProvider": "FTM Chip Provider",
+        "certificateNameHelpText": "Certificate Name Goes Here.CER"
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Manage FTM Chip Certificate",

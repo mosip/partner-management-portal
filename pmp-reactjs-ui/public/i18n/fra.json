@@ -476,7 +476,9 @@
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
-        "listOfFtmChipDetails": "Liste des détails de la puce FTM"
+        "listOfFtmChipDetails": "Liste des détails de la puce FTM",
+        "ftmChipProvider": "Fournisseur de puces FTM",
+        "certificateNameHelpText": "Le nom du certificat va ici.CER"
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
