@@ -694,7 +694,7 @@
         "PMS_DEVICE_ERROR_017": "SBI Id is invalid",
         "PMS_DEVICE_ERROR_018": "Error while deactivating the SBI",
         "PMS_DEVICE_ERROR_019": "SBI is not associated with user.",
-        "PMS_DEVICE_ERROR_020": "SBI should be in approved status",
+        "PMS_DEVICE_ERROR_020": "The selected SBI must be active and approved",
         "PMS_DEVICE_ERROR_021": "SBI for which device is being added is expired",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
