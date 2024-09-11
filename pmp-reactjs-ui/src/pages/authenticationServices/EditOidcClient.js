@@ -238,6 +238,7 @@ function EditOidcClient() {
                     }
                 }
                 setConfirmationData(requireData);
+                setEditOidcClientSuccess(true);
             } else {
                 setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -246,7 +247,6 @@ function EditOidcClient() {
             setDataLoaded(true);
             setErrorMsg(err);
         }
-        setEditOidcClientSuccess(true);
     }
 
     const styles = {

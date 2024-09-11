@@ -274,8 +274,11 @@ export const bgOfStatus = (status) => {
     else if (status === "rejected") {
         return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress" || status === 'pending_approval' || status === 'pending_cert_upload') {
+    else if (status === "InProgress" || status === 'pending_approval') {
         return ("bg-[#FEF1C6] text-[#6D1C00]")
+    }
+    else if (status === 'pending_cert_upload') {
+        return ("bg-[#ee763060] text-[#6D1C00]")
     }
     else if (status === "deactivated" || status === "INACTIVE") {
         return ("bg-[#EAECF0] text-[#525252]")
@@ -356,4 +359,22 @@ export const populateDeactivatedStatus = (data, statusAttributeName, activeAttri
         return item;
     });
     return updatedData;
+};
+
+export const getPartnerDomainType = (partnerType) => {
+    if (partnerType) {
+        partnerType = partnerType.toUpperCase();
+        if (partnerType === "Device_Provider".toUpperCase()) {
+            return 'DEVICE';
+        }
+        else if (partnerType === "FTM_Provider".toUpperCase()) {
+            return 'FTM';
+        }
+        else if (partnerType === "MISP_type".toUpperCase()) {
+            return 'MISP';
+        }
+        else {
+            return 'AUTH';
+        }
+    }
 };

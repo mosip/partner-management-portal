@@ -118,7 +118,7 @@
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
-        "ftmProvider": "مزود FTM",
+        "ftmProvider": "مزود شريحة FTM",
         "authPartner": "شريك المصادقة",
         "credentialPartner": "شريك الاعتماد",
         "onlineVerficationPartner": "شريك التحقق عبر الإنترنت",
@@ -443,7 +443,7 @@
     "ftmList": {
         "addDeviceBtn": "إضافة جهاز",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
-        "addFtmBtn": "إضافة FTM",
+        "addFtmBtn": "إضافة شريحة FTM",
         "partnerId": "معرف الشريك",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
@@ -451,6 +451,9 @@
         "createdDate": "تاريخ الإنشاء",
         "certificateExpiryDate": "تاريخ انتهاء صلاحية الشهادة",
         "certificateUploadDate": "وقت تحميل الشهادة",
+        "certExpiryStatus": "حالة انتهاء صلاحية الشهادة",
+        "certificateExpiryStatus": "حالة انتهاء صلاحية الشهادة",
+        "selectCertificateExpiryStatus": "حدد حالة انتهاء صلاحية الشهادة",
         "status": "حالة",
         "action": "فعل",
         "view": "منظر",
@@ -459,7 +462,9 @@
         "selectPartnerId": "حدد معرف الشريك",
         "selectMakeName": "حدد إنشاء اسم",
         "selectModelName": "حدد اسم النموذج",
-        "selectStatus": "حدد الحالة"
+        "selectStatus": "حدد الحالة",
+        "expired": "منتهي الصلاحية",
+        "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -471,8 +476,7 @@
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
         "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
         "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
-        "addFtmSuccessMsg": "تم إرسال طلب إنشاء شريحة FTM بنجاح وهو في انتظار موافقة المشرف",
-        "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
+        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة. كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
@@ -584,7 +588,7 @@
         "PMS_AUT_025": "يجب أن تكون حالة الموافقة نشطة / إلغاء تنشيط ؛",
         "PMP_AUT_030": "مزود بروتوكول نقل الملفات غير موجود.",
         "PMP_AUT_031": "معرف شريحة بروتوكول نقل الملفات غير موجود.",
-        "PMP_AUT_032": "الموفر المحدد ، والنوع والطراز موجودان بالفعل.",
+        "PMP_AUT_032": "تفاصيل شريحة FTM موجودة بالفعل لنفس الماركة والطراز",
         "PMP_AUT_033": "لم يتم تحميل الشهادة.",
         "PMP_AUT_034": "لم يتم تعيين معرف تفاصيل شريحة بروتوكول نقل الملفات ومعرف موفر بروتوكول نقل الملفات.",
         "PMP_AUT_037": "إعطاء تفاصيل شريحة بروتوكول نقل الملفات مسجلة بالفعل .؛",

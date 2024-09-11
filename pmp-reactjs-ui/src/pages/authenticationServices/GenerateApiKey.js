@@ -185,6 +185,7 @@ function GenerateApiKey() {
                     }
                     setConfirmationData(requireData);
                     setApiKeyId(responseData.response.apiKey);
+                    setGenerateApiKeySuccess(true);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -198,7 +199,6 @@ function GenerateApiKey() {
             console.log("Error fetching data: ", err);
         }
         setIsSubmitClicked(false);
-        setGenerateApiKeySuccess(true);
     }
 
     const copyIdPopupStyle = {

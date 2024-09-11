@@ -9,6 +9,7 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [makeData, setMakeData] = useState([]);
     const [modelData, setModelData] = useState([]);
+    const [certificateExpiryData, setCertificateExpiryData] = useState([]);
     const [statusData, setStatusData] = useState([]);
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredFtmList, t, t('ftmList.selectPartnerId')));
             setMakeData(createDropdownData('make', '', true, filteredFtmList, t, t('ftmList.selectMakeName')));
             setModelData(createDropdownData('model', '', true, filteredFtmList, t, t('ftmList.selectModelName')));
+            setCertificateExpiryData(createDropdownData('certificateExpiryStatus', '', true, filteredFtmList, t, t('ftmList.selectCertificateExpiryStatus')));
             setStatusData(createDropdownData('status', '', true, filteredFtmList, t, t('ftmList.selectStatus')));
         };
         fetchData();
@@ -60,6 +62,15 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
                 </DropdownWithSearchComponent>
+                <DropdownComponent 
+                    fieldName='certificateExpiryStatus' 
+                    dropdownDataList={certificateExpiryData} 
+                    onDropDownChangeEvent={onFilterChangeEvent} 
+                    fieldNameKey='ftmList.certificateExpiryStatus' 
+                    placeHolderKey='ftmList.selectCertificateExpiryStatus'
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}> 
+                </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
                     dropdownDataList={statusData} 

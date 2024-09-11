@@ -5,10 +5,9 @@ import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { createDropdownData, createRequest, getAllApprovedAuthPartnerPolicies, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL, getPartnerDomainType } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import { HttpService } from "../../services/HttpService";
-import file from '../../svg/file_icon.svg';
 import BlockerPrompt from "../common/BlockerPrompt";
 import Confirmation from "../common/Confirmation";
 import UploadCertificate from "../certificates/UploadCertificate";
@@ -28,9 +27,11 @@ function AddFtm() {
   const [model, setModel] = useState('');
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedFtmPartnerData, setSelectedFtmPartnerData] = useState({});
+  const [uploadCertificateData, setUploadCertificateData] = useState({});
   const [addFtmSuccess, setAddFtmSuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const [ftpChipDetailId, setFtpChipDetailId] = useState("");
+  const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
   let isCancelledClicked = false;
 
   const blocker = useBlocker(
@@ -72,7 +73,7 @@ function AddFtm() {
     setPartnerId(selectedValue);
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
-      setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+      setPartnerType(getPartnerTypeDescription("FTM_Provider", t));
     }
   };
 
@@ -86,6 +87,14 @@ function AddFtm() {
 
   const clickOnUpload = () => {
     document.body.style.overflow = "hidden";
+    const request = {
+      ftpProviderId: partnerId,
+      ftpChipDeatilId: ftpChipDetailId,
+      isItForRegistrationDevice: true,
+      organizationName: getUserProfile().orgName,
+      partnerDomain: getPartnerDomainType(partnerType),
+    };
+    setUploadCertificateRequest(request);
     setShowPopup(!showPopup);
   };
 
@@ -157,6 +166,12 @@ function AddFtm() {
         const responseData = response.data;
         console.log(responseData);
         if (responseData && responseData.response) {
+          setFtpChipDetailId(responseData.response.id);
+          const requiredDataForCertUpload = {
+            partnerType: "FTM_Provider",
+            isUploadFtmCertificate: true,
+          }
+          setUploadCertificateData(requiredDataForCertUpload);
           const requiredData = {
             title: "addFtm.addFtmChipDetails",
             backUrl: '/partnermanagement/ftmChipProviderServices/ftmList',
@@ -165,11 +180,12 @@ function AddFtm() {
             subNavigation: 'ftmList.ftmChipProviderServices',
             customBtnName: "addFtm.uploadFtmCertificate",
             styleSet: {
-              imgIconLtr: "ml-[24%] max-[450px]:mr-12",
-              imgIconRtl: "mr-[24%] max-[450px]:mr-12"
-          }
+              imgIconLtr: "ml-[42%] max-[450px]:ml-12",
+              imgIconRtl: "mr-[42%] max-[450px]:mr-12"
+            }
           }
           setConfirmationData(requiredData);
+          setAddFtmSuccess(true);
         } else {
           handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
@@ -182,7 +198,6 @@ function AddFtm() {
       console.log("Error fetching data: ", err);
     }
     setIsSubmitClicked(false);
-    setAddFtmSuccess(true);
   };
 
   const clearForm = () => {
@@ -217,7 +232,7 @@ function AddFtm() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
-              <Title title='addFtm.addFtmChipDetails' subTitle='ftmList.ftmChipProviderServices' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+              <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
             </div>
  {!addFtmSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -241,30 +256,26 @@ function AddFtm() {
                         </div>
                         <div className="flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                          <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-[0.63rem] border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                        overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                            {partnerId &&
-                              <>
-                                <span className="w-full break-all break-normal break-words text-wrap text-start">{t("partnerTypes.ftmProvider")}</span>
-                                <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                              </>
-                            }
+                          <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                            overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                            <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
+                            <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                            </svg>
                           </button>
                         </div>
                       </div>
                       <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
-                          <input value={make} onChange={(e) => onChangeMake(e.target.value)}
-                            className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                          <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
+                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterMake')} />
                         </div>
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
-                            className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterModel')} />
                         </div>
                       </div>
@@ -286,7 +297,7 @@ function AddFtm() {
                 <Confirmation confirmationData={confirmationData} onClickFunction={clickOnUpload} />
                 {
                   showPopup && (
-                    <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} partnerData={selectedFtmPartnerData} />
+                    <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
                   )
                 }
               </>

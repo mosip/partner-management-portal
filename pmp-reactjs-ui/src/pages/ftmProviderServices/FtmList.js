@@ -5,7 +5,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { HttpService } from '../../services/HttpService';
 import {
   isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
-  handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
+  handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
   onPressEnterKey
 } from '../../utils/AppUtils';
 import ErrorMessage from '../common/ErrorMessage';
@@ -54,7 +54,8 @@ function FtmList() {
           const responseData = response.data;
           if (responseData && responseData.response) {
             const resData = responseData.response;
-            const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+            const populatedData = populateCertificateExpiryStatus(resData);
+            const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
             setFtmList(sortedData);
             setFilteredFtmList(sortedData);
           } else {
@@ -72,13 +73,26 @@ function FtmList() {
     fetchData();
   }, []);
 
+  const populateCertificateExpiryStatus = (data) => {
+    // Updating the status based on the condition
+    const updatedData = data.map(item => {
+        if (item['isCertificateExpired'] === true) {
+            return { ...item, certificateExpiryStatus: 'expired' };
+        } else {
+            return { ...item, certificateExpiryStatus: '' };
+        }
+    });
+    return updatedData;
+  };
+
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
     { id: "model", headerNameKey: "ftmList.model" },
     { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
-    { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
     { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
+    { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
+    { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
     { id: "status", headerNameKey: "ftmList.status" },
     { id: "action", headerNameKey: 'ftmList.action' }
   ];
@@ -114,12 +128,12 @@ function FtmList() {
   }
 
   const sortAscOrder = (header) => {
-      const isDateCol = (header === "createdDateTime");
+      const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
       toggleSortAscOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
   const sortDescOrder = (header) => {
-      const isDateCol = (header === "createdDateTime");
+      const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
       toggleSortDescOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
@@ -163,7 +177,7 @@ function FtmList() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-5">
-              <Title title='ftmList.ftmChipProviderServices' backLink='/partnermanagement' />
+              <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
               { ftmList.length > 0 && (
                 <button onClick={() => addFtm()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                   {t('ftmList.addFtmBtn')}
@@ -178,8 +192,9 @@ function FtmList() {
                     <h6 className="px-2 mx-2">{t('ftmList.make')}</h6>
                     <h6 className="px-2 mx-2">{t('ftmList.model')}</h6>
                     <h6 className="px-2 mx-2">{t('ftmList.createdDate')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.certificateExpiryDate')}</h6>
                     <h6 className="px-2 mx-2">{t('ftmList.certificateUploadDate')}</h6>
+                    <h6 className="px-2 mx-2">{t('ftmList.certificateExpiryDate')}</h6>
+                    <h6 className="px-2 mx-2">{t('ftmList.certExpiryStatus')}</h6>
                     <h6 className="px-2 mx-2">{t('ftmList.status')}</h6>
                     <h6 className="px-2 mx-2 text-center">{t('ftmList.action')}</h6>
                   </div>
@@ -212,7 +227,7 @@ function FtmList() {
                         <tr>
                           {tableHeaders.map((header, index) => {
                             return (
-                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[14%] max-[1310px]:w-[16%]`}>
+                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[14%]`}>
                                 <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
@@ -233,8 +248,9 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.createdDateTime, 'date')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateExpiryDateTime, 'date')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.certificateExpiryStatus ? t('ftmList.expired') : "-"}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}

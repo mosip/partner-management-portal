@@ -308,6 +308,7 @@ function CreateOidcClient() {
             }
           }
           setConfirmationData(requiredData);
+          setCreateOidcClientSuccess(true);
           console.log(`Response data: ${resData.length}`);
         } else {
           handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -321,7 +322,6 @@ function CreateOidcClient() {
       console.log("Error fetching data: ", err);
     }
     setIsSubmitClicked(false);
-    setCreateOidcClientSuccess(true);
   }
 
 
