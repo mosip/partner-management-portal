@@ -219,7 +219,7 @@ function AddFtm() {
             <div className="flex justify-between">
               <Title title='addFtm.addFtmChipDetails' subTitle='ftmList.ftmChipProviderServices' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
             </div>
-            {!addFtmSuccess ?
+ {!addFtmSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                 <div className="px-[2.5%] py-[2%]">
                   <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
