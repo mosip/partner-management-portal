@@ -11,6 +11,7 @@ import DropdownComponent from "../common/fields/DropdownComponent";
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
 import Title from "../common/Title";
+import Confirmation from "../common/Confirmation";
 
 function RequestPolicy() {
     const navigate = useNavigate();
@@ -29,6 +30,8 @@ function RequestPolicy() {
     const [partnerData, setPartnerData] = useState([]);
     const [policyList, setPolicyList] = useState([]);
     const textareaRef = useRef(null);
+    const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
+    const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     let isCancelledClicked = false;
 
@@ -38,7 +41,7 @@ function RequestPolicy() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked) {
+            if (isSubmitClicked || isCancelledClicked || requestPolicySuccess) {
                 setIsSubmitClicked(false);
                 isCancelledClicked = false;
                 return false;
@@ -173,7 +176,7 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    const confirmationData = {
+                    const requireDataData = {
                         title: "requestPolicy.requestPolicy",
                         backUrl: "/partnermanagement/policies/policiesList",
                         header: "requestPolicy.policySuccessHeader",
@@ -184,8 +187,7 @@ function RequestPolicy() {
                             imgIconRtl: "mr-[25%] max-[450px]:mr-20"
                         }
                     }
-                    localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
-                    navigate('/partnermanagement/policies/requestPolicyConfirmation');
+                    setConfirmationData(requestPolicySuccess);
                     console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -198,6 +200,7 @@ function RequestPolicy() {
             setErrorMsg(err);
             console.log("Error fetching data: ", err);
         }
+        setRequestPolicySuccess(true);
         setIsSubmitClicked(false);
     }
 
@@ -251,82 +254,85 @@ function RequestPolicy() {
                     )}
                     <div className="flex-col mt-7">
                         <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policiesList'></Title>
-                        <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
-                            <div className="p-7">
-                                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                <form>
-                                    <div className="flex flex-col w-full">
-                                        <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <DropdownComponent
-                                                    fieldName='partnerId'
-                                                    dropdownDataList={partnerIdDropdownData}
-                                                    onDropDownChangeEvent={onChangePartnerId}
-                                                    fieldNameKey='requestPolicy.partnerId*'
-                                                    placeHolderKey='requestPolicy.partnerId'
-                                                    selectedDropdownValue={partnerId}
-                                                    styleSet={styles}
-                                                    addInfoIcon
-                                                    infoKey='requestPolicy.info'>
-                                                </DropdownComponent>
+                        {!requestPolicySuccess ?
+                            <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
+                                <div className="p-7">
+                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <form>
+                                        <div className="flex flex-col w-full">
+                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <DropdownComponent
+                                                        fieldName='partnerId'
+                                                        dropdownDataList={partnerIdDropdownData}
+                                                        onDropDownChangeEvent={onChangePartnerId}
+                                                        fieldNameKey='requestPolicy.partnerId*'
+                                                        placeHolderKey='requestPolicy.partnerId'
+                                                        selectedDropdownValue={partnerId}
+                                                        styleSet={styles}
+                                                        addInfoIcon
+                                                        infoKey='requestPolicy.info'>
+                                                    </DropdownComponent>
+                                                </div>
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                        <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
+                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
-                                                </button>
+                                            <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                        <span className="w-full break-all break-normal break-words text-wrap text-start">{policyGroupName || t('requestPolicy.policyGroup')}</span>
+                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <DropdownWithSearchComponent
+                                                        fieldName='policyName'
+                                                        dropdownDataList={policiesDropdownData}
+                                                        onDropDownChangeEvent={onChangePolicyName}
+                                                        fieldNameKey='requestPolicy.policyName*'
+                                                        placeHolderKey='requestPolicy.selectPolicyName'
+                                                        selectedDropdownValue={policyName}
+                                                        searchKey='commons.search'
+                                                        styleSet={styleForSearch}>
+                                                    </DropdownWithSearchComponent>
+                                                </div>
+                                            </div>
+                                            <div className="flex my-[1%]">
+                                                <div className="flex flex-col w-full">
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                        {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
+                                                    </label>
+                                                    <textarea maxLength={500} ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
+                                                    </textarea>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{policyGroupName || t('requestPolicy.policyGroup')}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <DropdownWithSearchComponent
-                                                    fieldName='policyName'
-                                                    dropdownDataList={policiesDropdownData}
-                                                    onDropDownChangeEvent={onChangePolicyName}
-                                                    fieldNameKey='requestPolicy.policyName*'
-                                                    placeHolderKey='requestPolicy.selectPolicyName'
-                                                    selectedDropdownValue={policyName}
-                                                    searchKey='commons.search'
-                                                    styleSet={styleForSearch}>
-                                                </DropdownWithSearchComponent>
-                                            </div>
-                                        </div>
-                                        <div className="flex my-[1%]">
-                                            <div className="flex flex-col w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                    {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
-                                                </label>
-                                                <textarea maxLength={500} ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
-                                                </textarea>
-                                            </div>
-                                        </div>
+                                    </form>
+                                </div>
+                                <div className="border bg-medium-gray" />
+                                <div className="flex flex-row px-[3%] py-5 justify-between">
+                                    <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
+                                        <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     </div>
-                                </form>
-                            </div>
-                            <div className="border bg-medium-gray" />
-                            <div className="flex flex-row px-[3%] py-5 justify-between">
-                                <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
-                                <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                 </div>
                             </div>
-                        </div>
+                            : <Confirmation confirmationData={confirmationData} />
+                        }
                     </div>
                 </>
             )}
