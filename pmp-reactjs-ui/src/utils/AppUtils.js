@@ -116,11 +116,11 @@ export const getPolicyManagerUrl = (url, env) => {
     return newUrl;
 }
 
-export const createRequest = (requestData, id) => {
+export const createRequest = (requestData, id, useCamelCase = false) => {
     const request = {
         id: id ? id : "",
         version: "1.0",
-        requesttime: new Date().toISOString(),
+        [useCamelCase ? "requestTime" : "requesttime"]: new Date().toISOString(),
         request: requestData
     };
     return request;

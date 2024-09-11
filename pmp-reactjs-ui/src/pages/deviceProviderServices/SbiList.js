@@ -116,7 +116,7 @@ function SbiList() {
         if (sbi.status === "approved") {
             const request = createRequest({
                 sbiId: sbi.sbiId,
-            }, "mosip.pms.deactivate.sbi.put");
+            }, "mosip.pms.deactivate.sbi.put", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
