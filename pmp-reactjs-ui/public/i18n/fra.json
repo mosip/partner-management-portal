@@ -8,7 +8,7 @@
         "back": "Dos",
         "submit": "Soumettre",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
-        "partnerTypeHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
+        "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",

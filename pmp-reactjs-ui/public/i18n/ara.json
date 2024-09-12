@@ -8,7 +8,7 @@
         "back": "خلف",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
-        "partnerTypeHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
+        "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
         "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",

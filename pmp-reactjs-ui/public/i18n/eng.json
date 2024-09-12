@@ -8,7 +8,7 @@
         "back": "Back",
         "submit": "Submit",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
-        "partnerTypeHelpText": "Auto-populated based on Partner ID selected",
+        "partnersHelpText": "Auto-populated based on Partner ID selected",
         "somethingWentWrong": "Something went wrong!",
         "somethingWentWrongDesc": "Please try again later",
         "noAccess": "You do not have privilege to access this page",
