@@ -18,7 +18,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
             setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceSubType')));
             setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('devicesList.selectMakeName')));
             setModelData(createDropdownData('model', '', true, filteredDevicesList, t, t('devicesList.selectModelName')));
-            setStatusData(createDropdownData('approvalStatus', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
+            setStatusData(createDropdownData('status', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
         };
         fetchData();
     }, []);
@@ -73,7 +73,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     isPlaceHolderPresent={true}>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
-                    fieldName='approvalStatus' 
+                    fieldName='status' 
                     dropdownDataList={statusData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
                     fieldNameKey='devicesList.status' 
