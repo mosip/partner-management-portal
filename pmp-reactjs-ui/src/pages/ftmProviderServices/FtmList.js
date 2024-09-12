@@ -142,11 +142,13 @@ function FtmList() {
 
   const showFtmDetails = (selectedFtmData) => {
     if (selectedFtmData.status !== "deactivated") {
+      localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
     }
   }
 
   const viewFtmDetails = (selectedFtmData) => {
+    localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
     navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
   }
 
