@@ -177,7 +177,7 @@ function DevicesList() {
         if (selectedDevice.approvalStatus === "approved") {
             const request = createRequest({
                 deviceId: selectedDevice.id,
-            },"mosip.pms.deactivate.device.put");
+            },"mosip.pms.deactivate.device.put", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
