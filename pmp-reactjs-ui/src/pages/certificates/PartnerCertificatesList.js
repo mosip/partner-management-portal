@@ -44,7 +44,7 @@ function PartnerCertificatesList() {
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = (state) => {
+    const closePopup = (state, btnName) => {
         if (state) {
             setShowPopup(false);
             document.body.style.overflow = "auto";
@@ -255,7 +255,7 @@ function PartnerCertificatesList() {
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
-                                                    <UploadCertificate closePopup={closePopup} popupData={{...selectedPartnerData, isUploadPartnerCertificate: true}} request={uploadCertificateRequest} />
+                                                    <UploadCertificate closePopup={closePopup} popupData={{...selectedPartnerData, isUploadPartnerCertificate: true, header: 'uploadCertificate.uploadPartnerCertificate'}} request={uploadCertificateRequest} />
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />
@@ -266,7 +266,7 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'dateTime')}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>

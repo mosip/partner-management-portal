@@ -29,14 +29,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const clickOnCancel = () => {
-        closePopup(true);
+        closePopup(true, 'cancel');
     };
     const clickOnSubmit = async () => {
         setSuccessMsg("");
         setErrorCode("");
         setErrorMsg("");
         if (uploadSuccess) {
-            closePopup(true);
+            closePopup(true, 'close');
         } else {
             setDataLoaded(false);
             const uploadRequest = createRequest({
@@ -62,7 +62,8 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
                     } else {
                         setUploadSuccess(true);
-                        setSuccessMsg(t('uploadCertificate.successMsg', { partnerType: getPartnerType(popupData) }));
+                        const successText = popupData.successMessage ? t(popupData.successMessage) : t('uploadCertificate.successMsg', { partnerType: getPartnerType(popupData) });
+                        setSuccessMsg(successText);
                     }
                 } else {
                     setUploadFailure(true);
@@ -149,7 +150,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
+                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t(popupData.header)}</h3>
                                 <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>

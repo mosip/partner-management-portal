@@ -58,6 +58,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.activated');
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
+        } else if (status === "expired") {
+            return t('statusCodes.expired')
         }
     }
 
@@ -306,7 +308,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "approvalStatus") {
+            } else if (fieldName === "status" || fieldName === "approvalStatus" || fieldName === "certificateExpiryStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
