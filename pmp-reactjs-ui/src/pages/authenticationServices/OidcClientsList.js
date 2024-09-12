@@ -193,7 +193,7 @@ function OidcClientsList() {
 
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -267,7 +267,7 @@ function OidcClientsList() {
                                             onFilterChange={onFilterChange}>
                                         </OidcClientsFilter>
                                     }
-                                    <div className="mx-[2%] overflow-x-scroll">
+                                    <div className="mx-[2%]">
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>
@@ -319,7 +319,7 @@ function OidcClientsList() {
                                                                             tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewClientId(index === viewClientId ? null : index))}>
                                                                             ...</p>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] top-7 z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] top-5 z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-12 text-right" : "right-12 text-left"}`}>
                                                                                 <p onClick={() => onClickView(client)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>

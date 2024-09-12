@@ -108,33 +108,33 @@ function FtmList() {
   //This part is related to Filter
   const onFilterChange = (fieldName, selectedFilter) => {
     setFilterQuery(oldFilterQuery => ({
-        ...oldFilterQuery,
-        [fieldName]: selectedFilter
+      ...oldFilterQuery,
+      [fieldName]: selectedFilter
     }));
   }
   useEffect(() => {
-      let filteredRows = ftmList;
-      Object.keys(filterQuery).forEach(key => {
-          if (filterQuery[key] !== '') {
-              filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
-          }
-      });
-      setFilteredFtmList(filteredRows);
-      setFirstIndex(0);
+    let filteredRows = ftmList;
+    Object.keys(filterQuery).forEach(key => {
+      if (filterQuery[key] !== '') {
+        filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
+      }
+    });
+    setFilteredFtmList(filteredRows);
+    setFirstIndex(0);
   }, [filterQuery, ftmList]);
 
   const onResetFilter = () => {
-      window.location.reload();
+    window.location.reload();
   }
 
   const sortAscOrder = (header) => {
-      const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
-      toggleSortAscOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
+    const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
+    toggleSortAscOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
   const sortDescOrder = (header) => {
-      const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
-      toggleSortDescOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
+    const isDateCol = (header === "createdDateTime" || header === "certificateUploadDateTime" || header === "certificateExpiryDateTime");
+    toggleSortDescOrder(header, isDateCol, filteredftmList, setFilteredFtmList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
   //This part related to Pagination Logic
@@ -166,7 +166,7 @@ function FtmList() {
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
-          <LoadingIcon></LoadingIcon>
+        <LoadingIcon></LoadingIcon>
       )}
       {dataLoaded && (
         <>
@@ -180,7 +180,7 @@ function FtmList() {
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-5">
               <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
-              { ftmList.length > 0 && (
+              {ftmList.length > 0 && (
                 <button onClick={() => addFtm()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                   {t('ftmList.addFtmBtn')}
                 </button>
@@ -211,19 +211,19 @@ function FtmList() {
                     </button>
                   </div>
                 </div>
-              </div> 
-              : 
+              </div>
+              :
               <>
                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
                   <FilterButtons listTitle='ftmList.listOfFtm' dataList={filteredftmList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                   <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                   {filter &&
                     <FtmListFilter
-                        filteredFtmList={ftmList}
-                        onFilterChange={onFilterChange}>
+                      filteredFtmList={ftmList}
+                      onFilterChange={onFilterChange}>
                     </FtmListFilter>
                   }
-                  <div className="mx-[2%] overflow-x-scroll">
+                  <div className="mx-[2%]">
                     <table className="table-fixed">
                       <thead>
                         <tr>
@@ -233,7 +233,7 @@ function FtmList() {
                                 <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
-                                      <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                    <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
                                   )}
                                 </div>
                               </th>
@@ -264,16 +264,16 @@ function FtmList() {
                                       tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewFtmId(index === viewFtmId ? null : index))}>
                                       ...</p>
                                     {viewFtmId === index && (
-                                      <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-5 text-right" : "right-5 text-left"}`}>
-                                        <p onClick={() => viewFtmDetails(ftm)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
+                                      <div className={`absolute w-[7%] top-5 z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-5 text-right" : "right-5 text-left"}`}>
+                                        <p onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
                                           {t('ftmList.view')}
                                         </p>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p onClick={() => showManageCertificate(ftm)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
+                                        <p onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
                                           {t('ftmList.manageCertificate')}
                                         </p>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p onClick={() => showDeactivateFtm(ftm)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
+                                        <p onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
                                           {t('ftmList.deActivate')}
                                         </p>
                                       </div>
