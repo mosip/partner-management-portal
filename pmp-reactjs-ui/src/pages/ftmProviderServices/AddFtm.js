@@ -98,11 +98,12 @@ function AddFtm() {
     setShowPopup(!showPopup);
   };
 
-  const closePopup = (state) => {
-    if (state) {
+  const closePopup = (state, btnName) => {
+    if (state && btnName === 'cancel') {
       setShowPopup(false);
       document.body.style.overflow = "auto";
-      window.location.reload();
+    } else if (state && btnName === 'close') {
+      navigate('/partnermanagement/ftmChipProviderServices/ftmList');
     }
   };
 
@@ -169,6 +170,8 @@ function AddFtm() {
           setFtpChipDetailId(responseData.response.id);
           const requiredDataForCertUpload = {
             partnerType: "FTM_Provider",
+            header: 'addFtm.uploadFtmCertHeader',
+            successMessage: 'addFtm.uploadFtmCertSuccessMsg',
             isUploadFtmCertificate: true,
           }
           setUploadCertificateData(requiredDataForCertUpload);
@@ -181,7 +184,7 @@ function AddFtm() {
             customBtnName: "addFtm.uploadFtmCertificate",
             styleSet: {
               imgIconLtr: "ml-[42%] max-[450px]:ml-12",
-              imgIconRtl: "mr-[42%] max-[450px]:mr-12"
+              imgIconRtl: "mr-[40%] max-[450px]:mr-12"
             }
           }
           setConfirmationData(requiredData);

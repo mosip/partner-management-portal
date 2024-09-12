@@ -100,7 +100,7 @@
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
         "reUploadPartnerCertificate": "إعادة تحميل شهادة الشريك",
-        "selectFieldsMsg": "الرجاء تحديد الحقول وتحميل الشهادة.",
+        "selectFieldsMsg": "الرجاء تحديد كافة الحقول وتحميل الشهادة",
         "partnerTypeLabel": "نوع الشريك",
         "partnerDomainType": "نوع نطاق الشريك",
         "selectingFile": "نحن نحضر شهادتك...",
@@ -112,9 +112,9 @@
         "submit": "يُقدِّم",
         "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
         "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
-        "fileUploadError": "الرجاء تحديد ملف بامتداد .cer أو .pem.",
+        "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
-        "errorWhileUploadingCertificate": "هناك خطأ ما في تحميل الشهادة. حاول مرة أخرى في وقت لاحق!"
+        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة"
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
@@ -135,7 +135,8 @@
         "rejected": "مرفوض",
         "deactivated": "معطل",
         "activated": "نشط",
-        "pendingCertUpload": "في انتظار تحميل الشهادة"
+        "pendingCertUpload": "في انتظار تحميل الشهادة",
+        "expired": "منتهي الصلاحية"
     },
     "policies": {
         "policies": "سياسات",
@@ -476,7 +477,9 @@
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
         "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
         "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
-        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة. كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة."
+        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة. كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
+        "uploadFtmCertHeader": "تحميل شهادة شريحة FTM",
+        "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",

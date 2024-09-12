@@ -100,7 +100,7 @@
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
         "reUploadPartnerCertificate": "Re-Upload Partner Certificate",
-        "selectFieldsMsg": "Please select the fields and upload certificate.",
+        "selectFieldsMsg": "Please select all fields and upload the certificate",
         "partnerTypeLabel": "Partner Type",
         "partnerDomainType": "Partner Domain Type",
         "selectingFile": "We’re fetching your certificate...",
@@ -112,9 +112,9 @@
         "submit": "Submit",
         "successMsg": "Partner certificate for {{partnerType}} is uploaded successfully.",
         "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
-        "fileUploadError": "Please select a file with .cer or .pem extension.",
+        "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
-        "errorWhileUploadingCertificate": "There is some error in uploading the certificate. Try again later!"
+        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate"
     },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
@@ -135,7 +135,8 @@
         "rejected": "Rejected",
         "deactivated": "Deactivated",
         "activated": "Activated",
-        "pendingCertUpload": "Pending For Certificate Upload"
+        "pendingCertUpload": "Pending For Certificate Upload",
+        "expired": "Expired"
     },
     "policies": {
         "policies": "Policies",
@@ -471,7 +472,9 @@
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload",
         "errorInAddingFtm": "While adding SBI, we have encountered with an error.",
         "addFtmSuccessHeader": "FTM Chip details submitted successfully!",
-        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval. As a next step, upload FTM Chip Certificate to proceed further."
+        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval. As a next step, upload FTM Chip Certificate to proceed further.",
+        "uploadFtmCertHeader": "Upload FTM Chip Certificate",
+        "uploadFtmCertSuccessMsg": "FTM Chip Certificate is uploaded successfully"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "View FTM Chip Device Details",

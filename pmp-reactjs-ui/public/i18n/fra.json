@@ -100,7 +100,7 @@
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
         "reUploadPartnerCertificate": "Re-télécharger le certificat de partenaire",
-        "selectFieldsMsg": "Veuillez sélectionner les champs et télécharger le certificat.",
+        "selectFieldsMsg": "Veuillez sélectionner tous les champs et télécharger le certificat",
         "partnerTypeLabel": "Type de partenaire",
         "partnerDomainType": "Type de domaine partenaire",
         "selectingFile": "Nous récupérons votre certificat...",
@@ -112,9 +112,9 @@
         "submit": "Soumettre",
         "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléchargé avec succès.",
         "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
-        "fileUploadError": "Veuillez sélectionner un fichier avec l'extension .cer ou .pem.",
+        "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!"
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat"
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
@@ -135,7 +135,8 @@
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
         "activated": "Actif",
-        "pendingCertUpload": "En attente de téléchargement du certificat"
+        "pendingCertUpload": "En attente de téléchargement du certificat",
+        "expired": "Expiré"
     },
     "policies": {
         "policies": "Stratégies",
@@ -476,7 +477,9 @@
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement.",
         "errorInAddingFtm": "Lors de l'ajout de SBI, nous avons rencontré une erreur.",
         "addFtmSuccessHeader": "Détails de la puce FTM soumis avec succès!",
-        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur. Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer."
+        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur. Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
+        "uploadFtmCertHeader": "Télécharger le certificat de la puce FTM",
+        "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
