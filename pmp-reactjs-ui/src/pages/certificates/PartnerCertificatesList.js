@@ -6,7 +6,7 @@ import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
 import SuccessMessage from "../common/SuccessMessage";
 import LoadingIcon from "../common/LoadingIcon";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl} from "../../utils/AppUtils";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType} from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../svg/rectangle_box.svg';
@@ -26,6 +26,7 @@ function PartnerCertificatesList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const dropdownRefs = useRef([]);
 
     useEffect(() => {
@@ -34,6 +35,11 @@ function PartnerCertificatesList() {
 
     const clickOnUpload = (partner) => {
         document.body.style.overflow = "hidden";
+        const request = {
+            partnerId: partner.partnerId,
+            partnerDomain: getPartnerDomainType(partner.partnerType),
+        };
+        setUploadCertificateRequest(request);
         setShowPopup(!showPopup);
         setSelectedPartnerData(partner);
     };
@@ -249,7 +255,7 @@ function PartnerCertificatesList() {
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
-                                                    <UploadCertificate closePopup={closePopup} partnerData={selectedPartnerData} />
+                                                    <UploadCertificate closePopup={closePopup} popupData={{...selectedPartnerData, isUploadPartnerCertificate: true}} request={uploadCertificateRequest} />
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />

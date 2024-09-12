@@ -187,7 +187,8 @@ function RequestPolicy() {
                             imgIconRtl: "mr-[25%] max-[450px]:mr-20"
                         }
                     }
-                    setConfirmationData(requestPolicySuccess);
+                    setConfirmationData(requireDataData);
+                    setRequestPolicySuccess(true);
                     console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -200,7 +201,6 @@ function RequestPolicy() {
             setErrorMsg(err);
             console.log("Error fetching data: ", err);
         }
-        setRequestPolicySuccess(true);
         setIsSubmitClicked(false);
     }
 

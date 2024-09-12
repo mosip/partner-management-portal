@@ -118,7 +118,7 @@
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
-        "ftmProvider": "Fournisseur FTM",
+        "ftmProvider": "Fournisseur de puces FTM",
         "authPartner": "Partenaire d'authentification",
         "credentialPartner": "Partenaire d'identification",
         "onlineVerficationPartner": "Partenaire de vérification en ligne",
@@ -443,7 +443,7 @@
     "ftmList": {
         "addDeviceBtn": "Ajouter un appareil",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
-        "addFtmBtn": "Ajouter FTM",
+        "addFtmBtn": "Ajouter la puce FTM",
         "partnerId": "ID partenaire",
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
@@ -451,6 +451,9 @@
         "createdDate": "Date de création",
         "certificateExpiryDate": "Date d'expiration du certificat",
         "certificateUploadDate": "Heure de téléchargement du certificat",
+        "certExpiryStatus": "Statut d'expiration du certificat",
+        "certificateExpiryStatus": "Statut d'expiration du certificat",
+        "selectCertificateExpiryStatus": "Sélectionner le statut d'expiration du certificat",
         "status": "Statut",
         "action": "Action",
         "view": "Voir",
@@ -460,6 +463,7 @@
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
+        "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur."
     },
     "addFtm": {
@@ -468,11 +472,11 @@
         "infoPartnerId": "Seuls les identifiants de partenaire du fournisseur de puces FTM dont le certificat partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat partenaire",
         "enterMake": "Entrez la marque",
         "enterModel": "Entrez le modèle",
-        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM.",
+        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement.",
         "errorInAddingFtm": "Lors de l'ajout de SBI, nous avons rencontré une erreur.",
         "addFtmSuccessHeader": "Détails de la puce FTM soumis avec succès!",
-        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur."
+        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur. Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
@@ -585,7 +589,7 @@
         "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver ;",
         "PMP_AUT_030": "le fournisseur ftp n'existe pas.",
         "PMP_AUT_031": "l'identifiant de la puce ftp n'existe pas.",
-        "PMP_AUT_032": "Le fournisseur, la marque et le modèle donnés existent déjà.",
+        "PMP_AUT_032": "Les détails de la puce FTM existent déjà pour la même marque et le même modèle",
         "PMP_AUT_033": "Le certificat n'est pas téléchargé.",
         "PMP_AUT_034": "L'ID de détail de la puce FTP et l'ID du fournisseur ftp ne sont pas mappés.",
         "PMP_AUT_037": "Compte tenu des détails de la puce ftp déjà enregistrés.;",

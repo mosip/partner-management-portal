@@ -118,7 +118,7 @@
     },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
-        "ftmProvider": "FTM Provider",
+        "ftmProvider": "FTM Chip Provider",
         "authPartner": "Authentication Partner",
         "credentialPartner": "Credential Partner",
         "onlineVerficationPartner": "Online Verification Partner",
@@ -135,7 +135,7 @@
         "rejected": "Rejected",
         "deactivated": "Deactivated",
         "activated": "Activated",
-        "pendingCertUpload": "Pending For certificate upload"
+        "pendingCertUpload": "Pending For Certificate Upload"
     },
     "policies": {
         "policies": "Policies",
@@ -438,14 +438,17 @@
     "ftmList": {
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
-        "addFtmBtn": "Add FTM",
+        "addFtmBtn": "Add FTM Chip",
         "partnerId":"Partner ID",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
         "createdDate": "Created Date",
-        "certificateExpiryDate": "Cert Expiry Date",
+        "certificateExpiryDate": "Cert Expiry Date & Time",
         "certificateUploadDate": "Cert Time of Upload",
+        "certExpiryStatus": "Cert Expiry Status",
+        "certificateExpiryStatus": "Certificate Expiry Status",
+        "selectCertificateExpiryStatus": "Select Certificate Expiry Status",
         "status": "Status",
         "action": "Action",
         "view": "View",
@@ -455,6 +458,7 @@
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
+        "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
     },
     "addFtm": {
@@ -463,11 +467,11 @@
         "infoPartnerId": "Only those partner IDs of FTM Chip Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "enterMake": "Enter Make",
         "enterModel": "Enter Model",
-        "uploadFtmCertificate": "Upload FTM Certificate",
+        "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload",
         "errorInAddingFtm": "While adding SBI, we have encountered with an error.",
         "addFtmSuccessHeader": "FTM Chip details submitted successfully!",
-        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval."
+        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval. As a next step, upload FTM Chip Certificate to proceed further."
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "View FTM Chip Device Details",
@@ -580,7 +584,7 @@
         "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate;",
         "PMP_AUT_030": "ftp provider not exists.",
         "PMP_AUT_031": "ftp chip id not exists.",
-        "PMP_AUT_032": "Given provider,make and model already exists.",
+        "PMP_AUT_032": "FTM Chip details already exists for the same make and model",
         "PMP_AUT_033": "Certificate is not uploaded.",
         "PMP_AUT_034": "Ftp chip detail id and ftp provider id not mappped. ",
         "PMP_AUT_037": "Given ftp chip details already registered.;",
