@@ -180,11 +180,12 @@ function AddFtm() {
             backUrl: '/partnermanagement/ftmChipProviderServices/ftmList',
             header: "addFtm.addFtmSuccessHeader",
             description: "addFtm.addFtmSuccessMsg",
+            description1: "addFtm.addFtmSuccessMsg1",
             subNavigation: 'ftmList.ftmChipProviderServices',
             customBtnName: "addFtm.uploadFtmCertificate",
             styleSet: {
-              imgIconLtr: "ml-[42%] max-[450px]:ml-12",
-              imgIconRtl: "mr-[40%] max-[450px]:mr-12"
+              imgIconLtr: "ml-[38%] max-[450px]:ml-12",
+              imgIconRtl: "mr-[36%] max-[450px]:mr-12"
             }
           }
           setConfirmationData(requiredData);
@@ -243,7 +244,7 @@ function AddFtm() {
                   <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                   <form onSubmit={handleFormSubmit}>
                     <div className="flex flex-col">
-                      <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                      <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col max-[700px]:space-x-2">
                         <div className="flex-col w-[48%] max-[450px]:w-full">
                           <DropdownComponent
                             fieldName='partnerId'
@@ -268,7 +269,7 @@ function AddFtm() {
                           </button>
                         </div>
                       </div>
-                      <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                      <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col max-[700px]:space-x-2">
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
@@ -286,11 +287,11 @@ function AddFtm() {
                   </form>
                 </div>
                 <div className="border bg-medium-gray" />
-                <div className="flex flex-row max-[450px]:flex-col px-[2%] py-5 justify-between max-[450px]:space-y-2">
-                  <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
-                  <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
-                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                <div className="flex flex-row max-[560px]:flex-col px-[2%] py-5 justify-between max-[560px]:space-y-2">
+                  <button onClick={() => clearForm()} className={`w-40 max-[560px]:w-full h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2 max-[560px]:mr-0" : "ml-2 max-[560px]:ml-0"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                  <div className={`flex flex-row max-[560px]:flex-col space-x-3 max-[560px]:space-x-0 max-[560px]:space-y-2 w-full md:w-auto justify-end`}>
+                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                       {t('commons.submit')}
                     </button>
                   </div>

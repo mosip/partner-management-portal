@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
@@ -22,6 +22,9 @@ function Confirmation({ confirmationData, onClickFunction }) {
                     </h1>
                     <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                         {t(confirmationData.description)}
+                        {confirmationData.description1 && (
+                            <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</p>
+                        )}
                     </p>
                     {!confirmationData.customBtnName &&
                         <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>

@@ -79,7 +79,7 @@ function FtmList() {
         if (item['isCertificateExpired'] === true) {
             return { ...item, certificateExpiryStatus: 'expired' };
         } else {
-            return { ...item, certificateExpiryStatus: '' };
+            return { ...item, certificateExpiryStatus: '-' };
         }
     });
     return updatedData;
@@ -187,8 +187,8 @@ function FtmList() {
               )}
             </div>
             {ftmList.length === 0 ? 
-              <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                <div className="flex justify-between py-2 px-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
+              <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg">
+                <div className="flex justify-between py-2 px-2 pt-4 text-sm font-semibold text-[#6F6E6E] overflow-x-scroll no-scrollbar">
                   <div className={`flex w-full justify-between`}>
                     <h6 className="px-2 mx-2">{t('ftmList.partnerId')}</h6>
                     <h6 className="px-2 mx-2">{t('ftmList.make')}</h6>
@@ -252,7 +252,7 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.createdDateTime, 'date')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${ftm.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-[#191919]'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus ? t('ftmList.expired') : "-"}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
