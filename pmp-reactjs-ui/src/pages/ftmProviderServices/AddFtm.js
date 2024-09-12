@@ -238,7 +238,7 @@ function AddFtm() {
             <div className="flex justify-between">
               <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
             </div>
- {!addFtmSuccess ?
+            {!addFtmSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                 <div className="px-[2.5%] py-[2%]">
                   <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
@@ -262,7 +262,7 @@ function AddFtm() {
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                           <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                             overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                            <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t('requestPolicy.partnerType')}</span>
+                            <span className={`w-full break-all break-normal break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnerTypeHelpText')}</span>
                             <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
@@ -314,4 +314,4 @@ function AddFtm() {
   )
 }
 
-  export default AddFtm;
+export default AddFtm;
