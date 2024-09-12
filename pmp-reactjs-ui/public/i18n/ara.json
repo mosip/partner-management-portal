@@ -485,7 +485,7 @@
         "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "ftmChipProvider": "مزود رقاقة FTM",
-        "certificateNameHelpText": "اسم الشهادة يظهر هنا CER"
+        "ftmChipCertificate": " شهادة رقاقة FTM"
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",

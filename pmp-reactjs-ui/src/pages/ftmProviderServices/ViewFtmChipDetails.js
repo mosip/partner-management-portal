@@ -62,11 +62,11 @@ function ViewFtmChipDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(ftmDetails.crDtimes, "date")}
+                                            formatDate(ftmDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(ftmDetails.crDtimes, "time")}
+                                        {formatDate(ftmDetails.createdDateTime, "time")}
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@ function ViewFtmChipDetails() {
                                         <div className="flex space-x-4 items-center ">
                                             <img src={fileUploadBlue} className="h-8" alt="" />
                                             <h6 className={`text-sm font-semibold text-[#000000] text-charcoal-gray'}`}>
-                                                {t('viewFtmChipDetails.certificateNameHelpText')}
+                                                {t('viewFtmChipDetails.ftmChipCertificate')}
                                             </h6>
                                         </div>
                                         <div className=" flex space-x-2">
@@ -136,11 +136,11 @@ function ViewFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDate, 'date')}</p>
+                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'date')}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDate, 'dateTime')}</p>
+                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime')}</p>
                                         </div>
                                     </div>
                                 </div>
