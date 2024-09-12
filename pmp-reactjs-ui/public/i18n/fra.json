@@ -477,7 +477,8 @@
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement.",
         "errorInAddingFtm": "Lors de l'ajout de SBI, nous avons rencontré une erreur.",
         "addFtmSuccessHeader": "Détails de la puce FTM soumis avec succès!",
-        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur. Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
+        "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur.",
+        "addFtmSuccessMsg1": "Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
         "uploadFtmCertHeader": "Télécharger le certificat de la puce FTM",
         "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès"
     },

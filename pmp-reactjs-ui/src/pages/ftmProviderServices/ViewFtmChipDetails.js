@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, moveToHome } from "../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import fileUploadBlue from '../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
@@ -136,7 +136,7 @@ function ViewFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'date')}</p>
+                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>

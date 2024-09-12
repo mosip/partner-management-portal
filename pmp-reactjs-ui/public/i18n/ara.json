@@ -477,7 +477,8 @@
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
         "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
         "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
-        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة. كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
+        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة.",
+        "addFtmSuccessMsg1": "كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
         "uploadFtmCertHeader": "تحميل شهادة شريحة FTM",
         "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
     },

@@ -60,6 +60,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
             return t('statusCodes.expired')
+        } else if (status === "-") {
+            return "-"
         }
     }
 
