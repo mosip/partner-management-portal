@@ -250,7 +250,7 @@ function SbiList() {
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.partnerType')}</p>
-                                                                <p className="text-sm text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
+                                                                <p className="text-sm text-vulcan">{getPartnerTypeDescription("Device_Provider", t)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
