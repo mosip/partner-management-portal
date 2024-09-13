@@ -68,16 +68,16 @@ function ViewDeviceDetails() {
                                         {deviceDetails.make} - {deviceDetails.model}
                                     </p>
                                     <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                        <div className={`${bgOfStatus(deviceDetails.approvalStatus, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                            {getStatusCode(deviceDetails.approvalStatus, t)}
+                                        <div className={`${bgOfStatus(deviceDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            {getStatusCode(deviceDetails.status, t)}
                                         </div>
                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                             {t("viewDeviceDetails.createdOn") + ' ' +
-                                                formatDate(deviceDetails.crDtimes, "date")}
+                                                formatDate(deviceDetails.createdDateTime, "date")}
                                         </div>
                                         <div className="mx-1 text-gray-300">|</div>
                                         <div className="font-semibold text-sm text-dark-blue">
-                                            {formatDate(deviceDetails.crDtimes, "time")}
+                                            {formatDate(deviceDetails.createdDateTime, "time")}
                                         </div>
                                     </div>
                                 </div>

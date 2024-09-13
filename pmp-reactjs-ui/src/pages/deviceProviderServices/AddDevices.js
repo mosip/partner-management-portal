@@ -243,7 +243,7 @@ function AddDevices() {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
     
             if (response?.data?.response?.id) {
-                addInactiveDeviceMappingToSbi(response.data.response.id, index);
+                inactiveMappingDeviceToSbi(response.data.response.id, index);
             } else {
                 handleError(response.data, index, newEntries);
             }
@@ -256,7 +256,7 @@ function AddDevices() {
         setIsSubmitClicked(false);
     };
     
-    const addInactiveDeviceMappingToSbi = async (deviceDetailId, index) => {
+    const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
         const newEntries = [...deviceEntries];
         setDataLoaded(false);
         try {
@@ -266,7 +266,7 @@ function AddDevices() {
                 partnerId: selectedSbidata.partnerId
             }, "mosip.pms.add.inactive.device.mapping.to.sbi.id.post", true);
     
-            const response = await HttpService.post(getPartnerManagerUrl(`/partners/addInactiveDeviceMappingToSbi`, process.env.NODE_ENV), request, {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/inactive-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
