@@ -116,7 +116,7 @@ function AddSbi() {
         setPartnerId(selectedValue);
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            setPartnerType(getPartnerTypeDescription("Device_Provider", t));
         }
     };
 

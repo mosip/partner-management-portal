@@ -21,9 +21,9 @@ function Confirmation({ confirmationData, onClickFunction }) {
                         {t(confirmationData.header)}
                     </h1>
                     <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
-                        {t(confirmationData.description)}
+                        {t(confirmationData.description)} <br></br>
                         {confirmationData.description1 && (
-                            <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</p>
+                            <span className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</span>
                         )}
                     </p>
                     {!confirmationData.customBtnName &&

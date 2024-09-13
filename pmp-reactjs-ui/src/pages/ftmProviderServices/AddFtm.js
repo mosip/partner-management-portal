@@ -92,7 +92,7 @@ function AddFtm() {
       ftpChipDeatilId: ftpChipDetailId,
       isItForRegistrationDevice: true,
       organizationName: getUserProfile().orgName,
-      partnerDomain: getPartnerDomainType(partnerType),
+      partnerDomain: getPartnerDomainType("FTM_Provider"),
     };
     setUploadCertificateRequest(request);
     setShowPopup(!showPopup);
