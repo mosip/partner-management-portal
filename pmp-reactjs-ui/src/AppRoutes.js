@@ -15,7 +15,6 @@ import GenerateApiKey from './pages/authenticationServices/GenerateApiKey.js';
 import ViewApiKeyDetails from './pages/authenticationServices/ViewApiKeyDetails.js';
 import RuntimeError from './pages/common/RuntimeError.js';
 import UserProfile from './nav/UserProfile.js';
-import Confirmation from './pages/common/Confirmation.js';
 import AddSbi from './pages/deviceProviderServices/AddSbi.js';
 import SbiList from './pages/deviceProviderServices/SbiList.js';
 import AddDevices from './pages/deviceProviderServices/AddDevices.js';
@@ -63,20 +62,12 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'policies/requestPolicyConfirmation',
-          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
-        },
-        {
           path: 'authenticationServices/oidcClientsList',
           element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/createOidcClient',
           element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
-        },
-        {
-          path: 'authenticationServices/createOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewOidcClienDetails',
@@ -87,20 +78,12 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><EditOidcClient/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/editOidcClientConfirmation',
-          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
-        },
-        {
           path: 'authenticationServices/apiKeysList',
           element: <GuardedRoute><MainLayout><ApiKeysList/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/generateApiKey',
           element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
-        },
-        {
-          path: 'authenticationServices/generateApiKeyConfirmation',
-          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewApiKeyDetails',
@@ -141,10 +124,6 @@ function AppRoutes() {
         {
           path: 'ftmChipProviderServices/manageFtmChipCertificate',
           element: <GuardedRoute><MainLayout><ManageFtmChipCertificate/></MainLayout></GuardedRoute>
-        },
-        {
-          path: 'ftmChipProviderServices/addFtmConfirmation',
-          element: <GuardedRoute><MainLayout><Confirmation/></MainLayout></GuardedRoute>,
         },
         {
           path: 'runtimeError',

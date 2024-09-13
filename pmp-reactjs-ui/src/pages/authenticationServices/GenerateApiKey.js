@@ -185,7 +185,6 @@ function GenerateApiKey() {
                     }
                     setConfirmationData(requireData);
                     setApiKeyId(responseData.response.apiKey);
-                    setGenerateApiKeySuccess(true);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -207,6 +206,11 @@ function GenerateApiKey() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+    };
+
+    const closePopUp = (state) => {
+        setShowPopup(state);
+        setGenerateApiKeySuccess(true);
     };
 
     return (
@@ -304,7 +308,7 @@ function GenerateApiKey() {
                                         <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                         {(showPopup && !errorMsg) && (
-                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} id={apiKeyId} navigateUrl='/partnermanagement/authenticationServices/generateApiKeyConfirmation'
+                                            <CopyIdPopUp closePopUp={closePopUp} partnerId={partnerId} policyName={policyName} id={apiKeyId}
                                                 header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle} />
                                         )}
                                     </div>

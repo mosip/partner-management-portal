@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
 
-function CopyIdPopUp({ closePopUp, policyName, partnerId, id, navigateUrl, header, alertMsg, styleSet }) {
+function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, styleSet }) {
     const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const navigate = useNavigate();
 
     const copyId = () => {
         navigator.clipboard.writeText(id).then(() => {
@@ -21,11 +19,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, navigateUrl, heade
         });
     };
     const dismiss = () => {
-        if (navigateUrl) {
-            navigate(navigateUrl);
-        } else {
-            closePopUp(false);
-        }
+        closePopUp(false);
     }
 
     useEffect(() => {
