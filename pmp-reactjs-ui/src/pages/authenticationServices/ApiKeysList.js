@@ -237,7 +237,7 @@ function ApiKeysList() {
                                             onFilterChange={onFilterChange}>
                                         </ApiKeysFilter>
                                     }
-                                    <div className="mx-[2%]">
+                                    <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>

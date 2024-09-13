@@ -190,7 +190,7 @@ function DevicesList() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -283,7 +283,7 @@ function DevicesList() {
                                                     onFilterChange={onFilterChange}>
                                                 </DevicesListFilter>
                                             }
-                                            <div className="mx-[2%]">
+                                            <div className="mx-[2%] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>

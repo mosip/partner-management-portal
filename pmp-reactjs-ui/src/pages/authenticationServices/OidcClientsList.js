@@ -193,7 +193,7 @@ function OidcClientsList() {
 
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -267,7 +267,7 @@ function OidcClientsList() {
                                             onFilterChange={onFilterChange}>
                                         </OidcClientsFilter>
                                     }
-                                    <div className="mx-[2%]">
+                                    <div className="mx-[2%] overflow-x-scroll">
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>
