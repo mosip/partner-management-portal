@@ -53,13 +53,13 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     }
                 });
             } else if (popupData.isDeactivateDevice) {
-                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateDevice`, process.env.NODE_ENV), request, {
+                response = await HttpService.post(getPartnerManagerUrl(`/partners/deactivate-device`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.isDeactivateSbi) {
-                response = await HttpService.put(getPartnerManagerUrl(`/partners/deactivateSbi`, process.env.NODE_ENV), request, {
+                response = await HttpService.post(getPartnerManagerUrl(`/partners/deactivate-sbi`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

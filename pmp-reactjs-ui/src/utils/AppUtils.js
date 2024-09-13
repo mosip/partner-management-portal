@@ -310,7 +310,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "approvalStatus" || fieldName === "certificateExpiryStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
