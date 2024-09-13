@@ -73,7 +73,7 @@ function DevicesList() {
                 setDataLoaded(false);
 
                 let sbiId = sbiData.sbiId;
-                const response = await HttpService.get(getPartnerManagerUrl(`/partners/sbi-devices/${sbiId}`, process.env.NODE_ENV), {
+                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/sbi-devices/${sbiId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
