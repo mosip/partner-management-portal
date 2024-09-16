@@ -485,7 +485,7 @@
         "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
     },
     "viewFtmChipDetails": {
-        "viewFtmChipDetails": "عرض تفاصيل جهاز شريحة FTM",
+        "viewFtmChipDetails": "عرض تفاصيل شريحة FTM",
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "ftmChipProvider": "مزود رقاقة FTM",
         "ftmChipCertificate": " شهادة رقاقة FTM"
