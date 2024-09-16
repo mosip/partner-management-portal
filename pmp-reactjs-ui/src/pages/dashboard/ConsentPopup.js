@@ -33,7 +33,7 @@ function ConsentPopup() {
         setDataLoaded(false);
         document.body.style.overflow = "auto";
         try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/partners/user-consent`, process.env.NODE_ENV));
+            const response = await HttpService.post(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
