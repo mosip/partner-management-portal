@@ -29,7 +29,7 @@ function Policies() {
   const [policiesList, setPoliciesList] = useState([]);
   const [filteredPoliciesList, setFilteredPoliciesList] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createDate");
+  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
@@ -51,7 +51,7 @@ function Policies() {
     { id: "partnerType", headerNameKey: "policies.partnerType" },
     { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
     { id: "policyName", headerNameKey: "policies.policyName" },
-    { id: "createDate", headerNameKey: "policies.createdDate" },
+    { id: "createdDateTime", headerNameKey: "policies.createdDate" },
     { id: "status", headerNameKey: "policies.status" },
     { id: "action", headerNameKey: 'policies.action' }
   ];
@@ -65,7 +65,7 @@ function Policies() {
           const responseData = response.data;
           if (responseData && responseData.response) {
             const resData = responseData.response;
-            const sortedData = resData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+            const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
             setPoliciesList(sortedData);
             setFilteredPoliciesList(sortedData);
           } else {
@@ -98,12 +98,12 @@ function Policies() {
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
-    const isDateCol = (header === "createDate") ? true : false;
+    const isDateCol = (header === "createdDateTime") ? true : false;
     toggleSortAscOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
   const sortDescOrder = (header) => {
-    const isDateCol = (header === "createDate") ? true : false;
+    const isDateCol = (header === "createdDateTime") ? true : false;
     toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
@@ -228,7 +228,7 @@ function Policies() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
-                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createDate, 'date')}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date')}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
                                   <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(partner.status, t)}
