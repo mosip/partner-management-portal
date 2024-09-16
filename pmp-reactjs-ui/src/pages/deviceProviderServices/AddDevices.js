@@ -202,6 +202,7 @@ function AddDevices() {
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
         if (field === 'deviceType') {
+            newEntries[index].deviceSubType = '';
             const subtypeData = await fetchDeviceSubTypeDropdownData(value, index);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
         }

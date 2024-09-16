@@ -231,7 +231,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                                 <div className="px-[4%] flex justify-center mt-2 my-3">
-                                    <button className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                                    <button disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                     {(!uploading && fileName) ? (
                                         <button className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                     ) : (
