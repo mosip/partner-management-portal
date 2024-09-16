@@ -480,7 +480,7 @@
         "uploadFtmCertSuccessMsg": "FTM Chip Certificate is uploaded successfully"
     },
     "viewFtmChipDetails": {
-        "viewFtmChipDetails": "View FTM Chip Device Details",
+        "viewFtmChipDetails": "View FTM Chip Details",
         "listOfFtmChipDetails": "List of FTM Chip details",
         "ftmChipProvider": "FTM Chip Provider",
         "ftmChipCertificate": " FTM Chip Certificate"
