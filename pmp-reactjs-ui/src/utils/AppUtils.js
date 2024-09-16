@@ -331,9 +331,9 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
     return dataArr;
 }
 
-export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
+export const getAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedAuthPartnerPolicies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/auth-partners-policies', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
@@ -346,7 +346,7 @@ export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCod
             return null;
         }
     } catch (error) {
-        console.error('Error in getAllApprovedAuthPartnerPolicies:', error);
+        console.error('Error in getAuthPartnerPolicies:', error);
         return null;
     }
 };

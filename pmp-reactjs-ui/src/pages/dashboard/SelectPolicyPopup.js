@@ -35,7 +35,7 @@ function SelectPolicyPopup() {
             setDataLoaded(false);
             try {
                 const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/getAllPolicyGroups', process.env.NODE_ENV),
+                    url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
                     method: 'get',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
                 });
@@ -43,7 +43,7 @@ function SelectPolicyPopup() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        setPolicyGroupList(createDropdownData('name', 'desc', false, resData, t));
+                        setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
                         console.log(`Response data: ${resData.length}`);
                     } else {
                       handleServiceErrors(responseData, setErrorCode, setErrorMsg);

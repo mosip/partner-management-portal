@@ -60,7 +60,7 @@ function Policies() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllRequestedPolicies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/policy-requests', process.env.NODE_ENV));
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {

@@ -67,11 +67,11 @@ function ViewOidcClientDetails() {
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(oidcClientDetails.crDtimes, "date")}
+                                        formatDate(oidcClientDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate(oidcClientDetails.crDtimes, "time")}
+                                    {formatDate(oidcClientDetails.createdDateTime, "time")}
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@ function ViewOidcClientDetails() {
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {oidcClientDetails.policyNameDescription}
+                                    {oidcClientDetails.policyDescription}
                                 </p>
                             </div>
                         </div>

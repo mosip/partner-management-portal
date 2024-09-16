@@ -141,14 +141,14 @@ function ViewPolicyDetails() {
                                                 {getStatusCode(policyDetails.status, t)}
                                             </div>
                                             <div>
-                                                {policyDetails.updDtimes && (
+                                                {policyDetails.updatedDateTime && (
                                                     <div className="flex">
                                                         <div className={`font-semibold ${isLoginLanguageRTL?"mr-3":"ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(policyDetails.updDtimes, "date")}
+                                                            {formatDate(policyDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
                                                         <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate(policyDetails.updDtimes, "time")}
+                                                            {formatDate(policyDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
                                                 )}
