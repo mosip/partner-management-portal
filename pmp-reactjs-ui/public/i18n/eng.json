@@ -489,6 +489,10 @@
         "manageFtmChipCertificate": "Manage FTM Chip Certificate",
         "listOfFtmChipDetails": "List of FTM Chip details"
     },
+    "deactivateFtmPopup": {
+        "headerMsg": "Do you want to deactivate FTM Chip ",
+        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
@@ -717,6 +721,11 @@
         "PMS_REQUEST_ERROR_005": "Request body is invalid",
         "PMS_REQUEST_ERROR_006": "Request date should be current date",
         "PMS_FTM_ERROR_001": "Error while fetching the FTM chip details",
-        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider Ids."
+        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider Ids.",
+        "PMS_FTM_ERROR_003": "Error while deactivating the FTM",
+        "PMS_FTM_ERROR_004": "FTM Id is invalid",
+        "PMS_FTM_ERROR_005": "FTM Details do not exists.",
+        "PMS_FTM_ERROR_006": "FTM is not associated with user.",
+        "PMS_FTM_ERROR_007": "The selected FTM must be active and approved"
     }
 }
