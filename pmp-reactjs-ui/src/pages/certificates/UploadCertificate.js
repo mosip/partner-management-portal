@@ -132,11 +132,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerType(getPartnerType(popupData));
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
-            const dateString = popupData.certificateUploadDate.toString();
+            const dateString = popupData.certificateUploadDateTime.toString();
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [popupData.isCertificateAvailable, popupData.certificateUploadDate, popupData, getPartnerType]);
+    }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
