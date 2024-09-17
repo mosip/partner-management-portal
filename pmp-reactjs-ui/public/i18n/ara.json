@@ -492,7 +492,9 @@
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
-        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM"
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
+        "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
+        "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",

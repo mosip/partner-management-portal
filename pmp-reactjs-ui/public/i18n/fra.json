@@ -492,7 +492,9 @@
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
-        "listOfFtmChipDetails": "Liste des détails de la puce FTM"
+        "listOfFtmChipDetails": "Liste des détails de la puce FTM",
+        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
+        "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",

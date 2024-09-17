@@ -169,6 +169,7 @@ function FtmList() {
 
   const showManageCertificate = (selectedFtmData) => {
     if (selectedFtmData.status === "approved" || selectedFtmData.status === "pending_cert_upload") {
+      localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftmChipProviderServices/manageFtmChipCertificate');
     }
   };

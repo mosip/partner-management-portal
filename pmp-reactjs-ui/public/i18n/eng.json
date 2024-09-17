@@ -487,7 +487,9 @@
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Manage FTM Chip Certificate",
-        "listOfFtmChipDetails": "List of FTM Chip details"
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "uploadFtmCertificate": "Upload FTM Chip Certificate",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
