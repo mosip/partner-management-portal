@@ -6,7 +6,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
-  isLangRTL, createDropdownData, validateUrl, getAllApprovedAuthPartnerPolicies,
+  isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
   onPressEnterKey
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
@@ -147,7 +147,7 @@ function CreateOidcClient() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const resData = await getAllApprovedAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+        const resData = await getAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
         if (resData) {
           setPartnerData(resData);
           setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
@@ -169,7 +169,7 @@ function CreateOidcClient() {
     // Find the selected partner data
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
-      setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+      setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
       setPolicyGroupName(selectedPartner.policyGroupName);
       setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
     }

@@ -32,7 +32,7 @@ function OidcClientsList() {
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
+    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -59,12 +59,12 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/getAllOidcClients', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oauth/clients', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setOidcClientsList(sortedData);
                         setFilteredOidcClientsList(sortedData);
                     } else {
@@ -87,7 +87,7 @@ function OidcClientsList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "crDtimes", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -170,12 +170,12 @@ function OidcClientsList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortAscOrder(header, isDateCol, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredOidcClientsList, setFilteredOidcClientsList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
@@ -294,7 +294,7 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.oidcClientName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}

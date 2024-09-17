@@ -31,7 +31,7 @@ function ApiKeysList() {
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
+    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
@@ -55,12 +55,12 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApiKeysForAuthPartners', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/api-keys-for-auth-partners', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setApiKeysList(sortedData);
                         setFilteredApiKeysList(sortedData);
                     } else {
@@ -83,7 +83,7 @@ function ApiKeysList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyLabel" },
-        { id: "crDtimes", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -143,12 +143,12 @@ function ApiKeysList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
@@ -264,7 +264,7 @@ function ApiKeysList() {
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(apiKey.status, t)}

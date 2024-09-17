@@ -53,11 +53,11 @@ function ViewPolicyDetails() {
                             </div>
                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-xs text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
-                                    formatDate(policyDetails.createDate, "date")}
+                                    formatDate(policyDetails.createdDateTime, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
                             <div className="font-semibold text-xs text-dark-blue">
-                                {formatDate(policyDetails.createDate, "time")}
+                                {formatDate(policyDetails.createdDateTime, "time")}
                             </div>
                         </div>
                     </div>
@@ -141,14 +141,14 @@ function ViewPolicyDetails() {
                                                 {getStatusCode(policyDetails.status, t)}
                                             </div>
                                             <div>
-                                                {policyDetails.updDtimes && (
+                                                {policyDetails.updatedDateTime && (
                                                     <div className="flex">
                                                         <div className={`font-semibold ${isLoginLanguageRTL?"mr-3":"ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(policyDetails.updDtimes, "date")}
+                                                            {formatDate(policyDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
                                                         <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate(policyDetails.updDtimes, "time")}
+                                                            {formatDate(policyDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
                                                 )}
@@ -173,11 +173,11 @@ function ViewPolicyDetails() {
                                             <div className="flex items-center justify-start">
                                                 <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
-                                                        formatDate(policyDetails.createDate, "date")}
+                                                        formatDate(policyDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-semibold text-xs text-dark-blue">
-                                                    {formatDate(policyDetails.createDate, "time")}
+                                                    {formatDate(policyDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>
                                         </div>
