@@ -147,12 +147,12 @@ function UploadCertificate({ closePopup, partnerData }) {
     useEffect(() => {
         setPartnerType(getPartnerType(partnerData));
         setPartnerDomainType(getPartnerDomainType(partnerData));
-        if (partnerData.isCertificateAvailable && partnerData.certificateUploadDate) {
-            const dateString = partnerData.certificateUploadDate.toString();
+        if (partnerData.isCertificateAvailable && partnerData.certificateUploadDateTime) {
+            const dateString = partnerData.certificateUploadDateTime.toString();
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate, partnerData, getPartnerType, getPartnerDomainType]);
+    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDateTime, partnerData, getPartnerType, getPartnerDomainType]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">

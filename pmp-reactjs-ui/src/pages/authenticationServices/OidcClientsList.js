@@ -59,7 +59,7 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oauth/clients', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
