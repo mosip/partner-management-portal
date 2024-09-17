@@ -64,6 +64,12 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
+            } else if (popupData.isDeactivateFtm) {
+                response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail/deactivate-ftm`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             }
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -101,10 +107,10 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - '{popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
+                                        {t(headerMsg)} - '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - {popupData.isDeactivateDevice ? popupData.make + ' - ' + popupData.model : headerKeyName}
+                                        {t(headerMsg)} - {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? popupData.make + ' - ' + popupData.model : headerKeyName}
                                     </p>
                                 }
                                 <p className="text-sm text-[#666666] break-words py-[5%]">

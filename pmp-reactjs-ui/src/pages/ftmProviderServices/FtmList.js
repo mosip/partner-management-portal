@@ -6,7 +6,7 @@ import { HttpService } from '../../services/HttpService';
 import {
   isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  onPressEnterKey
+  onPressEnterKey, createRequest, populateDeactivatedStatus
 } from '../../utils/AppUtils';
 import ErrorMessage from '../common/ErrorMessage';
 import Title from '../common/Title';
@@ -16,6 +16,7 @@ import FilterButtons from '../common/FilterButtons';
 import FtmListFilter from './FtmListFilter';
 import SortingIcon from '../common/SortingIcon';
 import Pagination from '../common/Pagination';
+import DeactivatePopup from '../common/DeactivatePopup';
 
 function FtmList() {
   const navigate = useNavigate('');
@@ -34,6 +35,8 @@ function FtmList() {
   const [ftmList, setFtmList] = useState([]);
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
+  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     partnerId: "",
     make: ""
@@ -54,7 +57,8 @@ function FtmList() {
           const responseData = response.data;
           if (responseData && responseData.response) {
             const resData = responseData.response;
-            const populatedData = populateCertificateExpiryStatus(resData);
+            let populatedData = populateCertificateExpiryStatus(resData);
+            populatedData = populateDeactivatedStatus(populatedData, "status", "isActive");
             const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
             setFtmList(sortedData);
             setFilteredFtmList(sortedData);
@@ -154,6 +158,12 @@ function FtmList() {
 
   const showDeactivateFtm = (selectedFtmData) => {
     if (selectedFtmData.status === "approved") {
+      const request = createRequest({
+        ftmId: selectedFtmData.ftmId,
+      },"mosip.pms.deactivate.ftm.post", true);
+      setDeactivateRequest(request);
+      setShowDeactivatePopup(true);
+      document.body.style.overflow = "hidden";
     }
   };
 
@@ -162,6 +172,11 @@ function FtmList() {
       navigate('/partnermanagement/ftmChipProviderServices/manageFtmChipCertificate');
     }
   };
+
+  const closeDeactivatePopup = () => {
+    setViewFtmId(-1);
+    setShowDeactivatePopup(false);
+};
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -251,7 +266,7 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.createdDateTime, 'date')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${ftm.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-[#191919]'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -276,6 +291,9 @@ function FtmList() {
                                         <p onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
                                           {t('ftmList.deActivate')}
                                         </p>
+                                        {showDeactivatePopup && (
+                                          <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{...ftm, isDeactivateFtm:true}} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                        )}
                                       </div>
                                     )}
                                   </div>
