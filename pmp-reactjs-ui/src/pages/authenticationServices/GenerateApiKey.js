@@ -159,7 +159,7 @@ function GenerateApiKey() {
         setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
-            label: nameLabel
+            label: nameLabel.trim().replace(/\s+/g,' ')
         });
         try {
             const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {

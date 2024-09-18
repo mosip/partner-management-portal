@@ -152,8 +152,8 @@ function AddFtm() {
     let request = createRequest(
       {
         ftpProviderId: partnerId,
-        make: make.trim(),
-        model: model.trim()
+        make: make.trim().replace(/\s+/g,' '),
+        model: model.trim().replace(/\s+/g,' ')
       }
     );
     console.log(request);

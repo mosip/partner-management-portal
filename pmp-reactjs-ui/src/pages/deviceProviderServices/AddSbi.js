@@ -149,7 +149,7 @@ function AddSbi() {
         let request = createRequest(
             {
                 swBinaryHash: binaryHash.trim(),
-                swVersion: sbiVersion.trim(),
+                swVersion: sbiVersion.trim().replace(/\s+/g,' '),
                 swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
                 swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId

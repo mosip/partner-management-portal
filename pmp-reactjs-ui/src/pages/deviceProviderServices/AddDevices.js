@@ -237,8 +237,8 @@ function AddDevices() {
             deviceProviderId: getUserProfile().userName,
             deviceTypeCode: entry.deviceType,
             deviceSubTypeCode: entry.deviceSubType,
-            make: entry.make.trim(),
-            model: entry.model.trim()
+            make: entry.make.trim().replace(/\s+/g,' '),
+            model: entry.model.trim().replace(/\s+/g, ' ')
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
