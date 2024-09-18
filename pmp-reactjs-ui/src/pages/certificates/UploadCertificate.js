@@ -138,9 +138,19 @@ function UploadCertificate({ closePopup, popupData, request }) {
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
+    const errorPopUpStyleSet = {
+        outerDiv: "!justify-center !inset-0",
+        innerDiv: "!rounded-none !bg-moderate-red !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+    }
+
+    const successPopUpStyleSet = {
+        outerDiv: "!justify-center !inset-0",
+        innerDiv: "!rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+    }
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
-            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true}}>
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
                         <div className="flex items-center h-[30rem]">
@@ -156,18 +166,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">
                                 {uploadFailure && errorMsg && (
-                                    <div className="flex justify-center inset-0">
-                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                        </div>
-                                    </div>
+                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={errorPopUpStyleSet} />
                                 )}
                                 {uploadSuccess && successMsg && (
-                                    <div className="flex justify-center inset-0">
-                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
-                                        </div>
-                                    </div>
+                                    <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} popUpStyleSet={successPopUpStyleSet} />
                                 )}
                                 <div className="px-[4%] py-[2%]">
                                     <form>

@@ -51,6 +51,11 @@ function ConsentPopup() {
         setDataLoaded(true);
     }
 
+    const popUpStyleSet = {
+        outerDiv: "!absolute !w-3/5 !mt-1 !px-0.5",
+        innerDiv: "!min-h-13 !p-3.5 !w-6/12"
+    }
+
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -61,11 +66,7 @@ function ConsentPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <div className="flex justify-end absolute w-3/5 mt-2 px-2">
-                                    <div className="flex justify-between items-center min-h-13 bg-[#C61818] rounded-xl p-3 w-6/12">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                    </div>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={popUpStyleSet} />
                             )}
                             <div className="p-4">
                                 <h3 className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>
