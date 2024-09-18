@@ -170,7 +170,8 @@ function AddFtm() {
           setFtpChipDetailId(responseData.response.id);
           const requiredDataForCertUpload = {
             partnerType: "FTM_Provider",
-            header: 'addFtm.uploadFtmCertHeader',
+            uploadHeader: 'addFtm.uploadFtmCertHeader',
+            reUploadHeader: 'addFtm.reUploadFtmCertHeader',
             successMessage: 'addFtm.uploadFtmCertSuccessMsg',
             isUploadFtmCertificate: true,
           }

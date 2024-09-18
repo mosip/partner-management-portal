@@ -2,10 +2,13 @@ import React, { useState, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from "../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import fileUploadBlue from '../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
+import fileUpload from '../../svg/file_upload_icon.svg';
+import file from '../../svg/file_icon.svg';
+import UploadCertificate from "../certificates/UploadCertificate";
 
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
@@ -13,6 +16,9 @@ function ViewFtmChipDetails() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
+    const [uploadCertificateData, setUploadCertificateData] = useState({});
 
     useEffect(() => {
         const selectedFtm = localStorage.getItem('selectedFtmData');
@@ -21,8 +27,45 @@ function ViewFtmChipDetails() {
             return;
         }
         let ftmData = JSON.parse(selectedFtm);
+        console.log(ftmData)
         setFtmDetails(ftmData);
     }, []);
+
+    const isDownloadBtnDisabled = () => {
+        return (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') ? false : true;
+    };
+
+    const clickOnUpload = () => {
+        document.body.style.overflow = "hidden";
+        const requiredDataForCertUpload = {
+            partnerType: "FTM_Provider",
+            uploadHeader: 'addFtm.uploadFtmCertHeader',
+            reUploadHeader: 'addFtm.reUploadFtmCertHeader',
+            successMessage: 'addFtm.uploadFtmCertSuccessMsg',
+            isUploadFtmCertificate: true,
+            isCertificateAvailable: ftmDetails.isCertificateAvailable,
+            certificateUploadDateTime: ftmDetails.certificateUploadDateTime,
+        };
+        setUploadCertificateData(requiredDataForCertUpload);
+        const request = {
+          ftpProviderId: ftmDetails.partnerId,
+          ftpChipDeatilId: ftmDetails.ftmId,
+          isItForRegistrationDevice: true,
+          organizationName: getUserProfile().orgName,
+          partnerDomain: getPartnerDomainType("FTM_Provider"),
+        };
+        setUploadCertificateRequest(request);
+        setShowPopup(true);
+    };
+
+    const closePopup = (state, btnName) => {
+        if (state && btnName === 'cancel') {
+          setShowPopup(false);
+          document.body.style.overflow = "auto";
+        } else if (state && btnName === 'close') {
+          navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+        }
+    };
 
     const moveToFtmList = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
@@ -32,7 +75,7 @@ function ViewFtmChipDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewFtmChipDetails.viewFtmChipDetails' subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
                 </div>
 
                 {unexpectedError && (
@@ -109,23 +152,39 @@ function ViewFtmChipDetails() {
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
-                                    <div className="flex py-[1.5rem] px-5 bg-[#F9FBFF] justify-between">
+                                    <div className="flex py-[1rem] px-5 bg-[#F9FBFF] justify-between items-center">
                                         <div className="flex space-x-4 items-center ">
-                                            <img src={fileUploadBlue} className="h-8" alt="" />
-                                            <h6 className={`text-sm font-semibold text-[#000000] text-charcoal-gray'}`}>
-                                                {t('viewFtmChipDetails.ftmChipCertificate')}
-                                            </h6>
+                                            <img src={ ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
+                                            <div className="flex-col p-3 items-center">
+                                                <h6 className={`text-sm ${ftmDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                    { ftmDetails.isViewFtmChipDetails ? t('viewFtmChipDetails.ftmChipCertificate') : ftmDetails.isCertificateAvailable ? t('viewFtmChipDetails.ftmChipCertificate'): t('manageFtmChipCertificate.uploadFtmCertificate')}
+                                                </h6>
+                                                { ftmDetails.isManageFtmCertificate && (
+                                                    <p className="text-xs text-light-gray">{ftmDetails.isCertificateAvailable ? null : t('manageFtmChipCertificate.certificateFormatMsg')}</p>
+                                                )}
+                                            </div>
                                         </div>
                                         <div className=" flex space-x-2">
-                                            {ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval' ? (
-                                                <button className={`h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
+                                            {ftmDetails.isViewFtmChipDetails && (
+                                                <button disabled={isDownloadBtnDisabled()} className={`h-10 w-28 text-xs p-3 py-2 ${isDownloadBtnDisabled() ? 'border-[#C1C1C1] text-vulcan bg-platinum-gray' : 'text-tory-blue bg-white border-blue-800'}  border font-semibold rounded-md text-center`}>
                                                     {t('partnerCertificatesList.download')}
                                                 </button>
-                                            ) : (
-                                                <button disabled className={`h-10 w-28 text-xs p-3 py-2 border-[#C1C1C1] text-vulcan bg-platinum-gray font-semibold rounded-md text-center`}>
-                                                    {t('partnerCertificatesList.download')}
-                                                </button>
-                                            ) }
+                                            )}
+                                            {ftmDetails.isManageFtmCertificate && (
+                                                <>
+                                                    { ftmDetails.isCertificateAvailable && (
+                                                        <button className={`h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border-blue-800 border font-semibold rounded-md text-center`}>
+                                                            {t('partnerCertificatesList.download')}
+                                                        </button>
+                                                    )}
+                                                    <button onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
+                                                        {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
+                                                    </button>
+                                                    { showPopup && (
+                                                        <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
+                                                    )}
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                     <hr className="border bg-medium-gray h-px" />
