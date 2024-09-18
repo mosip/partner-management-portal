@@ -482,6 +482,7 @@
         "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur.",
         "addFtmSuccessMsg1": "Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
         "uploadFtmCertHeader": "Télécharger le certificat de la puce FTM",
+        "reUploadFtmCertHeader": "Re-télécharger le certificat de la puce FTM",
         "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès"
     },
     "viewFtmChipDetails": {

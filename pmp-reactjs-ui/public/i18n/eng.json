@@ -477,6 +477,7 @@
         "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval.",
         "addFtmSuccessMsg1": "As a next step, upload FTM Chip Certificate to proceed further.",
         "uploadFtmCertHeader": "Upload FTM Chip Certificate",
+        "reUploadFtmCertHeader": "Re- upload FTM Chip Certificate",
         "uploadFtmCertSuccessMsg": "FTM Chip Certificate is uploaded successfully"
     },
     "viewFtmChipDetails": {

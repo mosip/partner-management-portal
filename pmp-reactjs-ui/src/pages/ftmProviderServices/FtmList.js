@@ -146,12 +146,22 @@ function FtmList() {
 
   const showFtmDetails = (selectedFtmData) => {
     if (selectedFtmData.status !== "deactivated") {
+      selectedFtmData = {
+        ...selectedFtmData,
+        title: 'viewFtmChipDetails.viewFtmChipDetails',
+        isViewFtmChipDetails: true
+      }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
     }
   }
 
   const viewFtmDetails = (selectedFtmData) => {
+    selectedFtmData = {
+      ...selectedFtmData,
+      title: 'viewFtmChipDetails.viewFtmChipDetails',
+      isViewFtmChipDetails: true
+    }
     localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
     navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
   }
@@ -169,6 +179,11 @@ function FtmList() {
 
   const showManageCertificate = (selectedFtmData) => {
     if (selectedFtmData.status === "approved" || selectedFtmData.status === "pending_cert_upload") {
+      selectedFtmData = {
+        ...selectedFtmData,
+        title: 'manageFtmChipCertificate.manageFtmChipCertificate',
+        isManageFtmCertificate: true
+      }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftmChipProviderServices/manageFtmChipCertificate');
     }

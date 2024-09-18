@@ -150,7 +150,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t(popupData.header)}</h3>
+                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
                                 <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>

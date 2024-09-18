@@ -482,6 +482,7 @@
         "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة.",
         "addFtmSuccessMsg1": "كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
         "uploadFtmCertHeader": "تحميل شهادة شريحة FTM",
+        "reUploadFtmCertHeader": "إعادة تحميل شهادة شريحة FTM",
         "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
     },
     "viewFtmChipDetails": {
