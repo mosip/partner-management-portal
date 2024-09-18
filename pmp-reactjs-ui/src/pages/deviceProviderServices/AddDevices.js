@@ -265,7 +265,7 @@ function AddDevices() {
                 deviceDetailId: deviceDetailId,
                 sbiId: selectedSbidata.sbiId,
                 partnerId: selectedSbidata.partnerId
-            }, "mosip.pms.add.inactive.device.mapping.to.sbi.id.post", true);
+            }, "mosip.pms.add.inactive.mapping.device.to.sbi.id.post", true);
     
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/inactive-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
                 headers: {
