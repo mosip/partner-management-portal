@@ -382,3 +382,7 @@ export const getPartnerDomainType = (partnerType) => {
         }
     }
 };
+
+export const trimAndReplace = (str) => {
+    return str.trim().replace(/\s+/g, ' ');
+};

@@ -7,7 +7,7 @@ import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAuthPartnerPolicies, createDropdownData
+    createRequest, getAuthPartnerPolicies, createDropdownData, trimAndReplace
 } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -159,7 +159,7 @@ function GenerateApiKey() {
         setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
-            label: nameLabel.trim().replace(/\s+/g,' ')
+            label: trimAndReplace(nameLabel)
         });
         try {
             const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {

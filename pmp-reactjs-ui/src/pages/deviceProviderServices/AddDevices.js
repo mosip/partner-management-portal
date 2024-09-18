@@ -4,7 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { HttpService } from '../../services/HttpService.js';
 import Title from '../common/Title.js';
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, trimAndReplace } from '../../utils/AppUtils.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import ErrorMessage from '../common/ErrorMessage.js';
 import SuccessMessage from "../common/SuccessMessage";
@@ -237,8 +237,8 @@ function AddDevices() {
             deviceProviderId: getUserProfile().userName,
             deviceTypeCode: entry.deviceType,
             deviceSubTypeCode: entry.deviceSubType,
-            make: entry.make.trim().replace(/\s+/g,' '),
-            model: entry.model.trim().replace(/\s+/g, ' ')
+            make: trimAndReplace(entry.make),
+            model: trimAndReplace(entry.model.trim())
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);

@@ -7,7 +7,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
 import {
     isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest
+    handleServiceErrors, createRequest, trimAndReplace
 } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -149,7 +149,7 @@ function AddSbi() {
         let request = createRequest(
             {
                 swBinaryHash: binaryHash.trim(),
-                swVersion: sbiVersion.trim().replace(/\s+/g,' '),
+                swVersion: trimAndReplace(sbiVersion),
                 swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
                 swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId
