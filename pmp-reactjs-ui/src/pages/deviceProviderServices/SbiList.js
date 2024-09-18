@@ -45,13 +45,13 @@ function SbiList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllSBIDetails', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/sbi-details', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const populatedData = populateDeactivatedStatus(resData, "status", "active");
-                        const sortedData = populatedData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const populatedData = populateDeactivatedStatus(resData, "status", "sbiActive");
+                        const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setSbiList(sortedData);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -102,7 +102,7 @@ function SbiList() {
     };
 
     const canAddDevices = (sbi) => {
-        if (sbi.status !== "approved" || sbi.expired) {
+        if (sbi.status !== "approved" || sbi.sbiExpired) {
             return false;
         }
         return true;
@@ -116,7 +116,7 @@ function SbiList() {
         if (sbi.status === "approved") {
             const request = createRequest({
                 sbiId: sbi.sbiId,
-            }, "mosip.pms.deactivate.sbi.put");
+            }, "mosip.pms.deactivate.sbi.post", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -129,7 +129,7 @@ function SbiList() {
         if (sbi.status === "deactivated") {
             return deactivatedIcon;
         }
-        else if (sbi.expired) {
+        else if (sbi.sbiExpired) {
             return expiredIcon;
         }
         else {
@@ -141,7 +141,7 @@ function SbiList() {
         if (sbi.status === "deactivated") {
             return 'bg-[#EAECF0] border rounded-lg';
         }
-        else if (sbi.expired) {
+        else if (sbi.sbiExpired) {
             return 'bg-[#fef1f1]';
         } else {
             return 'bg-[#FCFCFC]';
@@ -201,7 +201,7 @@ function SbiList() {
                                                     <div className="flex flex-col">
                                                         <p className={`text-base break-all font-bold p-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
                                                         <div className="flex flex-row items-center space-x-1">
-                                                            <div className={`${(sbi.status === 'deactivated' || sbi.expired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
+                                                            <div className={`${(sbi.status === 'deactivated' || sbi.sbiExpired) ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
                                                             <div className='flex items-center w-fit px-2 mx-1'>
@@ -221,13 +221,13 @@ function SbiList() {
                                                     </div>
                                                 </div>
                                                 <div ref={el => submenuRef.current[index] = el} className="flex flex-row justify-between items-center relative space-x-3">
-                                                    <button disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.expired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
+                                                    <button disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.sbiExpired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                     <button onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
                                                     <img src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
-                                                        <div className={`z-50 w-[17rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg ring-gray-50 border duration-500`}>
-                                                            <p onClick={() => onClickDeactivate(sbi)} className={`text-left px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
+                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
+                                                            <p onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (
@@ -250,21 +250,21 @@ function SbiList() {
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.partnerType')}</p>
-                                                                <p className="text-sm text-vulcan">{getPartnerTypeDescription(sbi.partnerType, t)}</p>
+                                                                <p className="text-sm text-vulcan">{getPartnerTypeDescription("Device_Provider", t)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.crDtimes, 'date')}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.createdDateTime, 'date')}</p>
                                                             </div>
                                                         </div>
                                                         <div className="flex flex-row justify-between font-semibold pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.createdDate')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiSoftwareCreatedDtimes, 'iso')}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'iso')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.expired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.expired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiSoftwareExpiryDtimes, 'iso')}</p>
+                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
+                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'iso')}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>

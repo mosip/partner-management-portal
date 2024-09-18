@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, onPressEnterKey } from '../../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
@@ -11,7 +11,7 @@ import fileUploadImg from '../../svg/file_upload_certificate.svg';
 import fileDescription from '../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
 
-function UploadCertificate({ closePopup, partnerData }) {
+function UploadCertificate({ closePopup, popupData, request }) {
     const [partnerDomainType, setPartnerDomainType] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [uploading, setUploading] = useState(false);
@@ -29,25 +29,26 @@ function UploadCertificate({ closePopup, partnerData }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const clickOnCancel = () => {
-        closePopup(true);
+        closePopup(true, 'cancel');
     };
     const clickOnSubmit = async () => {
         setSuccessMsg("");
         setErrorCode("");
         setErrorMsg("");
         if (uploadSuccess) {
-            closePopup(true);
+            closePopup(true, 'close');
         } else {
             setDataLoaded(false);
-            let request = {
-                request: {
-                    partnerId: partnerData.partnerId,
-                    certificateData: certificateData,
-                    partnerDomain: partnerDomainType,
-                },
-            }
+            const uploadRequest = createRequest({
+                ...request, certificateData: certificateData
+            });
             try {
-                const response = await HttpService.post(getPartnerManagerUrl('/partners/certificate/upload', process.env.NODE_ENV), request)
+                let response;
+                if (popupData.isUploadPartnerCertificate) {
+                    response = await HttpService.post(getPartnerManagerUrl('/partners/certificate/upload', process.env.NODE_ENV), uploadRequest)
+                } else if (popupData.isUploadFtmCertificate) {
+                    response = await HttpService.post(getPartnerManagerUrl('/ftpchipdetail/uploadcertificate', process.env.NODE_ENV), uploadRequest)
+                }
                 if (response !== null) {
                     const resData = response.data.response;
                     if (response.data.errors && response.data.errors.length > 0) {
@@ -61,7 +62,8 @@ function UploadCertificate({ closePopup, partnerData }) {
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
                     } else {
                         setUploadSuccess(true);
-                        setSuccessMsg(t('uploadCertificate.successMsg', { partnerType: getPartnerType(partnerData) }));
+                        const successText = popupData.successMessage ? t(popupData.successMessage) : t('uploadCertificate.successMsg', { partnerType: getPartnerType(popupData) });
+                        setSuccessMsg(successText);
                     }
                 } else {
                     setUploadFailure(true);
@@ -76,30 +78,12 @@ function UploadCertificate({ closePopup, partnerData }) {
         }
     };
 
-    const getPartnerType = useCallback((partner) => {
-        if (partner.partnerType) {
-            const partnerTypeDesc = getPartnerTypeDescription(partner.partnerType, t);
+    const getPartnerType = useCallback((popupData) => {
+        if (popupData.partnerType) {
+            const partnerTypeDesc = getPartnerTypeDescription(popupData.partnerType, t);
             return partnerTypeDesc;
         }
     }, [t]);
-
-    const getPartnerDomainType = useCallback((partner) => {
-        if (partner.partnerType) {
-            const partnerType = partner.partnerType.toUpperCase();
-            if (partnerType === "Device_Provider".toUpperCase()) {
-                return 'DEVICE';
-            }
-            else if (partnerType === "FTM_Provider".toUpperCase()) {
-                return 'FTM';
-            }
-            else if (partnerType === "MISP_type".toUpperCase()) {
-                return 'MISP';
-            }
-            else {
-                return 'AUTH';
-            }
-        }
-    }, []);
 
     const cancelUpload = () => {
         setFileName("");
@@ -145,19 +129,19 @@ function UploadCertificate({ closePopup, partnerData }) {
     };
 
     useEffect(() => {
-        setPartnerType(getPartnerType(partnerData));
-        setPartnerDomainType(getPartnerDomainType(partnerData));
-        if (partnerData.isCertificateAvailable && partnerData.certificateUploadDate) {
-            const dateString = partnerData.certificateUploadDate.toString();
+        setPartnerType(getPartnerType(popupData));
+        setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
+        if (popupData.isCertificateAvailable) {
+            const dateString = popupData.certificateUploadDateTime.toString();
             const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
-    }, [partnerData.isCertificateAvailable, partnerData.certificateUploadDate, partnerData, getPartnerType, getPartnerDomainType]);
+    }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true}}>
-                <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${partnerData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
+                <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
                         <div className="flex items-center h-[30rem]">
                             <LoadingIcon></LoadingIcon>
@@ -166,7 +150,7 @@ function UploadCertificate({ closePopup, partnerData }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{partnerData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t('uploadCertificate.uploadPartnerCertificate')}</h3>
+                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t(popupData.header)}</h3>
                                 <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
@@ -241,13 +225,13 @@ function UploadCertificate({ closePopup, partnerData }) {
                                             </div>
                                         )}
                                     </div>
-                                    {partnerData.isCertificateAvailable && !removeLastUploadDate && (
+                                    {popupData.isCertificateAvailable && !removeLastUploadDate && (
                                         <p className="text-sm text-gray-800 text-center mt-1">{t('uploadCertificate.lastcertificateUploadDate', { date: formattedDate })}</p>
                                     )}
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                                 <div className="px-[4%] flex justify-center mt-2 my-3">
-                                    <button className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                                    <button disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                     {(!uploading && fileName) ? (
                                         <button className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                     ) : (

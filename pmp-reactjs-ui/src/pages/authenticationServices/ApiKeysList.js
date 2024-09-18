@@ -31,7 +31,7 @@ function ApiKeysList() {
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
+    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
@@ -55,12 +55,12 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApiKeysForAuthPartners', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/api-keys-for-auth-partners', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setApiKeysList(sortedData);
                         setFilteredApiKeysList(sortedData);
                     } else {
@@ -83,7 +83,7 @@ function ApiKeysList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyLabel" },
-        { id: "crDtimes", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -143,12 +143,12 @@ function ApiKeysList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "crDtimes") ? true : false;
+        const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
@@ -243,7 +243,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 ${isLoginLanguageRTL ? `${header.id === "status" ?'pr-2':'pr-1'}` :`pl-1.5`} text-xs text-[#6F6E6E] lg:w-[14%]`}>
+                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
                                                                 <div className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -257,14 +257,14 @@ function ApiKeysList() {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    tableRows.map((apiKey, index) => {
+                                                    tableRows.map((apiKey, index, currentArray) => {
                                                         return (
                                                             <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.crDtimes, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(apiKey.status, t)}
@@ -276,7 +276,7 @@ function ApiKeysList() {
                                                                         <p onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7%] top-7 z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-10 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
                                                                                 <p onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>onClickView(apiKey))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>

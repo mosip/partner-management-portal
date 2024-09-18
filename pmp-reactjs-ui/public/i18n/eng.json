@@ -8,6 +8,7 @@
         "back": "Back",
         "submit": "Submit",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
+        "partnersHelpText": "Auto-populated based on Partner ID selected",
         "somethingWentWrong": "Something went wrong!",
         "somethingWentWrongDesc": "Please try again later",
         "noAccess": "You do not have privilege to access this page",
@@ -100,7 +101,7 @@
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
         "reUploadPartnerCertificate": "Re-Upload Partner Certificate",
-        "selectFieldsMsg": "Please select the fields and upload certificate.",
+        "selectFieldsMsg": "Please select all fields and upload the certificate",
         "partnerTypeLabel": "Partner Type",
         "partnerDomainType": "Partner Domain Type",
         "selectingFile": "We’re fetching your certificate...",
@@ -112,13 +113,13 @@
         "submit": "Submit",
         "successMsg": "Partner certificate for {{partnerType}} is uploaded successfully.",
         "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
-        "fileUploadError": "Please select a file with .cer or .pem extension.",
+        "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
-        "errorWhileUploadingCertificate": "There is some error in uploading the certificate. Try again later!"
+        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate"
     },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
-        "ftmProvider": "FTM Provider",
+        "ftmProvider": "FTM Chip Provider",
         "authPartner": "Authentication Partner",
         "credentialPartner": "Credential Partner",
         "onlineVerficationPartner": "Online Verification Partner",
@@ -134,7 +135,9 @@
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
-        "activated": "Activated"
+        "activated": "Activated",
+        "pendingCertUpload": "Pending For Certificate Upload",
+        "expired": "Expired"
     },
     "policies": {
         "policies": "Policies",
@@ -181,6 +184,7 @@
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
         "selectPartnerId": "Approved Partner ID",
+        "partnerIdHelpText": "Select Partner ID",
         "selectPolicyName": "Select policy name",
         "comments": "Comments",
         "commentBoxDesc": "Mention the purpose of requesting the policy",
@@ -437,7 +441,59 @@
     "ftmList": {
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
-        "addFtm": "Add FTM"
+        "addFtmBtn": "Add FTM Chip",
+        "partnerId":"Partner ID",
+        "listOfFtm": "List of FTM Chip details",
+        "make": "Make",
+        "model": "Model",
+        "createdDate": "Created Date",
+        "certificateExpiryDate": "Cert Expiry Date & Time",
+        "certificateUploadDate": "Cert Time of Upload",
+        "certExpiryStatus": "Cert Expiry Status",
+        "certificateExpiryStatus": "Certificate Expiry Status",
+        "selectCertificateExpiryStatus": "Select Certificate Expiry Status",
+        "status": "Status",
+        "action": "Action",
+        "view": "View",
+        "manageCertificate": "Manage Certificate",
+        "deActivate": "Deactivate",
+        "selectPartnerId":"Select Partner ID",
+        "selectMakeName": "Select Make Name",
+        "selectModelName": "Select Model Name",
+        "selectStatus": "Select Status",
+        "expired": "Expired",
+        "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
+    },
+    "addFtm": {
+        "addFtmChipDetails": "Add FTM Chip details",
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "infoPartnerId": "Only those partner IDs of FTM Chip Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "enterMake": "Enter Make",
+        "enterModel": "Enter Model",
+        "uploadFtmCertificate": "Upload FTM Chip Certificate",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload",
+        "errorInAddingFtm": "While adding SBI, we have encountered with an error.",
+        "addFtmSuccessHeader": "FTM Chip details submitted successfully!",
+        "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval.",
+        "addFtmSuccessMsg1": "As a next step, upload FTM Chip Certificate to proceed further.",
+        "uploadFtmCertHeader": "Upload FTM Chip Certificate",
+        "uploadFtmCertSuccessMsg": "FTM Chip Certificate is uploaded successfully"
+    },
+    "viewFtmChipDetails": {
+        "viewFtmChipDetails": "View FTM Chip Details",
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "ftmChipProvider": "FTM Chip Provider",
+        "ftmChipCertificate": " FTM Chip Certificate"
+    },
+    "manageFtmChipCertificate": {
+        "manageFtmChipCertificate": "Manage FTM Chip Certificate",
+        "listOfFtmChipDetails": "List of FTM Chip details",
+        "uploadFtmCertificate": "Upload FTM Chip Certificate",
+        "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
+    },
+    "deactivateFtmPopup": {
+        "headerMsg": "Do you want to deactivate FTM Chip ",
+        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -542,7 +598,7 @@
         "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate;",
         "PMP_AUT_030": "ftp provider not exists.",
         "PMP_AUT_031": "ftp chip id not exists.",
-        "PMP_AUT_032": "Given provider,make and model already exists.",
+        "PMP_AUT_032": "FTM Chip details already exists for the same make and model",
         "PMP_AUT_033": "Certificate is not uploaded.",
         "PMP_AUT_034": "Ftp chip detail id and ftp provider id not mappped. ",
         "PMP_AUT_037": "Given ftp chip details already registered.;",
@@ -555,6 +611,8 @@
         "PMS_AUT_510": "Mapping not exists for given data.",
         "PMS_AUT_511": "SBI for which device is being mapped is not approved",
         "PMS_AUT_513": "SBI for which device is being mapped is expired",
+        "PMS_AUT_514": "The created date should be less than or equal to the current date.",
+        "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
         "PMS_POL_004": "Policy Name already exists in the policy Group.Name : ",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",
@@ -643,18 +701,18 @@
         "PMS_DEVICE_ERROR_006": "Device do not exists.",
         "PMS_DEVICE_ERROR_007": "Device is not associated with partner Id.",
         "PMS_DEVICE_ERROR_008": "Error while adding inactive device mapping for sbi.",
-        "PMS_DEVICE_ERROR_009": "SBI for which device is being added is not approved",
+        "PMS_DEVICE_ERROR_009": "SBI for which device is being added is either not approved or deactivated",
         "PMS_DEVICE_ERROR_010": "Given device details are not in pending for approval status.",
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
         "PMS_DEVICE_ERROR_013": "Device Id is invalid",
-        "PMS_DEVICE_ERROR_014": "Device should be in approved status",
+        "PMS_DEVICE_ERROR_014": "The selected device must be active and approved",
         "PMS_DEVICE_ERROR_015": "Error while deactivating the device",
         "PMS_DEVICE_ERROR_016": "Device is not associated with user.",
         "PMS_DEVICE_ERROR_017": "SBI Id is invalid",
         "PMS_DEVICE_ERROR_018": "Error while deactivating the SBI",
         "PMS_DEVICE_ERROR_019": "SBI is not associated with user.",
-        "PMS_DEVICE_ERROR_020": "SBI should be in approved status",
+        "PMS_DEVICE_ERROR_020": "The selected SBI must be active and approved",
         "PMS_DEVICE_ERROR_021": "SBI for which device is being added is expired",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
@@ -663,6 +721,13 @@
         "PMS_REQUEST_ERROR_003": "Request version is invalid",
         "PMS_REQUEST_ERROR_004": "Invalid request time",
         "PMS_REQUEST_ERROR_005": "Request body is invalid",
-        "PMS_REQUEST_ERROR_006": "Request date should be current date"
+        "PMS_REQUEST_ERROR_006": "Request date should be current date",
+        "PMS_FTM_ERROR_001": "Error while fetching the FTM chip details",
+        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider Ids.",
+        "PMS_FTM_ERROR_003": "Error while deactivating the FTM",
+        "PMS_FTM_ERROR_004": "FTM Id is invalid",
+        "PMS_FTM_ERROR_005": "FTM Details do not exists.",
+        "PMS_FTM_ERROR_006": "FTM is not associated with user.",
+        "PMS_FTM_ERROR_007": "The selected FTM must be active and approved"
     }
 }

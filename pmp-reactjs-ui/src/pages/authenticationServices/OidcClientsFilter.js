@@ -14,7 +14,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     useEffect(() => {
         const fetchData = async () => {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPartnerId')));
-            setOidcClientNameData(createDropdownData('oidcClientName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectOidcClientType')));
+            setOidcClientNameData(createDropdownData('clientName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectOidcClientType')));
             setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyGroup')));
             setPolicyNameData(createDropdownData('policyName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyName')));
             setStatusData(createDropdownData('status', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectStatus')));
@@ -32,7 +32,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
 
     return (
         <>
-            <div className="flex w-full p-2 justify-start bg-gray-50 flex-wrap">
+            <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
                 <DropdownComponent
                     fieldName='partnerId'
                     dropdownDataList={partnerIdData}
@@ -61,7 +61,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     isPlaceHolderPresent={true}>
                 </DropdownComponent>
                 <DropdownComponent
-                    fieldName='oidcClientName'
+                    fieldName='clientName'
                     dropdownDataList={oidcClientNameData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.oidcClientName'

@@ -8,6 +8,7 @@
         "back": "خلف",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
+        "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
         "somethingWentWrong": "هناك خطأ ما!",
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
         "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",
@@ -100,7 +101,7 @@
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
         "reUploadPartnerCertificate": "إعادة تحميل شهادة الشريك",
-        "selectFieldsMsg": "الرجاء تحديد الحقول وتحميل الشهادة.",
+        "selectFieldsMsg": "الرجاء تحديد كافة الحقول وتحميل الشهادة",
         "partnerTypeLabel": "نوع الشريك",
         "partnerDomainType": "نوع نطاق الشريك",
         "selectingFile": "نحن نحضر شهادتك...",
@@ -112,13 +113,13 @@
         "submit": "يُقدِّم",
         "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
         "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
-        "fileUploadError": "الرجاء تحديد ملف بامتداد .cer أو .pem.",
+        "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
-        "errorWhileUploadingCertificate": "هناك خطأ ما في تحميل الشهادة. حاول مرة أخرى في وقت لاحق!"
+        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة"
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
-        "ftmProvider": "مزود FTM",
+        "ftmProvider": "مزود شريحة FTM",
         "authPartner": "شريك المصادقة",
         "credentialPartner": "شريك الاعتماد",
         "onlineVerficationPartner": "شريك التحقق عبر الإنترنت",
@@ -134,7 +135,9 @@
         "inProgress": "في انتظار لموافقة",
         "rejected": "مرفوض",
         "deactivated": "معطل",
-        "activated": "نشط"
+        "activated": "نشط",
+        "pendingCertUpload": "في انتظار تحميل الشهادة",
+        "expired": "منتهي الصلاحية"
     },
     "policies": {
         "policies": "سياسات",
@@ -149,6 +152,7 @@
         "action": "فعل",
         "view": "منظر",
         "selectPartnerId": "حدد معرف الشريك",
+        "partnerIdHelpText": "حدد معرف الشريك",
         "selectPartnerType": "حدد نوع الشريك",
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
@@ -433,7 +437,7 @@
         "deactivateApprovedDevicesSingular": "{{devicesCount}} سيتم إلغاء تنشيط الجهاز المعتمد المرتبط بهذا SBI ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} سيتم رفض الأجهزة التي تنتظر الموافقة تلقائيًا",
         "deactivatePendingDevicesSingular": "{{devicesCount}} سيتم رفض الجهاز المعلق للموافقة تلقائيًا"
-     },
+    },
     "viewDeviceDetails": {
         "viewDeviceDetails": "عرض تفاصيل الجهاز",
         "sbiVersionGoesHere1": "نسخة SBI هنا 1",
@@ -442,7 +446,59 @@
     "ftmList": {
         "addDeviceBtn": "إضافة جهاز",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
-        "addFtm": "إضافة FTM"
+        "addFtmBtn": "إضافة شريحة FTM",
+        "partnerId": "معرف الشريك",
+        "listOfFtm": "قائمة تفاصيل شريحة FTM",
+        "make": "يصنع",
+        "model": "نموذج",
+        "createdDate": "تاريخ الإنشاء",
+        "certificateExpiryDate": "تاريخ انتهاء صلاحية الشهادة",
+        "certificateUploadDate": "وقت تحميل الشهادة",
+        "certExpiryStatus": "حالة انتهاء صلاحية الشهادة",
+        "certificateExpiryStatus": "حالة انتهاء صلاحية الشهادة",
+        "selectCertificateExpiryStatus": "حدد حالة انتهاء صلاحية الشهادة",
+        "status": "حالة",
+        "action": "فعل",
+        "view": "منظر",
+        "manageCertificate": "إدارة الشهادة",
+        "deActivate": "إلغاء التنشيط",
+        "selectPartnerId": "حدد معرف الشريك",
+        "selectMakeName": "حدد إنشاء اسم",
+        "selectModelName": "حدد اسم النموذج",
+        "selectStatus": "حدد الحالة",
+        "expired": "منتهي الصلاحية",
+        "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
+    },
+    "addFtm": {
+        "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
+        "infoPartnerId": "تتوفر فقط معرفات الشركاء لمزود شريحة FTM الذي تم تحميل شهادة الشريك الخاصة به في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
+        "enterMake": "أدخل العلامة التجارية",
+        "enterModel": "أدخل النموذج",
+        "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
+        "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة",
+        "errorInAddingFtm": "أثناء إضافة SBI، واجهنا خطأ",
+        "addFtmSuccessHeader": "تم إرسال تفاصيل شريحة FTM بنجاح",
+        "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة.",
+        "addFtmSuccessMsg1": "كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
+        "uploadFtmCertHeader": "تحميل شهادة شريحة FTM",
+        "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
+    },
+    "viewFtmChipDetails": {
+        "viewFtmChipDetails": "عرض تفاصيل شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
+        "ftmChipProvider": "مزود رقاقة FTM",
+        "ftmChipCertificate": " شهادة رقاقة FTM"
+    },
+    "manageFtmChipCertificate": {
+        "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
+        "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
+        "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
+        "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
+    },
+    "deactivateFtmPopup": {
+        "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
@@ -546,7 +602,7 @@
         "PMS_AUT_025": "يجب أن تكون حالة الموافقة نشطة / إلغاء تنشيط ؛",
         "PMP_AUT_030": "مزود بروتوكول نقل الملفات غير موجود.",
         "PMP_AUT_031": "معرف شريحة بروتوكول نقل الملفات غير موجود.",
-        "PMP_AUT_032": "الموفر المحدد ، والنوع والطراز موجودان بالفعل.",
+        "PMP_AUT_032": "تفاصيل شريحة FTM موجودة بالفعل لنفس الماركة والطراز",
         "PMP_AUT_033": "لم يتم تحميل الشهادة.",
         "PMP_AUT_034": "لم يتم تعيين معرف تفاصيل شريحة بروتوكول نقل الملفات ومعرف موفر بروتوكول نقل الملفات.",
         "PMP_AUT_037": "إعطاء تفاصيل شريحة بروتوكول نقل الملفات مسجلة بالفعل .؛",
@@ -559,6 +615,8 @@
         "PMS_AUT_510": "لا يوجد تعيين للبيانات المقدمة.",
         "PMS_AUT_511": "لم تتم الموافقة على SBI الذي يتم تعيين الجهاز له",
         "PMS_AUT_513": "انتهت صلاحية SBI التي يتم تعيين الجهاز لها",
+        "PMS_AUT_514": "يجب أن يكون تاريخ الإنشاء أقل من أو يساوي التاريخ الحالي.",
+        "PMS_AUT_515": "لا ينبغي أن يكون تاريخ انتهاء الصلاحية أكبر من 10 سنوات من اليوم",
         "PMS_POL_002": "عدم تطابق بيانات اعتماد مدير السياسة",
         "PMS_POL_004": "اسم النهج موجود بالفعل في مجموعة السياسة. الاسم:",
         "PMS_POL_005": "سمة KYC غير مدعومة في ملف السياسة",
@@ -612,7 +670,7 @@
         "PMS_CERTIFICATE_ERROR_005": "حالة الموافقة فارغة أو فارغة",
         "PMS_CERTIFICATE_ERROR_006": "غير قادر على فك تشفير بيانات الشهادة",
         "PMS_CERTIFICATE_ERROR_007": "معرف الشريك المحدد لا ينتمي إلى المستخدم. لذلك غير قادر على الحصول على شهادات الشريك الأصلية",
-        "PMS_CERTIFICATE_ERROR_008":"حدث خطأ أثناء جلب الشهادة.",
+        "PMS_CERTIFICATE_ERROR_008": "حدث خطأ أثناء جلب الشهادة.",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
         "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",
@@ -648,18 +706,18 @@
         "PMS_DEVICE_ERROR_006": "الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_007": "الجهاز غير مرتبط بمعرف الشريك.",
         "PMS_DEVICE_ERROR_008": "حدث خطأ أثناء إضافة تعيين جهاز غير نشط لـ sbi.",
-        "PMS_DEVICE_ERROR_009": "لم تتم الموافقة على SBI الذي تمت إضافة الجهاز إليه",
+        "PMS_DEVICE_ERROR_009": "SBI الذي تتم إضافة الجهاز إليه إما أنه غير معتمد أو تم إلغاء تنشيطه",
         "PMS_DEVICE_ERROR_010": "تفاصيل الجهاز المحددة ليست في انتظار حالة الموافقة.",
         "PMS_DEVICE_ERROR_011": "حدث خطأ أثناء الموافقة على الجهاز أو رفضه لرسم خرائط Sbi.",
         "PMS_DEVICE_ERROR_012": "SBI وتعيين الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_013": "معرف الجهاز غير صالح",
-        "PMS_DEVICE_ERROR_014": "يجب أن يكون الجهاز في حالة معتمدة",
+        "PMS_DEVICE_ERROR_014": "يجب أن يكون الجهاز المحدد نشطًا ومعتمدًا",
         "PMS_DEVICE_ERROR_015": "خطأ أثناء إلغاء تنشيط الجهاز",
         "PMS_DEVICE_ERROR_016": "الجهاز غير مرتبط بالمستخدم.",
         "PMS_DEVICE_ERROR_017": "معرف SBI غير صالح",
         "PMS_DEVICE_ERROR_018": "حدث خطأ أثناء إلغاء تنشيط SBI",
         "PMS_DEVICE_ERROR_019": "SBI ليس مرتبطًا بالمستخدم.",
-        "PMS_DEVICE_ERROR_020": "يجب أن يكون SBI في حالة معتمدة",
+        "PMS_DEVICE_ERROR_020": "يجب أن تكون الهيئة الفرعية للتنفيذ المحددة نشطة ومعتمدة",
         "PMS_DEVICE_ERROR_021": "انتهت صلاحية SBI التي تمت إضافة الجهاز إليها",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
@@ -668,6 +726,13 @@
         "PMS_REQUEST_ERROR_003": "إصدار الطلب غير صالح",
         "PMS_REQUEST_ERROR_004": "وقت الطلب غير صالح",
         "PMS_REQUEST_ERROR_005": "نص الطلب غير صالح",
-        "PMS_REQUEST_ERROR_006": "يجب أن يكون تاريخ الطلب هو التاريخ الحالي"
+        "PMS_REQUEST_ERROR_006": "يجب أن يكون تاريخ الطلب هو التاريخ الحالي",
+        "PMS_FTM_ERROR_001": "خطأ أثناء جلب تفاصيل شريحة FTM",
+        "PMS_FTM_ERROR_002": "غير قادر على جلب معرفات مقدمي FTM المعتمدة.",
+        "PMS_FTM_ERROR_003": "خطأ أثناء إلغاء تنشيط FTM",
+        "PMS_FTM_ERROR_004": "معرف FTM غير صالح",
+        "PMS_FTM_ERROR_005": "تفاصيل FTM غير موجودة.",
+        "PMS_FTM_ERROR_006": "FTM ليس مرتبطًا بالمستخدم.",
+        "PMS_FTM_ERROR_007": "يجب أن يكون FTM المحدد نشطًا وموافقًا عليه"
     }
 }

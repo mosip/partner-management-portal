@@ -56,6 +56,12 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.deactivated');
         } else if (status === "active") {
             return t('statusCodes.activated');
+        } else if (status === "pending_cert_upload") {
+            return t('statusCodes.pendingCertUpload');
+        } else if (status === "expired") {
+            return t('statusCodes.expired')
+        } else if (status === "-") {
+            return "-"
         }
     }
 
@@ -114,11 +120,11 @@ export const getPolicyManagerUrl = (url, env) => {
     return newUrl;
 }
 
-export const createRequest = (requestData, id) => {
+export const createRequest = (requestData, id, useCamelCase = false) => {
     const request = {
         id: id ? id : "",
         version: "1.0",
-        requesttime: new Date().toISOString(),
+        [useCamelCase ? "requestTime" : "requesttime"]: new Date().toISOString(),
         request: requestData
     };
     return request;
@@ -275,6 +281,9 @@ export const bgOfStatus = (status) => {
     else if (status === "InProgress" || status === 'pending_approval') {
         return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
+    else if (status === 'pending_cert_upload') {
+        return ("bg-[#ee763060] text-[#6D1C00]")
+    }
     else if (status === "deactivated" || status === "INACTIVE") {
         return ("bg-[#EAECF0] text-[#525252]")
     }
@@ -301,7 +310,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "approvalStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
@@ -325,9 +334,9 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
     return dataArr;
 }
 
-export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
+export const getAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllApprovedAuthPartnerPolicies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/auth-partners-policies', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
@@ -340,7 +349,7 @@ export const getAllApprovedAuthPartnerPolicies = async (HttpService, setErrorCod
             return null;
         }
     } catch (error) {
-        console.error('Error in getAllApprovedAuthPartnerPolicies:', error);
+        console.error('Error in getAuthPartnerPolicies:', error);
         return null;
     }
 };
@@ -354,4 +363,22 @@ export const populateDeactivatedStatus = (data, statusAttributeName, activeAttri
         return item;
     });
     return updatedData;
+};
+
+export const getPartnerDomainType = (partnerType) => {
+    if (partnerType) {
+        partnerType = partnerType.toUpperCase();
+        if (partnerType === "Device_Provider".toUpperCase()) {
+            return 'DEVICE';
+        }
+        else if (partnerType === "FTM_Provider".toUpperCase()) {
+            return 'FTM';
+        }
+        else if (partnerType === "MISP_type".toUpperCase()) {
+            return 'MISP';
+        }
+        else {
+            return 'AUTH';
+        }
+    }
 };

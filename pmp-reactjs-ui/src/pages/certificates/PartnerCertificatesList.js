@@ -6,7 +6,7 @@ import { isLangRTL } from "../../utils/AppUtils";
 import ErrorMessage from "../common/ErrorMessage";
 import SuccessMessage from "../common/SuccessMessage";
 import LoadingIcon from "../common/LoadingIcon";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl} from "../../utils/AppUtils";
+import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType} from "../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../svg/rectangle_box.svg';
@@ -26,6 +26,7 @@ function PartnerCertificatesList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const dropdownRefs = useRef([]);
 
     useEffect(() => {
@@ -34,11 +35,16 @@ function PartnerCertificatesList() {
 
     const clickOnUpload = (partner) => {
         document.body.style.overflow = "hidden";
+        const request = {
+            partnerId: partner.partnerId,
+            partnerDomain: getPartnerDomainType(partner.partnerType),
+        };
+        setUploadCertificateRequest(request);
         setShowPopup(!showPopup);
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = (state) => {
+    const closePopup = (state, btnName) => {
         if (state) {
             setShowPopup(false);
             document.body.style.overflow = "auto";
@@ -97,7 +103,7 @@ function PartnerCertificatesList() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/originalPartnerCertificate', process.env.NODE_ENV));
+            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
             if (response !== null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
@@ -125,7 +131,7 @@ function PartnerCertificatesList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/getAllCertificateDetails', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/partner-certificates', process.env.NODE_ENV));
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
@@ -206,7 +212,7 @@ function PartnerCertificatesList() {
 
                                                     <div className="flex-col p-3 items-center">
                                                         <h6 className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                            {partner.isCertificateAvailable ? partner.certificateName : t('partnerCertificatesList.uploadPartnerCertificate')}
+                                                            {partner.isCertificateAvailable ? partner.certificateIssuedTo : t('partnerCertificatesList.uploadPartnerCertificate')}
                                                         </h6>
                                                         <p className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
                                                     </div>
@@ -249,7 +255,7 @@ function PartnerCertificatesList() {
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
-                                                    <UploadCertificate closePopup={closePopup} partnerData={selectedPartnerData} />
+                                                    <UploadCertificate closePopup={closePopup} popupData={{...selectedPartnerData, isUploadPartnerCertificate: true, header: 'uploadCertificate.uploadPartnerCertificate'}} request={uploadCertificateRequest} />
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />
@@ -260,11 +266,11 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDate, 'date')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime')}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDate, 'dateTime')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDateTime, 'dateTime')}</p>
                                                 </div>
                                             </div>
                                         </li>

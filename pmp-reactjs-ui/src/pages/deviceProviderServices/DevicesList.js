@@ -32,7 +32,7 @@ function DevicesList() {
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
+    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
     const [isDescending, setIsDescending] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -73,7 +73,7 @@ function DevicesList() {
                 setDataLoaded(false);
 
                 let sbiId = sbiData.sbiId;
-                const response = await HttpService.get(getPartnerManagerUrl(`/partners/getAllDevicesForSBI/${sbiId}`, process.env.NODE_ENV), {
+                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/sbi-devices/${sbiId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -82,8 +82,8 @@ function DevicesList() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const populatedData = populateDeactivatedStatus(resData, "approvalStatus", "isActive");
-                        const sortedData = populatedData.sort((a, b) => new Date(b.crDtimes) - new Date(a.crDtimes));
+                        const populatedData = populateDeactivatedStatus(resData, "status", "isActive");
+                        const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setDevicesList(sortedData);
                         setFilteredDevicesList(sortedData);
                     } else {
@@ -107,8 +107,8 @@ function DevicesList() {
         { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
-        { id: "crDtimes", headerNameKey: "devicesList.createdDate" },
-        { id: "approvalStatus", headerNameKey: "devicesList.status" },
+        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
 
@@ -149,17 +149,17 @@ function DevicesList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "crDtimes");
+        const isDateCol = (header === "createdDateTime");
         toggleSortAscOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "crDtimes");
+        const isDateCol = (header === "createdDateTime");
         toggleSortDescOrder(header, isDateCol, filteredDevicesList, setFilteredDevicesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const showDeviceDetails = (selectedDeviceData) => {
-        if (selectedDeviceData.approvalStatus !== "deactivated") {
+        if (selectedDeviceData.status !== "deactivated") {
             localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
             navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
         }
@@ -174,10 +174,10 @@ function DevicesList() {
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
     const showDeactivateDevice = (selectedDevice) => {
-        if (selectedDevice.approvalStatus === "approved") {
+        if (selectedDevice.status === "approved") {
             const request = createRequest({
                 deviceId: selectedDevice.id,
-            },"mosip.pms.deactivate.device.put");
+            },"mosip.pms.deactivate.device.post", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -305,15 +305,15 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.approvalStatus === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.model}</td>
-                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.crDtimes, 'date')}</td>
+                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date')}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">
-                                                                            <div className={`${bgOfStatus(device.approvalStatus)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                                {getStatusCode(device.approvalStatus, t)}
+                                                                            <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                {getStatusCode(device.status, t)}
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2">
@@ -322,12 +322,12 @@ function DevicesList() {
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
-                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-7'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-4 text-right" : "right-4 text-left"}`}>
-                                                                                        <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
+                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
+                                                                                    <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <p onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.approvalStatus === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
+                                                                                        <p onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (

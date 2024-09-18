@@ -4,21 +4,21 @@ import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComp
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from "../../utils/AppUtils.js";
 
-function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
+function FtmListFilter({ filteredFtmList, onFilterChange }) {
     const { t } = useTranslation();
-    const [deviceTypeData, setDeviceTypeData] = useState([]);
-    const [deviceSubTypeData, setDeviceSubTypeData] = useState([]);
+    const [partnerIdData, setPartnerIdData] = useState([]);
     const [makeData, setMakeData] = useState([]);
     const [modelData, setModelData] = useState([]);
+    const [certificateExpiryData, setCertificateExpiryData] = useState([]);
     const [statusData, setStatusData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            setDeviceTypeData(createDropdownData('deviceTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceType')));
-            setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceSubType')));
-            setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('devicesList.selectMakeName')));
-            setModelData(createDropdownData('model', '', true, filteredDevicesList, t, t('devicesList.selectModelName')));
-            setStatusData(createDropdownData('status', '', true, filteredDevicesList, t, t('devicesList.selectStatus')));
+            setPartnerIdData(createDropdownData('partnerId', '', true, filteredFtmList, t, t('ftmList.selectPartnerId')));
+            setMakeData(createDropdownData('make', '', true, filteredFtmList, t, t('ftmList.selectMakeName')));
+            setModelData(createDropdownData('model', '', true, filteredFtmList, t, t('ftmList.selectModelName')));
+            setCertificateExpiryData(createDropdownData('certificateExpiryStatus', '', true, filteredFtmList, t, t('ftmList.selectCertificateExpiryStatus')));
+            setStatusData(createDropdownData('status', '', true, filteredFtmList, t, t('ftmList.selectStatus')));
         };
         fetchData();
     }, []);
@@ -30,25 +30,15 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
     const styles = {
         dropdownButton: "!text-[#343434] min-w-72"
     }
-
     return (
         <>
             <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
                 <DropdownComponent
-                    fieldName='deviceTypeCode'
-                    dropdownDataList={deviceTypeData}
+                    fieldName='partnerId'
+                    dropdownDataList={partnerIdData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='devicesList.deviceType'
-                    placeHolderKey='devicesList.selectDeviceType'
-                    styleSet={styles}
-                    isPlaceHolderPresent={true}>
-                </DropdownComponent>
-                <DropdownComponent
-                    fieldName='deviceSubTypeCode'
-                    dropdownDataList={deviceSubTypeData}
-                    onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='devicesList.deviceSubType'
-                    placeHolderKey='devicesList.selectDeviceSubType'
+                    fieldNameKey='ftmList.partnerId'
+                    placeHolderKey='ftmList.selectPartnerId'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
                 </DropdownComponent>
@@ -56,8 +46,8 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='make' 
                     dropdownDataList={makeData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
-                    fieldNameKey='devicesList.make' 
-                    placeHolderKey='devicesList.selectMakeName'
+                    fieldNameKey='ftmList.make' 
+                    placeHolderKey='ftmList.selectMakeName'
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
@@ -66,18 +56,27 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     fieldName='model'
                     dropdownDataList={modelData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='devicesList.model'
-                    placeHolderKey='devicesList.selectModelName'
+                    fieldNameKey='ftmList.model'
+                    placeHolderKey='ftmList.selectModelName'
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
+                    fieldName='certificateExpiryStatus' 
+                    dropdownDataList={certificateExpiryData} 
+                    onDropDownChangeEvent={onFilterChangeEvent} 
+                    fieldNameKey='ftmList.certificateExpiryStatus' 
+                    placeHolderKey='ftmList.selectCertificateExpiryStatus'
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}> 
+                </DropdownComponent>
+                <DropdownComponent 
                     fieldName='status' 
                     dropdownDataList={statusData} 
                     onDropDownChangeEvent={onFilterChangeEvent} 
-                    fieldNameKey='devicesList.status' 
-                    placeHolderKey='devicesList.selectStatus'
+                    fieldNameKey='ftmList.status' 
+                    placeHolderKey='ftmList.selectStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}> 
                 </DropdownComponent>
@@ -86,4 +85,4 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
     )
 }
 
-export default DevicesListFilter;
+export default FtmListFilter;

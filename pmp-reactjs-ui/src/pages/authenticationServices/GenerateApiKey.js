@@ -7,13 +7,14 @@ import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAllApprovedAuthPartnerPolicies, createDropdownData
+    createRequest, getAuthPartnerPolicies, createDropdownData
 } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../common/BlockerPrompt";
 import CopyIdPopUp from "../common/CopyIdPopup";
 import Title from "../common/Title";
+import Confirmation from "../common/Confirmation";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
@@ -32,6 +33,8 @@ function GenerateApiKey() {
     const [nameLabel, setNameLabel] = useState('');
     const [apiKeyId, setApiKeyId] = useState('');
     const [validationError, setValidationError] = useState("");
+    const [generateApiKeySuccess, setGenerateApiKeySuccess] = useState(false);
+    const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     let isCancelledClicked = false;
 
@@ -39,7 +42,7 @@ function GenerateApiKey() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked) {
+            if (isSubmitClicked || isCancelledClicked ||generateApiKeySuccess) {
                 setIsSubmitClicked(false);
                 isCancelledClicked = false;
                 return false;
@@ -82,7 +85,7 @@ function GenerateApiKey() {
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
             setPolicyGroupName(selectedPartner.policyGroupName);
             setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
         }
@@ -100,7 +103,7 @@ function GenerateApiKey() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const resData = await getAllApprovedAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+                const resData = await getAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
                 if (resData) {
                     setPartnerData(resData);
                     setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
@@ -169,7 +172,7 @@ function GenerateApiKey() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     console.log(`Response data: ${resData.length}`);
-                    const confirmationData = {
+                    const requireData = {
                         title: "generateApiKey.generateApiKey",
                         backUrl: "/partnermanagement/authenticationServices/apiKeysList",
                         header: "generateApiKey.generateApiKeySuccessHeader",
@@ -180,7 +183,7 @@ function GenerateApiKey() {
                             imgIconRtl: "mr-[24%] max-[450px]:mr-12"
                         }
                     }
-                    localStorage.setItem('confirmationData', JSON.stringify(confirmationData));
+                    setConfirmationData(requireData);
                     setApiKeyId(responseData.response.apiKey);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -201,11 +204,14 @@ function GenerateApiKey() {
         outerDiv: "!bg-opacity-[50%]"
     }
 
-
-
-      const handleFormSubmit = (event) => {
+    const handleFormSubmit = (event) => {
         event.preventDefault();
-      };
+    };
+
+    const closePopUp = (state) => {
+        setShowPopup(state);
+        setGenerateApiKeySuccess(true);
+    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
@@ -225,88 +231,91 @@ function GenerateApiKey() {
                         <div className="flex justify-between">
                             <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' ></Title>
                         </div>
-                        <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-                            <div className="px-[2.5%] py-[2%]">
-                                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                <form onSubmit={handleFormSubmit}>
-                                    <div className="flex flex-col">
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
-                                            <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <DropdownComponent
-                                                    fieldName='partnerId'
-                                                    dropdownDataList={partnerIdDropdownData}
-                                                    onDropDownChangeEvent={onChangePartnerId}
-                                                    fieldNameKey='requestPolicy.partnerId*'
-                                                    placeHolderKey='createOidcClient.selectPartnerId'
-                                                    selectedDropdownValue={partnerId}
-                                                    styleSet={styles}
-                                                    addInfoIcon={true}
-                                                    infoKey='createOidcClient.partnerIdTooltip'>
-                                                </DropdownComponent>
+                        {!generateApiKeySuccess ?
+                            <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
+                                <div className="px-[2.5%] py-[2%]">
+                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <form onSubmit={handleFormSubmit}>
+                                        <div className="flex flex-col">
+                                            <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
+                                                <div className="flex-col w-[48%] max-[450px]:w-full">
+                                                    <DropdownComponent
+                                                        fieldName='partnerId'
+                                                        dropdownDataList={partnerIdDropdownData}
+                                                        onDropDownChangeEvent={onChangePartnerId}
+                                                        fieldNameKey='requestPolicy.partnerId*'
+                                                        placeHolderKey='createOidcClient.selectPartnerId'
+                                                        selectedDropdownValue={partnerId}
+                                                        styleSet={styles}
+                                                        addInfoIcon={true}
+                                                        infoKey='createOidcClient.partnerIdTooltip'>
+                                                    </DropdownComponent>
+                                                </div>
+                                                <div className="flex-col w-[48%] max-[450px]:w-full">
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                        <span className={`w-full break-all break-normal break-words ${partnerType ? 'text-dark-blue':'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
+                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{partnerType || t("partnerTypes.authPartner")}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[450px]:flex-col">
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                    overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                    <span className="w-full break-all break-normal break-words text-wrap text-start">{policyGroupName || t('requestPolicy.policyGroup')}</span>
-                                                    <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <DropdownWithSearchComponent
-                                                    fieldName='policyName'
-                                                    dropdownDataList={policiesDropdownData}
-                                                    onDropDownChangeEvent={onChangePolicyName}
-                                                    fieldNameKey='requestPolicy.policyName*'
-                                                    placeHolderKey='generateApiKey.selectedPolicyName'
-                                                    selectedDropdownValue={policyName}
-                                                    searchKey='commons.search'
-                                                    styleSet={styles}
-                                                    addInfoIcon={true}
-                                                    disabled={!partnerId}
-                                                    infoKey={t('createOidcClient.policyNameToolTip')} />
-                                            </div>
-                                        </div>
-                                        <div className="space-y-6">
-                                            <div className="my-4">
+                                            <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
-                                                        className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                        placeholder={t('generateApiKey.enterNameForApiKey')} />
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
+                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                        <span className={`w-full break-all break-normal break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
+                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <DropdownWithSearchComponent
+                                                        fieldName='policyName'
+                                                        dropdownDataList={policiesDropdownData}
+                                                        onDropDownChangeEvent={onChangePolicyName}
+                                                        fieldNameKey='requestPolicy.policyName*'
+                                                        placeHolderKey='generateApiKey.selectedPolicyName'
+                                                        selectedDropdownValue={policyName}
+                                                        searchKey='commons.search'
+                                                        styleSet={styles}
+                                                        addInfoIcon={true}
+                                                        disabled={!partnerId}
+                                                        infoKey={t('createOidcClient.policyNameToolTip')} />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-6">
+                                                <div className="my-4">
+                                                    <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
+                                                            className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                            placeholder={t('generateApiKey.enterNameForApiKey')} />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </form>
+                                </div>
+                                <div className="border bg-medium-gray" />
+                                <div className="flex flex-row max-[450px]:flex-col px-[3%] py-5 justify-between max-[450px]:space-y-2">
+                                    <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
+                                        <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        {(showPopup && !errorMsg) && (
+                                            <CopyIdPopUp closePopUp={closePopUp} partnerId={partnerId} policyName={policyName} id={apiKeyId}
+                                                header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle} />
+                                        )}
                                     </div>
-                                </form>
-                            </div>
-                            <div className="border bg-medium-gray" />
-                            <div className="flex flex-row max-[450px]:flex-col px-[3%] py-5 justify-between max-[450px]:space-y-2">
-                                <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
-                                <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
-                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
-                                    {(showPopup && !errorMsg) && (
-                                        <CopyIdPopUp closePopUp={setShowPopup} partnerId={partnerId} policyName={policyName} id={apiKeyId} navigateUrl='/partnermanagement/authenticationServices/generateApiKeyConfirmation' 
-                                            header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle}/>
-                                    )}
                                 </div>
                             </div>
-                        </div>
+                            : <Confirmation confirmationData={confirmationData} />
+                        }
                     </div>
                 </>
             )}

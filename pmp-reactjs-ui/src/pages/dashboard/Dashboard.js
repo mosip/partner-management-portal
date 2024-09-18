@@ -38,7 +38,7 @@ function Dashboard() {
     setErrorCode("");
     setErrorMsg("");
     try {
-      const response = await HttpService.get(getPartnerManagerUrl(`/partners/isUserConsentGiven`, process.env.NODE_ENV));
+      const response = await HttpService.get(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
       if (response) {
         console.log(response)
         const responseData = response.data;
