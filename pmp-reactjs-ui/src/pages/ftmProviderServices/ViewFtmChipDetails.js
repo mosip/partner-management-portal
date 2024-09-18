@@ -27,7 +27,6 @@ function ViewFtmChipDetails() {
             return;
         }
         let ftmData = JSON.parse(selectedFtm);
-        console.log(ftmData)
         setFtmDetails(ftmData);
     }, []);
 
