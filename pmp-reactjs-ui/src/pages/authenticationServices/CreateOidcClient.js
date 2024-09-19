@@ -7,7 +7,7 @@ import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
   isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
-  onPressEnterKey
+  onPressEnterKey, trimAndReplace
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -273,7 +273,7 @@ function CreateOidcClient() {
     setErrorMsg("");
     setDataLoaded(false);
     let request = createRequest({
-      name: oidcClientName.trim(),
+      name: trimAndReplace(oidcClientName),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -282,7 +282,7 @@ function CreateOidcClient() {
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
-        "eng": oidcClientName.trim()
+        "eng": trimAndReplace(oidcClientName)
       }
     });
     console.log(request);

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import DropdownComponent from "../common/fields/DropdownComponent";
@@ -29,7 +29,7 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        oidcClientName: '',
+        clientName: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -39,7 +39,7 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        oidcClientName: '',
+        clientName: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -95,7 +95,7 @@ function EditOidcClient() {
     const onChangeOidcClientName = (value) => {
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
-            oidcClientName: value
+            clientName: value
         }));
     }
 
@@ -183,8 +183,8 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (oidcClientDetails.oidcClientName.trim() !== selectedClientDetails.oidcClientName))
-            && oidcClientDetails.oidcClientName.trim() !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            (oidcClientDetails.clientName.trim() !== selectedClientDetails.clientName))
+            && oidcClientDetails.clientName.trim() !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
@@ -210,15 +210,15 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: oidcClientDetails.oidcClientName.trim(),
+            clientName: trimAndReplace(oidcClientDetails.clientName),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: {
-                "eng": oidcClientDetails.oidcClientName.trim()
+                "eng": trimAndReplace(oidcClientDetails.clientName)
             }
         });
         console.log(request);
         try {
-            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.oidcClientId}`, process.env.NODE_ENV), request, {
+            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -332,7 +332,7 @@ function EditOidcClient() {
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-[562px]">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
+                                                    <input value={oidcClientDetails.clientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                     />
                                                 </div>
