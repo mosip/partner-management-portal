@@ -266,7 +266,7 @@ function AddDevices() {
                 sbiId: selectedSbidata.sbiId,
                 partnerId: selectedSbidata.partnerId
             }, "mosip.pms.add.inactive.mapping.device.to.sbi.id.post", true);
-    
+
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/inactive-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -370,6 +370,11 @@ function AddDevices() {
         selectionBox: "!top-10"
     };
 
+    const customStyle = {
+        outerDiv: `flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`,
+        innerDiv: `flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 rounded-xl py-2 px-4 z-10`
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -378,7 +383,7 @@ function AddDevices() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -405,18 +410,10 @@ function AddDevices() {
                                             <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
-                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
-                                                    <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)}></SuccessMessage>
-                                                </div>
-                                            </div>
+                                            <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
                                         )}
                                         {entry.errorMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
-                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                                    <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)}></ErrorMessage>
-                                                </div>
-                                            </div>
+                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={'Device Details already exists for the same make and/or model'} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
                                         )}
                                     </div>
                                     <form>
