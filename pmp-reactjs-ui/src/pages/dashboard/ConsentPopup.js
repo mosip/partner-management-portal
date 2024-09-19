@@ -52,8 +52,8 @@ function ConsentPopup() {
     }
 
     const popUpStyleSet = {
-        outerDiv: "!absolute !w-3/5 !mt-1 !px-0.5",
-        innerDiv: "!min-h-13 !p-3.5 !w-6/12"
+        outerDiv: "!flex !justify-end !absolute !min-h-10 !w-3/5 !mt-1 !px-0.5",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-12 !p-3 !w-6/12"
     }
 
     return (

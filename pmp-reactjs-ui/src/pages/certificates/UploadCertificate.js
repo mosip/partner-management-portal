@@ -139,13 +139,13 @@ function UploadCertificate({ closePopup, popupData, request }) {
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
     const errorPopUpStyleSet = {
-        outerDiv: "!justify-center !inset-0",
-        innerDiv: "!rounded-none !bg-moderate-red !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !rounded-none !bg-moderate-red !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
     }
 
     const successPopUpStyleSet = {
-        outerDiv: "!justify-center !inset-0",
-        innerDiv: "!rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
     }
 
     return (

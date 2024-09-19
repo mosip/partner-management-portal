@@ -102,8 +102,8 @@ function SelectPolicyPopup() {
     }
 
     const popUpStyleSet = {
-        outerDiv: "!absolute !items-center !w-1/3",
-        innerDiv: "!min-h-14 !p-3"
+        outerDiv: "!flex !justify-end !absolute !items-center !w-1/3",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3"
     }
 
     return (

@@ -90,7 +90,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
 
     const popUpStyleSet = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!w-[55%] !min-h-14 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
     }
 
     return (
