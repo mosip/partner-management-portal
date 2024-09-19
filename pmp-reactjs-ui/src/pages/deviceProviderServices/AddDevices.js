@@ -39,9 +39,9 @@ function AddDevices() {
             }
             const checkValuesAreEntered = deviceEntries.some(entry => (
                 (entry.deviceType !== "" ||
-                entry.deviceSubType !== "" ||
-                entry.make !== "" ||
-                entry.model !== "") && !entry.isSubmitted
+                    entry.deviceSubType !== "" ||
+                    entry.make !== "" ||
+                    entry.model !== "") && !entry.isSubmitted
             ));
             return (
                 checkValuesAreEntered &&
@@ -118,7 +118,7 @@ function AddDevices() {
             optionalFilters: [],
             purpose: "REGISTRATION"
         });
-    
+
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
             if (response) {
@@ -182,7 +182,7 @@ function AddDevices() {
             return [];
         }
     }
-    
+
     async function createEmptyDeviceEntry(deviceTypeData) {
         return {
             deviceType: "",
@@ -242,7 +242,7 @@ function AddDevices() {
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
-    
+
             if (response?.data?.response?.id) {
                 inactiveMappingDeviceToSbi(response.data.response.id, index);
             } else {
@@ -256,7 +256,7 @@ function AddDevices() {
         setDataLoaded(true);
         setIsSubmitClicked(false);
     };
-    
+
     const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
         const newEntries = [...deviceEntries];
         setDataLoaded(false);
@@ -272,7 +272,7 @@ function AddDevices() {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (response?.data?.response) {
                 newEntries[index].isSubmitted = true;
                 newEntries[index].successMsg = t('addDevices.successMsg');
@@ -287,8 +287,8 @@ function AddDevices() {
             console.error('Error fetching data:', err);
         }
         setDataLoaded(true);
-    };  
-    
+    };
+
     const handleError = (responseData, index, newEntries) => {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
@@ -316,7 +316,7 @@ function AddDevices() {
 
     const addDeviceEntry = async () => {
         const newEntries = [...deviceEntries];
-        newEntries[deviceEntries.length-1].successMsg = "";
+        newEntries[deviceEntries.length - 1].successMsg = "";
         setDeviceEntries(newEntries);
         const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
         if (deviceEntries.length === 25 && allSubmitted) {
@@ -378,18 +378,14 @@ function AddDevices() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title 
-                                title='addDevices.addDevices' 
-                                subTitle={previousPath.name} 
-                                backLink={previousPath.path} 
+                            <Title
+                                title='addDevices.addDevices'
+                                subTitle={previousPath.name}
+                                backLink={previousPath.path}
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
                             />
@@ -497,7 +493,7 @@ function AddDevices() {
                                 <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
                                     {t('addDevices.backToSBIList')}
                                 </button>
-                            :
+                                :
                                 <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
                                     {t('addDevices.backToViewDevices')}
                                 </button>

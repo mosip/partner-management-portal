@@ -177,7 +177,7 @@ function DevicesList() {
         if (selectedDevice.status === "approved") {
             const request = createRequest({
                 deviceId: selectedDevice.id,
-            },"mosip.pms.deactivate.device.post", true);
+            }, "mosip.pms.deactivate.device.post", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -197,11 +197,7 @@ function DevicesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -322,8 +318,8 @@ function DevicesList() {
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
-                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                                                                    <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
+                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
+                                                                                        <p onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
@@ -331,7 +327,7 @@ function DevicesList() {
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{...device, isDeactivateDevice:true}} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}

@@ -146,11 +146,7 @@ function PoliciesList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
@@ -236,11 +232,11 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
+                                    <p onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
                                       ...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => showViewPolicyDetails(partner))}
+                                        <div onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}

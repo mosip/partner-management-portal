@@ -88,21 +88,22 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         loadingDiv: "!py-[35%]"
     }
 
+    const customStyle = {
+        outerDiv: "!flex !justify-end",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
+    }
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
-                        <LoadingIcon styleSet={styles}></LoadingIcon>
+                        <LoadingIcon styleSet={styles} />
                     )}
                     {dataLoaded && (
                         <div className="relative">
                             {errorMsg && (
-                                <div className="flex justify-end">
-                                    <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                    </div>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
@@ -118,8 +119,8 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                 </p>
                                 {popupData.isDeactivateSbi &&
                                     (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] rounded-md w-full p-[2%] mb-2">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t(formatDeviceCountMessage(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), {devicesCount: popupData.countOfApprovedDevices})}
-                                            | {t(formatDeviceCountMessage(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), {devicesCount: popupData.countOfPendingDevices})}
+                                        <p className="text-sm font-inter text-[#8B6105]">{t(formatDeviceCountMessage(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), { devicesCount: popupData.countOfApprovedDevices })}
+                                            | {t(formatDeviceCountMessage(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), { devicesCount: popupData.countOfPendingDevices })}
                                         </p>
                                     </div>)
                                 }

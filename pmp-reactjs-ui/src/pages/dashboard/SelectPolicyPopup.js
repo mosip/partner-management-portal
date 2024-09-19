@@ -24,7 +24,7 @@ function SelectPolicyPopup() {
     const descriptionText = t('selectPolicyPopup.description');
     const maxWords = 20;
     const displayText = isExpanded ? descriptionText : `${descriptionText.split(' ').slice(0, maxWords).join(' ')}...`;
-    
+
 
     const expandDescription = () => {
         setIsExpanded(!isExpanded);
@@ -46,7 +46,7 @@ function SelectPolicyPopup() {
                         setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
                         console.log(`Response data: ${resData.length}`);
                     } else {
-                      handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
                     setErrorMsg(t('selectPolicyPopup.policyGroupError'));
@@ -70,7 +70,7 @@ function SelectPolicyPopup() {
 
     const clickOnSubmit = async () => {
         setDataLoaded(false);
-        document.body.style.overflow="auto";
+        document.body.style.overflow = "auto";
         const userProfile = getUserProfile();
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,
@@ -101,6 +101,11 @@ function SelectPolicyPopup() {
         loadingDiv: "!py-[50%]"
     }
 
+    const customStyle = {
+        outerDiv: "!flex !justify-end !absolute !items-center !w-1/3",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3"
+    }
+
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -111,11 +116,7 @@ function SelectPolicyPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <div className="flex justify-end items-center absolute w-1/3">
-                                    <div className="flex justify-between items-center min-h-14 bg-[#C61818] rounded-xl p-3">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                    </div>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             <div className="px-4 py-2">
                                 <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
