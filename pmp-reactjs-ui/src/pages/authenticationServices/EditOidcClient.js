@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { HttpService } from "../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey } from "../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import DropdownComponent from "../common/fields/DropdownComponent";
@@ -210,10 +210,10 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: oidcClientDetails.clientName.trim(),
+            clientName: trimAndReplace(oidcClientDetails.clientName),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: {
-                "eng": oidcClientDetails.clientName.trim()
+                "eng": trimAndReplace(oidcClientDetails.clientName)
             }
         });
         console.log(request);
