@@ -115,7 +115,7 @@ function SelectPolicyPopup() {
                     )}
                     {dataLoaded && (
                         <>
-                            {true && (
+                            {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={popUpStyleSet}/>
                             )}
                             <div className="px-4 py-2">

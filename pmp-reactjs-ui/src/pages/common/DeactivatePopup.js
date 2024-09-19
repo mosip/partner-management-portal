@@ -89,7 +89,8 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
     }
 
     const popUpStyleSet = {
-        innerDiv: "!w-[55%] !min-h-14 !p-3 !m-2 !-mt-4"
+        outerDiv: "!flex !justify-end",
+        innerDiv: "!w-[55%] !min-h-14 !p-3 !m-1 !-mb-6"
     }
 
     return (
@@ -102,11 +103,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     {dataLoaded && (
                         <div className="relative">
                             {errorMsg && (
-                                <div className="flex justify-end">
-                                    <div className="flex justify-between items-center w-[55%] min-h-14 bg-[#C61818] rounded-xl p-3 m-2 -mb-5">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
-                                    </div>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={popUpStyleSet} />
                             )}
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
