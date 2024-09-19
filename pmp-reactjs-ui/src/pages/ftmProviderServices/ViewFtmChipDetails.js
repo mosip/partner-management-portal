@@ -58,11 +58,11 @@ function ViewFtmChipDetails() {
     };
 
     const closePopup = (state, btnName) => {
+        document.body.style.overflow = "auto";
         if (state && btnName === 'cancel') {
-          setShowPopup(false);
-          document.body.style.overflow = "auto";
+            setShowPopup(false);
         } else if (state && btnName === 'close') {
-          navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+            navigate('/partnermanagement/ftmChipProviderServices/ftmList');
         }
     };
 
@@ -151,7 +151,7 @@ function ViewFtmChipDetails() {
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
-                                    <div className="flex py-[1rem] px-5 bg-[#F9FBFF] justify-between items-center">
+                                    <div className="flex py-[1rem] px-5 bg-[#F9FBFF] justify-between items-center max-[450px]:flex-col">
                                         <div className="flex space-x-4 items-center ">
                                             <img src={ ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
                                             <div className="flex-col p-3 items-center">
@@ -170,7 +170,7 @@ function ViewFtmChipDetails() {
                                                 </button>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <>
+                                                <div className="space-x-3 max-[700px]:space-y-2 max-[700px]:space-x-0">
                                                     { ftmDetails.isCertificateAvailable && (
                                                         <button className={`h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border-blue-800 border font-semibold rounded-md text-center`}>
                                                             {t('partnerCertificatesList.download')}
@@ -182,7 +182,7 @@ function ViewFtmChipDetails() {
                                                     { showPopup && (
                                                         <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
                                                     )}
-                                                </>
+                                                </div>
                                             )}
                                         </div>
                                     </div>
