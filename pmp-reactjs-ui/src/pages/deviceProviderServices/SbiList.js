@@ -41,7 +41,7 @@ function SbiList() {
     };
 
     useEffect(() => {
-        localStorage.removeItem('selectedSbiData');
+        // localStorage.removeItem('selectedSbiData');
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
