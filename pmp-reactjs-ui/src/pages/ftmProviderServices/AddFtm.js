@@ -5,7 +5,7 @@ import DropdownComponent from '../common/fields/DropdownComponent';
 import { getUserProfile } from '../../services/UserProfileService';
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL, getPartnerDomainType } from "../../utils/AppUtils";
+import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL, getPartnerDomainType, trimAndReplace } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import { HttpService } from "../../services/HttpService";
 import BlockerPrompt from "../common/BlockerPrompt";
@@ -152,8 +152,8 @@ function AddFtm() {
     let request = createRequest(
       {
         ftpProviderId: partnerId,
-        make: make.trim(),
-        model: model.trim()
+        make: trimAndReplace(make),
+        model: trimAndReplace(model)
       }
     );
     console.log(request);
