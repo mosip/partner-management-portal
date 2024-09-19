@@ -138,12 +138,12 @@ function UploadCertificate({ closePopup, popupData, request }) {
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
-    const errorPopUpStyleSet = {
+    const errorCustomeStyle = {
         outerDiv: "!flex !justify-center !inset-0",
         innerDiv: "!flex !justify-between !items-center !rounded-none !bg-moderate-red !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
     }
 
-    const successPopUpStyleSet = {
+    const successCustomeStyle = {
         outerDiv: "!flex !justify-center !inset-0",
         innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
     }
@@ -166,10 +166,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">
                                 {uploadFailure && errorMsg && (
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={errorPopUpStyleSet} />
+                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customeStyle={errorCustomeStyle} />
                                 )}
                                 {uploadSuccess && successMsg && (
-                                    <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} popUpStyleSet={successPopUpStyleSet} />
+                                    <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customeStyle={successCustomeStyle} />
                                 )}
                                 <div className="px-[4%] py-[2%]">
                                     <form>

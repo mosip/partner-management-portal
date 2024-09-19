@@ -51,7 +51,7 @@ function ConsentPopup() {
         setDataLoaded(true);
     }
 
-    const popUpStyleSet = {
+    const customeStyle = {
         outerDiv: "!flex !justify-end !absolute !min-h-10 !w-3/5 !mt-1 !px-0.5",
         innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-12 !p-3 !w-6/12"
     }
@@ -66,7 +66,7 @@ function ConsentPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={popUpStyleSet} />
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customeStyle={customeStyle} />
                             )}
                             <div className="p-4">
                                 <h3 className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>

@@ -88,7 +88,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
         loadingDiv: "!py-[35%]"
     }
 
-    const popUpStyleSet = {
+    const customeStyle = {
         outerDiv: "!flex !justify-end",
         innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
     }
@@ -103,7 +103,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     {dataLoaded && (
                         <div className="relative">
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} popUpStyleSet={popUpStyleSet} />
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customeStyle={customeStyle} />
                             )}
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?

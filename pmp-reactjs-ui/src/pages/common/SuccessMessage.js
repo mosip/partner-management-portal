@@ -2,13 +2,13 @@ import { getUserProfile } from '../../services/UserProfileService';
 import cancelIcon from '../../svg/cancel_icon.svg';
 import { isLangRTL } from '../../utils/AppUtils';
 
-function SuccessMessage({ successMsg, clickOnCancel, popUpStyleSet}) {
+function SuccessMessage({ successMsg, clickOnCancel, customeStyle}) {
     
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     return (
-        <div className={`${(popUpStyleSet && popUpStyleSet.outerDiv) ? popUpStyleSet.outerDiv : `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>
-            <div className={` bg-fruit-salad ${(popUpStyleSet && popUpStyleSet.innerDiv) ? popUpStyleSet.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-72 p-4'}`}>
+        <div className={`${customeStyle ? customeStyle.outerDiv : `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>
+            <div className={` bg-fruit-salad ${customeStyle ? customeStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-72 p-4'}`}>
                 <div className={`${isLoginLanguageRTL ? 'ml-6':'mr-6'}`}>
                     <p className="text-sm/4 text-white break-words font-inter">
                         {successMsg}
