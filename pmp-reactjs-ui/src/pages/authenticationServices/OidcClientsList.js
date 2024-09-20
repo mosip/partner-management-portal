@@ -127,10 +127,10 @@ function OidcClientsList() {
                 redirectUris: selectedClientdata.redirectUris,
                 status: "INACTIVE",
                 grantTypes: selectedClientdata.grantTypes,
-                clientName: selectedClientdata.oidcClientName,
+                clientName: selectedClientdata.clientName,
                 clientAuthMethods: selectedClientdata.clientAuthMethods,
                 clientNameLangMap: {
-                    "eng": selectedClientdata.oidcClientName
+                    "eng": selectedClientdata.clientName
                 }
             });
             setDeactivateRequest(request);
@@ -295,7 +295,7 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.oidcClientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date')}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -311,7 +311,7 @@ function OidcClientsList() {
                                                                                 transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                         </svg>
                                                                         {showPopup && (
-                                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
                                                                         )}
                                                                     </div>
                                                                 </td>
@@ -338,7 +338,7 @@ function OidcClientsList() {
                                                                                     )
                                                                                 }
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' clientName={client.oidcClientName}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} clientData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' clientName={client.clientName}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

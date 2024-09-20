@@ -27,7 +27,7 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        oidcClientName: '',
+        clientName: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -37,7 +37,7 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        oidcClientName: '',
+        clientName: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -94,7 +94,7 @@ function EditOidcClient() {
         setNameValidationError(validateName(value, 256, t));
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
-            oidcClientName: value
+            clientName: value
         }));
     }
 
@@ -182,8 +182,8 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (oidcClientDetails.oidcClientName !== selectedClientDetails.oidcClientName))
-            && oidcClientDetails.oidcClientName !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            (oidcClientDetails.clientName !== selectedClientDetails.clientName))
+            && oidcClientDetails.clientName !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl && !nameValidationError;
     }
 
@@ -210,15 +210,15 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: oidcClientDetails.oidcClientName.trim(),
+            clientName: oidcClientDetails.clientName.trim(),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: {
-                "eng": oidcClientDetails.oidcClientName.trim()
+                "eng": oidcClientDetails.clientName.trim()
             }
         });
         console.log(request);
         try {
-            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.oidcClientId}`, process.env.NODE_ENV), request, {
+            const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -337,7 +337,7 @@ function EditOidcClient() {
                                         <div className="flex my-2">
                                             <div className="flex flex-col w-[562px]">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <input value={oidcClientDetails.oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
+                                                <input value={oidcClientDetails.clientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                     className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                 />
                                                 {nameValidationError && <span className="text-sm text-crimson-red font-semibold">{nameValidationError}</span>}

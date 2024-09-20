@@ -37,8 +37,8 @@ function DeactivatePopup({ closePopUp, clientData, request, headerMsg, descripti
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (clientData.oidcClientName) {
-                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${clientData.oidcClientId}`, process.env.NODE_ENV), request, {
+            } else if (clientData.clientName) {
+                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${clientData.clientId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
