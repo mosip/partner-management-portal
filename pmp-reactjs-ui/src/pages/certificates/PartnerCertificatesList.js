@@ -12,7 +12,6 @@ import { useTranslation } from "react-i18next";
 import rectangleBox from '../../svg/rectangle_box.svg';
 import fileUpload from '../../svg/file_upload_icon.svg';
 import file from '../../svg/file_icon.svg';
-import downloadIcon from '../../svg/download_icon.svg';
 import Title from "../common/Title";
 import DownloadCertificateButton from "../common/DownloadCertificateButton";
 
