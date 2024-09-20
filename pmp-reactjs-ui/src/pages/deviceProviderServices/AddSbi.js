@@ -137,26 +137,6 @@ function AddSbi() {
         selectionBox: "!top-10"
     };
 
-    const getCreatedDateInUTC = (dateStr) => {
-        const date = new Date(dateStr);
-        date.setHours(0,0,1);
-        const utcString = date.toUTCString();
-
-        const newDate = new Date(utcString);
-        const newDateStr = newDate.toISOString();
-        return newDateStr;
-    };
-
-    const getExpiryDateInUTC = (dateStr) => {
-        const date = new Date(dateStr);
-        date.setHours(23,59,59);
-        const utcString = date.toUTCString();
-
-        const newDate = new Date(utcString);
-        const newDateStr = newDate.toISOString();
-        return newDateStr;
-    }
-
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
         setErrorCode("");
@@ -166,8 +146,8 @@ function AddSbi() {
             {
                 swBinaryHash: binaryHash.trim(),
                 swVersion: trimAndReplace(sbiVersion),
-                swCreateDateTime: createdDate === "" ? getCreatedDateInUTC(new Date().toISOString()) : getCreatedDateInUTC(createdDate),
-                swExpiryDateTime: expiryDate === "" ? getExpiryDateInUTC(new Date().toISOString()) : getExpiryDateInUTC(expiryDate),
+                swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
+                swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId
             }
         );
