@@ -130,16 +130,30 @@ function AddSbi() {
         setExpiryDate(dateStr);
     };
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
-    };
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
         dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
     };
+
+    const getCreatedDateInUTC = (dateStr) => {
+        const date = new Date(dateStr);
+        
+        // Set the time to 00:00:01 UTC
+        date.setUTCHours(0, 0, 1, 0);
+        const newDateStr = date.toISOString();
+        return newDateStr;
+    };
+
+    const getExpiryDateInUTC = (dateStr) => {
+        const date = new Date(dateStr);
+        
+        // Set the time to 23:59:59 UTC
+        date.setUTCHours(23, 59, 59, 0);
+        const newDateStr = date.toISOString();
+        return newDateStr;
+    }
 
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
@@ -150,8 +164,8 @@ function AddSbi() {
             {
                 swBinaryHash: binaryHash.trim(),
                 swVersion: trimAndReplace(sbiVersion),
-                swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
-                swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
+                swCreateDateTime: createdDate === "" ? getCreatedDateInUTC(new Date().toISOString()) : getCreatedDateInUTC(createdDate),
+                swExpiryDateTime: expiryDate === "" ? getExpiryDateInUTC(new Date().toISOString()) : getExpiryDateInUTC(expiryDate),
                 providerId: partnerId
             }
         );
