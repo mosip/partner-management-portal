@@ -184,11 +184,11 @@ function ViewFtmChipDetails() {
                                                 < DownloadCertificateButton
                                                     disableBtn={ftmDetails.status!=='approved' && ftmDetails.status!=='pending_approval'}
                                                     downloadDropdownRef={dropdownRef}
-                                                    setActiveDownloadBtn={setShowDropDownOptions}
-                                                    activeDownloadBtn={showDropDownOptions}
-                                                    // firstOptionMethod={getOriginalCertificate}
-                                                    // secondOptionMethod={getMosipSignedCertificate}
-                                                    partner={ftmDetails}
+                                                    setShowDropDown={setShowDropDownOptions}
+                                                    showDropDown={showDropDownOptions}
+                                                    // onClickFirstOption={getOriginalCertificate}
+                                                    // onClickSecondOption={getMosipSignedCertificate}
+                                                    requiredData={ftmDetails}
                                                     styleSet={viewFtmDownloadButtonStyle}
                                                 />
                                             )}
@@ -197,11 +197,11 @@ function ViewFtmChipDetails() {
                                                     {ftmDetails.isCertificateAvailable && (
                                                         < DownloadCertificateButton
                                                             downloadDropdownRef={dropdownRef}
-                                                            setActiveDownloadBtn={setShowDropDownOptions}
-                                                            activeDownloadBtn={showDropDownOptions}
-                                                            // firstOptionMethod={getOriginalCertificate}
-                                                            // secondOptionMethod={getMosipSignedCertificate}
-                                                            partner={ftmDetails}
+                                                            setShowDropDown={setShowDropDownOptions}
+                                                            showDropDown={showDropDownOptions}
+                                                            // onClickFirstOption={getOriginalCertificate}
+                                                            // onClickSecondOption={getMosipSignedCertificate}
+                                                            requiredData={ftmDetails}
                                                             styleSet={mangeFtmDownloadButtonStyle}
                                                         />
                                                     )}
