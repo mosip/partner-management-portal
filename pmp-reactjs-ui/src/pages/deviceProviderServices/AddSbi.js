@@ -139,19 +139,21 @@ function AddSbi() {
 
     const getCreatedDateInUTC = (dateStr) => {
         const date = new Date(dateStr);
-        
-        // Set the time to 00:00:01 UTC
-        date.setUTCHours(0, 0, 1, 0);
-        const newDateStr = date.toISOString();
+        date.setHours(0,0,1);
+        const utcString = date.toUTCString();
+
+        const newDate = new Date(utcString);
+        const newDateStr = newDate.toISOString();
         return newDateStr;
     };
 
     const getExpiryDateInUTC = (dateStr) => {
         const date = new Date(dateStr);
-        
-        // Set the time to 23:59:59 UTC
-        date.setUTCHours(23, 59, 59, 0);
-        const newDateStr = date.toISOString();
+        date.setHours(23,59,59);
+        const utcString = date.toUTCString();
+
+        const newDate = new Date(utcString);
+        const newDateStr = newDate.toISOString();
         return newDateStr;
     }
 
