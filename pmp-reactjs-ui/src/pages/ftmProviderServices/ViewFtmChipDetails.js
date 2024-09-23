@@ -1,14 +1,18 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType } from "../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import fileUploadBlue from '../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../svg/file_upload_icon.svg';
 import file from '../../svg/file_icon.svg';
 import UploadCertificate from "../certificates/UploadCertificate";
+import DownloadCertificateButton from "../common/DownloadCertificateButton";
+import ErrorMessage from "../common/ErrorMessage";
+import SuccessMessage from "../common/SuccessMessage";
+import { HttpService } from "../../services/HttpService";
 
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
@@ -18,7 +22,16 @@ function ViewFtmChipDetails() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [showPopup, setShowPopup] = useState(false);
+    const [errorCode, setErrorCode] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+    const [showDropDownOptions, setShowDropDownOptions] = useState(false);
     const [uploadCertificateData, setUploadCertificateData] = useState({});
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        handleMouseClickForDropdown(dropdownRef, () => setShowDropDownOptions(false))
+    }, [dropdownRef]);
 
     useEffect(() => {
         const selectedFtm = localStorage.getItem('selectedFtmData');
@@ -29,10 +42,6 @@ function ViewFtmChipDetails() {
         let ftmData = JSON.parse(selectedFtm);
         setFtmDetails(ftmData);
     }, []);
-
-    const isDownloadBtnDisabled = () => {
-        return (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') ? false : true;
-    };
 
     const clickOnUpload = () => {
         document.body.style.overflow = "hidden";
@@ -47,11 +56,11 @@ function ViewFtmChipDetails() {
         };
         setUploadCertificateData(requiredDataForCertUpload);
         const request = {
-          ftpProviderId: ftmDetails.partnerId,
-          ftpChipDeatilId: ftmDetails.ftmId,
-          isItForRegistrationDevice: true,
-          organizationName: getUserProfile().orgName,
-          partnerDomain: getPartnerDomainType("FTM_Provider"),
+            ftpProviderId: ftmDetails.partnerId,
+            ftpChipDeatilId: ftmDetails.ftmId,
+            isItForRegistrationDevice: true,
+            organizationName: getUserProfile().orgName,
+            partnerDomain: getPartnerDomainType("FTM_Provider"),
         };
         setUploadCertificateRequest(request);
         setShowPopup(true);
@@ -66,12 +75,102 @@ function ViewFtmChipDetails() {
         }
     };
 
+    const getOriginalCertificate = async (ftmDetails) => {
+        const response = await getCertificate(ftmDetails.ftmId);
+        if (response !== null) {
+            if (response.isCaSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
+            }
+        }
+    }
+
+    const getMosipSignedCertificate = async (ftmDetails) => {
+        const response = await getCertificate(ftmDetails.ftmId);
+        if (response !== null) {
+            if (response.isMosipSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+            }
+        }
+    }
+
+    const downloadCertificate = (certificateData, fileName) => {
+        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    }
+
+    const getCertificate = async (ftmId) => {
+        setErrorCode("");
+        setErrorMsg("");
+        try {
+            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+            if (response !== null) {
+                const responseData = response.data;
+                if (responseData.errors && responseData.errors.length > 0) {
+                    const errorCode = responseData.errors[0].errorCode;
+                    const errorMessage = responseData.errors[0].message;
+                    setErrorCode(errorCode);
+                    setErrorMsg(errorMessage);
+                    console.error('Error:', errorMessage);
+                    return null;
+                } else {
+                    const resData = responseData.response;
+                    console.log('Response data:', resData);
+                    return resData;
+                }
+            } else {
+                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
+            }
+        } catch (err) {
+            console.error('Error fetching certificate:', err);
+            setErrorMsg(err);
+        }
+    }
+
     const moveToFtmList = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
     };
 
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+    };
+
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
+
+    const viewFtmDownloadButtonStyle = {
+        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[5.6rem] ml-2" : "origin-bottom-left right-[5.6rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
+    };
+
+    const mangeFtmDownloadButtonStyle = {
+        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[13rem] ml-2" : "origin-bottom-left right-[13rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
+    };
+
     return (
         <>
+            {errorMsg && (
+                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            )}
+            {successMsg && (
+                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+            )}
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
@@ -153,33 +252,47 @@ function ViewFtmChipDetails() {
                                 <div className={`flex-col`}>
                                     <div className="flex py-[1rem] px-5 bg-[#F9FBFF] justify-between items-center max-[450px]:flex-col">
                                         <div className="flex space-x-4 items-center ">
-                                            <img src={ ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
+                                            <img src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
                                             <div className="flex-col p-3 items-center">
                                                 <h6 className={`text-sm ${ftmDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                    { ftmDetails.isViewFtmChipDetails ? t('viewFtmChipDetails.ftmChipCertificate') : ftmDetails.isCertificateAvailable ? t('viewFtmChipDetails.ftmChipCertificate'): t('manageFtmChipCertificate.uploadFtmCertificate')}
+                                                    {ftmDetails.isViewFtmChipDetails ? t('viewFtmChipDetails.ftmChipCertificate') : ftmDetails.isCertificateAvailable ? t('viewFtmChipDetails.ftmChipCertificate') : t('manageFtmChipCertificate.uploadFtmCertificate')}
                                                 </h6>
-                                                { ftmDetails.isManageFtmCertificate && (
+                                                {ftmDetails.isManageFtmCertificate && (
                                                     <p className="text-xs text-light-gray">{ftmDetails.isCertificateAvailable ? null : t('manageFtmChipCertificate.certificateFormatMsg')}</p>
                                                 )}
                                             </div>
                                         </div>
+
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
-                                                <button disabled={isDownloadBtnDisabled()} className={`h-10 w-28 text-xs p-3 py-2 ${isDownloadBtnDisabled() ? 'border-[#C1C1C1] text-vulcan bg-platinum-gray' : 'text-tory-blue bg-white border-blue-800'}  border font-semibold rounded-md text-center`}>
-                                                    {t('partnerCertificatesList.download')}
-                                                </button>
+                                                < DownloadCertificateButton
+                                                    disableBtn={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'}
+                                                    downloadDropdownRef={dropdownRef}
+                                                    setShowDropDown={setShowDropDownOptions}
+                                                    showDropDown={showDropDownOptions}
+                                                    onClickFirstOption={getOriginalCertificate}
+                                                    onClickSecondOption={getMosipSignedCertificate}
+                                                    requiredData={ftmDetails}
+                                                    styleSet={viewFtmDownloadButtonStyle}
+                                                />
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <div className="space-x-3 max-[700px]:space-y-2 max-[700px]:space-x-0">
-                                                    { ftmDetails.isCertificateAvailable && (
-                                                        <button className={`h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border-blue-800 border font-semibold rounded-md text-center`}>
-                                                            {t('partnerCertificatesList.download')}
-                                                        </button>
+                                                <div className="flex space-x-2 max-[700px]:space-y-2 max-[700px]:space-x-0">
+                                                    {ftmDetails.isCertificateAvailable && (
+                                                        < DownloadCertificateButton
+                                                            downloadDropdownRef={dropdownRef}
+                                                            setShowDropDown={setShowDropDownOptions}
+                                                            showDropDown={showDropDownOptions}
+                                                            onClickFirstOption={getOriginalCertificate}
+                                                            onClickSecondOption={getMosipSignedCertificate}
+                                                            requiredData={ftmDetails}
+                                                            styleSet={mangeFtmDownloadButtonStyle}
+                                                        />
                                                     )}
                                                     <button onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                         {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                     </button>
-                                                    { showPopup && (
+                                                    {showPopup && (
                                                         <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
                                                     )}
                                                 </div>

@@ -156,15 +156,11 @@ function SbiList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
                     <div className="flex-col mt-7 !mb-4">
                         <div className="flex justify-between mb-5">
-                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement'/>
+                            <Title title='sbiList.listOfSbi' backLink='/partnermanagement' />
                             {sbiList.length > 0 ?
                                 <button type="button" onClick={addSbi}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
@@ -207,13 +203,13 @@ function SbiList() {
                                                             <div className='flex items-center w-fit px-2 mx-1'>
                                                                 <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue'} `}>
-                                                                        {sbi.countOfApprovedDevices} {sbi.countOfApprovedDevices <=1 ? t('sbiList.device') : t('sbiList.devices')}
+                                                                        {sbi.countOfApprovedDevices} {sbi.countOfApprovedDevices <= 1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.approved')}
                                                                 </p>
                                                                 <span className='mx-1'>{'|'}</span>
                                                                 <p className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04]'} `}>
-                                                                        {sbi.countOfPendingDevices} {sbi.countOfPendingDevices <=1 ? t('sbiList.device') : t('sbiList.devices')}
+                                                                        {sbi.countOfPendingDevices} {sbi.countOfPendingDevices <= 1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.pendingForApprovalContx')}
                                                                 </p>
                                                             </div>
@@ -231,7 +227,7 @@ function SbiList() {
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (
-                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion}/>
+                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
                                                             )}
                                                         </div>
                                                     )}
@@ -260,11 +256,11 @@ function SbiList() {
                                                         <div className="flex flex-row justify-between font-semibold pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.createdDate')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'iso')}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'iso')}</p>
+                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date')}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>
                                                         </div>

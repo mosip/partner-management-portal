@@ -229,11 +229,7 @@ function AddFtm() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">

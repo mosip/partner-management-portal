@@ -39,9 +39,9 @@ function AddDevices() {
             }
             const checkValuesAreEntered = deviceEntries.some(entry => (
                 (entry.deviceType !== "" ||
-                entry.deviceSubType !== "" ||
-                entry.make !== "" ||
-                entry.model !== "") && !entry.isSubmitted
+                    entry.deviceSubType !== "" ||
+                    entry.make !== "" ||
+                    entry.model !== "") && !entry.isSubmitted
             ));
             return (
                 checkValuesAreEntered &&
@@ -118,7 +118,7 @@ function AddDevices() {
             optionalFilters: [],
             purpose: "REGISTRATION"
         });
-    
+
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
             if (response) {
@@ -182,7 +182,7 @@ function AddDevices() {
             return [];
         }
     }
-    
+
     async function createEmptyDeviceEntry(deviceTypeData) {
         return {
             deviceType: "",
@@ -242,7 +242,7 @@ function AddDevices() {
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
-    
+
             if (response?.data?.response?.id) {
                 inactiveMappingDeviceToSbi(response.data.response.id, index);
             } else {
@@ -256,7 +256,7 @@ function AddDevices() {
         setDataLoaded(true);
         setIsSubmitClicked(false);
     };
-    
+
     const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
         const newEntries = [...deviceEntries];
         setDataLoaded(false);
@@ -266,13 +266,13 @@ function AddDevices() {
                 sbiId: selectedSbidata.sbiId,
                 partnerId: selectedSbidata.partnerId
             }, "mosip.pms.add.inactive.mapping.device.to.sbi.id.post", true);
-    
+
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/inactive-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (response?.data?.response) {
                 newEntries[index].isSubmitted = true;
                 newEntries[index].successMsg = t('addDevices.successMsg');
@@ -287,8 +287,8 @@ function AddDevices() {
             console.error('Error fetching data:', err);
         }
         setDataLoaded(true);
-    };  
-    
+    };
+
     const handleError = (responseData, index, newEntries) => {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
@@ -316,7 +316,7 @@ function AddDevices() {
 
     const addDeviceEntry = async () => {
         const newEntries = [...deviceEntries];
-        newEntries[deviceEntries.length-1].successMsg = "";
+        newEntries[deviceEntries.length - 1].successMsg = "";
         setDeviceEntries(newEntries);
         const allSubmitted = deviceEntries.every(entry => entry.isSubmitted);
         if (deviceEntries.length === 25 && allSubmitted) {
@@ -370,6 +370,11 @@ function AddDevices() {
         selectionBox: "!top-10"
     };
 
+    const customStyle = {
+        outerDiv: `flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`,
+        innerDiv: `flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 rounded-xl py-2 px-4 z-10`
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -378,18 +383,14 @@ function AddDevices() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title 
-                                title='addDevices.addDevices' 
-                                subTitle={previousPath.name} 
-                                backLink={previousPath.path} 
+                            <Title
+                                title='addDevices.addDevices'
+                                subTitle={previousPath.name}
+                                backLink={previousPath.path}
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
                             />
@@ -409,18 +410,10 @@ function AddDevices() {
                                             <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
-                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-fruit-salad rounded-xl py-3 px-6 z-10">
-                                                    <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)}></SuccessMessage>
-                                                </div>
-                                            </div>
+                                            <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
                                         )}
                                         {entry.errorMsg && (
-                                            <div className={`flex justify-end max-w-7xl max-[800px]:w-1/3 absolute ${isLoginLanguageRTL ? "left-6" : "right-6"}`}>
-                                                <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                                                    <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)}></ErrorMessage>
-                                                </div>
-                                            </div>
+                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={'Device Details already exists for the same make and/or model'} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
                                         )}
                                     </div>
                                     <form>
@@ -497,7 +490,7 @@ function AddDevices() {
                                 <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
                                     {t('addDevices.backToSBIList')}
                                 </button>
-                            :
+                                :
                                 <button onClick={clickOnBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border rounded-md text-sm font-semibold border-[#1447B2] bg-tory-blue text-white`}>
                                     {t('addDevices.backToViewDevices')}
                                 </button>

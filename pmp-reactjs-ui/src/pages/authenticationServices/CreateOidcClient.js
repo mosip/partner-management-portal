@@ -7,7 +7,7 @@ import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
   isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
-  onPressEnterKey
+  onPressEnterKey, trimAndReplace
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -273,7 +273,7 @@ function CreateOidcClient() {
     setErrorMsg("");
     setDataLoaded(false);
     let request = createRequest({
-      name: oidcClientName.trim(),
+      name: trimAndReplace(oidcClientName),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -282,7 +282,7 @@ function CreateOidcClient() {
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
-        "eng": oidcClientName.trim()
+        "eng": trimAndReplace(oidcClientName)
       }
     });
     console.log(request);
@@ -375,11 +375,7 @@ function CreateOidcClient() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">

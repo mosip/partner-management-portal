@@ -80,11 +80,11 @@ function FtmList() {
   const populateCertificateExpiryStatus = (data) => {
     // Updating the status based on the condition
     const updatedData = data.map(item => {
-        if (item['isCertificateExpired'] === true) {
-            return { ...item, certificateExpiryStatus: 'expired' };
-        } else {
-            return { ...item, certificateExpiryStatus: '-' };
-        }
+      if (item['isCertificateExpired'] === true) {
+        return { ...item, certificateExpiryStatus: 'expired' };
+      } else {
+        return { ...item, certificateExpiryStatus: '-' };
+      }
     });
     return updatedData;
   };
@@ -170,7 +170,7 @@ function FtmList() {
     if (selectedFtmData.status === "approved") {
       const request = createRequest({
         ftmId: selectedFtmData.ftmId,
-      },"mosip.pms.deactivate.ftm.post", true);
+      }, "mosip.pms.deactivate.ftm.post", true);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
@@ -192,7 +192,7 @@ function FtmList() {
   const closeDeactivatePopup = () => {
     setViewFtmId(-1);
     setShowDeactivatePopup(false);
-};
+  };
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -202,11 +202,7 @@ function FtmList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mb-5 mt-2 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3 z-10">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-5">
@@ -217,7 +213,7 @@ function FtmList() {
                 </button>
               )}
             </div>
-            {ftmList.length === 0 ? 
+            {ftmList.length === 0 ?
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg">
                 <div className="flex justify-between py-2 px-2 pt-4 text-sm font-semibold text-[#6F6E6E] overflow-x-scroll no-scrollbar">
                   <div className={`flex w-full justify-between`}>
@@ -308,7 +304,7 @@ function FtmList() {
                                           {t('ftmList.deActivate')}
                                         </p>
                                         {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{...ftm, isDeactivateFtm:true}} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                          <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                         )}
                                       </div>
                                     )}

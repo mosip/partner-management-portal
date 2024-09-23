@@ -130,10 +130,6 @@ function AddSbi() {
         setExpiryDate(dateStr);
     };
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
-    };
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
@@ -211,11 +207,7 @@ function AddSbi() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
