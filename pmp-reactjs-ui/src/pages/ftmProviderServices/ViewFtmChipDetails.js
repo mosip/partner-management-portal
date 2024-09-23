@@ -203,11 +203,12 @@ function ViewFtmChipDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(ftmDetails.createdDateTime, "date", true)}
+                                            formatDate(ftmDetails.createdDateTime, "date", false)}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(ftmDetails.createdDateTime, "time", true)}
+                                        {formatDate(ftmDetails.createdDateTime, "time", false
+                                        )}
                                     </div>
                                 </div>
                             </div>
