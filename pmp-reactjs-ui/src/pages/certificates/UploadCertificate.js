@@ -133,7 +133,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
             const dateString = popupData.certificateUploadDateTime.toString();
-            const formatted = formatDate(dateString, 'dateTime');
+            const formatted = formatDate(dateString, 'dateTime', false);
             setFormattedDate(formatted);
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
