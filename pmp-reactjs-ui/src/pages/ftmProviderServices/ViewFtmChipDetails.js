@@ -82,7 +82,7 @@ function ViewFtmChipDetails() {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
             }
         }
     }
@@ -142,33 +142,6 @@ function ViewFtmChipDetails() {
             setErrorMsg(err);
         }
     }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/ftm-chip-details', process.env.NODE_ENV));
-                if (response != null) {
-                    const responseData = response.data;
-                    if (responseData.errors && responseData.errors.length > 0) {
-                        const errorCode = responseData.errors[0].errorCode;
-                        const errorMessage = responseData.errors[0].message;
-                        setErrorCode(errorCode);
-                        setErrorMsg(errorMessage);
-                        console.error('Error:', errorMessage);
-                    } else {
-                        const resData = responseData.response;
-                        console.log('Response data:', resData);
-                    }
-                } else {
-                    setErrorMsg(t('partnerCertificatesList.errorInCertificateList'));
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
-            }
-        };
-        fetchData();
-    }, []);
 
     const moveToFtmList = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
