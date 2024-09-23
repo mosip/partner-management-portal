@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +26,7 @@ public class BasePage {
 
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
-		PageFactory.initElements(driver, this); // No need for AppiumFieldDecorator in Selenium
+		PageFactory.initElements(driver, this); 
 	}
 
 	public static String getDateTime(){
@@ -50,10 +49,9 @@ public class BasePage {
 				try {
 					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				throw exception;  // Re-throw the caught exception
+				throw exception;  
 			}
 		}
 	}
@@ -72,7 +70,7 @@ public class BasePage {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				throw exception;  // Re-throw the caught exception
+				throw exception;  
 			}
 		}
 	}
@@ -91,7 +89,7 @@ public class BasePage {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				throw exception;  // Re-throw the caught exception
+				throw exception;  
 			}
 		}
 	}
@@ -159,7 +157,6 @@ public class BasePage {
 			preappend = ConfigManager.getpreappend();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return preappend;
@@ -173,7 +170,6 @@ public class BasePage {
 			splitdigit = ConfigManager.getsplitdigit();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return Integer.parseInt(splitdigit);

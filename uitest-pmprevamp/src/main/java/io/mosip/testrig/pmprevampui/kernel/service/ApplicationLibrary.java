@@ -7,7 +7,6 @@ import io.mosip.testrig.pmprevampui.utility.BaseTestCaseFunc;
 import io.restassured.response.Response;
 
 public class ApplicationLibrary extends BaseTestCaseFunc {
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(ApplicationLibrary.class);
 	private static CommonLibrary commonLibrary = new CommonLibrary();
 	
 	

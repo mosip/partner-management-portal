@@ -93,14 +93,7 @@ public class CommonLibrary extends BaseTestCaseFunc {
 
 		return mapProp;
 	}
-	
-	// Get Requests:
-	/**
-	 * @param url
-	 * @param cookie
-	 * @return this method is for get request with authentication(cookie) and
-	 *         without any param.
-	 */
+
 	public Response getWithoutParams(String url, String cookie) {
 		logger.info("REST-ASSURED: Sending a Get request to " + url);
 		Cookie.Builder builder = new Cookie.Builder("Authorization", cookie);
@@ -150,14 +143,6 @@ public class CommonLibrary extends BaseTestCaseFunc {
 		return jsonData;
 	}
 	
-	/**
-	 * @param url
-	 * @param body
-	 * @param contentHeader
-	 * @param acceptHeader
-	 * @return this method is for post request without authentication(cookie) and
-	 *         only with jsonData in request body.
-	 */
 	public Response postWithJson(String url, Object body, String contentHeader, String acceptHeader) {
 		logger.info("REST:ASSURED:Sending post request to" + url);
 		Response postResponse = given().relaxedHTTPSValidation().body(body).contentType(contentHeader)

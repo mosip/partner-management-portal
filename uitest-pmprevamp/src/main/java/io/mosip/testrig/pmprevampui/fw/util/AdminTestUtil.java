@@ -1,4 +1,5 @@
 package io.mosip.testrig.pmprevampui.fw.util;
+
 import static io.restassured.RestAssured.given;
 
 import java.io.BufferedReader;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 import org.json.JSONObject;
 
@@ -20,9 +20,9 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class AdminTestUtil extends BaseTestCaseFunc  {
+public class AdminTestUtil extends BaseTestCaseFunc {
 
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(RestClient.class);
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RestClient.class);
 	public static String token;
 	public static String user;
 	public static String tokenRoleIdRepo = "idrepo";
@@ -32,7 +32,6 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 			+ "config/healthCheckEndpoint.properties";
 	public static boolean initialized = false;
 
-	
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())
 			return serverComponentsCommitDetails;
@@ -55,7 +54,7 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 						continue;
 					}
 					stringBuilder.append("\n")
-							.append(getCommitDetails(BaseTestCaseFunc.ApplnURI + parts[1].replace("health", "info")));
+					.append(getCommitDetails(BaseTestCaseFunc.ApplnURI + parts[1].replace("health", "info")));
 				}
 			}
 		} catch (Exception e) {
@@ -67,22 +66,23 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 		serverComponentsCommitDetails = stringBuilder.toString();
 		return serverComponentsCommitDetails;
 	}
+
 	public static void closeBufferedReader(BufferedReader bufferedReader) {
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
 			} catch (IOException e) {
-	//			logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
+				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
-	
+
 	public static void closeFileReader(FileReader fileReader) {
 		if (fileReader != null) {
 			try {
 				fileReader.close();
 			} catch (IOException e) {
-			//	logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
+				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
@@ -95,33 +95,35 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 			logger.info(response.getBody().asString());
 			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
 			return "Group: " + jsonResponse.getJSONObject("build").getString("group") + ", Artifact: "
-					+ jsonResponse.getJSONObject("build").getString("artifact") + ", version: "
-					+ jsonResponse.getJSONObject("build").getString("version") + ", Commit ID: "
-					+ jsonResponse.getJSONObject("git").getJSONObject("commit").getString("id");
+			+ jsonResponse.getJSONObject("build").getString("artifact") + ", version: "
+			+ jsonResponse.getJSONObject("build").getString("version") + ", Commit ID: "
+			+ jsonResponse.getJSONObject("git").getJSONObject("commit").getString("id");
 		}
 		return path + "- No Response";
 	}
-	 public static String UserMapping() {
+
+	public static String UserMapping() {
 		return user;
-		 
-	 }
-	 
-	 public static void initialize() {
-	    	if (initialized == false) {
-	    		ConfigManager.init();
-	    		
-	    		
-	        	BaseTestCaseFunc.initialize();
-	        	HashMap<String, List<String>> attrmap=new HashMap<String, List<String>>();
-				List<String> list=new ArrayList<String>();
-				String val= "11000000";
-				list.add(val);
-				attrmap.put("individualId",list);
-	        	KeycloakUserManager.createUsers();
-	        	BaseTestCaseFunc.mapUserToZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"),"CSB");
-	    		BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"));	
-	    		initialized = true;
-	    	}
-	    }
-	
+
+	}
+
+	public static void initialize() {
+		if (initialized == false) {
+			ConfigManager.init();
+			String admin_userName="admin_userName";
+			String zone="CSB";
+			BaseTestCaseFunc.initialize();
+			HashMap<String, List<String>> attrmap = new HashMap<String, List<String>>();
+			List<String> list = new ArrayList<String>();
+			String val = "11000000";
+			list.add(val);
+			attrmap.put("individualId", list);
+			KeycloakUserManager.createUsers();
+			BaseTestCaseFunc.mapUserToZone(
+					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName), zone);
+			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName));
+			initialized = true;
+		}
+	}
+
 }
