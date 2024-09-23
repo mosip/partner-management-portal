@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, handleMouseClickForDropdown } from "../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import fileUploadBlue from '../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
@@ -10,6 +10,9 @@ import fileUpload from '../../svg/file_upload_icon.svg';
 import file from '../../svg/file_icon.svg';
 import UploadCertificate from "../certificates/UploadCertificate";
 import DownloadCertificateButton from "../common/DownloadCertificateButton";
+import ErrorMessage from "../common/ErrorMessage";
+import SuccessMessage from "../common/SuccessMessage";
+import { HttpService } from "../../services/HttpService";
 
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
@@ -19,6 +22,9 @@ function ViewFtmChipDetails() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [showPopup, setShowPopup] = useState(false);
+    const [errorCode, setErrorCode] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [showDropDownOptions, setShowDropDownOptions] = useState(false);
     const [uploadCertificateData, setUploadCertificateData] = useState({});
     const dropdownRef = useRef(null);
@@ -36,10 +42,6 @@ function ViewFtmChipDetails() {
         let ftmData = JSON.parse(selectedFtm);
         setFtmDetails(ftmData);
     }, []);
-
-    const isDownloadBtnDisabled = () => {
-        return (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') ? false : true;
-    };
 
     const clickOnUpload = () => {
         document.body.style.overflow = "hidden";
@@ -73,8 +75,84 @@ function ViewFtmChipDetails() {
         }
     };
 
+    const getOriginalCertificate = async (ftmDetails) => {
+        const response = await getCertificate(ftmDetails.ftmId);
+        if (response !== null) {
+            if (response.isCaSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
+            }
+        }
+    }
+
+    const getMosipSignedCertificate = async (ftmDetails) => {
+        const response = await getCertificate(ftmDetails.ftmId);
+        if (response !== null) {
+            if (response.isMosipSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+            }
+        }
+    }
+
+    const downloadCertificate = (certificateData, fileName) => {
+        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    }
+
+    const getCertificate = async (ftmId) => {
+        setErrorCode("");
+        setErrorMsg("");
+        try {
+            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+            if (response !== null) {
+                const responseData = response.data;
+                if (responseData.errors && responseData.errors.length > 0) {
+                    const errorCode = responseData.errors[0].errorCode;
+                    const errorMessage = responseData.errors[0].message;
+                    setErrorCode(errorCode);
+                    setErrorMsg(errorMessage);
+                    console.error('Error:', errorMessage);
+                    return null;
+                } else {
+                    const resData = responseData.response;
+                    console.log('Response data:', resData);
+                    return resData;
+                }
+            } else {
+                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
+            }
+        } catch (err) {
+            console.error('Error fetching certificate:', err);
+            setErrorMsg(err);
+        }
+    }
+
     const moveToFtmList = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+    };
+
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+    };
+
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
     };
 
     const viewFtmDownloadButtonStyle = {
@@ -87,6 +165,12 @@ function ViewFtmChipDetails() {
 
     return (
         <>
+            {errorMsg && (
+                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            )}
+            {successMsg && (
+                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+            )}
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
@@ -178,16 +262,16 @@ function ViewFtmChipDetails() {
                                                 )}
                                             </div>
                                         </div>
-                                        
+
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
                                                 < DownloadCertificateButton
-                                                    disableBtn={ftmDetails.status!=='approved' && ftmDetails.status!=='pending_approval'}
+                                                    disableBtn={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'}
                                                     downloadDropdownRef={dropdownRef}
                                                     setShowDropDown={setShowDropDownOptions}
                                                     showDropDown={showDropDownOptions}
-                                                    // onClickFirstOption={getOriginalCertificate}
-                                                    // onClickSecondOption={getMosipSignedCertificate}
+                                                    onClickFirstOption={getOriginalCertificate}
+                                                    onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={ftmDetails}
                                                     styleSet={viewFtmDownloadButtonStyle}
                                                 />
@@ -199,8 +283,8 @@ function ViewFtmChipDetails() {
                                                             downloadDropdownRef={dropdownRef}
                                                             setShowDropDown={setShowDropDownOptions}
                                                             showDropDown={showDropDownOptions}
-                                                            // onClickFirstOption={getOriginalCertificate}
-                                                            // onClickSecondOption={getMosipSignedCertificate}
+                                                            onClickFirstOption={getOriginalCertificate}
+                                                            onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={ftmDetails}
                                                             styleSet={mangeFtmDownloadButtonStyle}
                                                         />
