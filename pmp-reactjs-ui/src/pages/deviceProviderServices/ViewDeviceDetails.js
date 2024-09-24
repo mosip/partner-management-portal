@@ -73,11 +73,11 @@ function ViewDeviceDetails() {
                                         </div>
                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                             {t("viewDeviceDetails.createdOn") + ' ' +
-                                                formatDate(deviceDetails.createdDateTime, "date")}
+                                                formatDate(deviceDetails.createdDateTime, "date", true)}
                                         </div>
                                         <div className="mx-1 text-gray-300">|</div>
                                         <div className="font-semibold text-sm text-dark-blue">
-                                            {formatDate(deviceDetails.createdDateTime, "time")}
+                                            {formatDate(deviceDetails.createdDateTime, "time", true)}
                                         </div>
                                     </div>
                                 </div>

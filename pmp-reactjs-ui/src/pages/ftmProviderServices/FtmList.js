@@ -276,9 +276,9 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.createdDateTime, 'date')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.createdDateTime, 'date', false)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
