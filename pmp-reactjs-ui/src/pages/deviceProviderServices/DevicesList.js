@@ -306,7 +306,7 @@ function DevicesList() {
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.model}</td>
-                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date')}</td>
+                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date', true)}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">
                                                                             <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                 {getStatusCode(device.status, t)}
