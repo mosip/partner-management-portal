@@ -74,8 +74,8 @@ function ConsentPopup() {
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="text-sm text-[#414141] w-full">
                                 <div className="p-4"> <p>{consentText}</p></div>
-                                <div className="flex items-center mt-3 bg-alice-green w-full px-4 py-3">
-                                    <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" tabIndex="0"
+                                <div className="flex items-start mt-3 bg-alice-green w-full px-4 py-3">
+                                    <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded mt-[3px]" tabIndex="0"
                                         onKeyPress={(e) => onPressEnterKey(e, handleCheckboxChange)} />
                                     <label className="ms-2 text-sm font-semibold">{t('consentPopup.checkBoxDesc')}</label>
                                 </div>
