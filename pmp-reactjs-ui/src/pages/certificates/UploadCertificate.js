@@ -10,6 +10,9 @@ import SuccessMessage from '../common/SuccessMessage';
 import fileUploadImg from '../../svg/file_upload_certificate.svg';
 import fileDescription from '../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
+import * as asn1js from "asn1js";
+import { Certificate } from "pkijs";
+import { fromBER } from "asn1js";
 
 function UploadCertificate({ closePopup, popupData, request }) {
     const [partnerDomainType, setPartnerDomainType] = useState("");
@@ -39,9 +42,20 @@ function UploadCertificate({ closePopup, popupData, request }) {
             closePopup(true, 'close');
         } else {
             setDataLoaded(false);
-            const uploadRequest = createRequest({
-                ...request, certificateData: certificateData
-            });
+            let uploadRequest = {};
+            if (popupData.isUploadPartnerCertificate) {
+                uploadRequest = createRequest({
+                    ...request, 
+                    certificateData: certificateData,
+                });
+            }
+            if (popupData.isUploadFtmCertificate) {
+                uploadRequest = createRequest({
+                    ...request, 
+                    certificateData: certificateData,
+                    organizationName: getOrganization(certificateData,)
+                });
+            }
             try {
                 let response;
                 if (popupData.isUploadPartnerCertificate) {
@@ -76,6 +90,35 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 console.log("Unable to upload partner certificate: ", err);
             }
         }
+    };
+
+    const decodeCertificate = (certificateData) => {
+        const certBase64 = certificateData
+          .replace("-----BEGIN CERTIFICATE-----", "")
+          .replace("-----END CERTIFICATE-----", "")
+          .replace(/\s+/g, "");
+      
+        // Convert the base64 string to a Uint8Array
+        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.charCodeAt(0));
+      
+        // Parse the certificate using asn1js and pkijs
+        const asn1 = fromBER(certBinary.buffer);
+        if (asn1.offset === -1) {
+          setErrorMsg(t('uploadCertificate.errorWhileGettingCertOrgName'));
+        }
+        const cert = new Certificate({ schema: asn1.result });
+        return cert;
+    };
+
+    const getOrganization = (certificate) => {
+        const decodedCert = decodeCertificate(certificate);
+
+        // Iterate over typesAndValues in the subject to find O (Organization)
+        const organizationAttr = decodedCert.subject.typesAndValues.find(
+          (attr) => attr.type === "2.5.4.10"
+        );
+        return organizationAttr.value.valueBlock.value;
+        
     };
 
     const getPartnerType = useCallback((popupData) => {
