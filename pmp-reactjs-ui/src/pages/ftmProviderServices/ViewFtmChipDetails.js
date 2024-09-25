@@ -274,6 +274,7 @@ function ViewFtmChipDetails() {
                                                     onClickFirstOption={getOriginalCertificate}
                                                     onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={ftmDetails}
+                                                    disableSecondOption = {ftmDetails.status !== 'approved'}
                                                     styleSet={viewFtmDownloadButtonStyle}
                                                 />
                                             )}
@@ -287,6 +288,7 @@ function ViewFtmChipDetails() {
                                                             onClickFirstOption={getOriginalCertificate}
                                                             onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={ftmDetails}
+                                                            disableSecondOption = {ftmDetails.status !== 'approved'}
                                                             styleSet={mangeFtmDownloadButtonStyle}
                                                         />
                                                     )}
