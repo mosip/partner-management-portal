@@ -269,7 +269,7 @@ function ViewFtmChipDetails() {
                                                 < DownloadCertificateButton
                                                     disableBtn={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'}
                                                     downloadDropdownRef={dropdownRef}
-                                                    setShowDropDown={setShowDropDownOptions}
+                                                    setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
                                                     showDropDown={showDropDownOptions}
                                                     onClickFirstOption={getOriginalCertificate}
                                                     onClickSecondOption={getMosipSignedCertificate}

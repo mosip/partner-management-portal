@@ -217,12 +217,11 @@ function PartnerCertificatesList() {
                                                     ? <div className="flex">
                                                         <DownloadCertificateButton
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
-                                                            setShowDropDown={setDownloadBtnId}
-                                                            showDropDown={downloadBtnId}
+                                                            setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
+                                                            showDropDown={downloadBtnId === index}
                                                             onClickFirstOption={getOriginalCertificate}
                                                             onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={partner}
-                                                            index={index}
                                                             styleSet={dropdownStyle}
                                                             disableBtn={false}
                                                         />
