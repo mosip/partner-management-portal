@@ -186,7 +186,7 @@ function AddFtm() {
             customBtnName: "addFtm.uploadFtmCertificate",
             styleSet: {
               imgIconLtr: "ml-[38%] max-[450px]:ml-12",
-              imgIconRtl: "mr-[36%] max-[450px]:mr-12"
+              imgIconRtl: "mr-[32%] max-[450px]:mr-12"
             }
           }
           setConfirmationData(requiredData);
