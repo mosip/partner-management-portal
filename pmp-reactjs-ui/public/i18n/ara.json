@@ -115,7 +115,8 @@
         "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
-        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة"
+        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة",
+        "errorWhileGettingCertOrgName": "غير قادر على الحصول على اسم منظمة الشهادة"
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
