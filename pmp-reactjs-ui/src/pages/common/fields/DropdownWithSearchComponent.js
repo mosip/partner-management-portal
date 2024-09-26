@@ -6,7 +6,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent }) {
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent, id }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -58,7 +58,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                 )}
             </label>
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
+                <button id={id} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all break-normal break-words text-wrap text-start'>{
                         selectedDropdownEntry ?
@@ -78,7 +78,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
                                     </svg>
                                 </span>
-                                <input type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
+                                <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
                                     className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
@@ -90,7 +90,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                 {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-2">
-                                            <button
+                                            <button id={id + "_item" + (index +1)}
                                                 className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>

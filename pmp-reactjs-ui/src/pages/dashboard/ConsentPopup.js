@@ -83,7 +83,7 @@ function ConsentPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-4 flex justify-between relative items-center">
                                 <p className="text-[#333333] text-sm font-semibold">{t('consentPopup.logoutMsg')}
-                                    <span className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
+                                    <span id='consent_logout_btn' className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
                                         onKeyPress={(e) => onPressEnterKey(e, logout)}> {t('commons.logout')}</span>
                                 </p>
                                 <button
@@ -91,6 +91,7 @@ function ConsentPopup() {
                                 ${isChecked ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                     disabled={!isChecked}
                                     onClick={saveUserConsent}
+                                    id='consent_proceed_btn'
                                 >
                                     {t('consentPopup.proceed')}
                                 </button>
