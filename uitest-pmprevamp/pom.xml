@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.mosip.test</groupId>
 	<artifactId>uitest-pmprevamp</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<name>uitest-pmprevamp</name>
 	<description>Parent project of uitest-pmprevamp</description>
 	<url>https://github.com/mosip/Partner-management-portal</url>
@@ -46,6 +46,14 @@
 		<webdrivermanager.version>5.1.0</webdrivermanager.version>
 		<keycloak-admin-client.version>17.0.1</keycloak-admin-client.version>
 		<fileName>pmprevampui-1.2.1-SNAPSHOT-jar-with-dependencies</fileName>
+		
+			<!-- maven -->
+		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.version>3.8.0</maven.compiler.version>
+		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
+		<maven.war.plugin.version>3.1.0</maven.war.plugin.version>
+		<maven.sonar.plugin.version>3.7.0.1746</maven.sonar.plugin.version>
 	</properties>
 
 	<build>
@@ -54,11 +62,36 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>populate-git-commit-information</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<configuration>
+							<verbose>true</verbose>
+							<dateFormat>MM/dd/yyyy HH:mm:ss Z</dateFormat>
+							<abbrevLength>8</abbrevLength>
+							<generateGitPropertiesFile>true</generateGitPropertiesFile>
+							<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
-					<source>21</source>
-					<target>21</target>
+					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -123,7 +156,7 @@
 			<dependency>
 				<groupId>io.mosip.kernel</groupId>
 				<artifactId>kernel-bom</artifactId>
-				<version>1.2.1-java21-SNAPSHOT</version>
+				<version>1.2.1-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
