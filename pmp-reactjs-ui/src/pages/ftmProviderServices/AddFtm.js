@@ -63,6 +63,9 @@ function AddFtm() {
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, [partnerId, make, model, isSubmitClicked]);
 
   const cancelErrorMsg = () => {
