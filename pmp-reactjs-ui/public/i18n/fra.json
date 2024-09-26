@@ -490,7 +490,9 @@
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
         "listOfFtmChipDetails": "Liste des détails de la puce FTM",
         "ftmChipProvider": "Fournisseur de puces FTM",
-        "ftmChipCertificate": " Certificat de puce FTM"
+        "ftmChipCertificate": " Certificat de puce FTM",
+        "originalCertSuccessMsg": "Certificat original téléchargé avec succès.",
+        "mosipSignedCertificateSuccessMsg": "Le certificat signé MOSIP a été téléchargé avec succès."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
