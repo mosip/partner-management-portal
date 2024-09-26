@@ -490,7 +490,9 @@
         "viewFtmChipDetails": "عرض تفاصيل شريحة FTM",
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "ftmChipProvider": "مزود رقاقة FTM",
-        "ftmChipCertificate": " شهادة رقاقة FTM"
+        "ftmChipCertificate": " شهادة رقاقة FTM",
+        "originalCertSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح.",
+        "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
