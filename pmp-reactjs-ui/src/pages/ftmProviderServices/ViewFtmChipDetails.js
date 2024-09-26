@@ -88,13 +88,15 @@ function ViewFtmChipDetails() {
     }
 
     const getMosipSignedCertificate = async (ftmDetails) => {
-        const response = await getCertificate(ftmDetails.ftmId);
-        if (response !== null) {
-            if (response.isMosipSignedCertificateExpired) {
-                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-            } else {
-                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+        if (ftmDetails.status === 'approved') {
+            const response = await getCertificate(ftmDetails.ftmId);
+            if (response !== null) {
+                if (response.isMosipSignedCertificateExpired) {
+                    setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                } else {
+                    setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+                    downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                }
             }
         }
     }
@@ -273,7 +275,7 @@ function ViewFtmChipDetails() {
                                                     showDropDown={showDropDownOptions}
                                                     onClickFirstOption={getOriginalCertificate}
                                                     onClickSecondOption={getMosipSignedCertificate}
-                                                    requiredData={ftmDetails}
+                                                    requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
                                                     styleSet={viewFtmDownloadButtonStyle}
                                                 />
                                             )}
@@ -286,7 +288,7 @@ function ViewFtmChipDetails() {
                                                             showDropDown={showDropDownOptions}
                                                             onClickFirstOption={getOriginalCertificate}
                                                             onClickSecondOption={getMosipSignedCertificate}
-                                                            requiredData={ftmDetails}
+                                                            requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
                                                             styleSet={mangeFtmDownloadButtonStyle}
                                                         />
                                                     )}
