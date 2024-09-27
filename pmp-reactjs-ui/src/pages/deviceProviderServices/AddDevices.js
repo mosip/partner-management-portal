@@ -429,7 +429,7 @@ function AddDevices() {
                                                     disabled={entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_select_device_type'>
+                                                    id='add_device_device_type'>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -443,7 +443,7 @@ function AddDevices() {
                                                     disabled={!entry.deviceType || entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_select_device_sub_type'>
+                                                    id='add_device_device_sub_type'>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -466,7 +466,7 @@ function AddDevices() {
                                                 <button id='add_device_submit_btn' disabled={!isFormValid(index)} onClick={() => submitForm(index, entry)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md text-sm font-semibold max-[600px]:mb-2 ${isFormValid(index) ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                                     {t('addDevices.submit')}
                                                 </button>
-                                                <button id='add_device_submit_btn' onClick={() => clearForm(index)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>
+                                                <button id='add_device_clear_btn' onClick={() => clearForm(index)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-11 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>
                                                     {t('addDevices.clear')}
                                                 </button>
                                             </div>

@@ -232,7 +232,7 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p id={'policy_list_view_hamburger' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
+                                    <p id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
                                       ...</p>
                                     {
                                       viewPolicyId === index && (

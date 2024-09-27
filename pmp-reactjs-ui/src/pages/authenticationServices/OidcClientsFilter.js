@@ -71,7 +71,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectOidcClientType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='oidc_select_client_type_filter'>
+                    id='oidc_select_client_name_filter'>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 

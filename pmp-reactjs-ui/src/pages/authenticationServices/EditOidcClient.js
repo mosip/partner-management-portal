@@ -398,7 +398,7 @@ function EditOidcClient() {
                                                         fieldNameKey='createOidcClient.grantTypes*'
                                                         selectedDropdownValue={oidcClientDetails.grantTypes[0]}
                                                         styleSet={styles}
-                                                        id='oidc_edit_select_grant_type'>
+                                                        id='oidc_edit_grant_type'>
                                                     </DropdownComponent>
                                                 </div>
                                             </div>

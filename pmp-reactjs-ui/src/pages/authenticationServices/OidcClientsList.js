@@ -292,7 +292,7 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
-                                                                    <div id={'auth-oidc_client_item_status' + (index +1)} className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                    <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(client.status, t)}
                                                                     </div>
                                                                 </td>
@@ -311,7 +311,7 @@ function OidcClientsList() {
                                                                 </td>
                                                                 <td className="px-2 mx-2">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <p id={'auth_oidc_details_hamburger' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
+                                                                        <p id={'auth_oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                             tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewClientId(index === viewClientId ? null : index))}>
                                                                             ...</p>
                                                                         {viewClientId === index && (

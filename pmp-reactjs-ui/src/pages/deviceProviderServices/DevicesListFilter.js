@@ -42,7 +42,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     placeHolderKey='devicesList.selectDeviceType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='device_list_filter_select_device_type'>
+                    id='device_list_filter_device_type'>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='deviceSubTypeCode'
@@ -52,7 +52,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     placeHolderKey='devicesList.selectDeviceSubType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='device_list_filter_select_device_subtype'>
+                    id='device_list_filter_device_subtype'>
                 </DropdownComponent>
                 <DropdownWithSearchComponent 
                     fieldName='make' 
@@ -63,7 +63,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='device_list_filter_select_make'>
+                    id='device_list_filter_make'>
                 </DropdownWithSearchComponent>
                 <DropdownWithSearchComponent
                     fieldName='model'
@@ -74,7 +74,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='device_list_filter_select_model'>
+                    id='device_list_filter_model'>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -84,7 +84,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
                     placeHolderKey='devicesList.selectStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='device_list_filter_select_status'> 
+                    id='device_list_filter_status'> 
                 </DropdownComponent>
             </div>
         </>

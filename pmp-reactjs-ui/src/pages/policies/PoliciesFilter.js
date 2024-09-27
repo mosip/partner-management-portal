@@ -43,7 +43,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPartnerId'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_select_partner_id_filter'
+                    id='policy_partner_id_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 
@@ -54,7 +54,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPartnerType'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_select_partner_type_filter'
+                    id='policy_partner_type_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 
@@ -65,7 +65,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPolicyGroup'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_select_policy_group_filter'
+                    id='policy_policy_group_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 
@@ -76,7 +76,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPolicyName'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_select_policy_name_filter'
+                    id='policy_policy_name_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 
@@ -87,7 +87,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_select_status_filter'
+                    id='policy_status_filter'
                     > 
                 </DropdownComponent>
             </div>

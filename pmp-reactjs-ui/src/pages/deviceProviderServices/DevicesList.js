@@ -301,20 +301,20 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr id={'device_list_device_item' +  (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.model}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date', true)}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">
-                                                                            <div id={'device_list_device_status' + (index + 1)} className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                            <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                 {getStatusCode(device.status, t)}
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2">
                                                                             <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                                <p id={'device_list_action_hamburger' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
+                                                                                <p id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
