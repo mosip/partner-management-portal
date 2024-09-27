@@ -267,7 +267,8 @@ function RequestPolicy() {
                                                         selectedDropdownValue={partnerId}
                                                         styleSet={styles}
                                                         addInfoIcon
-                                                        infoKey='requestPolicy.info'>
+                                                        infoKey='requestPolicy.info'
+                                                        id='policy_partner_id'>
                                                     </DropdownComponent>
                                                 </div>
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
@@ -301,7 +302,8 @@ function RequestPolicy() {
                                                         placeHolderKey='requestPolicy.selectPolicyName'
                                                         selectedDropdownValue={policyName}
                                                         searchKey='commons.search'
-                                                        styleSet={styleForSearch}>
+                                                        styleSet={styleForSearch}
+                                                        id='policies_policy_name'>
                                                     </DropdownWithSearchComponent>
                                                 </div>
                                             </div>
@@ -310,7 +312,7 @@ function RequestPolicy() {
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
                                                     </label>
-                                                    <textarea maxLength={500} ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                    <textarea id="policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                     </textarea>
                                                 </div>
@@ -320,10 +322,10 @@ function RequestPolicy() {
                                 </div>
                                 <div className="border bg-medium-gray" />
                                 <div className="flex flex-row px-[3%] py-5 justify-between">
-                                    <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <button id="policies_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                        <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="policies_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     </div>
                                 </div>
                             </div>
