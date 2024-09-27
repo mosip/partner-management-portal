@@ -185,7 +185,7 @@ function ViewFtmChipDetails() {
                             <div className="flex flex-col justify-center items-center">
                                 <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                 <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={() => moveToFtmList()} type="button"
+                                <button onClick={moveToFtmList} type="button"
                                     className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                     {t('commons.goBack')}
                                 </button>
@@ -327,7 +327,7 @@ function ViewFtmChipDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                            <button onClick={() => moveToFtmList(navigate)} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
+                            <button onClick={moveToFtmList} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
                                 {t("commons.back")}
                             </button>
                         </div>
