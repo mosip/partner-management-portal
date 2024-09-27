@@ -33,7 +33,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
                         </p>
                     </div>
                     <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute top-4  mt-1`}>
-                        <img src={cancelIcon} alt="" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel} />
+                        <img id="error_close_btn" src={cancelIcon} alt="" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel} />
                     </div>
                 </div>
             </div>

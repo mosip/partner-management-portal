@@ -15,7 +15,7 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle}) {
                     </p>
                 </div>
                 <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute top-4 mt-1`}>
-                    <img src={cancelIcon} alt="" className="cursor-pointer" onClick={clickOnCancel}></img>
+                    <img id='success_msg_close' src={cancelIcon} alt="" className="cursor-pointer" onClick={clickOnCancel}></img>
                 </div>
             </div>
         </div>
