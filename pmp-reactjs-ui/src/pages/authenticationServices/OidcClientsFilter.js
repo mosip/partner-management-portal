@@ -40,7 +40,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.partnerId'
                     placeHolderKey='oidcClientsList.selectPartnerId'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='oidc_select_partner_id_filter'>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='policyGroupName'
@@ -49,7 +50,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.policyGroup'
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='oidc_select_policy_group_filter'>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -58,7 +60,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.policyName' 
                     placeHolderKey='oidcClientsList.selectPolicyName'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='oidc_select_policy_name_filter'>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='clientName'
@@ -67,7 +70,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.oidcClientName'
                     placeHolderKey='oidcClientsList.selectOidcClientType'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='oidc_select_client_type_filter'>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -76,7 +80,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.status' 
                     placeHolderKey='oidcClientsList.selectStatus'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}> 
+                    isPlaceHolderPresent={true}
+                    id='oidc_select_status_filter'> 
                 </DropdownComponent>
             </div>
         </>

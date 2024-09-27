@@ -28,7 +28,7 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
     };
 
     return (
-        <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
+        <div id='pagination_card' className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
             <div></div>
             <ReactPaginate
             containerClassName={"pagination"}

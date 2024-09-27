@@ -38,7 +38,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
                             <h1 className={`font-bold text-base text-[#333333] break-normal break-words`}>{policyName}</h1>
                             <p className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
-                        <img src={close_icon} alt="" onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, dismiss)} />
+                        <img id='copy_id_close_btn' src={close_icon} alt="" onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, dismiss)} />
                     </header>
                     <hr className={`py-[3.5%]`} />
                     <div className={`px-5 pt-1 pb-6 flex-col text-center justify-center items-center`}>
@@ -49,7 +49,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
                         )}
                         <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
                         <p className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
-                        <button type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-[31%]" : "ml-[31%]"} cursor-pointer`}>
+                        <button id='copy_id_btn' type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-[31%]" : "ml-[31%]"} cursor-pointer`}>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 width="13" height="15" viewBox="0 0 13.808 16.481">
                                 <path id="content_copy_FILL0_wght300_GRAD0_opsz24"
