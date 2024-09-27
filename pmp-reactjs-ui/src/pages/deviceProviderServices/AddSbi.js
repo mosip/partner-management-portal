@@ -293,7 +293,7 @@ function AddSbi() {
                             </div>
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-[2%] justify-between max-[500px]:flex-col max-[500px]:items-center">
-                                <button id="add_sbi_policy_form_clear_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2">{t('requestPolicy.clearForm')}</button>
+                                <button id="add_sbi_form_clear_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col max-[500px]:space-x-0 max-[500px]:items-center">
                                     <button id="add_sbi_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2`}>{t('requestPolicy.cancel')}</button>
                                     <button id="add_sbi_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>

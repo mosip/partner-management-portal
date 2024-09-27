@@ -224,13 +224,13 @@ function PartnerCertificatesList() {
                                                             requiredData={partner}
                                                             styleSet={dropdownStyle}
                                                             disableBtn={false}
-                                                            index={index}
+                                                            id={'download_btn' + (index + 1)}
                                                         />
                                                         <button id={"partner_certificate_re_upload_btn" + (index+1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                                             {t('partnerCertificatesList.reUpload')}
                                                         </button>
                                                     </div>
-                                                    : <button id="partner_certificate_upload_btn" onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
+                                                    : <button id={"partner_certificate_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showPopup && (
