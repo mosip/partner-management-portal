@@ -146,7 +146,7 @@ function ViewDeviceDetails() {
                                 </div>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                                    <button onClick={() => moveToDevicesList()} className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                                    <button id='view_device_details_back_btn' onClick={() => moveToDevicesList()} className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                         {t("commons.back")}
                                     </button>
                                 </div>

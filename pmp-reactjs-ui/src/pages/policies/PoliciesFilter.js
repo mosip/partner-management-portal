@@ -42,7 +42,9 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     fieldNameKey='policies.partnerId' 
                     placeHolderKey='policies.selectPartnerId'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='policy_partner_id_filter'
+                    >
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='partnerType' 
@@ -51,7 +53,9 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     fieldNameKey='policies.partnerType' 
                     placeHolderKey='policies.selectPartnerType'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='policy_partner_type_filter'
+                    >
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyGroupName' 
@@ -60,7 +64,9 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     fieldNameKey='policies.policyGroupName' 
                     placeHolderKey='policies.selectPolicyGroup'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='policy_group_filter'
+                    >
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -69,7 +75,9 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     fieldNameKey='policies.policyName' 
                     placeHolderKey='policies.selectPolicyName'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='policy_name_filter'
+                    >
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -78,7 +86,9 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     fieldNameKey='policies.status' 
                     placeHolderKey='policies.selectStatus'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}> 
+                    isPlaceHolderPresent={true}
+                    id='policy_status_filter'
+                    > 
                 </DropdownComponent>
             </div>
         </>

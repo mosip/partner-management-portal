@@ -71,7 +71,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
-                                            <button id={id + '_option' + (index+1)}
+                                            <button id={isPlaceHolderPresent ? (index > 0 && id + '_option' + (index)) : id + '_option' + (index + 1)}
                                                 className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
