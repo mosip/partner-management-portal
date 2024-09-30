@@ -65,7 +65,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPolicyGroup'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_policy_group_filter'
+                    id='policy_group_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 
@@ -76,7 +76,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     placeHolderKey='policies.selectPolicyName'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='policy_policy_name_filter'
+                    id='policy_name_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 

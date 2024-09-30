@@ -219,14 +219,14 @@ function PoliciesList() {
                         <tbody>
                           {tableRows.map((partner, index) => {
                             return (
-                              <tr key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                              <tr id={'policy_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', false)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
-                                  <div id={'policy_list_item_status' + (index + 1)} className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                  <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(partner.status, t)}
                                   </div>
                                 </td>
