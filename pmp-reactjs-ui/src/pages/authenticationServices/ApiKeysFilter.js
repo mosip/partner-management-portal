@@ -41,7 +41,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.partnerId'
                     placeHolderKey='oidcClientsList.selectPartnerId'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='api_key_partner_id'>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='policyGroupName'
@@ -50,7 +51,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.policyGroup'
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='api_key_policy_group'>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -59,7 +61,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.policyName' 
                     placeHolderKey='oidcClientsList.selectPolicyName'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='api_key_policy_name'>
                 </DropdownComponent>
                 <DropdownWithSearchComponent
                     fieldName='apiKeyLabel'
@@ -69,7 +72,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='apiKeysList.selectApiKeyLabel'
                     searchKey='commons.search'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='api_key_name'>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -78,7 +82,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldNameKey='oidcClientsList.status' 
                     placeHolderKey='oidcClientsList.selectStatus'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}> 
+                    isPlaceHolderPresent={true}
+                    id='api_key_status'> 
                 </DropdownComponent>
             </div>
         </>
