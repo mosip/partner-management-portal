@@ -282,6 +282,7 @@ function ViewFtmChipDetails() {
                                                     onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
                                                     styleSet={viewFtmDownloadButtonStyle}
+                                                    id='download_btn'
                                                 />
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
@@ -295,9 +296,10 @@ function ViewFtmChipDetails() {
                                                             onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
                                                             styleSet={mangeFtmDownloadButtonStyle}
+                                                            id='download_btn'
                                                         />
                                                     )}
-                                                    <button onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
+                                                    <button id="certificate_reupload_btn" onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                         {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                     </button>
                                                     {showPopup && (
@@ -327,7 +329,7 @@ function ViewFtmChipDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                            <button onClick={moveToFtmList} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
+                            <button id="ftm_view_back_btn" onClick={moveToFtmList} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
                                 {t("commons.back")}
                             </button>
                         </div>
