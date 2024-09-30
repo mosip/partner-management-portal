@@ -40,7 +40,8 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     fieldNameKey='ftmList.partnerId'
                     placeHolderKey='ftmList.selectPartnerId'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='ftm_partner_id_filter'>
                 </DropdownComponent>
                 <DropdownWithSearchComponent 
                     fieldName='make' 
@@ -50,7 +51,8 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     placeHolderKey='ftmList.selectMakeName'
                     searchKey='commons.search'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='ftm_make_name_filter'>
                 </DropdownWithSearchComponent>
                 <DropdownWithSearchComponent
                     fieldName='model'
@@ -60,7 +62,8 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     placeHolderKey='ftmList.selectModelName'
                     searchKey='commons.search'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}>
+                    isPlaceHolderPresent={true}
+                    id='ftm_model_name_filter'>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='certificateExpiryStatus' 
@@ -69,7 +72,8 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     fieldNameKey='ftmList.certificateExpiryStatus' 
                     placeHolderKey='ftmList.selectCertificateExpiryStatus'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}> 
+                    isPlaceHolderPresent={true}
+                    id='ftm_certificate_expiry_filter'> 
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -78,7 +82,8 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
                     fieldNameKey='ftmList.status' 
                     placeHolderKey='ftmList.selectStatus'
                     styleSet={styles}
-                    isPlaceHolderPresent={true}> 
+                    isPlaceHolderPresent={true}
+                    id='ftm_status_filter'> 
                 </DropdownComponent>
             </div>
         </>

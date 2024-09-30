@@ -281,7 +281,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-[48%]">
                                                     <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('requestPolicy.partnerId')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.partnerIdTooltip')} />
+                                                        <Information infoKey={t('createOidcClient.partnerIdTooltip')} id='partner_id_info'/>
                                                     </label>
                                                     <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -318,7 +318,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-[48%]">
                                                     <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('requestPolicy.policyName')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.policyNameToolTip')} />
+                                                        <Information infoKey={t('createOidcClient.policyNameToolTip')} id='policy_name_info'/>
                                                     </label>
                                                     <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -341,7 +341,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-full">
                                                     <label className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
+                                                        <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info'/>
                                                     </label>
                                                     <textarea value={oidcClientDetails.publicKey} readOnly
                                                         className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar">
