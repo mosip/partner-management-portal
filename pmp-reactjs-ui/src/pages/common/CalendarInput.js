@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import calendar_icon from '../../svg/calendar_icon.svg'
 import Information from './fields/Information';
 
-function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, label, onChange, selectedDateStr, containsAsterisk}) {
+function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, label, onChange, selectedDateStr, containsAsterisk, id}) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
@@ -39,6 +39,7 @@ function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCa
       </label>
       <div className="w-full">
         <DatePicker
+          id={id}
           selected={selectedDateStr === "" ? new Date() : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           dateFormat="MM/dd/yyyy"

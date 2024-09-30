@@ -127,7 +127,7 @@ function SelectPolicyPopup() {
                                     {displayText}
                                 </p>
                                 {descriptionText.split(' ').length > maxWords && (
-                                    <button className="text-tory-blue text-sm font-semibold" onClick={expandDescription}>
+                                    <button id="select_policy_group_view_text" className="text-tory-blue text-sm font-semibold" onClick={expandDescription}>
                                         {isExpanded ? t('selectPolicyPopup.viewLess') : t('selectPolicyPopup.viewMore')}
                                     </button>
                                 )}
@@ -150,7 +150,8 @@ function SelectPolicyPopup() {
                                                 placeHolderKey='selectPolicyPopup.title'
                                                 searchKey='commons.search'
                                                 selectPolicyPopup
-                                                styleSet={styles}>
+                                                styleSet={styles}
+                                                id="select_policy_group_dropdown">
                                             </DropdownWithSearchComponent>
                                         </div>
                                     </div>
@@ -159,13 +160,14 @@ function SelectPolicyPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-3 flex justify-between relative">
                                 <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                    <span className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                                    <span id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
                                 </p>
                                 <button
                                     className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
                                 ${selectedPolicyGroup ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                     onClick={clickOnSubmit}
                                     disabled={!selectedPolicyGroup}
+                                    id="select_policy_group_submit"
                                 >
                                     {t('selectPolicyPopup.submit')}
                                 </button>
