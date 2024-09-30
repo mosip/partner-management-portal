@@ -42,7 +42,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectPartnerId'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='api_key_partner_id'>
+                    id='api_key_partner_id_filter'>
                 </DropdownComponent>
                 <DropdownComponent
                     fieldName='policyGroupName'
@@ -52,7 +52,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectPolicyGroup'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='api_key_policy_group'>
+                    id='api_key_policy_group_filter'>
                 </DropdownComponent>
                 <DropdownComponent 
                     fieldName='policyName' 
@@ -62,7 +62,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectPolicyName'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='api_key_policy_name'>
+                    id='api_key_policy_name_filter'>
                 </DropdownComponent>
                 <DropdownWithSearchComponent
                     fieldName='apiKeyLabel'
@@ -73,7 +73,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='api_key_name'>
+                    id='api_key_name_filter'>
                 </DropdownWithSearchComponent>
                 <DropdownComponent 
                     fieldName='status' 
@@ -83,7 +83,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     placeHolderKey='oidcClientsList.selectStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='api_key_status'> 
+                    id='api_key_status_filter'> 
                 </DropdownComponent>
             </div>
         </>
