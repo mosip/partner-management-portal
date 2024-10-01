@@ -34,7 +34,7 @@ function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCa
       <label className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
         <p className={`mb-0.5`}>{label}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
         {addInfoIcon && (
-          <Information infoKey={infoKey} infoKey1={infoKey1} />
+          <Information infoKey={infoKey} infoKey1={infoKey1} id={id + '_info'}/>
         )}
       </label>
       <div className="w-full">

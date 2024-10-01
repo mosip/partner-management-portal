@@ -54,7 +54,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
             <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
             <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
-                    <Information infoKey={infoKey} />
+                    <Information infoKey={infoKey} id={id + "_info"}/>
                 )}
             </label>
             <div className="relative w-full" ref={dropdownRef}>

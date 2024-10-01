@@ -254,7 +254,8 @@ function AddFtm() {
                             selectedDropdownValue={partnerId}
                             styleSet={styles}
                             addInfoIcon
-                            infoKey='addFtm.infoPartnerId'>
+                            infoKey='addFtm.infoPartnerId'
+                            id='add_ftm_partner_id'>
                           </DropdownComponent>
                         </div>
                         <div className="flex-col w-[48%] max-[450px]:w-full">
@@ -273,13 +274,13 @@ function AddFtm() {
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                            placeholder={t('addFtm.enterMake')} />
+                            placeholder={t('addFtm.enterMake')} id="add_ftm_make"/>
                         </div>
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                            placeholder={t('addFtm.enterModel')} />
+                            placeholder={t('addFtm.enterModel')} id="add_ftm_model"/>
                         </div>
                       </div>
                     </div>
@@ -287,10 +288,10 @@ function AddFtm() {
                 </div>
                 <div className="border bg-medium-gray" />
                 <div className="flex flex-row max-[560px]:flex-col px-[2%] py-5 justify-between max-[560px]:space-y-2">
-                  <button onClick={() => clearForm()} className={`w-40 max-[560px]:w-full h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2 max-[560px]:mr-0" : "ml-2 max-[560px]:ml-0"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                  <button id="add_ftm_clear_form" onClick={() => clearForm()} className={`w-40 max-[560px]:w-full h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2 max-[560px]:mr-0" : "ml-2 max-[560px]:ml-0"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                   <div className={`flex flex-row max-[560px]:flex-col space-x-3 max-[560px]:space-x-0 max-[560px]:space-y-2 w-full md:w-auto justify-end`}>
-                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                    <button id="add_ftm_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                    <button id="add_ftm_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 max-[560px]:w-full h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                       {t('commons.submit')}
                     </button>
                   </div>
