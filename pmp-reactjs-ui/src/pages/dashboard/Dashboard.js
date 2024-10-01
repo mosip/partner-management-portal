@@ -14,6 +14,8 @@ import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
 import deviceProviderServices_icon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
+import partner_admin_icon from '../../svg/partner_admin_icon.svg';
+import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 
 function Dashboard() {
@@ -28,6 +30,7 @@ function Dashboard() {
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
   const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
+  const [isPartnerAdmin, setIsPartnerAdmin] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -73,6 +76,9 @@ function Dashboard() {
         }
         if (getUserProfile().partnerType === "FTM_PROVIDER") {
           setShowFtmServices(true);
+        }
+        if (getUserProfile().roles === 'PARTNER_ADMIN') {
+          setIsPartnerAdmin(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
         // using the email id
@@ -248,6 +254,107 @@ function Dashboard() {
                   </p>
                 </div>
               </div>
+            )}
+            {isPartnerAdmin && (
+              <>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={''} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.pendingRequests')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.pendingRequestsDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.uploadRootOfTrustCertificate')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.uploadRootOfTrustCertificateDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={partner_admin_icon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.partner')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.partnerDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.policy')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.policyDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.partnerPolicyMapping')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.partnerPolicyMappingDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={''} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.sbiDeviceDetails')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.sbiDeviceDetailsDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={ftmServicesIcon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.ftmDetails')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.ftmDetailsDesc')}
+                    </p>
+                  </div>
+                </div>
+              </>
             )}
           </div>
           {showPopup && (
