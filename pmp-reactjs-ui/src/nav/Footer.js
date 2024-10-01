@@ -13,8 +13,8 @@ function Footer() {
                     <p>2024 © MOSIP - {t('footer.allRightsReserved')}</p>
                 </div>
                 <div className="flex justify-between">
-                    <a href="https://docs.mosip.io/1.2.0/modules/partner-management-services" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.documentation')}</a>
-                    <a href="https://community.mosip.io/c/platform/5" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.contactUs')}</a>
+                    <a id='footer_documentation_link' href="https://docs.mosip.io/1.2.0/modules/partner-management-services" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.documentation')}</a>
+                    <a id='footer_contact_us_link' href="https://community.mosip.io/c/platform/5" target="_blank" rel="noopener noreferrer" className={`${isLoginLanguageRTL ? "ml-7" : "mr-7"} cursor-pointer`}>{t('footer.contactUs')}</a>
                 </div>
             </div>
         </div>

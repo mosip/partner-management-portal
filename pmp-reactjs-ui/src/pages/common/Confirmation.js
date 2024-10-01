@@ -28,17 +28,17 @@ function Confirmation({ confirmationData, onClickFunction }) {
                     </p>
                     {!confirmationData.customBtnName &&
                         <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
-                            <button onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
+                            <button id='confirmation_go_back_btn' onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                 {t('commons.goBack')}
                             </button>
-                            <button onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
+                            <button id='confirmation_home_btn' onClick={() => moveToHome(navigate)} type="button" className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
                                 {t('commons.home')}
                             </button>
                         </div>
                     }
                     {confirmationData.customBtnName &&
                         <div>
-                            <button onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
+                            <button id='confirmation_custom_btn' onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
                                 {t(confirmationData.customBtnName)}
                             </button>
                         </div>

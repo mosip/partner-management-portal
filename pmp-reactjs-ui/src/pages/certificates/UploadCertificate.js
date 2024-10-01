@@ -192,7 +192,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50 !mx-0">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
@@ -243,7 +243,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName === '' && (
-                                            <div className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
+                                            <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
                                                 <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
                                                     <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" tabIndex="0" />
                                                     <h5 className="text-charcoal-gray text-base font-normal">
@@ -257,14 +257,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName && (
-                                            <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
+                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
                                                     {t('uploadCertificate.remove')}
                                                 </p>
                                             </div>
@@ -276,9 +276,9 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                                 <div className="px-[4%] flex justify-center mt-2 my-3">
-                                    <button disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                                    <button id='certificate_upload_cancel_btn' disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                     {(!uploading && fileName) ? (
-                                        <button className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
+                                        <button id={uploadSuccess ?  "certificate_upload_close_btn" : "certificate_upload_submit_btn"} className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                     ) : (
                                         <button disabled className="w-36 h-10 border-[#A5A5A5] border bg-[#A5A5A5] rounded-md text-white text-sm font-semibold">{t('uploadCertificate.submit')}</button>
                                     )}
