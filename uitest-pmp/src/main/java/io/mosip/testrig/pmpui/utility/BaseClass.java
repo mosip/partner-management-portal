@@ -36,7 +36,7 @@ public class BaseClass {
 	protected String userid = KeycloakUserManager.moduleSpecificUser;
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
-	protected String data = Commons.appendDate.substring(0, Commons.getSplitdigit());
+	protected static String data = Commons.appendDate.substring(0, Commons.getSplitdigit());
 	public static ExtentSparkReporter html;
 	public static    ExtentReports extent;
 	public static    ExtentTest test;

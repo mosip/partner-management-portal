@@ -71,17 +71,17 @@ public class ConfigManager {
 	//	private static String IDA_DB_PASS = "postgresql-password";
 	//	private static String IDA_DB_SCHEMA = "ida_db_schema";
 	//
-	//	private static String PMS_DB_USER = "db-su-user";
-	//	private static String PMS_DB_PASS = "postgresql-password";
-	//	private static String PMS_DB_SCHEMA = "pms_db_schema";
+		private static String PMS_DB_USER = "db-su-user";
+		private static String PMS_DB_PASS = "postgresql-password";
+		private static String PMS_DB_SCHEMA = "pms_db_schema";
 	//
 	//	private static String KM_DB_USER = "db-su-user";
 	//	private static String KM_DB_PASS = "postgresql-password";
 	//	private static String KM_DB_SCHEMA = "km_db_schema";
 	//
-	private static String MASTER_DB_USER = "db-su-user";
-	private static String MASTER_DB_PASS = "postgres-password";
-	private static String MASTER_DB_SCHEMA = "master_db_schema";
+//	private static String MASTER_DB_USER = "db-su-user";
+//	private static String MASTER_DB_PASS = "postgres-password";
+//	private static String MASTER_DB_SCHEMA = "master_db_schema";
 	//
 	private static String IAM_REALM_ID = "keycloak-realm-id";
 	private static String IAM_USERS_TO_CREATE = "iam-users-to-create";
@@ -198,17 +198,17 @@ public class ConfigManager {
 	//	private static String ida_db_pass;
 	//	private static String ida_db_schema;
 	//
-	//	private static String pms_db_user;
-	//	private static String pms_db_pass;
-	//	private static String pms_db_schema;
+		private static String pms_db_user;
+		private static String pms_db_pass;
+		private static String pms_db_schema;
 	//
 	//	private static String km_db_user;
 	//	private static String km_db_pass;
 	//	private static String km_db_schema;
 	//
-	private static String master_db_user;
-	private static String master_db_pass;
-	private static String master_db_schema;
+//	private static String master_db_user;
+//	private static String master_db_pass;
+//	private static String master_db_schema;
 
 	private static String iamExternalURL;	
 	private static String iam_realm_id;
@@ -314,15 +314,15 @@ public class ConfigManager {
 		//		ida_db_user = getValueForKey(IDA_DB_USER);
 		//		ida_db_pass = getValueForKey(IDA_DB_PASS);
 		//		ida_db_schema = getValueForKey(IDA_DB_SCHEMA);
-		//		pms_db_user = getValueForKey(PMS_DB_USER);
-		//		pms_db_pass = getValueForKey(PMS_DB_PASS);
-		//		pms_db_schema = getValueForKey(PMS_DB_SCHEMA);
+				pms_db_user = getValueForKey(PMS_DB_USER);
+				pms_db_pass = getValueForKey(PMS_DB_PASS);
+				pms_db_schema = getValueForKey(PMS_DB_SCHEMA);
 		//		km_db_user = getValueForKey(KM_DB_USER);
 		//		km_db_pass = getValueForKey(KM_DB_PASS);
 		//		km_db_schema = getValueForKey(KM_DB_SCHEMA);
-		master_db_user = getValueForKey(MASTER_DB_USER);
-		master_db_pass = getValueForKey(MASTER_DB_PASS);
-		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
+//		master_db_user = getValueForKey(MASTER_DB_USER);
+//		master_db_pass = getValueForKey(MASTER_DB_PASS);
+//		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
 		serviceNotDeployedList = System.getenv(SERVICES_NOT_DEPLOYED) == null
 				? propsKernel.getProperty(SERVICES_NOT_DEPLOYED)
 						: System.getenv(SERVICES_NOT_DEPLOYED);
@@ -748,29 +748,29 @@ public class ConfigManager {
 	//		return ida_db_schema;
 	//	}
 	//
-	//	public static String getPMSDbUrl() {
-	//		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_pms";
-	//	}
+		public static String getPMSDbUrl() {
+			return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_pms";
+		}
 	//
 	//	public static String getKMDbUrl() {
 	//		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_keymgr";
 	//	}
 	//
-	public static String getMASTERDbUrl() {
-		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_master";
-	}
+//	public static String getMASTERDbUrl() {
+//		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_master";
+//	}
 	//
-	//	public static String getPMSDbUser() {
-	//		return pms_db_user;
-	//	}
-	//
-	//	public static String getPMSDbPass() {
-	//		return pms_db_pass;
-	//	}
-	//
-	//	public static String getPMSDbSchema() {
-	//		return pms_db_schema;
-	//	}
+		public static String getPMSDbUser() {
+			return pms_db_user;
+		}
+	
+		public static String getPMSDbPass() {
+			return pms_db_pass;
+		}
+	
+		public static String getPMSDbSchema() {
+			return pms_db_schema;
+		}
 	//
 	//	public static String getKMDbUser() {
 	//		return km_db_user;
@@ -784,17 +784,17 @@ public class ConfigManager {
 	//		return km_db_schema;
 	//	}
 	//
-	public static String getMasterDbUser() {
-		return master_db_user;
-	}
-	//
-	public static String getMasterDbPass() {
-		return master_db_pass;
-	}
-	//
-	public static String getMasterDbSchema() {
-		return master_db_schema;
-	}
+//	public static String getMasterDbUser() {
+//		return master_db_user;
+//	}
+//	//
+//	public static String getMasterDbPass() {
+//		return master_db_pass;
+//	}
+//	//
+//	public static String getMasterDbSchema() {
+//		return master_db_schema;
+//	}
 
 	public static String getIAMRealmId() {
 		return iam_realm_id;
