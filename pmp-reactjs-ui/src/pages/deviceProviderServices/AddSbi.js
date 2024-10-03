@@ -7,7 +7,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import Title from "../common/Title";
 import {
     isLangRTL, getPartnerTypeDescription, moveToSbisList, getPartnerManagerUrl, createDropdownData,
-    handleServiceErrors, createRequest
+    handleServiceErrors, createRequest, trimAndReplace
 } from "../../utils/AppUtils";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -130,10 +130,6 @@ function AddSbi() {
         setExpiryDate(dateStr);
     };
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
-    };
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
@@ -149,7 +145,7 @@ function AddSbi() {
         let request = createRequest(
             {
                 swBinaryHash: binaryHash.trim(),
-                swVersion: sbiVersion.trim(),
+                swVersion: trimAndReplace(sbiVersion),
                 swCreateDateTime: createdDate === "" ? new Date().toISOString() : createdDate,
                 swExpiryDateTime: expiryDate === "" ? new Date().toISOString() : expiryDate,
                 providerId: partnerId
@@ -211,11 +207,7 @@ function AddSbi() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
@@ -240,7 +232,9 @@ function AddSbi() {
                                                     selectedDropdownValue={partnerId}
                                                     styleSet={styles}
                                                     addInfoIcon
-                                                    infoKey='addSbis.partnerIdTooltip'>
+                                                    infoKey='addSbis.partnerIdTooltip'
+                                                    id="add_sbi_partner_id"
+                                                    >
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
@@ -257,13 +251,13 @@ function AddSbi() {
                                         <div className="flex justify-between space-x-4 max-[450px]:space-x-0 max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
-                                                <input value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
+                                                <input id="add_sbi_software_version_input" value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
                                                 <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
-                                                <input value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
+                                                <input id="binary_hash_input" value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
                                             </div>
@@ -279,6 +273,7 @@ function AddSbi() {
                                                 addInfoIcon
                                                 infoKey='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
+                                                id="sbi_created_date_calender"
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -290,6 +285,7 @@ function AddSbi() {
                                                 infoKey='addSbis.expiryDateInfoKey'
                                                 infoKey1='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
+                                                id='sbi_expiry_date_calender'
                                             />
                                         </div>
                                     </div>
@@ -297,10 +293,10 @@ function AddSbi() {
                             </div>
                             <div className="border bg-medium-gray" />
                             <div className="flex flex-row px-[3%] py-[2%] justify-between max-[500px]:flex-col max-[500px]:items-center">
-                                <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2">{t('requestPolicy.clearForm')}</button>
+                                <button id="add_sbi_form_clear_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2">{t('requestPolicy.clearForm')}</button>
                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-between max-[500px]:flex-col max-[500px]:space-x-0 max-[500px]:items-center">
-                                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2`}>{t('requestPolicy.cancel')}</button>
-                                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
+                                    <button id="add_sbi_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold max-[500px]:mb-2`}>{t('requestPolicy.cancel')}</button>
+                                    <button id="add_sbi_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>
                                         {t('commons.submit')}
                                     </button>
                                 </div>

@@ -26,7 +26,7 @@ function Dashboard() {
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
-  const [showFtmServices,setShowFtmServices] = useState(false);
+  const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
@@ -168,11 +168,7 @@ function Dashboard() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mt-3 absolute ${isLoginLanguageRTL ? "left-2" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-4">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
           <div className="mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700">
             <p >
@@ -180,7 +176,7 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
-            <div onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+            <div id='dashboard_partner_certificated_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
               <div className="flex justify-center mb-5">
                 <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
               </div>
@@ -194,7 +190,7 @@ function Dashboard() {
               </div>
             </div>
             {showPolicies && (
-              <div onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
+              <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
                 <div className="flex justify-center mb-5">
                   <img src={policiesIcon} alt="" className="w-8 h-8"></img>
                 </div>
@@ -209,7 +205,7 @@ function Dashboard() {
               </div>
             )}
             {showAuthenticationServices && (
-              <div onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
+              <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                 </div>
@@ -224,7 +220,7 @@ function Dashboard() {
               </div>
             )}
             {showDeviceProviderServices && (
-              <div onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
+              <div id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" />
                 </div>
@@ -239,7 +235,7 @@ function Dashboard() {
               </div>
             )}
             {showFtmServices && (
-              <div onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>

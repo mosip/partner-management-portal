@@ -39,6 +39,13 @@ module.exports = {
       fontFamily: {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        'max-1712': { 'max': '1712px' }, 
+        'max-1530': {'max': '1540px'},
+        'max-1350': {'max': '1350px'},
+        'max-640': {'max': '640px'},
+        'max-520': {'max': '520px'},
+      },
     },
   },
   plugins: [

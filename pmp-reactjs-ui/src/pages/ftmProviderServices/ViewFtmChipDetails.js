@@ -1,11 +1,19 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from "../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../utils/AppUtils";
 import Title from "../common/Title";
 import fileUploadBlue from '../../svg/file_upload_blue_icon.svg';
+import fileUploadDisabled from '../../svg/file_upload_disabled_icon.svg';
 import somethingWentWrongIcon from '../../svg/something_went_wrong_icon.svg';
+import fileUpload from '../../svg/file_upload_icon.svg';
+import file from '../../svg/file_icon.svg';
+import UploadCertificate from "../certificates/UploadCertificate";
+import DownloadCertificateButton from "../common/DownloadCertificateButton";
+import ErrorMessage from "../common/ErrorMessage";
+import SuccessMessage from "../common/SuccessMessage";
+import { HttpService } from "../../services/HttpService";
 
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
@@ -13,6 +21,18 @@ function ViewFtmChipDetails() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
+    const [errorCode, setErrorCode] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+    const [showDropDownOptions, setShowDropDownOptions] = useState(false);
+    const [uploadCertificateData, setUploadCertificateData] = useState({});
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        handleMouseClickForDropdown(dropdownRef, () => setShowDropDownOptions(false))
+    }, [dropdownRef]);
 
     useEffect(() => {
         const selectedFtm = localStorage.getItem('selectedFtmData');
@@ -24,15 +44,139 @@ function ViewFtmChipDetails() {
         setFtmDetails(ftmData);
     }, []);
 
+    const clickOnUpload = () => {
+        document.body.style.overflow = "hidden";
+        const requiredDataForCertUpload = {
+            partnerType: "FTM_Provider",
+            uploadHeader: 'addFtm.uploadFtmCertHeader',
+            reUploadHeader: 'addFtm.reUploadFtmCertHeader',
+            successMessage: 'addFtm.uploadFtmCertSuccessMsg',
+            isUploadFtmCertificate: true,
+            isCertificateAvailable: ftmDetails.isCertificateAvailable,
+            certificateUploadDateTime: ftmDetails.certificateUploadDateTime,
+        };
+        setUploadCertificateData(requiredDataForCertUpload);
+        const request = {
+            ftpProviderId: ftmDetails.partnerId,
+            ftpChipDeatilId: ftmDetails.ftmId,
+            isItForRegistrationDevice: true,
+            organizationName: getUserProfile().orgName,
+            partnerDomain: getPartnerDomainType("FTM_Provider"),
+        };
+        setUploadCertificateRequest(request);
+        setShowPopup(true);
+    };
+
+    const closePopup = (state, btnName) => {
+        document.body.style.overflow = "auto";
+        if (state && btnName === 'cancel') {
+            setShowPopup(false);
+        } else if (state && btnName === 'close') {
+            navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+        }
+    };
+
+    const getOriginalCertificate = async (ftmDetails) => {
+        const response = await getCertificate(ftmDetails.ftmId);
+        if (response !== null) {
+            if (response.isCaSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
+            }
+        }
+    }
+
+    const getMosipSignedCertificate = async (ftmDetails) => {
+        if (ftmDetails.status === 'approved') {
+            const response = await getCertificate(ftmDetails.ftmId);
+            if (response !== null) {
+                if (response.isMosipSignedCertificateExpired) {
+                    setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                } else {
+                    setSuccessMsg(t('viewFtmChipDetails.mosipSignedCertificateSuccessMsg'));
+                    downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                }
+            }
+        }
+    }
+
+    const downloadCertificate = (certificateData, fileName) => {
+        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    }
+
+    const getCertificate = async (ftmId) => {
+        setErrorCode("");
+        setErrorMsg("");
+        try {
+            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+            if (response !== null) {
+                const responseData = response.data;
+                if (responseData.errors && responseData.errors.length > 0) {
+                    const errorCode = responseData.errors[0].errorCode;
+                    const errorMessage = responseData.errors[0].message;
+                    setErrorCode(errorCode);
+                    setErrorMsg(errorMessage);
+                    console.error('Error:', errorMessage);
+                    return null;
+                } else {
+                    const resData = responseData.response;
+                    console.log('Response data:', resData);
+                    return resData;
+                }
+            } else {
+                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
+            }
+        } catch (err) {
+            console.error('Error fetching certificate:', err);
+            setErrorMsg(err);
+        }
+    }
+
     const moveToFtmList = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
     };
 
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+    };
+
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
+
+    const viewFtmDownloadButtonStyle = {
+        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[5.6rem] ml-2" : "origin-bottom-left right-[5.6rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700 max-520:right-[3rem]`
+    };
+
+    const mangeFtmDownloadButtonStyle = {
+        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[13rem] ml-2" : "origin-bottom-left right-[13rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700 max-640:right-[5.5rem] max-520:right-[3.5rem]`
+    };
+
     return (
         <>
+            {errorMsg && (
+                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            )}
+            {successMsg && (
+                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+            )}
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewFtmChipDetails.viewFtmChipDetails' subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
                 </div>
 
                 {unexpectedError && (
@@ -41,7 +185,7 @@ function ViewFtmChipDetails() {
                             <div className="flex flex-col justify-center items-center">
                                 <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                 <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={() => moveToFtmList()} type="button"
+                                <button onClick={moveToFtmList} type="button"
                                     className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                     {t('commons.goBack')}
                                 </button>
@@ -62,11 +206,12 @@ function ViewFtmChipDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(ftmDetails.createdDateTime, "date")}
+                                            formatDate(ftmDetails.createdDateTime, "date", false)}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(ftmDetails.createdDateTime, "time")}
+                                        {formatDate(ftmDetails.createdDateTime, "time", false
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -109,23 +254,59 @@ function ViewFtmChipDetails() {
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
-                                    <div className="flex py-[1.5rem] px-5 bg-[#F9FBFF] justify-between">
+                                    <div className={`flex py-[1rem] px-5 ${ftmDetails.status === "deactivated" ? 'bg-gray-100' : 'bg-[#F9FBFF]'} justify-between items-center max-520:flex-col`}>
                                         <div className="flex space-x-4 items-center ">
-                                            <img src={fileUploadBlue} className="h-8" alt="" />
-                                            <h6 className={`text-sm font-semibold text-[#000000] text-charcoal-gray'}`}>
-                                                {t('viewFtmChipDetails.ftmChipCertificate')}
-                                            </h6>
+                                            { ftmDetails.status === "deactivated" ? 
+                                                <img src={fileUploadDisabled} className="h-8" alt="" />
+                                            :
+                                                <img src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
+                                            }
+                                            <div className="flex-col p-3 items-center">
+                                                <h6 className={`text-sm ${ftmDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                    {ftmDetails.isViewFtmChipDetails ? t('viewFtmChipDetails.ftmChipCertificate') : ftmDetails.isCertificateAvailable ? t('viewFtmChipDetails.ftmChipCertificate') : t('manageFtmChipCertificate.uploadFtmCertificate')}
+                                                </h6>
+                                                {ftmDetails.isManageFtmCertificate && (
+                                                    <p className="text-xs text-light-gray">{ftmDetails.isCertificateAvailable ? null : t('manageFtmChipCertificate.certificateFormatMsg')}</p>
+                                                )}
+                                            </div>
                                         </div>
+
                                         <div className=" flex space-x-2">
-                                            {ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval' ? (
-                                                <button className={`h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
-                                                    {t('partnerCertificatesList.download')}
-                                                </button>
-                                            ) : (
-                                                <button disabled className={`h-10 w-28 text-xs p-3 py-2 border-[#C1C1C1] text-vulcan bg-platinum-gray font-semibold rounded-md text-center`}>
-                                                    {t('partnerCertificatesList.download')}
-                                                </button>
-                                            ) }
+                                            {ftmDetails.isViewFtmChipDetails && (
+                                                < DownloadCertificateButton
+                                                    disableBtn={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'}
+                                                    downloadDropdownRef={dropdownRef}
+                                                    setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
+                                                    showDropDown={showDropDownOptions}
+                                                    onClickFirstOption={getOriginalCertificate}
+                                                    onClickSecondOption={getMosipSignedCertificate}
+                                                    requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
+                                                    styleSet={viewFtmDownloadButtonStyle}
+                                                    id='download_btn'
+                                                />
+                                            )}
+                                            {ftmDetails.isManageFtmCertificate && (
+                                                <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
+                                                    {ftmDetails.isCertificateAvailable && (
+                                                        < DownloadCertificateButton
+                                                            downloadDropdownRef={dropdownRef}
+                                                            setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
+                                                            showDropDown={showDropDownOptions}
+                                                            onClickFirstOption={getOriginalCertificate}
+                                                            onClickSecondOption={getMosipSignedCertificate}
+                                                            requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
+                                                            styleSet={mangeFtmDownloadButtonStyle}
+                                                            id='download_btn'
+                                                        />
+                                                    )}
+                                                    <button id="certificate_reupload_btn" onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
+                                                        {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
+                                                    </button>
+                                                    {showPopup && (
+                                                        <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <hr className="border bg-medium-gray h-px" />
@@ -136,11 +317,11 @@ function ViewFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}</p>
+                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime')}</p>
+                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +329,7 @@ function ViewFtmChipDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                            <button onClick={() => moveToFtmList(navigate)} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
+                            <button id="ftm_view_back_btn" onClick={moveToFtmList} className={`h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center`}>
                                 {t("commons.back")}
                             </button>
                         </div>

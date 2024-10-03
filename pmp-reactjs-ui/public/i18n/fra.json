@@ -13,6 +13,9 @@
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
+        "download": "Télécharger",
+        "originalCertificate": "Certificat original",
+        "mosipSignedCertificate": "Certificat signé MOSIP",
         "timeout": "La demande a expiré",
         "timeoutDesc": "Le serveur a mis trop de temps à répondre, veuillez réessayer plus tard",
         "nameTooLong": "Le nom ne doit pas autoriser plus de {{length}} caractères.",
@@ -83,9 +86,6 @@
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire signé par une autorité de certification",
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
-        "download": "Télécharger",
-        "originalCertificate": "Certificat original",
-        "mosipSignedCertificate": "Certificat signé MOSIP",
         "reUpload": "Re-télécharger",
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
@@ -115,7 +115,8 @@
         "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat"
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat",
+        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
@@ -376,8 +377,8 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "device": "appareil",
-        "createdDate": "Date et heure de création du SBI",
-        "expiryDate": "Date et heure d'expiration du SBI",
+        "createdDate": "Date de création de SBI",
+        "expiryDate": "Date d'expiration du SBI",
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
@@ -482,13 +483,16 @@
         "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur.",
         "addFtmSuccessMsg1": "Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
         "uploadFtmCertHeader": "Télécharger le certificat de la puce FTM",
+        "reUploadFtmCertHeader": "Re-télécharger le certificat de la puce FTM",
         "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
         "listOfFtmChipDetails": "Liste des détails de la puce FTM",
         "ftmChipProvider": "Fournisseur de puces FTM",
-        "ftmChipCertificate": " Certificat de puce FTM"
+        "ftmChipCertificate": " Certificat de puce FTM",
+        "originalCertSuccessMsg": "Certificat original téléchargé avec succès.",
+        "mosipSignedCertificateSuccessMsg": "Le certificat signé MOSIP a été téléchargé avec succès."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
@@ -601,7 +605,7 @@
         "PMS_AUT_005": "Les détails du périphérique pour l'ID %s n'existent pas",
         "PMS_AUT_512": "Les détails SBI existent pour la version SBI donnée. Plusieurs SBI avec la même version SBI ne peuvent pas être ajoutés.",
         "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver ;",
-        "PMP_AUT_030": "le fournisseur ftp n'existe pas.",
+        "PMP_AUT_030": "Le fournisseur FTP est inactif ou n'existe pas",
         "PMP_AUT_031": "l'identifiant de la puce ftp n'existe pas.",
         "PMP_AUT_032": "Les détails de la puce FTM existent déjà pour la même marque et le même modèle",
         "PMP_AUT_033": "Le certificat n'est pas téléchargé.",
@@ -618,6 +622,7 @@
         "PMS_AUT_513": "Le SBI pour lequel le périphérique est en cours de mappage a expiré",
         "PMS_AUT_514": "La date de création doit être inférieure ou égale à la date du jour.",
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
+        "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
         "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name :",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",
@@ -711,13 +716,13 @@
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "Le mappage SBI et périphérique n’existe pas.",
         "PMS_DEVICE_ERROR_013": "L'identifiant de l'appareil n'est pas valide",
-        "PMS_DEVICE_ERROR_014": "L'appareil sélectionné doit être actif et approuvé",
+        "PMS_DEVICE_ERROR_014": "L'appareil ne peut être désactivé que s'il est approuvé et n'a pas été désactivé au préalable",
         "PMS_DEVICE_ERROR_015": "Erreur lors de la désactivation de l'appareil",
         "PMS_DEVICE_ERROR_016": "L'appareil n'est pas associé à l'utilisateur.",
         "PMS_DEVICE_ERROR_017": "L'identifiant SBI n'est pas valide",
         "PMS_DEVICE_ERROR_018": "Erreur lors de la désactivation du SBI",
         "PMS_DEVICE_ERROR_019": "SBI n'est pas associé à l'utilisateur.",
-        "PMS_DEVICE_ERROR_020": "Le SBI sélectionné doit être actif et approuvé",
+        "PMS_DEVICE_ERROR_020": "SBI ne peut être désactivé que s'il est approuvé et n'a pas été préalablement désactivé",
         "PMS_DEVICE_ERROR_021": "Le SBI pour lequel l'appareil est ajouté a expiré",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
@@ -733,6 +738,8 @@
         "PMS_FTM_ERROR_004": "L'identifiant FTM n'est pas valide",
         "PMS_FTM_ERROR_005": "Les détails FTM n'existent pas.",
         "PMS_FTM_ERROR_006": "FTM n'est pas associé à l'utilisateur.",
-        "PMS_FTM_ERROR_007": "Le FTM sélectionné doit être actif et approuvé"
+        "PMS_FTM_ERROR_007": "Le FTM sélectionné doit être actif et approuvé",
+        "PMS_FTM_ERROR_008": "Le FTM sélectionné doit être en attente d'approbation ou approuvé",
+        "PMS_FTM_ERROR_009": "Impossible de télécharger le certificat FTM d'origine"
     }
 }

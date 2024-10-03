@@ -1,10 +1,12 @@
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
-export const formatDate = (dateString, format) => {
+export const formatDate = (dateString, format, isTimeInUTC) => {
     if (!dateString) return '-';
-    const date = new Date(dateString);
-
+    let date = new Date(dateString);
+    if (isTimeInUTC) {
+        date = new Date(date.getTime() - date.getTimezoneOffset()*60*1000);	
+    }
     switch (format) {
         case 'dateTime':
             return date.toLocaleString();
@@ -381,4 +383,8 @@ export const getPartnerDomainType = (partnerType) => {
             return 'AUTH';
         }
     }
+};
+
+export const trimAndReplace = (str) => {
+    return str.trim().replace(/\s+/g, ' ');
 };

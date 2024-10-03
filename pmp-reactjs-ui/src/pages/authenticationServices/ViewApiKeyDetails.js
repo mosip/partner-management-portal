@@ -49,11 +49,11 @@ function ViewApiKeyDetails() {
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(apiKeyDetails.createdDateTime, "date")}
+                                        formatDate(apiKeyDetails.createdDateTime, "date", false)}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate(apiKeyDetails.createdDateTime, "time")}
+                                    {formatDate(apiKeyDetails.createdDateTime, "time", false)}
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@ function ViewApiKeyDetails() {
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                        <button onClick={() => moveToApiKeysList(navigate)}
+                        <button id="view_api_key_back_btn" onClick={() => moveToApiKeysList(navigate)}
                             className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center"
                         >
                             {t("viewPolicyDetails.back")}

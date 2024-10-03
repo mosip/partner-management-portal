@@ -7,7 +7,7 @@ import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAuthPartnerPolicies, createDropdownData
+    createRequest, getAuthPartnerPolicies, createDropdownData, trimAndReplace
 } from "../../utils/AppUtils";
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -42,7 +42,7 @@ function GenerateApiKey() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked ||generateApiKeySuccess) {
+            if (isSubmitClicked || isCancelledClicked || generateApiKeySuccess) {
                 setIsSubmitClicked(false);
                 isCancelledClicked = false;
                 return false;
@@ -159,7 +159,7 @@ function GenerateApiKey() {
         setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
-            label: nameLabel
+            label: trimAndReplace(nameLabel)
         });
         try {
             const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
@@ -221,11 +221,7 @@ function GenerateApiKey() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <div className={`flex justify-end max-w-7xl sm:max-w-xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-                            <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 max-[450px]:min-w-40 max-[450px]:min-h-40 bg-[#C61818] rounded-xl p-3">
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                            </div>
-                        </div>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
@@ -248,14 +244,15 @@ function GenerateApiKey() {
                                                         selectedDropdownValue={partnerId}
                                                         styleSet={styles}
                                                         addInfoIcon={true}
-                                                        infoKey='createOidcClient.partnerIdTooltip'>
+                                                        infoKey='createOidcClient.partnerIdTooltip'
+                                                        id='generate_partner_id'>
                                                     </DropdownComponent>
                                                 </div>
                                                 <div className="flex-col w-[48%] max-[450px]:w-full">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                                                     <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                        <span className={`w-full break-all break-normal break-words ${partnerType ? 'text-dark-blue':'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
+                                                        <span className={`w-full break-all break-normal break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                         </svg>
@@ -285,7 +282,8 @@ function GenerateApiKey() {
                                                         styleSet={styles}
                                                         addInfoIcon={true}
                                                         disabled={!partnerId}
-                                                        infoKey={t('createOidcClient.policyNameToolTip')} />
+                                                        infoKey={t('createOidcClient.policyNameToolTip')} 
+                                                        id='generate_policy_name'/>
                                                 </div>
                                             </div>
                                             <div className="space-y-6">
@@ -294,7 +292,7 @@ function GenerateApiKey() {
                                                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                            placeholder={t('generateApiKey.enterNameForApiKey')} />
+                                                            placeholder={t('generateApiKey.enterNameForApiKey')} id="generate_api_key_name"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,10 +301,10 @@ function GenerateApiKey() {
                                 </div>
                                 <div className="border bg-medium-gray" />
                                 <div className="flex flex-row max-[450px]:flex-col px-[3%] py-5 justify-between max-[450px]:space-y-2">
-                                    <button onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <button id="generate_clear_form" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
-                                        <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="generate_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="generate_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                         {(showPopup && !errorMsg) && (
                                             <CopyIdPopUp closePopUp={closePopUp} partnerId={partnerId} policyName={policyName} id={apiKeyId}
                                                 header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle} />

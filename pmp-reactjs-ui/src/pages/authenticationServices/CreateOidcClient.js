@@ -7,7 +7,7 @@ import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes,
   isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
-  onPressEnterKey
+  onPressEnterKey, trimAndReplace
 } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import DropdownWithSearchComponent from "../common/fields/DropdownWithSearchComponent";
@@ -273,7 +273,7 @@ function CreateOidcClient() {
     setErrorMsg("");
     setDataLoaded(false);
     let request = createRequest({
-      name: oidcClientName.trim(),
+      name: trimAndReplace(oidcClientName),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -282,7 +282,7 @@ function CreateOidcClient() {
       grantTypes: grantTypesList,
       clientAuthMethods: clientAuthMethods,
       clientNameLangMap: {
-        "eng": oidcClientName.trim()
+        "eng": trimAndReplace(oidcClientName)
       }
     });
     console.log(request);
@@ -375,11 +375,7 @@ function CreateOidcClient() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <div className={`flex justify-end max-w-7xl mb-5 absolute ${isLoginLanguageRTL ? "left-0" : "right-2"}`}>
-              <div className="flex justify-between items-center max-w-[35rem] min-h-14 min-w-72 bg-[#C61818] rounded-xl p-3">
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-              </div>
-            </div>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
@@ -402,7 +398,8 @@ function CreateOidcClient() {
                             selectedDropdownValue={partnerId}
                             styleSet={styles}
                             addInfoIcon={true}
-                            infoKey='createOidcClient.partnerIdTooltip'>
+                            infoKey='createOidcClient.partnerIdTooltip'
+                            id='create_oidc_partner_id'>
                           </DropdownComponent>
                         </div>
                         <div className="flex flex-col w-[48%]">
@@ -439,7 +436,8 @@ function CreateOidcClient() {
                             styleSet={styles}
                             addInfoIcon={true}
                             disabled={!partnerId}
-                            infoKey={t('createOidcClient.policyNameToolTip')} />
+                            infoKey={t('createOidcClient.policyNameToolTip')} 
+                            id='create_oidc_policy_name'/>
                         </div>
                       </div>
                       <div className="flex my-2">
@@ -447,16 +445,16 @@ function CreateOidcClient() {
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                            placeholder={t('createOidcClient.enterNameForOidcClient')} />
+                            placeholder={t('createOidcClient.enterNameForOidcClient')} id="create_oidc_client_name"/>
                         </div>
                       </div>
                       <div className="flex my-[1%]">
                         <div className="flex flex-col w-full">
                           <label className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                             <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                            <Information infoKey={t('createOidcClient.publicKeyToolTip')} />
+                            <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info'/>
                           </label>
-                          <textarea value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
+                          <textarea id="create_oidc_public_key" value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                             className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
                           </textarea>
@@ -466,7 +464,7 @@ function CreateOidcClient() {
                       <div className="flex my-[1%]">
                         <div className="flex flex-col w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
-                          <input value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
+                          <input id="create_oidc_logo_url" value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
                           {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
@@ -485,8 +483,9 @@ function CreateOidcClient() {
                                 onChange={(e) => onChangeRedirectUrl(index, e.target.value)}
                                 placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                                 className="w-[85%] focus:outline-none"
+                                id={"create_oidc_redirect_url" + (index + 1)}
                               />
-                              <div className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
+                              <div id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                   stroke={redirectUrls.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${redirectUrls.length > 1 ? 'cursor-pointer' : ''}`}>
                                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -500,7 +499,7 @@ function CreateOidcClient() {
                           ))}
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
-                            <p className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                            <p id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
                               <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
                               <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                             </p>
@@ -514,7 +513,8 @@ function CreateOidcClient() {
                             onDropDownChangeEvent={handleGrantTypesChange}
                             fieldNameKey='createOidcClient.grantTypes*'
                             selectedDropdownValue={grantTypes}
-                            styleSet={styles}>
+                            styleSet={styles}
+                            id='create_oidc_grant_type'>
                           </DropdownComponent>
                         </div>
                       </div>
@@ -523,10 +523,10 @@ function CreateOidcClient() {
                 </div>
                 <div className="border bg-medium-gray" />
                 <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                  <button onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
+                  <button id="create_oidc_clear_form" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                   <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                    <button onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                    <button disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                    <button id="create_oidc_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                    <button id="create_oidc_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                   </div>
                 </div>
               </div>

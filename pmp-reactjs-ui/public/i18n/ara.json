@@ -13,6 +13,9 @@
         "somethingWentWrongDesc": "الرجاء معاودة المحاولة في وقت لاحق",
         "noAccess": "ليس لديك امتياز الوصول إلى هذه الصفحة",
         "noAccessDesc": "يرجى الاتصال بالمسؤول الخاص بك",
+        "download": "تحميل",
+        "originalCertificate": "الشهادة الأصلية",
+        "mosipSignedCertificate": "شهادة موقعة من MOSIP",
         "timeout": "الطلب منتهي المدة",
         "timeoutDesc": "استغرق الخادم وقتا طويلا للرد، يرجى المحاولة مرة أخرى في وقت لاحق",
         "nameTooLong": "يجب ألا يسمح الاسم بأكثر من {{length}} حرفًا.",
@@ -83,9 +86,6 @@
         "noPartnerTypesAreMapped": "لم يتم تعيين أي أنواع شركاء لمعرف المستخدم الخاص بك",
         "uploadPartnerCertificate": "قم بتحميل شهادة الشريك الموقّع من CA",
         "certificateFormatMsg": "يُسمح فقط بتحميل تنسيقات الشهادات .cer أو .pem",
-        "download": "تحميل",
-        "originalCertificate": "الشهادة الأصلية",
-        "mosipSignedCertificate": "شهادة موقعة من MOSIP",
         "reUpload": "إعادة التحميل",
         "upload": "رفع",
         "partnerType": "نوع الشريك",
@@ -115,7 +115,8 @@
         "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
-        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة"
+        "errorWhileUploadingCertificate": "بسبب خطأ، لم نتمكن من تحميل الشهادة",
+        "errorWhileGettingCertOrgName": "غير قادر على الحصول على اسم منظمة الشهادة"
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
@@ -376,8 +377,8 @@
         "partnerId": "معرف الشريك",
         "partnerType": "نوع الشريك",
         "device": "جهاز",
-        "createdDate": "تاريخ ووقت إنشاء SBI",
-        "expiryDate": "تاريخ ووقت انتهاء صلاحية SBI",
+        "createdDate": "تاريخ إنشاء SBI",
+        "expiryDate": "تاريخ انتهاء صلاحية SBI",
         "deactivate": "إلغاء تنشيط SBI",
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً.",
@@ -482,13 +483,16 @@
         "addFtmSuccessMsg": "تم تقديم طلب إنشاء شريحة FTM بنجاح وهو معلق لدى المشرف للموافقة.",
         "addFtmSuccessMsg1": "كخطوة تالية، قم بتحميل شهادة شريحة FTM للمتابعة.",
         "uploadFtmCertHeader": "تحميل شهادة شريحة FTM",
+        "reUploadFtmCertHeader": "إعادة تحميل شهادة شريحة FTM",
         "uploadFtmCertSuccessMsg": "تم تحميل شهادة شريحة FTM بنجاح"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "عرض تفاصيل شريحة FTM",
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "ftmChipProvider": "مزود رقاقة FTM",
-        "ftmChipCertificate": " شهادة رقاقة FTM"
+        "ftmChipCertificate": " شهادة رقاقة FTM",
+        "originalCertSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح.",
+        "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
@@ -600,7 +604,7 @@
         "PMS_AUT_005": "تفاصيل الجهاز للمعرف٪ s غير موجودة",
         "PMS_AUT_512": "توجد تفاصيل SBI لإصدار SBI المحدد. لا يمكن إضافة SBI متعددة بنفس إصدار SBI.",
         "PMS_AUT_025": "يجب أن تكون حالة الموافقة نشطة / إلغاء تنشيط ؛",
-        "PMP_AUT_030": "مزود بروتوكول نقل الملفات غير موجود.",
+        "PMP_AUT_030": "موفر FTP إما غير نشط أو غير موجود",
         "PMP_AUT_031": "معرف شريحة بروتوكول نقل الملفات غير موجود.",
         "PMP_AUT_032": "تفاصيل شريحة FTM موجودة بالفعل لنفس الماركة والطراز",
         "PMP_AUT_033": "لم يتم تحميل الشهادة.",
@@ -617,6 +621,7 @@
         "PMS_AUT_513": "انتهت صلاحية SBI التي يتم تعيين الجهاز لها",
         "PMS_AUT_514": "يجب أن يكون تاريخ الإنشاء أقل من أو يساوي التاريخ الحالي.",
         "PMS_AUT_515": "لا ينبغي أن يكون تاريخ انتهاء الصلاحية أكبر من 10 سنوات من اليوم",
+        "PMS_AUT_516": "لا يجب أن يقل تاريخ الإنشاء عن 10 سنوات من اليوم",
         "PMS_POL_002": "عدم تطابق بيانات اعتماد مدير السياسة",
         "PMS_POL_004": "اسم النهج موجود بالفعل في مجموعة السياسة. الاسم:",
         "PMS_POL_005": "سمة KYC غير مدعومة في ملف السياسة",
@@ -711,13 +716,13 @@
         "PMS_DEVICE_ERROR_011": "حدث خطأ أثناء الموافقة على الجهاز أو رفضه لرسم خرائط Sbi.",
         "PMS_DEVICE_ERROR_012": "SBI وتعيين الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_013": "معرف الجهاز غير صالح",
-        "PMS_DEVICE_ERROR_014": "يجب أن يكون الجهاز المحدد نشطًا ومعتمدًا",
+        "PMS_DEVICE_ERROR_014": "لا يمكن إلغاء تنشيط الجهاز إلا إذا تمت الموافقة عليه ولم يتم إلغاء تنشيطه مسبقًا",
         "PMS_DEVICE_ERROR_015": "خطأ أثناء إلغاء تنشيط الجهاز",
         "PMS_DEVICE_ERROR_016": "الجهاز غير مرتبط بالمستخدم.",
         "PMS_DEVICE_ERROR_017": "معرف SBI غير صالح",
         "PMS_DEVICE_ERROR_018": "حدث خطأ أثناء إلغاء تنشيط SBI",
         "PMS_DEVICE_ERROR_019": "SBI ليس مرتبطًا بالمستخدم.",
-        "PMS_DEVICE_ERROR_020": "يجب أن تكون الهيئة الفرعية للتنفيذ المحددة نشطة ومعتمدة",
+        "PMS_DEVICE_ERROR_020": "لا يمكن إلغاء تنشيط SBI إلا إذا تمت الموافقة عليه ولم يتم إلغاء تنشيطه مسبقًا",
         "PMS_DEVICE_ERROR_021": "انتهت صلاحية SBI التي تمت إضافة الجهاز إليها",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
@@ -733,6 +738,8 @@
         "PMS_FTM_ERROR_004": "معرف FTM غير صالح",
         "PMS_FTM_ERROR_005": "تفاصيل FTM غير موجودة.",
         "PMS_FTM_ERROR_006": "FTM ليس مرتبطًا بالمستخدم.",
-        "PMS_FTM_ERROR_007": "يجب أن يكون FTM المحدد نشطًا وموافقًا عليه"
+        "PMS_FTM_ERROR_007": "يجب أن يكون FTM المحدد نشطًا وموافقًا عليه",
+        "PMS_FTM_ERROR_008": "يجب أن يكون FTM المحدد معلقًا أو معتمدًا",
+        "PMS_FTM_ERROR_009": "غير قادر على تنزيل شهادة FTM الأصلية"
     }
 }

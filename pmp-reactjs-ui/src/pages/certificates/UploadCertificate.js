@@ -10,6 +10,9 @@ import SuccessMessage from '../common/SuccessMessage';
 import fileUploadImg from '../../svg/file_upload_certificate.svg';
 import fileDescription from '../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
+import * as asn1js from "asn1js";
+import { Certificate } from "pkijs";
+import { fromBER } from "asn1js";
 
 function UploadCertificate({ closePopup, popupData, request }) {
     const [partnerDomainType, setPartnerDomainType] = useState("");
@@ -39,9 +42,20 @@ function UploadCertificate({ closePopup, popupData, request }) {
             closePopup(true, 'close');
         } else {
             setDataLoaded(false);
-            const uploadRequest = createRequest({
-                ...request, certificateData: certificateData
-            });
+            let uploadRequest = {};
+            if (popupData.isUploadPartnerCertificate) {
+                uploadRequest = createRequest({
+                    ...request, 
+                    certificateData: certificateData,
+                });
+            }
+            if (popupData.isUploadFtmCertificate) {
+                uploadRequest = createRequest({
+                    ...request, 
+                    certificateData: certificateData,
+                    organizationName: getOrganization(certificateData,)
+                });
+            }
             try {
                 let response;
                 if (popupData.isUploadPartnerCertificate) {
@@ -76,6 +90,35 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 console.log("Unable to upload partner certificate: ", err);
             }
         }
+    };
+
+    const decodeCertificate = (certificateData) => {
+        const certBase64 = certificateData
+          .replace("-----BEGIN CERTIFICATE-----", "")
+          .replace("-----END CERTIFICATE-----", "")
+          .replace(/\s+/g, "");
+      
+        // Convert the base64 string to a Uint8Array
+        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.charCodeAt(0));
+      
+        // Parse the certificate using asn1js and pkijs
+        const asn1 = fromBER(certBinary.buffer);
+        if (asn1.offset === -1) {
+          setErrorMsg(t('uploadCertificate.errorWhileGettingCertOrgName'));
+        }
+        const cert = new Certificate({ schema: asn1.result });
+        return cert;
+    };
+
+    const getOrganization = (certificate) => {
+        const decodedCert = decodeCertificate(certificate);
+
+        // Iterate over typesAndValues in the subject to find O (Organization)
+        const organizationAttr = decodedCert.subject.typesAndValues.find(
+          (attr) => attr.type === "2.5.4.10"
+        );
+        return organizationAttr.value.valueBlock.value;
+        
     };
 
     const getPartnerType = useCallback((popupData) => {
@@ -133,14 +176,24 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
             const dateString = popupData.certificateUploadDateTime.toString();
-            const formatted = formatDate(dateString, 'dateTime');
+            const formatted = formatDate(dateString, 'dateTime', false);
             setFormattedDate(formatted);
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
 
+    const errorcustomStyle = {
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !rounded-none !bg-moderate-red !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+    }
+
+    const successcustomStyle = {
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+    }
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50">
-            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true}}>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50 !mx-0">
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
                         <div className="flex items-center h-[30rem]">
@@ -150,24 +203,16 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t('uploadCertificate.reUploadPartnerCertificate') : t(popupData.header)}</h3>
+                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
                                 <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">
                                 {uploadFailure && errorMsg && (
-                                    <div className="flex justify-center inset-0">
-                                        <div className="bg-moderate-red md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                        </div>
-                                    </div>
+                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle} />
                                 )}
                                 {uploadSuccess && successMsg && (
-                                    <div className="flex justify-center inset-0">
-                                        <div className="bg-fruit-salad md:w-[25rem] w-full min-h-[3.2rem] h-fit flex items-center justify-between px-4 py-[10px]">
-                                            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg}></SuccessMessage>
-                                        </div>
-                                    </div>
+                                    <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                                 )}
                                 <div className="px-[4%] py-[2%]">
                                     <form>
@@ -198,7 +243,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName === '' && (
-                                            <div className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
+                                            <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
                                                 <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
                                                     <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" tabIndex="0" />
                                                     <h5 className="text-charcoal-gray text-base font-normal">
@@ -212,14 +257,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName && (
-                                            <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
+                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
                                                     {t('uploadCertificate.remove')}
                                                 </p>
                                             </div>
@@ -231,9 +276,9 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>
                                 <div className="px-[4%] flex justify-center mt-2 my-3">
-                                    <button disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
+                                    <button id='certificate_upload_cancel_btn' disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                     {(!uploading && fileName) ? (
-                                        <button className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
+                                        <button id={uploadSuccess ?  "certificate_upload_close_btn" : "certificate_upload_submit_btn"} className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                     ) : (
                                         <button disabled className="w-36 h-10 border-[#A5A5A5] border bg-[#A5A5A5] rounded-md text-white text-sm font-semibold">{t('uploadCertificate.submit')}</button>
                                     )}
