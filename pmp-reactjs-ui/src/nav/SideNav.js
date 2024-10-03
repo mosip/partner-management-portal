@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
+import { getUserProfile } from '../services/UserProfileService';
 
 function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const location = useLocation();
@@ -12,7 +13,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
     const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
-    const [enableFtmServices, setEnableFtmServices] = useState(false);
+    const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
+    const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
 
     useEffect(() => {
         //console.log(selectedPath);
@@ -32,7 +34,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon('deviceProviderServices');
         } else if (selectedPath.includes('ftmChipProviderServices')) {
             setActiveIcon('ftmChipProviderServices');
-        } 
+        }
         else {
             setActiveIcon("home");
         }
@@ -50,7 +52,10 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setEnableDeviceProviderServicesMenu(true);
         }
         if (partnerType === "FTM_PROVIDER") {
-            setEnableFtmServices(true);
+            setEnableFtmServicesMenu(true);
+        }
+        if (getUserProfile().roles.includes('PARTNER_ADMIN' || 'POLICY_MANAGER')) {
+            setEnablePartnerAdminMenu(true);
         }
     }, [policyRequiredPartnerTypes, partnerType]);
 
@@ -76,6 +81,28 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const showFtmServices = () => {
         navigate('/partnermanagement/ftmChipProviderServices/ftmList');
     };
+    const showPendingRequests = () => {
+        setActiveIcon("pendingRequests");
+    };
+    const showUploadRootOfTrustCertificate = () => {
+        setActiveIcon("uploadRootOfTrustCertificate");
+    };
+    const showPartner = () => {
+        setActiveIcon("partner");
+    };
+    const showPolicy = () => {
+        setActiveIcon("policy");
+    };
+    const showPartnerPolicyMapping = () => {
+        setActiveIcon("partnerPolicyMapping");
+    };
+    const showSbiDeviceDetails = () => {
+        setActiveIcon("sbiDeviceDetails");
+    };
+    const showFtmDetails = () => {
+        setActiveIcon("ftmDetails");
+    };
+    
 
     return (
         <div className="flex font-inter bg-white h-screen z-40">
@@ -85,29 +112,56 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     <li id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()} onKeyPress={(e) => { e.key === 'Enter' && showHome() }}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
-                    <li id='side_nav_partner_certificate_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()} onKeyPress={(e) => { e.key === 'Enter' && showPartnerCertificatesList() }}>
-                        <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
-                    {enablePoliciesMenu &&
+                    {!enablePartnerAdminMenu &&
+                        <li id='side_nav_partner_certificate_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()} onKeyPress={(e) => { e.key === 'Enter' && showPartnerCertificatesList() }}>
+                            <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
+                        </li>
+                    }
+                    {!enablePartnerAdminMenu && enablePoliciesMenu &&
                         <li id='side_nav_policies_icon' className="duration-700 cursor-pointer" onClick={() => showPolicies()} onKeyPress={(e) => { e.key === 'Enter' && showPolicies() }}>
                             <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
                         </li>
                     }
-                    {enableAuthenticationServicesMenu &&
+                    {!enablePartnerAdminMenu && enableAuthenticationServicesMenu &&
                         <li id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()} onKeyPress={(e) => { e.key === 'Enter' && showAuthenticationServices() }}>
                             <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                         </li>
                     }
-                    {enableDeviceProviderServicesMenu &&
+                    {!enablePartnerAdminMenu && enableDeviceProviderServicesMenu &&
                         <li id='side_nav_device_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showDeviceProviderServices()} onKeyPress={(e) => { e.key === 'Enter' && showDeviceProviderServices() }}>
                             <SideNavMenuItem title={t('dashboard.deviceProviderServices')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
                         </li>
                     }
-                    {enableFtmServices &&
+                    {!enablePartnerAdminMenu && enableFtmServicesMenu &&
                         <li id='side_nav_ftmchip_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showFtmServices()} onKeyPress={(e) => { e.key === 'Enter' && showFtmServices() }}>
                             <SideNavMenuItem title={t('dashboard.ftmChipProviderServices')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                         </li>
                     }
+                    {enablePartnerAdminMenu && (
+                        <>
+                            <li id='side_nav_pendingRequests_icon' className="duration-700 cursor-pointer" onClick={() => showPendingRequests()}>
+                                <SideNavMenuItem title={t('dashboard.pendingRequests')} id='pendingRequests' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_uploadRootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showUploadRootOfTrustCertificate()}>
+                                <SideNavMenuItem title={t('dashboard.uploadRootOfTrustCertificate')} id= 'uploadRootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
+                                <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showPolicy()}>
+                                <SideNavMenuItem title={t('dashboard.policy')} id='policy' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_partnerPolicyMapping_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerPolicyMapping()}>
+                                <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
+                                <SideNavMenuItem title={t('dashboard.sbiDeviceDetails')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showFtmDetails()}>
+                                <SideNavMenuItem title={t('dashboard.ftmDetails')} id='ftmDetails' isExpanded={open} activeIcon={activeIcon} />
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
         </div>

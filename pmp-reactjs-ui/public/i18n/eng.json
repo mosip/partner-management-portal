@@ -45,7 +45,21 @@
         "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
         "deviceProviderServicesDesc": "Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
         "userRegistrationError": "Unable to register user. Try login again!",
-        "verifyEmailError": "Error during user's email verification. Try login again!"
+        "verifyEmailError": "Error during user's email verification. Try login again!",
+        "pendingRequests": "Pending Requests",
+        "pendingRequestsDesc": "Approve/Reject pending requests from various partners",
+        "uploadRootOfTrustCertificate": "Upload Root of Trust Certificate",
+        "uploadRootOfTrustCertificateDesc": "Upload Root/CA Certificates",
+        "partner": "Partner",
+        "partnerDesc": "View or/and deactivate Partner details",
+        "policy": "Policy",
+        "policyDesc": "Create Policy Groups, Auth Policy, Datashare Policy",
+        "partnerPolicyMapping": "Partner Policy mapping",
+        "partnerPolicyMappingDesc": "View or/and deactivate requested policies by various partners",
+        "sbiDeviceDetails": "SBI - Device Details",
+        "sbiDeviceDetailsDesc": "View or/and deactivate SBI or device details",
+        "ftmDetails": "FTM Details",
+        "ftmDetailsDesc": "View or/and deactivate FTM Chip details"
     },
     "header": {
         "userProfile": "User Profile",
