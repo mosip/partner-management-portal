@@ -514,6 +514,25 @@
         "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
         "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
+    "rootTrustCertificate":{
+        "rootTrustCertTitle": "Télécharger le certificat racine de confiance",
+        "organisation": "Organisation",
+        "partnerDomain": "Domaine partenaire",
+        "issuedTo": "Délivré à",
+        "issuedBy": "Délivré par",
+        "validFrom": "Valable à partir de",
+        "validTill": "Valable jusqu'à",
+        "timeOfUpload": "Heure de téléchargement",
+        "status": "Statut",
+        "action": "Action",
+        "UploadCertBtn": "Télécharger le certificat",
+        "listOfCertificates": "Liste des certificats Root of Trust",
+        "selectOrganisation": "Sélectionnez une organisation",
+        "selectPartnerDomain": "Sélectionnez un domaine partenaire",
+        "selectStatus": "Sélectionnez le statut",
+        "deActivate": "Désactiver",
+        "view": "Voir"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
