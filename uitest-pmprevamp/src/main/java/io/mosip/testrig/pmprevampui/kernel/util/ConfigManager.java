@@ -22,8 +22,6 @@ public class ConfigManager {
 	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
 	private static String MOSIP_IDREPO_CLIENT_ID = "mosip_idrepo_client_id";
 	private static String MOSIP_IDREPO_APP_ID = "mosip_idrepo_app_id";
-	//
-
 	private static String MOSIP_ADMIN_CLIENT_SECRET = "mosip_admin_client_secret";
 	private static String MOSIP_ADMIN_CLIENT_ID = "mosip_admin_client_id";
 	private static String MOSIP_ADMIN_APP_ID = "mosip_admin_app_id";
@@ -77,7 +75,6 @@ public class ConfigManager {
 	private static String signPublicKey;
 	private static String publicKey;
 	private static String randomPublicKey;
-
 	private static String sbivalidDate;
 	private static String bulkwait;
 	private static String sbiexpiryDate;
@@ -91,12 +88,10 @@ public class ConfigManager {
 	private static String idrepo_client_secret;
 	private static String idrepo_client_id;
 	private static String idrepo_app_id;
-
 	private static String IAM_EXTERNAL_URL = "keycloak-external-url";
 	private static String admin_client_secret;
 	private static String admin_client_id;
 	private static String admin_app_id;
-
 	private static String automation_client_secret;
 	private static String automation_client_id;
 	private static String s3_region;
@@ -114,11 +109,9 @@ public class ConfigManager {
 	private static String hibernate_dialect;
 	private static String hibernate_show_sql;
 	private static String hibernate_current_session_context_class;
-
 	private static String master_db_user;
 	private static String master_db_pass;
 	private static String master_db_schema;
-
 	private static String iamExternalURL;
 	private static String iam_realm_id;
 	private static String iam_users_to_create;
@@ -128,7 +121,6 @@ public class ConfigManager {
 	private static String iam_pmprevamp;
 	private static String iam_apienvuser;
 	private static String iam_apiinternalendpoint;
-
 	public static Properties propsKernel;
 	private static String reportExpirationInDays;
 
