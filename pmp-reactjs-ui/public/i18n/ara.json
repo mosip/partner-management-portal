@@ -500,6 +500,25 @@
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
+    "rootTrustCertificate":{
+        "rootTrustCertTitle": "تحميل شهادة جذر الثقة",
+        "organisation": "منظمة",
+        "partnerDomain": "مجال الشريك",
+        "issuedTo": "صدر ل",
+        "issuedBy": "صادرة عن",
+        "validFrom": "صالح من",
+        "validTill": "صالح حتى",
+        "timeOfUpload": "وقت التحميل",
+        "status": "حالة",
+        "action": "فعل",
+        "UploadCertBtn": "تحميل الشهادة",
+        "listOfCertificates": "قائمة شهادات جذر الثقة",
+        "selectOrganisation": "حدد المنظمة",
+        "selectPartnerDomain": "حدد مجال الشريك",
+        "selectStatus": "حدد الحالة",
+        "deActivate": "إلغاء التنشيط",
+        "view": "منظر"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."

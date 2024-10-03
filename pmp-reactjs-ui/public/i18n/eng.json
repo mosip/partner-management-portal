@@ -495,6 +495,25 @@
         "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
+    "rootTrustCertificate":{
+        "rootTrustCertTitle": "Upload Root of Trust Certificate",
+        "organisation": "Organisation",
+        "partnerDomain": "Partner Domain",
+        "issuedTo": "Issued To",
+        "issuedBy": "Issued By",
+        "validFrom": "Valid From",
+        "validTill": "Valid Till",
+        "timeOfUpload": "Time of Upload",
+        "status": "Status",
+        "action": "Action",
+        "UploadCertBtn": "Upload Certificate",
+        "listOfCertificates": "List of Root of Trust certificates",
+        "selectOrganisation": "Select Organisation",
+        "selectPartnerDomain": "Select Partner Domain",
+        "selectStatus": "Select Status",
+        "deActivate": "Deactivate",
+        "view": "View"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
