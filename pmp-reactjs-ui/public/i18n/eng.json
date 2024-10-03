@@ -706,7 +706,7 @@
         "PMS_DEVICE_ERROR_006": "Device do not exists.",
         "PMS_DEVICE_ERROR_007": "Device is not associated with partner Id.",
         "PMS_DEVICE_ERROR_008": "Error while adding inactive device mapping for sbi.",
-        "PMS_DEVICE_ERROR_009": "SBI for which device is being added is either not approved or deactivated",
+        "PMS_DEVICE_ERROR_009": "Given SBI is either deactivated or not approved yet.",
         "PMS_DEVICE_ERROR_010": "Given device details are not in pending for approval status.",
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
