@@ -20,7 +20,7 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class AdminTestUtil extends BaseTestCaseFunc {
+public class PmpTestUtil extends BaseTestCaseFunc {
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RestClient.class);
 	public static String token;
@@ -60,8 +60,8 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		} finally {
-			AdminTestUtil.closeBufferedReader(bufferedReader);
-			AdminTestUtil.closeFileReader(fileReader);
+			PmpTestUtil.closeBufferedReader(bufferedReader);
+			PmpTestUtil.closeFileReader(fileReader);
 		}
 		serverComponentsCommitDetails = stringBuilder.toString();
 		return serverComponentsCommitDetails;

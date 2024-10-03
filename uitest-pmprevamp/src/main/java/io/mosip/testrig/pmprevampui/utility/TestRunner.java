@@ -10,7 +10,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import io.mosip.testrig.pmprevampui.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 
 public class TestRunner {
@@ -24,7 +24,7 @@ public class TestRunner {
 	static TestNG testNg;
 
 	public static void main(String[] args) throws Exception {
-		AdminTestUtil.initialize();
+		PmpTestUtil.initialize();
 		startTestRunner();
 	}
 

@@ -28,7 +28,7 @@ import org.testng.collections.Lists;
 import org.testng.internal.Utils;
 import org.testng.xml.XmlSuite;
 
-import io.mosip.testrig.pmprevampui.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.kernel.util.S3Adapter;
 
@@ -224,7 +224,7 @@ public class EmailableReport implements IReporter {
 			writer.print("</th></tr>");
 
 			writer.print("<tr><th colspan=\"7\"><span class=\"not-bold\"><pre>");
-			writer.print(Utils.escapeHtml("Server Component Details " + AdminTestUtil.getServerComponentsDetails()));
+			writer.print(Utils.escapeHtml("Server Component Details " + PmpTestUtil.getServerComponentsDetails()));
 			writer.print("</pre></span>");
 //			writer.print(GlobalConstants.TRTR);
 
