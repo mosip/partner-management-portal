@@ -287,18 +287,17 @@ function ViewFtmChipDetails() {
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
                                                 <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                    {ftmDetails.isCertificateAvailable && (
-                                                        < DownloadCertificateButton
-                                                            downloadDropdownRef={dropdownRef}
-                                                            setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
-                                                            showDropDown={showDropDownOptions}
-                                                            onClickFirstOption={getOriginalCertificate}
-                                                            onClickSecondOption={getMosipSignedCertificate}
-                                                            requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
-                                                            styleSet={mangeFtmDownloadButtonStyle}
-                                                            id='download_btn'
-                                                        />
-                                                    )}
+                                                    < DownloadCertificateButton
+                                                        disableBtn={ftmDetails.isCertificateAvailable ? false : true}
+                                                        downloadDropdownRef={dropdownRef}
+                                                        setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
+                                                        showDropDown={showDropDownOptions}
+                                                        onClickFirstOption={getOriginalCertificate}
+                                                        onClickSecondOption={getMosipSignedCertificate}
+                                                        requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
+                                                        styleSet={mangeFtmDownloadButtonStyle}
+                                                        id='download_btn'
+                                                    />
                                                     <button id="certificate_reupload_btn" onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                         {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                     </button>

@@ -711,7 +711,7 @@
         "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
         "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
         "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout du mappage de périphériques inactifs pour sbi.",
-        "PMS_DEVICE_ERROR_009": "Le SBI pour lequel l'appareil est ajouté n'est pas approuvé ou est désactivé",
+        "PMS_DEVICE_ERROR_009": "Étant donné que le SBI est soit désactivé, soit pas encore approuvé.",
         "PMS_DEVICE_ERROR_010": "Les détails de l'appareil donné ne sont pas en attente d'approbation.",
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "Le mappage SBI et périphérique n’existe pas.",
