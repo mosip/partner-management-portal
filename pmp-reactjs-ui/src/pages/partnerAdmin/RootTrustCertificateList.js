@@ -15,7 +15,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import Title from "../common/Title";
 import rectangleGrid from "../../svg/rectangle_grid.svg";
 import FilterButtons from "../common/FilterButtons";
-import RootTrustCertiifcatesFilter from "./RootTrustCertiifcatesFilter";
+import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
 import SortingIcon from "../common/SortingIcon";
 import Pagination from "../common/Pagination";
 
