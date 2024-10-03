@@ -45,7 +45,21 @@
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
         "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
-        "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
+        "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
+        "pendingRequests": "Demandes en attente",
+        "pendingRequestsDesc": "Approuver/Rejeter les demandes en attente de divers partenaires",
+        "uploadRootOfTrustCertificate": "Télécharger le certificat racine de confiance",
+        "uploadRootOfTrustCertificateDesc": "Télécharger des certificats racine/CA",
+        "partner": "Partenaire",
+        "partnerDesc": "Afficher ou/et désactiver les détails du partenaire",
+        "policy": "Politique",
+        "policyDesc": "Créer des groupes de stratégies, une stratégie d'authentification, une stratégie de partage de données",
+        "partnerPolicyMapping": "Cartographie des politiques des partenaires",
+        "partnerPolicyMappingDesc": "Afficher ou/et désactiver les politiques demandées par différents partenaires",
+        "sbiDeviceDetails": "SBI - Détails de l'appareil",
+        "sbiDeviceDetailsDesc": "Afficher ou/et désactiver les détails du SBI ou de l'appareil",
+        "ftmDetails": "Détails FTM",
+        "ftmDetailsDesc": "Afficher ou/et désactiver les détails de la puce FTM"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",

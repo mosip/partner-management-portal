@@ -45,7 +45,21 @@
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
         "deviceProviderServicesDesc": "إضافة وعرض وإلغاء تنشيط SBI (الواجهة البيومترية الآمنة) والأجهزة المرتبطة بها",
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
-        "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى"
+        "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
+        "pendingRequests": "الطلبات المعلقة",
+        "pendingRequestsDesc": "الموافقة على/رفض الطلبات المعلقة من مختلف الشركاء",
+        "uploadRootOfTrustCertificate": "تحميل شهادة جذر الثقة",
+        "uploadRootOfTrustCertificateDesc": "تحميل شهادات الجذر/CA",
+        "partner": "شريك",
+        "partnerDesc": "عرض و/أو إلغاء تنشيط تفاصيل الشريك",
+        "policy": "سياسة",
+        "policyDesc": "إنشاء مجموعات السياسات وسياسة المصادقة وسياسة مشاركة البيانات",
+        "partnerPolicyMapping": "رسم خرائط سياسة الشريك",
+        "partnerPolicyMappingDesc": "عرض و/أو إلغاء تنشيط السياسات المطلوبة من قبل الشركاء المختلفين",
+        "sbiDeviceDetails": "SBI-تفاصيل الجهاز",
+        "sbiDeviceDetailsDesc": "عرض و/أو إلغاء تنشيط SBI أو تفاصيل الجهاز",
+        "ftmDetails": "تفاصيل اف تي ام",
+        "ftmDetailsDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
