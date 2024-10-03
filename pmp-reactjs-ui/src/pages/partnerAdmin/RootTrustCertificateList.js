@@ -29,7 +29,7 @@ function RootTrustCertificateList() {
   const [certificateData, setCertificateData] = useState([]);
   const [filteredCertificateData, setFilteredCertificateData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("certificateUploadDateTime");
+  const [activeSortAsc, setActiveSortAsc] = useState("time");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [isDescending, setIsDescending] = useState(false);
@@ -56,7 +56,7 @@ function RootTrustCertificateList() {
     { id: "issuedBy", headerNameKey: "rootTrustCertificate.issuedBy" },
     { id: "validFrom", headerNameKey: "rootTrustCertificate.validFrom" },
     { id: "validTill", headerNameKey: "rootTrustCertificate.validTill" },
-    { id: "certificateUploadDateTime", headerNameKey: "rootTrustCertificate.timeOfUpload" },
+    { id: "timeOfUpload", headerNameKey: "rootTrustCertificate.timeOfUpload" },
     { id: "status", headerNameKey: "rootTrustCertificate.status" },
     { id: "action", headerNameKey: "rootTrustCertificate.action" },
   ];
@@ -210,7 +210,7 @@ function RootTrustCertificateList() {
         ];
 
         const sortedData = trustCertDummyData.sort(
-          (a, b) => new Date(b.certificateUploadDateTime) - new Date(a.certificateUploadDateTime)
+          (a, b) => new Date(b.timeOfUpload) - new Date(a.timeOfUpload)
         );
         setCertificateData(sortedData);
         setFilteredCertificateData(sortedData);
@@ -239,7 +239,7 @@ function RootTrustCertificateList() {
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
-    const isDateCol = header === "certificateUploadDateTime" ? true : false;
+    const isDateCol = header === "timeOfUpload" ? true : false;
     toggleSortAscOrder(
       header,
       isDateCol,
@@ -257,7 +257,7 @@ function RootTrustCertificateList() {
   };
 
   const sortDescOrder = (header) => {
-    const isDateCol = header === "certificateUploadDateTime" ? true : false;
+    const isDateCol = header === "timeOfUpload" ? true : false;
     toggleSortDescOrder(
       header,
       isDateCol,
@@ -400,10 +400,10 @@ function RootTrustCertificateList() {
                     ></FilterButtons>
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter && (
-                      <RootTrustCertiifcatesFilter
+                      <RootTrustCertificatesFilter
                         filteredCertificateData={filteredCertificateData}
                         onFilterChange={onFilterChange}
-                      ></RootTrustCertiifcatesFilter>
+                      ></RootTrustCertificatesFilter>
                     )}
 
                     <div className="mx-[2%] overflow-x-scroll">
