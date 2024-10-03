@@ -287,7 +287,7 @@ function ViewFtmChipDetails() {
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
                                                 <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                    < DownloadCertificateButton
+                                                   < DownloadCertificateButton
                                                         disableBtn={ftmDetails.isCertificateAvailable ? false : true}
                                                         downloadDropdownRef={dropdownRef}
                                                         setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}

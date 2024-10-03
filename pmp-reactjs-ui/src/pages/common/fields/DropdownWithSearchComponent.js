@@ -90,7 +90,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                 {filteredPolicyGroupList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-2">
-                                            <button id={isPlaceHolderPresent ? (index > 0 && id + '_option' + (index)) : id + '_option' + (index + 1)}
+                                            <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
                                                 className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
