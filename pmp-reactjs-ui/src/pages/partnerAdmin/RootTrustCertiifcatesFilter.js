@@ -4,7 +4,7 @@ import DropdownComponent from '../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from '../../utils/AppUtils.js';
 
-function RootTrustFilter({ filteredCertificateData, onFilterChange }) {
+function RootTrustCertiifcatesFilter({ filteredCertificateData, onFilterChange }) {
     const { t } = useTranslation();
     const [organisationNameData, setOrganisationNameData] = useState([]);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
@@ -69,4 +69,4 @@ function RootTrustFilter({ filteredCertificateData, onFilterChange }) {
     );
 }
 
-export default RootTrustFilter;
+export default RootTrustCertiifcatesFilter;

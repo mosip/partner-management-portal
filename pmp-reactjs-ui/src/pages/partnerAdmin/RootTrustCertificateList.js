@@ -1,13 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-// import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import {
-  // getPartnerManagerUrl,
   formatDate,
-  // handleServiceErrors,
-  // getPartnerTypeDescription,
   getStatusCode,
   handleMouseClickForDropdown,
   toggleSortAscOrder,
@@ -19,15 +15,13 @@ import ErrorMessage from "../common/ErrorMessage";
 import Title from "../common/Title";
 import rectangleGrid from "../../svg/rectangle_grid.svg";
 import FilterButtons from "../common/FilterButtons";
-import RootTrustFilter from "./RootTrustFilter";
+import RootTrustCertiifcatesFilter from "./RootTrustCertiifcatesFilter";
 import SortingIcon from "../common/SortingIcon";
 import Pagination from "../common/Pagination";
-// import DeactivatePopup from "../common/DeactivatePopup";
 
 function RootTrustCertificateList() {
   const { t } = useTranslation();
   const [filter, setFilter] = useState(false);
-  // const navigate = useNavigate();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -35,7 +29,7 @@ function RootTrustCertificateList() {
   const [certificateData, setCertificateData] = useState([]);
   const [filteredCertificateData, setFilteredCertificateData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
+  const [activeSortAsc, setActiveSortAsc] = useState("certificateUploadDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [isDescending, setIsDescending] = useState(false);
@@ -47,8 +41,6 @@ function RootTrustCertificateList() {
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
   const submenuRef = useRef([]);
-  // const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
-  // const [deactivateRequest, setDeactivateRequest] = useState({});
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewCertificateId(-1));
@@ -64,181 +56,165 @@ function RootTrustCertificateList() {
     { id: "issuedBy", headerNameKey: "rootTrustCertificate.issuedBy" },
     { id: "validFrom", headerNameKey: "rootTrustCertificate.validFrom" },
     { id: "validTill", headerNameKey: "rootTrustCertificate.validTill" },
-    { id: "timeOfUpload", headerNameKey: "rootTrustCertificate.timeOfUpload" },
+    { id: "certificateUploadDateTime", headerNameKey: "rootTrustCertificate.timeOfUpload" },
     { id: "status", headerNameKey: "rootTrustCertificate.status" },
     { id: "action", headerNameKey: "rootTrustCertificate.action" },
-  ];
-
-  const trustCertDummyData = [
-    {
-      orgName: "P23423049",
-      partnerDomain: "DEVICE_V1",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423045",
-      partnerDomain: "DEVICE_V2",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "rejected",
-    },
-    {
-      orgName: "P23423045",
-      partnerDomain: "DEVICE_V3",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P234230456",
-      partnerDomain: "DEVICE_V4",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "InProgress",
-    },
-    {
-      orgName: "P23423034",
-      partnerDomain: "DEVICE_V5",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423064",
-      partnerDomain: "DEVICE_V6",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "rejected",
-    },
-    {
-      orgName: "P23423064",
-      partnerDomain: "DEVICE_V7",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423045",
-      partnerDomain: "DEVICE_V8",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423065",
-      partnerDomain: "DEVICE_V9",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "InProgress",
-    },
-    {
-      orgName: "P23423076",
-      partnerDomain: "DEVICE_V10",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423026",
-      partnerDomain: "DEVICE_V11",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "rejected",
-    },
-    {
-      orgName: "P23423029",
-      partnerDomain: "DEVICE_V12",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423029",
-      partnerDomain: "DEVICE_V13",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "approved",
-    },
-    {
-      orgName: "P23423029",
-      partnerDomain: "DEVICE_V14",
-      issuedTo: "MOSIP",
-      issuedBy: "Mosip",
-      validFrom: "2024-09-13T04:25:39.046+00:00",
-      validTill: "2024-09-13T04:25:39.046+00:00",
-      timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-      status: "InProgress",
-    },
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        //   const response = await HttpService.get(getPartnerManagerUrl('/partners/policy-requests', process.env.NODE_ENV));
-        //   if (response) {
-        //     const responseData = response.data;
-        //     if (responseData && responseData.response) {
-        //       const resData = responseData.response;
-        //       const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
-        //       setPoliciesList(sortedData);
-        //       setFilteredPoliciesList(sortedData);
-        //     } else {
-        //       handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-        //     }
-        //   } else {
-        //     setErrorMsg(t('policies.errorInPoliciesList'));
-        //   }
+
+        const trustCertDummyData =  [
+          {
+            orgName: "P23423049",
+            partnerDomain: "DEVICE_V1",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423045",
+            partnerDomain: "DEVICE_V2",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "rejected",
+          },
+          {
+            orgName: "P23423045",
+            partnerDomain: "DEVICE_V3",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P234230456",
+            partnerDomain: "DEVICE_V4",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "InProgress",
+          },
+          {
+            orgName: "P23423034",
+            partnerDomain: "DEVICE_V5",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423064",
+            partnerDomain: "DEVICE_V6",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "rejected",
+          },
+          {
+            orgName: "P23423064",
+            partnerDomain: "DEVICE_V7",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423045",
+            partnerDomain: "DEVICE_V8",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423065",
+            partnerDomain: "DEVICE_V9",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "InProgress",
+          },
+          {
+            orgName: "P23423076",
+            partnerDomain: "DEVICE_V10",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423026",
+            partnerDomain: "DEVICE_V11",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "rejected",
+          },
+          {
+            orgName: "P23423029",
+            partnerDomain: "DEVICE_V12",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423029",
+            partnerDomain: "DEVICE_V13",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "approved",
+          },
+          {
+            orgName: "P23423029",
+            partnerDomain: "DEVICE_V14",
+            issuedTo: "MOSIP",
+            issuedBy: "Mosip",
+            validFrom: "2024-09-13T04:25:39.046+00:00",
+            validTill: "2024-09-13T04:25:39.046+00:00",
+            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
+            status: "InProgress",
+          },
+        ];
 
         const sortedData = trustCertDummyData.sort(
-          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+          (a, b) => new Date(b.certificateUploadDateTime) - new Date(a.certificateUploadDateTime)
         );
         setCertificateData(sortedData);
         setFilteredCertificateData(sortedData);
-        setInterval(() => {
-          setDataLoaded(true);
-        }, 1000);
+        setDataLoaded(true);
       } catch (err) {
         console.error("Error fetching data:", err);
         setErrorMsg(err);
@@ -248,7 +224,6 @@ function RootTrustCertificateList() {
   }, []);
 
   const showUploadCertificate = () => {
-    // navigate("/partnermanagement/policies/requestPolicy");
   };
 
   const showCertificateDetails = (selectedCertificateData) => {
@@ -256,7 +231,6 @@ function RootTrustCertificateList() {
       "selectedCertificateData",
       JSON.stringify(selectedCertificateData)
     );
-    // navigate("/partnermanagement/policies/viewPolicyDetails");
   };
 
   const cancelErrorMsg = () => {
@@ -265,7 +239,7 @@ function RootTrustCertificateList() {
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
-    const isDateCol = header === "createdDateTime" ? true : false;
+    const isDateCol = header === "certificateUploadDateTime" ? true : false;
     toggleSortAscOrder(
       header,
       isDateCol,
@@ -283,7 +257,7 @@ function RootTrustCertificateList() {
   };
 
   const sortDescOrder = (header) => {
-    const isDateCol = header === "createdDateTime" ? true : false;
+    const isDateCol = header === "certificateUploadDateTime" ? true : false;
     toggleSortDescOrder(
       header,
       isDateCol,
@@ -338,19 +312,6 @@ function RootTrustCertificateList() {
 
   const showDeactivateCertificate = (selectedClientdata) => {
     if (selectedClientdata.status === "ACTIVE") {
-      // const request = createRequest({
-      //   logoUri: selectedClientdata.logoUri,
-      //   redirectUris: selectedClientdata.redirectUris,
-      //   status: "INACTIVE",
-      //   grantTypes: selectedClientdata.grantTypes,
-      //   clientName: selectedClientdata.clientName,
-      //   clientAuthMethods: selectedClientdata.clientAuthMethods,
-      //   clientNameLangMap: {
-      //     eng: selectedClientdata.clientName,
-      //   },
-      // });
-      // setDeactivateRequest(request);
-      // setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
     }
   };
@@ -439,10 +400,10 @@ function RootTrustCertificateList() {
                     ></FilterButtons>
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter && (
-                      <RootTrustFilter
+                      <RootTrustCertiifcatesFilter
                         filteredCertificateData={filteredCertificateData}
                         onFilterChange={onFilterChange}
-                      ></RootTrustFilter>
+                      ></RootTrustCertiifcatesFilter>
                     )}
 
                     <div className="mx-[2%] overflow-x-scroll">
@@ -609,7 +570,7 @@ function RootTrustCertificateList() {
                                         }`}
                                       >
                                         <p
-                                          id="oidc_details_view_btn"
+                                          id="root_certificate_details_view_btn"
                                           onClick={() =>
                                             showCertificateDetails(certificate)
                                           }
@@ -631,7 +592,7 @@ function RootTrustCertificateList() {
                                         </p>
                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                         <p
-                                          id="oidc_deactive_btn"
+                                          id="root_certificate_deactive_btn"
                                           onClick={() =>
                                             showDeactivateCertificate(certificate)
                                           }
@@ -655,40 +616,7 @@ function RootTrustCertificateList() {
                                         >
                                           {t("rootTrustCertificate.deActivate")}
                                         </p>
-                                        {/* {showDeactivatePopup && (
-                                          <DeactivatePopup
-                                            closePopUp={closeDeactivatePopup}
-                                            popupData={client}
-                                            request={deactivateRequest}
-                                            headerMsg="deactivateOidcClient.oidcClientName"
-                                            descriptionMsg="deactivateOidcClient.description"
-                                            headerKeyName={
-                                              client.oidcClientName
-                                            }
-                                          ></DeactivatePopup>
-                                        )} */}
                                       </div>
-                                      // <div
-                                      //   id="root_certificate_list_view_card"
-                                      //   onClick={() =>
-                                      //     showCertificateDetails(certificate)
-                                      //   }
-                                      //   tabIndex="0"
-                                      //   onKeyPress={(e) =>
-                                      //     onPressEnterKey(e, () =>
-                                      //       showCertificateDetails(certificate)
-                                      //     )
-                                      //   }
-                                      //   className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${
-                                      //     isLoginLanguageRTL
-                                      //       ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right"
-                                      //       : "text-left"
-                                      //   }`}
-                                      // >
-                                      //   <p className="cursor-pointer">
-                                      //     {t("policies.view")}
-                                      //   </p>
-                                      // </div>
                                     )}
                                   </div>
                                 </td>
