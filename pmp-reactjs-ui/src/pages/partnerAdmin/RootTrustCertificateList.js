@@ -29,7 +29,7 @@ function RootTrustCertificateList() {
   const [certificateData, setCertificateData] = useState([]);
   const [filteredCertificateData, setFilteredCertificateData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("time");
+  const [activeSortAsc, setActiveSortAsc] = useState("timeOfUpload");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [isDescending, setIsDescending] = useState(false);
