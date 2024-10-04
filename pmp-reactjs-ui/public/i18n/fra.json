@@ -644,6 +644,7 @@
         "PMP_AUT_033": "Le certificat n'est pas téléchargé.",
         "PMP_AUT_034": "L'ID de détail de la puce FTP et l'ID du fournisseur ftp ne sont pas mappés.",
         "PMP_AUT_037": "Compte tenu des détails de la puce ftp déjà enregistrés.;",
+        "PMP_AUT_038": "La puce FTP est désactivée",
         "PMS_AUT_007": "Interface biométrique sécurisée introuvable pour l'identifiant %s",
         "PMS_AUT_026": "L'état d'approbation doit être activé/désactivé",
         "PMS_AUT_506": "Fournissez les détails de l'appareil du même fournisseur.",

@@ -639,6 +639,7 @@
         "PMP_AUT_033": "Certificate is not uploaded.",
         "PMP_AUT_034": "Ftp chip detail id and ftp provider id not mappped. ",
         "PMP_AUT_037": "Given ftp chip details already registered.;",
+        "PMP_AUT_038": "FTP chip is deactivated.",
         "PMS_AUT_007": "Secure Biometric Interface not found for the id %s",
         "PMS_AUT_026": "ApprovalStatus should be Activate / De_activate",
         "PMS_AUT_506": "Provide device details of same provider.",
