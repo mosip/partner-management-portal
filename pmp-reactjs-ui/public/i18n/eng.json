@@ -691,6 +691,7 @@
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-004": "Certificate Date is not valid.",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
+        "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PV_005": "Invalid input parameter - errorCode in policy data",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",

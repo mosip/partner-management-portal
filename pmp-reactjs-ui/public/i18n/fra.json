@@ -696,6 +696,7 @@
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-004": "La date du certificat n'est pas valide.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
+        "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PV_005": "Paramètre d'entrée non valide - errorCode dans les données de stratégie",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
