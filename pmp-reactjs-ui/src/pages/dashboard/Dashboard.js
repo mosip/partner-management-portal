@@ -15,8 +15,8 @@ import authServiceIcon from '../../svg/auth_services_icon.svg';
 import deviceProviderServices_icon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import pending_requests_icon from '../../svg/pending_requests_icon.svg';
-import sbi_device_details_icon from '../../svg/sbi_device_details_icon.svg';
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
+import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 
@@ -79,7 +79,7 @@ function Dashboard() {
         if (getUserProfile().partnerType === "FTM_PROVIDER") {
           setShowFtmServices(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN' || 'POLICY_MANAGER') ) {
+        if (getUserProfile().roles.includes('PARTNER_ADMIN' || 'POLICY_MANAGER')) {
           setIsPartnerAdmin(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
@@ -281,10 +281,10 @@ function Dashboard() {
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.uploadRootOfTrustCertificate')}
+                      {t('dashboard.rootOfTrustCertificate')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.uploadRootOfTrustCertificateDesc')}
+                      {t('dashboard.rootOfTrustCertificateDesc')}
                     </p>
                   </div>
                 </div>
@@ -305,14 +305,14 @@ function Dashboard() {
 
                 <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                   <div className="flex justify-center mb-5">
-                    <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+                    <img src={admin_policies_icon} alt="" className="w-8 h-8"></img>
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.policy')}
+                      {t('dashboard.policies')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.policyDesc')}
+                      {t('dashboard.policiesadminDesc')}
                     </p>
                   </div>
                 </div>
@@ -333,7 +333,7 @@ function Dashboard() {
 
                 <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                   <div className="flex justify-center mb-5">
-                    <img src={sbi_device_details_icon} alt="" className="w-8 h-8"></img>
+                    <img src={deviceProviderServices_icon} alt="" className="w-8 h-8"></img>
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -355,6 +355,20 @@ function Dashboard() {
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.ftmDetailsDesc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                  <div className="flex justify-center mb-5">
+                    <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                      {t('dashboard.authenticationServices')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.adminAuthenticationServicesDesc')}
                     </p>
                   </div>
                 </div>
