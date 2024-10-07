@@ -53,7 +53,7 @@
         "partner": "Partenaire",
         "partnerDesc": "Afficher / désactiver les détails du partenaire",
         "policy": "Politique",
-        "policiesAdmineDesc": "Créer des groupes de stratégies, une stratégie d'authentification, une stratégie de partage de données",
+        "policiesadminDesc": "Créer des groupes de stratégies, une stratégie d'authentification, une stratégie de partage de données",
         "partnerPolicyMapping": "Cartographie des politiques des partenaires",
         "partnerPolicyMappingDesc": "Afficher / désactiver les politiques demandées par différents partenaires",
         "sbiDeviceDetails": "SBI - Détails de l'appareil",

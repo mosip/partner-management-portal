@@ -53,7 +53,7 @@
         "partner": "Partner",
         "partnerDesc": "View / Deactivate partner details",
         "policy": "Policy",
-        "policiesAdmineDesc": "Create Policy Groups, Auth Policy, Datashare Policy",
+        "policiesadminDesc": "Create Policy Groups, Auth Policy, Datashare Policy",
         "partnerPolicyMapping": "Partner Policy mapping",
         "partnerPolicyMappingDesc": "View / deactivate requested policies by various partners",
         "sbiDeviceDetails": "SBI - Device Details",
