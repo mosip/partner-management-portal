@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../services/UserProfileService";
-import { isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { getUserProfile } from "../../../services/UserProfileService";
+import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
   formatDate,
   getStatusCode,
@@ -9,15 +9,15 @@ import {
   toggleSortAscOrder,
   toggleSortDescOrder,
   bgOfStatus,
-} from "../../utils/AppUtils";
-import LoadingIcon from "../common/LoadingIcon";
-import ErrorMessage from "../common/ErrorMessage";
-import Title from "../common/Title";
-import rectangleGrid from "../../svg/rectangle_grid.svg";
-import FilterButtons from "../common/FilterButtons";
+} from "../../../utils/AppUtils";
+import LoadingIcon from "../../common/LoadingIcon";
+import ErrorMessage from "../../common/ErrorMessage";
+import Title from "../../common/Title";
+import rectangleGrid from "../../../svg/rectangle_grid.svg";
+import FilterButtons from "../../common/FilterButtons";
 import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
-import SortingIcon from "../common/SortingIcon";
-import Pagination from "../common/Pagination";
+import SortingIcon from "../../common/SortingIcon";
+import Pagination from "../../common/Pagination";
 
 function RootTrustCertificateList() {
   const { t } = useTranslation();

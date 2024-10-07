@@ -23,7 +23,7 @@ import DevicesList from './pages/deviceProviderServices/DevicesList.js';
 import FtmList from './pages/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/ftmProviderServices/AddFtm.js';
 import ViewFtmChipDetails from './pages/ftmProviderServices/ViewFtmChipDetails.js';
-import RootTrustCertificateList from './pages/certificates/RootTrustCertificateList.js';
+import RootTrustCertificateList from './pages/partner/certificates/RootTrustCertificateList.js';
 
 
 function AppRoutes() {
@@ -46,7 +46,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><UserProfile/></MainLayout></GuardedRoute>,
         },
         {
-          path: 'partnerCertificate',
+          path: 'certificates/partnerCertificate',
           element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
         },
         {

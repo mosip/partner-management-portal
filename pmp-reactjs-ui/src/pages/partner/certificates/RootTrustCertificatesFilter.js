@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import DropdownComponent from '../common/fields/DropdownComponent.js';
+import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData } from '../../utils/AppUtils.js';
+import { createDropdownData } from '../../../utils/AppUtils.js';
 
 function RootTrustCertificatesFilter({ filteredCertificateData, onFilterChange }) {
     const { t } = useTranslation();
