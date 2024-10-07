@@ -439,7 +439,8 @@
         "errorInDeviceType": "While fetching device types, we have encountered with an error.",
         "errorInAddingDevice": "While adding device, we have encountered with an error.",
         "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.",
-        "inActiveDeviceMappingToSbiError": "We have encountered with an error, please contact your administrator."
+        "inActiveDeviceMappingToSbiError": "We have encountered with an error, please contact your administrator.",
+        "errorWhileFetchingDeviceDetails": "While fetching device details, we have encountered with an error."
     },
     "deactivateSbi": {
         "headerMsg": "Do you want to deactivate SBI Version ",

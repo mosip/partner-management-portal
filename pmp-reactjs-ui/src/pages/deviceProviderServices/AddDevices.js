@@ -234,7 +234,7 @@ function AddDevices() {
         setErrorMsg("");
         const request = createRequest({
             id: null,
-            deviceProviderId: getUserProfile().userName,
+            deviceProviderId: selectedSbidata.partnerId,
             deviceTypeCode: entry.deviceType,
             deviceSubTypeCode: entry.deviceSubType,
             make: trimAndReplace(entry.make),
@@ -246,7 +246,13 @@ function AddDevices() {
             if (response?.data?.response?.id) {
                 inactiveMappingDeviceToSbi(response.data.response.id, index);
             } else {
-                handleError(response.data, index, newEntries);
+                const errorCode = response.data.errors[0].errorCode;
+                if (errorCode === "PMS_AUT_003") {
+                    const deviceDetails = await searchDeviceDetails(entry, index);
+                    inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                } else {
+                    handleError(response.data, index, newEntries);
+                }
             }
         } catch (err) {
             newEntries[index].errorMsg = t('addDevices.errorInAddingDevice');
@@ -255,6 +261,46 @@ function AddDevices() {
         }
         setDataLoaded(true);
         setIsSubmitClicked(false);
+    };
+
+    const searchDeviceDetails = async(entry, index) => {
+        const newEntries = [...deviceEntries];
+        setDataLoaded(false);
+        const searchRequest = createRequest({
+            filters: [
+                {"columnName": "deviceProviderId", "type": "equals", "value": selectedSbidata.partnerId},
+                {"columnName": "partnerOrganizationName", "type": "equals", "value": getUserProfile().orgName},
+                {"columnName": "deviceTypeCode", "type": "equals", "value": entry.deviceType},
+                {"columnName": "deviceSubTypeCode", "type": "equals", "value": entry.deviceSubType},
+                {"columnName": "make", "type": "equals", "value": trimAndReplace(entry.make)},
+                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)}
+            ],
+            sort: [],
+            pagination: {pageStart: 0, pageFetch: 10},
+            languageCode: "eng",
+            purpose: "REGISTRATION",
+            deviceProviderId: selectedSbidata.partnerId
+        });
+        try {
+            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV), searchRequest);
+            if (response?.data?.response) {
+                const searchDetails = response.data.response.data;
+                let filteredArr = [];
+                searchDetails.forEach(item => {
+                    if ((item['approvalStatus'] === "pending_approval") || (item['approvalStatus'] === "approved" && item["isActive"])) {
+                        filteredArr.push(item);
+                    }
+                });
+                return filteredArr;
+            } else {
+                handleError(response.data, index, newEntries);
+            }
+        } catch (err) {
+            newEntries[index].errorMsg = t('addDevices.errorWhileFetchingDeviceDetails');
+            setDeviceEntries(newEntries);
+            console.error("Error fetching data: ", err);
+        }
+        setDataLoaded(true);
     };
 
     const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
