@@ -64,7 +64,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("home");
     };
     const showPartnerCertificatesList = () => {
-        navigate('/partnermanagement/partnerCertificate');
+        navigate('/partnermanagement/certificates/partnerCertificate');
         setActiveIcon("partnerCertificate");
     };
     const showPolicies = () => {

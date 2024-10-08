@@ -149,7 +149,7 @@ function Dashboard() {
   }, []);
 
   const partnerCertificatesList = () => {
-    navigate('/partnermanagement/partnerCertificate')
+    navigate('/partnermanagement/certificates/partnerCertificate')
   };
 
   const policies = () => {
