@@ -251,6 +251,9 @@ function AddDevices() {
                     const deviceDetails = await searchDeviceDetails(entry, index);
                     if (deviceDetails) {
                         inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    } else {
+                        newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
+                        setDeviceEntries(newEntries);
                     }
                 } else {
                     handleError(response.data, index, newEntries);

@@ -445,7 +445,8 @@
         "errorInAddingDevice": "Lors de l'ajout d'un appareil, nous avons rencontré une erreur.",
         "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils.",
         "inActiveDeviceMappingToSbiError": "Nous avons rencontré une erreur, veuillez contacter votre administrateur.",
-        "errorWhileFetchingDeviceDetails": "Lors de la récupération des détails de l'appareil, nous avons rencontré une erreur."
+        "errorWhileFetchingDeviceDetails": "Lors de la récupération des détails de l'appareil, nous avons rencontré une erreur.",
+        "unableToAddDevice": "Impossible d'ajouter un appareil"
     },
     "deactivateSbi": {
         "headerMsg": "Voulez-vous désactiver la version SBI ",
