@@ -49,12 +49,11 @@ public class RegisterNewUser extends BaseClass {
 		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
 		registerPage.enterPhone("9876543210");
 
-		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
-				GlobalConstants.isNotificationLanguageDropdownDisplayed);
+		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(), GlobalConstants.isNotificationLanguageDropdownDisplayed);
 		registerPage.selectNotificationLanguageDropdown();
 
 		assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
-		registerPage.enterUsername("ad" + data);
+		registerPage.enterUsername("automationuiiii");
 
 		assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
 		registerPage.enterPassword("mosip123");
@@ -65,31 +64,25 @@ public class RegisterNewUser extends BaseClass {
 		assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isSelectPolicyGroupPopUpDisplayed(),
-				GlobalConstants.isSelectPolicyGroupPopUpDisplayed);
+		assertTrue(dashboardpage.isSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSelectPolicyGroupPopUpDisplayed);
 		dashboardpage.selectSelectPolicyGroupDropdown();
 
-		assertTrue(dashboardpage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(),
-				GlobalConstants.isSubmitButtonDisplayed);
+		assertTrue(dashboardpage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage.clickOnSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardpage.clickOnCheckbox();
 
 		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardpage.clickOnProceedButton();
 
-		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(),
-				GlobalConstants.isPartnerCertificateTitleDisplayed);
-		PartnerCertificatePage partnerCertificatePage = dashboardpage.clickOnPartnerCertificateTitle();
+		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(), GlobalConstants.isPartnerCertificateTitleDisplayed);
+		PartnerCertificatePage partnerCertificatePage=dashboardpage.clickOnPartnerCertificateTitle();
 
-		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
 		partnerCertificatePage.clickOnUploadButton();
 
-		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
-				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(), GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
@@ -98,7 +91,7 @@ public class RegisterNewUser extends BaseClass {
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
 		assertTrue(dashboardpage.isPoliciesTitleDisplayed(), GlobalConstants.isPoliciesTitleDisplayed);
-		PoliciesPage policiesPage = dashboardpage.clickOnPoliciesTitle();
+		PoliciesPage policiesPage=dashboardpage.clickOnPoliciesTitle();
 
 		assertTrue(policiesPage.isPoliciesPageDisplayed(), GlobalConstants.isPoliciesPageDisplayed);
 		policiesPage.clickOnRequestPolicyButton();
@@ -114,6 +107,8 @@ public class RegisterNewUser extends BaseClass {
 		policiesPage.clickSubmitButton();
 
 		assertTrue(policiesPage.isPolicySubmittedSuccessfullyDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
+
+		
 
 	}
 }

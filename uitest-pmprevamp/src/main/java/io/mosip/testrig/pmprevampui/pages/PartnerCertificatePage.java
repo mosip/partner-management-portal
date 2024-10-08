@@ -8,7 +8,7 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class PartnerCertificatePage extends BasePage{
 	
-	@FindBy(xpath = "//*[text()='Partner Certificate']")
+	@FindBy(id = "dashboard_partner_certificated_list_card")
 	private WebElement partnerCertificateTitle;
 	
 	@FindBy(xpath = "//*[text()='Upload']")
@@ -29,7 +29,7 @@ public class PartnerCertificatePage extends BasePage{
 	@FindBy(xpath = "//*[text()='Close']")
 	private WebElement closeButton;
 	
-	@FindBy(xpath = "//*[text()='Home']")
+	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
 	
 	public PartnerCertificatePage(WebDriver driver) {

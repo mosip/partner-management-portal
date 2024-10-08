@@ -72,7 +72,7 @@ public class BaseClass {
 		logger.info("launch url --"+envPathPmpRevamp);
 		driver.manage().window().maximize();
 		Thread.sleep(500);	
-		BasePage.enter(driver.findElement(By.id("username")), "automationUii");
+		BasePage.enter(driver.findElement(By.id("username")), "automationuiiii");
 		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
 
