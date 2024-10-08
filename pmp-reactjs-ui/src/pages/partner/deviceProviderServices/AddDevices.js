@@ -249,7 +249,9 @@ function AddDevices() {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === "PMS_AUT_003") {
                     const deviceDetails = await searchDeviceDetails(entry, index);
-                    inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    if (deviceDetails) {
+                        inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    }
                 } else {
                     handleError(response.data, index, newEntries);
                 }
@@ -459,7 +461,7 @@ function AddDevices() {
                                             <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
                                         )}
                                         {entry.errorMsg && (
-                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={'Device Details already exists for the same make and/or model'} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
+                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
                                         )}
                                     </div>
                                     <form>
