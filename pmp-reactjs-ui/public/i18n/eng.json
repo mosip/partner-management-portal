@@ -6,6 +6,7 @@
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
         "back": "Back",
+        "cancel": "Cancel",
         "submit": "Submit",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "partnersHelpText": "Auto-populated based on Partner ID selected",
@@ -528,6 +529,10 @@
         "selectStatus": "Select Status",
         "deActivate": "Deactivate",
         "view": "View"
+    },
+    "uploadRootofTrustCertificate": {
+        "partnerDomain": "Partner Domain",
+        "dropdownPlaceholder": "Select partner domain"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",

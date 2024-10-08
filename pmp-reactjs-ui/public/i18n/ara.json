@@ -5,7 +5,8 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "back": "خلف",
+        "back": "خلف", 
+        "cancel": "يلغي",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
@@ -533,6 +534,10 @@
         "selectStatus": "حدد الحالة",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر"
+    },
+    "uploadRootofTrustCertificate": {
+        "partnerDomain": "مجال الشريك",
+        "dropdownPlaceholder": "حدد مجال الشريك"
     },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",

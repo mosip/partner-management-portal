@@ -164,6 +164,10 @@ function Dashboard() {
     navigate('/partnermanagement/ftmChipProviderServices/ftmList')
   };
 
+  const showRootOfTrustCertificate = () => {
+    navigate('/partnermanagement/rootTrustCertificateList')
+  };
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -275,7 +279,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div onClick={() => showRootOfTrustCertificate()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, showRootOfTrustCertificate())}>
                   <div className="flex justify-center mb-5">
                     <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
                   </div>

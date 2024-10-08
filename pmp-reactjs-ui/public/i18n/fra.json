@@ -6,6 +6,7 @@
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
         "back": "Dos",
+        "cancel": "Annuler",
         "submit": "Soumettre",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
@@ -533,6 +534,10 @@
         "selectStatus": "Sélectionnez le statut",
         "deActivate": "Désactiver",
         "view": "Voir"
+    },
+    "uploadRootofTrustCertificate": {
+        "partnerDomain": "Domaine partenaire",
+        "dropdownPlaceholder": "Sélectionnez un domaine partenaire"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
