@@ -129,8 +129,6 @@ public class TestRunner {
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
 			String path = System.getProperty("user.dir") + System.getProperty("path.config");
 
-			//	String path = new File(TestRunner.class.getClassLoader().getResource("").getPath()).getAbsolutePath()
-			//				.toString();
 			if (path.contains("test-classes"))
 				path = path.replace("test-classes", "classes");
 			return path;
