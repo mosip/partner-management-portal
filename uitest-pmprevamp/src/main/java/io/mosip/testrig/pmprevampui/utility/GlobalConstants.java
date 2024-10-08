@@ -30,5 +30,22 @@ public class GlobalConstants {
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
 	public static final String isPolicyNameDropdownDisplayed = "Verify if policy name dropdown displayed";
 	public static final String isPolicySubmittedSuccessfullyDisplayed = "Verify if Policy Submitted Successfully displayed";
-
+	public static final String isNoDataTextDisplaed = "Verify if Policy dropdown no policy data text displayed";
+	public static final String isPolicyEmptyTableIsDisplayed = "Verify if policies empty table displayed";
+	public static final String isAuthenticationServicesDisplayed = "Verify if authentication services title is displayed";
+	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";
+	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
+	public static final String isEnterRedirectUriTextDisplayed = "Verify if enter valid redirect uri text displayed";
+	public static final String isAutherisationCodeTextDisplayed = "Verify if Authrisation code is selected by default displayed";
+	
+	public static final String isPolicyGroupHeaderTextDisplayed = "Verify if policy group header text displayed";
+	public static final String isPolicyNameHeaderTextDisplayed = "Verify if policy name header text displayed";
+	public static final String isOIDCClientNameHeaderTextDisplayed = "Verify if oidc client name header text displayed";
+	public static final String isCreatedDateHeaderTextDisplayed = "Verify if create data header text displayed";
+	public static final String isStatusHeaderTextDisplayed = "Verify if status header text displayed";
+	public static final String isOIDCClientIDHeaderTextDisplayed = "Verify if oidc client header text displayed";
+	public static final String isActionHeaderTextDisplayed = "Verify if action header text displayed";
+	public static final String isRequestPolicyEnabled = "Verify if request policy button enabled";
+	public static final String isGenerateAPIKeyDisplayed = "Verify if generate api key text displayed.";
+	public static final String isApiKeyHeaderTextDisplayed = "Verify if api key header Text displayed";
 }

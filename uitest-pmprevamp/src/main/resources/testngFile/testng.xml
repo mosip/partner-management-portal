@@ -1,13 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="	PMP-UI-AUTOMATION-RUN">
-	<listeners>
-		<listener class-name="io.mosip.testrig.pmprevampui.utility.EmailableReport" />
-	</listeners>
-	<test name="PMP-UI-AUTOMATION-RUN" preserve-order="true">
+	
+	<test  name="PMP-UI-AUTOMATION-RUN"  preserve-order="true">
+	
 		<classes>
 			<class name="io.mosip.testrig.pmprevampui.testcase.RegisterNewUser" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.NewUserPolicy" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.CreateOidecClient" />
 		</classes>
+		
 	</test>
+		<listeners>
+		
+	
+
+		<listener
+			  class-name="io.mosip.testrig.pmprevampui.utility.EmailableReport" />
+			
+	</listeners>
+
 </suite>
