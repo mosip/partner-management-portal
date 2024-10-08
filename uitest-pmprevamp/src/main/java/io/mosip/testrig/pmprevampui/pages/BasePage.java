@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,7 +27,7 @@ public class BasePage {
 
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
-		PageFactory.initElements(driver, this); 
+		PageFactory.initElements(driver, this); // No need for AppiumFieldDecorator in Selenium
 	}
 
 	public static String getDateTime(){
@@ -125,6 +126,21 @@ public class BasePage {
 	protected boolean isElementDisplayed(WebElement element) {
 		try {
 			waitForElementToBeVisible(element);
+			return true;
+		} catch (Exception e) {
+			try {
+				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	protected boolean isElementEnabled(WebElement element) {
+		try {
+			waitForElementToBeVisible(element);
+			element.isEnabled();
 			return true;
 		} catch (Exception e) {
 			try {

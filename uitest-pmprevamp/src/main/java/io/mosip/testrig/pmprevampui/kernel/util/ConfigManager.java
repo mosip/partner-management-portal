@@ -57,13 +57,16 @@ public class ConfigManager {
 	private static String SbivalidDate = "sbivalidDate";
 	private static String PublicKey = "publicKey";
 	private static String RandomPublicKey = "randompublicKey";
+	
+	private static String LogoUri = "logouri";
+	private static String RedirectUri = "redirecturi";
 	private static String SignPublicKey = "signPublicKey";
 	private static String Headless = "headless";
 	private static String Docker = "docker";
 	private static String Langcode = "langcode";
-	private static String SbiexpiryDate = "sbiexpiryDate";// loginlang
+	private static String SbiexpiryDate = "sbiexpiryDate";//loginlang
 	private static String Loginlang = "loginlang";
-	private static String PolicyData = "policyData";// loginlang
+	private static String PolicyData = "policyData";//loginlang
 	private static String DataSharepolicyData = "dataSharepolicyData";
 	private static String Testcases = "pmpscenariosToExecute";
 
@@ -75,6 +78,9 @@ public class ConfigManager {
 	private static String signPublicKey;
 	private static String publicKey;
 	private static String randomPublicKey;
+	private static String logouri;
+	private static String redirectUri;
+	
 	private static String sbivalidDate;
 	private static String bulkwait;
 	private static String sbiexpiryDate;
@@ -262,6 +268,12 @@ public class ConfigManager {
 		randomPublicKey = System.getenv(RandomPublicKey) == null ? propsKernel.getProperty(RandomPublicKey)
 				: System.getenv(RandomPublicKey);
 		propsKernel.setProperty(RandomPublicKey, randomPublicKey);
+		
+		logouri =System.getenv(LogoUri) == null ? propsKernel.getProperty(LogoUri) : System.getenv(LogoUri);
+		propsKernel.setProperty(LogoUri, logouri);
+		
+		redirectUri =System.getenv(RedirectUri) == null ? propsKernel.getProperty(RedirectUri) : System.getenv(RedirectUri);
+		propsKernel.setProperty(RedirectUri, redirectUri);
 
 		signPublicKey = System.getenv(SignPublicKey) == null ? propsKernel.getProperty(SignPublicKey)
 				: System.getenv(SignPublicKey);
@@ -327,11 +339,18 @@ public class ConfigManager {
 	public static String getpublicKey() {
 		return publicKey;
 	}
-
+	
 	public static String getrandomPublicKey() {
 		return randomPublicKey;
 	}
-
+	
+	public static String getLogouri() {
+		return logouri;
+	}
+	
+	public static String getRedirectUri() {
+		return redirectUri;
+	}
 	public static String getsbivalidDate() {
 		return sbivalidDate;
 	}

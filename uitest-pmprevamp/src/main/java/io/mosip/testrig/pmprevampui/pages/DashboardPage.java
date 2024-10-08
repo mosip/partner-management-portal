@@ -6,10 +6,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class DashboardPage extends BasePage{
 
-	@FindBy(xpath = "//div[@class='flex items-center ml-1']/button")
+	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
 	
-	@FindBy(xpath = "//button[contains(text(), 'Logout')]")
+	@FindBy(id = "header_user_profile_logout_btn")
 	private WebElement logoutButton;
 	
 	@FindBy(xpath = "//*[text()='Select Policy Group']")
@@ -33,11 +33,14 @@ public class DashboardPage extends BasePage{
 	@FindBy(xpath = "//*[text()='Proceed']")
 	private WebElement proceedButton;
 	
-	@FindBy(xpath = "//*[text()='Partner Certificate']")
+	@FindBy(id = "dashboard_partner_certificated_list_card")
 	private WebElement partnerCertificateTitle;
 	
-	@FindBy(xpath = "//*[text()='Policies']")
+	@FindBy(id = "dashboard_policies_card")
 	private WebElement policiesTitle;
+	
+	@FindBy(id = "dashboard_authentication_clients_list_card")
+	private WebElement AuthenticationServices;
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -97,6 +100,10 @@ public class DashboardPage extends BasePage{
 		return isElementDisplayed(policiesTitle);
 	}
 	
+	public boolean isAuthenticationServicesTitleDisplayed() {
+		return isElementDisplayed(AuthenticationServices);
+	}
+	
 	public  PoliciesPage clickOnPoliciesTitle() {
 		clickOnElement(policiesTitle);
 		return new PoliciesPage(driver);
@@ -105,6 +112,11 @@ public class DashboardPage extends BasePage{
 	public  PartnerCertificatePage clickOnPartnerCertificateTitle() {
 		clickOnElement(partnerCertificateTitle);
 		return new PartnerCertificatePage(driver);
+	}
+	
+	public  OidcClientPage clickOnAuthenticationServicesTitle() {
+		clickOnElement(AuthenticationServices);
+		return new OidcClientPage(driver);
 	}
 	
 }
