@@ -27,7 +27,7 @@ public class BasePage {
 
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
-		PageFactory.initElements(driver, this); // No need for AppiumFieldDecorator in Selenium
+		PageFactory.initElements(driver, this);
 	}
 
 	public static String getDateTime(){

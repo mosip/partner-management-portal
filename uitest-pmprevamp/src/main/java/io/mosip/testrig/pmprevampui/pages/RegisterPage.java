@@ -49,7 +49,6 @@ public class RegisterPage extends BasePage {
 		super(driver);
 	}
 
-	// Display check methods
 	public boolean isRegisterPageTitleDisplayed() {
 		return isElementDisplayed(registerPageTitle);
 	}

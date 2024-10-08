@@ -40,12 +40,8 @@ public class ApiKeyPage extends BasePage{
 	@FindBy(xpath = "//*[contains(text(), 'Status')]")
 	private WebElement StatusHeaderText;
 	
-	
 	@FindBy(xpath = "//*[contains(text(), 'Action')]")
 	private WebElement ActionHeaderText;
-	
-	
-	
 	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
@@ -107,7 +103,6 @@ public class ApiKeyPage extends BasePage{
 	public boolean isStatusHeaderTextDisplayed() {
 		return isElementDisplayed(StatusHeaderText);
 	}
-	
 	
 	public boolean isActionHeaderTextDisplayed() {
 		return isElementDisplayed(ActionHeaderText);

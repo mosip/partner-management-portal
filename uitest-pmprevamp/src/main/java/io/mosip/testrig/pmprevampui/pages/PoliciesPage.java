@@ -99,8 +99,4 @@ public class PoliciesPage extends BasePage{
 		return isElementEnabled(requestPolicyButton);
 	}
 	
-	
-	
-	
-	
 }

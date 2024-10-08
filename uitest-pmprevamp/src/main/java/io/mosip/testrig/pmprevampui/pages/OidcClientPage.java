@@ -76,9 +76,6 @@ public class OidcClientPage extends BasePage{
 	@FindBy(id = "create_oidc_policy_name")
 	private WebElement SelectPolicyNameForOidc;
 	
-	
-	
-	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
