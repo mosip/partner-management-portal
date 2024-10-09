@@ -22,7 +22,7 @@ import Pagination from "../../common/Pagination";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
-import UploadCertificate from "../../partner/certificates/UploadCertificate";
+import file_uploaded_successful from '../../../svg/file_uploaded_successful_icon.svg';
 import SuccessMessage from "../../common/SuccessMessage";
 
 function RootTrustCertificateList() {
@@ -423,7 +423,7 @@ function RootTrustCertificateList() {
                 styleSet={style}
               ></Title>
 
-              {certificateData.length > 0 && (
+              {certificateData.length === 0 && (
                 <button
                   id="root_certificate_upload_btn"
                   onClick={() => showUploadCertificate()}
@@ -435,7 +435,7 @@ function RootTrustCertificateList() {
               )}
             </div>
             <div className="flex-col justify-center ml-3 h-full">
-              {certificateData.length === 0 ? (
+              {certificateData.length > 0 ? (
                 <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                   {!showUploadCertificatePortal ?
                     <>
@@ -475,13 +475,16 @@ function RootTrustCertificateList() {
                         <div className="m-[1%] shadow-md pb-[1%] rounded-lg">
                           <div className={`flex items-center shadow-lg rounded-lg justify-between`}>
                             <div className="flex-col items-center w-full">
-                              <div className="flex items-center bg-[#edf2fc] p-[0.5rem]">
-                                <img src={file} className="h-8" alt="" />
+                              <div className={`flex items-center ${!uploading && fileName ? "bg-[#F4FAF4]" : "bg-[#edf2fc]"} p-[0.5rem]`}>
+                                {!uploading && fileName
+                                  ? <img src={file_uploaded_successful} className="h-8" alt="" />
+                                  : <img src={file} className="h-8" alt="" />
+                                }
                                 <div className="flex-col p-3 items-center">
                                   <h6 className={`text-sm font-semibold text-charcoal-gray`}>
-                                    {t('rootTrustCertificate.rootTrustCertTitle')}
+                                    {!uploading && fileName ? fileName : t('rootTrustCertificate.rootTrustCertTitle')}
                                   </h6>
-                                  <p className="text-xs text-light-gray">{t('partnerCertificatesList.certificateFormatMsg')}</p>
+                                  {uploading && <p className="text-xs text-light-gray">{t('partnerCertificatesList.certificateFormatMsg')}</p>}
                                 </div>
                               </div>
                               <hr className="border bg-medium-gray " />
