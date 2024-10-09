@@ -126,7 +126,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
         },
         {
-          path: 'rootTrustCertificateList',
+          path: 'admin/certificates/rootTrustCertificateList',
           element: <GuardedRoute><MainLayout><RootTrustCertificateList/></MainLayout></GuardedRoute>
         },
         {
