@@ -502,8 +502,7 @@
         "listOfFtmChipDetails": "List of FTM Chip details",
         "ftmChipProvider": "FTM Chip Provider",
         "ftmChipCertificate": " FTM Chip Certificate",
-        "originalCertSuccessMsg": "Original Certificate downloaded successfully.",
-        "mosipSignedCertificateSuccessMsg": "MOSIP Signed Certificate downloaded successfully."
+        "originalCertSuccessMsg": "FTM Chip certificate is downloaded successfully."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Manage FTM Chip Certificate",

@@ -85,6 +85,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("pendingRequests");
     };
     const showRootOfTrustCertificate = () => {
+        navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
         setActiveIcon("rootOfTrustCertificate");
     };
     const showPartner = () => {

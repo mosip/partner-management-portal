@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, handleMouseClickForDropdown, getPartnerManagerUrl } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -10,7 +10,6 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import UploadCertificate from "./../certificates/UploadCertificate";
-import DownloadCertificateButton from "../../common/DownloadCertificateButton";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import { HttpService } from "../../../services/HttpService";
@@ -26,13 +25,7 @@ function ViewFtmChipDetails() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [showDropDownOptions, setShowDropDownOptions] = useState(false);
     const [uploadCertificateData, setUploadCertificateData] = useState({});
-    const dropdownRef = useRef(null);
-
-    useEffect(() => {
-        handleMouseClickForDropdown(dropdownRef, () => setShowDropDownOptions(false))
-    }, [dropdownRef]);
 
     useEffect(() => {
         const selectedFtm = localStorage.getItem('selectedFtmData');
@@ -84,20 +77,6 @@ function ViewFtmChipDetails() {
             } else {
                 setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
                 downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
-            }
-        }
-    }
-
-    const getMosipSignedCertificate = async (ftmDetails) => {
-        if (ftmDetails.status === 'approved') {
-            const response = await getCertificate(ftmDetails.ftmId);
-            if (response !== null) {
-                if (response.isMosipSignedCertificateExpired) {
-                    setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-                } else {
-                    setSuccessMsg(t('viewFtmChipDetails.mosipSignedCertificateSuccessMsg'));
-                    downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
-                }
             }
         }
     }
@@ -156,14 +135,6 @@ function ViewFtmChipDetails() {
 
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
-    };
-
-    const viewFtmDownloadButtonStyle = {
-        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[5.6rem] ml-2" : "origin-bottom-left right-[5.6rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700 max-520:right-[3rem]`
-    };
-
-    const mangeFtmDownloadButtonStyle = {
-        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[13rem] ml-2" : "origin-bottom-left right-[13rem] mr-2"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700 max-640:right-[5.5rem] max-520:right-[3.5rem]`
     };
 
     return (
@@ -273,31 +244,17 @@ function ViewFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
-                                                < DownloadCertificateButton
-                                                    disableBtn={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'}
-                                                    downloadDropdownRef={dropdownRef}
-                                                    setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
-                                                    showDropDown={showDropDownOptions}
-                                                    onClickFirstOption={getOriginalCertificate}
-                                                    onClickSecondOption={getMosipSignedCertificate}
-                                                    requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
-                                                    styleSet={viewFtmDownloadButtonStyle}
-                                                    id='download_btn'
-                                                />
+                                                <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                    className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                    {t('commons.download')}
+                                                </button>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
                                                 <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                   < DownloadCertificateButton
-                                                        disableBtn={ftmDetails.isCertificateAvailable ? false : true}
-                                                        downloadDropdownRef={dropdownRef}
-                                                        setShowDropDown={() => setShowDropDownOptions(!showDropDownOptions)}
-                                                        showDropDown={showDropDownOptions}
-                                                        onClickFirstOption={getOriginalCertificate}
-                                                        onClickSecondOption={getMosipSignedCertificate}
-                                                        requiredData={{ ...ftmDetails, disableSecondOption: ftmDetails.status !== 'approved' }}
-                                                        styleSet={mangeFtmDownloadButtonStyle}
-                                                        id='download_btn'
-                                                    />
+                                                    <button id='download_btn' disabled={!ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                        className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${!ftmDetails.isCertificateAvailable ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                        {t('commons.download')}
+                                                    </button>
                                                     <button id="certificate_reupload_btn" onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                         {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                     </button>
