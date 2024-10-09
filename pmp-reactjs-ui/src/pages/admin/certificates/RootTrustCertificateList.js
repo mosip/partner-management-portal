@@ -254,6 +254,13 @@ function RootTrustCertificateList() {
     setFileName("");
     setUploading(false);
   };
+
+  const goBack = () => {
+    setFileName("");
+    setUploading(false);
+    setShowUploadCertificatePortal(false);
+  };
+
   const removeUpload = () => {
     setFileName("");
     setUploadSuccess(false);
@@ -416,7 +423,7 @@ function RootTrustCertificateList() {
                 styleSet={style}
               ></Title>
 
-              {certificateData.length > 0 && (
+              {certificateData.length === 0 && (
                 <button
                   id="root_certificate_upload_btn"
                   onClick={() => showUploadCertificate()}
@@ -428,7 +435,7 @@ function RootTrustCertificateList() {
               )}
             </div>
             <div className="flex-col justify-center ml-3 h-full">
-              {certificateData.length === 0 ? (
+              {certificateData.length > 0 ? (
                 <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                   {!showUploadCertificatePortal ?
                     <>
@@ -562,8 +569,12 @@ function RootTrustCertificateList() {
                           </div>
                           <hr className="border bg-medium-gray mt-[2rem]" />
                           <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end m-4`}>
-                            <button id="upload_admine_certificate_cancel_btn" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-/12 md:w-24 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
-                            <button id="upload_admine_certificate_btn" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-24 h-10 border-[#1447B2] border rounded-md text-sm bg-tory-blue text-white font-semibold`}>{t('commons.goBack')}</button>
+                            <button id="upload_admine_certificate_cancel_btn" onClick={cancelUpload} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-/12 md:w-[7rem] h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>
+                              {t('commons.cancel')}
+                            </button>
+                            <button id="upload_admine_certificate_btn" onClick={goBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-[7rem] h-10 border-[#1447B2] border rounded-md text-sm bg-tory-blue text-white font-semibold`}>
+                              {t('commons.goBack')}
+                            </button>
                           </div>
                         </div>
                       </div>
