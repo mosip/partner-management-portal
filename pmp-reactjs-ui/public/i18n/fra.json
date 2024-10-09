@@ -539,6 +539,10 @@
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire"
     },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
+        "caCertificates": "Certificats CA"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."

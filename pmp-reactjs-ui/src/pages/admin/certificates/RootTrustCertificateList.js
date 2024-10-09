@@ -417,13 +417,12 @@ function RootTrustCertificateList() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
-              <Title
-                title="rootTrustCertificate.rootTrustCertTitle"
-                backLink="/partnermanagement"
-                styleSet={style}
-              ></Title>
+              {certificateData.length > 0
+                ? <Title title="viewRootOfTrustCertificate.viewRootOfTrustCertificate" backLink="/partnermanagement" subTitle2="viewRootOfTrustCertificate.caCertificates" styleSet={style}/>
+                : <Title title="rootTrustCertificate.rootTrustCertTitle" backLink="/partnermanagement" styleSet={style}/>
+              }
 
-              {certificateData.length === 0 && (
+              {certificateData.length > 0 && (
                 <button
                   id="root_certificate_upload_btn"
                   onClick={() => showUploadCertificate()}
@@ -435,7 +434,7 @@ function RootTrustCertificateList() {
               )}
             </div>
             <div className="flex-col justify-center ml-3 h-full">
-              {certificateData.length > 0 ? (
+              {certificateData.length === 0 ? (
                 <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                   {!showUploadCertificatePortal ?
                     <>

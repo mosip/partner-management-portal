@@ -534,6 +534,10 @@
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain"
     },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "View Root of Trust Certificate",
+        "caCertificates": "Ca Certificates"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
