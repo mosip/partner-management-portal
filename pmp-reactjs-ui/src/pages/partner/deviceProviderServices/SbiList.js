@@ -95,8 +95,7 @@ function SbiList() {
             sbiVersion: sbi.sbiVersion,
             status: sbi.status,
             canAddDevices: canAddDevices(sbi),
-            partnerId: sbi.partnerId,
-            orgName: sbi.orgName
+            partnerId: sbi.partnerId
         };
 
         localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));

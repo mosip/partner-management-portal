@@ -445,7 +445,7 @@
         "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils.",
         "unableToAddDevice": "Impossible d'ajouter l'appareil, veuillez réessayer plus tard",
         "unableToAddDeviceReason": "Impossible d'ajouter l'appareil pour la raison suivante: ",
-        "unableToAddApprovedDevice": "Impossible d'ajouter l'appareil car un appareil de la même marque et du même modèle est déjà approuvé par le même SBI ou par un SBI différent."
+        "errorInAddDevice": "Impossible d'ajouter l'appareil car un appareil de la même marque et du même modèle est déjà approuvé par le même SBI ou par un SBI différent."
     },
     "deactivateSbi": {
         "headerMsg": "Voulez-vous désactiver la version SBI ",

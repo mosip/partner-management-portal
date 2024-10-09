@@ -440,7 +440,7 @@
         "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.",
         "unableToAddDevice": "Unable to add the device, please try again later",
         "unableToAddDeviceReason": "Unable to add the device due to the following reason: ",
-        "unableToAddApprovedDevice": "Unable to add the device because a device with the same make and model is already approved under either the same or a different SBI."
+        "errorInAddDevice": "Unable to add the device because a device with the same make and model is already approved under either the same or a different SBI."
     },
     "deactivateSbi": {
         "headerMsg": "Do you want to deactivate SBI Version ",

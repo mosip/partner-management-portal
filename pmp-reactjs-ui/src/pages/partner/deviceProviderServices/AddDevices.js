@@ -249,10 +249,10 @@ function AddDevices() {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === "PMS_AUT_003") {
                     const deviceDetails = await searchDeviceDetails(entry, index);
-                    if (deviceDetails.id) {
+                    if (deviceDetails && deviceDetails.id) {
                         inactiveMappingDeviceToSbi(deviceDetails.id, index);
                     } else {
-                        newEntries[index].errorMsg = t('addDevices.unableToAddApprovedDevice');
+                        newEntries[index].errorMsg = t('addDevices.errorInAddDevice');
                         setDeviceEntries(newEntries);
                     }
                 } else {
@@ -274,7 +274,7 @@ function AddDevices() {
         const searchRequest = createRequest({
             filters: [
                 {"columnName": "deviceProviderId", "type": "equals", "value": selectedSbidata.partnerId},
-                {"columnName": "partnerOrganizationName", "type": "equals", "value": selectedSbidata.orgName},
+                {"columnName": "partnerOrganizationName", "type": "equals", "value": getUserProfile().orgName},
                 {"columnName": "deviceTypeCode", "type": "equals", "value": entry.deviceType},
                 {"columnName": "deviceSubTypeCode", "type": "equals", "value": entry.deviceSubType},
                 {"columnName": "make", "type": "equals", "value": trimAndReplace(entry.make)},
