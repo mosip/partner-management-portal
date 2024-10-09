@@ -249,10 +249,10 @@ function AddDevices() {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === "PMS_AUT_003") {
                     const deviceDetails = await searchDeviceDetails(entry, index);
-                    if (deviceDetails) {
-                        inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    if (deviceDetails.id) {
+                        inactiveMappingDeviceToSbi(deviceDetails.id, index);
                     } else {
-                        newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
+                        newEntries[index].errorMsg = t('addDevices.unableToAddApprovedDevice');
                         setDeviceEntries(newEntries);
                     }
                 } else {
@@ -274,14 +274,15 @@ function AddDevices() {
         const searchRequest = createRequest({
             filters: [
                 {"columnName": "deviceProviderId", "type": "equals", "value": selectedSbidata.partnerId},
-                {"columnName": "partnerOrganizationName", "type": "equals", "value": getUserProfile().orgName},
+                {"columnName": "partnerOrganizationName", "type": "equals", "value": selectedSbidata.orgName},
                 {"columnName": "deviceTypeCode", "type": "equals", "value": entry.deviceType},
                 {"columnName": "deviceSubTypeCode", "type": "equals", "value": entry.deviceSubType},
                 {"columnName": "make", "type": "equals", "value": trimAndReplace(entry.make)},
-                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)}
+                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)},
+                {"columnName": "approvalStatus", "type": "equals", "value": "pending_approval"}
             ],
             sort: [],
-            pagination: {pageStart: 0, pageFetch: 10},
+            pagination: {pageStart: 0, pageFetch: 100},
             languageCode: "eng",
             purpose: "REGISTRATION",
             deviceProviderId: selectedSbidata.partnerId
@@ -290,13 +291,11 @@ function AddDevices() {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV), searchRequest);
             if (response?.data?.response) {
                 const searchDetails = response.data.response.data;
-                let filteredArr = [];
-                searchDetails.forEach(item => {
-                    if ((item['approvalStatus'] === "pending_approval") || (item['approvalStatus'] === "approved" && item["isActive"])) {
-                        filteredArr.push(item);
-                    }
-                });
-                return filteredArr;
+                let filteredItem = {};
+                if (searchDetails !== null) {
+                    filteredItem = searchDetails.find(item => item.make === entry.make && item.model === entry.model);
+                }
+                return filteredItem;
             } else {
                 handleError(response.data, index, newEntries);
             }
