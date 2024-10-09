@@ -423,7 +423,7 @@ function RootTrustCertificateList() {
                 styleSet={style}
               ></Title>
 
-              {certificateData.length === 0 && (
+              {certificateData.length > 0 && (
                 <button
                   id="root_certificate_upload_btn"
                   onClick={() => showUploadCertificate()}
@@ -435,7 +435,7 @@ function RootTrustCertificateList() {
               )}
             </div>
             <div className="flex-col justify-center ml-3 h-full">
-              {certificateData.length > 0 ? (
+              {certificateData.length === 0 ? (
                 <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                   {!showUploadCertificatePortal ?
                     <>
