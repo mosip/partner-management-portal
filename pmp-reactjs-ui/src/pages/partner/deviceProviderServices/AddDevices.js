@@ -251,13 +251,16 @@ function AddDevices() {
                     const deviceDetails = await searchDeviceDetails(entry, index);
                     if (deviceDetails) {
                         inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    } else {
+                        newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
+                        setDeviceEntries(newEntries);
                     }
                 } else {
                     handleError(response.data, index, newEntries);
                 }
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.errorInAddingDevice');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error("Error fetching data: ", err);
         }
@@ -298,7 +301,7 @@ function AddDevices() {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.errorWhileFetchingDeviceDetails');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error("Error fetching data: ", err);
         }
@@ -330,7 +333,7 @@ function AddDevices() {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error('Error fetching data:', err);
         }
@@ -340,8 +343,17 @@ function AddDevices() {
     const handleError = (responseData, index, newEntries) => {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
-            const errorMessage = responseData.errors[0].message;
-            newEntries[index].errorCode = errorCode;
+            let errorMessage = responseData.errors[0].message;
+            if (errorCode) {
+                const serverErrors = t('serverError', { returnObjects: true });
+                if (serverErrors[errorCode]) {
+                    errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                } else {
+                    errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                }
+            } else {
+                errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+            }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);
             console.error('Error:', errorMessage);
