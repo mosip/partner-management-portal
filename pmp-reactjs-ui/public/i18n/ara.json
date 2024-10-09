@@ -5,7 +5,8 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "back": "خلف",
+        "back": "خلف", 
+        "cancel": "يلغي",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
@@ -516,7 +517,6 @@
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
     "rootTrustCertificate":{
-        "rootTrustCertTitle": "تحميل شهادة جذر الثقة",
         "organisation": "منظمة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -533,6 +533,15 @@
         "selectStatus": "حدد الحالة",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر"
+    },
+    "uploadRootofTrustCertificate": {
+        "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
+        "partnerDomain": "مجال الشريك",
+        "dropdownPlaceholder": "حدد مجال الشريك"
+    },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
+        "caCertificates": "شهادات كاليفورنيا"
     },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
