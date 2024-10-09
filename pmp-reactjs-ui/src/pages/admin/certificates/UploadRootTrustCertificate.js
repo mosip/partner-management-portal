@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { createDropdownData, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title'; import DropdownComponent from "../../common/fields/DropdownComponent";
-
 import file from '../../../svg/file_icon.svg';
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
@@ -12,7 +11,7 @@ import SuccessMessage from "../../common/SuccessMessage";
 import file_uploaded_successful from '../../../svg/file_uploaded_successful_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 
-function UploadRootOfCertificate() {
+function UploadRootTrustCertificate() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -20,6 +19,7 @@ function UploadRootOfCertificate() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [uploading, setUploading] = useState(false);
+    const [selectedDomain, setSelectedDomain] = useState('');
     const [certificateData, setCertificateData] = useState([]);
     const [removeLastUploadData, setRemoveLastUploadData] = useState(false);
     const [fileName, setFileName] = useState('');
@@ -78,8 +78,8 @@ function UploadRootOfCertificate() {
         }
     };
 
-    const onDomainChangeEvent = () => {
-
+    const onDomainChangeEvent = (value) => {
+        setSelectedDomain(value);
     };
 
     const uploadCertificateDropdownStyle = {
@@ -102,7 +102,7 @@ function UploadRootOfCertificate() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             <div className="flex-col mt-7">
                 <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" backLink="/partnermanagement" styleSet={style} />
                 <div className="flex-col justify-center mt-3 h-full">
@@ -147,17 +147,19 @@ function UploadRootOfCertificate() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`flex-col pt-[0.5rem] justify-center w-[47rem] ${isLoginLanguageRTL ? 'pr-[23rem]' : 'pl-[23rem]'}`}>
+                            <div className={`flex-col pt-[0.5rem] justify-center w-[47rem] ${isLoginLanguageRTL ? 'pr-[31%]' : 'pl-[31%]'}`}>
                                 <DropdownComponent
+                                    fieldName='partnerDomain'
                                     fieldNameKey='uploadRootofTrustCertificate.partnerDomain'
                                     onDropDownChangeEvent={onDomainChangeEvent}
                                     dropdownDataList={[
-                                        { fieldValue: '1', fieldCode: 'FTM' },
-                                        { fieldValue: '2', fieldCode: 'DEVICE' },
-                                        { fieldValue: '3', fieldCode: 'AUTH' }
+                                        { fieldValue: 'FTM', fieldCode: 'FTM' },
+                                        { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
+                                        { fieldValue: 'AUTH', fieldCode: 'AUTH' }
                                     ]}
                                     placeHolderKey='uploadRootofTrustCertificate.dropdownPlaceholder'
                                     isPlaceHolderPresent={true}
+                                    selectedDropdownValue={selectedDomain}
                                     styleSet={uploadCertificateDropdownStyle}
                                     id='partnerDomain_selector_dropdown'
                                 />
@@ -207,8 +209,8 @@ function UploadRootOfCertificate() {
                             </div>
                             <hr className="border bg-medium-gray mt-[2rem]" />
                             <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end p-[1.5rem]`}>
-                                <button id="upload_admine_certificate_cancel_btn" onClick={cancelUpload} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-/12 md:w-24 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
-                                <button id="upload_admine_certificate_btn" onClick={goBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-24 h-10 border-[#1447B2] border rounded-md text-sm bg-tory-blue text-white font-semibold`}>{t('commons.goBack')}</button>
+                                <button id="upload_admin_certificate_cancel_btn" onClick={cancelUpload} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-/12 md:w-24 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
+                                <button id="upload_admin_certificate_btn" onClick={goBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-24 h-10 border-[#1447B2] border rounded-md text-sm bg-tory-blue text-white font-semibold`}>{t('commons.goBack')}</button>
                             </div>
                         </div>
                     </div>
@@ -218,4 +220,4 @@ function UploadRootOfCertificate() {
     )
 }
 
-export default UploadRootOfCertificate;
+export default UploadRootTrustCertificate;
