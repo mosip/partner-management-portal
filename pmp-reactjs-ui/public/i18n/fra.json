@@ -6,10 +6,11 @@
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
         "back": "Dos",
+        "cancel": "Annuler",
         "submit": "Soumettre",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
-        "somethingWentWrong": "Quelque chose s'est mal passé !",
+        "somethingWentWrong": "Quelque chose s'est mal passé !",
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
@@ -44,7 +45,7 @@
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
         "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
-        "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
+        "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
         "pendingRequests": "Demandes en attente",
         "pendingRequestsDesc": "Approuver/Rejeter les demandes en attente de divers partenaires",
@@ -93,7 +94,7 @@
         "submit": "Soumettre",
         "viewLess": "Voir moins",
         "viewMore": "Voir plus",
-        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
+        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
     },
     "loading": "chargement",
     "partnerCertificatesList": {
@@ -210,10 +211,10 @@
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
-        "policySuccessHeader": "Politique soumise avec succès !",
+        "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
         "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
-        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -242,7 +243,7 @@
         "policyNamePlaceHolder": "Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "name": "Nom",
-        "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
+        "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
         "enterNameForOidcClient": "Entrez un nom pour le client OIDC",
         "publicKey": "Clé publique",
         "publicKeyToolTip": "Seul le format JWK est autorisé",
@@ -256,7 +257,7 @@
         "enterGrantTypes": "Entrez les types de subventions",
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
-        "requestSuccessHeader": "Détails soumis avec succès !",
+        "requestSuccessHeader": "Détails soumis avec succès !",
         "requestSuccessMsg": "Les détails du client OIDC ont été soumis avec succès.",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
         "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur",
@@ -324,7 +325,7 @@
     "editOidcClient": {
         "editOidcClient": "Modifier le client OIDC",
         "authenticationServiceSection": "Services d'authentification",
-        "editSuccessHeader": "Détails modifiés soumis avec succès !",
+        "editSuccessHeader": "Détails modifiés soumis avec succès !",
         "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès."
     },
     "deactivateOidcClient": {
@@ -347,10 +348,10 @@
         "selectedPolicyName": "Sélectionnez la stratégie pour laquelle la clé API est requise",
         "name": "nom",
         "enterNameForApiKey": "Entrez un nom pour la clé API",
-        "generateApiKeySuccessHeader": "Détails soumis avec succès !",
+        "generateApiKeySuccessHeader": "Détails soumis avec succès !",
         "apiKeySuccessMsg": "Les détails de la clé API ont été soumis avec succès.",
         "errorInGenerateApiKey": "Lors de la génération de la clé API, nous avons rencontré une erreur.",
-        "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
+        "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
     },
     "deactivateApiKey": {
         "apiKeyName": "Voulez-vous désactiver la clé API",
@@ -397,7 +398,7 @@
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
-        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
+        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
     },
     "devicesList": {
         "addDevices": "Ajouter des périphériques",
@@ -425,7 +426,7 @@
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
-        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
+        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
         "deviceType": "Type d'appareil",
         "selectDeviceType": "Sélectionner le type d'appareil",
         "deviceSubType": "Sous-type d'appareil",
@@ -516,7 +517,6 @@
         "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
     "rootTrustCertificate":{
-        "rootTrustCertTitle": "Télécharger le certificat racine de confiance",
         "organisation": "Organisation",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
@@ -534,6 +534,15 @@
         "deActivate": "Désactiver",
         "view": "Voir"
     },
+    "uploadRootofTrustCertificate": {
+        "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
+        "partnerDomain": "Domaine partenaire",
+        "dropdownPlaceholder": "Sélectionnez un domaine partenaire"
+    },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
+        "caCertificates": "Certificats CA"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
@@ -548,7 +557,7 @@
         "consentSaveError": "Erreur lors de l'enregistrement du consentement de l'utilisateur"
     },
     "blockerMessage": {
-        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
         "cancel": "Annuler",
         "proceed": "Procéder"
     },
