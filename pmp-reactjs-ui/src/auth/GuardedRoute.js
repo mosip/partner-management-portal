@@ -12,12 +12,11 @@ const GuardedRoute = ({ children }) => {
 
   useEffect(() => {
     setupResponseInterceptor(navigate);
-    const userProfile = getUserProfile();
 
     //if user is accessing partneradmin path
     const isPartnerAdminPath = location.pathname.includes('admin');
     // If user is on a partnerAdmin path, ensure they have admin privileges
-    if (isPartnerAdminPath && !userProfile.roles.includes('PARTNER_ADMIN')) {
+    if (isPartnerAdminPath && localStorage.getItem("isAdmin") === 'false') {
       navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
     };
 
