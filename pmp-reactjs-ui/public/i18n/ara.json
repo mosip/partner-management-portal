@@ -154,7 +154,9 @@
         "deactivated": "معطل",
         "activated": "نشط",
         "pendingCertUpload": "في انتظار تحميل الشهادة",
-        "expired": "منتهي الصلاحية"
+        "expired": "منتهي الصلاحية",
+        "uploaded": "تم الرفع",
+        "notUploaded": "لم يتم الرفع"
     },
     "policies": {
         "policies": "سياسات",
@@ -545,6 +547,27 @@
         "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
         "caCertificates": "شهادات كاليفورنيا"
     },
+    "partnerList":{
+        "partnerTitle": "شريك",
+        "listOfPartnerTitle": "قائمة الشركاء",
+        "partnerId": "معرف الشريك",
+        "organisation": "اسم المنظمة",
+        "partnerType": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "email": "عنوان البريد الإلكتروني",
+        "certUploadStatus": "شهادة. حالة التحميل",
+        "status": "حالة",
+        "action": "فعل",
+        "noData": "لا توجد بيانات",
+        "deActivate": "إلغاء التنشيط",
+        "view": "منظر",
+        "selectPartnerId": "حدد معرف الشريك",
+        "selectOrganisation":"حدد المنظمة",
+        "selectPartnerType":"حدد نوع الشريك",
+        "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
+        "selectPolicyGroup":"حدد مجموعة السياسات",
+        "selectStatus":"حدد الحالة"
+     },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."

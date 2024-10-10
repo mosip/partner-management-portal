@@ -154,7 +154,9 @@
         "deactivated": "Désactivé",
         "activated": "Actif",
         "pendingCertUpload": "En attente de téléchargement du certificat",
-        "expired": "Expiré"
+        "expired": "Expiré",
+        "uploaded": "Téléchargé",
+        "notUploaded": "Non téléchargé"
     },
     "policies": {
         "policies": "Stratégies",
@@ -545,6 +547,27 @@
         "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
         "caCertificates": "Certificats CA"
     },
+    "partnerList":{
+        "partnerTitle": "Partenaire",
+        "listOfPartnerTitle": "Liste des partenaires",
+        "partnerId": "ID partenairePartenaires",
+        "organisation": "Nom de l'organisation",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "email": "Adresse email",
+        "certUploadStatus": "Cert. Statut de téléchargement",
+        "status": "Statut",
+        "action": "Action",
+        "noData": "Aucune donnée",
+        "deActivate": "Désactiver",
+        "view": "Voir",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
+        "selectOrganisation":"Sélectionnez une organisation",
+        "selectPartnerType":"Sélectionnez le type de partenaire",
+        "selectEmailAddress": "Sélectionnez l'adresse e-mail",
+        "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
+        "selectStatus":"Sélectionnez le statut"
+     },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
