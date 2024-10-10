@@ -30,6 +30,7 @@ export const setupResponseInterceptor = (navigate) => {
           "langCode": userData.locale ? userData.locale : 'eng',
           "roles": resp.role
         };
+        localStorage.setItem("isAdmin", resp.role.includes("PARTNER_ADMIN"))
         setUserProfile(profile);
         console.log(profile);
       }
