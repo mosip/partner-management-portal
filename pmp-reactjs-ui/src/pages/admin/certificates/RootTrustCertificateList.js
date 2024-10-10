@@ -3,14 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
-import {
-  formatDate,
-  getStatusCode,
-  handleMouseClickForDropdown,
-  toggleSortAscOrder,
-  toggleSortDescOrder,
-  bgOfStatus,
-} from "../../../utils/AppUtils";
+import { formatDate, getStatusCode, handleMouseClickForDropdown, toggleSortAscOrder, toggleSortDescOrder, bgOfStatus,} from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";

@@ -538,7 +538,8 @@
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
         "partnerDomain": "مجال الشريك",
-        "dropdownPlaceholder": "حدد مجال الشريك"
+        "dropdownPlaceholder": "حدد مجال الشريك",
+        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
     "viewRootOfTrustCertificate": {
         "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
