@@ -1,7 +1,7 @@
 import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { createDropdownData, createRequest, getPartnerManagerUrl, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title'; import DropdownComponent from "../../common/fields/DropdownComponent";
 import file from '../../../svg/file_icon.svg';
@@ -10,6 +10,7 @@ import fileDescription from '../../../svg/file_description.svg';
 import SuccessMessage from "../../common/SuccessMessage";
 import file_uploaded_successful from '../../../svg/file_uploaded_successful_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
+import { HttpService } from '../../../services/HttpService';
 
 function UploadRootTrustCertificate() {
     const { t } = useTranslation();
@@ -20,7 +21,7 @@ function UploadRootTrustCertificate() {
     const [successMsg, setSuccessMsg] = useState("");
     const [uploading, setUploading] = useState(false);
     const [selectedDomain, setSelectedDomain] = useState('');
-    const [certificateData, setCertificateData] = useState([]);
+    const [certificateData, setCertificateData] = useState('');
     const [removeLastUploadData, setRemoveLastUploadData] = useState(false);
     const [fileName, setFileName] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -29,9 +30,10 @@ function UploadRootTrustCertificate() {
     const cancelUpload = () => {
         setFileName("");
         setUploading(false);
+        setSelectedDomain('');
     };
 
-    const goBack = () => {
+    const submit = () => {
         setFileName("");
         setUploading(false);
         navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
@@ -49,6 +51,42 @@ function UploadRootTrustCertificate() {
     };
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
+    };
+
+    const certificateSubmit = async (certificateData, selectedDomain) => {
+        setSuccessMsg("");
+        setErrorCode("");
+        const uploadRequest = createRequest({
+            certificateData: certificateData,
+            partnerDomain: selectedDomain
+        });
+        try {
+            let response;
+            response = await HttpService.post(getPartnerManagerUrl('/partners/certificate/ca/upload', process.env.NODE_ENV), uploadRequest)
+            if (response !== null) {
+                const resData = response.data.response;
+                if (response.data.errors && response.data.errors.length > 0) {
+                    const errorCode = response.data.errors[0].errorCode;
+                    const errorMessage = response.data.errors[0].message;
+                    setUploadFailure(true);
+                    setErrorCode(errorCode)
+                    setErrorMsg(errorMessage);
+                } else if (resData === null) {
+                    setUploadFailure(true);
+                    setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
+                } else {
+                    setUploadSuccess(true);
+                    setSuccessMsg({partnerDomain: selectedDomain}, 'uploadRootofTrustCertificate.successMsg');
+                }
+            } else {
+                setUploadFailure(true);
+                setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
+            }
+        } catch (err) {
+            setUploadFailure(true);
+            setErrorMsg(err);
+            console.log("Unable to upload partner certificate: ", err);
+        }
     };
 
     const handleFileChange = (event) => {
@@ -71,6 +109,7 @@ function UploadRootTrustCertificate() {
                     }, 2000);
                 }
                 reader.readAsText(file);
+                certificateSubmit(certificateData, selectedDomain);
             } else {
                 setUploadFailure(true);
                 setErrorMsg(t('uploadCertificate.fileUploadError'));
@@ -78,7 +117,7 @@ function UploadRootTrustCertificate() {
         }
     };
 
-    const onDomainChangeEvent = (value) => {
+    const onDomainChangeEvent = (fieldName, value) => {
         setSelectedDomain(value);
     };
 
@@ -110,8 +149,8 @@ function UploadRootTrustCertificate() {
                         <div className="m-[1%] shadow-md rounded-lg">
                             <div className={`flex items-center shadow-lg rounded-lg justify-between`}>
                                 <div className="flex-col items-center w-full">
-                                    <div className={`flex items-center ${!uploading && fileName ? "bg-[#F4FAF4]" : "bg-[#edf2fc]"} p-[0.5rem]`}>
-                                        {!uploading && fileName
+                                    <div className={`flex items-center ${uploadSuccess && fileName ? "bg-[#F4FAF4]" : "bg-[#edf2fc]"} p-[0.5rem]`}>
+                                        {uploadSuccess && fileName
                                             ? <img src={file_uploaded_successful} className="h-8" alt="" />
                                             : <img src={file} className="h-8" alt="" />
                                         }
@@ -126,15 +165,15 @@ function UploadRootTrustCertificate() {
                                     <div className="flex items-center p-3 bg-white rounded-lg gap-x-10">
                                         <div className="flex-col">
                                             <p className="font-semibold text-xs text-dim-gray">{t('uploadRootofTrustCertificate.partnerDomain')}</p>
-                                            <p className="font-bold text-sm text-charcoal-gray">-</p>
+                                            <p className="font-semibold text-xs text-charcoal-gray">{!uploadSuccess && selectedDomain}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">-</p>
+                                            <p className="font-semibold text-xs text-charcoal-gray">-</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                             <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">-</p>
+                                            <p className="font-semibold text-xs text-charcoal-gray">-</p>
                                         </div>
                                     </div>
                                     <div className="relative">
@@ -147,7 +186,7 @@ function UploadRootTrustCertificate() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`flex-col pt-[0.5rem] justify-center w-[47rem] ${isLoginLanguageRTL ? 'pr-[31%]' : 'pl-[31%]'}`}>
+                            <div className={`flex-col pt-[0.5rem] justify-center w-[47.5rem] ${isLoginLanguageRTL ? 'pr-[31%]' : 'pl-[31%]'}`}>
                                 <DropdownComponent
                                     fieldName='partnerDomain'
                                     fieldNameKey='uploadRootofTrustCertificate.partnerDomain'
@@ -157,9 +196,8 @@ function UploadRootTrustCertificate() {
                                         { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
                                         { fieldValue: 'AUTH', fieldCode: 'AUTH' }
                                     ]}
-                                    placeHolderKey='uploadRootofTrustCertificate.dropdownPlaceholder'
+                                    placeHolderKey={selectedDomain ? selectedDomain : 'uploadRootofTrustCertificate.dropdownPlaceholder'}
                                     isPlaceHolderPresent={true}
-                                    selectedDropdownValue={selectedDomain}
                                     styleSet={uploadCertificateDropdownStyle}
                                     id='partnerDomain_selector_dropdown'
                                 />
@@ -210,7 +248,7 @@ function UploadRootTrustCertificate() {
                             <hr className="border bg-medium-gray mt-[2rem]" />
                             <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end p-[1.5rem]`}>
                                 <button id="upload_admin_certificate_cancel_btn" onClick={cancelUpload} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-/12 md:w-24 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
-                                <button id="upload_admin_certificate_btn" onClick={goBack} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-24 h-10 border-[#1447B2] border rounded-md text-sm bg-tory-blue text-white font-semibold`}>{t('commons.goBack')}</button>
+                                <button disabled={!fileName} id="upload_admin_certificate_btn" onClick={submit} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-8/12 md:w-24 h-10 ${!fileName ? 'bg-[]#cfd1d4] border-[#cfd1d4] text-[#65676b]' : 'border-[#1447B2] bg-tory-blue text-white'}  border rounded-md text-sm font-semibold`}>{t('commons.submit')}</button>
                             </div>
                         </div>
                     </div>

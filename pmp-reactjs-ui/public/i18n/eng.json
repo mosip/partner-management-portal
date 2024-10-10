@@ -533,7 +533,8 @@
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate":"Upload Root of Trust Certificate",
         "partnerDomain": "Partner Domain",
-        "dropdownPlaceholder": "Select partner domain"
+        "dropdownPlaceholder": "Select partner domain",
+        "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
     },
     "viewRootOfTrustCertificate": {
         "viewRootOfTrustCertificate": "View Root of Trust Certificate",
