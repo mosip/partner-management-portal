@@ -194,7 +194,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50 !mx-0">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
+                <div className={`bg-white break-normal md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
                         <div className="flex items-center h-[30rem]">
                             <LoadingIcon></LoadingIcon>
@@ -246,10 +246,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
                                                 <label htmlFor="fileInput" tabIndex={0} onKeyPress={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()} className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
                                                     <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10"/>
-                                                    <h5 className="text-charcoal-gray text-base font-normal">
+                                                    <h5 className="text-charcoal-gray text-base font-normal px-2">
                                                         {t('uploadCertificate.selectCertificate')}
                                                     </h5>
-                                                    <p className="text-xs text-light-gray">
+                                                    <p className="text-xs text-light-gray px-2">
                                                         {t('uploadCertificate.certificateFormat')}
                                                     </p>
                                                 </label>

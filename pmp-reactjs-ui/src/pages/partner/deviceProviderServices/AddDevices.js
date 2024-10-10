@@ -244,13 +244,13 @@ function AddDevices() {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
 
             if (response?.data?.response?.id) {
-                inactiveMappingDeviceToSbi(response.data.response.id, index);
+                inactiveMappingDeviceToSbi(response.data.response.id, index, false);
             } else {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === "PMS_AUT_003") {
                     const deviceDetails = await searchDeviceDetails(entry, index);
                     if (deviceDetails && deviceDetails.id) {
-                        inactiveMappingDeviceToSbi(deviceDetails.id, index);
+                        inactiveMappingDeviceToSbi(deviceDetails.id, index, true);
                     } else {
                         newEntries[index].errorMsg = t('addDevices.errorInAddDevice');
                         setDeviceEntries(newEntries);
@@ -307,7 +307,7 @@ function AddDevices() {
         setDataLoaded(true);
     };
 
-    const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
+    const inactiveMappingDeviceToSbi = async (deviceDetailId, index, isDeviceAlreadyMapped) => {
         const newEntries = [...deviceEntries];
         setDataLoaded(false);
         try {
@@ -325,7 +325,7 @@ function AddDevices() {
 
             if (response?.data?.response) {
                 newEntries[index].isSubmitted = true;
-                newEntries[index].successMsg = t('addDevices.successMsg');
+                newEntries[index].successMsg = isDeviceAlreadyMapped ? t('addDevices.successMsgForExistingDeviceMapping') : t('addDevices.successMsgForNewDeviceMapping');
                 setDeviceEntries(newEntries);
                 updateButtonStates();
             } else {
