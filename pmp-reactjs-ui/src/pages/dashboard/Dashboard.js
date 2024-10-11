@@ -168,6 +168,10 @@ function Dashboard() {
     navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
   }
 
+  const partnersList = () =>{
+    navigate('/partnermanagement/admin/partnersList')
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -293,7 +297,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={partner_admin_icon} alt="" className="w-8 h-8"></img>
                   </div>

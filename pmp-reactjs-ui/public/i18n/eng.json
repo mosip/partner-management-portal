@@ -154,7 +154,9 @@
         "deactivated": "Deactivated",
         "activated": "Activated",
         "pendingCertUpload": "Pending For Certificate Upload",
-        "expired": "Expired"
+        "expired": "Expired",
+        "uploaded": "Uploaded",
+        "notUploaded": "Not Uploaded"
     },
     "policies": {
         "policies": "Policies",
@@ -539,6 +541,27 @@
     "viewRootOfTrustCertificate": {
         "viewRootOfTrustCertificate": "View Root of Trust Certificate",
         "caCertificates": "Ca Certificates"
+    },
+    "partnerList":{
+       "partnerTitle": "Partner",
+       "listOfPartnerTitle": "List of Partners",
+       "partnerId": "Partner ID",
+       "organisation": "Organisation Name",
+       "partnerType": "Partner Type",
+       "policyGroup": "Policy Group",
+       "email": "Email Address",
+       "certUploadStatus": "Cert. Upload Status",
+       "status": "Status",
+       "action": "Action",
+       "noData": "No Data",
+       "deActivate": "Deactivate",
+       "view": "View",
+       "selectPartnerId": "Select Partner ID",
+       "selectOrganisation":"Select Organisation",
+       "selectPartnerType":"Select Partner Type",
+       "selectEmailAddress": "Select Email Address",
+       "selectPolicyGroup":"Select Policy Group",
+       "selectStatus":"Select Status"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
