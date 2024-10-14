@@ -539,6 +539,8 @@
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
+        "rootTrustCertificate": "Certificat racine de confiance",
+        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner les champs et télécharger le certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
