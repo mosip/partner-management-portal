@@ -6,10 +6,11 @@ import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../u
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
 
-function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex}) {
+function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter=false, getPaginationValues }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
+    const [selectedPage, setSelctedPage] = useState(0);
     const itemsPerPageOptions = [8, 16, 24, 32];
     const itemsCountSelectionRef = useRef(null);
 
@@ -17,7 +18,13 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
         handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
     }, [itemsCountSelectionRef]);
 
+    useEffect(() =>{
+        if(isServerSideFilter)
+           getPaginationValues(selectedRecordsPerPage, selectedPage);
+    }, [selectedPage, selectedRecordsPerPage])
+
     const handlePageChange = (event) => {
+        setSelctedPage(event.selected);
         const newIndex = (event.selected * selectedRecordsPerPage) % dataList.length;
         setFirstIndex(newIndex);
     };

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { isLangRTL, onPressEnterKey, createRequest, getPartnerManagerUrl } from "../../../utils/AppUtils";
 import {
   formatDate,
   getStatusCode,
@@ -19,6 +19,7 @@ import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
+import { HttpService } from "../../../services/HttpService";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ function PartnersList() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [filterDataLoaded, setFilterDataLoaded] = useState(true);
   const [partnersData, setPartnersData] = useState([]);
   const [filteredPartnersData, setFilteredPartnersData] = useState([]);
   const [order, setOrder] = useState("ASC");
@@ -43,6 +45,7 @@ function PartnersList() {
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
   const submenuRef = useRef([]);
+  const [filterRequest, setFilterRequest] = useState({"filters": [], "sort": [], "pagination": {"pageStart":firstIndex, "pageFetch":selectedRecordsPerPage}, "partnerType": 'all'})
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewPartnersId(-1));
@@ -207,17 +210,38 @@ function PartnersList() {
     fetchData();
   }, []);
 
-  const showPartnerDetails = (selectedPartnerData) => {
-   
-  };
+  const showPartnerDetails = (selectedPartnerData) => {};
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
 
+  // server side filter code
+  useEffect(() =>{
+    const request = createRequest({...filterRequest});
+    console.log(request)
+    try {
+      setFilterDataLoaded(false)
+      const apiResp = HttpService.post(getPartnerManagerUrl("/partners/search", process.env.NODE_ENV), request);
+      apiResp.then(res =>{
+        setFilterDataLoaded(true)
+        console.log(res)
+      })
+    } catch (error) {
+      return error
+    }
+    
+  }, [filterRequest]);
+
+  const getPaginationValues = (recordsPerPage, pageIndex) =>{
+    setFilterRequest(prevData => ({...prevData, pagination:{pageStart: pageIndex, pageFetch: recordsPerPage}}))
+  }
+
   //This part is related to Sorting
   const sortAscOrder = (header) => {
     const isDateCol = header === "timeOfUpload" ? true : false;
+    const isServerFilter = true;
+    setFilterRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'asc'}]}))
     toggleSortAscOrder(
       header,
       isDateCol,
@@ -230,12 +254,15 @@ function PartnersList() {
       activeSortAsc,
       setActiveSortAsc,
       activeSortDesc,
-      setActiveSortDesc
+      setActiveSortDesc,
+      isServerFilter
     );
   };
 
   const sortDescOrder = (header) => {
     const isDateCol = header === "timeOfUpload" ? true : false;
+    const isServerFilter = true;
+    setFilterRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'desc'}]}))
     toggleSortDescOrder(
       header,
       isDateCol,
@@ -248,7 +275,10 @@ function PartnersList() {
       activeSortAsc,
       setActiveSortAsc,
       activeSortDesc,
-      setActiveSortDesc
+      setActiveSortDesc,
+      activeSortDesc,
+      setActiveSortDesc,
+      isServerFilter
     );
   };
 
@@ -368,9 +398,7 @@ function PartnersList() {
                       </div>
                     </div>
                   </div>
-
                   <hr className="h-px mx-3 bg-gray-200 border-0" />
-
                   <div className="flex items-center justify-center p-24">
                     <div className="flex flex-col items-center">
                       <img src={rectangleGrid} alt="" />
@@ -382,7 +410,7 @@ function PartnersList() {
                 </div>
               ) : (
                 <>
-                  <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
+                  <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!filterDataLoaded && "pb-6"}`}>
                     <FilterButtons
                       listTitle="partnerList.listOfPartnerTitle"
                       dataList={filteredPartnersData}
@@ -390,7 +418,7 @@ function PartnersList() {
                       onResetFilter={onResetFilter}
                       setFilter={setFilter}
                     ></FilterButtons>
-                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                    {filterDataLoaded && <hr className="h-0.5 mt-3 bg-gray-200 border-0" />}
                     {filter && (
                       <PartnerListFilter
                         filteredPartnersData={filteredPartnersData}
@@ -398,6 +426,8 @@ function PartnersList() {
                       ></PartnerListFilter>
                     )}
 
+                  {!filterDataLoaded && <LoadingIcon></LoadingIcon>}
+                  {filterDataLoaded && (
                     <div className="mx-[2%] overflow-x-scroll">
                       <table className="table-fixed">
                         <thead>
@@ -418,6 +448,7 @@ function PartnersList() {
                                         order={order}
                                         activeSortDesc={activeSortDesc}
                                         activeSortAsc={activeSortAsc}
+                                        filterRequest={filterRequest}
                                       ></SortingIcon>
                                     )}
                                   </div>
@@ -433,47 +464,37 @@ function PartnersList() {
                                 id={"partner_list_item" + (index + 1)}
                                 key={index}
                                 className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${
-                                  partner.status.toLowerCase() === "deactivated"
+                                  partner.status.toLowerCase() ==="deactivated"
                                     ? "text-[#969696]"
                                     : "text-[#191919]"
                                 }`}
                               >
                                 <td
-                                  onClick={() =>
-                                    showPartnerDetails(partner)
-                                  }
+                                  onClick={() => showPartnerDetails(partner)}
                                   className="px-2 break-all"
                                 >
                                   {partner.partnerID}
                                 </td>
                                 <td
-                                  onClick={() =>
-                                    showPartnerDetails(partner)
-                                  }
+                                  onClick={() => showPartnerDetails(partner)}
                                   className="px-2 break-all"
                                 >
                                   {partner.partnerType}
                                 </td>
                                 <td
-                                  onClick={() =>
-                                    showPartnerDetails(partner)
-                                  }
+                                  onClick={() => showPartnerDetails(partner)}
                                   className="px-2 break-all"
                                 >
                                   {partner.orgName}
                                 </td>
                                 <td
-                                  onClick={() =>
-                                    showPartnerDetails(partner)
-                                  }
+                                  onClick={() => showPartnerDetails(partner)}
                                   className="px-2 break-all"
                                 >
                                   {partner.emailID}
                                 </td>
                                 <td
-                                  onClick={() =>
-                                    showPartnerDetails(partner)
-                                  }
+                                  onClick={() => showPartnerDetails(partner)}
                                   className="px-2 break-all"
                                 >
                                   {partner.policyGroup}
@@ -482,7 +503,7 @@ function PartnersList() {
                                   onClick={() =>
                                     showPartnerDetails(partner)
                                   }
-                                  className={`px-3 break-all ${partner.certUploadStatus === 'notUploaded' && "text-[#BE1818]"}`}
+                                  className={`px-3 break-all ${partner.certUploadStatus === "notUploaded" && "text-[#BE1818]"}`}
                                 >
                                   {getStatusCode(partner.certUploadStatus, t)}
                                 </td>
@@ -507,10 +528,7 @@ function PartnersList() {
                                     }
                                   >
                                     <p
-                                      id={
-                                        "partner_list_view" +
-                                        (index + 1)
-                                      }
+                                      id={"partner_list_view" + (index + 1)}
                                       onClick={() =>
                                         setViewPartnersId(
                                           index === viewPartnerId
@@ -593,12 +611,15 @@ function PartnersList() {
                         </tbody>
                       </table>
                     </div>
+                  )}
                   </div>
                   <Pagination
                     dataList={filteredPartnersData}
                     selectedRecordsPerPage={selectedRecordsPerPage}
                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
                     setFirstIndex={setFirstIndex}
+                    isServerSideFilter={true}
+                    getPaginationValues={getPaginationValues}
                   ></Pagination>
                 </>
               )}
