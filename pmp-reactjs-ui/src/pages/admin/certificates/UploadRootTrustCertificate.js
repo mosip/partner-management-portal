@@ -34,7 +34,6 @@ function UploadRootTrustCertificate() {
 
     const removeUpload = () => {
         setFileName("");
-        setUploadSuccess(false);
         setUploading(false);
     };
 
