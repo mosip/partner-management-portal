@@ -568,7 +568,8 @@
         "selectPartnerType":"حدد نوع الشريك",
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
         "selectPolicyGroup":"حدد مجموعة السياسات",
-        "selectStatus":"حدد الحالة"
+        "selectStatus":"حدد الحالة",
+        "unableToFilter":"غير قادر على تصفية بيانات الشركاء"
      },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",

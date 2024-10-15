@@ -568,7 +568,8 @@
         "selectPartnerType":"Sélectionnez le type de partenaire",
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
-        "selectStatus":"Sélectionnez le statut"
+        "selectStatus":"Sélectionnez le statut",
+        "unableToFilter":"Impossible de filtrer les données des partenaires"
      },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",

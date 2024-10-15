@@ -25,11 +25,12 @@ function PartnersList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [filter, setFilter] = useState(false);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const langCode = getUserProfile().langCode
+  const isLoginLanguageRTL = isLangRTL(langCode);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [filterDataLoaded, setFilterDataLoaded] = useState(true);
+  const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [partnersData, setPartnersData] = useState([]);
   const [filteredPartnersData, setFilteredPartnersData] = useState([]);
   const [order, setOrder] = useState("ASC");
@@ -45,7 +46,8 @@ function PartnersList() {
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
   const submenuRef = useRef([]);
-  const [filterRequest, setFilterRequest] = useState({"filters": [], "sort": [], "pagination": {"pageStart":firstIndex, "pageFetch":selectedRecordsPerPage}, "partnerType": 'all'})
+  const [serverRequest, setServerRequest] = useState({"filters": [], "sort": [], "pagination": {"pageStart":firstIndex, "pageFetch":selectedRecordsPerPage}, "partnerType": 'all'});
+  const [triggerServerMethod, setTriggerServerMethod] = useState(false);
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewPartnersId(-1));
@@ -218,30 +220,50 @@ function PartnersList() {
 
   // server side filter code
   useEffect(() =>{
-    const request = createRequest({...filterRequest});
-    console.log(request)
+    const request = createRequest({...serverRequest});
     try {
-      setFilterDataLoaded(false)
-      const apiResp = HttpService.post(getPartnerManagerUrl("/partners/search", process.env.NODE_ENV), request);
-      apiResp.then(res =>{
-        setFilterDataLoaded(true)
-        console.log(res)
-      })
+      if(triggerServerMethod){
+        setTableDataLoaded(false)
+        const apiResp = HttpService.post(getPartnerManagerUrl("/partners/search", process.env.NODE_ENV), request);
+        apiResp.then(res =>{
+          if(res.data.response){
+            let filteredData = res.data.response
+            setTableDataLoaded(true)
+            // setFilteredPartnersData(res)
+          }else{
+            setTableDataLoaded(true)
+            if (res.data.errors[0].message === null) {
+              setErrorMsg(t('partnerList.unableToFilter'));
+            }else{
+              const errorCode = res.data.errors[0].errorCode;
+              const errorMessage = res.data.errors[0].message;
+              setErrorCode(errorCode)
+              setErrorMsg(errorMessage);
+            }
+          }
+          setTriggerServerMethod(false)
+        })
+      }
     } catch (error) {
-      return error
+      setTableDataLoaded(true);
+      setErrorMsg(error);
+      console.log("Unable to filter partners data" + error)
     }
     
-  }, [filterRequest]);
+  }, [serverRequest]);
 
   const getPaginationValues = (recordsPerPage, pageIndex) =>{
-    setFilterRequest(prevData => ({...prevData, pagination:{pageStart: pageIndex, pageFetch: recordsPerPage}}))
+    setTriggerServerMethod(true);
+    if(firstIndex !== pageIndex || selectedRecordsPerPage !== recordsPerPage)
+      setServerRequest(prevData => ({...prevData, pagination:{pageStart: pageIndex, pageFetch: recordsPerPage}}))
   }
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
+    setTriggerServerMethod(true);
     const isDateCol = header === "timeOfUpload" ? true : false;
-    const isServerFilter = true;
-    setFilterRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'asc'}]}))
+    const isServerRequest = true;
+    setServerRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'asc'}]}))
     toggleSortAscOrder(
       header,
       isDateCol,
@@ -255,14 +277,15 @@ function PartnersList() {
       setActiveSortAsc,
       activeSortDesc,
       setActiveSortDesc,
-      isServerFilter
+      isServerRequest
     );
   };
 
   const sortDescOrder = (header) => {
+    setTriggerServerMethod(true);
     const isDateCol = header === "timeOfUpload" ? true : false;
-    const isServerFilter = true;
-    setFilterRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'desc'}]}))
+    const isServerRequest = true;
+    setServerRequest(prevData => ({...prevData, sort:[{sortField: 'id',sortType: 'desc'}]}))
     toggleSortDescOrder(
       header,
       isDateCol,
@@ -276,9 +299,7 @@ function PartnersList() {
       setActiveSortAsc,
       activeSortDesc,
       setActiveSortDesc,
-      activeSortDesc,
-      setActiveSortDesc,
-      isServerFilter
+      isServerRequest
     );
   };
 
@@ -410,7 +431,7 @@ function PartnersList() {
                 </div>
               ) : (
                 <>
-                  <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!filterDataLoaded && "pb-6"}`}>
+                  <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "pb-6"}`}>
                     <FilterButtons
                       listTitle="partnerList.listOfPartnerTitle"
                       dataList={filteredPartnersData}
@@ -418,7 +439,7 @@ function PartnersList() {
                       onResetFilter={onResetFilter}
                       setFilter={setFilter}
                     ></FilterButtons>
-                    {filterDataLoaded && <hr className="h-0.5 mt-3 bg-gray-200 border-0" />}
+                    {tableDataLoaded && <hr className="h-0.5 mt-3 bg-gray-200 border-0" />}
                     {filter && (
                       <PartnerListFilter
                         filteredPartnersData={filteredPartnersData}
@@ -426,8 +447,8 @@ function PartnersList() {
                       ></PartnerListFilter>
                     )}
 
-                  {!filterDataLoaded && <LoadingIcon></LoadingIcon>}
-                  {filterDataLoaded && (
+                  {!tableDataLoaded && <LoadingIcon></LoadingIcon>}
+                  {tableDataLoaded && (
                     <div className="mx-[2%] overflow-x-scroll">
                       <table className="table-fixed">
                         <thead>
@@ -448,7 +469,6 @@ function PartnersList() {
                                         order={order}
                                         activeSortDesc={activeSortDesc}
                                         activeSortAsc={activeSortAsc}
-                                        filterRequest={filterRequest}
                                       ></SortingIcon>
                                     )}
                                   </div>
@@ -503,7 +523,7 @@ function PartnersList() {
                                   onClick={() =>
                                     showPartnerDetails(partner)
                                   }
-                                  className={`px-3 break-all ${partner.certUploadStatus === "notUploaded" && "text-[#BE1818]"}`}
+                                  className={`px-3 break-all ${langCode === 'fra' && 'max-1200:text-start max-1950:text-center'} ${partner.certUploadStatus === "notUploaded" && "text-[#BE1818]"}`}
                                 >
                                   {getStatusCode(partner.certUploadStatus, t)}
                                 </td>

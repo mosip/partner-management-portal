@@ -563,7 +563,8 @@
        "selectPartnerType":"Select Partner Type",
        "selectEmailAddress": "Select Email Address",
        "selectPolicyGroup":"Select Policy Group",
-       "selectStatus":"Select Status"
+       "selectStatus":"Select Status",
+       "unableToFilter":"Unable to filter partners data"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",

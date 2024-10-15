@@ -199,7 +199,7 @@ const areAllValuesSame = (list, column) => {
     return list.every(item => item[column] === firstValue);
 };
 
-export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc, isServerFilter=false) => {
+export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc, isServerRequest=false) => {
     if (areAllValuesSame(filteredList, sortItem)) {
         setOrder("DESC")
         setIsDescending(true);
@@ -207,7 +207,7 @@ export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilter
         setActiveSortAsc("");
     } else {
         if (order !== 'DESC' || activeSortDesc !== sortItem) {
-            if(!isServerFilter){
+            if(!isServerRequest){
               let sortedList;
               if (isDateCol) {
                 sortedList = [...filteredList].sort((a, b) => {
@@ -231,7 +231,7 @@ export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilter
     }
 }
 
-export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc, isServerFilter=false) => { 
+export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFilteredList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc, isServerRequest=false) => { 
     if (areAllValuesSame(filteredList, sortItem)) {
         setOrder("ASC")
         setIsDescending(false);
@@ -239,7 +239,7 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
         setActiveSortAsc(sortItem);
     } else {
         if (order !== 'ASC' || activeSortAsc !== sortItem) {
-            if(!isServerFilter){
+            if(!isServerRequest){
                 let sortedList;
                 if (isDateCol) {
                    sortedList = [...filteredList].sort((a, b) => {

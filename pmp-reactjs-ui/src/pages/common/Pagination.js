@@ -21,7 +21,8 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
     useEffect(() =>{
         if(isServerSideFilter)
            getPaginationValues(selectedRecordsPerPage, selectedPage);
-    }, [selectedPage, selectedRecordsPerPage])
+           console.log("Testing")
+    }, [selectedPage, selectedRecordsPerPage]);
 
     const handlePageChange = (event) => {
         setSelctedPage(event.selected);
