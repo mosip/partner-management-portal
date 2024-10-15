@@ -539,7 +539,6 @@
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "rootTrustCertificate": "جذر شهادة الثقة",
         "uploadRootofTrustCertificateDesc": "الرجاء تحديد الحقول وتحميل الشهادة",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
