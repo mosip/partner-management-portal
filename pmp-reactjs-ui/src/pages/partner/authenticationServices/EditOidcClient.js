@@ -232,10 +232,6 @@ function EditOidcClient() {
                     header: "editOidcClient.editSuccessHeader",
                     description: "editOidcClient.editSuccessMsg",
                     subNavigation: "authenticationServices.authenticationServices",
-                    styleSet: {
-                        imgIconLtr: "ml-[30%] max-[450px]:ml-20",
-                        imgIconRtl: "mr-[18%] max-[450px]:mr-20"
-                    }
                 }
                 setConfirmationData(requireData);
                 setEditOidcClientSuccess(true);

@@ -182,10 +182,6 @@ function RequestPolicy() {
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",
-                        styleSet: {
-                            imgIconLtr: "ml-[33%] max-[450px]:ml-20",
-                            imgIconRtl: "mr-[25%] max-[450px]:mr-20"
-                        }
                     }
                     setConfirmationData(requireDataData);
                     setRequestPolicySuccess(true);
