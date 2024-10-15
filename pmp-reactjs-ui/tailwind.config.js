@@ -40,6 +40,7 @@ module.exports = {
         inter: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       screens: {
+        'max-1950': {'max': '1950px'},
         'max-1712': { 'max': '1712px' }, 
         'max-1530': {'max': '1540px'},
         'max-1355': {'max': '1355px'},
