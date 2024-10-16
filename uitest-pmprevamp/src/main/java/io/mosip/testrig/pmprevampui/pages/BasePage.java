@@ -58,7 +58,9 @@ public class BasePage {
 	}
 
 	public static void enter(WebElement element,String value)  {
+		
 		try {
+			Thread.sleep(3000);
 			element.clear();
 			element.sendKeys(value);
 		}catch (Exception e) {
@@ -108,7 +110,39 @@ public class BasePage {
 			executor.executeScript("arguments[0].click();", element);
 		}
 	}
+	
+	public static void dropdown(WebElement element,String value) throws IOException
+	{
 
+		try {
+			Thread.sleep(50);
+			clickOnElement(element);
+			Thread.sleep(50);
+			String val="'"+value +"'";
+			click(By.xpath("//*[contains(text(),"+val+")]"));
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch (Exception e) {
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", element);
+
+		}
+	}
+
+
+	protected static void click(By by) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			driver.findElement(by).click();
+	}
 
 	public static String generateRandomAlphabetString() {
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -190,4 +224,14 @@ public class BasePage {
 		}
 		return Integer.parseInt(splitdigit);
 	}
+	
+    protected String getTextFromLocator(WebElement element) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.waitForElementToBeVisible(element);
+        return element.getText();
+    }
 }

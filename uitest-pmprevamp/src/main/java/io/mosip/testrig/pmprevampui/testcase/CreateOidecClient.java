@@ -48,7 +48,6 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnSubmitButton();
-		
 		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
 			
 	}

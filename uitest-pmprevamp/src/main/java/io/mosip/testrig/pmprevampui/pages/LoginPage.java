@@ -12,6 +12,15 @@ public class LoginPage extends BasePage{
 	@FindBy(xpath = "//*[contains(text(), 'Register')]")
 	private WebElement registerButton;
 	
+	@FindBy(id = "username")
+	private WebElement usernameTextBox;
+	
+	@FindBy(id = "password")
+	private WebElement passwordTextBox;
+	
+	@FindBy(xpath = "//input[@name=\'login\']")
+	private WebElement LoginButton;
+	
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
@@ -23,6 +32,18 @@ public class LoginPage extends BasePage{
 	
 	public boolean isLoginPageDisplayed() {
 		return isElementDisplayed(loginPageTitle);
+	}
+	
+	public void enterUserName(String value) {
+		enter(usernameTextBox,value);
+	}
+	
+	public void enterPassword(String value) {
+		enter(passwordTextBox,value);
+	}
+	
+	public void ClickOnLoginButton() {
+		clickOnElement(LoginButton);
 	}
 	
 }
