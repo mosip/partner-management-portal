@@ -116,7 +116,7 @@ function Dashboard() {
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
               const registerUserResponseData = registerUserResponse.data;
               if (registerUserResponseData && registerUserResponseData.response) {
-                window.location.reload();
+                // window.location.reload();
               } else {
                 handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
               }
