@@ -8,7 +8,7 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class PartnerCertificatePage extends BasePage{
 	
-	@FindBy(id = "dashboard_partner_certificated_list_card")
+	@FindBy(id = "title_back_icon")
 	private WebElement partnerCertificateTitle;
 	
 	@FindBy(xpath = "//*[text()='Upload']")
@@ -31,6 +31,25 @@ public class PartnerCertificatePage extends BasePage{
 	
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
+	
+	@FindBy(id = "download_btn1")
+	private WebElement downloadButton;
+	
+	@FindBy(id = "original_certificate_download_btn1")
+	private WebElement originalCertificateDownloadButton;
+	
+	@FindBy(id = "mosip_signed_certificate_download_btn1")
+	private WebElement mosipSignedCertificateDownloadButton;
+	
+	@FindBy(id = "partner_certificate_re_upload_btn1")
+	private WebElement partnerCertificateReuploadButton;
+	
+	
+	
+	
+	
+	
+	
 	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -68,4 +87,14 @@ public class PartnerCertificatePage extends BasePage{
 		clickOnElement(homeButton);
 		return new DashboardPage(driver);
 	}
+	
+	public boolean isDownloadButtonDisplayed() {
+		return isElementDisplayed(downloadButton);
+	}
+	
+	public  void clickOnPartnerCertificateReuploadButton() {
+		clickOnElement(partnerCertificateReuploadButton);
+	}
+	
+	
 }

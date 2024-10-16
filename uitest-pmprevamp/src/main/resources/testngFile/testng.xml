@@ -9,6 +9,7 @@
 			<class name="io.mosip.testrig.pmprevampui.testcase.RegisterNewUser" />
 			<class name="io.mosip.testrig.pmprevampui.testcase.NewUserPolicy" />
 			<class name="io.mosip.testrig.pmprevampui.testcase.CreateOidecClient" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.CreateApiKey" />
 		</classes>
 		
 	</test>

@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +17,15 @@ public class DashboardPage extends BasePage{
 	private WebElement selectPolicyGroupPopUp;
 	
 	@FindBy(xpath = "//div[@class='relative w-full']/button")
+//	select_policy_group_dropdown
 	private WebElement selectPolicyGroupDropdown;
+	
+	@FindBy(xpath = "//*[text()='No Data Available.']")
+	private WebElement noDataAvailableText;
+	
+	@FindBy(id = "select_policy_group_dropdown_search_input")
+	private WebElement SearchBox;
+	
 	
 	@FindBy(xpath = "//*[text()='Submit']")
 	private WebElement submitButton;
@@ -41,6 +50,31 @@ public class DashboardPage extends BasePage{
 	
 	@FindBy(id = "dashboard_authentication_clients_list_card")
 	private WebElement AuthenticationServices;
+	
+	@FindBy(id = "select_policy_group_view_text")
+	private WebElement selectPolicyGroupViewMoreAndLess;
+	
+	@FindBy(id = "select_policy_group_logout")
+	private WebElement selectPolicyGroupLogout;
+	
+	@FindBy(id = "select_policy_group_submit")
+	private WebElement selectPolicyGroupSubmit;
+	
+	@FindBy(id = "select_policy_group_dropdown_option1")
+	private WebElement selectPolicyGrouDropdownOption1;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	View Less
+	
+//	View More
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -67,9 +101,19 @@ public class DashboardPage extends BasePage{
 		return isElementDisplayed(submitButton);
 	}
 	
-	public void selectSelectPolicyGroupDropdown() {
+	public void selectSelectPolicyGroupDropdown(String value) {
 		clickOnElement(selectPolicyGroupDropdown);
-		clickOnElement(value);
+		enter(SearchBox,value);
+		String val="'"+value +"'";
+//		click(By.xpath("//*[contains(text(),"+val+")]"));
+		clickOnElement(selectPolicyGrouDropdownOption1);
+	}
+	
+	public void selectSelectPolicyGroupDropdownForInvalid(String value) {
+		clickOnElement(selectPolicyGroupDropdown);
+		enter(SearchBox,value);
+		String val="'"+value +"'";
+//		clickOnElement(value);
 	}
 	
 	public  void clickOnSubmitButton() {
@@ -118,5 +162,27 @@ public class DashboardPage extends BasePage{
 		clickOnElement(AuthenticationServices);
 		return new OidcClientPage(driver);
 	}
+	
+	public boolean isSelectPolicyGroupViewMoreAndLess() {
+		return isElementDisplayed(selectPolicyGroupViewMoreAndLess);
+	}
+	
+	public boolean isNoDataAvailableTextDisplayed() {
+		return isElementDisplayed(noDataAvailableText);
+	}
+	
+	public boolean isSelectPolicyGroupSubmitEnabled() {
+		return isElementEnabled(selectPolicyGroupSubmit);
+	}
+	
+	public void clickOnSelectPolicyGroupSubmit() {
+		clickOnElement(selectPolicyGroupSubmit);
+	}
+	
+	public void clickOnSelectPolicyGroupLogout() {
+		clickOnElement(selectPolicyGroupLogout);
+	}
+	
+	
 	
 }
