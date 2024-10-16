@@ -43,14 +43,7 @@ public class PartnerCertificatePage extends BasePage{
 	
 	@FindBy(id = "partner_certificate_re_upload_btn1")
 	private WebElement partnerCertificateReuploadButton;
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -95,6 +88,5 @@ public class PartnerCertificatePage extends BasePage{
 	public  void clickOnPartnerCertificateReuploadButton() {
 		clickOnElement(partnerCertificateReuploadButton);
 	}
-	
 	
 }

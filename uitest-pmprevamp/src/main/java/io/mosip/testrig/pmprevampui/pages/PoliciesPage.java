@@ -167,22 +167,7 @@ public class PoliciesPage extends BasePage{
 	
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
-	
-	
-
-	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-	
-	
-	
+		
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -219,11 +204,7 @@ public class PoliciesPage extends BasePage{
 	public  void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 //		enter(SearchBox,value);
-		clickOnElement(requestPolicyNameOption)
-;		
-//		
-//		String val="'"+value +"'";
-//		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'"+value+"')])[2]")));
+		clickOnElement(requestPolicyNameOption);		
 	}
 	
 	public  void selectInvalidPolicyNameDropdown(String value) {
@@ -279,11 +260,7 @@ public class PoliciesPage extends BasePage{
 	public  void clickOnPartnerIdDropdown() {
 		clickOnElement(partnerIdDropdown);
 	}
-//	
-//	
-//	
-	
-	
+
 	public boolean isListOfPolicyRequestedDisplayed() {
 		return isElementDisplayed(ListOfPolicyRequested);
 	}
@@ -340,7 +317,6 @@ public class PoliciesPage extends BasePage{
 	public  void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
-	
 	
 	public boolean isNextPageDisplayed() {
 		return isElementDisplayed(nextPage);

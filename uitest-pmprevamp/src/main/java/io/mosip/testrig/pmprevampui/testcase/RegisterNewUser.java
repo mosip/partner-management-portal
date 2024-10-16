@@ -167,8 +167,5 @@ public class RegisterNewUser extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-
-	}
-	
-	
+	}	
 }

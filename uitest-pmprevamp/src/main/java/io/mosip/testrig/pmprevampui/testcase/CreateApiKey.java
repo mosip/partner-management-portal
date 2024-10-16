@@ -46,6 +46,4 @@ public class CreateApiKey extends BaseClass {
 		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
 			
 	}
-	
-	
 }

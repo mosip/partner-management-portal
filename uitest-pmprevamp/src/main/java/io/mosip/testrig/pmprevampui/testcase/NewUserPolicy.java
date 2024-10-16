@@ -101,7 +101,6 @@ public class NewUserPolicy extends BaseClass {
 		assertTrue(policiesPage.isSubTitleButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
 		assertTrue(policiesPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		assertTrue(policiesPage.isViewPolicyDetailsTextDisplayed(), GlobalConstants.isViewPolicyTitle);
-
 	}
 	
 	
@@ -207,12 +206,9 @@ public class NewUserPolicy extends BaseClass {
 		dashboardpage.selectSelectPolicyGroupDropdownForInvalid("abc"+ data);
 		assertTrue(dashboardpage.isNoDataAvailableTextDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
 		
-		dashboardpage.clickOnSelectPolicyGroupLogout();
-		
+		dashboardpage.clickOnSelectPolicyGroupLogout();	
 	}
 	
-	
-
 	@Test
 	public void searchWithInvalidPolicyName() {
 
@@ -254,7 +250,6 @@ public class NewUserPolicy extends BaseClass {
 		registerPage.openNewTab();
 		OldPmpPage oldPmpPage = new OldPmpPage(driver);
 		
-
 		oldPmpPage.refreshPage();
 		oldPmpPage.EnterUserName(userid);
 		oldPmpPage.EntePasswordTextBox(password);
@@ -264,7 +259,6 @@ public class NewUserPolicy extends BaseClass {
 		oldPmpPage.clickOnPolicyMenuGroupTab();
 		
 		oldPmpPage.clickOnCreatePolicyGroup();
-		
 		
 		oldPmpPage.EnterNameTextBox("0"+data+"n");
 		oldPmpPage.EnterDescriptionTextBox("0"+data+"n");

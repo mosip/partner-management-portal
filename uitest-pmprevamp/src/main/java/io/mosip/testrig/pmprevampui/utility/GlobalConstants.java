@@ -37,7 +37,6 @@ public class GlobalConstants {
 	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
 	public static final String isEnterRedirectUriTextDisplayed = "Verify if enter valid redirect uri text displayed";
 	public static final String isAutherisationCodeTextDisplayed = "Verify if Authrisation code is selected by default displayed";
-	
 	public static final String isPolicyGroupHeaderTextDisplayed = "Verify if policy group header text displayed";
 	public static final String isPolicyNameHeaderTextDisplayed = "Verify if policy name header text displayed";
 	public static final String isOIDCClientNameHeaderTextDisplayed = "Verify if oidc client name header text displayed";

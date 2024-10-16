@@ -81,7 +81,6 @@ public class OldPmpPage extends BasePage{
 	@FindBy(xpath = "//*[contains(text(), ' Yes ')]")
 	private WebElement YesButton;
 	
-	
 	public OldPmpPage(WebDriver driver) {
 		super(driver);
 	}
@@ -125,7 +124,6 @@ public class OldPmpPage extends BasePage{
 	public  void EnterDescription() {
 		enter(descFormPolicyGroup,"");
 	}
-	
 	
 	public  void clickOnCreateButton() {
 		clickOnElement(CreatButton);

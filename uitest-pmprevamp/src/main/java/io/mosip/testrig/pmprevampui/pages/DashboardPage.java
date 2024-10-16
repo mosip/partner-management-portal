@@ -26,7 +26,6 @@ public class DashboardPage extends BasePage{
 	@FindBy(id = "select_policy_group_dropdown_search_input")
 	private WebElement SearchBox;
 	
-	
 	@FindBy(xpath = "//*[text()='Submit']")
 	private WebElement submitButton;
 	
@@ -62,19 +61,6 @@ public class DashboardPage extends BasePage{
 	
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	View Less
-	
-//	View More
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);

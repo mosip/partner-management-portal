@@ -14,8 +14,6 @@
 		
 	</test>
 		<listeners>
-		
-	
 
 		<listener
 			  class-name="io.mosip.testrig.pmprevampui.utility.EmailableReport" />
