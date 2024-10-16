@@ -21,7 +21,6 @@ public class PoliciesPage extends BasePage{
 	@FindBy(id = "policies_request_btn")
 	private WebElement policies_request_btn;
 	
-	
 	@FindBy(id = "request_policy_partner_id")
 	private WebElement partnerIdDropdown;
 	
@@ -51,13 +50,6 @@ public class PoliciesPage extends BasePage{
 	
 	@FindBy(id = "sub_title_btn")
 	private WebElement PolicyButton;
-	
-//
-//	
-//	
-//	
-	
-	
 	
 	@FindBy(xpath = "//*[text()='List of Policy Requests (1)']")
 	private WebElement ListOfPolicyRequested;

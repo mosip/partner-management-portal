@@ -166,7 +166,6 @@ public class RegisterPage extends BasePage {
 }
 	
 	public void openPreviousTab() {
-//((JavascriptExecutor) driver).executeScript("window.open('https://pmp.dev1.mosip.net/ ')");
         Set<String> allWindowHandles =driver.getWindowHandles();
         System.out.println(allWindowHandles);
        
