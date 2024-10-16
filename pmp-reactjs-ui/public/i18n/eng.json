@@ -6,6 +6,7 @@
         "emptyMsg": "No Data Available.",
         "logout": "Logout",
         "back": "Back",
+        "cancel": "Cancel",
         "submit": "Submit",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "partnersHelpText": "Auto-populated based on Partner ID selected",
@@ -53,13 +54,13 @@
         "partner": "Partner",
         "partnerDesc": "View / Deactivate partner details",
         "policy": "Policy",
-        "policiesadminDesc": "Create Policy Groups, Auth Policy, Datashare Policy",
-        "partnerPolicyMapping": "Partner Policy mapping",
-        "partnerPolicyMappingDesc": "View / deactivate requested policies by various partners",
-        "sbiDeviceDetails": "SBI - Device Details",
-        "sbiDeviceDetailsDesc": "View / deactivate SBI or device details",
-        "ftmDetails": "FTM Details",
-        "ftmDetailsDesc": "View / deactivate FTM Chip details",
+        "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
+        "partnerPolicyMapping": "Partner - Policy mapping",
+        "partnerPolicyMappingDesc": "View, Deactivate, Approve/Rejected policy requests from partners",
+        "sbiDevice": "SBI - Device",
+        "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
+        "ftmChip": "FTM Chip",
+        "ftmChipDesc": "View, Deactivate Approve/Reject FTM Chip details",
         "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details"
     },
     "header": {
@@ -153,7 +154,9 @@
         "deactivated": "Deactivated",
         "activated": "Activated",
         "pendingCertUpload": "Pending For Certificate Upload",
-        "expired": "Expired"
+        "expired": "Expired",
+        "uploaded": "Uploaded",
+        "notUploaded": "Not Uploaded"
     },
     "policies": {
         "policies": "Policies",
@@ -434,13 +437,14 @@
         "addDevice": "Add Device",
         "backToSBIList": "Back to SBI List",
         "backToViewDevices": "Back to View Devices",
-        "successMsg": "Device has been successfully submitted and is pending with admin for approval.",
+        "successMsgForNewDeviceMapping": "Device has been successfully submitted and is pending with admin for approval.",
+        "successMsgForExistingDeviceMapping": "The device has been successfully submitted and is pending admin approval. It has also been mapped to another SBI.",
         "errorInDeviceSubType": "While fetching device sub types, we have encountered with an error.",
         "errorInDeviceType": "While fetching device types, we have encountered with an error.",
-        "errorInAddingDevice": "While adding device, we have encountered with an error.",
         "limitExceedWarning": "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.",
-        "inActiveDeviceMappingToSbiError": "We have encountered with an error, please contact your administrator.",
-        "errorWhileFetchingDeviceDetails": "While fetching device details, we have encountered with an error."
+        "unableToAddDevice": "Unable to add the device, please try again later",
+        "unableToAddDeviceReason": "Unable to add the device due to the following reason: ",
+        "errorInAddDevice": "Unable to add the device because a device with the same make and model is already approved under either the same or a different SBI."
     },
     "deactivateSbi": {
         "headerMsg": "Do you want to deactivate SBI Version ",
@@ -494,7 +498,7 @@
         "addFtmSuccessMsg": "FTM Chip creation request has been successfully submitted and is pending with admin for approval.",
         "addFtmSuccessMsg1": "As a next step, upload FTM Chip Certificate to proceed further.",
         "uploadFtmCertHeader": "Upload FTM Chip Certificate",
-        "reUploadFtmCertHeader": "Re- Upload FTM Chip Certificate",
+        "reUploadFtmCertHeader": "Re-Upload FTM Chip Certificate",
         "uploadFtmCertSuccessMsg": "FTM Chip Certificate is uploaded successfully"
     },
     "viewFtmChipDetails": {
@@ -502,8 +506,7 @@
         "listOfFtmChipDetails": "List of FTM Chip details",
         "ftmChipProvider": "FTM Chip Provider",
         "ftmChipCertificate": " FTM Chip Certificate",
-        "originalCertSuccessMsg": "Original Certificate downloaded successfully.",
-        "mosipSignedCertificateSuccessMsg": "MOSIP Signed Certificate downloaded successfully."
+        "originalCertSuccessMsg": "FTM Chip certificate is downloaded successfully."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Manage FTM Chip Certificate",
@@ -512,7 +515,6 @@
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
     "rootTrustCertificate":{
-        "rootTrustCertTitle": "Upload Root of Trust Certificate",
         "organisation": "Organisation",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
@@ -529,6 +531,38 @@
         "selectStatus": "Select Status",
         "deActivate": "Deactivate",
         "view": "View"
+    },
+    "uploadRootofTrustCertificate": {
+        "uploadRootofTrustCertificate":"Upload Root of Trust Certificate",
+        "uploadRootofTrustCertificateDesc": "Please select the fields and upload certificate",
+        "partnerDomain": "Partner Domain",
+        "dropdownPlaceholder": "Select partner domain",
+        "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
+    },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "View Root of Trust Certificate",
+        "caCertificates": "Ca Certificates"
+    },
+    "partnerList":{
+       "partnerTitle": "Partner",
+       "listOfPartnerTitle": "List of Partners",
+       "partnerId": "Partner ID",
+       "organisation": "Organisation Name",
+       "partnerType": "Partner Type",
+       "policyGroup": "Policy Group",
+       "email": "Email Address",
+       "certUploadStatus": "Cert. Upload Status",
+       "status": "Status",
+       "action": "Action",
+       "noData": "No Data",
+       "deActivate": "Deactivate",
+       "view": "View",
+       "selectPartnerId": "Select Partner ID",
+       "selectOrganisation":"Select Organisation",
+       "selectPartnerType":"Select Partner Type",
+       "selectEmailAddress": "Select Email Address",
+       "selectPolicyGroup":"Select Policy Group",
+       "selectStatus":"Select Status"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
@@ -634,13 +668,15 @@
         "PMS_AUT_004": "Duplicate request received",
         "PMS_AUT_005": "Device detail for id %s does not exist",
         "PMS_AUT_512": "SBI details exists for given SBI Version. Multiple SBI with same SBI Version cannot be added.",
-        "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate;",
-        "PMP_AUT_030": "The FTP provider is either inactive or does not exist",
+        "PMS_AUT_025": "ApprovalStatus should be Activate / De_activate",
+        "PMP_AUT_030": "Partner is not active",
         "PMP_AUT_031": "ftp chip id not exists.",
         "PMP_AUT_032": "FTM Chip details already exists for the same make and model",
         "PMP_AUT_033": "Certificate is not uploaded.",
-        "PMP_AUT_034": "Ftp chip detail id and ftp provider id not mappped. ",
-        "PMP_AUT_037": "Given ftp chip details already registered.;",
+        "PMP_AUT_034": "Ftp chip detail id and ftp provider id not mappped.",
+        "PMP_AUT_037": "Given ftp chip details already registered.",
+        "PMP_AUT_038": "The certificate can only be uploaded for FTM that is either pending certificate upload or has an approved status",
+        "PMP_AUT_039": "FTM chip is deactivated",
         "PMS_AUT_007": "Secure Biometric Interface not found for the id %s",
         "PMS_AUT_026": "ApprovalStatus should be Activate / De_activate",
         "PMS_AUT_506": "Provide device details of same provider.",
@@ -747,14 +783,16 @@
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
         "PMS_DEVICE_ERROR_013": "Device Id is invalid",
-        "PMS_DEVICE_ERROR_014": "The device can only be deactivated if it is approved and has not been previously deactivated",
+        "PMS_DEVICE_ERROR_014": "The selected device has been already deactivated",
         "PMS_DEVICE_ERROR_015": "Error while deactivating the device",
         "PMS_DEVICE_ERROR_016": "Device is not associated with user.",
         "PMS_DEVICE_ERROR_017": "SBI Id is invalid",
         "PMS_DEVICE_ERROR_018": "Error while deactivating the SBI",
         "PMS_DEVICE_ERROR_019": "SBI is not associated with user.",
-        "PMS_DEVICE_ERROR_020": "SBI can only be deactivated if it is approved and has not been previously deactivated",
+        "PMS_DEVICE_ERROR_020": "The selected SBI is already deactivated",
         "PMS_DEVICE_ERROR_021": "SBI for which device is being added is expired",
+        "PMS_DEVICE_ERROR_022": "The selected SBI is not in an approved status.",
+        "PMS_DEVICE_ERROR_023": "The selected Device is not in an approved status.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",
@@ -769,8 +807,9 @@
         "PMS_FTM_ERROR_004": "FTM Id is invalid",
         "PMS_FTM_ERROR_005": "FTM Details do not exists.",
         "PMS_FTM_ERROR_006": "FTM is not associated with user.",
-        "PMS_FTM_ERROR_007": "The selected FTM must be active and approved",
+        "PMS_FTM_ERROR_007": "The selected FTM is already deactivated",
         "PMS_FTM_ERROR_008": "The selected FTM must be pending_approval or approved",
-        "PMS_FTM_ERROR_009": "Unable to download original FTM certificate"
+        "PMS_FTM_ERROR_009": "Unable to download original FTM certificate",
+        "PMS_FTM_ERROR_010": "The selected FTM is not in an approved status."
     }
 }

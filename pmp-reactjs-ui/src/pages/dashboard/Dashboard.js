@@ -164,6 +164,14 @@ function Dashboard() {
     navigate('/partnermanagement/ftmChipProviderServices/ftmList')
   };
 
+  const rootTrustCertificateList = () =>{
+    navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
+  }
+
+  const partnersList = () =>{
+    navigate('/partnermanagement/admin/partnersList')
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -261,7 +269,7 @@ function Dashboard() {
             )}
             {isPartnerAdmin && (
               <>
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={pending_requests_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -275,7 +283,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div onClick={rootTrustCertificateList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, rootTrustCertificateList())}>
                   <div className="flex justify-center mb-5">
                     <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -289,7 +297,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={partner_admin_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -303,7 +311,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={admin_policies_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -317,7 +325,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -331,35 +339,35 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={deviceProviderServices_icon} alt="" className="w-8 h-8"></img>
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.sbiDeviceDetails')}
+                      {t('dashboard.sbiDevice')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.sbiDeviceDetailsDesc')}
+                      {t('dashboard.sbiDeviceDesc')}
                     </p>
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={ftmServicesIcon} alt="" className="w-8 h-8"></img>
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.ftmDetails')}
+                      {t('dashboard.ftmChip')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.ftmDetailsDesc')}
+                      {t('dashboard.ftmChipDesc')}
                     </p>
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                   </div>

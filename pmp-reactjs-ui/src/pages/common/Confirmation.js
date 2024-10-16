@@ -14,7 +14,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
 
     return (
         <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-            <div className="flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
                 <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? (style && style.imgIconRtl ? style.imgIconRtl : "") : (style && style.imgIconLtr ? style.imgIconLtr : "")} h-40`} />
                 <div className="text-center space-y-1">
                     <h1 className="font-bold text-black text-lg max-[450px]:text-sm">
@@ -27,7 +27,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
                         )}
                     </p>
                     {!confirmationData.customBtnName &&
-                        <div className={`flex gap-x-3 mt-12 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
+                        <div className={`flex gap-x-3 p-2 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                             <button id='confirmation_go_back_btn' onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                 {t('commons.goBack')}
                             </button>
@@ -38,7 +38,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
                     }
                     {confirmationData.customBtnName &&
                         <div>
-                            <button id='confirmation_custom_btn' onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2 mt-4">
+                            <button id='confirmation_custom_btn' onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                 {t(confirmationData.customBtnName)}
                             </button>
                         </div>

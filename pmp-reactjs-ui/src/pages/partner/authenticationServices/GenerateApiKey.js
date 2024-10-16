@@ -178,10 +178,6 @@ function GenerateApiKey() {
                         header: "generateApiKey.generateApiKeySuccessHeader",
                         description: "generateApiKey.apiKeySuccessMsg",
                         subNavigation: "authenticationServices.authenticationServices",
-                        styleSet: {
-                            imgIconLtr: "ml-[24%] max-[450px]:mr-12",
-                            imgIconRtl: "mr-[24%] max-[450px]:mr-12"
-                        }
                     }
                     setConfirmationData(requireData);
                     setApiKeyId(responseData.response.apiKey);

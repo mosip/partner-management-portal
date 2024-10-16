@@ -244,18 +244,23 @@ function AddDevices() {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
 
             if (response?.data?.response?.id) {
-                inactiveMappingDeviceToSbi(response.data.response.id, index);
+                inactiveMappingDeviceToSbi(response.data.response.id, index, false);
             } else {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === "PMS_AUT_003") {
                     const deviceDetails = await searchDeviceDetails(entry, index);
-                    inactiveMappingDeviceToSbi(deviceDetails[0].id, index);
+                    if (deviceDetails && deviceDetails.id) {
+                        inactiveMappingDeviceToSbi(deviceDetails.id, index, true);
+                    } else {
+                        newEntries[index].errorMsg = t('addDevices.errorInAddDevice');
+                        setDeviceEntries(newEntries);
+                    }
                 } else {
                     handleError(response.data, index, newEntries);
                 }
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.errorInAddingDevice');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error("Error fetching data: ", err);
         }
@@ -273,10 +278,11 @@ function AddDevices() {
                 {"columnName": "deviceTypeCode", "type": "equals", "value": entry.deviceType},
                 {"columnName": "deviceSubTypeCode", "type": "equals", "value": entry.deviceSubType},
                 {"columnName": "make", "type": "equals", "value": trimAndReplace(entry.make)},
-                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)}
+                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)},
+                {"columnName": "approvalStatus", "type": "equals", "value": "pending_approval"}
             ],
             sort: [],
-            pagination: {pageStart: 0, pageFetch: 10},
+            pagination: {pageStart: 0, pageFetch: 100},
             languageCode: "eng",
             purpose: "REGISTRATION",
             deviceProviderId: selectedSbidata.partnerId
@@ -285,25 +291,23 @@ function AddDevices() {
             const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV), searchRequest);
             if (response?.data?.response) {
                 const searchDetails = response.data.response.data;
-                let filteredArr = [];
-                searchDetails.forEach(item => {
-                    if ((item['approvalStatus'] === "pending_approval") || (item['approvalStatus'] === "approved" && item["isActive"])) {
-                        filteredArr.push(item);
-                    }
-                });
-                return filteredArr;
+                let filteredItem = {};
+                if (searchDetails !== null) {
+                    filteredItem = searchDetails.find(item => item.make === entry.make && item.model === entry.model);
+                }
+                return filteredItem;
             } else {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.errorWhileFetchingDeviceDetails');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);
     };
 
-    const inactiveMappingDeviceToSbi = async (deviceDetailId, index) => {
+    const inactiveMappingDeviceToSbi = async (deviceDetailId, index, isDeviceAlreadyMapped) => {
         const newEntries = [...deviceEntries];
         setDataLoaded(false);
         try {
@@ -321,14 +325,14 @@ function AddDevices() {
 
             if (response?.data?.response) {
                 newEntries[index].isSubmitted = true;
-                newEntries[index].successMsg = t('addDevices.successMsg');
+                newEntries[index].successMsg = isDeviceAlreadyMapped ? t('addDevices.successMsgForExistingDeviceMapping') : t('addDevices.successMsgForNewDeviceMapping');
                 setDeviceEntries(newEntries);
                 updateButtonStates();
             } else {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.inActiveDeviceMappingToSbiError');
+            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
             console.error('Error fetching data:', err);
         }
@@ -338,8 +342,17 @@ function AddDevices() {
     const handleError = (responseData, index, newEntries) => {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
-            const errorMessage = responseData.errors[0].message;
-            newEntries[index].errorCode = errorCode;
+            let errorMessage = responseData.errors[0].message;
+            if (errorCode) {
+                const serverErrors = t('serverError', { returnObjects: true });
+                if (serverErrors[errorCode]) {
+                    errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                } else {
+                    errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                }
+            } else {
+                errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+            }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);
             console.error('Error:', errorMessage);
@@ -459,7 +472,7 @@ function AddDevices() {
                                             <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
                                         )}
                                         {entry.errorMsg && (
-                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={'Device Details already exists for the same make and/or model'} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
+                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
                                         )}
                                     </div>
                                     <form>

@@ -426,6 +426,4 @@ public class PoliciesPage extends BasePage{
 		clickOnElement(policyListItem1);
 	}
 	
-	
-	
 }

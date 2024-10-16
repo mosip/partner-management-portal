@@ -302,10 +302,6 @@ function CreateOidcClient() {
             header: "createOidcClient.requestSuccessHeader",
             description: "createOidcClient.requestSuccessMsg",
             subNavigation: "authenticationServices.authenticationServices",
-            styleSet: {
-              imgIconLtr: "ml-[24%] max-[450px]:ml-20",
-              imgIconRtl: "mr-[24%] max-[450px]:mr-20"
-            }
           }
           setConfirmationData(requiredData);
           setCreateOidcClientSuccess(true);

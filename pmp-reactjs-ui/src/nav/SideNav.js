@@ -34,6 +34,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon('deviceProviderServices');
         } else if (selectedPath.includes('ftmChipProviderServices')) {
             setActiveIcon('ftmChipProviderServices');
+        } else if (selectedPath.includes('rootTrustCertificateList')) {
+            setActiveIcon("rootOfTrustCertificate");
         }
         else {
             setActiveIcon("home");
@@ -85,7 +87,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("pendingRequests");
     };
     const showRootOfTrustCertificate = () => {
-        setActiveIcon("rootOfTrustCertificate");
+        navigate('/partnermanagement/admin/certificates/rootTrustCertificateList');
     };
     const showPartner = () => {
         setActiveIcon("partner");
@@ -105,7 +107,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const showAdminAuthenticationServices = () => {
         setActiveIcon("authenticationServices");
     };
-    
+
     return (
         <div className="flex font-inter bg-white h-screen z-40">
             <div className={`h-full ${open ? "absolute inset-y-14 w-64" : "absolute inset-y-14 w-[4.5rem]"} 
@@ -145,7 +147,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                                 <SideNavMenuItem title={t('dashboard.pendingRequests')} id='pendingRequests' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()}>
-                                <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id= 'rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
                                 <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
@@ -157,10 +159,10 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
-                                <SideNavMenuItem title={t('dashboard.sbiDeviceDetails')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.sbiDevice')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>
-                                <SideNavMenuItem title={t('dashboard.ftmDetails')} id='ftmDetails' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmDetails' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />

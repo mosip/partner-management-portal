@@ -61,12 +61,15 @@ export const getStatusCode = (status, t) => {
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
-            return t('statusCodes.expired')
+            return t('statusCodes.expired');
+        } else if (status === "uploaded"){
+            return t('statusCodes.uploaded');
+        } else if (status === "notuploaded"){
+            return t('statusCodes.notUploaded');
         } else if (status === "-") {
             return "-"
         }
     }
-
 }
 
 export const getGrantTypes = (type, t) => {

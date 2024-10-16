@@ -1,15 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
-import {
-  formatDate,
-  getStatusCode,
-  handleMouseClickForDropdown,
-  toggleSortAscOrder,
-  toggleSortDescOrder,
-  bgOfStatus,
-} from "../../../utils/AppUtils";
+import { formatDate, getStatusCode, handleMouseClickForDropdown, toggleSortAscOrder, toggleSortDescOrder, bgOfStatus,} from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
@@ -21,6 +15,7 @@ import Pagination from "../../common/Pagination";
 
 function RootTrustCertificateList() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState(false);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [errorCode, setErrorCode] = useState("");
@@ -66,148 +61,7 @@ function RootTrustCertificateList() {
       try {
         setDataLoaded(false);
 
-        const trustCertDummyData =  [
-          {
-            orgName: "P23423049",
-            partnerDomain: "DEVICE_V1",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423045",
-            partnerDomain: "DEVICE_V2",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "rejected",
-          },
-          {
-            orgName: "P23423045",
-            partnerDomain: "DEVICE_V3",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P234230456",
-            partnerDomain: "DEVICE_V4",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "InProgress",
-          },
-          {
-            orgName: "P23423034",
-            partnerDomain: "DEVICE_V5",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423064",
-            partnerDomain: "DEVICE_V6",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "rejected",
-          },
-          {
-            orgName: "P23423064",
-            partnerDomain: "DEVICE_V7",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423045",
-            partnerDomain: "DEVICE_V8",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423065",
-            partnerDomain: "DEVICE_V9",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "InProgress",
-          },
-          {
-            orgName: "P23423076",
-            partnerDomain: "DEVICE_V10",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423026",
-            partnerDomain: "DEVICE_V11",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "rejected",
-          },
-          {
-            orgName: "P23423029",
-            partnerDomain: "DEVICE_V12",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423029",
-            partnerDomain: "DEVICE_V13",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "approved",
-          },
-          {
-            orgName: "P23423029",
-            partnerDomain: "DEVICE_V14",
-            issuedTo: "MOSIP",
-            issuedBy: "Mosip",
-            validFrom: "2024-09-13T04:25:39.046+00:00",
-            validTill: "2024-09-13T04:25:39.046+00:00",
-            timeOfUpload: "2025-09-13T04:25:39.046+00:00",
-            status: "InProgress",
-          },
-        ];
+        const trustCertDummyData = [];
 
         const sortedData = trustCertDummyData.sort(
           (a, b) => new Date(b.timeOfUpload) - new Date(a.timeOfUpload)
@@ -224,6 +78,7 @@ function RootTrustCertificateList() {
   }, []);
 
   const showUploadCertificate = () => {
+    navigate('/partnermanagement/admin/certificates/uploadRootTrustCertificate')
   };
 
   const showCertificateDetails = (selectedCertificateData) => {
@@ -318,9 +173,8 @@ function RootTrustCertificateList() {
 
   return (
     <div
-      className={`mt-2 w-[100%] ${
-        isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"
-      } overflow-x-scroll font-inter`}
+      className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"
+        } overflow-x-scroll font-inter`}
     >
       {!dataLoaded && <LoadingIcon></LoadingIcon>}
       {dataLoaded && (
@@ -335,12 +189,13 @@ function RootTrustCertificateList() {
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
               <Title
-                title="rootTrustCertificate.rootTrustCertTitle"
+                title="viewRootOfTrustCertificate.viewRootOfTrustCertificate"
+                subTitle2="viewRootOfTrustCertificate.caCertificates"
                 backLink="/partnermanagement"
                 styleSet={style}
-              ></Title>
+              />
 
-              {certificateData.length > 0 ? (
+              {certificateData.length > 0 && (
                 <button
                   id="root_certificate_upload_btn"
                   onClick={() => showUploadCertificate()}
@@ -349,7 +204,7 @@ function RootTrustCertificateList() {
                 >
                   {t("rootTrustCertificate.UploadCertBtn")}
                 </button>
-              ) : null}
+              )}
             </div>
             <div className="flex-col justify-center ml-3 h-full">
               {certificateData.length === 0 ? (
@@ -440,12 +295,11 @@ function RootTrustCertificateList() {
                               <tr
                                 id={"root_certificate_list_item" + (index + 1)}
                                 key={index}
-                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${
-                                  certificate.status.toLowerCase() ===
-                                  "deactivated"
+                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status.toLowerCase() ===
+                                    "deactivated"
                                     ? "text-[#969696]"
                                     : "text-[#191919]"
-                                }`}
+                                  }`}
                               >
                                 <td
                                   onClick={() =>
@@ -563,22 +417,20 @@ function RootTrustCertificateList() {
                                     </p>
                                     {viewCertificateId === index && (
                                       <div
-                                        className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${
-                                          isLoginLanguageRTL
+                                        className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL
                                             ? "left-9 text-right"
                                             : "right-9 text-left"
-                                        }`}
+                                          }`}
                                       >
                                         <p
                                           id="root_certificate_details_view_btn"
                                           onClick={() =>
                                             showCertificateDetails(certificate)
                                           }
-                                          className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${
-                                            isLoginLanguageRTL
+                                          className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL
                                               ? "pl-10"
                                               : "pr-10"
-                                          }`}
+                                            }`}
                                           tabIndex="0"
                                           onKeyPress={(e) =>
                                             onPressEnterKey(e, () =>
@@ -596,15 +448,13 @@ function RootTrustCertificateList() {
                                           onClick={() =>
                                             showDeactivateCertificate(certificate)
                                           }
-                                          className={`py-1.5 px-4 ${
-                                            isLoginLanguageRTL
+                                          className={`py-1.5 px-4 ${isLoginLanguageRTL
                                               ? "pl-10"
                                               : "pr-10"
-                                          } ${
-                                            certificate.status === "approved"
+                                            } ${certificate.status === "approved"
                                               ? "text-crimson-red cursor-pointer"
                                               : "text-[#A5A5A5] cursor-auto"
-                                          } hover:bg-gray-100`}
+                                            } hover:bg-gray-100`}
                                           tabIndex="0"
                                           onKeyPress={(e) =>
                                             onPressEnterKey(e, () =>

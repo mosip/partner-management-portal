@@ -24,6 +24,8 @@ import FtmList from './pages/partner/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/partner/ftmProviderServices/AddFtm.js';
 import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipDetails.js';
 import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertificateList.js';
+import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
+import PartnersList from './pages/admin/partners/PartnersList.js';
 
 
 function AppRoutes() {
@@ -126,9 +128,18 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
         },
         {
-          path: 'rootTrustCertificateList',
+          path: 'admin/certificates/rootTrustCertificateList',
           element: <GuardedRoute><MainLayout><RootTrustCertificateList/></MainLayout></GuardedRoute>
         },
+        {
+          path: 'admin/certificates/uploadRootTrustCertificate',
+          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/partnersList',
+          element: <GuardedRoute><MainLayout><PartnersList/></MainLayout></GuardedRoute>
+        },
+
         {
           path: 'runtimeError',
           element: <RuntimeError/>,

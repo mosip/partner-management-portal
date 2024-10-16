@@ -5,7 +5,8 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "back": "خلف",
+        "back": "خلف", 
+        "cancel": "يلغي",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
@@ -53,13 +54,13 @@
         "partner": "شريك",
         "partnerDesc": "عرض و/أو إلغاء تنشيط تفاصيل الشريك",
         "policy": "سياسة",
-        "policiesadminDesc": "إنشاء مجموعات السياسات وسياسة المصادقة وسياسة مشاركة البيانات",
-        "partnerPolicyMapping": "رسم خرائط سياسة الشريك",
-        "partnerPolicyMappingDesc": "عرض و/أو إلغاء تنشيط السياسات المطلوبة من قبل الشركاء المختلفين",
-        "sbiDeviceDetails": "SBI-تفاصيل الجهاز",
-        "sbiDeviceDetailsDesc": "عرض و/أو إلغاء تنشيط SBI أو تفاصيل الجهاز",
-        "ftmDetails": "تفاصيل اف تي ام",
-        "ftmDetailsDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM",
+        "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
+        "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
+        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
+        "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
+        "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
+        "ftmChip": "تفاصيل اف تي ام",
+        "ftmChipDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM",
         "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات"
     },
     "header": {
@@ -153,7 +154,9 @@
         "deactivated": "معطل",
         "activated": "نشط",
         "pendingCertUpload": "في انتظار تحميل الشهادة",
-        "expired": "منتهي الصلاحية"
+        "expired": "منتهي الصلاحية",
+        "uploaded": "تم الرفع",
+        "notUploaded": "لم يتم الرفع"
     },
     "policies": {
         "policies": "سياسات",
@@ -439,13 +442,14 @@
         "addDevice": "إضافة جهاز",
         "backToSBIList": "العودة إلى قائمة SBI",
         "backToViewDevices": "العودة إلى عرض الأجهزة",
-        "successMsg": "تم إرسال الجهاز بنجاح وهو معلق لدى المشرف للموافقة.",
+        "successMsgForNewDeviceMapping": "تم إرسال الجهاز بنجاح وهو معلق لدى المشرف للموافقة.",
+        "successMsgForExistingDeviceMapping": "تم إرسال الجهاز بنجاح وهو في انتظار موافقة المسؤول. كما تم ربطه بجهاز SBI آخر.",
         "errorInDeviceSubType": "أثناء جلب أنواع فرعية للجهاز، واجهنا خطأً.",
         "errorInDeviceType": "أثناء جلب أنواع الأجهزة، واجهنا خطأً.",
-        "errorInAddingDevice": "أثناء إضافة الجهاز، واجهنا خطأ.",
         "limitExceedWarning": "يمكن إضافة 25 جهازًا كحد أقصى في المرة الواحدة. انقر فوق تأكيد لتحديث هذه الصفحة وإضافة المزيد من الأجهزة. يرجى ملاحظة أن جميع الأجهزة التي تم إرسالها مسبقًا لن تكون مرئية عند التحديث ولكن يمكن عرضها في صفحة قائمة الأجهزة",
-        "inActiveDeviceMappingToSbiError": "لقد واجهنا خطأ، يرجى الاتصال بالمسؤول.",
-        "errorWhileFetchingDeviceDetails": "أثناء جلب تفاصيل الجهاز، واجهنا خطأً."
+        "unableToAddDevice": "تعذر إضافة الجهاز، يرجى المحاولة مرة أخرى لاحقًا",
+        "unableToAddDeviceReason": "تعذر إضافة الجهاز بسبب السبب التالي: ",
+        "errorInAddDevice": "تعذر إضافة الجهاز لأنه تم بالفعل اعتماد جهاز بنفس الماركة والطراز بموجب نفس SBI أو SBI مختلف."
     },
     "deactivateSbi": {
         "headerMsg": "هل تريد إلغاء تنشيط إصدار SBI ",
@@ -507,8 +511,7 @@
         "listOfFtmChipDetails": "قائمة تفاصيل شريحة FTM",
         "ftmChipProvider": "مزود رقاقة FTM",
         "ftmChipCertificate": " شهادة رقاقة FTM",
-        "originalCertSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح.",
-        "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح."
+        "originalCertSuccessMsg": "تم تنزيل شهادة FTM Chip بنجاح."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "إدارة شهادة شريحة FTM",
@@ -517,7 +520,6 @@
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
     "rootTrustCertificate":{
-        "rootTrustCertTitle": "تحميل شهادة جذر الثقة",
         "organisation": "منظمة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -535,6 +537,38 @@
         "deActivate": "إلغاء التنشيط",
         "view": "منظر"
     },
+    "uploadRootofTrustCertificate": {
+        "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
+        "uploadRootofTrustCertificateDesc": "الرجاء تحديد الحقول وتحميل الشهادة",
+        "partnerDomain": "مجال الشريك",
+        "dropdownPlaceholder": "حدد مجال الشريك",
+        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
+    },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
+        "caCertificates": "شهادات كاليفورنيا"
+    },
+    "partnerList":{
+        "partnerTitle": "شريك",
+        "listOfPartnerTitle": "قائمة الشركاء",
+        "partnerId": "معرف الشريك",
+        "organisation": "اسم المنظمة",
+        "partnerType": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "email": "عنوان البريد الإلكتروني",
+        "certUploadStatus": "شهادة. حالة التحميل",
+        "status": "حالة",
+        "action": "فعل",
+        "noData": "لا توجد بيانات",
+        "deActivate": "إلغاء التنشيط",
+        "view": "منظر",
+        "selectPartnerId": "حدد معرف الشريك",
+        "selectOrganisation":"حدد المنظمة",
+        "selectPartnerType":"حدد نوع الشريك",
+        "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
+        "selectPolicyGroup":"حدد مجموعة السياسات",
+        "selectStatus":"حدد الحالة"
+     },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
@@ -639,12 +673,14 @@
         "PMS_AUT_005": "تفاصيل الجهاز للمعرف٪ s غير موجودة",
         "PMS_AUT_512": "توجد تفاصيل SBI لإصدار SBI المحدد. لا يمكن إضافة SBI متعددة بنفس إصدار SBI.",
         "PMS_AUT_025": "يجب أن تكون حالة الموافقة نشطة / إلغاء تنشيط ؛",
-        "PMP_AUT_030": "موفر FTP إما غير نشط أو غير موجود",
+        "PMP_AUT_030": "الشريك غير نشط",
         "PMP_AUT_031": "معرف شريحة بروتوكول نقل الملفات غير موجود.",
         "PMP_AUT_032": "تفاصيل شريحة FTM موجودة بالفعل لنفس الماركة والطراز",
         "PMP_AUT_033": "لم يتم تحميل الشهادة.",
         "PMP_AUT_034": "لم يتم تعيين معرف تفاصيل شريحة بروتوكول نقل الملفات ومعرف موفر بروتوكول نقل الملفات.",
         "PMP_AUT_037": "إعطاء تفاصيل شريحة بروتوكول نقل الملفات مسجلة بالفعل .؛",
+        "PMP_AUT_038": "لا يمكن تحميل الشهادة إلا لـ FTM الذي هو إما في انتظار تحميل الشهادة أو لديه حالة معتمدة",
+        "PMP_AUT_039": "تم إلغاء تنشيط شريحة FTM",
         "PMS_AUT_007": "لم يتم العثور على واجهة المقاييس الحيوية الآمنة للمعرّف٪ s",
         "PMS_AUT_026": "يجب أن تكون حالة الموافقة نشطة / إلغاء التنشيط",
         "PMS_AUT_506": "قدم تفاصيل الجهاز لنفس المزود.",
@@ -752,14 +788,16 @@
         "PMS_DEVICE_ERROR_011": "حدث خطأ أثناء الموافقة على الجهاز أو رفضه لرسم خرائط Sbi.",
         "PMS_DEVICE_ERROR_012": "SBI وتعيين الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_013": "معرف الجهاز غير صالح",
-        "PMS_DEVICE_ERROR_014": "لا يمكن إلغاء تنشيط الجهاز إلا إذا تمت الموافقة عليه ولم يتم إلغاء تنشيطه مسبقًا",
+        "PMS_DEVICE_ERROR_014": "تم إلغاء تنشيط الجهاز المحدد بالفعل",
         "PMS_DEVICE_ERROR_015": "خطأ أثناء إلغاء تنشيط الجهاز",
         "PMS_DEVICE_ERROR_016": "الجهاز غير مرتبط بالمستخدم.",
         "PMS_DEVICE_ERROR_017": "معرف SBI غير صالح",
         "PMS_DEVICE_ERROR_018": "حدث خطأ أثناء إلغاء تنشيط SBI",
         "PMS_DEVICE_ERROR_019": "SBI ليس مرتبطًا بالمستخدم.",
-        "PMS_DEVICE_ERROR_020": "لا يمكن إلغاء تنشيط SBI إلا إذا تمت الموافقة عليه ولم يتم إلغاء تنشيطه مسبقًا",
+        "PMS_DEVICE_ERROR_020": "تم إلغاء تنشيط SBI المحدد بالفعل",
         "PMS_DEVICE_ERROR_021": "انتهت صلاحية SBI التي تمت إضافة الجهاز إليها",
+        "PMS_DEVICE_ERROR_022": "الهيئة الفرعية للتنفيذ المحددة ليست في حالة معتمدة",
+        "PMS_DEVICE_ERROR_023": "الجهاز المحدد ليس في حالة معتمدة.",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
         "PMS_REQUEST_ERROR_001": "طلب غير صالح.",
@@ -774,8 +812,9 @@
         "PMS_FTM_ERROR_004": "معرف FTM غير صالح",
         "PMS_FTM_ERROR_005": "تفاصيل FTM غير موجودة.",
         "PMS_FTM_ERROR_006": "FTM ليس مرتبطًا بالمستخدم.",
-        "PMS_FTM_ERROR_007": "يجب أن يكون FTM المحدد نشطًا وموافقًا عليه",
+        "PMS_FTM_ERROR_007": "تم إلغاء تنشيط FTM المحدد بالفعل",
         "PMS_FTM_ERROR_008": "يجب أن يكون FTM المحدد معلقًا أو معتمدًا",
-        "PMS_FTM_ERROR_009": "غير قادر على تنزيل شهادة FTM الأصلية"
+        "PMS_FTM_ERROR_009": "غير قادر على تنزيل شهادة FTM الأصلية",
+        "PMS_FTM_ERROR_010": "FTM المحدد ليس في حالة معتمدة"
     }
 }
