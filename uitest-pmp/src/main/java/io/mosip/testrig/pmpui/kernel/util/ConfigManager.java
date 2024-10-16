@@ -46,7 +46,7 @@ public class ConfigManager {
 	private static String HIBERNATE_CONTEXT_CLASS = "hibernate.current_session_context_class";
 	
 	private static String PMS_DB_USER = "db-su-user";
-	private static String PMS_DB_PASS = "postgresql-password";
+	private static String PMS_DB_PASS = "postgres-password";
 	private static String PMS_DB_SCHEMA = "pms_db_schema";
 	
 	private static String IAM_REALM_ID = "keycloak-realm-id";
