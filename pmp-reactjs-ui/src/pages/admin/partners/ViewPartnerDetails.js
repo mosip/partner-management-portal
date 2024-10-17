@@ -157,15 +157,14 @@ function ViewPartnerDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {partnerDetails.orgName}
+                                    {partnerDetails.partnerID}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(partnerDetails.status, t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                         {getStatusCode(partnerDetails.status, t)}
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
-                                        {t("viewPartnerDetails.createdOn") + ' ' +
-                                            '30/05/2024'}
+                                        {t("viewPartnerDetails.createdOn") + ' ' + '30/05/2024'}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
@@ -178,10 +177,10 @@ function ViewPartnerDetails() {
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                     <p className="font-[600] text-suva-gray text-xs">
-                                        {t("viewOidcClientDetails.partnerId")}
+                                        {t("viewPartnerDetails.organizationName")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-sm">
-                                        {partnerDetails.partnerID}
+                                        {partnerDetails.orgName}
                                     </p>
                                 </div>
                                 <div className="mb-3 max-[600px]:w-[100%] w-[50%]">

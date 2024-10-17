@@ -567,6 +567,7 @@
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
+        "organizationName": "Organization Name",
         "createdOn":"Created On",
         "emailId": "Email ID"
     },

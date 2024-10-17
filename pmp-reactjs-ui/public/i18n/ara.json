@@ -571,6 +571,7 @@
      },
      "viewPartnerDetails": {
          "viewPartnerDetails": "عرض تفاصيل الشريك",
+         "organizationName": "اسم المنظمة",
          "createdOn":"تم الإنشاء بتاريخ",
          "emailId": "معرف البريد الإلكتروني"
      },

@@ -571,6 +571,7 @@
      },
      "viewPartnerDetails": {
          "viewPartnerDetails": "Afficher les détails du partenaire",
+         "organizationName": "Nom de l'Organisation",
          "createdOn":"Créé le",
          "emailId": "Identifiant de courrier électronique"
      },
