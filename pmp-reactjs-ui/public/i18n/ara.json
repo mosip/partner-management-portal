@@ -539,7 +539,7 @@
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadRootofTrustCertificateDesc": "الرجاء تحديد الحقول وتحميل الشهادة",
+        "uploadRootofTrustCertificateDesc": "يرجى تحديد نطاق الشريك وتحميل شهادة الجذر/ الجذر المتوسطة",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
