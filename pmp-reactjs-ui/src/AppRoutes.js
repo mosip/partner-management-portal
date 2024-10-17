@@ -26,6 +26,7 @@ import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipD
 import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertificateList.js';
 import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
+import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 
 
 function AppRoutes() {
@@ -41,108 +42,111 @@ function AppRoutes() {
         { path: '', loader: () => redirect('/partnermanagement/dashboard') },
         {
           path: 'dashboard',
-          element: <GuardedRoute><MainLayout><Dashboard/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Dashboard /></MainLayout></GuardedRoute>,
         },
         {
           path: 'userProfile',
-          element: <GuardedRoute><MainLayout><UserProfile/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><UserProfile /></MainLayout></GuardedRoute>,
         },
         {
           path: 'certificates/partnerCertificate',
-          element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><PartnerCertificatesList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/policiesList',
-          element: <GuardedRoute><MainLayout><PoliciesList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><PoliciesList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/viewPolicyDetails',
-          element: <GuardedRoute><MainLayout><ViewPolicyDetails/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewPolicyDetails /></MainLayout></GuardedRoute>,
         },
         {
           path: 'policies/requestPolicy',
-          element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/oidcClientsList',
-          element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><OidcClientsList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/createOidcClient',
-          element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><CreateOidcClient /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewOidcClienDetails',
-          element: <GuardedRoute><MainLayout><ViewOidcClientDetails/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewOidcClientDetails /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/editOidcClient',
-          element: <GuardedRoute><MainLayout><EditOidcClient/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><EditOidcClient /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/apiKeysList',
-          element: <GuardedRoute><MainLayout><ApiKeysList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ApiKeysList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/generateApiKey',
-          element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><GenerateApiKey /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authenticationServices/viewApiKeyDetails',
-          element: <GuardedRoute><MainLayout><ViewApiKeyDetails/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewApiKeyDetails /></MainLayout></GuardedRoute>,
         },
         {
           path: 'deviceProviderServices/sbiList',
-          element: <GuardedRoute><MainLayout><SbiList/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><SbiList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'deviceProviderServices/addSbi',
-          element: <GuardedRoute><MainLayout><AddSbi/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><AddSbi /></MainLayout></GuardedRoute>,
         },
         {
           path: 'deviceProviderServices/addDevices',
-          element: <GuardedRoute><MainLayout><AddDevices/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AddDevices /></MainLayout></GuardedRoute>
         },
         {
           path: 'deviceProviderServices/devicesList',
-          element: <GuardedRoute><MainLayout><DevicesList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><DevicesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'deviceProviderServices/viewDeviceDetails',
-          element: <GuardedRoute><MainLayout><ViewDeviceDetails/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewDeviceDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'ftmChipProviderServices/ftmList',
-          element: <GuardedRoute><MainLayout><FtmList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><FtmList /></MainLayout></GuardedRoute>
         },
         {
           path: 'ftmChipProviderServices/addFtm',
-          element: <GuardedRoute><MainLayout><AddFtm/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AddFtm /></MainLayout></GuardedRoute>
         },
         {
           path: 'ftmChipProviderServices/viewFtmChipDetails',
-          element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'ftmChipProviderServices/manageFtmChipCertificate',
-          element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/rootTrustCertificateList',
-          element: <GuardedRoute><MainLayout><RootTrustCertificateList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><RootTrustCertificateList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/uploadRootTrustCertificate',
-          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/partnersList',
-          element: <GuardedRoute><MainLayout><PartnersList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
+        }, 
+        {
+          path: 'admin/viewPartnerDetails',
+          element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
         },
-
         {
           path: 'runtimeError',
-          element: <RuntimeError/>,
+          element: <RuntimeError />,
         },
       ],
     },
