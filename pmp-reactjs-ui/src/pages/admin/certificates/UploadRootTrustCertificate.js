@@ -138,7 +138,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/rootTrustCertificateList"/>
+                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/rootTrustCertificateList" />
                         </div>
                         <div className="flex-col justify-center mt-3 h-full">
                             {!uploadSuccess ?
