@@ -20,11 +20,11 @@ function ViewFtmChipDetails() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [uploadCertificateData, setUploadCertificateData] = useState({});
 
     useEffect(() => {

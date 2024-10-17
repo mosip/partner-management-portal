@@ -519,7 +519,7 @@
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
-    "rootTrustCertificate":{
+    "rootTrustCertificate": {
         "organisation": "منظمة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -568,6 +568,11 @@
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
         "selectPolicyGroup":"حدد مجموعة السياسات",
         "selectStatus":"حدد الحالة"
+     },
+     "viewPartnerDetails": {
+         "viewPartnerDetails": "عرض تفاصيل الشريك",
+         "createdOn":"تم الإنشاء بتاريخ",
+         "emailId": "معرف البريد الإلكتروني"
      },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",

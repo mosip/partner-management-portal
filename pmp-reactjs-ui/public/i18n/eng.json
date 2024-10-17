@@ -463,7 +463,7 @@
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "addFtmBtn": "Add FTM Chip",
-        "partnerId":"Partner ID",
+        "partnerId": "Partner ID",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
@@ -478,7 +478,7 @@
         "view": "View",
         "manageCertificate": "Manage Certificate",
         "deActivate": "Deactivate",
-        "selectPartnerId":"Select Partner ID",
+        "selectPartnerId": "Select Partner ID",
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
@@ -514,7 +514,7 @@
         "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
-    "rootTrustCertificate":{
+    "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
@@ -533,8 +533,9 @@
         "view": "View"
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate":"Upload Root of Trust Certificate",
-        "uploadRootofTrustCertificateDesc": "Please select the fields and upload certificate",
+        "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
+        "rootTrustCertificate": "Root of Trust Certificate",
+        "uploadRootofTrustCertificateDesc": "Please select the fields and upload certifiate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
@@ -543,26 +544,31 @@
         "viewRootOfTrustCertificate": "View Root of Trust Certificate",
         "caCertificates": "Ca Certificates"
     },
-    "partnerList":{
-       "partnerTitle": "Partner",
-       "listOfPartnerTitle": "List of Partners",
-       "partnerId": "Partner ID",
-       "organisation": "Organisation Name",
-       "partnerType": "Partner Type",
-       "policyGroup": "Policy Group",
-       "email": "Email Address",
-       "certUploadStatus": "Cert. Upload Status",
-       "status": "Status",
-       "action": "Action",
-       "noData": "No Data",
-       "deActivate": "Deactivate",
-       "view": "View",
-       "selectPartnerId": "Select Partner ID",
-       "selectOrganisation":"Select Organisation",
-       "selectPartnerType":"Select Partner Type",
-       "selectEmailAddress": "Select Email Address",
-       "selectPolicyGroup":"Select Policy Group",
-       "selectStatus":"Select Status"
+    "partnerList": {
+        "partnerTitle": "Partner",
+        "listOfPartnerTitle": "List of Partners",
+        "partnerId": "Partner ID",
+        "organisation": "Organisation Name",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "email": "Email Address",
+        "certUploadStatus": "Cert. Upload Status",
+        "status": "Status",
+        "action": "Action",
+        "noData": "No Data",
+        "deActivate": "Deactivate",
+        "view": "View",
+        "selectPartnerId": "Select Partner ID",
+        "selectOrganisation": "Select Organisation",
+        "selectPartnerType": "Select Partner Type",
+        "selectEmailAddress": "Select Email Address",
+        "selectPolicyGroup": "Select Policy Group",
+        "selectStatus": "Select Status"
+    },
+    "viewPartnerDetails": {
+        "viewPartnerDetails": "View Partner Details",
+        "createdOn":"Created On",
+        "emailId": "Email ID"
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",

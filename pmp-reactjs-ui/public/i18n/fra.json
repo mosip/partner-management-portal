@@ -519,7 +519,7 @@
         "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
         "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
-    "rootTrustCertificate":{
+    "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
@@ -568,6 +568,11 @@
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
         "selectStatus":"Sélectionnez le statut"
+     },
+     "viewPartnerDetails": {
+         "viewPartnerDetails": "Afficher les détails du partenaire",
+         "createdOn":"Créé le",
+         "emailId": "Identifiant de courrier électronique"
      },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
