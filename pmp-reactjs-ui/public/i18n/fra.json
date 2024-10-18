@@ -573,7 +573,8 @@
          "viewPartnerDetails": "Afficher les détails du partenaire",
          "organizationName": "Nom de l'Organisation",
          "createdOn":"Créé le",
-         "emailId": "Identifiant de courrier électronique"
+         "emailId": "Identifiant de courrier électronique",
+        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
      },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
