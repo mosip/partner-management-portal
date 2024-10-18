@@ -5,7 +5,7 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "back": "خلف", 
+        "back": "خلف",
         "cancel": "يلغي",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
@@ -548,7 +548,7 @@
         "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
         "caCertificates": "شهادات كاليفورنيا"
     },
-    "partnerList":{
+    "partnerList": {
         "partnerTitle": "شريك",
         "listOfPartnerTitle": "قائمة الشركاء",
         "partnerId": "معرف الشريك",
@@ -563,18 +563,19 @@
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "selectPartnerId": "حدد معرف الشريك",
-        "selectOrganisation":"حدد المنظمة",
-        "selectPartnerType":"حدد نوع الشريك",
+        "selectOrganisation": "حدد المنظمة",
+        "selectPartnerType": "حدد نوع الشريك",
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
-        "selectPolicyGroup":"حدد مجموعة السياسات",
-        "selectStatus":"حدد الحالة"
-     },
-     "viewPartnerDetails": {
-         "viewPartnerDetails": "عرض تفاصيل الشريك",
-         "organizationName": "اسم المنظمة",
-         "createdOn":"تم الإنشاء بتاريخ",
-         "emailId": "معرف البريد الإلكتروني"
-     },
+        "selectPolicyGroup": "حدد مجموعة السياسات",
+        "selectStatus": "حدد الحالة"
+    },
+    "viewPartnerDetails": {
+        "viewPartnerDetails": "عرض تفاصيل الشريك",
+        "organizationName": "اسم المنظمة",
+        "createdOn": "تم الإنشاء بتاريخ",
+        "emailId": "معرف البريد الإلكتروني",
+        "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ"
+    },
     "deactivateFtmPopup": {
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."

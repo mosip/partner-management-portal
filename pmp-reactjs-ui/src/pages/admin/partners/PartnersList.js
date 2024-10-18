@@ -209,7 +209,7 @@ function PartnersList() {
 
   const showViewPartnerDetails = (selectedPartnerData) => {
     if (selectedPartnerData.status === 'ACTIVE') {
-      localStorage.setItem('selectedPartnerData', JSON.stringify(selectedPartnerData));
+      localStorage.setItem('selectedPartnerId','sudeepadmin');
       navigate('/partnermanagement/admin/viewPartnerDetails')
     }
   };

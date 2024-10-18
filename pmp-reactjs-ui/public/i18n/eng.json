@@ -535,7 +535,7 @@
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
         "rootTrustCertificate": "Root of Trust Certificate",
-        "uploadRootofTrustCertificateDesc": "Please select the fields and upload certifiate",
+        "uploadRootofTrustCertificateDesc": "Please select the partner domain and upload root/ intermediate root certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
@@ -568,8 +568,9 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
         "organizationName": "Organization Name",
-        "createdOn":"Created On",
-        "emailId": "Email ID"
+        "createdOn": "Created On",
+        "emailId": "Email ID",
+        "errorInPartnerList": "While fetching Partner details, we have encountered with an error."
     },
     "deactivateFtmPopup": {
         "headerMsg": "Do you want to deactivate FTM Chip ",
