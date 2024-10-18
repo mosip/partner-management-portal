@@ -153,7 +153,7 @@ function UploadRootTrustCertificate() {
                                                 <div className={`flex-col p-6 border-2 bg-[#f9fafb] my-5 mx-4 rounded-xl justify-center items-center`}>
                                                     <DropdownComponent
                                                         fieldName='partnerDomain'
-                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain'
+                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain*'
                                                         onDropDownChangeEvent={onDomainChangeEvent}
                                                         dropdownDataList={[
                                                             { fieldValue: 'FTM', fieldCode: 'FTM' },
