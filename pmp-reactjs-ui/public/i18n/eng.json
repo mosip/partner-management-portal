@@ -734,7 +734,7 @@
         "PMS_POL_060": "Error while fetching policy groups.",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
-        "KER-PCM-003": "Certificate already exists in store.",
+        "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Date is not valid.",
         "KER-PCM-005": "Root CA Certificate not found.",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
