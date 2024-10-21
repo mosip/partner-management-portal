@@ -185,7 +185,7 @@ return (
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
-                                    {t(partnerDetails.policyGroupName)}
+                                    {t(partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-')}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
