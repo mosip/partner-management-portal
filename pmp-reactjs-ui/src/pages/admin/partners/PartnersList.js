@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
-  createRequest,
   getPartnerManagerUrl,
   handleServiceErrors,
   getStatusCode,
