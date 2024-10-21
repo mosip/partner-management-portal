@@ -17,7 +17,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
 
     useEffect(() => {
-        console.log(selectedPath);
+        //console.log(selectedPath);
         if (selectedPath.includes('dashboard')) {
             setActiveIcon("home");
         } else if (selectedPath.includes('partnerCertificate')) {

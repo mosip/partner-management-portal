@@ -36,7 +36,6 @@ function PartnersList() {
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
-  const [serverRequest, setServerRequest] = useState({"filters": [], "sort": {"sortFieldName": "createdDateTime", "sortType": "desc"}, "pagination": {"pageNo":firstIndex, "pageSize":selectedRecordsPerPage}});
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
@@ -44,8 +43,6 @@ function PartnersList() {
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
-  const [selectedPage, setSelectedPage] = useState(0);
-  const [serverRecordPerPage, setServerRecordPerPage] = useState(8);
   const defaultFilterQuery = {
     orgName: "",
     partnerType: "",
@@ -81,7 +78,6 @@ function PartnersList() {
         triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
         const response = await HttpService.get(url);
         if (response) {
-          console.log(response);
           const responseData = response.data;
           if (responseData && responseData.response) {
             const resData = responseData.response.data;
