@@ -64,7 +64,7 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.expired');
         } else if (status === "uploaded") {
             return t('statusCodes.uploaded');
-        } else if (status === "notuploaded") {
+        } else if (status === "not_uploaded") {
             return t('statusCodes.notUploaded');
         } else if (status === "-") {
             return "-"

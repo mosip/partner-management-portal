@@ -242,7 +242,7 @@ function FtmList() {
               :
               <>
                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                  <FilterButtons listTitle='ftmList.listOfFtm' dataList={filteredftmList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                  <FilterButtons listTitle='ftmList.listOfFtm' dataListLength={filteredftmList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                   <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                   {filter &&
                     <FtmListFilter
@@ -318,7 +318,7 @@ function FtmList() {
                     </table>
                   </div>
                 </div>
-                <Pagination dataList={filteredftmList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                <Pagination dataListLength={filteredftmList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
               </>
             }
           </div>

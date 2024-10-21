@@ -255,7 +255,7 @@ function OidcClientsList() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='oidcClientsList.listOfOidcClients' dataList={filteredOidcClientsList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons listTitle='oidcClientsList.listOfOidcClients' dataListLength={filteredOidcClientsList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <OidcClientsFilter
@@ -342,7 +342,7 @@ function OidcClientsList() {
                                         </table>
                                     </div>
                                 </div>
-                                <Pagination dataList={filteredOidcClientsList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                                <Pagination dataListLength={filteredOidcClientsList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                             </>
                         }
                     </div>

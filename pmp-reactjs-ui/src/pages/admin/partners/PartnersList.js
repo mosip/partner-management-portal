@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
-  formatDate,
+  createRequest,
+  getPartnerManagerUrl,
+  handleServiceErrors,
   getStatusCode,
   handleMouseClickForDropdown,
-  toggleSortAscOrder,
-  toggleSortDescOrder,
-  bgOfStatus,
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -19,6 +18,7 @@ import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
+import { HttpService } from "../../../services/HttpService";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -31,12 +31,21 @@ function PartnersList() {
   const [partnersData, setPartnersData] = useState([]);
   const [filteredPartnersData, setFilteredPartnersData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("timeOfUpload");
+  const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [isDescending, setIsDescending] = useState(false);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [serverRequest, setServerRequest] = useState({"filters": [], "sort": {"sortFieldName": "createdDateTime", "sortType": "desc"}, "pagination": {"pageNo":firstIndex, "pageSize":selectedRecordsPerPage}});
+  const [sortFieldName, setSortFieldName] = useState("createdDateTime");
+  const [sortType, setSortType] = useState("desc");
+  const [pageNo, setPageNo] = useState(0);
+  const [pageSize, setPageSize] = useState(8);
+  const [triggerServerMethod, setTriggerServerMethod] = useState(false);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [tableDataLoaded, setTableDataLoaded] = useState(true);
+  const [selectedPage, setSelectedPage] = useState(0);
+  const [serverRecordPerPage, setServerRecordPerPage] = useState(8);
   const defaultFilterQuery = {
     orgName: "",
     partnerType: "",
@@ -49,163 +58,61 @@ function PartnersList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "partnerID", headerNameKey: "partnerList.partnerId" },
+    { id: "partnerId", headerNameKey: "partnerList.partnerId" },
     { id: "partnerType", headerNameKey: "partnerList.partnerType" },
     { id: "orgName", headerNameKey: "partnerList.organisation" },
-    { id: "emailID", headerNameKey: "partnerList.email" },
-    { id: "policyGroup", headerNameKey: "partnerList.policyGroup" },
-    { id: "certUploadStatus", headerNameKey: "partnerList.certUploadStatus" },
+    { id: "policyGroupName", headerNameKey: "partnerList.policyGroup" },
+    { id: "emailAddress", headerNameKey: "partnerList.email" },
+    { id: "certificateUploadStatus", headerNameKey: "partnerList.certUploadStatus" },
     { id: "status", headerNameKey: "partnerList.status" },
     { id: "action", headerNameKey: "partnerList.action" },
   ];
 
   useEffect(() => {
     const fetchData = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('sortFieldName', sortFieldName);
+      queryParams.append('sortType', sortType);
+      queryParams.append('pageNo', pageNo);
+      queryParams.append('pageSize', pageSize);
+
+      const url = `${getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
-        setDataLoaded(false);
-
-        const partnersDummyData = [
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP",
-            partnerType: "DEVICE_Provider",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423089",
-            orgName: "MOSIP444454",
-            partnerType: "MANUAL_ADJUDICATION",
-            emailID: "abhnc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23425029",
-            orgName: "MOSIP4353243",
-            partnerType: "MANUAL_ADJUDICATION",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423529",
-            orgName: "MOSIP5423",
-            partnerType: "MANUAL_ADJUDICATION",
-            emailID: "asbc@mock.co.in",
-            policyGroup: "mpolicfccygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP3434",
-            partnerType: "INTERNAL_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP3434",
-            partnerType: "PRINT_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP33343",
-            partnerType: "SDK_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP34324",
-            partnerType: "MISP_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP23434",
-            partnerType: "ABIS_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP3243",
-            partnerType: "ONLINE_VERIFICATION_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP343",
-            partnerType: "CREDENTIAL_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP324444",
-            partnerType: "AUTH_PARTNER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "ACTIVE",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP3432",
-            partnerType: "FTM_PROVIDER",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "uploaded",
-            status: "deactivated",
-          },
-          {
-            partnerID: "P23423029",
-            orgName: "MOSIP123",
-            partnerType: "DEVICE_Provider",
-            emailID: "abc@mock.co.in",
-            policyGroup: "mpolicygroup-default-cert",
-            certUploadStatus: "notUploaded",
-            status: "ACTIVE",
-          },
-        ];
-
-        const sortedData = partnersDummyData.sort(
-          (a, b) => new Date(b.certExpiryDate) - new Date(a.certExpiryDate)
-        );
-        setPartnersData(sortedData);
-        setFilteredPartnersData(sortedData);
-        setDataLoaded(true);
+        triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
+        const response = await HttpService.get(url);
+        if (response) {
+          console.log(response);
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            const resData = responseData.response.data;
+            setTotalRecords(responseData.response.totalResults);
+            setPartnersData(resData);
+            setFilteredPartnersData(resData);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('partnerList.errorInPartnersList'));
+        }
+        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+        setTriggerServerMethod(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+        console.error('Error fetching data:', err);
         setErrorMsg(err);
       }
-    };
+    }
     fetchData();
-  }, []);
+  }, [sortFieldName, sortType, pageNo, pageSize]);
+
+  const getPaginationValues = (recordsPerPage, pageIndex) =>{
+    // console.log(recordsPerPage, pageIndex);
+    if(pageNo !== pageIndex || pageSize !== recordsPerPage) {
+      setPageNo(pageIndex);
+      setPageSize(recordsPerPage);
+      setTriggerServerMethod(true);
+    }
+  }
 
   const showViewPartnerDetails = (selectedPartnerData) => {
     if (selectedPartnerData.status === 'ACTIVE') {
@@ -220,39 +127,25 @@ function PartnersList() {
 
   //This part is related to Sorting
   const sortAscOrder = (header) => {
-    const isDateCol = header === "timeOfUpload" ? true : false;
-    toggleSortAscOrder(
-      header,
-      isDateCol,
-      filteredPartnersData,
-      setFilteredPartnersData,
-      order,
-      setOrder,
-      isDescending,
-      setIsDescending,
-      activeSortAsc,
-      setActiveSortAsc,
-      activeSortDesc,
-      setActiveSortDesc
-    );
+    if (order !== 'ASC' || activeSortAsc !== header) {
+      setTriggerServerMethod(true);
+      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortType("desc");
+      setOrder("ASC");
+      setActiveSortDesc("");
+      setActiveSortAsc(header);
+    }
   };
 
   const sortDescOrder = (header) => {
-    const isDateCol = header === "timeOfUpload" ? true : false;
-    toggleSortDescOrder(
-      header,
-      isDateCol,
-      filteredPartnersData,
-      setFilteredPartnersData,
-      order,
-      setOrder,
-      isDescending,
-      setIsDescending,
-      activeSortAsc,
-      setActiveSortAsc,
-      activeSortDesc,
-      setActiveSortDesc
-    );
+    if (order !== 'DESC' || activeSortDesc !== header) {
+      setTriggerServerMethod(true);
+      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortType("asc");
+      setOrder("DESC");
+      setActiveSortDesc(header);
+      setActiveSortAsc("");
+    }
   };
 
   const style = {
@@ -276,12 +169,6 @@ function PartnersList() {
     window.location.reload();
   };
 
-  //This  part related to Pagination logic
-  let tableRows = filteredPartnersData.slice(
-    firstIndex,
-    firstIndex + selectedRecordsPerPage
-  );
-
   //This part is related to Filter
   const onFilterChange = (fieldName, selectedFilter) => {
     setFilterQuery((oldFilterQuery) => ({
@@ -292,18 +179,22 @@ function PartnersList() {
   };
 
   const showDeactivatePartner = (selectedClientdata) => {
-    if (selectedClientdata.status === "ACTIVE") {
+    if (selectedClientdata.isActive === true) {
       document.body.style.overflow = "hidden";
     }
   };
+
+  const styles = {
+    loadingDiv: "!py-[20%]"
+  }
 
   return (
     <div
       className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"
         } overflow-x-scroll font-inter`}
     >
-      {!dataLoaded && <LoadingIcon></LoadingIcon>}
-      {dataLoaded && (
+      { !dataLoaded && <LoadingIcon></LoadingIcon> }
+      { dataLoaded && (
         <>
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
@@ -340,7 +231,7 @@ function PartnersList() {
                         <h6>{t("partnerList.organisation")}</h6>
                         <h6>{t("partnerList.policyGroup")}</h6>
                         <h6>{t("partnerList.email")}</h6>
-                        <h6>{t("partnerList.certExpiryDate")}</h6>
+                        <h6>{t("partnerList.certUploadStatus")}</h6>
                         <h6>{t("partnerList.status")}</h6>
                         <h6 className="mx-4">{t("partnerList.action")}</h6>
                       </div>
@@ -358,10 +249,10 @@ function PartnersList() {
                 </div>
               ) : (
                 <>
-                  <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
+                  <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
                       listTitle="partnerList.listOfPartnerTitle"
-                      dataList={filteredPartnersData}
+                      dataListLength={totalRecords}
                       filter={filter}
                       onResetFilter={onResetFilter}
                       setFilter={setFilter}
@@ -373,7 +264,8 @@ function PartnersList() {
                         onFilterChange={onFilterChange}
                       />
                     )}
-
+                    {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
+                    {tableDataLoaded && (
                     <div className="mx-[2%] overflow-x-scroll">
                       <table className="table-fixed">
                         <thead>
@@ -399,22 +291,21 @@ function PartnersList() {
                           </tr>
                         </thead>
                         <tbody>
-                          {tableRows.map((partner, index) => {
+                          {filteredPartnersData.map((partner, index) => {
                             return (
                               <tr id={"partner_list_item" + (index + 1)} key={index}
-                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}
-                              >
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerID}</td>
+                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
                                 <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
                                 <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.emailID}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroup}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className={`px-3 break-all ${partner.certUploadStatus === 'notUploaded' && "text-[#BE1818]"}`}>
-                                  {getStatusCode(partner.certUploadStatus, t)}
+                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
+                                <td onClick={() => showViewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                  {getStatusCode(partner.certificateUploadStatus, t)}
                                 </td>
                                 <td onClick={() => showViewPartnerDetails(partner)} className="break-all">
-                                  <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
-                                    {getStatusCode(partner.status, t)}
+                                  <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                    {partner.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
                                   </div>
                                 </td>
                                 <td className="text-center break-all">
@@ -432,7 +323,7 @@ function PartnersList() {
                                           {t("partnerList.view")}
                                         </p>
                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                        <p id="partner_deactive_btn" onClick={() => showDeactivatePartner(partner)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.status === "approved" ? "text-crimson-red cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
+                                        <p id="partner_deactive_btn" onClick={() => showDeactivatePartner(partner)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
                                           tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}
                                         >
                                           {t("partnerList.deActivate")}
@@ -447,12 +338,15 @@ function PartnersList() {
                         </tbody>
                       </table>
                     </div>
+                    )}
                   </div>
                   <Pagination
-                    dataList={filteredPartnersData}
+                    dataListLength={totalRecords}
                     selectedRecordsPerPage={selectedRecordsPerPage}
                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
                     setFirstIndex={setFirstIndex}
+                    isServerSideFilter={true}
+                    getPaginationValues={getPaginationValues}
                   ></Pagination>
                 </>
               )}

@@ -248,7 +248,7 @@ function RootTrustCertificateList() {
                   <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
                     <FilterButtons
                       listTitle="rootTrustCertificate.listOfCertificates"
-                      dataList={filteredCertificateData}
+                      dataListLength={filteredCertificateData.length}
                       filter={filter}
                       onResetFilter={onResetFilter}
                       setFilter={setFilter}
@@ -478,7 +478,7 @@ function RootTrustCertificateList() {
                     </div>
                   </div>
                   <Pagination
-                    dataList={filteredCertificateData}
+                    dataListLength={filteredCertificateData.length}
                     selectedRecordsPerPage={selectedRecordsPerPage}
                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
                     setFirstIndex={setFirstIndex}
