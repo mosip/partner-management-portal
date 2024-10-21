@@ -205,8 +205,8 @@ function PartnerCertificatesList() {
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
                                                             showDropDown={downloadBtnId === index}
-                                                            onClickFirstOption={() => getOriginalCertificate(partner, getCertificate, setErrorMsg, setSuccessMsg, t)}
-                                                            onClickSecondOption={() => getMosipSignedCertificate(partner, getCertificate, setErrorMsg, setSuccessMsg, t)}
+                                                            onClickFirstOption={() => getOriginalCertificate}
+                                                            onClickSecondOption={() => getMosipSignedCertificate}
                                                             requiredData={partner}
                                                             styleSet={dropdownStyle}
                                                             disableBtn={false}

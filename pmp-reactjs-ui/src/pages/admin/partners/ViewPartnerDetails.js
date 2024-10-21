@@ -253,8 +253,8 @@ function ViewPartnerDetails() {
                                                     downloadDropdownRef={dropdownRef}
                                                     setShowDropDown={() => setDownloadBtnId(!downloadBtnId)}
                                                     showDropDown={downloadBtnId}
-                                                    onClickFirstOption={() => getOriginalCertificate(partnerDetails, getCertificate, setErrorMsg, setSuccessMsg, t)}
-                                                    onClickSecondOption={() => getMosipSignedCertificate(partnerDetails, getCertificate, setErrorMsg, setSuccessMsg, t)}
+                                                    onClickFirstOption={getOriginalCertificate}
+                                                    onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={partnerDetails}
                                                     styleSet={dropdownStyle}
                                                     disableBtn={partnerDetails.approvalStatus !== "approved"}
