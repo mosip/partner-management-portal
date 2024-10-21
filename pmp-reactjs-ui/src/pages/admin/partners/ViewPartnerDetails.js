@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getMosipSignedCertificate, getOriginalCertificate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -69,45 +69,6 @@ function ViewPartnerDetails() {
 const moveToPartnersList = () => {
     navigate('/partnermanagement/admin/partnersList');
 };
-
-const getOriginalCertificate = async (partnerDetails) => {
-    const response = await getOriginalCertificate(partnerDetails.partnerId);
-    if (response !== null) {
-        if (response.isCaSignedCertificateExpired) {
-            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-        } else {
-            setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-            downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
-        }
-    }
-}
-
-const getMosipSignedCertificate = async (partnerDetails) => {
-    const response = await getCertificate(partnerDetails.partnerID);
-    if (response !== null) {
-        if (response.isMosipSignedCertificateExpired) {
-            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-        } else {
-            setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-            downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
-        }
-    }
-}
-
-const downloadCertificate = (certificateData, fileName) => {
-    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-
-    document.body.appendChild(link);
-    link.click();
-
-    // Cleanup
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-}
 
 const getCertificate = async (partnerId) => {
     setErrorCode("");
@@ -263,8 +224,8 @@ return (
                                         downloadDropdownRef={dropdownRef}
                                         setShowDropDown={() => setDownloadBtnId(!downloadBtnId)}
                                         showDropDown={downloadBtnId}
-                                        onClickFirstOption={getOriginalCertificate}
-                                        onClickSecondOption={getMosipSignedCertificate}
+                                        onClickFirstOption={() => getOriginalCertificate(partnerDetails, getCertificate, setErrorMsg, setSuccessMsg, t)}
+                                        onClickSecondOption={() => getMosipSignedCertificate(partnerDetails, getCertificate, setErrorMsg, setSuccessMsg, t)}
                                         requiredData={partnerDetails}
                                         styleSet={dropdownStyle}
                                         disableBtn={partnerDetails.approvalStatus !== "approved"}

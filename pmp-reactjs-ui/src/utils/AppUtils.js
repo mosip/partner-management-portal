@@ -5,7 +5,7 @@ export const formatDate = (dateString, format, isTimeInUTC) => {
     if (!dateString) return '-';
     let date = new Date(dateString);
     if (isTimeInUTC) {
-        date = new Date(date.getTime() - date.getTimezoneOffset()*60*1000);	
+        date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     }
     switch (format) {
         case 'dateTime':
@@ -62,9 +62,9 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
             return t('statusCodes.expired');
-        } else if (status === "uploaded"){
+        } else if (status === "uploaded") {
             return t('statusCodes.uploaded');
-        } else if (status === "notuploaded"){
+        } else if (status === "notuploaded") {
             return t('statusCodes.notUploaded');
         } else if (status === "-") {
             return "-"
@@ -172,6 +172,45 @@ export const moveToApiKeysList = (navigate) => {
 
 export const moveToSbisList = (navigate) => {
     navigate('/partnermanagement/deviceProviderServices/sbiList');
+};
+
+export const getOriginalCertificate = async (partner, getCertificate, setErrorMsg, setSuccessMsg, t) => {
+    const response = await getCertificate(partner.partnerId);
+    if (response !== null) {
+        if (response.isCaSignedCertificateExpired) {
+            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+        } else {
+            setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+            downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+        }
+    }
+};
+
+export const getMosipSignedCertificate = async (partner, getCertificate, setErrorMsg, setSuccessMsg, t) => {
+    const response = await getCertificate(partner.partnerId);
+    if (response !== null) {
+        if (response.isMosipSignedCertificateExpired) {
+            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+        } else {
+            setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+            downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+        }
+    }
+};
+
+const downloadCertificate = (certificateData, fileName) => {
+    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
 };
 
 export const logout = async () => {

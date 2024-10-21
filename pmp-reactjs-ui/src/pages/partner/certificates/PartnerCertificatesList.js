@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
+import { getMosipSignedCertificate, getOriginalCertificate, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -59,44 +59,44 @@ function PartnerCertificatesList() {
         }
     }
 
-    const getOriginalCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
-        if (response !== null) {
-            if (response.isCaSignedCertificateExpired) {
-                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-            } else {
-                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
-            }
-        }
-    }
+    // const getOriginalCertificate = async (partner) => {
+    //     const response = await getCertificate(partner.partnerId);
+    //     if (response !== null) {
+    //         if (response.isCaSignedCertificateExpired) {
+    //             setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+    //         } else {
+    //             setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+    //             downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+    //         }
+    //     }
+    // }
 
-    const getMosipSignedCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
-        if (response !== null) {
-            if (response.isMosipSignedCertificateExpired) {
-                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-            } else {
-                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
-            }
-        }
-    }
+    // const getMosipSignedCertificate = async (partner) => {
+    //     const response = await getCertificate(partner.partnerId);
+    //     if (response !== null) {
+    //         if (response.isMosipSignedCertificateExpired) {
+    //             setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+    //         } else {
+    //             setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+    //             downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+    //         }
+    //     }
+    // }
 
-    const downloadCertificate = (certificateData, fileName) => {
-        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
+    // const downloadCertificate = (certificateData, fileName) => {
+    //     const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+    //     const url = window.URL.createObjectURL(blob);
+    //     const link = document.createElement('a');
+    //     link.href = url;
+    //     link.download = fileName;
 
-        document.body.appendChild(link);
-        link.click();
+    //     document.body.appendChild(link);
+    //     link.click();
 
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
-    }
+    //     // Cleanup
+    //     window.URL.revokeObjectURL(url);
+    //     document.body.removeChild(link);
+    // }
 
     const getCertificate = async (partnerId) => {
         setErrorCode("");
@@ -219,8 +219,8 @@ function PartnerCertificatesList() {
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
                                                             showDropDown={downloadBtnId === index}
-                                                            onClickFirstOption={getOriginalCertificate}
-                                                            onClickSecondOption={getMosipSignedCertificate}
+                                                            onClickFirstOption={() => getOriginalCertificate(partner, getCertificate, setErrorMsg, setSuccessMsg, t)}
+                                                            onClickSecondOption={() => getMosipSignedCertificate(partner, getCertificate, setErrorMsg, setSuccessMsg, t)}
                                                             requiredData={partner}
                                                             styleSet={dropdownStyle}
                                                             disableBtn={false}
