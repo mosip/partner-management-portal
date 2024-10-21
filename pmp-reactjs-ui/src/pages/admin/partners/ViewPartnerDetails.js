@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, formatDate, getMosipSignedCertificate, getOriginalCertificate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadCertificate, formatDate, getMosipSignedCertificate, getOriginalCertificate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -69,6 +69,30 @@ function ViewPartnerDetails() {
     const moveToPartnersList = () => {
         navigate('/partnermanagement/admin/partnersList');
     };
+
+    const getOriginalCertificate = async (partner) => {
+        const response = await getCertificate(partner.partnerId);
+        if (response !== null) {
+            if (response.isCaSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+            }
+        }
+    }
+
+    const getMosipSignedCertificate = async (partner) => {
+        const response = await getCertificate(partner.partnerId);
+        if (response !== null) {
+            if (response.isMosipSignedCertificateExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+            } else {
+                setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
+                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+            }
+        }
+    }
 
     const getCertificate = async (partnerId) => {
         setErrorCode("");
