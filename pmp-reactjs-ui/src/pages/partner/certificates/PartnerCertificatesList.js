@@ -121,11 +121,7 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        const errorCode = responseData.errors[0].errorCode;
-                        const errorMessage = responseData.errors[0].message;
-                        setErrorCode(errorCode);
-                        setErrorMsg(errorMessage);
-                        console.error('Error:', errorMessage);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
@@ -205,8 +201,8 @@ function PartnerCertificatesList() {
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
                                                             showDropDown={downloadBtnId === index}
-                                                            onClickFirstOption={() => getOriginalCertificate}
-                                                            onClickSecondOption={() => getMosipSignedCertificate}
+                                                            onClickFirstOption={getOriginalCertificate}
+                                                            onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={partner}
                                                             styleSet={dropdownStyle}
                                                             disableBtn={false}

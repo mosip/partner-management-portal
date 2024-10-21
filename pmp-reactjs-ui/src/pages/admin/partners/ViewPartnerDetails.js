@@ -103,12 +103,7 @@ function ViewPartnerDetails() {
             if (response !== null) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                    return null;
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 } else {
                     const resData = responseData.response;
                     console.log('Response data:', resData);
