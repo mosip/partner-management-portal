@@ -567,7 +567,8 @@
         "selectPartnerType": "حدد نوع الشريك",
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
         "selectPolicyGroup": "حدد مجموعة السياسات",
-        "selectStatus": "حدد الحالة"
+        "selectStatus": "حدد الحالة",
+       "errorInPartnersList": "أثناء جلب تفاصيل الشركاء، واجهنا خطأً."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",

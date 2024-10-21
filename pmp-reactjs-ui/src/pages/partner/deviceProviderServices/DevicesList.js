@@ -271,7 +271,7 @@ function DevicesList() {
                                     :
                                     <>
                                         <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                            <FilterButtons listTitle='devicesList.listOfDevices' dataList={filteredDevicesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                            <FilterButtons listTitle='devicesList.listOfDevices' dataListLength={filteredDevicesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                             <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                             {filter &&
                                                 <DevicesListFilter
@@ -341,7 +341,7 @@ function DevicesList() {
                                                 </table>
                                             </div>
                                         </div>
-                                        <Pagination dataList={filteredDevicesList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                                        <Pagination dataListLength={filteredDevicesList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                                     </>
                                 }
                             </>

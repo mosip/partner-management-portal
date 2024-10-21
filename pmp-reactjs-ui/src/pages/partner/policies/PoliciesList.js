@@ -190,7 +190,7 @@ function PoliciesList() {
                 :
                 <>
                   <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
-                    <FilterButtons listTitle='policies.listOfPolicies' dataList={filteredPoliciesList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                    <FilterButtons listTitle='policies.listOfPolicies' dataListLength={filteredPoliciesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter &&
                       <PoliciesFilter
@@ -254,7 +254,7 @@ function PoliciesList() {
                       </table>
                     </div>
                   </div>
-                  <Pagination dataList={filteredPoliciesList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                  <Pagination dataListLength={filteredPoliciesList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                 </>
               }
             </div>

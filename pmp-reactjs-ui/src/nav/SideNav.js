@@ -36,6 +36,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('rootTrustCertificateList')) {
             setActiveIcon("rootOfTrustCertificate");
+        } else if (selectedPath.includes('partnersList')) {
+            setActiveIcon("partner");
         }
         else {
             setActiveIcon("home");
@@ -90,7 +92,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/certificates/rootTrustCertificateList');
     };
     const showPartner = () => {
-        setActiveIcon("partner");
+        navigate('/partnermanagement/admin/partnersList');
     };
     const showAdminPolicies = () => {
         setActiveIcon("admin_policies");

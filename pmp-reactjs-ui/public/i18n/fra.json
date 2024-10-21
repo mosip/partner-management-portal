@@ -567,7 +567,8 @@
         "selectPartnerType":"Sélectionnez le type de partenaire",
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
-        "selectStatus":"Sélectionnez le statut"
+        "selectStatus":"Sélectionnez le statut",
+       "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur."
      },
      "viewPartnerDetails": {
          "viewPartnerDetails": "Afficher les détails du partenaire",
