@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
+import { downloadCertificate, getMosipSignedCertificate, getOriginalCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -83,20 +83,6 @@ function PartnerCertificatesList() {
         }
     }
 
-    const downloadCertificate = (certificateData, fileName) => {
-        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-
-        document.body.appendChild(link);
-        link.click();
-
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
-    }
 
     const getCertificate = async (partnerId) => {
         setErrorCode("");
@@ -135,11 +121,7 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        const errorCode = responseData.errors[0].errorCode;
-                        const errorMessage = responseData.errors[0].message;
-                        setErrorCode(errorCode);
-                        setErrorMsg(errorMessage);
-                        console.error('Error:', errorMessage);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
