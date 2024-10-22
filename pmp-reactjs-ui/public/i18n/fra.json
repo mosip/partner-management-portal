@@ -519,6 +519,10 @@
         "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
         "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
+    "deactivateFtmPopup": {
+        "headerMsg": "Voulez-vous désactiver la puce FTM ",
+        "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
+    },
     "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Domaine partenaire",
@@ -585,10 +589,10 @@
         "emailId": "Identifiant de courrier électronique",
         "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
      },
-    "deactivateFtmPopup": {
-        "headerMsg": "Voulez-vous désactiver la puce FTM ",
-        "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
-    },
+     "deactivatePartner": {
+         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS.",
+         "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+     },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",

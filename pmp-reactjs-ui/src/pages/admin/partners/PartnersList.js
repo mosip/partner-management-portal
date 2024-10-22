@@ -18,6 +18,7 @@ import PartnerListFilter from "./PartnersListFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
 import { HttpService } from "../../../services/HttpService";
+import DeactivatePopup from "../../common/DeactivatePopup";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -42,6 +43,8 @@ function PartnersList() {
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
+  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     orgName: "",
     partnerType: "",
@@ -100,9 +103,9 @@ function PartnersList() {
     fetchData();
   }, [sortFieldName, sortType, pageNo, pageSize]);
 
-  const getPaginationValues = (recordsPerPage, pageIndex) =>{
+  const getPaginationValues = (recordsPerPage, pageIndex) => {
     // console.log(recordsPerPage, pageIndex);
-    if(pageNo !== pageIndex || pageSize !== recordsPerPage) {
+    if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
       setPageNo(pageIndex);
       setPageSize(recordsPerPage);
       setTriggerServerMethod(true);
@@ -110,15 +113,8 @@ function PartnersList() {
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
-    if (selectedPartnerData.isActive === true) {
-      localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
-      navigate('/partnermanagement/admin/viewPartnerDetails')
-    }
-  };
-
-  const showViewPartnerDetails = (selectedPartnerData) => {
-      localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
-      navigate('/partnermanagement/admin/viewPartnerDetails')
+    localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+    navigate('/partnermanagement/admin/viewPartnerDetails')
   };
 
   const cancelErrorMsg = () => {
@@ -180,9 +176,16 @@ function PartnersList() {
 
   const showDeactivatePartner = (selectedClientdata) => {
     if (selectedClientdata.isActive === true) {
+
+      setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
     }
   };
+
+  const closeDeactivatePopup = () => {
+    setViewPartnersId(-1);
+    setShowDeactivatePopup(false);
+  }
 
   const styles = {
     loadingDiv: "!py-[20%]"
@@ -193,8 +196,8 @@ function PartnersList() {
       className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"
         } overflow-x-scroll font-inter`}
     >
-      { !dataLoaded && <LoadingIcon></LoadingIcon> }
-      { dataLoaded && (
+      {!dataLoaded && <LoadingIcon></LoadingIcon>}
+      {dataLoaded && (
         <>
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
@@ -266,78 +269,87 @@ function PartnersList() {
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && (
-                    <div className="mx-[2%] overflow-x-scroll">
-                      <table className="table-fixed">
-                        <thead>
-                          <tr>
-                            {tableHeaders.map((header, index) => {
+                      <div className="mx-[2%] overflow-x-scroll">
+                        <table className="table-fixed">
+                          <thead>
+                            <tr>
+                              {tableHeaders.map((header, index) => {
+                                return (
+                                  <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                    <div className="mx-2 flex gap-x-0 items-center">
+                                      {t(header.headerNameKey)}
+                                      {header.id !== "action" && (
+                                        <SortingIcon
+                                          headerId={header.id}
+                                          sortDescOrder={sortDescOrder}
+                                          sortAscOrder={sortAscOrder}
+                                          order={order}
+                                          activeSortDesc={activeSortDesc}
+                                          activeSortAsc={activeSortAsc}
+                                        />
+                                      )}
+                                    </div>
+                                  </th>);
+                              })}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filteredPartnersData.map((partner, index) => {
                               return (
-                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                  <div className="mx-2 flex gap-x-0 items-center">
-                                    {t(header.headerNameKey)}
-                                    {header.id !== "action" && (
-                                      <SortingIcon
-                                        headerId={header.id}
-                                        sortDescOrder={sortDescOrder}
-                                        sortAscOrder={sortAscOrder}
-                                        order={order}
-                                        activeSortDesc={activeSortDesc}
-                                        activeSortAsc={activeSortAsc}
-                                      />
-                                    )}
-                                  </div>
-                                </th>);
+                                <tr id={"partner_list_item" + (index + 1)} key={index}
+                                  className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                    {getStatusCode(partner.certificateUploadStatus, t)}
+                                  </td>
+                                  <td onClick={() => viewPartnerDetails(partner)} className="break-all">
+                                    <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                      {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                    </div>
+                                  </td>
+                                  <td className="text-center break-all">
+                                    <div ref={(el) => (submenuRef.current[index] = el)}>
+                                      <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                        tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
+                                      >
+                                        ...
+                                      </p>
+                                      {viewPartnerId === index && (
+                                        <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                          <p id="partner_details_view_btn" onClick={() => viewPartnerDetails(partner)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}
+                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}
+                                          >
+                                            {t("partnerList.view")}
+                                          </p>
+                                          <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                          <p id="partner_deactive_btn" onClick={() => showDeactivatePartner(partner)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red hover:bg-gray-100 cursor-pointer" : "text-[#A5A5A5] cursor-default"}`}
+                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}
+                                          >
+                                            {t("partnerList.deActivate")}
+                                          </p>
+                                          {showDeactivatePopup && (
+                                            < DeactivatePopup
+                                              closePopUp={closeDeactivatePopup}
+                                              popupData={{ ...partner, isDeactivatePartner: true }}
+                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organizationName: partner.orgName })}
+                                              descriptionMsg='deactivatePartner.description'
+                                              headerKeyName={partner.orgName}
+                                            />
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
                             })}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {filteredPartnersData.map((partner, index) => {
-                            return (
-                              <tr id={"partner_list_item" + (index + 1)} key={index}
-                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
-                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
-                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
-                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
-                                <td onClick={() => viewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
-                                  {getStatusCode(partner.certificateUploadStatus, t)}
-                                </td>
-                                <td onClick={() => viewPartnerDetails(partner)} className="break-all">
-                                  <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
-                                    {partner.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
-                                  </div>
-                                </td>
-                                <td className="text-center break-all">
-                                  <div ref={(el) => (submenuRef.current[index] = el)}>
-                                    <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
-                                      tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
-                                    >
-                                      ...
-                                    </p>
-                                    {viewPartnerId === index && (
-                                      <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                        <p id="partner_details_view_btn" onClick={() => showViewPartnerDetails(partner)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}
-                                          tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showViewPartnerDetails(partner))}
-                                        >
-                                          {t("partnerList.view")}
-                                        </p>
-                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                        <p id="partner_deactive_btn" onClick={() => showDeactivatePartner(partner)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
-                                          tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}
-                                        >
-                                          {t("partnerList.deActivate")}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
+                          </tbody>
+                        </table>
+                      </div>
                     )}
                   </div>
                   <Pagination

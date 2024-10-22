@@ -224,7 +224,7 @@ function ViewPartnerDetails() {
                                     <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                                     <div className="rounded-lg shadow-lg border mb-[2%]">
                                         <div className={`flex-col`}>
-                                            <div className={`flex py-[1rem] px-5 ${partnerDetails.isActive === false ? 'bg-gray-100' : 'bg-[#f6f9f6]'} justify-between items-center max-520:flex-col`}>
+                                            <div className={`flex py-[1rem] px-5 ${partnerDetails.isActive === false ? 'bg-gray-100' : 'bg-[#f3fdf3]'} justify-between items-center max-520:flex-col`}>
                                                 <div className="flex space-x-4 items-center">
                                                     { partnerDetails.isActive === false
                                                         ? <img src={fileUploadDisabled} className="h-8" alt="" />
@@ -244,7 +244,7 @@ function ViewPartnerDetails() {
                                                     onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={partnerDetails}
                                                     styleSet={dropdownStyle}
-                                                    disableBtn={partnerDetails.isActive === false}
+                                                    disableBtn={partnerDetails.certificateUploadStatus === 'not_uploaded' || !partnerDetails.isActive}
                                                     id={'download_partner_cer_btn'}
                                                 />
                                             </div>

@@ -70,7 +70,14 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
-            }
+            } 
+            // else if (popupData.isDeactivatePartner) {
+            //     response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail/deactivate-ftm`, process.env.NODE_ENV), request, {
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     });
+            // }
             const responseData = response.data;
             if (responseData && responseData.response) {
                 window.location.reload();
@@ -107,14 +114,14 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                             )}
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
-                                    <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? popupData.make + ' - ' + popupData.model : headerKeyName}'?
+                                    <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'?
                                     </p>
-                                    : <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                        {t(headerMsg)} - {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? popupData.make + ' - ' + popupData.model : headerKeyName}
+                                    : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
                                     </p>
                                 }
-                                <p className="text-sm text-[#666666] break-words py-[5%]">
+                                <p className="text-sm text-[#666666] break-normal py-[5%]">
                                     {t(descriptionMsg)}
                                 </p>
                                 {popupData.isDeactivateSbi &&
