@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { downloadCertificate, getMosipSignedCertificate, getOriginalCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { downloadCertificate, getTheCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -89,22 +89,13 @@ function PartnerCertificatesList() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
-            if (response !== null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                    return null;
-                } else {
-                    const resData = responseData.response;
-                    console.log('Response data:', resData);
-                    return resData;
-                }
-            } else {
+            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
+            if (responseData) {
+                const resData = responseData.response;
+                console.log('Response data:', resData);
+                return resData;
+            }
+            else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
                 return null;
             }

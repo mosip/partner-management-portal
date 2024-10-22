@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, downloadCertificate, formatDate, getMosipSignedCertificate, getOriginalCertificate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadCertificate, formatDate, getPartnerManagerUrl, getStatusCode, getTheCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -98,17 +98,13 @@ function ViewPartnerDetails() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
-            if (response !== null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                } else {
-                    const resData = responseData.response;
-                    console.log('Response data:', resData);
-                    return resData;
-                }
-            } else {
+            const responseData = await getTheCertificate(partnerId, HttpService, setErrorCode, setErrorMsg, t);
+            if (responseData) {
+                const resData = responseData.response;
+                console.log('Response data:', resData);
+                return resData;
+            }
+            else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
                 return null;
             }
