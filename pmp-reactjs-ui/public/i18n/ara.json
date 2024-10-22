@@ -568,7 +568,13 @@
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectStatus": "حدد الحالة",
-       "errorInPartnersList": "أثناء جلب تفاصيل الشركاء، واجهنا خطأً."
+        "errorInPartnersList": "أثناء جلب تفاصيل الشركاء، واجهنا خطأً.",
+        "selectCertUploadStatus": "حدد الشهادة. حالة التحميل",
+        "applyFilter": "تطبيق الفلتر",
+        "searchPartnerId": "معرف شريك البحث",
+        "searchOrganisation": "منظمة البحث",
+        "searchEmailAddress": "بحث في عنوان البريد الإلكتروني",
+        "searchPolicyGroup": "مجموعة سياسات البحث"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
