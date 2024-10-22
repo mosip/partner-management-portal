@@ -519,6 +519,10 @@
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
+    "deactivateFtmPopup": {
+        "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
+    },
     "rootTrustCertificate": {
         "organisation": "منظمة",
         "partnerDomain": "مجال الشريك",
@@ -585,9 +589,9 @@
         "emailId": "معرف البريد الإلكتروني",
         "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ"
     },
-    "deactivateFtmPopup": {
-        "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
-        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
+    "deactivatePartner": {
+        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",
+        "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",

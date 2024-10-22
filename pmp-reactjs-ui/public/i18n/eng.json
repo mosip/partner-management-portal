@@ -514,6 +514,10 @@
         "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
+    "deactivateFtmPopup": {
+        "headerMsg": "Do you want to deactivate FTM Chip ",
+        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
+    },
     "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Partner Domain",
@@ -581,9 +585,9 @@
         "emailId": "Email ID",
         "errorInPartnerList": "While fetching Partner details, we have encountered with an error."
     },
-    "deactivateFtmPopup": {
-        "headerMsg": "Do you want to deactivate FTM Chip ",
-        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
+    "deactivatePartner": {
+        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}?",
+        "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
