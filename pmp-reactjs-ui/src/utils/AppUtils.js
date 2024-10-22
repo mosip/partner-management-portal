@@ -174,21 +174,6 @@ export const moveToSbisList = (navigate) => {
     navigate('/partnermanagement/deviceProviderServices/sbiList');
 };
 
-export const downloadCertificate = (certificateData, fileName) => {
-    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-
-    document.body.appendChild(link);
-    link.click();
-
-    // Cleanup
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-};
-
 export const logout = async () => {
     localStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
@@ -405,4 +390,38 @@ export const getPartnerDomainType = (partnerType) => {
 
 export const trimAndReplace = (str) => {
     return str.trim().replace(/\s+/g, ' ');
+};
+
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
+        if (response && response.data) {
+            const responseData = response.data
+            if (responseData.response) {
+                return responseData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching certificate:', error);
+        return null;
+    }
+};
+
+export const downloadCertificate = (certificateData, fileName) => {
+    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
 };
