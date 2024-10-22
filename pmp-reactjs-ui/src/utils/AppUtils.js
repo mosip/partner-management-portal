@@ -392,7 +392,7 @@ export const trimAndReplace = (str) => {
     return str.trim().replace(/\s+/g, ' ');
 };
 
-export const getTheCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
         if (response && response.data) {

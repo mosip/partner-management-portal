@@ -70,7 +70,7 @@ function ViewFtmChipDetails() {
     };
 
     const getOriginalCertificate = async (ftmDetails) => {
-        const response = await getCertificate(ftmDetails.ftmId);
+        const response = await fetchCertificate(ftmDetails.ftmId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
@@ -81,7 +81,7 @@ function ViewFtmChipDetails() {
         }
     }
 
-    const getCertificate = async (ftmId) => {
+    const fetchCertificate = async (ftmId) => {
         setErrorCode("");
         setErrorMsg("");
         try {
@@ -97,7 +97,6 @@ function ViewFtmChipDetails() {
                     return null;
                 } else {
                     const resData = responseData.response;
-                    console.log('Response data:', resData);
                     return resData;
                 }
             } else {

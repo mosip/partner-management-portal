@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, downloadCertificate, formatDate, getPartnerManagerUrl, getStatusCode, getTheCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadCertificate, formatDate, getPartnerManagerUrl, getStatusCode, getCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -70,7 +70,7 @@ function ViewPartnerDetails() {
     };
 
     const getOriginalCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
@@ -82,7 +82,7 @@ function ViewPartnerDetails() {
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
@@ -93,15 +93,14 @@ function ViewPartnerDetails() {
         }
     }
 
-    const getCertificate = async (partnerId) => {
+    const fetchCertificate = async (partnerId) => {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
             if (responseData) {
                 const resData = responseData.response;
-                console.log('Response data:', resData);
                 return resData;
             }
             else {

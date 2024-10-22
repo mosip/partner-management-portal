@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { downloadCertificate, getTheCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { downloadCertificate, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -60,7 +60,7 @@ function PartnerCertificatesList() {
     }
 
     const getOriginalCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
@@ -72,7 +72,7 @@ function PartnerCertificatesList() {
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
@@ -84,15 +84,14 @@ function PartnerCertificatesList() {
     }
 
 
-    const getCertificate = async (partnerId) => {
+    const fetchCertificate = async (partnerId) => {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
             if (responseData) {
                 const resData = responseData.response;
-                console.log('Response data:', resData);
                 return resData;
             }
             else {
