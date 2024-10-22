@@ -118,8 +118,8 @@ function UploadRootTrustCertificate() {
 
     const uploadCertificateDropdownStyle = {
         outerDiv: "!ml-0",
-        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-base",
-        dropdownLabel: "!text-sm"
+        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-[1rem]",
+        dropdownLabel: "!text-[1.03rem]"
     }
 
     const style = {
