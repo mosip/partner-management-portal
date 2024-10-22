@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadCertificate } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -79,21 +79,6 @@ function ViewFtmChipDetails() {
                 downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
             }
         }
-    }
-
-    const downloadCertificate = (certificateData, fileName) => {
-        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-
-        document.body.appendChild(link);
-        link.click();
-
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
     }
 
     const getCertificate = async (ftmId) => {
