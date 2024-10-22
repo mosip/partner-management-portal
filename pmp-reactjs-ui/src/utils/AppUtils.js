@@ -403,7 +403,7 @@ export const getTheCertificate = async (HttpService, partnerId, setErrorCode, se
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } else {
-            return null;
+            return response;
         }
 
     } catch (error) {

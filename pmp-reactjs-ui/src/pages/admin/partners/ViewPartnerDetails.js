@@ -34,6 +34,7 @@ function ViewPartnerDetails() {
 
     useEffect(() => {
         const selectedPartnerId = localStorage.getItem('selectedPartnerId');
+        console.log(selectedPartnerId);
         if (!selectedPartnerId) {
             setUnexpectedError(true);
             return;
@@ -98,7 +99,7 @@ function ViewPartnerDetails() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getTheCertificate(partnerId, HttpService, setErrorCode, setErrorMsg, t);
+            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
             if (responseData) {
                 const resData = responseData.response;
                 console.log('Response data:', resData);
@@ -106,7 +107,6 @@ function ViewPartnerDetails() {
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
-                return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);

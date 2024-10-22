@@ -97,7 +97,6 @@ function PartnerCertificatesList() {
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
-                return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
@@ -199,7 +198,7 @@ function PartnerCertificatesList() {
                                                             disableBtn={false}
                                                             id={'download_btn' + (index + 1)}
                                                         />
-                                                        <button id={"partner_certificate_re_upload_btn" + (index+1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                                                        <button id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                                             {t('partnerCertificatesList.reUpload')}
                                                         </button>
                                                     </div>
