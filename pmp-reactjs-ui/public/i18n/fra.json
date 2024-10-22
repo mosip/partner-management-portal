@@ -568,7 +568,13 @@
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
         "selectStatus":"Sélectionnez le statut",
-       "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur."
+        "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
+        "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
+        "applyFilter": "Appliquer le filtre",
+        "searchPartnerId": "ID du partenaire de recherche",
+        "searchOrganisation": "Rechercher une organisation",
+        "searchEmailAddress": "Rechercher une adresse e-mail",
+        "searchPolicyGroup": "Groupe de stratégies de recherche"
      },
      "viewPartnerDetails": {
          "viewPartnerDetails": "Afficher les détails du partenaire",

@@ -564,7 +564,13 @@
         "selectEmailAddress": "Select Email Address",
         "selectPolicyGroup": "Select Policy Group",
         "selectStatus": "Select Status",
-       "errorInPartnersList": "While fetching partners details, we have encountered with an error."
+        "errorInPartnersList": "While fetching partners details, we have encountered with an error.",
+        "selectCertUploadStatus": "Select Cert. Upload Status",
+        "applyFilter": "Apply Filter",
+        "searchPartnerId": "Search Partner ID",
+        "searchOrganisation": "Search Organisation",
+        "searchEmailAddress": "Search Email Address",
+        "searchPolicyGroup": "Search Policy Group"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
