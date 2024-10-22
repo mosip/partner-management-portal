@@ -403,11 +403,11 @@ export const getTheCertificate = async (HttpService, partnerId, setErrorCode, se
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } else {
-            return response;
+            return null;
         }
-
     } catch (error) {
         console.error('Error fetching certificate:', error);
+        return null;
     }
 };
 

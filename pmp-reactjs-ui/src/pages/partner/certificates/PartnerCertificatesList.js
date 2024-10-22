@@ -89,7 +89,7 @@ function PartnerCertificatesList() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
+            const responseData = await getTheCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
             if (responseData) {
                 const resData = responseData.response;
                 console.log('Response data:', resData);
