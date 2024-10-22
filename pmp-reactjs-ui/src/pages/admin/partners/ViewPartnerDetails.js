@@ -11,7 +11,6 @@ import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
-import file from '../../../svg/file_icon.svg';
 import DownloadCertificateButton from '../../common/DownloadCertificateButton';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -146,7 +145,7 @@ function ViewPartnerDetails() {
                     )}
                     <div className={`flex-col bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.viewPartnerDetails' backLink='/partnermanagement/admin/partnersList' />
+                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partnersList' />
                         </div>
 
                         {unexpectedError && (
@@ -171,8 +170,8 @@ function ViewPartnerDetails() {
                                             {partnerDetails.partnerId}
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(partnerDetails.approvalStatus, t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                {getStatusCode(partnerDetails.approvalStatus, t)}
+                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                {partnerDetails.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
@@ -180,14 +179,21 @@ function ViewPartnerDetails() {
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(partnerDetails.createdDateTime, "time", false
-                                                )}
+                                                {formatDate(partnerDetails.createdDateTime, "time", false)}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                            <p className="font-[600] text-suva-gray text-xs">
+                                                {t("viewOidcClientDetails.partnerType")}
+                                            </p>
+                                            <p className="font-[600] text-vulcan text-sm">
+                                                {t(partnerDetails.partnerType)}
+                                            </p>
+                                        </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                             <p className="font-[600] text-suva-gray text-xs">
                                                 {t("viewPartnerDetails.organizationName")}
@@ -198,18 +204,10 @@ function ViewPartnerDetails() {
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
                                             <p className="font-[600] text-suva-gray text-xs">
-                                                {t("viewOidcClientDetails.partnerType")}
+                                                {t("userProfile.phoneNumber")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.partnerType)}
-                                            </p>
-                                        </div>
-                                        <div className="mb-3 w-[100%]">
-                                            <p className="font-[600] text-suva-gray text-xs">
-                                                {t("viewOidcClientDetails.policyGroup")}
-                                            </p>
-                                            <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-')}
+                                                {t(partnerDetails.phoneNumber ? partnerDetails.phoneNumber : '-')}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
@@ -220,26 +218,26 @@ function ViewPartnerDetails() {
                                                 {t(partnerDetails.emailId)}
                                             </p>
                                         </div>
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                        <div className="mb-3 w-[100%]">
                                             <p className="font-[600] text-suva-gray text-xs">
-                                                {t("userProfile.phoneNumber")}
+                                                {t("viewOidcClientDetails.policyGroup")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.phoneNumber ? partnerDetails.phoneNumber : '-')}
+                                                {t(partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-')}
                                             </p>
                                         </div>
                                     </div>
                                     <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                                     <div className="rounded-lg shadow-lg border mb-[2%]">
                                         <div className={`flex-col`}>
-                                            <div className={`flex py-[1rem] px-5 ${partnerDetails.approvalStatus !== "approved" ? 'bg-gray-100' : 'bg-[#f6f9f6]'} justify-between items-center max-520:flex-col`}>
+                                            <div className={`flex py-[1rem] px-5 ${partnerDetails.isActive === false ? 'bg-gray-100' : 'bg-[#f6f9f6]'} justify-between items-center max-520:flex-col`}>
                                                 <div className="flex space-x-4 items-center">
-                                                    {partnerDetails.approvalStatus !== "approved"
+                                                    { partnerDetails.isActive === false
                                                         ? <img src={fileUploadDisabled} className="h-8" alt="" />
-                                                        : <img src={partnerDetails.certificateIssuedTo ? fileUpload : fileUploadBlue} className="h-8" alt="" />
+                                                        : <img src={fileUpload} className="h-8" alt="" />
                                                     }
                                                     <div className='flex-col p-3 items-center'>
-                                                        <h6 className={`text-sm ${partnerDetails.certificateIssuedTo ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                        <h6 className={`text-sm ${partnerDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                             {"Partner Certificate"}
                                                         </h6>
                                                     </div>
@@ -252,7 +250,7 @@ function ViewPartnerDetails() {
                                                     onClickSecondOption={getMosipSignedCertificate}
                                                     requiredData={partnerDetails}
                                                     styleSet={dropdownStyle}
-                                                    disableBtn={partnerDetails.approvalStatus !== "approved"}
+                                                    disableBtn={partnerDetails.isActive === false}
                                                     id={'download_partner_cer_btn'}
                                                 />
                                             </div>
@@ -260,15 +258,15 @@ function ViewPartnerDetails() {
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col space-y-1">
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
+                                                    <p className="font-bold text-sm text-charcoal-gray">{partnerDetails.partnerType}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{'12-31-2024'}</p>
+                                                    <p className="font-semibold text-xs text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{'12-31-2024 16:23:12'}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime", false)}</p>
                                                 </div>
                                             </div>
                                         </div>

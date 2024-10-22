@@ -571,10 +571,12 @@
        "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur."
      },
      "viewPartnerDetails": {
-         "viewPartnerDetails": "Afficher les détails du partenaire",
-         "organizationName": "Nom de l'Organisation",
-         "createdOn":"Créé le",
-         "emailId": "Identifiant de courrier électronique",
+        "viewPartnerDetails": "Afficher les détails du partenaire",
+        "listOfPartners": "Liste des partenaires",
+        "organizationName": "Nom de l'Organisation",
+        "createdOn":"Créé le",
+        "expiryDate": "Date et heure d'expiration",
+        "emailId": "Identifiant de courrier électronique",
         "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
      },
     "deactivateFtmPopup": {
