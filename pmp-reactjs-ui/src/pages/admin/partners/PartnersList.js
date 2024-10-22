@@ -109,11 +109,16 @@ function PartnersList() {
     }
   }
 
-  const showViewPartnerDetails = (selectedPartnerData) => {
-    if (selectedPartnerData.status === 'ACTIVE') {
-      localStorage.setItem('selectedPartnerId','sudeepadmin');
+  const viewPartnerDetails = (selectedPartnerData) => {
+    if (selectedPartnerData.isActive === true) {
+      localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
       navigate('/partnermanagement/admin/viewPartnerDetails')
     }
+  };
+
+  const showViewPartnerDetails = (selectedPartnerData) => {
+      localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+      navigate('/partnermanagement/admin/viewPartnerDetails')
   };
 
   const cancelErrorMsg = () => {
@@ -290,15 +295,15 @@ function PartnersList() {
                             return (
                               <tr id={"partner_list_item" + (index + 1)} key={index}
                                 className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
+                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
+                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
+                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
+                                <td onClick={() => viewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                   {getStatusCode(partner.certificateUploadStatus, t)}
                                 </td>
-                                <td onClick={() => showViewPartnerDetails(partner)} className="break-all">
+                                <td onClick={() => viewPartnerDetails(partner)} className="break-all">
                                   <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                     {partner.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
                                   </div>

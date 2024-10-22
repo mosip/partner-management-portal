@@ -572,8 +572,10 @@
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
+        "listOfPartners": "قائمة الشركاء",
         "organizationName": "اسم المنظمة",
         "createdOn": "تم الإنشاء بتاريخ",
+        "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
         "emailId": "معرف البريد الإلكتروني",
         "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ"
     },

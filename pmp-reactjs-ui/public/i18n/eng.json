@@ -568,8 +568,10 @@
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
+        "listOfPartners": "List of Partners",
         "organizationName": "Organization Name",
         "createdOn": "Created On",
+        "expiryDate": "Expiry date & time",
         "emailId": "Email ID",
         "errorInPartnerList": "While fetching Partner details, we have encountered with an error."
     },
