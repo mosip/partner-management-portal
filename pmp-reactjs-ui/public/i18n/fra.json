@@ -145,7 +145,8 @@
         "sdkPartner": "Partenaire SDK",
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
-        "manualAdjudication": "Arbitrage manuelle"
+        "manualAdjudication": "Arbitrage manuelle",
+        "partnerAdmin": "Administrateur partenaire"
     },
     "statusCodes": {
         "approved": "Approuvée",

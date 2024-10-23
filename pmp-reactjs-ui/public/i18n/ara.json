@@ -145,7 +145,8 @@
         "sdkPartner": "شريك SDK",
         "printPartner": "شريك الطباعة",
         "internalPartner": "الشريك الداخلي",
-        "manualAdjudication": "التحكيم اليدوي"
+        "manualAdjudication": "التحكيم اليدوي",
+        "partnerAdmin": "مشرف الشريك"
     },
     "statusCodes": {
         "approved": "موافقة",
