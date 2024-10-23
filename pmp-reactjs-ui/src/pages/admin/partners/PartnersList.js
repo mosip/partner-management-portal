@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { createRequest, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
   getPartnerManagerUrl,
   handleServiceErrors,
@@ -178,9 +178,12 @@ function PartnersList() {
     //useEffect will be triggered which will do the filter
   };
 
-  const showDeactivatePartner = (selectedClientdata) => {
-    if (selectedClientdata.isActive === true) {
-
+  const showDeactivatePartner = (selectedPartnerdata) => {
+    if (selectedPartnerdata.isActive === true) {
+      const request = createRequest({
+        status: "De-Active"
+      });
+      setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
     }
@@ -340,6 +343,7 @@ function PartnersList() {
                                             < DeactivatePopup
                                               closePopUp={closeDeactivatePopup}
                                               popupData={{ ...partner, isDeactivatePartner: true }}
+                                              request={deactivateRequest}
                                               headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organizationName: partner.orgName })}
                                               descriptionMsg='deactivatePartner.description'
                                               headerKeyName={partner.orgName}

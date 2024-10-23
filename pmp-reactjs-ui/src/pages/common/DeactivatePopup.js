@@ -70,14 +70,13 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
+            } else if (popupData.isDeactivatePartner) {
+                response = await HttpService.post(getPartnerManagerUrl(`/partners/${popupData.partnerId}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             } 
-            // else if (popupData.isDeactivatePartner) {
-            //     response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail/deactivate-ftm`, process.env.NODE_ENV), request, {
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         }
-            //     });
-            // }
             const responseData = response.data;
             if (responseData && responseData.response) {
                 window.location.reload();
