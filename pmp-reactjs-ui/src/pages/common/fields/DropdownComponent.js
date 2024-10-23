@@ -7,7 +7,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
-    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, isPlaceHolderPresent, changeDropdownBackground}) {
+    placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, isPlaceHolderPresent, changeDropdownBackground, id}) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -43,12 +43,12 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
-                    <Information infoKey={infoKey}/>
+                    <Information infoKey={infoKey} id={id + '_info'}/>
                 )}
             </label>
 
             <div className="relative w-full" ref={dropdownRef}>
-                <button onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'} rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
+                <button id={id} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'} rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all break-normal break-words text-wrap text-start'>{
                         selectedDropdownEntry ?
@@ -71,7 +71,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
-                                            <button
+                                            <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
                                                 className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}

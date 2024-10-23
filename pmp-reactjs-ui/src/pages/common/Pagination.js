@@ -6,10 +6,11 @@ import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../u
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
 
-function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex}) {
+function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter=false, getPaginationValues}) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
+    const [selectedPage, setSelectedPage] = useState(0);
     const itemsPerPageOptions = [8, 16, 24, 32];
     const itemsCountSelectionRef = useRef(null);
 
@@ -17,8 +18,15 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
         handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
     }, [itemsCountSelectionRef]);
 
+    useEffect(() =>{
+        if(isServerSideFilter) {
+           getPaginationValues(selectedRecordsPerPage, selectedPage);
+        }
+    }, [selectedPage, selectedRecordsPerPage]);
+
     const handlePageChange = (event) => {
-        const newIndex = (event.selected * selectedRecordsPerPage) % dataList.length;
+        setSelectedPage(event.selected);
+        const newIndex = (event.selected * selectedRecordsPerPage) % dataListLength;
         setFirstIndex(newIndex);
     };
     const changeItemsPerPage = (num) => {
@@ -28,14 +36,14 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
     };
 
     return (
-        <div className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
+        <div id='pagination_card' className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md">
             <div></div>
             <ReactPaginate
             containerClassName={"pagination"}
             pageClassName={"page-item"}
             activeClassName={"active"}
             onPageChange={(event) => handlePageChange(event)}
-            pageCount={Math.ceil(dataList.length / selectedRecordsPerPage)}
+            pageCount={Math.ceil(dataListLength / selectedRecordsPerPage)}
             breakLabel="..."
             previousLabel={
                 <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
@@ -55,7 +63,7 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
                     <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
                         {itemsPerPageOptions.map((num, i) => {
                         return (
-                            <p key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => changeItemsPerPage(num))}
+                            <p id={'pagination_each_num_option' + (i+1)} key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => changeItemsPerPage(num))}
                             className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                             {num}
                             </p>
@@ -64,7 +72,7 @@ function Pagination({ dataList, selectedRecordsPerPage, setSelectedRecordsPerPag
                         }
                     </div>
                     )}
-                    <div className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                    <div id='pagination_select_record_per_page' className="cursor-pointer flex justify-between w-10 h-6 items-center 
                         text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
                         onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyPress={(e)=> onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                         <p>

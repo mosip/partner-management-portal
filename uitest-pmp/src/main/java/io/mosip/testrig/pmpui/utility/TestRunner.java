@@ -11,8 +11,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-
-//import io.mosip.testrig.pmpui.dbaccess.DBManager;
+import io.mosip.testrig.pmpui.dbaccess.DBManager;
 import io.mosip.testrig.pmpui.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.testcase.*;
@@ -37,34 +36,10 @@ public class TestRunner {
 
 	public static void main(String[] args) throws Exception {
 
-		//		if (checkRunType().equalsIgnoreCase("JAR")) {
-		//			ExtractResource.removeOldMosipTestTestResource();
-		//			ExtractResource.extractResourceFromJar();
-		//		}
+		
 		AdminTestUtil.initialize();
-		//DBManager.clearMasterDbData();
-		//ConfigManager.getMasterDbPass();
-		/*	testNg=new TestNG();
-
-		String listExcludedGroups=JsonUtil.JsonObjParsing(Commons.getTestData(),"setExcludedGroups");
-		testNg.setExcludedGroups(listExcludedGroups);
-		//testNg.setPreserveOrder(true);
-		testNg.setTestClasses(new Class[] {
-				AdminAuthPolicyTest.class,
-				AdminDataSharePolicyTest.class,
-				AdminDeviceDetailsTest.class,
-				AdminFtmDetailsTest.class,
-				AdminPartnerPolicyMappingTest.class,
-				AdminPolicyGroupTest.class,
-				AdminSbiDetailsTest.class,
-				AdminUploadCaCertTest.class,
-				PartnerLoginAuthCredTest.class,
-				PartnerRegisterAuthCredTest.class,
-				PartnerRegisterFTMTest.class,
-				PartnerRegisterSbiDeviceTest.class,apicall.class
-
-		});*/
-		//		testNg.run();
+		DBManager.clearPMSDbData();
+		
 		startTestRunner();
 	}
 
@@ -218,8 +193,7 @@ public class TestRunner {
 				+ "-run-" + System.currentTimeMillis() + "-report.html");
 
 		runner.run();
-
-		//	DBManager.clearMasterDbData();
+		DBManager.clearPMSDbData();
 		System.exit(0);
 	}
 

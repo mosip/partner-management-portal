@@ -51,6 +51,11 @@ function ConsentPopup() {
         setDataLoaded(true);
     }
 
+    const customStyle = {
+        outerDiv: "!flex !justify-end !absolute !min-h-10 !w-3/5 !mt-1 !px-0.5",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-12 !p-3 !w-6/12"
+    }
+
     return (
         <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -61,11 +66,7 @@ function ConsentPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <div className="flex justify-end absolute w-3/5 mt-2 px-2">
-                                    <div className="flex justify-between items-center min-h-13 bg-[#C61818] rounded-xl p-3 w-6/12">
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
-                                    </div>
-                                </div>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="p-4">
                                 <h3 className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>
@@ -73,8 +74,8 @@ function ConsentPopup() {
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="text-sm text-[#414141] w-full">
                                 <div className="p-4"> <p>{consentText}</p></div>
-                                <div className="flex items-center mt-3 bg-alice-green w-full px-4 py-3">
-                                    <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" tabIndex="0"
+                                <div className="flex items-start mt-3 bg-alice-green w-full px-4 py-3">
+                                    <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded mt-[3px]" tabIndex="0"
                                         onKeyPress={(e) => onPressEnterKey(e, handleCheckboxChange)} />
                                     <label className="ms-2 text-sm font-semibold">{t('consentPopup.checkBoxDesc')}</label>
                                 </div>
@@ -82,7 +83,7 @@ function ConsentPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-4 flex justify-between relative items-center">
                                 <p className="text-[#333333] text-sm font-semibold">{t('consentPopup.logoutMsg')}
-                                    <span className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
+                                    <span id='consent_logout_btn' className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
                                         onKeyPress={(e) => onPressEnterKey(e, logout)}> {t('commons.logout')}</span>
                                 </p>
                                 <button
@@ -90,6 +91,7 @@ function ConsentPopup() {
                                 ${isChecked ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
                                     disabled={!isChecked}
                                     onClick={saveUserConsent}
+                                    id='consent_proceed_btn'
                                 >
                                     {t('consentPopup.proceed')}
                                 </button>

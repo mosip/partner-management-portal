@@ -1,10 +1,12 @@
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
-export const formatDate = (dateString, format) => {
+export const formatDate = (dateString, format, isTimeInUTC) => {
     if (!dateString) return '-';
-    const date = new Date(dateString);
-
+    let date = new Date(dateString);
+    if (isTimeInUTC) {
+        date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+    }
     switch (format) {
         case 'dateTime':
             return date.toLocaleString();
@@ -31,7 +33,8 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "SDK_PARTNER": 'partnerTypes.sdkPartner',
         "PRINT_PARTNER": 'partnerTypes.printPartner',
         "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
-        "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication'
+        "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication',
+        "PARTNER_ADMIN": 'partnerTypes.partnerAdmin',
     };
 
     if (partnerType) {
@@ -59,12 +62,15 @@ export const getStatusCode = (status, t) => {
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
-            return t('statusCodes.expired')
+            return t('statusCodes.expired');
+        } else if (status === "uploaded") {
+            return t('statusCodes.uploaded');
+        } else if (status === "not_uploaded") {
+            return t('statusCodes.notUploaded');
         } else if (status === "-") {
             return "-"
         }
     }
-
 }
 
 export const getGrantTypes = (type, t) => {
@@ -310,7 +316,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
@@ -381,4 +387,42 @@ export const getPartnerDomainType = (partnerType) => {
             return 'AUTH';
         }
     }
+};
+
+export const trimAndReplace = (str) => {
+    return str.trim().replace(/\s+/g, ' ');
+};
+
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
+        if (response && response.data) {
+            const responseData = response.data
+            if (responseData.response) {
+                return responseData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching certificate:', error);
+        return null;
+    }
+};
+
+export const downloadCertificate = (certificateData, fileName) => {
+    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
 };

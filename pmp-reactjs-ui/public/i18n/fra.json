@@ -6,13 +6,17 @@
         "emptyMsg": "Pas de données disponibles.",
         "logout": "Se déconnecter",
         "back": "Dos",
+        "cancel": "Annuler",
         "submit": "Soumettre",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
-        "somethingWentWrong": "Quelque chose s'est mal passé !",
+        "somethingWentWrong": "Quelque chose s'est mal passé !",
         "somethingWentWrongDesc": "Veuillez réessayer plus tard",
         "noAccess": "Vous n'avez pas le privilège d'accéder à cette page",
         "noAccessDesc": "Veuillez contacter votre administrateur",
+        "download": "Télécharger",
+        "originalCertificate": "Certificat original",
+        "mosipSignedCertificate": "Certificat signé MOSIP",
         "timeout": "La demande a expiré",
         "timeoutDesc": "Le serveur a mis trop de temps à répondre, veuillez réessayer plus tard",
         "nameTooLong": "Le nom ne doit pas autoriser plus de {{length}} caractères.",
@@ -41,8 +45,23 @@
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
         "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
-        "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
-        "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!"
+        "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
+        "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
+        "pendingRequests": "Demandes en attente",
+        "pendingRequestsDesc": "Approuver/Rejeter les demandes en attente de divers partenaires",
+        "rootOfTrustCertificate": "Certificat racine de confiance",
+        "rootOfTrustCertificateDesc": "Télécharger des certificats racine/CA",
+        "partner": "Partenaire",
+        "partnerDesc": "Afficher / désactiver les détails du partenaire",
+        "policy": "Politique",
+        "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
+        "partnerPolicyMapping": "Partenaire - Cartographie des politiques",
+        "partnerPolicyMappingDesc": "Afficher, désactiver, approuver/rejeter les demandes de politique des partenaires",
+        "sbiDevice": "SBI-Appareil",
+        "sbiDeviceDesc": "Afficher, désactiver Approuver/Rejeter les détails du SBI ou de l'appareil",
+        "ftmChip": "Puce FTM",
+        "ftmChipDesc": "Afficher, désactiver l'approbation/rejet des détails de la puce FTM",
+        "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -75,7 +94,7 @@
         "submit": "Soumettre",
         "viewLess": "Voir moins",
         "viewMore": "Voir plus",
-        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
+        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
     },
     "loading": "chargement",
     "partnerCertificatesList": {
@@ -83,9 +102,6 @@
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire signé par une autorité de certification",
         "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
-        "download": "Télécharger",
-        "originalCertificate": "Certificat original",
-        "mosipSignedCertificate": "Certificat signé MOSIP",
         "reUpload": "Re-télécharger",
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
@@ -115,7 +131,8 @@
         "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat"
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat",
+        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
@@ -128,7 +145,8 @@
         "sdkPartner": "Partenaire SDK",
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
-        "manualAdjudication": "Arbitrage manuelle"
+        "manualAdjudication": "Arbitrage manuelle",
+        "partnerAdmin": "Administrateur partenaire"
     },
     "statusCodes": {
         "approved": "Approuvée",
@@ -137,7 +155,9 @@
         "deactivated": "Désactivé",
         "activated": "Actif",
         "pendingCertUpload": "En attente de téléchargement du certificat",
-        "expired": "Expiré"
+        "expired": "Expiré",
+        "uploaded": "Téléchargé",
+        "notUploaded": "Non téléchargé"
     },
     "policies": {
         "policies": "Stratégies",
@@ -194,10 +214,10 @@
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
-        "policySuccessHeader": "Politique soumise avec succès !",
+        "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
         "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
-        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -226,7 +246,7 @@
         "policyNamePlaceHolder": "Sélectionnez la stratégie pour laquelle l'ID client OIDC est requis",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "name": "Nom",
-        "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
+        "nameTooLong": "Le nom ne doit pas contenir plus de 256 caractères.",
         "enterNameForOidcClient": "Entrez un nom pour le client OIDC",
         "publicKey": "Clé publique",
         "publicKeyToolTip": "Seul le format JWK est autorisé",
@@ -240,7 +260,7 @@
         "enterGrantTypes": "Entrez les types de subventions",
         "delete": "Supprimer",
         "addNew": "Ajouter un nouveau",
-        "requestSuccessHeader": "Détails soumis avec succès !",
+        "requestSuccessHeader": "Détails soumis avec succès !",
         "requestSuccessMsg": "Les détails du client OIDC ont été soumis avec succès.",
         "commentBoxDesc": "Mentionner le but de la demande du client OIDC",
         "errorInCreateOIDC": "Lors de la demande du client OIDC, nous avons rencontré une erreur",
@@ -308,7 +328,7 @@
     "editOidcClient": {
         "editOidcClient": "Modifier le client OIDC",
         "authenticationServiceSection": "Services d'authentification",
-        "editSuccessHeader": "Détails modifiés soumis avec succès !",
+        "editSuccessHeader": "Détails modifiés soumis avec succès !",
         "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès."
     },
     "deactivateOidcClient": {
@@ -331,10 +351,10 @@
         "selectedPolicyName": "Sélectionnez la stratégie pour laquelle la clé API est requise",
         "name": "nom",
         "enterNameForApiKey": "Entrez un nom pour la clé API",
-        "generateApiKeySuccessHeader": "Détails soumis avec succès !",
+        "generateApiKeySuccessHeader": "Détails soumis avec succès !",
         "apiKeySuccessMsg": "Les détails de la clé API ont été soumis avec succès.",
         "errorInGenerateApiKey": "Lors de la génération de la clé API, nous avons rencontré une erreur.",
-        "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
+        "nameTooLong": "Le nom ne doit pas contenir plus de 36 caractères."
     },
     "deactivateApiKey": {
         "apiKeyName": "Voulez-vous désactiver la clé API",
@@ -376,12 +396,12 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "device": "appareil",
-        "createdDate": "Date et heure de création du SBI",
-        "expiryDate": "Date et heure d'expiration du SBI",
+        "createdDate": "Date de création de SBI",
+        "expiryDate": "Date d'expiration du SBI",
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
-        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
+        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
     },
     "devicesList": {
         "addDevices": "Ajouter des périphériques",
@@ -409,7 +429,7 @@
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
-        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
+        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
         "deviceType": "Type d'appareil",
         "selectDeviceType": "Sélectionner le type d'appareil",
         "deviceSubType": "Sous-type d'appareil",
@@ -423,12 +443,14 @@
         "addDevice": "Ajouter un appareil",
         "backToSBIList": "Retour à la liste des SBI",
         "backToViewDevices": "Retour aux appareils d'affichage",
-        "successMsg": "L'appareil a été soumis avec succès et est en attente de administrateur pour approbation.",
+        "successMsgForNewDeviceMapping": "L'appareil a été soumis avec succès et est en attente de administrateur pour approbation.",
+        "successMsgForExistingDeviceMapping": "L'appareil a été soumis avec succès et est en attente d'approbation de l'administrateur. Il a également été mappé à un autre SBI.",
         "errorInDeviceSubType": "Lors de la récupération des sous-types d'appareils, nous avons rencontré une erreur.",
         "errorInDeviceType": "Lors de la récupération des types d'appareils, nous avons rencontré une erreur.",
-        "errorInAddingDevice": "Lors de l'ajout d'un appareil, nous avons rencontré une erreur.",
         "limitExceedWarning": "Vous pouvez ajouter jusqu'à 25 appareils à la fois. Cliquez sur Confirmer pour actualiser cette page et ajouter d'autres appareils. Veuillez noter que tous les appareils précédemment soumis ne seront pas visibles lors de l'actualisation, mais pourront être consultés dans la page Liste des appareils.",
-        "inActiveDeviceMappingToSbiError": "Nous avons rencontré une erreur, veuillez contacter votre administrateur."
+        "unableToAddDevice": "Impossible d'ajouter l'appareil, veuillez réessayer plus tard",
+        "unableToAddDeviceReason": "Impossible d'ajouter l'appareil pour la raison suivante: ",
+        "errorInAddDevice": "Impossible d'ajouter l'appareil car un appareil de la même marque et du même modèle est déjà approuvé par le même SBI ou par un SBI différent."
     },
     "deactivateSbi": {
         "headerMsg": "Voulez-vous désactiver la version SBI ",
@@ -489,7 +511,8 @@
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
         "listOfFtmChipDetails": "Liste des détails de la puce FTM",
         "ftmChipProvider": "Fournisseur de puces FTM",
-        "ftmChipCertificate": " Certificat de puce FTM"
+        "ftmChipCertificate": " Certificat de puce FTM",
+        "originalCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès."
     },
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
@@ -501,6 +524,76 @@
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
+    "rootTrustCertificate": {
+        "organisation": "Organisation",
+        "partnerDomain": "Domaine partenaire",
+        "issuedTo": "Délivré à",
+        "issuedBy": "Délivré par",
+        "validFrom": "Valable à partir de",
+        "validTill": "Valable jusqu'à",
+        "timeOfUpload": "Heure de téléchargement",
+        "status": "Statut",
+        "action": "Action",
+        "UploadCertBtn": "Télécharger le certificat",
+        "listOfCertificates": "Liste des certificats Root of Trust",
+        "selectOrganisation": "Sélectionnez une organisation",
+        "selectPartnerDomain": "Sélectionnez un domaine partenaire",
+        "selectStatus": "Sélectionnez le statut",
+        "deActivate": "Désactiver",
+        "view": "Voir"
+    },
+    "uploadRootofTrustCertificate": {
+        "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
+        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner le domaine partenaire et télécharger le certificat racine /racine intermédiaire",
+        "partnerDomain": "Domaine partenaire",
+        "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
+        "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
+    },
+    "viewRootOfTrustCertificate": {
+        "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
+        "caCertificates": "Certificats CA"
+    },
+    "partnerList":{
+        "partnerTitle": "Partenaire",
+        "listOfPartnerTitle": "Liste des partenaires",
+        "partnerId": "ID partenairePartenaires",
+        "organisation": "Nom de l'organisation",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "email": "Adresse email",
+        "certUploadStatus": "Cert. Statut de téléchargement",
+        "status": "Statut",
+        "action": "Action",
+        "noData": "Aucune donnée",
+        "deActivate": "Désactiver",
+        "view": "Voir",
+        "selectPartnerId": "Sélectionnez l'ID du partenaire",
+        "selectOrganisation":"Sélectionnez une organisation",
+        "selectPartnerType":"Sélectionnez le type de partenaire",
+        "selectEmailAddress": "Sélectionnez l'adresse e-mail",
+        "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
+        "selectStatus":"Sélectionnez le statut",
+        "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
+        "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
+        "applyFilter": "Appliquer le filtre",
+        "searchPartnerId": "ID du partenaire de recherche",
+        "searchOrganisation": "Rechercher une organisation",
+        "searchEmailAddress": "Rechercher une adresse e-mail",
+        "searchPolicyGroup": "Groupe de stratégies de recherche"
+     },
+     "viewPartnerDetails": {
+        "viewPartnerDetails": "Afficher les détails du partenaire",
+        "listOfPartners": "Liste des partenaires",
+        "organizationName": "Nom de l'Organisation",
+        "createdOn":"Créé le",
+        "expiryDate": "Date et heure d'expiration",
+        "emailId": "Identifiant de courrier électronique",
+        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
+     },
+     "deactivatePartner": {
+         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS.",
+         "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+     },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
@@ -511,7 +604,7 @@
         "consentSaveError": "Erreur lors de l'enregistrement du consentement de l'utilisateur"
     },
     "blockerMessage": {
-        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
         "cancel": "Annuler",
         "proceed": "Procéder"
     },
@@ -601,13 +694,15 @@
         "PMS_AUT_004": "Demande en double reçue",
         "PMS_AUT_005": "Les détails du périphérique pour l'ID %s n'existent pas",
         "PMS_AUT_512": "Les détails SBI existent pour la version SBI donnée. Plusieurs SBI avec la même version SBI ne peuvent pas être ajoutés.",
-        "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver ;",
-        "PMP_AUT_030": "le fournisseur ftp n'existe pas.",
+        "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver",
+        "PMP_AUT_030": "Le partenaire n'est pas actif",
         "PMP_AUT_031": "l'identifiant de la puce ftp n'existe pas.",
         "PMP_AUT_032": "Les détails de la puce FTM existent déjà pour la même marque et le même modèle",
         "PMP_AUT_033": "Le certificat n'est pas téléchargé.",
         "PMP_AUT_034": "L'ID de détail de la puce FTP et l'ID du fournisseur ftp ne sont pas mappés.",
-        "PMP_AUT_037": "Compte tenu des détails de la puce ftp déjà enregistrés.;",
+        "PMP_AUT_037": "Compte tenu des détails de la puce ftp déjà enregistrés.",
+        "PMP_AUT_038": "Le certificat ne peut être téléchargé que pour les FTM qui sont en attente de téléchargement de certificat ou qui ont un statut approuvé.",
+        "PMP_AUT_039": "La puce FTM est désactivée",
         "PMS_AUT_007": "Interface biométrique sécurisée introuvable pour l'identifiant %s",
         "PMS_AUT_026": "L'état d'approbation doit être activé/désactivé",
         "PMS_AUT_506": "Fournissez les détails de l'appareil du même fournisseur.",
@@ -619,6 +714,7 @@
         "PMS_AUT_513": "Le SBI pour lequel le périphérique est en cours de mappage a expiré",
         "PMS_AUT_514": "La date de création doit être inférieure ou égale à la date du jour.",
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
+        "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
         "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name :",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",
@@ -657,8 +753,11 @@
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
+        "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "La date du certificat n'est pas valide.",
+        "KER-PCM-005": "Certificat d'autorité de certification racine introuvable.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
+        "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PV_005": "Paramètre d'entrée non valide - errorCode dans les données de stratégie",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
@@ -707,19 +806,21 @@
         "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
         "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
         "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout du mappage de périphériques inactifs pour sbi.",
-        "PMS_DEVICE_ERROR_009": "Le SBI pour lequel l'appareil est ajouté n'est pas approuvé ou est désactivé",
+        "PMS_DEVICE_ERROR_009": "Étant donné que le SBI est soit désactivé, soit pas encore approuvé.",
         "PMS_DEVICE_ERROR_010": "Les détails de l'appareil donné ne sont pas en attente d'approbation.",
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "Le mappage SBI et périphérique n’existe pas.",
         "PMS_DEVICE_ERROR_013": "L'identifiant de l'appareil n'est pas valide",
-        "PMS_DEVICE_ERROR_014": "L'appareil sélectionné doit être actif et approuvé",
+        "PMS_DEVICE_ERROR_014": "L'appareil sélectionné a déjà été désactivé",
         "PMS_DEVICE_ERROR_015": "Erreur lors de la désactivation de l'appareil",
         "PMS_DEVICE_ERROR_016": "L'appareil n'est pas associé à l'utilisateur.",
         "PMS_DEVICE_ERROR_017": "L'identifiant SBI n'est pas valide",
         "PMS_DEVICE_ERROR_018": "Erreur lors de la désactivation du SBI",
         "PMS_DEVICE_ERROR_019": "SBI n'est pas associé à l'utilisateur.",
-        "PMS_DEVICE_ERROR_020": "Le SBI sélectionné doit être actif et approuvé",
+        "PMS_DEVICE_ERROR_020": "Le SBI sélectionné est déjà désactivé",
         "PMS_DEVICE_ERROR_021": "Le SBI pour lequel l'appareil est ajouté a expiré",
+        "PMS_DEVICE_ERROR_022": "Le SBI sélectionné n'est pas dans un statut approuvé",
+        "PMS_DEVICE_ERROR_023": "L'appareil sélectionné n'est pas dans un statut approuvé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
@@ -734,6 +835,9 @@
         "PMS_FTM_ERROR_004": "L'identifiant FTM n'est pas valide",
         "PMS_FTM_ERROR_005": "Les détails FTM n'existent pas.",
         "PMS_FTM_ERROR_006": "FTM n'est pas associé à l'utilisateur.",
-        "PMS_FTM_ERROR_007": "Le FTM sélectionné doit être actif et approuvé"
+        "PMS_FTM_ERROR_007": "Le FTM sélectionné est déjà désactivé",
+        "PMS_FTM_ERROR_008": "Le FTM sélectionné doit être en attente d'approbation ou approuvé",
+        "PMS_FTM_ERROR_009": "Impossible de télécharger le certificat FTM d'origine",
+        "PMS_FTM_ERROR_010": "Le FTM sélectionné n'est pas dans un statut approuvé"
     }
 }
