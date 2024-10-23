@@ -3,11 +3,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../services/UserProfileService';
+import { isLangRTL } from '../utils/AppUtils';
 
 function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeIcon, setActiveIcon] = useState("");
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     let selectedPath = location.pathname;
     const { t } = useTranslation();
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
@@ -112,9 +114,9 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
 
     return (
         <div className="flex font-inter bg-white h-screen z-40">
-            <div className={`h-full ${open ? "absolute inset-y-14 w-64" : "absolute inset-y-14 w-[4.5rem]"} 
+            <div className={`h-full ${open ? "absolute inset-y-14 min-w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
             flex-col duration-500`}>
-                <ul className="pt-3 h-full space-y-5 bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]">
+                <ul className={`pt-3 h-full space-y-5 bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]`}>
                     <li id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()} onKeyPress={(e) => { e.key === 'Enter' && showHome() }}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </li>
@@ -157,7 +159,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                             <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
                                 <SideNavMenuItem title={t('dashboard.policy')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_partnerPolicyMapping_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerPolicyMapping()}>
+                            <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1': 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
