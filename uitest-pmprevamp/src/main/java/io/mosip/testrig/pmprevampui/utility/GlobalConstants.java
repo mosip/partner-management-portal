@@ -37,7 +37,6 @@ public class GlobalConstants {
 	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
 	public static final String isEnterRedirectUriTextDisplayed = "Verify if enter valid redirect uri text displayed";
 	public static final String isAutherisationCodeTextDisplayed = "Verify if Authrisation code is selected by default displayed";
-	
 	public static final String isPolicyGroupHeaderTextDisplayed = "Verify if policy group header text displayed";
 	public static final String isPolicyNameHeaderTextDisplayed = "Verify if policy name header text displayed";
 	public static final String isOIDCClientNameHeaderTextDisplayed = "Verify if oidc client name header text displayed";
@@ -48,4 +47,21 @@ public class GlobalConstants {
 	public static final String isRequestPolicyEnabled = "Verify if request policy button enabled";
 	public static final String isGenerateAPIKeyDisplayed = "Verify if generate api key text displayed.";
 	public static final String isApiKeyHeaderTextDisplayed = "Verify if api key header Text displayed";
+	public static final String isListOfPolicyRequestedTextDisplayed = "Verify if list of policy requested text displayed";
+	public static final String isNextPageDisplayed = "Verify if next page for policy requested  displayed";
+	public static final String isPreviousPageDisplayed = "Verify if Previous page for policy requested  displayed";
+	public static final String isPendingForApprovalDisplayed = "Verify if pending for approval text displayed";
+	public static final String isPartnerIdTextDisplayed = "Verify if partner id text displayed";
+	public static final String isPartnerIdDescAscIcon = "Verify if partner Asending decending icon displayed";
+	public static final String isPartnerTypeDescAscIcon = "Verify if partner type Asending decending icon displayed";
+	public static final String isPolicyGroupNameDescAscIcon = "Verify if policy group name type Asending decending icon displayed";
+	public static final String isPolicyNameDescAscIcon = "Verify if policy name Asending decending icon displayed";
+	public static final String isCreatedDateTimeDescAscIcon = "Verify if created date time Asending decending icon displayed";
+	public static final String isSubTitleHomeDisplayed = "Verify if subtitle home displayed";
+	public static final String isSubTitleDisplayed  = "Verify if subtitle displayed";
+	public static final String isBackArrow = "Verify if back arrow icon displayed";
+	public static final String isViewPolicyTitle = "Verify if view policy title displayed";
+	public static final String isSelectPolicyGroupViewMoreAndLess = "Verify if select policy group view more and less is displayed";
+	public static final String isSelectPolicyGroupSubmitDisabled = "Verify if select policy group submit disabled";
+	
 }

@@ -29,7 +29,6 @@ public class CreateApiKey extends BaseClass {
 		assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed);		
 		assertTrue(apiKeyPage.isPolicyGroupHeaderTextDisplayed(), GlobalConstants.isPolicyGroupHeaderTextDisplayed);
 		assertTrue(apiKeyPage.isPolicyNameHeaderTextDisplayed(), GlobalConstants.isPolicyNameHeaderTextDisplayed);
-//		assertTrue(apiKeyPage.isApiKeyHeaderTextDisplayed(), GlobalConstants.isApiKeyHeaderTextDisplayed);
 		assertTrue(apiKeyPage.isCreatedDateHeaderTextDisplayed(), GlobalConstants.isCreatedDateHeaderTextDisplayed);
 		assertTrue(apiKeyPage.isStatusHeaderTextDisplayed(), GlobalConstants.isStatusHeaderTextDisplayed);
 		assertTrue(apiKeyPage.isActionHeaderTextDisplayed(), GlobalConstants.isActionHeaderTextDisplayed);
@@ -41,13 +40,10 @@ public class CreateApiKey extends BaseClass {
 		apiKeyPage.selectPartnerIdDropdown("automationuiiii");
 		
 		assertTrue(apiKeyPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
-//		apiKeyPage.selectPolicyNameDropdown(data+"ad");
 		apiKeyPage.enterNameOfApiKeyTextBox(data+"ad");
 		
 		apiKeyPage.ClickOnSubmitButton();
 		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
 			
 	}
-	
-	
 }

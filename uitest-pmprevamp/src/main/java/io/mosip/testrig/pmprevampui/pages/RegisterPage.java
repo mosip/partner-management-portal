@@ -1,5 +1,8 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import java.util.Set;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -148,5 +151,46 @@ public class RegisterPage extends BasePage {
 	public  DashboardPage clickSubmitButton() {
 		clickOnElement(submitButton);
 		return new DashboardPage(driver);
+	}
+	
+	public void openNewTab() {
+((JavascriptExecutor) driver).executeScript("window.open('https://pmp.dev1.mosip.net/ ')");
+        Set<String> allWindowHandles =driver.getWindowHandles();
+        System.out.println(allWindowHandles);
+        if (allWindowHandles.size() >= 2) {
+            String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
+            String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
+            // Switch to the second window
+            driver.switchTo().window(secondWindowHandle);
+	}
+}
+	
+	public void openPreviousTab() {
+        Set<String> allWindowHandles =driver.getWindowHandles();
+        System.out.println(allWindowHandles);
+       
+            String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
+            // Switch to the second window
+            driver.switchTo().window(firstWindowHandle);
+	}
+	
+	public void openRevampInNewTab() {
+((JavascriptExecutor) driver).executeScript("window.open('https://pmp-new.dev1.mosip.net/ ')");
+        Set<String> allWindowHandles =driver.getWindowHandles();
+        System.out.println(allWindowHandles);
+        if (allWindowHandles.size() >= 2) {
+            String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
+            String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
+            // Switch to the second window
+            driver.switchTo().window(secondWindowHandle);
+	}
+}
+	
+	public void refreshThePage() {
+		driver.navigate().refresh();
+	}
+	
+	public void CloseTheTab() {
+		driver.close();
 	}
 }
