@@ -102,6 +102,10 @@ function PartnersList() {
     }
     fetchData();
   }, [sortFieldName, sortType, pageNo, pageSize]);
+  
+  const onApplyFilter = (filters) => {
+    console.log('Filters sent from child:', filters);
+  };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
     // console.log(recordsPerPage, pageIndex);
@@ -261,12 +265,13 @@ function PartnersList() {
                       setFilter={setFilter}
                     />
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                    {filter && (
-                      <PartnerListFilter
-                        filteredPartnersData={filteredPartnersData}
-                        onFilterChange={onFilterChange}
-                      />
-                    )}
+                      {filter && (
+                        <PartnerListFilter
+                          onApplyFilter={onApplyFilter}
+                          setErrorCode={setErrorCode}
+                          setErrorMsg={setErrorMsg}
+                        />
+                      )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && (
                       <div className="mx-[2%] overflow-x-scroll">

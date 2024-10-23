@@ -33,7 +33,8 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "SDK_PARTNER": 'partnerTypes.sdkPartner',
         "PRINT_PARTNER": 'partnerTypes.printPartner',
         "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
-        "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication'
+        "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication',
+        "PARTNER_ADMIN": 'partnerTypes.partnerAdmin',
     };
 
     if (partnerType) {
@@ -315,7 +316,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]

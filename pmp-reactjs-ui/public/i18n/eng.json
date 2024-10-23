@@ -145,7 +145,8 @@
         "sdkPartner": "SDK Partner",
         "printPartner": "Print Partner",
         "internalPartner": "Internal Partner",
-        "manualAdjudication": "Manual Adjudication"
+        "manualAdjudication": "Manual Adjudication",
+        "partnerAdmin": "Partner Admin"
     },
     "statusCodes": {
         "approved": "Approved",

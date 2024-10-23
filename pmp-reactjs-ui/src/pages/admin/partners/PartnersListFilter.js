@@ -2,15 +2,28 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData } from "../../../utils/AppUtils.js";
+import { createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
+import { isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
+import { HttpService } from "../../../services/HttpService.js";
 
-function PartnerListFilter({ filteredPartnersData, onFilterChange }) {
+function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
+    { certificateUploadStatus: 'uploaded' },
+    { certificateUploadStatus: 'not_uploaded' }
+  ]);
+  const [statusDropdownData, setStatusDropdownData] = useState([
+    { status: 'active' },
+    { status: 'deactivated' }
+  ]);
   const [filters, setFilters] = useState({
+    partnerId: "",
     partnerType: "",
     status: "",
     orgName: "",
@@ -20,16 +33,57 @@ function PartnerListFilter({ filteredPartnersData, onFilterChange }) {
   });
 
   useEffect(() => {
-    setPartnerType(
-      createDropdownData("partnerType", "", true, filteredPartnersData, t, t("partnerList.selectPartnerType"))
-    );
-    setStatus(
-      createDropdownData("status", "", true, filteredPartnersData, t, t("partnerList.selectStatus"))
-    );
-    setCertUploadStatus(
-      createDropdownData("certificateUploadStatus", "", true, filteredPartnersData, t, t("partnerList.selectCertUploadStatus"))
-    );
-  }, [filteredPartnersData, t]);
+    const fetchData = async () => {
+      const partnerTypeDropdownData = await fetchPartnerTypeData();
+      setPartnerType(
+        createDropdownData("partnerType", "", true, partnerTypeDropdownData, t, t("partnerList.selectPartnerType"))
+      );
+      setStatus(
+        createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
+      );
+      setCertUploadStatus(
+        createDropdownData("certificateUploadStatus", "", true, certUploadStatusDropdownData, t, t("partnerList.selectCertUploadStatus"))
+      );
+    };
+
+    fetchData();
+  }, [t]);
+
+  async function fetchPartnerTypeData() {
+    const request = createRequest({
+      "filters": [],
+      "pagination": { "pageFetch": 100, "pageStart": 0 },
+      "sort": []
+    });
+
+    try {
+      const response = await HttpService.post(
+        getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+        request
+      );
+
+      if (response && response.data) {
+        const responseData = response.data;
+        if (responseData.response && responseData.response.data) {
+          const partnerTypeData = responseData.response.data.map(item => ({
+            partnerType: item.code
+          }));
+          return partnerTypeData;
+        } else {
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          return [];
+        }
+      } else {
+        setErrorMsg(t('partnerList.errorInPartnersList'));
+        return [];
+      }
+    } catch (err) {
+      setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
+      console.error("Error fetching partner type data: ", err);
+      return [];
+    }
+  }
+
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
     setFilters((prevFilters) => ({
@@ -38,8 +92,12 @@ function PartnerListFilter({ filteredPartnersData, onFilterChange }) {
     }));
   };
 
+  const areFiltersEmpty = () => {
+    return Object.values(filters).every(value => value === "");
+  };
+
   const styles = {
-    dropdownButton: "!text-[#343434] min-w-72",
+    dropdownButton: "min-w-72",
   };
 
   return (
@@ -66,7 +124,7 @@ function PartnerListFilter({ filteredPartnersData, onFilterChange }) {
         fieldName="orgName"
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.organisation"
-        placeHolderKey="partnerList.searchPartnerId"
+        placeHolderKey="partnerList.searchOrganisation"
         styleSet={styles}
         id="partner_organisation_filter"
       />
@@ -106,12 +164,14 @@ function PartnerListFilter({ filteredPartnersData, onFilterChange }) {
         isPlaceHolderPresent={true}
         id="status_filter"
       />
-      <div className="ml-auto mt-6 mr-6">
+      <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
         <button
           id="apply_filter__btn"
-          onClick={() => onFilterChange(filters)}
+          onClick={() => onApplyFilter(filters)}
           type="button"
-          className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md ml-6"
+          disabled={areFiltersEmpty()}
+          className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
+          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-not-allowed' : 'bg-tory-blue'}`}
         >
           {t("partnerList.applyFilter")}
         </button>
