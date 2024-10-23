@@ -1,7 +1,7 @@
 modules:
-  auth:
+  - name: pmpui
     enabled: true
     image:
-      repository: mosipqa/apitest-auth
+      registry: docker.io
+      repository: mosipqa/pmptest
       tag: develop
-      pullPolicy: Always
