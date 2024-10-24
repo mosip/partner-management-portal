@@ -48,7 +48,7 @@
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!",
         "pendingRequests": "Pending Requests",
-        "pendingRequestsDesc": "Approve/Reject pending requests from various partners",
+        "pendingRequestsDesc": "Approve / Reject pending requests from various partners",
         "rootOfTrustCertificate": "Root of Trust Certificate",
         "rootOfTrustCertificateDesc": "Upload Root and Intermediate Root Certificates",
         "partner": "Partner",
@@ -56,11 +56,11 @@
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
         "partnerPolicyMapping": "Partner - Policy mapping",
-        "partnerPolicyMappingDesc": "View, Deactivate, Approve/Rejected policy requests from partners",
+        "partnerPolicyMappingDesc": "View, Deactivate, Approve / Rejected policy requests from partners",
         "sbiDevice": "SBI - Device",
-        "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
+        "sbiDeviceDesc": "View, Deactivate Approve / Reject SBI or device details",
         "ftmChip": "FTM Chip",
-        "ftmChipDesc": "View, Deactivate Approve/Reject FTM Chip details",
+        "ftmChipDesc": "View, Deactivate Approve / Reject FTM Chip details",
         "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details"
     },
     "header": {
