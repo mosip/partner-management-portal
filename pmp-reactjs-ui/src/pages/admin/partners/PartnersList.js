@@ -203,7 +203,7 @@ function PartnersList() {
       className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"
         } overflow-x-scroll font-inter`}
     >
-      {!dataLoaded && <LoadingIcon></LoadingIcon>}
+      {!dataLoaded && <LoadingIcon/>}
       {dataLoaded && (
         <>
           {errorMsg && (
@@ -368,7 +368,7 @@ function PartnersList() {
                     setFirstIndex={setFirstIndex}
                     isServerSideFilter={true}
                     getPaginationValues={getPaginationValues}
-                  ></Pagination>
+                  />
                 </>
               )}
             </div>
