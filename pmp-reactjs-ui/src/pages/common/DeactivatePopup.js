@@ -71,7 +71,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     }
                 });
             } else if (popupData.isDeactivatePartner) {
-                response = await HttpService.post(getPartnerManagerUrl(`/partners/${popupData.partnerId}`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
