@@ -190,8 +190,6 @@ function RootTrustCertificateList() {
             <div className="flex justify-between mb-3">
               <Title
                 title="viewRootOfTrustCertificate.viewRootOfTrustCertificate"
-                subTitle2="viewRootOfTrustCertificate.caCertificates"
-                backLink="/partnermanagement"
                 styleSet={style}
               />
 

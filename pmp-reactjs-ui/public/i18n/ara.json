@@ -48,7 +48,7 @@
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
         "pendingRequests": "الطلبات المعلقة",
-        "pendingRequestsDesc": "الموافقة على/رفض الطلبات المعلقة من مختلف الشركاء",
+        "pendingRequestsDesc": "الموافقة على / رفض الطلبات المعلقة من مختلف الشركاء",
         "rootOfTrustCertificate": "جذر شهادة الثقة",
         "rootOfTrustCertificateDesc": "تحميل شهادات الجذر/CA",
         "partner": "شريك",
@@ -56,11 +56,11 @@
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
         "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
+        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها / رفضها من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
         "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
         "ftmChip": "تفاصيل اف تي ام",
-        "ftmChipDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM",
+        "ftmChipDesc": "عرض أو / وإلغاء تنشيط تفاصيل شريحة FTM",
         "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات"
     },
     "header": {
