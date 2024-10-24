@@ -28,8 +28,8 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     status: "",
     orgName: "",
     emailAddress: "",
-    certUploadStatus: "",
-    policyGroup: ""
+    certificateUploadStatus: "",
+    policyGroupName: ""
   });
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         id="partner_organisation_filter"
       />
       <TextInputComponent
-        fieldName="policyGroup"
+        fieldName="policyGroupName"
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.policyGroup"
         placeHolderKey="partnerList.searchPolicyGroup"
@@ -145,7 +145,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         id="email_address_filter"
       />
       <DropdownComponent
-        fieldName="certUploadStatus"
+        fieldName="certificateUploadStatus"
         dropdownDataList={certUploadStatus}
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerList.certUploadStatus"

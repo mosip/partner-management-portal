@@ -51,9 +51,9 @@ function PartnersList() {
     status: null,
     orgName: null,
     emailAddress: null,
-    certUploadStatus: null,
-    policyGroup: null,
-  });
+    certificateUploadStatus: null,
+    policyGroupName: null,
+  });  
   const defaultFilterQuery = {
     orgName: "",
     partnerType: "",
@@ -84,8 +84,18 @@ function PartnersList() {
       queryParams.append('pageNo', pageNo);
       queryParams.append('pageSize', pageSize);
 
-      // Add filter values to query params only if they are not null or empty
       if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
+      if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
+      if (filters.orgName) queryParams.append('orgName', filters.orgName);
+      if (filters.emailAddress) queryParams.append('emailAddress', filters.emailAddress);
+      if (filters.certificateUploadStatus) queryParams.append('certificateUploadStatus', filters.certificateUploadStatus);
+      if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
+      
+      // Check filters.status
+      if (filters.status !== null) {
+        if (filters.status === 'active') queryParams.append('isActive', true);
+        else if (filters.status === 'deactivated') queryParams.append('isActive', false);
+      }
 
       const url = `${getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
