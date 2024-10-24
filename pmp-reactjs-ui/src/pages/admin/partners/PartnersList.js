@@ -50,7 +50,7 @@ function PartnersList() {
     partnerType: null,
     status: null,
     orgName: null,
-    emailId: null,
+    emailAddress: null,
     certUploadStatus: null,
     policyGroup: null,
   });
@@ -116,6 +116,7 @@ function PartnersList() {
   }, [sortFieldName, sortType, pageNo, pageSize, filters]);
 
   const onApplyFilter = (filters) => {
+    console.log(filters)
     setFilters(filters);
   };
 
