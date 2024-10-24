@@ -45,6 +45,15 @@ function PartnersList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
+  const [filters, setFilters] = useState({
+    partnerId: null,
+    partnerType: null,
+    status: null,
+    orgName: null,
+    emailAddress: null,
+    certUploadStatus: null,
+    policyGroup: null,
+  });
   const defaultFilterQuery = {
     orgName: "",
     partnerType: "",
@@ -75,6 +84,9 @@ function PartnersList() {
       queryParams.append('pageNo', pageNo);
       queryParams.append('pageSize', pageSize);
 
+      // Add filter values to query params only if they are not null or empty
+      if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
+
       const url = `${getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
@@ -101,10 +113,11 @@ function PartnersList() {
       }
     }
     fetchData();
-  }, [sortFieldName, sortType, pageNo, pageSize]);
-  
+  }, [sortFieldName, sortType, pageNo, pageSize, filters]);
+
   const onApplyFilter = (filters) => {
-    console.log('Filters sent from child:', filters);
+    console.log(filters)
+    setFilters(filters);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {

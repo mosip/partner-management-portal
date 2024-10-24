@@ -27,7 +27,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     partnerType: "",
     status: "",
     orgName: "",
-    emailID: "",
+    emailAddress: "",
     certUploadStatus: "",
     policyGroup: ""
   });
@@ -137,7 +137,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         id="policy_group_filter"
       />
       <TextInputComponent
-        fieldName="emailID"
+        fieldName="emailAddress"
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.email"
         placeHolderKey="partnerList.searchEmailAddress"
