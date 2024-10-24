@@ -50,7 +50,7 @@ function PartnersList() {
     partnerType: null,
     status: null,
     orgName: null,
-    emailID: null,
+    emailId: null,
     certUploadStatus: null,
     policyGroup: null,
   });
