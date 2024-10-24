@@ -619,7 +619,7 @@
         "PMS_PRT_359": " Error occured while sorting",
         "PMS_PRT_357": " Invalid sort field %s",
         "KER_PRT_390": " Invalid filter value",
-        "KER-PCM-008": "Partner Organization Name not Matched.",
+        "KER-PCM-008": "Partner organization name not matched.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
         "PMS_PRT_051": " A Partner is already registered with the same Id",
         "PMS_PRT_052": "PartnerId max length should be 36",
