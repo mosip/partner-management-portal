@@ -46,13 +46,13 @@ function PartnersList() {
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [filters, setFilters] = useState({
-    partnerId: '',
-    partnerType: '',
-    status: '',
-    orgName: '',
-    emailAddress: '',
-    certificateUploadStatus: '',
-    policyGroupName: '',
+    partnerId: null,
+    partnerType: null,
+    status: null,
+    orgName: null,
+    emailAddress: null,
+    certificateUploadStatus: null,
+    policyGroupName: null,
   });  
   const defaultFilterQuery = {
     orgName: "",
@@ -84,17 +84,17 @@ function PartnersList() {
       queryParams.append('pageNo', pageNo);
       queryParams.append('pageSize', pageSize);
 
-      queryParams.append('partnerId', filters.partnerId);
-      queryParams.append('partnerType', filters.partnerType);
-      queryParams.append('orgName', filters.orgName);
-      queryParams.append('emailAddress', filters.emailAddress);
-      queryParams.append('certificateUploadStatus', filters.certificateUploadStatus);
-      queryParams.append('policyGroupName', filters.policyGroupName);
-      // Check filters.status and set isActive
-      if (filters.status === 'active') {
-        queryParams.append('isActive', true);
-      } else if (filters.status === 'deactive') {
-        queryParams.append('isActive', false);
+      if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
+      if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
+      if (filters.orgName) queryParams.append('orgName', filters.orgName);
+      if (filters.emailAddress) queryParams.append('emailAddress', filters.emailAddress);
+      if (filters.certificateUploadStatus) queryParams.append('certificateUploadStatus', filters.certificateUploadStatus);
+      if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
+      
+      // Check filters.status
+      if (filters.status !== null) {
+        if (filters.status === 'active') queryParams.append('isActive', true);
+        else if (filters.status === 'deactivated') queryParams.append('isActive', false);
       }
 
       const url = `${getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV)}?${queryParams.toString()}`;
