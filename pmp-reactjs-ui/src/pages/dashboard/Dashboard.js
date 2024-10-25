@@ -74,7 +74,7 @@ function Dashboard() {
     setErrorMsg("");
     try {
       const partnerId = getUserProfile().userName;
-      const response = await HttpService.get(getPartnerManagerUrl(`/partners/v3/${partnerId}`, process.env.NODE_ENV));
+      const response = await HttpService.get(getPartnerManagerUrl(`/partners/${partnerId}`, process.env.NODE_ENV));
       if (response && response.data) {
         const responseData = response.data;
         console.log(responseData);
@@ -219,8 +219,8 @@ function Dashboard() {
             <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
-            <p className={`${!partnerStatus ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#fcfdfe] text-[#616161]'} flex w-fit px-3 mt-1 text-[0.8rem] ${isLoginLanguageRTL ? 'ml-[3rem]' : 'mr-[3rem]'} rounded-md font-semibold`}>
-              <li>{t('dashboard.accountStatus')} :  {!partnerStatus ? t('statusCodes.activated') : t('statusCodes.deactivated')}</li>
+            <p className={`${partnerStatus ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#fcfdfe] text-[#616161]'} flex w-fit px-3 mt-1 text-[0.8rem] ${isLoginLanguageRTL ? 'ml-[3rem]' : 'mr-[3rem]'} rounded-md font-semibold`}>
+              <li>{t('dashboard.accountStatus')} :  {partnerStatus ? t('statusCodes.activated') : t('statusCodes.deactivated')}</li>
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
