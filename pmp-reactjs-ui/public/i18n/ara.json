@@ -32,7 +32,7 @@
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
         "accountStatus": "حالة الحساب ",
-        "adminStatusFetchError": "حدث خطأ أثناء جلب حالة المسؤول",
+        "partnerDetailsFetchError": "حدث خطأ أثناء جلب تفاصيل الشريك",
         "partnerTypeRequest": "أنواع الشركاء",
         "partnerTypeRequestDesc": "اطلب نوع شريك آخر إذا كانت مؤسستك توفر خدمات شركاء متعددة.",
         "organisationUsers": "المستخدمين",

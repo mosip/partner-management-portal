@@ -85,7 +85,7 @@ function Dashboard() {
           handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
       } else {
-        setErrorMsg(t('dashboard.adminStatusFetchError'));
+        setErrorMsg(t('dashboard.partnerDetailsFetchError'));
       }
       setDataLoaded(true);
     } catch (err) {

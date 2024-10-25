@@ -32,7 +32,7 @@
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
         "accountStatus": "Account Status ",
-        "adminStatusFetchError": "Error While fetching admin status",
+        "partnerDetailsFetchError": "Error while fetching partner details.",
         "partnerTypeRequest": "Partner Types",
         "partnerTypeRequestDesc": "Request for another partner type if your organisation provides multiple partner services.",
         "organisationUsers": "Users",
