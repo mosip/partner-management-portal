@@ -14,6 +14,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const [isFilterActive, setIsFilterActive] = useState(false);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
@@ -86,6 +87,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
+    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -93,11 +95,15 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const areFiltersEmpty = () => {
-    return Object.values(filters).every(value => value === "");
+    return !isFilterActive && Object.values(filters).every(value => value === "");
   };
 
   const styles = {
-    dropdownButton: "min-w-72",
+    dropdownButton: "min-w-64",
+  };
+
+  const styleSet = {
+    inputField: "min-w-64 w-auto",
   };
 
   return (
@@ -107,7 +113,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.partnerId"
         placeHolderKey="partnerList.searchPartnerId"
-        styleSet={styles}
+        styleSet={styleSet}
         id="partner_id_filter"
       />
       <DropdownComponent
@@ -125,7 +131,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.organisation"
         placeHolderKey="partnerList.searchOrganisation"
-        styleSet={styles}
+        styleSet={styleSet}
         id="partner_organisation_filter"
       />
       <TextInputComponent
@@ -133,7 +139,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.policyGroup"
         placeHolderKey="partnerList.searchPolicyGroup"
-        styleSet={styles}
+        styleSet={styleSet}
         id="policy_group_filter"
       />
       <TextInputComponent
@@ -141,7 +147,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onTextChange={onFilterChangeEvent}
         fieldNameKey="partnerList.email"
         placeHolderKey="partnerList.searchEmailAddress"
-        styleSet={styles}
+        styleSet={styleSet}
         id="email_address_filter"
       />
       <DropdownComponent

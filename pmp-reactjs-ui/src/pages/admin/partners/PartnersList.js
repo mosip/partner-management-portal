@@ -8,6 +8,7 @@ import {
   handleServiceErrors,
   getStatusCode,
   handleMouseClickForDropdown,
+  getPartnerTypeDescription,
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -241,7 +242,7 @@ function PartnersList() {
             <div className="flex-col justify-center ml-3 h-full">
               {!isFilterApplied && partnersData.length === 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                  <div className="py-1 pt-4 text-sm font-semibold text-[#6F6E6E]">
+                  <div className="py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full px-2">
                       <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
                         {t("partnerList.listOfPartnerTitle")}
@@ -289,7 +290,7 @@ function PartnersList() {
                                 {tableHeaders.map((header, index) => {
                                   return (
                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                      <div className="mx-2 flex gap-x-0 items-center">
+                                      <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                         {t(header.headerNameKey)}
                                         {header.id !== "action" && (
                                           <SortingIcon
@@ -312,15 +313,15 @@ function PartnersList() {
                                   <tr id={"partner_list_item" + (index + 1)} key={index}
                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
                                     <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
-                                    <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerType}</td>
+                                    <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                     <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
                                     <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
                                     <td onClick={() => viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
-                                    <td onClick={() => viewPartnerDetails(partner)} className={`px-3 break-all ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                    <td onClick={() => viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                       {getStatusCode(partner.certificateUploadStatus, t)}
                                     </td>
-                                    <td onClick={() => viewPartnerDetails(partner)} className="break-all">
-                                      <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                    <td onClick={() => viewPartnerDetails(partner)}>
+                                      <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                         {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                       </div>
                                     </td>

@@ -23,7 +23,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, onTextCha
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder={t(placeHolderKey)}
-                className={`w-full min-w-72 px-2 py-2 border border-[#707070] rounded-[4px] text-[15px] 
+                className={`w-full px-2 py-2 h-[2.3rem] border border-[#707070] rounded-[4px] text-[15px] 
                     ${styleSet && styleSet.inputField ? styleSet.inputField : ''} focus:outline-none `}
             />
         </div>
