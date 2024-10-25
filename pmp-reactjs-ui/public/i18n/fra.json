@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
+        "accountStatus": "Statut du compte ",
+        "adminStatusFetchError": "Erreur lors de la récupération du statut d'administrateur",
         "partnerTypeRequest": "Types de partenaires",
         "partnerTypeRequestDesc": "Demandez un autre type de partenaire si votre organisation fournit plusieurs services partenaires.",
         "organisationUsers": "Utilisatrices",
