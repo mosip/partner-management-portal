@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
+        "accountStatus": "Statut du compte ",
+        "partnerDetailsFetchError": "Erreur lors de la récupération des détails du partenaire.",
         "partnerTypeRequest": "Types de partenaires",
         "partnerTypeRequestDesc": "Demandez un autre type de partenaire si votre organisation fournit plusieurs services partenaires.",
         "organisationUsers": "Utilisatrices",
@@ -591,7 +593,7 @@
         "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
      },
      "deactivatePartner": {
-         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS.",
+         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
          "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
      },
     "consentPopup": {

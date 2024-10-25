@@ -48,8 +48,6 @@ function ViewPartnerDetails() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setPartnerDetails(resData);
-                        console.log(partnerDetails);
-
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -201,7 +199,7 @@ function ViewPartnerDetails() {
                                                 {t("userProfile.phoneNumber")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.phoneNumber ? partnerDetails.phoneNumber : '-')}
+                                                {t(partnerDetails.contactNumber ? partnerDetails.contactNumber : '-')}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">

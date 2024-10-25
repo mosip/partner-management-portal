@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
+        "accountStatus": "Account Status ",
+        "partnerDetailsFetchError": "Error while fetching partner details.",
         "partnerTypeRequest": "Partner Types",
         "partnerTypeRequestDesc": "Request for another partner type if your organisation provides multiple partner services.",
         "organisationUsers": "Users",
@@ -587,7 +589,7 @@
         "errorInPartnerList": "While fetching Partner details, we have encountered with an error."
     },
     "deactivatePartner": {
-        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}?",
+        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}",
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "consentPopup": {

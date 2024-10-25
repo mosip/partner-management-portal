@@ -27,6 +27,7 @@ function Dashboard() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [partnerStatus, setPartnerStatus] = useState('');
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
@@ -66,6 +67,33 @@ function Dashboard() {
       console.log("Error: ", err);
     }
   }
+
+  const fetchPartnerStatus = async () => {
+    setDataLoaded(false);
+    setErrorCode("");
+    setErrorMsg("");
+    try {
+      const partnerId = getUserProfile().userName;
+      const response = await HttpService.get(getPartnerManagerUrl(`/partners/${partnerId}`, process.env.NODE_ENV));
+      if (response && response.data) {
+        const responseData = response.data;
+        console.log(responseData);
+        if (responseData.response) {
+          const resData = responseData.response;
+          setPartnerStatus(resData.isActive);
+        } else {
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+        }
+      } else {
+        setErrorMsg(t('dashboard.partnerDetailsFetchError'));
+      }
+      setDataLoaded(true);
+    } catch (err) {
+      setErrorMsg(err.toString());
+      console.log("Error: ", err);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -124,6 +152,7 @@ function Dashboard() {
           }
           if (!isSelectPolicyPopupVisible) {
             await fetchUserConsent();
+            await fetchPartnerStatus();
             if (!isUserConsentGiven) {
               setShowConsentPopup(true);
               document.body.style.overflow = "hidden";
@@ -164,11 +193,11 @@ function Dashboard() {
     navigate('/partnermanagement/ftmChipProviderServices/ftmList')
   };
 
-  const rootTrustCertificateList = () =>{
+  const rootTrustCertificateList = () => {
     navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
   }
 
-  const partnersList = () =>{
+  const partnersList = () => {
     navigate('/partnermanagement/admin/partnersList')
   }
 
@@ -186,9 +215,12 @@ function Dashboard() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700">
-            <p >
+          <div className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
+            <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
+            </p>
+            <p className={`${partnerStatus ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#fcfdfe] text-[#616161]'} flex w-fit px-3 mt-1 text-[0.8rem] ${isLoginLanguageRTL ? 'ml-[3rem]' : 'mr-[3rem]'} rounded-md font-semibold`}>
+              <li>{t('dashboard.accountStatus')} :  {partnerStatus ? t('statusCodes.activated') : t('statusCodes.deactivated')}</li>
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
