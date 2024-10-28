@@ -79,8 +79,12 @@ function PartnersList() {
       const queryParams = new URLSearchParams();
       queryParams.append('sortFieldName', sortFieldName);
       queryParams.append('sortType', sortType);
-      queryParams.append('pageNo', pageNo);
       queryParams.append('pageSize', pageSize);
+
+      //reset page number to 0 if filter applied or page number is out of bounds
+      const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
+      const effectivePageNo = pageNo > totalNumberOfPages || isFilterApplied ? 0 : pageNo;
+      queryParams.append('pageNo', effectivePageNo);      
 
       if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
       if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
