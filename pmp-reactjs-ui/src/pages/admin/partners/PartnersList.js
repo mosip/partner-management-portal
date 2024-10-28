@@ -83,11 +83,11 @@ function PartnersList() {
       queryParams.append('pageSize', pageSize);
 
       //reset page number to 0 if filter applied or page number is out of bounds
-      const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
+      const totalNumberOfPages = Math.ceil(totalRecords / pageSize); 
       const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
       queryParams.append('pageNo', effectivePageNo);      
       setResetPageNo(false);
-      
+
       if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
       if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
       if (filters.orgName) queryParams.append('orgName', filters.orgName);
