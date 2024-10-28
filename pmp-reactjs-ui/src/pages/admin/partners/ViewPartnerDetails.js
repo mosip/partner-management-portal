@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, downloadCertificate, formatDate, getPartnerManagerUrl, getStatusCode, getCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { downloadCertificate, formatDate, getPartnerManagerUrl, getCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
 
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
-import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import DownloadCertificateButton from '../../common/DownloadCertificateButton';
@@ -73,7 +72,7 @@ function ViewPartnerDetails() {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
-                setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
+                setSuccessMsg(t('viewPartnerDetails.originalCertificateSuccessMsg'));
                 downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
             }
         }

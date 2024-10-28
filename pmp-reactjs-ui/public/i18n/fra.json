@@ -577,7 +577,7 @@
         "selectStatus":"Sélectionnez le statut",
         "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
         "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
-        "applyFilter": "Appliquer le filtre",
+        "applyFilter": "Postulez maintenant",
         "searchPartnerId": "ID du partenaire de recherche",
         "searchOrganisation": "Rechercher une organisation",
         "searchEmailAddress": "Rechercher une adresse e-mail",
@@ -590,7 +590,8 @@
         "createdOn":"Créé le",
         "expiryDate": "Date et heure d'expiration",
         "emailId": "Identifiant de courrier électronique",
-        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur."
+        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
+        "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
      },
      "deactivatePartner": {
          "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",

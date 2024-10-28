@@ -573,7 +573,7 @@
         "selectStatus": "Select Status",
         "errorInPartnersList": "While fetching partners details, we have encountered with an error.",
         "selectCertUploadStatus": "Select Cert. Upload Status",
-        "applyFilter": "Apply Filter",
+        "applyFilter": "Apply Now",
         "searchPartnerId": "Search Partner ID",
         "searchOrganisation": "Search Organisation",
         "searchEmailAddress": "Search Email Address",
@@ -586,7 +586,8 @@
         "createdOn": "Created On",
         "expiryDate": "Expiry date & time",
         "emailId": "Email ID",
-        "errorInPartnerList": "While fetching Partner details, we have encountered with an error."
+        "errorInPartnerList": "While fetching Partner details, we have encountered with an error.",
+        "originalCertificateSuccessMsg": "Original Certificate downloaded successfully."
     },
     "deactivatePartner": {
         "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}",
