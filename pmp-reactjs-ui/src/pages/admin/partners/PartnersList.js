@@ -48,6 +48,7 @@ function PartnersList() {
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [isFilterApplied, setIsFilterApplied ] = useState(false);
+  const [resetPageNo, setResetPageNo] = useState(false);
   const [filters, setFilters] = useState({
     partnerId: null,
     partnerType: null,
@@ -83,9 +84,10 @@ function PartnersList() {
 
       //reset page number to 0 if filter applied or page number is out of bounds
       const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-      const effectivePageNo = pageNo > totalNumberOfPages || isFilterApplied ? 0 : pageNo;
+      const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
       queryParams.append('pageNo', effectivePageNo);      
-
+      setResetPageNo(false);
+      
       if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
       if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
       if (filters.orgName) queryParams.append('orgName', filters.orgName);
@@ -129,6 +131,7 @@ function PartnersList() {
   const onApplyFilter = (filters) => {
     console.log(filters)
     setIsFilterApplied(true);
+    setResetPageNo(true);
     setTriggerServerMethod(true);
     setFilters(filters);
   };
