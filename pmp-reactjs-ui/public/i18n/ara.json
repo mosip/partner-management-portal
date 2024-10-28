@@ -590,7 +590,8 @@
         "createdOn": "تم الإنشاء بتاريخ",
         "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
         "emailId": "معرف البريد الإلكتروني",
-        "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ"
+        "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ",
+        "originalCertificateSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح."
     },
     "deactivatePartner": {
         "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",

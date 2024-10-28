@@ -20,6 +20,8 @@ import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
 import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
+import viewIcon from "../../../svg/view_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -137,6 +139,13 @@ function PartnersList() {
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
+    if (selectedPartnerData.isActive === true) {
+      localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+      navigate('/partnermanagement/admin/viewPartnerDetails')
+    }
+  };
+
+  const ClickOnView = (selectedPartnerData) => {
     localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
     navigate('/partnermanagement/admin/viewPartnerDetails')
   };
@@ -237,7 +246,7 @@ function PartnersList() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
-              <Title title="partnerList.partnerTitle" subTitle2="partnerList.partnerTitle" backLink="/partnermanagement" styleSet={style} />
+              <Title title="partnerList.partnerTitle" backLink="/partnermanagement" styleSet={style} />
             </div>
             <div className="flex-col justify-center ml-3 h-full">
               {!isFilterApplied && partnersData.length === 0 ? (
@@ -334,17 +343,15 @@ function PartnersList() {
                                         </p>
                                         {viewPartnerId === index && (
                                           <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                            <p id="partner_details_view_btn" onClick={() => viewPartnerDetails(partner)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}
-                                              tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}
-                                            >
-                                              {t("partnerList.view")}
-                                            </p>
+                                            <div className="flex justify-between hover:bg-gray-100" onClick={() => ClickOnView(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => ClickOnView(partner))}>
+                                              <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                              <img src={viewIcon} alt="" className="pr-2"></img>
+                                            </div>
                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                            <p id="partner_deactive_btn" onClick={() => showDeactivatePartner(partner)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red hover:bg-gray-100 cursor-pointer" : "text-[#A5A5A5] cursor-default"}`}
-                                              tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}
-                                            >
-                                              {t("partnerList.deActivate")}
-                                            </p>
+                                            <div className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
+                                              <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                              <img src={deactivateIcon} alt="" className="pr-2"></img>
+                                            </div>
                                             {showDeactivatePopup && (
                                               < DeactivatePopup
                                                 closePopUp={closeDeactivatePopup}
