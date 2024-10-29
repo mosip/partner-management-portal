@@ -19,9 +19,11 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
 
     useEffect(() => {
-        //console.log(selectedPath);
+        // console.log(selectedPath);
         if (selectedPath.includes('dashboard')) {
             setActiveIcon("home");
+        } else if (selectedPath.includes('admin/policies')) {
+            setActiveIcon("admin_policies");
         } else if (selectedPath.includes('partnerCertificate')) {
             setActiveIcon("partnerCertificate");
         } else if (selectedPath.includes('partnerTypeRequest')) {
@@ -40,8 +42,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("rootOfTrustCertificate");
         } else if (selectedPath.includes('partnersList')) {
             setActiveIcon("partner");
-        }
-        else {
+        } else {
             setActiveIcon("home");
         }
     }, [selectedPath]);
@@ -97,7 +98,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/partnersList');
     };
     const showAdminPolicies = () => {
-        setActiveIcon("admin_policies");
+        navigate('/partnermanagement/admin/policies/policyGroupList');
     };
     const showPartnerPolicyMapping = () => {
         setActiveIcon("partnerPolicyMapping");

@@ -593,6 +593,32 @@
         "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}",
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
+    "policyGroupList": {
+        "policies": "Policies",
+        "policyGroup":"Policy Group",
+        "authPolicy": "Auth Policy",
+        "dataSharePolicy": "Data Share Policy",
+        "createPolicyGroup": "Create Policy Group",
+        "policyGroupId": "Policy Group ID",
+        "policyGroupName":"Policy Group Name",
+        "policyGroupDescription":"Policy Group Description",
+        "status":"Status",
+        "action":"Action"
+    },
+    "authPoliciesList": {
+        "createAuthPolicy": "Create Auth Policy",
+        "partnerId":"Partner ID",
+        "partnerType":"Partner Type",
+        "policyGroup":"Policy Group",
+        "policyName":"Policy Name",
+        "policyDescription": "Description",
+        "createdDate":"Created Date",
+        "status":"Status",
+        "action":"Action"
+    },
+    "dataSharePoliciesList": {
+        "createDataSharePolicy": "Create Data Share Policy"
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",

@@ -27,6 +27,9 @@ import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertif
 import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
+import PolicyGroupList from './pages/admin/policies/PolicyGroupList.js';
+import AuthPoliciesList from './pages/admin/policies/AuthPoliciesList.js';
+import DataSharePoliciesList from './pages/admin/policies/DataSharePoliciesList.js';
 
 
 function AppRoutes() {
@@ -143,6 +146,18 @@ function AppRoutes() {
         {
           path: 'admin/viewPartnerDetails',
           element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policies/policyGroupList',
+          element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policies/authPoliciesList',
+          element: <GuardedRoute><MainLayout><AuthPoliciesList/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policies/dataSharePoliciesList',
+          element: <GuardedRoute><MainLayout><DataSharePoliciesList/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
