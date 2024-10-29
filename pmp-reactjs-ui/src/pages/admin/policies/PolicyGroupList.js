@@ -23,6 +23,10 @@ function PolicyGroupList() {
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(false);
     const [policyGroupList, setPolicyGroupList] = useState([]);
 
+    const createPolicyGroup = () => {
+        navigate('/partnermanagement/admin/policyGroup/createPolicyGroup');
+    };
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -74,7 +78,7 @@ function PolicyGroupList() {
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activePolicyGroup &&
-                                            (<button id='create_policy_group_btn' type="button"
+                                            (<button id='create_policy_group_btn' type="button" onClick={createPolicyGroup}
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                 {t('policyGroupList.createPolicyGroup')}
                                             </button>)

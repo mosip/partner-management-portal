@@ -27,6 +27,7 @@ import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertif
 import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
+import CreatePolicyGroup from './pages/admin/policies/CreatePolicyGroup.js';
 import PolicyGroupList from './pages/admin/policies/PolicyGroupList.js';
 import AuthPoliciesList from './pages/admin/policies/AuthPoliciesList.js';
 import DataSharePoliciesList from './pages/admin/policies/DataSharePoliciesList.js';
@@ -146,6 +147,10 @@ function AppRoutes() {
         {
           path: 'admin/viewPartnerDetails',
           element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policyGroup/createPolicyGroup',
+          element: <GuardedRoute><MainLayout><CreatePolicyGroup /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policies/policyGroupList',
