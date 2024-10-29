@@ -32,7 +32,7 @@ function HeaderNav({ open, setOpen }) {
     };
 
     const moveToMyProfile = () => {
-        navigate('/partnermanagement/userProfile')
+        navigate('/partnermanagement/user-profile')
         setIsDropdownOpen(false)
     };
 

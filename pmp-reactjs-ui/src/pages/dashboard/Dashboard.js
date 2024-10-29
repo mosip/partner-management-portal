@@ -150,31 +150,31 @@ function Dashboard() {
   }, []);
 
   const partnerCertificatesList = () => {
-    navigate('/partnermanagement/certificates/partnerCertificate')
+    navigate('/partnermanagement/certificates/partner-certificate')
   };
 
   const policies = () => {
-    navigate('/partnermanagement/policies/policiesList')
+    navigate('/partnermanagement/policies/policies-list')
   };
 
   const deviceProviderServices = () => {
-    navigate('/partnermanagement/deviceProviderServices/sbiList')
+    navigate('/partnermanagement/device-provider-services/sbi-list')
   };
 
   const ftmChipProviderServices = () => {
-    navigate('/partnermanagement/ftmChipProviderServices/ftmList')
+    navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   };
 
   const rootTrustCertificateList = () => {
-    navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
+    navigate('/partnermanagement/admin/certificates/root-trust-certificate-list')
   }
 
   const partnersList = () => {
-    navigate('/partnermanagement/admin/partnersList')
+    navigate('/partnermanagement/admin/partners-list')
   }
 
   const policiesInAdmin = () => {
-    navigate('/partnermanagement/admin/policyManager/policyGroupList')
+    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
   }
 
   const cancelErrorMsg = () => {

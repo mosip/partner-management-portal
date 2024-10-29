@@ -84,12 +84,12 @@ function PoliciesList() {
   }, []);
 
   const showRequestPolicy = () => {
-    navigate('/partnermanagement/policies/requestPolicy')
+    navigate('/partnermanagement/policies/request-policy')
   }
 
   const showViewPolicyDetails = (selectedPolicyData) => {
     localStorage.setItem('selectedPolicyData', JSON.stringify(selectedPolicyData));
-    navigate('/partnermanagement/policies/viewPolicyDetails')
+    navigate('/partnermanagement/policies/view-policy-details')
   };
 
   const cancelErrorMsg = () => {

@@ -178,7 +178,7 @@ function RequestPolicy() {
                     const resData = responseData.response;
                     const requireDataData = {
                         title: "requestPolicy.requestPolicy",
-                        backUrl: "/partnermanagement/policies/policiesList",
+                        backUrl: "/partnermanagement/policies/policies-list",
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",
@@ -245,7 +245,7 @@ function RequestPolicy() {
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
                     <div className="flex-col mt-7">
-                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policiesList'></Title>
+                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list'></Title>
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">

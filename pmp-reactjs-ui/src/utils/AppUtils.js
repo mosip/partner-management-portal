@@ -160,19 +160,19 @@ export const moveToHome = (navigate) => {
 };
 
 export const moveToPolicies = (navigate) => {
-    navigate('/partnermanagement/policies/policiesList')
+    navigate('/partnermanagement/policies/policies-list')
 };
 
 export const moveToOidcClientsList = (navigate) => {
-    navigate('/partnermanagement/authenticationServices/oidcClientsList')
+    navigate('/partnermanagement/authentication-services/oidc-clients-list')
 };
 
 export const moveToApiKeysList = (navigate) => {
-    navigate('/partnermanagement/authenticationServices/apiKeysList')
+    navigate('/partnermanagement/authentication-services/api-keys-list')
 };
 
 export const moveToSbisList = (navigate) => {
-    navigate('/partnermanagement/deviceProviderServices/sbiList');
+    navigate('/partnermanagement/device-provider-services/sbi-list');
 };
 
 export const logout = async () => {

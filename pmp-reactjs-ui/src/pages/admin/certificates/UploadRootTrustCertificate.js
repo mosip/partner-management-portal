@@ -68,7 +68,7 @@ function UploadRootTrustCertificate() {
                     const resData = responseData.response;
                     const successMessage = t('uploadRootofTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/certificates/rootTrustCertificateList",
+                        backUrl: "/partnermanagement/admin/certificates/root-trust-certificate-list",
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
@@ -138,7 +138,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/rootTrustCertificateList" />
+                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/root-trust-certificate-list" />
                         </div>
                         <div className="flex-col justify-center mt-3 h-full">
                             {!uploadSuccess ?

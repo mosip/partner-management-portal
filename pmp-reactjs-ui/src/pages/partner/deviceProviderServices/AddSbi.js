@@ -162,7 +162,7 @@ function AddSbi() {
                 const responseData = response.data;
                 console.log(responseData);
                 if (responseData && responseData.response) {
-                    navigate('/partnermanagement/deviceProviderServices/sbiList')
+                    navigate('/partnermanagement/device-provider-services/sbi-list')
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -211,7 +211,7 @@ function AddSbi() {
                     )}
                     <div className="flex-col mt-7 font-inter">
                         <div className="flex justify-between">
-                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/deviceProviderServices/sbiList' />
+                            <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/device-provider-services/sbi-list' />
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">

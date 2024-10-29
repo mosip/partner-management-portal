@@ -63,7 +63,7 @@ function ViewPartnerDetails() {
     }, []);
 
     const moveToPartnersList = () => {
-        navigate('/partnermanagement/admin/partnersList');
+        navigate('/partnermanagement/admin/partners-list');
     };
 
     const getOriginalCertificate = async (partner) => {
@@ -136,7 +136,7 @@ function ViewPartnerDetails() {
                     )}
                     <div className={`flex-col bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partnersList' />
+                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
 
                         {unexpectedError && (

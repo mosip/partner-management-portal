@@ -78,7 +78,7 @@ function RootTrustCertificateList() {
   }, []);
 
   const showUploadCertificate = () => {
-    navigate('/partnermanagement/admin/certificates/uploadRootTrustCertificate')
+    navigate('/partnermanagement/admin/certificates/upload-root-trust-certificate')
   };
 
   const showCertificateDetails = (selectedCertificateData) => {

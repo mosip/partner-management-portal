@@ -22,25 +22,25 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         // console.log(selectedPath);
         if (selectedPath.includes('dashboard')) {
             setActiveIcon("home");
-        } else if (selectedPath.includes('admin/policyManager')) {
+        } else if (selectedPath.includes('policy-manager')) {
             setActiveIcon("admin_policies");
-        } else if (selectedPath.includes('partnerCertificate')) {
+        } else if (selectedPath.includes('partner-certificate')) {
             setActiveIcon("partnerCertificate");
-        } else if (selectedPath.includes('partnerTypeRequest')) {
+        } else if (selectedPath.includes('partner-type-request')) {
             setActiveIcon("partnerTypeRequest");
-        } else if (selectedPath.includes('organisationUsers')) {
+        } else if (selectedPath.includes('organisation-users')) {
             setActiveIcon("organisationUsers");
         } else if (selectedPath.includes('policies')) {
             setActiveIcon("policies");
-        } else if (selectedPath.includes('authenticationServices')) {
+        } else if (selectedPath.includes('authentication-services')) {
             setActiveIcon("authenticationServices");
-        } else if (selectedPath.includes('deviceProviderServices')) {
+        } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
-        } else if (selectedPath.includes('ftmChipProviderServices')) {
+        } else if (selectedPath.includes('ftm-chip-provider-services')) {
             setActiveIcon('ftmChipProviderServices');
-        } else if (selectedPath.includes('rootTrustCertificateList')) {
+        } else if (selectedPath.includes('admin/certificates')) {
             setActiveIcon("rootOfTrustCertificate");
-        } else if (selectedPath.includes('partnersList')) {
+        } else if (selectedPath.includes('partners-list')) {
             setActiveIcon("partner");
         } else {
             setActiveIcon("home");
@@ -71,34 +71,34 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("home");
     };
     const showPartnerCertificatesList = () => {
-        navigate('/partnermanagement/certificates/partnerCertificate');
+        navigate('/partnermanagement/certificates/partner-certificate');
         setActiveIcon("partnerCertificate");
     };
     const showPolicies = () => {
-        navigate('/partnermanagement/policies/policiesList');
+        navigate('/partnermanagement/policies/policies-list');
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
-        navigate('/partnermanagement/authenticationServices/oidcClientsList');
+        navigate('/partnermanagement/authentication-services/oidc-clients-list');
         setActiveIcon("authenticationServices");
     };
     const showDeviceProviderServices = () => {
-        navigate('/partnermanagement/deviceProviderServices/sbiList');
+        navigate('/partnermanagement/device-provider-services/sbi-list');
     };
     const showFtmServices = () => {
-        navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+        navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     };
     const showPendingRequests = () => {
         setActiveIcon("pendingRequests");
     };
     const showRootOfTrustCertificate = () => {
-        navigate('/partnermanagement/admin/certificates/rootTrustCertificateList');
+        navigate('/partnermanagement/admin/certificates/root-trust-certificate-list');
     };
     const showPartner = () => {
-        navigate('/partnermanagement/admin/partnersList');
+        navigate('/partnermanagement/admin/partners-list');
     };
     const showAdminPolicies = () => {
-        navigate('/partnermanagement/admin/policyManager/policyGroupList');
+        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
     };
     const showPartnerPolicyMapping = () => {
         setActiveIcon("partnerPolicyMapping");
