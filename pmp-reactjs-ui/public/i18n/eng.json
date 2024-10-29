@@ -599,7 +599,8 @@
         "policyGroupName": "Policy Group Name",
         "enterNameforPolicyGroup": "Enter name for Policy Group",
         "policyGroupDescription":"Policy Group Description",
-        "enterPolicyGroupDescription": "Enter description about Policy Group here"
+        "enterPolicyGroupDescription": "Enter description about Policy Group here",
+        "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error."
     },
     "policyGroupList": {
         "policies": "Policies",

@@ -27,10 +27,10 @@ import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertif
 import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
-import CreatePolicyGroup from './pages/admin/policies/CreatePolicyGroup.js';
-import PolicyGroupList from './pages/admin/policies/PolicyGroupList.js';
-import AuthPoliciesList from './pages/admin/policies/AuthPoliciesList.js';
-import DataSharePoliciesList from './pages/admin/policies/DataSharePoliciesList.js';
+import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
+import PolicyGroupList from './pages/admin/policyManager/policyGroupList.js';
+import AuthPoliciesList from './pages/admin/policyManager/AuthPoliciesList.js';
+import DataSharePoliciesList from './pages/admin/policyManager/DataSharePoliciesList.js';
 
 
 function AppRoutes() {
@@ -149,19 +149,19 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policyGroup/createPolicyGroup',
+          path: 'admin/policyManager/createPolicyGroup',
           element: <GuardedRoute><MainLayout><CreatePolicyGroup /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policies/policyGroupList',
-          element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+          path: 'admin/policyManager/policyGroupList',
+          element: <GuardedRoute><MainLayout><PolicyGroupList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policies/authPoliciesList',
+          path: 'admin/policyManager/authPoliciesList',
           element: <GuardedRoute><MainLayout><AuthPoliciesList/></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policies/dataSharePoliciesList',
+          path: 'admin/policyManager/dataSharePoliciesList',
           element: <GuardedRoute><MainLayout><DataSharePoliciesList/></MainLayout></GuardedRoute>
         },
         {

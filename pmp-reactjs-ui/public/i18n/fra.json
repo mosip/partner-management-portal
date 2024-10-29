@@ -603,7 +603,8 @@
         "policyGroupName": "Nom du groupe de stratégies",
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
         "policyGroupDescription":"Description du groupe de stratégies",
-        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici"
+        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
+        "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur"
     },
     "policyGroupList": {
         "policies": "Politiques",
