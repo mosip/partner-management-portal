@@ -604,7 +604,10 @@
         "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
         "policyGroupDescription":"وصف مجموعة السياسات",
         "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
-        "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ"
+        "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
+        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        
     },
     "policyGroupList": {
         "policies": "السياسات",
