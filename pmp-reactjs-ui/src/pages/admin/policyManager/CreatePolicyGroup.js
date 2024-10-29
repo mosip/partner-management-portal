@@ -8,6 +8,7 @@ import Title from '../../common/Title';
 import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
+import Confirmation from '../../common/Confirmation';
 
 function CreatePolicyGroup() {
 
@@ -22,6 +23,8 @@ function CreatePolicyGroup() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [validationError, setValidationError] = useState("");
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
+    const [confirmationData, setConfirmationData] = useState({});
+
     let isCancelledClicked = false;
 
     const blocker = useBlocker(
@@ -83,33 +86,39 @@ function CreatePolicyGroup() {
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
-        // let request = createRequest({
-        //     name: trimAndReplace(policyGroupName),
-        //     desc: trimAndReplace(policyGroupDesc)
-        // });
-        // try {
-        //     const response = await HttpService.post(getPolicyManagerUrl(`/policies/group/new`, process.env.NODE_ENV), request, {
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     });
-        //     if (response) {
-        //         const responseData = response.data;
-        //         if (responseData && responseData.response) {
-        //             const resData = responseData.response;
-        //             console.log(`Response data: ${resData}`);
-
-        //         } else {
-        //             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-        //         }
-        //     } else {
-        //         setErrorMsg(t('createPolicyGroup.errorInCreatePolicyGroup'));
-        //     }
-        //     setDataLoaded(false);
-        // } catch (err) {
-        //     setErrorMsg(err);
-        //     console.log("Error fetching data: ", err);
-        // }
+        let request = createRequest({
+            name: trimAndReplace(policyGroupName),
+            desc: trimAndReplace(policyGroupDesc)
+        });
+        try {
+            const response = await HttpService.post(getPolicyManagerUrl(`/policies/group/new`, process.env.NODE_ENV), request, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    console.log(resData);
+                    const requireData = {
+                        backUrl: "/partnermanagement/admin/policy-manager/policy-group-list",
+                        header: "createPolicyGroup.creatPolicyGroupSuccessHeader",
+                        description: "createPolicyGroup.creatPolicyGroupSuccessDescription"
+                    }
+                    setConfirmationData(requireData);
+                    setCreatePolicySuccess(true);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('createPolicyGroup.errorInCreatePolicyGroup'));
+            }
+            setDataLoaded(false);
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
         setIsSubmitClicked(false);
     }
 
@@ -140,49 +149,52 @@ function CreatePolicyGroup() {
                         <div className="flex justify-between">
                             <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.policies' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
                         </div>
-                        <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-                            <div className="px-[2.5%] py-[2%]">
-                                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                <form onSubmit={handleFormSubmit}>
-                                    <div className="flex flex-col">
-                                        <div className="space-y-6">
-                                            <div className="my-4">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
-                                                        className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                        placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
-                                                    />
+                        {!createPolicySuccess ?
+                            <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
+                                <div className="px-[2.5%] py-[2%]">
+                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <form onSubmit={handleFormSubmit}>
+                                        <div className="flex flex-col">
+                                            <div className="space-y-6">
+                                                <div className="my-4">
+                                                    <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
+                                                            className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                            placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-6">
+                                                <div className="my-4">
+                                                    <div className="flex flex-col w-full max-[450px]:w-full">
+                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
+                                                            className="h-14 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                            placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="space-y-6">
-                                            <div className="my-4">
-                                                <div className="flex flex-col w-full max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
-                                                        className="h-14 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                        placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="border bg-medium-gray" />
-                            <div className="flex flex-row max-[450px]:flex-col px-[3%] py-9 justify-between max-[450px]:space-y-2">
-                                <button id="createPolicy_clear_form" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, clearForm())}>
-                                    {t('requestPolicy.clearForm')}
-                                </button>
-                                <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
-                                    <button id="createPolicy_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                    <button id="createPolicy_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, clearForm())}>
-                                        {t('requestPolicy.submit')}
+                                    </form>
+                                </div>
+                                <div className="border bg-medium-gray" />
+                                <div className="flex flex-row max-[450px]:flex-col px-[3%] py-9 justify-between max-[450px]:space-y-2">
+                                    <button id="createPolicy_clear_form" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, clearForm())}>
+                                        {t('requestPolicy.clearForm')}
                                     </button>
+                                    <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
+                                        <button id="createPolicy_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="createPolicy_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, clearForm())}>
+                                            {t('requestPolicy.submit')}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            : <Confirmation confirmationData={confirmationData} /> 
+                        }
                     </div>
                 </>
             )}

@@ -604,7 +604,9 @@
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
         "policyGroupDescription":"Description du groupe de stratégies",
         "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
-        "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur"
+        "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
+        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès !",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
     },
     "policyGroupList": {
         "policies": "Politiques",

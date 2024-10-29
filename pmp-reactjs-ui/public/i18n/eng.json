@@ -600,7 +600,10 @@
         "enterNameforPolicyGroup": "Enter name for Policy Group",
         "policyGroupDescription":"Policy Group Description",
         "enterPolicyGroupDescription": "Enter description about Policy Group here",
-        "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error."
+        "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error.",
+        "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+
     },
     "policyGroupList": {
         "policies": "Policies",
