@@ -617,8 +617,11 @@
         "policyGroupId": "ID du groupe de politiques",
         "policyGroupName":"Nom du groupe de politiques",
         "policyGroupDescription":"Description du groupe de politiques",
+        "createdDate":"Date de création",
         "status":"Statut",
-        "action":"Action"
+        "action":"Action",
+        "listOfPolicyGroups": "Liste des groupes de politiques",
+        "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur."
     },
     "authPoliciesList": {
         "createAuthPolicy": "Créer une politique d'authentification",
