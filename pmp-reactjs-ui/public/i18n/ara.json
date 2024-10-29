@@ -597,6 +597,15 @@
         "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",
         "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
+    "createPolicyGroup": {
+        "policies":"السياسات",
+        "createPolicyGroup": "إنشاء مجموعة السياسات",
+        "policyGroupName": "اسم مجموعة السياسات",
+        "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
+        "policyGroupDescription":"وصف مجموعة السياسات",
+        "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
+        "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ"
+    },
     "policyGroupList": {
         "policies": "السياسات",
         "policyGroup":"مجموعة السياسات",

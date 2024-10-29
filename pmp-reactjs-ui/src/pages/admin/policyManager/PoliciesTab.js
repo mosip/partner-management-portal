@@ -10,21 +10,21 @@ function PoliciesTab ({activePolicyGroup, setActivePolicyGroup, activeAuthPolicy
     const navigate = useNavigate();
 
     const changeToPolicyGroup = () => {
-        navigate('/partnermanagement/admin/policies/policyGroupList')
+        navigate('/partnermanagement/admin/policyManager/policyGroupList')
         setActivePolicyGroup(true); 
         setActiveAuthPolicy(false);
         setActiveDataSharePolicy(false);
     };
 
     const changeToAuthPolicy = () => {
-        navigate('/partnermanagement/admin/policies/authPoliciesList')
+        navigate('/partnermanagement/admin/policyManager/authPoliciesList')
         setActivePolicyGroup(false); 
         setActiveAuthPolicy(true);
         setActiveDataSharePolicy(false);
     };
 
     const changeToDataSharePolicy = () => {
-        navigate('/partnermanagement/admin/policies/dataSharePoliciesList')
+        navigate('/partnermanagement/admin/policyManager/dataSharePoliciesList')
         setActivePolicyGroup(false); 
         setActiveAuthPolicy(false);
         setActiveDataSharePolicy(true);

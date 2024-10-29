@@ -174,7 +174,7 @@ function Dashboard() {
   }
 
   const policiesInAdmin = () => {
-    navigate('/partnermanagement/admin/policies/policyGroupList')
+    navigate('/partnermanagement/admin/policyManager/policyGroupList')
   }
 
   const cancelErrorMsg = () => {
