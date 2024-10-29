@@ -98,25 +98,25 @@ function OidcClientsList() {
     };
 
     const createOidcClient = () => {
-        navigate('/partnermanagement/authenticationServices/createOidcClient')
+        navigate('/partnermanagement/authentication-services/create-oidc-client')
     }
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
+            navigate('/partnermanagement/authentication-services/view-oidc-client-details')
         }
     };
 
     const onClickView = (selectedClientdata) => {
         localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
+        navigate('/partnermanagement/authentication-services/view-oidc-client-details')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/editOidcClient')
+            navigate('/partnermanagement/authentication-services/edit-oidc-client')
         }
     };
 

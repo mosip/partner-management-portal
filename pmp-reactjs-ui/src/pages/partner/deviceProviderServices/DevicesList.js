@@ -119,11 +119,11 @@ function DevicesList() {
     const addDevices = () => {
         const previousPath = {
             name: 'devicesList.listOfDevices',
-            path: '/partnermanagement/deviceProviderServices/devicesList',
+            path: '/partnermanagement/device-provider-services/devices-list',
             backToSbiList: false
         };
         localStorage.setItem('previousPath', JSON.stringify(previousPath));
-        navigate('/partnermanagement/deviceProviderServices/addDevices');
+        navigate('/partnermanagement/device-provider-services/add-devices');
     }
 
     //This part is related to Filter
@@ -161,13 +161,13 @@ function DevicesList() {
     const showDeviceDetails = (selectedDeviceData) => {
         if (selectedDeviceData.status !== "deactivated") {
             localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
-            navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
+            navigate('/partnermanagement/device-provider-services/view-device-details')
         }
     }
 
     const viewDeviceDetails = (selectedDeviceData) => {
         localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
-        navigate('/partnermanagement/deviceProviderServices/viewDeviceDetails')
+        navigate('/partnermanagement/device-provider-services/view-device-details')
     }
 
     //This part related to Pagination Logic
@@ -204,7 +204,7 @@ function DevicesList() {
                             <Title
                                 title='devicesList.listOfDevices'
                                 subTitle='sbiList.listOfSbi'
-                                backLink='/partnermanagement/deviceProviderServices/sbiList'
+                                backLink='/partnermanagement/device-provider-services/sbi-list'
                                 status={!unexpectedError ? selectedSbidata.status : ''}
                                 version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
                             />

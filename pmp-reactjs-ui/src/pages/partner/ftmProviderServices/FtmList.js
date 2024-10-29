@@ -106,7 +106,7 @@ function FtmList() {
   };
 
   const addFtm = () => {
-    navigate('/partnermanagement/ftmChipProviderServices/addFtm');
+    navigate('/partnermanagement/ftm-chip-provider-services/add-ftm');
   };
 
   //This part is related to Filter
@@ -152,7 +152,7 @@ function FtmList() {
         isViewFtmChipDetails: true
       }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-      navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
+      navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
     }
   }
 
@@ -163,7 +163,7 @@ function FtmList() {
       isViewFtmChipDetails: true
     }
     localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-    navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
+    navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
 
   const showDeactivateFtm = (selectedFtmData) => {
@@ -185,7 +185,7 @@ function FtmList() {
         isManageFtmCertificate: true
       }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-      navigate('/partnermanagement/ftmChipProviderServices/manageFtmChipCertificate');
+      navigate('/partnermanagement/ftm-chip-provider-services/manage-ftm-chip-certificate');
     }
   };
 

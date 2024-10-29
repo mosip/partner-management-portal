@@ -76,7 +76,7 @@ function CreatePolicyGroup() {
     };
 
     const clickOnCancel = () => {
-        navigate('/partnermanagement/admin/policyManager/policyGroupList');
+        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
     };
 
     const clickOnSubmit = async () => {
@@ -138,7 +138,7 @@ function CreatePolicyGroup() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.policies' backLink={'/partnermanagement/admin/policyManager/policyGroupList'} style={style} />
+                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.policies' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">

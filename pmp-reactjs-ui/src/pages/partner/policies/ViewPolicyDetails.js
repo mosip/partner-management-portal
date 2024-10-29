@@ -22,11 +22,11 @@ function ViewPolicyDetails() {
                 const selectedPartner = JSON.parse(partnerData);
                 setPolicyDetails(selectedPartner);
             } catch (error) {
-                navigate('/partnermanagement/policies/policiesList');
+                navigate('/partnermanagement/policies/policies-list');
                 console.error('Error in viewPolicyDetails page :', error);
             }
         } else {
-            navigate('/partnermanagement/policies/policiesList');
+            navigate('/partnermanagement/policies/policies-list');
         }
     }, [navigate]);
 
@@ -38,7 +38,7 @@ function ViewPolicyDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all break-normal font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
-                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policiesList' styleSet={style}></Title>
+                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style}></Title>
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>

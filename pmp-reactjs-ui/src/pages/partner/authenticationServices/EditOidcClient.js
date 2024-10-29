@@ -80,11 +80,11 @@ function EditOidcClient() {
                 setOidcClientDetails(selectedClient);
                 setSelectedClientDetails(selectedClient);
             } catch (error) {
-                navigate('/partnermanagement/authenticationServices/oidcClientsList');
+                navigate('/partnermanagement/authentication-services/oidc-clients-list');
                 console.error('Error in viewOidcClientDetails page :', error);
             }
         } else {
-            navigate('/partnermanagement/authenticationServices/oidcClientsList');
+            navigate('/partnermanagement/authentication-services/oidc-clients-list');
         }
     }, [navigate, createGrantTypesDropdownData]);
 
@@ -228,7 +228,7 @@ function EditOidcClient() {
                 setDataLoaded(true);
                 const requireData = {
                     title: "editOidcClient.editOidcClient",
-                    backUrl: "/partnermanagement/authenticationServices/oidcClientsList",
+                    backUrl: "/partnermanagement/authentication-services/oidc-clients-list",
                     header: "editOidcClient.editSuccessHeader",
                     description: "editOidcClient.editSuccessMsg",
                     subNavigation: "authenticationServices.authenticationServices",
@@ -265,7 +265,7 @@ function EditOidcClient() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
+                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
                         </div>
                         {!editOidcClientSuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

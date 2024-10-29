@@ -147,7 +147,7 @@ function PartnersList() {
 
   const viewPartnerDetails = (selectedPartnerData) => {
     localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
-    navigate('/partnermanagement/admin/viewPartnerDetails')
+    navigate('/partnermanagement/admin/view-partner-details')
   };
 
   const cancelErrorMsg = () => {

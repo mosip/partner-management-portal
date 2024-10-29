@@ -93,19 +93,19 @@ function ApiKeysList() {
     };
 
     const generateApiKey = () => {
-        navigate('/partnermanagement/authenticationServices/generateApiKey')
+        navigate('/partnermanagement/authentication-services/generate-api-key')
     };
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "ACTIVE") {
             localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
-            navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+            navigate('/partnermanagement/authentication-services/view-api-key-details')
         }
     };
 
     const onClickView = (selectedApiKeyData) => {
         localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
-        navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+        navigate('/partnermanagement/authentication-services/view-api-key-details')
     };
 
     const onClickDeactivate = (selectedApiKeyData) => {

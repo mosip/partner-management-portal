@@ -65,7 +65,7 @@ function ViewFtmChipDetails() {
         if (state && btnName === 'cancel') {
             setShowPopup(false);
         } else if (state && btnName === 'close') {
-            navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+            navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
         }
     };
 
@@ -110,7 +110,7 @@ function ViewFtmChipDetails() {
     }
 
     const moveToFtmList = () => {
-        navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+        navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     };
 
     const cancelErrorMsg = () => {
@@ -131,7 +131,7 @@ function ViewFtmChipDetails() {
             )}
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftm-chip-provider-services/ftm-list' />
                 </div>
 
                 {unexpectedError && (

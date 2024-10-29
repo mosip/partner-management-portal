@@ -174,7 +174,7 @@ function GenerateApiKey() {
                     console.log(`Response data: ${resData.length}`);
                     const requireData = {
                         title: "generateApiKey.generateApiKey",
-                        backUrl: "/partnermanagement/authenticationServices/apiKeysList",
+                        backUrl: "/partnermanagement/authentication-services/api-keys-list",
                         header: "generateApiKey.generateApiKeySuccessHeader",
                         description: "generateApiKey.apiKeySuccessMsg",
                         subNavigation: "authenticationServices.authenticationServices",
@@ -221,7 +221,7 @@ function GenerateApiKey() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/apiKeysList' ></Title>
+                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list' ></Title>
                         </div>
                         {!generateApiKeySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

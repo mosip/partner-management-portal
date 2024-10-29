@@ -24,7 +24,7 @@ function PolicyGroupList() {
     const [policyGroupList, setPolicyGroupList] = useState([]);
 
     const createPolicyGroup = () => {
-        navigate('/partnermanagement/admin/policyManager/createPolicyGroup');
+        navigate('/partnermanagement/admin/policy-manager/create-policy-group');
     };
 
     const cancelErrorMsg = () => {
