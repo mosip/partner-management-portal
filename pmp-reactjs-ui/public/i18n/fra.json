@@ -582,21 +582,47 @@
         "searchOrganisation": "Rechercher une organisation",
         "searchEmailAddress": "Rechercher une adresse e-mail",
         "searchPolicyGroup": "Groupe de stratégies de recherche"
-     },
-     "viewPartnerDetails": {
-        "viewPartnerDetails": "Afficher les détails du partenaire",
-        "listOfPartners": "Liste des partenaires",
-        "organizationName": "Nom de l'Organisation",
-        "createdOn":"Créé le",
-        "expiryDate": "Date et heure d'expiration",
-        "emailId": "Identifiant de courrier électronique",
-        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
-        "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
-     },
-     "deactivatePartner": {
-         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
-         "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
-     },
+    },
+    "viewPartnerDetails": {
+    "viewPartnerDetails": "Afficher les détails du partenaire",
+    "listOfPartners": "Liste des partenaires",
+    "organizationName": "Nom de l'Organisation",
+    "createdOn":"Créé le",
+    "expiryDate": "Date et heure d'expiration",
+    "emailId": "Identifiant de courrier électronique",
+    "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
+    "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
+    },
+    "deactivatePartner": {
+        "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
+        "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+    },
+    "policyGroupList": {
+        "policies": "Politiques",
+        "policyGroup":"Groupe de politiques",
+        "authPolicy": "Politique d'authentification",
+        "dataSharePolicy": "Politique de partage des données",
+        "createPolicyGroup": "Créer un groupe de politiques",
+        "policyGroupId": "ID du groupe de politiques",
+        "policyGroupName":"Nom du groupe de politiques",
+        "policyGroupDescription":"Description du groupe de politiques",
+        "status":"Statut",
+        "action":"Action"
+    },
+    "authPoliciesList": {
+        "createAuthPolicy": "Créer une politique d'authentification",
+        "partnerId":"ID partenaire",
+        "partnerType":"Type de partenaire",
+        "policyGroup":"Groupe de politiques",
+        "policyName":"Nom de la politique",
+        "policyDescription": "Description",
+        "createdDate":"Date de création",
+        "status":"Statut",
+        "action":"Action"
+    },
+    "dataSharePoliciesList": {
+        "createDataSharePolicy": "Créer une politique de partage de données"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
