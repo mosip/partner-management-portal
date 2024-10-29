@@ -41,7 +41,7 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/v3/' + selectedPartnerId, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/partners/${selectedPartnerId}/v2`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
