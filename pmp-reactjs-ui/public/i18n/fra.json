@@ -650,7 +650,10 @@
         "policyData": "Données de politique (uniquement json)",
         "policyDataDesc": "Collez le code ou téléchargez un fichier",
         "upload": "Télécharger",
-        "remove": "Retirer"
+        "remove": "Retirer",
+        "CreatePolicySuccessHeader":"Politique créée avec succès !",
+        "uploadFileError": "Une erreur inattendue s'est produite lors du téléchargement du fichier. Veuillez réessayer.",
+        "jsonParseError": "Veuillez fournir des données JSON valides"
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -779,7 +782,7 @@
         "PMS_POL_006": "Type d'authentification non pris en charge dans le fichier de stratégie",
         "PMS_POL_007": "Attribut eKYC manquant dans le fichier de stratégie",
         "PMS_POL_008": "L'ID de stratégie n'existe pas",
-        "PMS_POL_009": "La politique d'authentification existe avec le nom :",
+        "PMS_POL_009": "Une stratégie portant ce nom existe déjà",
         "PMS_COR_002": "Paramètre d'entrée non valide -",
         "PMS_COR_003": "Impossible de traiter la demande",
         "PMS_POL_010": " Les politiques d'authentification ne sont pas définies par rapport à la politique",

@@ -176,14 +176,14 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    const requireDataData = {
+                    const requiredData = {
                         title: "requestPolicy.requestPolicy",
                         backUrl: "/partnermanagement/policies/policies-list",
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",
                     }
-                    setConfirmationData(requireDataData);
+                    setConfirmationData(requiredData);
                     setRequestPolicySuccess(true);
                     console.log(`Response data: ${resData.length}`);
                 } else {

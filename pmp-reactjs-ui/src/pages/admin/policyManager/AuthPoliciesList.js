@@ -28,6 +28,7 @@ function AuthPoliciesList() {
     };
 
     const createAuthPolicy = () => {
+        localStorage.setItem('policyType', 'Auth');
         navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
     };
 

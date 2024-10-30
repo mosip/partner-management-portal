@@ -104,7 +104,8 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
   const styleSet = {
     inputField: "min-w-64 h-9",
-    inputLabel: "mb-2"
+    inputLabel: "mb-2",
+    outerDiv: "ml-4"
   };
 
   return (

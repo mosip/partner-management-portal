@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, version } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -7,7 +7,6 @@ import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToP
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
-import DropdownComponent from "../../common/fields/DropdownComponent";
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
@@ -30,11 +29,43 @@ function CreatePolicy() {
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [policyType, setPolicyType] = useState(null);
     let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+        if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
+            setIsSubmitClicked(false);
+            isCancelledClicked = false;
+            return false;
+        }
+
+        return (
+            (policyGroup || policyName || policyDescription || policyData) &&
+            currentLocation.pathname !== nextLocation.pathname
+        );
+    });
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () =>
+            policyGroup || policyName || policyDescription || policyData;
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [policyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
 
 
     const onChangePolicyGroup = async (fieldName, selectedValue) => {
@@ -53,11 +84,88 @@ function CreatePolicy() {
         navigate('/partnermanagement/admin/policy-manager/auth-policies-list')
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setDataLoaded(false);
+                const storedPolicyType = localStorage.getItem('policyType');
+                if (!storedPolicyType) {
+                    console.err('policy Type not found');
+                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+                }
+                setPolicyType(storedPolicyType);
+                const response = await HttpService.get(getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setPolicyGroupDropdownData(createDropdownData('name', '', false, resData, t));
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('commons.errorInResponse'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+        };
+        fetchData();
+    }, []);
+
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
+        setErrorCode("");
+        setErrorMsg("");
+        setDataLoaded(false);
+
+        // Convert policyData from string to JSON
+        let parsedPolicyData;
+        try {
+            parsedPolicyData = JSON.parse(policyData);
+        } catch (error) {
+            setErrorMsg(t('createPolicy.jsonParseError'));
+            setIsSubmitClicked(false);
+            setDataLoaded(true);
+            return;
+        }
+        let request = createRequest({
+            name: policyName,
+            policyGroupName: policyGroup,
+            policyType: policyType,
+            desc: policyDescription,
+            policies: parsedPolicyData,
+            version: "1.1"
+        });
+        try {
+            const response = await HttpService.post(getPolicyManagerUrl(`/policies`, process.env.NODE_ENV), request);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const requiredData = {
+                        backUrl: "/partnermanagement/admin/policy-manager/auth-policies-list",
+                        header: "createPolicy.CreatePolicySuccessHeader",
+                    }
+                    setConfirmationData(requiredData);
+                    setCreatePolicySuccess(true);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('requestPolicy.errorInMapPolicy'));
+            }
+        } catch (err) {
+            setErrorMsg(err);
+            console.log("Error fetching data: ", err);
+        }
+        setDataLoaded(true);
+        setIsSubmitClicked(false);
     }
 
     const isFormValid = () => {
-        return policyGroup && policyName && policyDescription.trim();
+        return policyGroup && policyName && policyDescription.trim() && policyData.trim();
     };
 
     const handlePolicyDescriptionChange = (e) => {
@@ -94,7 +202,6 @@ function CreatePolicy() {
 
     const styleSet = {
         inputField: "min-w-64 w-full min-h-10",
-        outerDiv: "mx-4"
     };
 
     const handleFileChange = (event) => {
@@ -127,7 +234,7 @@ function CreatePolicy() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
+        <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -136,28 +243,31 @@ function CreatePolicy() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
-                    <div className="flex-col mt-7">
-                        <Title title='policyGroupList.policies' subTitle='policyGroupList.policies' backLink='/partnermanagement/admin/policy-manager/auth-policies-list'></Title>
+                    <div className="flex-col mt-7 w-full">
+                        <div className="w-fit">
+                            <Title title='policyGroupList.policies' subTitle='policyGroupList.policies' backLink='/partnermanagement/admin/policy-manager/auth-policies-list'></Title>
+                        </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
                                     <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
-                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
+                                            <div className="flex flex-row justify-between my-[1%] max-[450px]:flex-col">
                                                 <div className="flex flex-col w-2/4">
-                                                    <DropdownComponent
+                                                    <DropdownWithSearchComponent
                                                         fieldName='policyGroup'
                                                         dropdownDataList={policyGroupDropdownData}
                                                         onDropDownChangeEvent={onChangePolicyGroup}
                                                         fieldNameKey='createPolicy.policyGroup*'
                                                         placeHolderKey='createPolicy.selectPolicyGroup'
+                                                        searchKey='commons.search'
                                                         selectedDropdownValue={policyGroup}
                                                         styleSet={styles}
                                                         id='policy_group_dropdown'>
-                                                    </DropdownComponent>
+                                                    </DropdownWithSearchComponent>
                                                 </div>
-                                                <div className="flex flex-col w-2/4">
+                                                <div className={`flex flex-col w-2/4 ${isLoginLanguageRTL ? "mr-4" : "ml-4"}`}>
                                                     <TextInputComponent
                                                         fieldName="policyName"
                                                         textBoxValue={policyName}
@@ -231,7 +341,7 @@ function CreatePolicy() {
                                                         >
                                                             <path
                                                                 d="M5.65391 34C4.64976 34 3.79193 33.6444 3.08043 32.9333C2.36926 32.2218 2.01368 31.3639 2.01368 30.3598V4.80162H0V1.7811H9.06156V0H21.1437V1.7811H30.2052V4.80162H28.1915V30.3598C28.1915 31.377 27.8391 32.238 27.1344 32.9428C26.4296 33.6476 25.5685 34 24.5513 34H5.65391ZM25.171 4.80162H5.0342V30.3598C5.0342 30.5407 5.09226 30.6892 5.20839 30.8053C5.32451 30.9214 5.47302 30.9795 5.65391 30.9795H24.5513C24.7064 30.9795 24.8483 30.9149 24.9772 30.7857C25.1064 30.6568 25.171 30.5148 25.171 30.3598V4.80162ZM9.87509 26.9521H12.8951V8.82899H9.87509V26.9521ZM17.3101 26.9521H20.3301V8.82899H17.3101V26.9521Z"
-                                                                
+
                                                             />
                                                         </svg>
                                                         <p className="pt-1">{t('createPolicy.remove')}</p>
@@ -255,6 +365,7 @@ function CreatePolicy() {
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div>
     )
 }

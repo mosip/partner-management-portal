@@ -647,7 +647,10 @@
         "policyData": "Policy Data(only json)",
         "policyDataDesc": "Paste code or upload a file",
         "upload": "Upload",
-        "remove": "Remove"
+        "remove": "Remove",
+        "CreatePolicySuccessHeader":"Policy Created Successfully!",
+        "uploadFileError": "There was an unexpected error during the file upload. Please try again.",
+        "jsonParseError": "Please provide valid JSON data"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -776,7 +779,7 @@
         "PMS_POL_006": "Unsupported Authentication Type in the Policy File",
         "PMS_POL_007": "eKYC attribute missing in the policy file",
         "PMS_POL_008": "Policy ID does not exist",
-        "PMS_POL_009": "Auth policy exists with name : ",
+        "PMS_POL_009": "A policy with this name already exists",
         "PMS_COR_002": "Invalid Input Parameter _ ",
         "PMS_COR_003": "Could not process the request",
         "PMS_POL_010": " Auth Policies are not defined against to policy",
