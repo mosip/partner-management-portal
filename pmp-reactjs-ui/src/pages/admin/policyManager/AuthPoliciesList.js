@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import {
-    isLangRTL
-} from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
 import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import Title from '../../common/Title.js';
 import PoliciesTab from './PoliciesTab.js';
+import ViewPolicy from './ViewPolicy.js';
+import { HttpService } from '../../../services/HttpService.js';
 
 function AuthPoliciesList() {
     const navigate = useNavigate('');
@@ -20,8 +20,36 @@ function AuthPoliciesList() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [activePolicyGroup, setActivePolicyGroup] = useState(false);
     const [activeAuthPolicy, setActiveAuthPolicy] = useState(true);
+    const [showAuthPolicyDetails, setShowAuthPolicyDetails] = useState(false);
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(false);
     const [authPoliciesList, setAuthPoliciesList] = useState([]);
+    const [authPolicyDetails, setAuthPolicyDetails] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setDataLoaded(false);
+            try {
+                const response = await HttpService.get(getPolicyManagerUrl(`/policies/35225`, process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setAuthPolicyDetails(resData);
+                    }
+                    else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('viewAuthPolicyDetails.errorInAuthPoliciesList'));
+                } 
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err)
+                setErrorMsg(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -31,15 +59,19 @@ function AuthPoliciesList() {
         navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
     };
 
+    const viewAuthPolicyDetails = () => {
+        setShowAuthPolicyDetails(true);
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
-            { !dataLoaded && (
+            {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
-            { dataLoaded && (
+            {dataLoaded && (
                 <>
-                    { errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+                    {errorMsg && (
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -59,10 +91,10 @@ function AuthPoliciesList() {
                             activeDataSharePolicy={activeDataSharePolicy}
                             setActiveDataSharePolicy={setActiveDataSharePolicy}>
                         </PoliciesTab>
-                        { authPoliciesList.length === 0 
+                        {authPoliciesList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                { activeAuthPolicy && (
+                                {activeAuthPolicy && (
                                     <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                                         <div className={`flex w-full justify-between`}>
                                             <h6 className="px-2 mx-2">{t('authPoliciesList.partnerId')}</h6>
@@ -95,6 +127,14 @@ function AuthPoliciesList() {
                 </>
             )}
         </div>
+        // { showAuthPolicyDetails && (
+        //     <ViewPolicy
+        //         header={'viewAuthPoliciesList.viewAuthPolicy'}
+        //         subTitle={'viewAuthPoliciesList.listOfAuthenticationPolicies'}
+        //         setShowAuthPolicyDetails = setShowAuthPolicyDetails()
+        //        viewData={authPolicyDetails}
+        //     />
+        // )}
     )
 }
 export default AuthPoliciesList;

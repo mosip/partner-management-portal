@@ -29,6 +29,7 @@ import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
 import PolicyGroupList from './pages/admin/policyManager/PolicyGroupList.js';
+import ViewPolicyGroupDetails from './pages/admin/policyManager/ViewPolicyGroupDetails.js';
 import AuthPoliciesList from './pages/admin/policyManager/AuthPoliciesList.js';
 import DataSharePoliciesList from './pages/admin/policyManager/DataSharePoliciesList.js';
 import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
@@ -155,6 +156,10 @@ function AppRoutes() {
         {
           path: 'admin/policy-manager/policy-group-list',
           element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-policy-group-details',
+          element: <GuardedRoute><MainLayout><ViewPolicyGroupDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/auth-policies-list',

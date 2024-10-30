@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import {
-    isLangRTL
-} from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
 import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import Title from '../../common/Title.js';
 import PoliciesTab from './PoliciesTab.js';
+import ViewPolicy from './ViewPolicy.js';
+import { HttpService } from '../../../services/HttpService.js';
 
 function DataSharePoliciesList() {
     const navigate = useNavigate('');
@@ -20,11 +20,46 @@ function DataSharePoliciesList() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [activePolicyGroup, setActivePolicyGroup] = useState(false);
     const [activeAuthPolicy, setActiveAuthPolicy] = useState(false);
+    const [showDataSharePolicyDetails, setShowDataSharePolicyDetails] = useState(false);
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(true);
+    const [dataShareDetails, setDataShareDetails] = useState(true);
     const [dataSharePoliciesList, setDataSharePoliciesList] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setDataLoaded(false);
+            try {
+                const response = await HttpService.get(getPolicyManagerUrl(`/policies/mpolicy-default-adjudication`, process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        console.log(resData);
+                        
+                        setDataShareDetails(resData);
+                    }
+                    else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('viewAuthPolicyDetails.errorInAuthPoliciesList'));
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err)
+                setErrorMsg(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
+    };
+
+    const viewDataSharePolicyDetails = () => {
+        setShowDataSharePolicyDetails(true);
     };
 
     return (
@@ -91,6 +126,14 @@ function DataSharePoliciesList() {
                 </>
             )}
         </div>
+        // { showDataSharePolicyDetails && (
+        //         <ViewPolicy
+        //             header={'viewDataSharePoliciesList.viewDataSharePolicy'}
+        //             subTitle={'viewDataSharePoliciesList.listOfDataSharePolicies' } 
+        //             setshowDataSharePolicyDetails = setshowDataSharePolicyDetails()
+        //             viewData={authPolicyDetails}
+        //         />
+        //     )}
     )
 }
 export default DataSharePoliciesList;

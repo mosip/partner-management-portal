@@ -603,7 +603,6 @@
         "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error.",
         "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
-
     },
     "policyGroupList": {
         "policies": "Policies",
@@ -633,6 +632,17 @@
         "createdDate":"Created Date",
         "status":"Status",
         "action":"Action"
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy":"View Authentication Policy",
+        "listOfAuthenticationPolicies": "List of Authentication Policies",
+        "policyId": "Policy ID",
+        "policyGroup":"Policy Group",
+        "policyNameDescription":"Policy Name Description",
+        "policyGroupDescription":"Policy Group Description",
+        "policyData": "Policy Data",
+        "jsonFilePlace": "JSON File Name Goes Here",
+        "preview": "Preview"
     },
     "dataSharePoliciesList": {
         "createDataSharePolicy": "Create Data Share Policy"

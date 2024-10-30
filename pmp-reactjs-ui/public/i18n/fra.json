@@ -633,9 +633,20 @@
         "policyGroup":"Groupe de politiques",
         "policyName":"Nom de la politique",
         "policyDescription": "Description",
-        "createdDate":"Date de création",
-        "status":"Statut",
-        "action":"Action"
+        "createdDate": "Date de création",
+        "status": "Statut",
+        "action": "Action"
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy": "Afficher la politique d'authentification",
+        "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
+        "policyId": "ID de stratégie",
+        "policyGroup": "Groupe de politiques",
+        "policyNameDescription": "Nom de la stratégie Description",
+        "policyGroupDescription": "Description du groupe de stratégies",
+        "jsonFilePlace": "Le nom du fichier JSON va ici",
+        "policyData": "Données de police",
+        "preview": "Aperçu"
     },
     "dataSharePoliciesList": {
         "createDataSharePolicy": "Créer une politique de partage de données"
