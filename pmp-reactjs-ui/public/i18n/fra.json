@@ -621,7 +621,10 @@
         "status":"Statut",
         "action":"Action",
         "listOfPolicyGroups": "Liste des groupes de politiques",
-        "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur."
+        "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur.",
+        "searchPolicyGroupId": "ID de groupe de politiques de recherche",
+        "searchPolicyGroupName": "Rechercher le nom du groupe de politiques",
+        "searchPolicyGroupDescription": "Description du groupe de politiques de recherche"
     },
     "authPoliciesList": {
         "createAuthPolicy": "Créer une politique d'authentification",

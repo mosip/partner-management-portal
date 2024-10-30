@@ -9,6 +9,7 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
+  resetPageNumber, applyFilter, setPageNumberAndPageSize, onResetFilter
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -83,8 +84,7 @@ function PartnersList() {
       queryParams.append('pageSize', pageSize);
 
       //reset page number to 0 if filter applied or page number is out of bounds
-      const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-      const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
+      const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo); 
       queryParams.append('pageNo', effectivePageNo);      
       setResetPageNo(false);
       
@@ -129,20 +129,11 @@ function PartnersList() {
   }, [sortFieldName, sortType, pageNo, pageSize, filters]);
 
   const onApplyFilter = (filters) => {
-    console.log(filters)
-    setIsFilterApplied(true);
-    setResetPageNo(true);
-    setTriggerServerMethod(true);
-    setFilters(filters);
+    applyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
-    // console.log(recordsPerPage, pageIndex);
-    if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
-      setPageNo(pageIndex);
-      setPageSize(recordsPerPage);
-      setTriggerServerMethod(true);
-    }
+    setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod);
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
@@ -179,10 +170,6 @@ function PartnersList() {
 
   const style = {
     backArrowIcon: "!mt-[9%]",
-  };
-
-  const onResetFilter = () => {
-    window.location.reload();
   };
 
   const showDeactivatePartner = (selectedPartnerdata) => {
