@@ -25,7 +25,7 @@ function PolicyGroupList() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [dataLoaded, setDataLoaded] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(true);
     const [activePolicyGroup, setActivePolicyGroup] = useState(true);
     const [activeAuthPolicy, setActiveAuthPolicy] = useState(false);
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(false);
