@@ -214,7 +214,6 @@ function CreatePolicy() {
                     const data = JSON.parse(reader.result);
                     const dataString = JSON.stringify(data);
                     setPolicyData(dataString);
-                    console.log('aaa')
                 } catch (error) {
                     setErrorMsg(t('createPolicy.jsonParseError'));
                 }
