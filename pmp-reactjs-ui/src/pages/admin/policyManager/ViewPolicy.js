@@ -7,18 +7,18 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
 
-function ViewPolicy({setShowAuthPolicyDetails, header, subTitle, viewData}) {
+function ViewPolicy({setShowPolicyDetails, header, subTitle, viewData}) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const moveBackToList = () => {
-        setShowAuthPolicyDetails(false);
+        setShowPolicyDetails(false);
     };
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <div className="flex justify-between mb-3">
-                <Title title={header} subTitle={subTitle} backLink={setShowAuthPolicyDetails(false)} />
+                <Title title={header} subTitle={subTitle} backLink={setShowPolicyDetails(false)} />
             </div>
             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
