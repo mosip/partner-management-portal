@@ -631,6 +631,18 @@
     "dataSharePoliciesList": {
         "createDataSharePolicy": "Create Data Share Policy"
     },
+    "createPolicy": {
+        "policyGroup": "Policy Group",
+        "selectPolicyGroup": "Select policy group",
+        "policyName": "Policy Name",
+        "writePolicyName": "Write policy name",
+        "policyDescription": "Policy Description",
+        "writePolicyDescription": "Write policy description",
+        "policyData": "Policy Data(only json)",
+        "policyDataDesc": "Paste code or upload a file",
+        "upload": "Upload",
+        "remove": "Remove"
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
