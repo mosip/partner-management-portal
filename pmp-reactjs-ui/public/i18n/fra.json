@@ -608,6 +608,12 @@
         "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès !",
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
     },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "Afficher le groupe de stratégies",
+        "listOfPolicyGroups":"Liste des groupes de stratégies",
+        "policyGroupId":"ID du groupe de stratégies",
+        "policyGroupDesc": "Description du groupe de stratégies"
+    },
     "policyGroupList": {
         "policies": "Politiques",
         "policyGroup":"Groupes de politiques",

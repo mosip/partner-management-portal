@@ -604,6 +604,12 @@
         "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
     },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "View Policy Group",
+        "listOfPolicyGroups":"List of Policy Groups",
+        "policyGroupId":"Policy Group ID",
+        "policyGroupDesc": "Policy Group Description"
+    },
     "policyGroupList": {
         "policies": "Policies",
         "policyGroup":"Policy Groups",

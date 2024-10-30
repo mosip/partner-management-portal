@@ -609,6 +609,12 @@
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
         
     },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "إظهار مجموعة السياسات",
+        "listOfPolicyGroups":"قائمة مجموعات السياسة",
+        "policyGroupId":"معرف مجموعة السياسات",
+        "policyGroupDesc": "وصف مجموعة السياسات"
+    },
     "policyGroupList": {
         "policies": "السياسات",
         "policyGroup":"مجموعات السياسات",
