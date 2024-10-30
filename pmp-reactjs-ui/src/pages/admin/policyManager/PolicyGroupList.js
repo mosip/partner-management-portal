@@ -60,7 +60,7 @@ function PolicyGroupList() {
 
     useEffect(() => {
         const fetchData = async () => {
-            //reset page number to 0 if filter applied or page number is out of bounds
+            // reset page number to 0 if filter applied or page number is out of bounds
             const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
             const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;    
             setResetPageNo(false);
