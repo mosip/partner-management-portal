@@ -27,6 +27,10 @@ function AuthPoliciesList() {
         setErrorMsg("");
     };
 
+    const createAuthPolicy = () => {
+        navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             { !dataLoaded && (
@@ -77,7 +81,7 @@ function AuthPoliciesList() {
                                     <div className="flex flex-col justify-center">
                                         <img src={rectangleGrid} alt="" />
                                         {activeAuthPolicy &&
-                                            (<button id='create_auth_policy_btn' type="button"
+                                            (<button onClick={createAuthPolicy} id='create_auth_policy_btn' type="button"
                                                 className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                 {t('authPoliciesList.createAuthPolicy')}
                                             </button>)

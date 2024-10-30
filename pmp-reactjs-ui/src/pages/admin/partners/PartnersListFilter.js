@@ -103,7 +103,8 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const styleSet = {
-    inputField: "min-w-64 w-auto",
+    inputField: "min-w-64 h-9",
+    inputLabel: "mb-2"
   };
 
   return (
@@ -111,6 +112,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="partnerId"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.partnerId}
         fieldNameKey="partnerList.partnerId"
         placeHolderKey="partnerList.searchPartnerId"
         styleSet={styleSet}
@@ -129,6 +131,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="orgName"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.orgName}
         fieldNameKey="partnerList.organisation"
         placeHolderKey="partnerList.searchOrganisation"
         styleSet={styleSet}
@@ -137,6 +140,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="policyGroupName"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.policyGroupName}
         fieldNameKey="partnerList.policyGroup"
         placeHolderKey="partnerList.searchPolicyGroup"
         styleSet={styleSet}
@@ -145,6 +149,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="emailAddress"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.emailAddress}
         fieldNameKey="partnerList.email"
         placeHolderKey="partnerList.searchEmailAddress"
         styleSet={styleSet}

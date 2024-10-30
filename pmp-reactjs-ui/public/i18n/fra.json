@@ -634,6 +634,18 @@
     "dataSharePoliciesList": {
         "createDataSharePolicy": "Créer une politique de partage de données"
     },
+    "createPolicy": {
+        "policyGroup": "Groupe de politiques",
+        "selectPolicyGroup": "Sélectionner un groupe de stratégies",
+        "policyName": "Nom de la politique",
+        "writePolicyName": "Écrire le nom de la politique",
+        "policyDescription": "Description de la politique",
+        "writePolicyDescription": "Rédiger une description de la politique",
+        "policyData": "Données de politique (uniquement json)",
+        "policyDataDesc": "Collez le code ou téléchargez un fichier",
+        "upload": "Télécharger",
+        "remove": "Retirer"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
