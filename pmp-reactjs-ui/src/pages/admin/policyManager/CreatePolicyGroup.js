@@ -91,10 +91,11 @@ function CreatePolicyGroup() {
             desc: trimAndReplace(policyGroupDesc)
         });
         try {
-            const response = await HttpService.post(getPolicyManagerUrl(`/policies/group/new`, process.env.NODE_ENV), request, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await HttpService({
+                url: getPolicyManagerUrl('/policies/group/new', process.env.NODE_ENV),
+                method: 'post',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                data: request
             });
             if (response) {
                 const responseData = response.data;
