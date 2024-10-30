@@ -98,25 +98,25 @@ function OidcClientsList() {
     };
 
     const createOidcClient = () => {
-        navigate('/partnermanagement/authenticationServices/createOidcClient')
+        navigate('/partnermanagement/authentication-services/create-oidc-client')
     }
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
+            navigate('/partnermanagement/authentication-services/view-oidc-client-details')
         }
     };
 
     const onClickView = (selectedClientdata) => {
         localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-        navigate('/partnermanagement/authenticationServices/viewOidcClienDetails')
+        navigate('/partnermanagement/authentication-services/view-oidc-client-details')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
             localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
-            navigate('/partnermanagement/authenticationServices/editOidcClient')
+            navigate('/partnermanagement/authentication-services/edit-oidc-client')
         }
     };
 
@@ -255,7 +255,7 @@ function OidcClientsList() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='oidcClientsList.listOfOidcClients' dataList={filteredOidcClientsList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons listTitle='oidcClientsList.listOfOidcClients' dataListLength={filteredOidcClientsList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <OidcClientsFilter
@@ -328,7 +328,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.oidcClientName}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.oidcClientName}/>
                                                                                 )}
                                                                             </div>
                                                                         )}
@@ -342,7 +342,7 @@ function OidcClientsList() {
                                         </table>
                                     </div>
                                 </div>
-                                <Pagination dataList={filteredOidcClientsList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                                <Pagination dataListLength={filteredOidcClientsList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                             </>
                         }
                     </div>

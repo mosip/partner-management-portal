@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
+        "accountStatus": "Statut du compte ",
+        "partnerDetailsFetchError": "Erreur lors de la récupération des détails du partenaire.",
         "partnerTypeRequest": "Types de partenaires",
         "partnerTypeRequestDesc": "Demandez un autre type de partenaire si votre organisation fournit plusieurs services partenaires.",
         "organisationUsers": "Utilisatrices",
@@ -48,19 +50,19 @@
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
         "pendingRequests": "Demandes en attente",
-        "pendingRequestsDesc": "Approuver/Rejeter les demandes en attente de divers partenaires",
+        "pendingRequestsDesc": "Approuver / Rejeter les demandes en attente de divers partenaires",
         "rootOfTrustCertificate": "Certificat racine de confiance",
-        "rootOfTrustCertificateDesc": "Télécharger des certificats racine/CA",
+        "rootOfTrustCertificateDesc": "Télécharger des certificats racine / CA",
         "partner": "Partenaire",
-        "partnerDesc": "Afficher / désactiver les détails du partenaire",
+        "partnerDesc": "Afficher / Désactiver les détails du partenaire",
         "policy": "Politique",
         "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
         "partnerPolicyMapping": "Partenaire - Cartographie des politiques",
-        "partnerPolicyMappingDesc": "Afficher, désactiver, approuver/rejeter les demandes de politique des partenaires",
+        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver / Rejeter les demandes de politique des partenaires",
         "sbiDevice": "SBI-Appareil",
-        "sbiDeviceDesc": "Afficher, désactiver Approuver/Rejeter les détails du SBI ou de l'appareil",
+        "sbiDeviceDesc": "Afficher, Désactiver Approuver / Rejeter les détails du SBI ou de l'appareil",
         "ftmChip": "Puce FTM",
-        "ftmChipDesc": "Afficher, désactiver l'approbation/rejet des détails de la puce FTM",
+        "ftmChipDesc": "Afficher, Désactiver l'approbation / Rejet des détails de la puce FTM",
         "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API"
     },
     "header": {
@@ -145,7 +147,8 @@
         "sdkPartner": "Partenaire SDK",
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
-        "manualAdjudication": "Arbitrage manuelle"
+        "manualAdjudication": "Arbitrage manuelle",
+        "partnerAdmin": "Administrateur partenaire"
     },
     "statusCodes": {
         "approved": "Approuvée",
@@ -519,7 +522,11 @@
         "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
         "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
     },
-    "rootTrustCertificate":{
+    "deactivateFtmPopup": {
+        "headerMsg": "Voulez-vous désactiver la puce FTM ",
+        "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
+    },
+    "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
@@ -539,7 +546,7 @@
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
-        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner les champs et télécharger le certificat",
+        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner le domaine partenaire et télécharger le certificat racine /racine intermédiaire",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
@@ -567,11 +574,65 @@
         "selectPartnerType":"Sélectionnez le type de partenaire",
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
         "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
-        "selectStatus":"Sélectionnez le statut"
+        "selectStatus":"Sélectionnez le statut",
+        "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
+        "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
+        "applyFilter": "Postulez maintenant",
+        "searchPartnerId": "ID du partenaire de recherche",
+        "searchOrganisation": "Rechercher une organisation",
+        "searchEmailAddress": "Rechercher une adresse e-mail",
+        "searchPolicyGroup": "Groupe de stratégies de recherche"
      },
-    "deactivateFtmPopup": {
-        "headerMsg": "Voulez-vous désactiver la puce FTM ",
-        "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
+     "viewPartnerDetails": {
+        "viewPartnerDetails": "Afficher les détails du partenaire",
+        "listOfPartners": "Liste des partenaires",
+        "organizationName": "Nom de l'Organisation",
+        "createdOn":"Créé le",
+        "expiryDate": "Date et heure d'expiration",
+        "emailId": "Identifiant de courrier électronique",
+        "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
+        "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
+     },
+     "deactivatePartner": {
+         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
+         "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+     },
+     "createPolicyGroup": {
+        "policies":"Politiques",
+        "createPolicyGroup": "Créer un groupe de stratégies",
+        "policyGroupName": "Nom du groupe de stratégies",
+        "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
+        "policyGroupDescription":"Description du groupe de stratégies",
+        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
+        "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
+        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès !",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+    },
+    "policyGroupList": {
+        "policies": "Politiques",
+        "policyGroup":"Groupe de politiques",
+        "authPolicy": "Politique d'authentification",
+        "dataSharePolicy": "Politique de partage des données",
+        "createPolicyGroup": "Créer un groupe de politiques",
+        "policyGroupId": "ID du groupe de politiques",
+        "policyGroupName":"Nom du groupe de politiques",
+        "policyGroupDescription":"Description du groupe de politiques",
+        "status":"Statut",
+        "action":"Action"
+    },
+    "authPoliciesList": {
+        "createAuthPolicy": "Créer une politique d'authentification",
+        "partnerId":"ID partenaire",
+        "partnerType":"Type de partenaire",
+        "policyGroup":"Groupe de politiques",
+        "policyName":"Nom de la politique",
+        "policyDescription": "Description",
+        "createdDate":"Date de création",
+        "status":"Statut",
+        "action":"Action"
+    },
+    "dataSharePoliciesList": {
+        "createDataSharePolicy": "Créer une politique de partage de données"
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -732,7 +793,9 @@
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
+        "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "La date du certificat n'est pas valide.",
+        "KER-PCM-005": "Certificat d'autorité de certification racine introuvable.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",

@@ -106,7 +106,7 @@ function FtmList() {
   };
 
   const addFtm = () => {
-    navigate('/partnermanagement/ftmChipProviderServices/addFtm');
+    navigate('/partnermanagement/ftm-chip-provider-services/add-ftm');
   };
 
   //This part is related to Filter
@@ -152,7 +152,7 @@ function FtmList() {
         isViewFtmChipDetails: true
       }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-      navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
+      navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
     }
   }
 
@@ -163,7 +163,7 @@ function FtmList() {
       isViewFtmChipDetails: true
     }
     localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-    navigate('/partnermanagement/ftmChipProviderServices/viewFtmChipDetails');
+    navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
 
   const showDeactivateFtm = (selectedFtmData) => {
@@ -185,7 +185,7 @@ function FtmList() {
         isManageFtmCertificate: true
       }
       localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
-      navigate('/partnermanagement/ftmChipProviderServices/manageFtmChipCertificate');
+      navigate('/partnermanagement/ftm-chip-provider-services/manage-ftm-chip-certificate');
     }
   };
 
@@ -242,7 +242,7 @@ function FtmList() {
               :
               <>
                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                  <FilterButtons listTitle='ftmList.listOfFtm' dataList={filteredftmList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                  <FilterButtons listTitle='ftmList.listOfFtm' dataListLength={filteredftmList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                   <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                   {filter &&
                     <FtmListFilter
@@ -318,7 +318,7 @@ function FtmList() {
                     </table>
                   </div>
                 </div>
-                <Pagination dataList={filteredftmList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                <Pagination dataListLength={filteredftmList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
               </>
             }
           </div>

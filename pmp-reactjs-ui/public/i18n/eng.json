@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
+        "accountStatus": "Account Status ",
+        "partnerDetailsFetchError": "Error while fetching partner details.",
         "partnerTypeRequest": "Partner Types",
         "partnerTypeRequestDesc": "Request for another partner type if your organisation provides multiple partner services.",
         "organisationUsers": "Users",
@@ -48,7 +50,7 @@
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!",
         "pendingRequests": "Pending Requests",
-        "pendingRequestsDesc": "Approve/Reject pending requests from various partners",
+        "pendingRequestsDesc": "Approve / Reject pending requests from various partners",
         "rootOfTrustCertificate": "Root of Trust Certificate",
         "rootOfTrustCertificateDesc": "Upload Root and Intermediate Root Certificates",
         "partner": "Partner",
@@ -56,11 +58,11 @@
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
         "partnerPolicyMapping": "Partner - Policy mapping",
-        "partnerPolicyMappingDesc": "View, Deactivate, Approve/Rejected policy requests from partners",
+        "partnerPolicyMappingDesc": "View, Deactivate, Approve / Rejected policy requests from partners",
         "sbiDevice": "SBI - Device",
-        "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
+        "sbiDeviceDesc": "View, Deactivate Approve / Reject SBI or device details",
         "ftmChip": "FTM Chip",
-        "ftmChipDesc": "View, Deactivate Approve/Reject FTM Chip details",
+        "ftmChipDesc": "View, Deactivate Approve / Reject FTM Chip details",
         "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details"
     },
     "header": {
@@ -145,7 +147,8 @@
         "sdkPartner": "SDK Partner",
         "printPartner": "Print Partner",
         "internalPartner": "Internal Partner",
-        "manualAdjudication": "Manual Adjudication"
+        "manualAdjudication": "Manual Adjudication",
+        "partnerAdmin": "Partner Admin"
     },
     "statusCodes": {
         "approved": "Approved",
@@ -463,7 +466,7 @@
         "addDeviceBtn": "Add a Device",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "addFtmBtn": "Add FTM Chip",
-        "partnerId":"Partner ID",
+        "partnerId": "Partner ID",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
@@ -478,7 +481,7 @@
         "view": "View",
         "manageCertificate": "Manage Certificate",
         "deActivate": "Deactivate",
-        "selectPartnerId":"Select Partner ID",
+        "selectPartnerId": "Select Partner ID",
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
@@ -514,7 +517,11 @@
         "uploadFtmCertificate": "Upload FTM Chip Certificate",
         "certificateFormatMsg": "Only .cer or .pem certificate formats signed by authorised Certificate Authority are allowed for upload"
     },
-    "rootTrustCertificate":{
+    "deactivateFtmPopup": {
+        "headerMsg": "Do you want to deactivate FTM Chip ",
+        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
+    },
+    "rootTrustCertificate": {
         "organisation": "Organisation",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
@@ -533,8 +540,9 @@
         "view": "View"
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate":"Upload Root of Trust Certificate",
-        "uploadRootofTrustCertificateDesc": "Please select the fields and upload certificate",
+        "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
+        "rootTrustCertificate": "Root of Trust Certificate",
+        "uploadRootofTrustCertificateDesc": "Please select the partner domain and upload root/ intermediate root certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
@@ -543,30 +551,85 @@
         "viewRootOfTrustCertificate": "View Root of Trust Certificate",
         "caCertificates": "Ca Certificates"
     },
-    "partnerList":{
-       "partnerTitle": "Partner",
-       "listOfPartnerTitle": "List of Partners",
-       "partnerId": "Partner ID",
-       "organisation": "Organisation Name",
-       "partnerType": "Partner Type",
-       "policyGroup": "Policy Group",
-       "email": "Email Address",
-       "certUploadStatus": "Cert. Upload Status",
-       "status": "Status",
-       "action": "Action",
-       "noData": "No Data",
-       "deActivate": "Deactivate",
-       "view": "View",
-       "selectPartnerId": "Select Partner ID",
-       "selectOrganisation":"Select Organisation",
-       "selectPartnerType":"Select Partner Type",
-       "selectEmailAddress": "Select Email Address",
-       "selectPolicyGroup":"Select Policy Group",
-       "selectStatus":"Select Status"
+    "partnerList": {
+        "partnerTitle": "Partner",
+        "listOfPartnerTitle": "List of Partners",
+        "partnerId": "Partner ID",
+        "organisation": "Organisation Name",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "email": "Email Address",
+        "certUploadStatus": "Cert. Upload Status",
+        "status": "Status",
+        "action": "Action",
+        "noData": "No Data",
+        "deActivate": "Deactivate",
+        "view": "View",
+        "selectPartnerId": "Select Partner ID",
+        "selectOrganisation": "Select Organisation",
+        "selectPartnerType": "Select Partner Type",
+        "selectEmailAddress": "Select Email Address",
+        "selectPolicyGroup": "Select Policy Group",
+        "selectStatus": "Select Status",
+        "errorInPartnersList": "While fetching partners details, we have encountered with an error.",
+        "selectCertUploadStatus": "Select Cert. Upload Status",
+        "applyFilter": "Apply Now",
+        "searchPartnerId": "Search Partner ID",
+        "searchOrganisation": "Search Organisation",
+        "searchEmailAddress": "Search Email Address",
+        "searchPolicyGroup": "Search Policy Group"
     },
-    "deactivateFtmPopup": {
-        "headerMsg": "Do you want to deactivate FTM Chip ",
-        "description": "On clicking Confirm, your FTM Chip details will be deactivated."
+    "viewPartnerDetails": {
+        "viewPartnerDetails": "View Partner Details",
+        "listOfPartners": "List of Partners",
+        "organizationName": "Organization Name",
+        "createdOn": "Created On",
+        "expiryDate": "Expiry date & time",
+        "emailId": "Email ID",
+        "errorInPartnerList": "While fetching Partner details, we have encountered with an error.",
+        "originalCertificateSuccessMsg": "Original Certificate downloaded successfully."
+    },
+    "deactivatePartner": {
+        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}",
+        "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
+    },
+    "createPolicyGroup": {
+        "policies":"Policies",
+        "createPolicyGroup": "Create Policy Group",
+        "policyGroupName": "Policy Group Name",
+        "enterNameforPolicyGroup": "Enter name for Policy Group",
+        "policyGroupDescription":"Policy Group Description",
+        "enterPolicyGroupDescription": "Enter description about Policy Group here",
+        "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error.",
+        "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+
+    },
+    "policyGroupList": {
+        "policies": "Policies",
+        "policyGroup":"Policy Group",
+        "authPolicy": "Auth Policy",
+        "dataSharePolicy": "Data Share Policy",
+        "createPolicyGroup": "Create Policy Group",
+        "policyGroupId": "Policy Group ID",
+        "policyGroupName":"Policy Group Name",
+        "policyGroupDescription":"Policy Group Description",
+        "status":"Status",
+        "action":"Action"
+    },
+    "authPoliciesList": {
+        "createAuthPolicy": "Create Auth Policy",
+        "partnerId":"Partner ID",
+        "partnerType":"Partner Type",
+        "policyGroup":"Policy Group",
+        "policyName":"Policy Name",
+        "policyDescription": "Description",
+        "createdDate":"Created Date",
+        "status":"Status",
+        "action":"Action"
+    },
+    "dataSharePoliciesList": {
+        "createDataSharePolicy": "Create Data Share Policy"
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -597,7 +660,7 @@
         "PMS_PRT_359": " Error occured while sorting",
         "PMS_PRT_357": " Invalid sort field %s",
         "KER_PRT_390": " Invalid filter value",
-        "KER-PCM-008": "Partner Organization Name not Matched.",
+        "KER-PCM-008": "Partner organization name not matched.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
         "PMS_PRT_051": " A Partner is already registered with the same Id",
         "PMS_PRT_052": "PartnerId max length should be 36",
@@ -727,7 +790,9 @@
         "PMS_POL_060": "Error while fetching policy groups.",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
+        "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Date is not valid.",
+        "KER-PCM-005": "Root CA Certificate not found.",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",

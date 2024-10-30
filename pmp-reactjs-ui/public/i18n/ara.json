@@ -5,7 +5,7 @@
         "goBack": "عُد",
         "emptyMsg": "لا تتوافر بيانات.",
         "logout": "تسجيل خروج",
-        "back": "خلف", 
+        "back": "خلف",
         "cancel": "يلغي",
         "submit": "إرسال",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
@@ -31,6 +31,8 @@
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
+        "accountStatus": "حالة الحساب ",
+        "partnerDetailsFetchError": "حدث خطأ أثناء جلب تفاصيل الشريك",
         "partnerTypeRequest": "أنواع الشركاء",
         "partnerTypeRequestDesc": "اطلب نوع شريك آخر إذا كانت مؤسستك توفر خدمات شركاء متعددة.",
         "organisationUsers": "المستخدمين",
@@ -48,7 +50,7 @@
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
         "pendingRequests": "الطلبات المعلقة",
-        "pendingRequestsDesc": "الموافقة على/رفض الطلبات المعلقة من مختلف الشركاء",
+        "pendingRequestsDesc": "الموافقة على / رفض الطلبات المعلقة من مختلف الشركاء",
         "rootOfTrustCertificate": "جذر شهادة الثقة",
         "rootOfTrustCertificateDesc": "تحميل شهادات الجذر/CA",
         "partner": "شريك",
@@ -56,11 +58,11 @@
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
         "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
+        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها / رفضها من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
         "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
         "ftmChip": "تفاصيل اف تي ام",
-        "ftmChipDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM",
+        "ftmChipDesc": "عرض أو / وإلغاء تنشيط تفاصيل شريحة FTM",
         "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات"
     },
     "header": {
@@ -145,7 +147,8 @@
         "sdkPartner": "شريك SDK",
         "printPartner": "شريك الطباعة",
         "internalPartner": "الشريك الداخلي",
-        "manualAdjudication": "التحكيم اليدوي"
+        "manualAdjudication": "التحكيم اليدوي",
+        "partnerAdmin": "مشرف الشريك"
     },
     "statusCodes": {
         "approved": "موافقة",
@@ -519,7 +522,11 @@
         "uploadFtmCertificate": "تحميل شهادة شريحة FTM",
         "certificateFormatMsg": "يُسمح فقط بصيغة الشهادة .cer أو .pem الموقعة من قبل هيئة الشهادات المعتمدة للتحميل"
     },
-    "rootTrustCertificate":{
+    "deactivateFtmPopup": {
+        "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
+    },
+    "rootTrustCertificate": {
         "organisation": "منظمة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -539,7 +546,7 @@
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadRootofTrustCertificateDesc": "الرجاء تحديد الحقول وتحميل الشهادة",
+        "uploadRootofTrustCertificateDesc": "يرجى تحديد نطاق الشريك وتحميل شهادة الجذر/ الجذر المتوسطة",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
@@ -548,7 +555,7 @@
         "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
         "caCertificates": "شهادات كاليفورنيا"
     },
-    "partnerList":{
+    "partnerList": {
         "partnerTitle": "شريك",
         "listOfPartnerTitle": "قائمة الشركاء",
         "partnerId": "معرف الشريك",
@@ -563,15 +570,70 @@
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "selectPartnerId": "حدد معرف الشريك",
-        "selectOrganisation":"حدد المنظمة",
-        "selectPartnerType":"حدد نوع الشريك",
+        "selectOrganisation": "حدد المنظمة",
+        "selectPartnerType": "حدد نوع الشريك",
         "selectEmailAddress": "حدد عنوان البريد الإلكتروني",
-        "selectPolicyGroup":"حدد مجموعة السياسات",
-        "selectStatus":"حدد الحالة"
-     },
-    "deactivateFtmPopup": {
-        "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
-        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
+        "selectPolicyGroup": "حدد مجموعة السياسات",
+        "selectStatus": "حدد الحالة",
+        "errorInPartnersList": "أثناء جلب تفاصيل الشركاء، واجهنا خطأً.",
+        "selectCertUploadStatus": "حدد الشهادة. حالة التحميل",
+        "applyFilter": "تقدم الآن",
+        "searchPartnerId": "معرف شريك البحث",
+        "searchOrganisation": "منظمة البحث",
+        "searchEmailAddress": "بحث في عنوان البريد الإلكتروني",
+        "searchPolicyGroup": "مجموعة سياسات البحث"
+    },
+    "viewPartnerDetails": {
+        "viewPartnerDetails": "عرض تفاصيل الشريك",
+        "listOfPartners": "قائمة الشركاء",
+        "organizationName": "اسم المنظمة",
+        "createdOn": "تم الإنشاء بتاريخ",
+        "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
+        "emailId": "معرف البريد الإلكتروني",
+        "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ",
+        "originalCertificateSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح."
+    },
+    "deactivatePartner": {
+        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",
+        "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
+    },
+    "createPolicyGroup": {
+        "policies":"السياسات",
+        "createPolicyGroup": "إنشاء مجموعة السياسات",
+        "policyGroupName": "اسم مجموعة السياسات",
+        "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
+        "policyGroupDescription":"وصف مجموعة السياسات",
+        "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
+        "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
+        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح",
+        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        
+    },
+    "policyGroupList": {
+        "policies": "السياسات",
+        "policyGroup":"مجموعة السياسات",
+        "authPolicy": "سياسة المصادقة",
+        "dataSharePolicy": "سياسة مشاركة البيانات",
+        "createPolicyGroup": "إنشاء مجموعة سياسات",
+        "policyGroupId": "معرف مجموعة السياسات",
+        "policyGroupName":"اسم مجموعة السياسات",
+        "policyGroupDescription":"وصف مجموعة السياسات",
+        "status":"حالة",
+        "action":"فعل"
+    },
+    "authPoliciesList": {
+        "createAuthPolicy": "إنشاء سياسة المصادقة",
+        "partnerId":"معرف الشريك",
+        "partnerType":"نوع الشريك",
+        "policyGroup":"مجموعة السياسات",
+        "policyName":"اسم السياسة",
+        "policyDescription": "وصف",
+        "createdDate":"تاريخ الإنشاء",
+        "status":"حالة",
+        "action":"فعل"
+    },
+    "dataSharePoliciesList": {
+        "createDataSharePolicy": "إنشاء سياسة مشاركة البيانات"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
@@ -732,7 +794,9 @@
         "KER-PCM-006": "لم يتم العثور على شهادات CA الجذر/CA المتوسطة.",
         "KER-PCM-008": "اسم المنظمة الشريكة غير متطابق",
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
+        "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
         "KER-PCM-004": "تاريخ الشهادة غير صالح.",
+        "KER-PCM-005": "لم يتم العثور على شهادة CA الجذر",
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",

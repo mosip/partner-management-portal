@@ -34,6 +34,7 @@ function UploadRootTrustCertificate() {
 
     const removeUpload = () => {
         setFileName("");
+        setCertificateData("");
         setUploading(false);
     };
 
@@ -67,7 +68,7 @@ function UploadRootTrustCertificate() {
                     const resData = responseData.response;
                     const successMessage = t('uploadRootofTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/certificates/rootTrustCertificateList",
+                        backUrl: "/partnermanagement/admin/certificates/root-trust-certificate-list",
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
@@ -116,8 +117,9 @@ function UploadRootTrustCertificate() {
     };
 
     const uploadCertificateDropdownStyle = {
-        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-base",
-        dropdownLabel: "!text-sm"
+        outerDiv: "!ml-0",
+        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-[1rem]",
+        dropdownLabel: "!text-[1.03rem]"
     }
 
     const style = {
@@ -136,7 +138,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" backLink="/partnermanagement" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink2="/partnermanagement/admin/certificates/rootTrustCertificateList" styleSet={style} />
+                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/root-trust-certificate-list" />
                         </div>
                         <div className="flex-col justify-center mt-3 h-full">
                             {!uploadSuccess ?
@@ -151,7 +153,7 @@ function UploadRootTrustCertificate() {
                                                 <div className={`flex-col p-6 border-2 bg-[#f9fafb] my-5 mx-4 rounded-xl justify-center items-center`}>
                                                     <DropdownComponent
                                                         fieldName='partnerDomain'
-                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain'
+                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain*'
                                                         onDropDownChangeEvent={onDomainChangeEvent}
                                                         dropdownDataList={[
                                                             { fieldValue: 'FTM', fieldCode: 'FTM' },
@@ -174,14 +176,25 @@ function UploadRootTrustCertificate() {
                                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                                     {t('uploadCertificate.selectingFile')}
                                                                 </h5>
-                                                                <p className="text-sm font-semibold text-tory-blue">
+                                                                <button
+                                                                    id="remove_certificate_btn"
+                                                                    className="text-sm font-semibold text-tory-blue"
+                                                                    onClick={removeUpload}
+                                                                    onKeyPress={(e) => {
+                                                                        if (e.key === 'Enter' || e.key === ' ') removeUpload();
+                                                                    }}
+                                                                >
                                                                     {t('uploadCertificate.cancel')}
-                                                                </p>
+                                                                </button>
                                                             </div>
                                                         )}
                                                         {!uploading && fileName === '' && (
-                                                            <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
-                                                                <label htmlFor="fileInput" tabIndex={0} onKeyPress={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()} className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
+                                                            <div id="upload_certificate_card" className="flex flex-col items-center justify-center w-full min-h-36 cursor-pointer">
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => document.getElementById('fileInput').click()}
+                                                                    className="flex flex-col items-center w-full min-h-36 justify-center"
+                                                                >
                                                                     <img src={fileUploadImg} alt="" className="mb-3 w-10 h-10" />
                                                                     <h5 className="text-charcoal-gray text-sm font-medium">
                                                                         {t('uploadCertificate.selectCertificate')}
@@ -189,21 +202,38 @@ function UploadRootTrustCertificate() {
                                                                     <p className="text-xs text-light-gray">
                                                                         {t('uploadCertificate.certificateFormat')}
                                                                     </p>
-                                                                </label>
-                                                                <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
+                                                                </button>
+                                                                <input
+                                                                    id="fileInput"
+                                                                    type="file"
+                                                                    className="hidden"
+                                                                    accept=".cer,.pem"
+                                                                    onChange={handleFileChange}
+                                                                />
                                                             </div>
                                                         )}
                                                         {!uploading && fileName && (
-                                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
-                                                                <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
+                                                            <div id="remove_certificate_card" className="flex flex-col items-center justify-center mb-1 cursor-pointer">
+                                                                <label
+                                                                    htmlFor="fileInput"
+                                                                    className="flex flex-col items-center justify-center cursor-pointer"
+                                                                    aria-label={t('uploadCertificate.selectCertificate')}
+                                                                >
                                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-3" />
                                                                 </label>
                                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                                     {fileName}
                                                                 </h5>
-                                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                                <button
+                                                                    id="remove_certificate_btn"
+                                                                    className="text-sm font-semibold text-tory-blue"
+                                                                    onClick={removeUpload}
+                                                                    onKeyPress={(e) => {
+                                                                        if (e.key === 'Enter' || e.key === ' ') removeUpload();
+                                                                    }}
+                                                                >
                                                                     {t('uploadCertificate.remove')}
-                                                                </p>
+                                                                </button>
                                                             </div>
                                                         )}
                                                     </div>

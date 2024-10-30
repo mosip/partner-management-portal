@@ -406,9 +406,9 @@ function AddDevices() {
 
     const clickOnBack = () => {
         if (previousPath.backToSbiList) {
-            navigate('/partnermanagement/deviceProviderServices/sbiList');
+            navigate('/partnermanagement/device-provider-services/sbi-list');
         } else {
-            navigate('/partnermanagement/deviceProviderServices/devicesList');
+            navigate('/partnermanagement/device-provider-services/devices-list');
         }
     }
 

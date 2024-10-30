@@ -93,19 +93,19 @@ function ApiKeysList() {
     };
 
     const generateApiKey = () => {
-        navigate('/partnermanagement/authenticationServices/generateApiKey')
+        navigate('/partnermanagement/authentication-services/generate-api-key')
     };
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "ACTIVE") {
             localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
-            navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+            navigate('/partnermanagement/authentication-services/view-api-key-details')
         }
     };
 
     const onClickView = (selectedApiKeyData) => {
         localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
-        navigate('/partnermanagement/authenticationServices/viewApiKeyDetails')
+        navigate('/partnermanagement/authentication-services/view-api-key-details')
     };
 
     const onClickDeactivate = (selectedApiKeyData) => {
@@ -225,7 +225,7 @@ function ApiKeysList() {
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataList={filteredApiKeysList} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataListLength={filteredApiKeysList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <ApiKeysFilter
@@ -295,7 +295,7 @@ function ApiKeysList() {
                                         </table>
                                     </div>
                                 </div>
-                                <Pagination dataList={filteredApiKeysList} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
+                                <Pagination dataListLength={filteredApiKeysList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                             </>
                         }
                     </div>

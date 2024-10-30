@@ -105,7 +105,7 @@ function AddFtm() {
       setShowPopup(false);
       document.body.style.overflow = "auto";
     } else if (state && btnName === 'close') {
-      navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+      navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     }
   };
 
@@ -180,7 +180,7 @@ function AddFtm() {
           setUploadCertificateData(requiredDataForCertUpload);
           const requiredData = {
             title: "addFtm.addFtmChipDetails",
-            backUrl: '/partnermanagement/ftmChipProviderServices/ftmList',
+            backUrl: '/partnermanagement/ftm-chip-provider-services/ftm-list',
             header: "addFtm.addFtmSuccessHeader",
             description: "addFtm.addFtmSuccessMsg",
             description1: "addFtm.addFtmSuccessMsg1",
@@ -216,7 +216,7 @@ function AddFtm() {
 
   const clickOnCancel = () => {
     isCancelledClicked = true;
-    navigate('/partnermanagement/ftmChipProviderServices/ftmList')
+    navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   }
 
   return (
@@ -231,7 +231,7 @@ function AddFtm() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
-              <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+              <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftm-chip-provider-services/ftm-list' />
             </div>
             {!addFtmSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
