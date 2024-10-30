@@ -611,7 +611,7 @@
     },
     "policyGroupList": {
         "policies": "السياسات",
-        "policyGroup":"مجموعة السياسات",
+        "policyGroup":"مجموعات السياسات",
         "authPolicy": "سياسة المصادقة",
         "dataSharePolicy": "سياسة مشاركة البيانات",
         "createPolicyGroup": "إنشاء مجموعة سياسات",

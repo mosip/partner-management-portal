@@ -607,7 +607,7 @@
     },
     "policyGroupList": {
         "policies": "Policies",
-        "policyGroup":"Policy Group",
+        "policyGroup":"Policy Groups",
         "authPolicy": "Auth Policy",
         "dataSharePolicy": "Data Share Policy",
         "createPolicyGroup": "Create Policy Group",

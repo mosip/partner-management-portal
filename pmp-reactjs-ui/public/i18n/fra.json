@@ -610,7 +610,7 @@
     },
     "policyGroupList": {
         "policies": "Politiques",
-        "policyGroup":"Groupe de politiques",
+        "policyGroup":"Groupes de politiques",
         "authPolicy": "Politique d'authentification",
         "dataSharePolicy": "Politique de partage des données",
         "createPolicyGroup": "Créer un groupe de politiques",
