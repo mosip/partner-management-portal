@@ -611,7 +611,7 @@
     },
     "policyGroupList": {
         "policies": "السياسات",
-        "policyGroup":"مجموعة السياسات",
+        "policyGroup":"مجموعات السياسات",
         "authPolicy": "سياسة المصادقة",
         "dataSharePolicy": "سياسة مشاركة البيانات",
         "createPolicyGroup": "إنشاء مجموعة سياسات",
@@ -622,7 +622,10 @@
         "status":"حالة",
         "action":"فعل",
         "listOfPolicyGroups": "قائمة مجموعات السياسات",
-        "errorInPolicyGroupList": "أثناء جلب قائمة مجموعات السياسات، واجهنا خطأً."
+        "errorInPolicyGroupList": "أثناء جلب قائمة مجموعات السياسات، واجهنا خطأً.",
+        "searchPolicyGroupId": "معرف مجموعة سياسة البحث",
+        "searchPolicyGroupName": "البحث عن اسم مجموعة السياسات",
+        "searchPolicyGroupDescription": "وصف مجموعة سياسة البحث"
     },
     "authPoliciesList": {
         "createAuthPolicy": "إنشاء سياسة المصادقة",

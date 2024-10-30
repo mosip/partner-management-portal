@@ -426,3 +426,30 @@ export const downloadCertificate = (certificateData, fileName) => {
     window.URL.revokeObjectURL(url);
     document.body.removeChild(link);
 };
+
+export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => {
+    const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
+    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo; 
+    return effectivePageNo;
+};
+
+export const applyFilter = (filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters) => {
+    // console.log(filters)
+    setIsFilterApplied(true);
+    setResetPageNo(true);
+    setTriggerServerMethod(true);
+    setFilters(filters);
+};
+
+export const setPageNumberAndPageSize = (recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod) => {
+    // console.log(recordsPerPage, pageIndex);
+    if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
+        setPageNo(pageIndex);
+        setPageSize(recordsPerPage);
+        setTriggerServerMethod(true);
+    }
+};
+
+export const onResetFilter = () => {
+    window.location.reload();
+};

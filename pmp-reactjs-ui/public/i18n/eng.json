@@ -607,7 +607,7 @@
     },
     "policyGroupList": {
         "policies": "Policies",
-        "policyGroup":"Policy Group",
+        "policyGroup":"Policy Groups",
         "authPolicy": "Auth Policy",
         "dataSharePolicy": "Data Share Policy",
         "createPolicyGroup": "Create Policy Group",
@@ -618,7 +618,10 @@
         "status":"Status",
         "action":"Action",
         "listOfPolicyGroups": "List of Policy Groups",
-        "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error."
+        "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error.",
+        "searchPolicyGroupId": "Search Policy Group ID",
+        "searchPolicyGroupName": "Search Policy Group Name",
+        "searchPolicyGroupDescription": "Search Policy Group Description"
     },
     "authPoliciesList": {
         "createAuthPolicy": "Create Auth Policy",
