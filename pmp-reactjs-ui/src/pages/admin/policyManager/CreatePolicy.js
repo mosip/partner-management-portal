@@ -162,7 +162,7 @@ function CreatePolicy() {
                                                         fieldName="policyName"
                                                         textBoxValue={policyName}
                                                         onTextChange={onTextChange}
-                                                        fieldNameKey="createPolicy.policyName"
+                                                        fieldNameKey="createPolicy.policyName*"
                                                         placeHolderKey="createPolicy.writePolicyName"
                                                         styleSet={styleSet}
                                                         id="policy_name_box"

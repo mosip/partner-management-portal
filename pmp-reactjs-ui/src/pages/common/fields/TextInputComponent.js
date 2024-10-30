@@ -25,10 +25,13 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
         }
     }, [textBoxValue]);
 
+    const containsAsterisk = fieldNameKey.includes('*');
+    fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
+
     return (
         <div className={`ml-4 mb-2 ${styleSet?.outerDiv || ''}`}>
             <label className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
-                <p className="font-semibold">{t(fieldNameKey)}</p>
+                <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
             </label>
             <div className={`flex border border-[#707070] rounded-[4px] text-[15px] items-center`}>
                 <input
