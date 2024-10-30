@@ -75,7 +75,12 @@ function PolicyGroupList() {
             });
             try {
                 triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService.post(getPolicyManagerUrl(`/policies/group/search`, process.env.NODE_ENV), request);
+                const response = await HttpService({
+                    url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
+                    method: 'post',
+                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
+                });
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
