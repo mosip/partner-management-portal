@@ -614,8 +614,11 @@
         "policyGroupId": "Policy Group ID",
         "policyGroupName":"Policy Group Name",
         "policyGroupDescription":"Policy Group Description",
+        "createdDate":"Created Date",
         "status":"Status",
-        "action":"Action"
+        "action":"Action",
+        "listOfPolicyGroups": "List of Policy Groups",
+        "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error."
     },
     "authPoliciesList": {
         "createAuthPolicy": "Create Auth Policy",
