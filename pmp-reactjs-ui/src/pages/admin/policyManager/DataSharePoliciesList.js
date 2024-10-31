@@ -8,7 +8,6 @@ import LoadingIcon from "../../common/LoadingIcon";
 import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import Title from '../../common/Title.js';
 import PoliciesTab from './PoliciesTab.js';
-import ViewPolicy from './ViewPolicy.js';
 import { HttpService } from '../../../services/HttpService.js';
 
 function DataSharePoliciesList() {
@@ -20,46 +19,25 @@ function DataSharePoliciesList() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [activePolicyGroup, setActivePolicyGroup] = useState(false);
     const [activeAuthPolicy, setActiveAuthPolicy] = useState(false);
-    const [showDataSharePolicyDetails, setShowDataSharePolicyDetails] = useState(false);
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(true);
-    const [dataShareDetails, setDataShareDetails] = useState(true);
     const [dataSharePoliciesList, setDataSharePoliciesList] = useState([]);
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setDataLoaded(false);
-            try {
-                const response = await HttpService.get(getPolicyManagerUrl(`/policies/mpolicy-default-adjudication`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        console.log(resData);
-
-                        setDataShareDetails(resData);
-                    }
-                    else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('viewAuthPolicyDetails.errorInAuthPoliciesList'));
-                }
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Error fetching data:', err)
-                setErrorMsg(err);
-            }
-        };
-        fetchData();
-    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
-    const viewDataSharePolicyDetails = () => {
-        setShowDataSharePolicyDetails(true);
+    const viewDataSharePolicyDetails = (selectedDataSharePolicy) => {
+        if (selectedDataSharePolicy.isActive) {
+            const requiredData = {
+                policyId: 'mpolicy-default-adjudication',
+                header: 'viewDataSharePoliciesList.viewDataSharePolicy',
+                subTitle: 'viewDataSharePoliciesList.listOfDataSharePolicies',
+                backLink: '/partnermanagement/admin/policy-manager/data-share-policies-list'
+            }
+            localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        }
+        navigate('/partnermanagement/admin/policy-manager/view-policy')
+    
     };
 
     return (
@@ -127,14 +105,6 @@ function DataSharePoliciesList() {
                     </>
                 )}
             </div>
-            {showDataSharePolicyDetails && (
-                <ViewPolicy
-                    header={'viewDataSharePoliciesList.viewDataSharePolicy'}
-                    subTitle={'viewDataSharePoliciesList.listOfDataSharePolicies'}
-                    setShowPolicyDetails= {setShowDataSharePolicyDetails()}
-                    viewData={dataShareDetails}
-                />
-            )}
         </>
     )
 }

@@ -23,33 +23,6 @@ function AuthPoliciesList() {
     const [showAuthPolicyDetails, setShowAuthPolicyDetails] = useState(false);
     const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(false);
     const [authPoliciesList, setAuthPoliciesList] = useState([]);
-    const [authPolicyDetails, setAuthPolicyDetails] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setDataLoaded(false);
-            try {
-                const response = await HttpService.get(getPolicyManagerUrl(`/policies/35225`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setAuthPolicyDetails(resData);
-                    }
-                    else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('viewAuthPolicyDetails.errorInAuthPoliciesList'));
-                }
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Error fetching data:', err)
-                setErrorMsg(err);
-            }
-        };
-        fetchData();
-    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -59,8 +32,17 @@ function AuthPoliciesList() {
         navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
     };
 
-    const viewAuthPolicyDetails = () => {
-        setShowAuthPolicyDetails(true);
+    const viewAuthPolicyDetails = (selectedAuthPolicy) => {
+        if (selectedAuthPolicy.isActive) {
+            const requiredData = {
+                policyId: '35225',
+                header: 'viewAuthPoliciesList.viewAuthPolicy',
+                subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
+                backLink: '/partnermanagement/admin/policy-manager/auth-policies-list'
+            }
+            localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        }
+        navigate('/partnermanagement/admin/policy-manager/view-policy')
     };
 
     return (
@@ -128,14 +110,6 @@ function AuthPoliciesList() {
                     </>
                 )}
             </div>
-            {showAuthPolicyDetails && (
-                <ViewPolicy
-                    header={'viewAuthPoliciesList.viewAuthPolicy'}
-                    subTitle={'viewAuthPoliciesList.listOfAuthenticationPolicies'}
-                    setShowPolicyDetails={setShowAuthPolicyDetails()}
-                    viewData={authPolicyDetails}
-                />
-            )}
         </>
     )
 }
