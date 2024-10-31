@@ -23,17 +23,19 @@ function ViewPolicy() {
     const [viewPolicyPageHeaders, setViewPolicyPageHeaders] = useState(true);
 
     useEffect(() => {
-        const viewData = localStorage.getItem('selectedPolicyData');
-        if (!viewData) {
+        const data = localStorage.getItem('selectedPolicyData');
+        
+        if (!data) {
             setUnexpectedError(true);
             return;
         }
-        setViewPolicyPageHeaders(JSON.parse(viewData));
+        const viewData = JSON.parse(data);
+        setViewPolicyPageHeaders(viewData);
 
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const response = await HttpService.get(getPolicyManagerUrl(`/policies/35225`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPolicyManagerUrl(`/policies/${viewData.policyId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -155,7 +157,7 @@ function ViewPolicy() {
                                             <p className="font-[600] mb-3 text-suva-gray text-xs">
                                                 {t("viewAuthPoliciesList.policyData")}
                                             </p>
-                                            <div className='flex justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
+                                            <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
                                                 <div className='flex items-center'>
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
                                                     <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.jsonFilePlace')}</p>
