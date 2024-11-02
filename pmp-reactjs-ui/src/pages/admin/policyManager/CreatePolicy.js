@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, version } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL } from "../../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, createDropdownData, createRequest } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -12,6 +12,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
 import TextInputComponent from "../../common/fields/TextInputComponent";
+import uploadPolicyDataFileIcon from '../../../svg/upload_policy_data.svg';
 
 function CreatePolicy() {
     const navigate = useNavigate();
@@ -25,11 +26,12 @@ function CreatePolicy() {
     const [policyDescription, setPolicyDescription] = useState("");
     const [policyData, setPolicyData] = useState("");
     const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
-    const textareaRef = useRef(null);
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [policyType, setPolicyType] = useState(null);
+    const policyDescriptionRef = useRef(null);
+    const policyDataRef = useRef(null);
     let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
@@ -40,6 +42,7 @@ function CreatePolicy() {
         if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
             setIsSubmitClicked(false);
             isCancelledClicked = false;
+            setCreatePolicySuccess(false);
             return false;
         }
 
@@ -65,7 +68,7 @@ function CreatePolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [policyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
+    }, [policyGroup, policyName, policyDescription, policyData]);
 
 
     const onChangePolicyGroup = async (fieldName, selectedValue) => {
@@ -186,8 +189,12 @@ function CreatePolicy() {
     };
 
     useEffect(() => {
-        adjustTextareaHeight(textareaRef);
-    }, [policyDescription, policyData]);
+        adjustTextareaHeight(policyDescriptionRef);
+    }, [policyDescription]);
+
+    useEffect(() => {
+        adjustTextareaHeight(policyDataRef);
+    }, [policyData]);
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
@@ -201,19 +208,17 @@ function CreatePolicy() {
     };
 
     const styleSet = {
-        inputField: "min-w-64 w-full min-h-10",
+        inputField: "min-h-10",
     };
 
     const handleFileChange = (event) => {
-        console.log('File change event triggered');
         const file = event.target.files[0];
-        if (file && file.type === "application/json") {
+        if (file?.type === "application/json") {
             const reader = new FileReader();
             reader.onload = () => {
                 try {
                     const data = JSON.parse(reader.result);
-                    const dataString = JSON.stringify(data);
-                    setPolicyData(dataString);
+                    setPolicyData(JSON.stringify(data));
                 } catch (error) {
                     setErrorMsg(t('createPolicy.jsonParseError'));
                 }
@@ -222,15 +227,8 @@ function CreatePolicy() {
         } else {
             setErrorMsg(t('createPolicy.uploadFileError'));
         }
-    };
-
-    function isPolicyDataEmpty() {
-        return policyData.trim() === '';
-    }
-
-    const removeFileData = () => {
-        setPolicyData("");
-    }
+        event.target.value = '';
+    };    
 
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
@@ -252,7 +250,7 @@ function CreatePolicy() {
                                     <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
-                                            <div className="flex flex-row justify-between my-[1%] max-[450px]:flex-col">
+                                            <div className="flex flex-row justify-between my-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-2/4">
                                                     <DropdownWithSearchComponent
                                                         fieldName='policyGroup'
@@ -278,14 +276,14 @@ function CreatePolicy() {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="flex my-[1%]">
+                                            <div className="flex my-2">
                                                 <div className="flex flex-col w-full">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('createPolicy.policyDescription')}<span className="text-crimson-red">*</span>
                                                     </label>
                                                     <textarea
                                                         id="policy_description_box"
-                                                        ref={textareaRef}
+                                                        ref={policyDescriptionRef}
                                                         value={policyDescription}
                                                         onChange={(e) => handlePolicyDescriptionChange(e)}
                                                         className="w-full min-h-11 h-11 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar"
@@ -293,58 +291,42 @@ function CreatePolicy() {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="flex my-[1%]">
-                                                <div className="w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                        {t('createPolicy.policyData')}<span className="text-crimson-red">*</span>
-                                                    </label>
-                                                    <textarea
-                                                        id="policy_data_box"
-                                                        ref={textareaRef}
-                                                        value={policyData}
-                                                        onChange={(e) => handlePolicyDataChange(e)}
-                                                        className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
-                                                        placeholder={t('createPolicy.policyDataDesc')}
-                                                    />
-                                                </div>
-                                                <div className="pt-4 flex text-gray-500 text-xs font-semibold items-start">
-                                                    <div className="px-3 pt-2">
-                                                        <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
-                                                            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M7 12V3.85L4.4 6.45L3 5L8 0L13 5L11.6 6.45L9 3.85V12H7ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z" fill="white" />
-                                                            </svg>
-                                                            <span className="px-2">{t('createPolicy.upload')}</span>
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            id="fileInput"
-                                                            accept=".json"
-                                                            style={{ display: 'none' }}
-                                                            onChange={handleFileChange}
+                                            <div className="rounded-lg shadow-md border my-5">
+                                                <div className={`flex-col`}>
+                                                    <div className={`flex py-[1rem] px-5 bg-[#F9FBFF] justify-between items-center max-520:flex-col`}>
+                                                        <div className="flex space-x-4 items-center ">
+                                                            <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
+                                                            <div className="flex-col p-1 items-center">
+                                                                <h6 className={`text-sm font-semibold text-dark-blue`}>
+                                                                    {t('createPolicy.uploadPolicyDataFile')}
+                                                                </h6>
+                                                                <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
+                                                                <span className="px-2">{t('createPolicy.upload')}</span>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                id="fileInput"
+                                                                accept=".json"
+                                                                style={{ display: 'none' }}
+                                                                onChange={handleFileChange}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <hr className="border bg-medium-gray h-px" />
+                                                    <div className="flex items-center p-5 bg-white rounded-lg">
+                                                        <textarea
+                                                            id="policy_data_box"
+                                                            ref={policyDataRef}
+                                                            value={policyData}
+                                                            onChange={(e) => handlePolicyDataChange(e)}
+                                                            className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
+                                                            placeholder={t('createPolicy.policyDataDesc')}
                                                         />
                                                     </div>
-
-                                                    <button
-                                                        onClick={removeFileData}
-                                                        disabled={isPolicyDataEmpty()}
-                                                        className={`mx-2 pt-2 focus:outline-none flex flex-col items-center ${isPolicyDataEmpty() ? 'text-gray-500' : 'cursor-pointer text-tory-blue'
-                                                            }`}
-                                                    >
-                                                        <svg
-                                                            width="20"
-                                                            height="21"
-                                                            viewBox="0 0 31 34"
-                                                            fill={isPolicyDataEmpty() ? '#A5A5A5' : '#1447B2'}
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            className={`${isPolicyDataEmpty() ? '' : 'cursor-pointer'}`}
-                                                        >
-                                                            <path
-                                                                d="M5.65391 34C4.64976 34 3.79193 33.6444 3.08043 32.9333C2.36926 32.2218 2.01368 31.3639 2.01368 30.3598V4.80162H0V1.7811H9.06156V0H21.1437V1.7811H30.2052V4.80162H28.1915V30.3598C28.1915 31.377 27.8391 32.238 27.1344 32.9428C26.4296 33.6476 25.5685 34 24.5513 34H5.65391ZM25.171 4.80162H5.0342V30.3598C5.0342 30.5407 5.09226 30.6892 5.20839 30.8053C5.32451 30.9214 5.47302 30.9795 5.65391 30.9795H24.5513C24.7064 30.9795 24.8483 30.9149 24.9772 30.7857C25.1064 30.6568 25.171 30.5148 25.171 30.3598V4.80162ZM9.87509 26.9521H12.8951V8.82899H9.87509V26.9521ZM17.3101 26.9521H20.3301V8.82899H17.3101V26.9521Z"
-
-                                                            />
-                                                        </svg>
-                                                        <p className="pt-1">{t('createPolicy.remove')}</p>
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

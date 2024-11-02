@@ -650,7 +650,9 @@
         "remove": "Remove",
         "CreatePolicySuccessHeader":"Policy Created Successfully!",
         "uploadFileError": "There was an unexpected error during the file upload. Please try again.",
-        "jsonParseError": "Please provide valid JSON data"
+        "jsonParseError": "Please provide valid JSON data",
+        "uploadPolicyDataFile": "Upload Policy Data File",
+        "uploadPolicyDataFileDesc": "Only .json file format is allowed for upload"
     },
     "consentPopup": {
         "title": "Terms and Conditions",

@@ -40,7 +40,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder={t(placeHolderKey)}
-                    className={`rounded-[4px] h-auto w-fit p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    className={`rounded-[4px] h-auto w-full min-w-fit p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && (
                     <p onClick={onTextClear} className={`bg-white font-bold rounded-md px-2 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:outline-none items-center hover:cursor-pointer`}>

@@ -653,7 +653,9 @@
         "remove": "Retirer",
         "CreatePolicySuccessHeader":"Politique créée avec succès !",
         "uploadFileError": "Une erreur inattendue s'est produite lors du téléchargement du fichier. Veuillez réessayer.",
-        "jsonParseError": "Veuillez fournir des données JSON valides"
+        "jsonParseError": "Veuillez fournir des données JSON valides",
+        "uploadPolicyDataFile": "Télécharger le fichier de données de stratégie",
+        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement"
     },
     "consentPopup": {
         "title": "Termes et conditions",

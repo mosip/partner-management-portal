@@ -654,7 +654,9 @@
         "remove": "يزيل",
         "CreatePolicySuccessHeader":"تم إنشاء السياسة بنجاح!",
         "uploadFileError": "حدث خطأ غير متوقع أثناء تحميل الملف. يرجى المحاولة مرة أخرى.",
-        "jsonParseError": "يرجى تقديم بيانات JSON صالحة"
+        "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
+        "uploadPolicyDataFile": "تحميل ملف بيانات السياسة",
+        "uploadPolicyDataFileDesc": "يُسمح فقط بتحميل تنسيق الملف .json"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
