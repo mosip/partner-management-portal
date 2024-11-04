@@ -138,6 +138,9 @@ function CreatePolicy() {
         let parsedPolicyData;
         try {
             parsedPolicyData = JSON.parse(policyData);
+            if (Array.isArray(parsedPolicyData) || parsedPolicyData === null || Object.keys(parsedPolicyData).length === 0) {
+                throw new Error("Parsed data is not a valid JSON object");
+            }
         } catch (error) {
             setErrorMsg(t('createPolicy.jsonParseError'));
             setIsSubmitClicked(false);
