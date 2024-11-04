@@ -42,7 +42,7 @@ function DataSharePoliciesList() {
 
     const createDataSharePolicy = () => {
         localStorage.setItem('policyType', 'DataShare');
-        navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
+        navigate('/partnermanagement/admin/policy-manager/create-data-share-policy');
     };
 
     return (
