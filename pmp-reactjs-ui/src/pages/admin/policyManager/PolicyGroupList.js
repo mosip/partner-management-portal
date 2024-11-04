@@ -179,10 +179,8 @@ function PolicyGroupList() {
     };
 
     const viewPolicyGroupDetails = (selectedPolicyGroup) => {
-        if (selectedPolicyGroup.isActive) {
-            localStorage.setItem('selectedPolicyGroup', JSON.stringify(selectedPolicyGroup));
-            navigate('/partnermanagement/admin/policy-manager/view-policy-group-details')
-        }
+        localStorage.setItem('selectedPolicyGroup', JSON.stringify(selectedPolicyGroup));
+        navigate('/partnermanagement/admin/policy-manager/view-policy-group-details');
     };
 
     const showDeactivatePolicyGroup = (policyGroup) => {

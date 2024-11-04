@@ -36,7 +36,7 @@ function DataSharePoliciesList() {
             }
             localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
         }
-        navigate('/partnermanagement/admin/policy-manager/view-policy')
+        navigate('/partnermanagement/admin/policy-manager/view-data-share-policy')
     
     };
 

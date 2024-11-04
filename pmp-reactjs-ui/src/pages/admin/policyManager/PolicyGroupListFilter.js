@@ -12,32 +12,32 @@ function PolicyGroupListFilter({ onApplyFilter }) {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
-        { status: 'active' },
-        { status: 'deactivated' }
+      { status: 'active' },
+      { status: 'deactivated' }
     ]);
     const [filters, setFilters] = useState({
-        id: "",
-        name: "",
-        desc: "",
-        status: "",
+      id: "",
+      name: "",
+      desc: "",
+      status: "",
     });
 
     useEffect(() => {
-        const fetchData = async () => {
-          setStatus(
-            createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-          );
-        };
-    
-        fetchData();
+      const fetchData = async () => {
+        setStatus(
+          createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
+        );
+      };
+  
+      fetchData();
     }, [t]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
-        setIsFilterActive(true);
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          [fieldName]: selectedFilter
-        }));
+      setIsFilterActive(true);
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [fieldName]: selectedFilter
+      }));
     };
 
     const areFiltersEmpty = () => {
@@ -45,11 +45,13 @@ function PolicyGroupListFilter({ onApplyFilter }) {
       };
     
     const styles = {
-        dropdownButton: "min-w-64",
+      dropdownButton: "min-w-64",
     };
     
     const styleSet = {
-        inputField: "min-w-64 w-auto",
+      inputField: "min-w-64",
+      inputLabel: "mb-2",
+      outerDiv: "ml-4"
     };
 
     return (
