@@ -29,7 +29,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     return (
-        <div className={`ml-4 mb-2 ${styleSet?.outerDiv || ''}`}>
+        <div className={`mb-2 ${styleSet?.outerDiv || ''}`}>
             <label className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
             </label>
@@ -40,7 +40,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder={t(placeHolderKey)}
-                    className={`rounded-[4px] h-auto w-fit p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    className={`rounded-[4px] h-auto w-full min-w-fit p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && (
                     <p onClick={onTextClear} className={`bg-white font-bold rounded-md px-2 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:outline-none items-center hover:cursor-pointer`}>
