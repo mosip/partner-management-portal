@@ -839,7 +839,6 @@
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
-        "PMS_PV_005": "Invalid input parameter - errorCode in policy data",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",
         "PMS_PRT_060": "This policy has already been approved against your partner ID.",
         "PMS_AUT_028": "Device details for id $ID are rejected. Can't use same details for mapping.",
@@ -918,6 +917,10 @@
         "PMS_FTM_ERROR_007": "The selected FTM is already deactivated",
         "PMS_FTM_ERROR_008": "The selected FTM must be pending_approval or approved",
         "PMS_FTM_ERROR_009": "Unable to download original FTM certificate",
-        "PMS_FTM_ERROR_010": "The selected FTM is not in an approved status."
+        "PMS_FTM_ERROR_010": "The selected FTM is not in an approved status.",
+        "PMS_PV_001": "Failed to read schema.",
+        "PMS_PV_002": "Policy object validation failed.",
+        "PMS_PV_003": "Failed to parse or convert policy object.",
+        "PMS_PV_004": "Invalid policy schema."
     }
 }
