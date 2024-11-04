@@ -179,7 +179,15 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-policy',
+          path: 'admin/policy-manager/create-data-share-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-auth-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
         },
         {
