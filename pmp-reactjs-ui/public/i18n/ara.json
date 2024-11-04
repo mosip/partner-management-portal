@@ -609,6 +609,12 @@
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
         
     },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "إظهار مجموعة السياسات",
+        "listOfPolicyGroups":"قائمة مجموعات السياسة",
+        "policyGroupId":"معرف مجموعة السياسات",
+        "policyGroupDesc": "وصف مجموعة السياسات"
+    },
     "policyGroupList": {
         "policies": "السياسات",
         "policyGroup":"مجموعات السياسات",
@@ -634,12 +640,27 @@
         "policyGroup":"مجموعة السياسات",
         "policyName":"اسم السياسة",
         "policyDescription": "وصف",
-        "createdDate":"تاريخ الإنشاء",
-        "status":"حالة",
-        "action":"فعل"
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل"
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy": "عرض سياسة المصادقة",
+        "listOfAuthenticationPolicies": "عرض سياسة المصادقة",
+        "policyId": "معرف السياسة",
+        "policyGroup": "مجموعة السياسات",
+        "policyNameDescription": "وصف اسم السياسة",
+        "policyGroupDescription": "وصف مجموعة السياسات",
+        "policyData": "بيانات السياسة",
+        "jsonFilePlace": "اسم ملف JSON يظهر هنا",
+        "preview": "معاينة"
     },
     "dataSharePoliciesList": {
         "createDataSharePolicy": "إنشاء سياسة مشاركة البيانات"
+    },
+    "viewDataSharePoliciesList": {
+        "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",
+        "listOfDataSharePolicies": "قائمة سياسات مشاركة البيانات"
     },
     "createPolicy": {
         "policyGroup": "مجموعة السياسات",

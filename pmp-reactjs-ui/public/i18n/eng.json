@@ -594,29 +594,34 @@
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "createPolicyGroup": {
-        "policies":"Policies",
+        "policies": "Policies",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupName": "Policy Group Name",
         "enterNameforPolicyGroup": "Enter name for Policy Group",
-        "policyGroupDescription":"Policy Group Description",
+        "policyGroupDescription": "Policy Group Description",
         "enterPolicyGroupDescription": "Enter description about Policy Group here",
         "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error.",
         "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
         "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
-
+    },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "View Policy Group",
+        "listOfPolicyGroups": "List of Policy Groups",
+        "policyGroupId": "Policy Group ID",
+        "policyGroupDesc": "Policy Group Description"
     },
     "policyGroupList": {
         "policies": "Policies",
-        "policyGroup":"Policy Groups",
+        "policyGroup": "Policy Groups",
         "authPolicy": "Auth Policy",
         "dataSharePolicy": "Data Share Policy",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupId": "Policy Group ID",
-        "policyGroupName":"Policy Group Name",
-        "policyGroupDescription":"Policy Group Description",
-        "createdDate":"Created Date",
-        "status":"Status",
-        "action":"Action",
+        "policyGroupName": "Policy Group Name",
+        "policyGroupDescription": "Policy Group Description",
+        "createdDate": "Created Date",
+        "status": "Status",
+        "action": "Action",
         "listOfPolicyGroups": "List of Policy Groups",
         "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error.",
         "searchPolicyGroupId": "Search Policy Group ID",
@@ -625,17 +630,32 @@
     },
     "authPoliciesList": {
         "createAuthPolicy": "Create Auth Policy",
-        "partnerId":"Partner ID",
-        "partnerType":"Partner Type",
-        "policyGroup":"Policy Group",
-        "policyName":"Policy Name",
+        "partnerId": "Partner ID",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
         "policyDescription": "Description",
-        "createdDate":"Created Date",
-        "status":"Status",
-        "action":"Action"
+        "createdDate": "Created Date",
+        "status": "Status",
+        "action": "Action"
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy": "View Authentication Policy",
+        "listOfAuthenticationPolicies": "List of Authentication Policies",
+        "policyId": "Policy ID",
+        "policyGroup": "Policy Group",
+        "policyNameDescription": "Policy Name Description",
+        "policyGroupDescription": "Policy Group Description",
+        "policyData": "Policy Data",
+        "jsonFilePlace": "JSON File Name Goes Here",
+        "preview": "Preview"
     },
     "dataSharePoliciesList": {
         "createDataSharePolicy": "Create Data Share Policy"
+    },
+    "viewDataSharePoliciesList": {
+        "viewDataSharePolicy": "View Data Share Policy",
+        "listOfDataSharePolicies": "List Of Data Share Policies"
     },
     "createPolicy": {
         "policyGroup": "Policy Group",
@@ -776,7 +796,7 @@
         "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_AUT_516": "Created date should not be less than 10 years from today",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
-        "PMS_POL_004": "Policy Name already exists in the policy Group.Name : ",
+        "PMS_POL_004": "Policy Name already exists in the policy Group.Name",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",
         "PMS_POL_006": "Unsupported Authentication Type in the Policy File",
         "PMS_POL_007": "eKYC attribute missing in the policy file",
