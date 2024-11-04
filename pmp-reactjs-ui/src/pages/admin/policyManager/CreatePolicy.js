@@ -103,7 +103,11 @@ function CreatePolicy() {
                 } else if (storedPolicyType === 'Auth') {
                     setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
                 }
-                const response = await HttpService.get(getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV));
+                const response = await HttpService({
+                    url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
+                    method: 'get',
+                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                });
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -149,7 +153,12 @@ function CreatePolicy() {
             version: "1.1"
         });
         try {
-            const response = await HttpService.post(getPolicyManagerUrl(`/policies`, process.env.NODE_ENV), request);
+            const response = await HttpService({
+                url: getPolicyManagerUrl('/policies', process.env.NODE_ENV),
+                method: 'post',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                data: request
+            });
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
