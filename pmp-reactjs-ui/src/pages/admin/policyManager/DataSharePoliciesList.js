@@ -40,6 +40,11 @@ function DataSharePoliciesList() {
     
     };
 
+    const createDataSharePolicy = () => {
+        localStorage.setItem('policyType', 'DataShare');
+        navigate('/partnermanagement/admin/policy-manager/create-data-share-policy');
+    };
+
     return (
         <>
             <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -91,7 +96,7 @@ function DataSharePoliciesList() {
                                         <div className="flex flex-col justify-center">
                                             <img src={rectangleGrid} alt="" />
                                             {activeDataSharePolicy &&
-                                                (<button id='create_data_share_policy_btn' type="button"
+                                                (<button onClick={createDataSharePolicy} id='create_data_share_policy_btn' type="button"
                                                     className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                                                     {t('dataSharePoliciesList.createDataSharePolicy')}
                                                 </button>)

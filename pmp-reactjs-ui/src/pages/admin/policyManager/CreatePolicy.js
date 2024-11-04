@@ -30,6 +30,7 @@ function CreatePolicy() {
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [policyType, setPolicyType] = useState(null);
+    const [backLink, setBackLink] = useState("");
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
     let isCancelledClicked = false;
@@ -84,19 +85,24 @@ function CreatePolicy() {
 
     const clickOnCancel = () => {
         isCancelledClicked = true;
-        navigate('/partnermanagement/admin/policy-manager/auth-policies-list')
+        navigate(backLink)
     }
 
     useEffect(() => {
         const fetchData = async () => {
+            setDataLoaded(false);
             try {
-                setDataLoaded(false);
                 const storedPolicyType = localStorage.getItem('policyType');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
+                if (storedPolicyType === 'DataShare') {
+                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                } else if (storedPolicyType === 'Auth') {
+                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
+                }
                 const response = await HttpService.get(getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
@@ -109,11 +115,11 @@ function CreatePolicy() {
                 } else {
                     setErrorMsg(t('commons.errorInResponse'));
                 }
-                setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
             }
+            setDataLoaded(true);
         };
         fetchData();
     }, []);
@@ -148,7 +154,7 @@ function CreatePolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/policy-manager/auth-policies-list",
+                        backUrl: backLink,
                         header: "createPolicy.CreatePolicySuccessHeader",
                     }
                     setConfirmationData(requiredData);
@@ -242,7 +248,7 @@ function CreatePolicy() {
                     )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title='policyGroupList.policies' subTitle='policyGroupList.policies' backLink='/partnermanagement/admin/policy-manager/auth-policies-list'></Title>
+                            <Title title='policyGroupList.policies' subTitle='policyGroupList.policies' backLink={backLink}></Title>
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
