@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
-import { bgOfStatus, downloadCertificate, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
@@ -10,8 +10,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
-import FocusTrap from 'focus-trap-react';
-import DownloadJsonPopup from './DownloadJsonPopup';
+import ViewPolicyPopup from './ViewPolicyPopup';
 
 function ViewPolicy() {
     const { t } = useTranslation();
@@ -72,8 +71,8 @@ function ViewPolicy() {
         document.body.style.overflow = 'hidden';
     };
 
-    const downloadJsonFile = (policyJsonData) => {
-        downloadCertificate(policyJsonData, 'policy-data-json.json')
+    const downloadPolicyData = (policyJsonData) => {
+        downloadFile(policyJsonData, 'policy-data-json.json', 'application/json');
     };
 
     const closePopUp = () => {
@@ -181,7 +180,7 @@ function ViewPolicy() {
                                             <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
                                                 <div className='flex items-center'>
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
-                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.jsonFilePlace')}</p>
+                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                                 </div>
                                                 <div onClick={() => showUploadedJsonData()} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
                                                     <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
@@ -189,9 +188,9 @@ function ViewPolicy() {
                                                 </div>
                                             </div>
                                             {previewJsonPopup &&
-                                                <DownloadJsonPopup
-                                                    title={"JSON File Name Goes Here"}
-                                                    downloadJsonFile={downloadJsonFile}
+                                                <ViewPolicyPopup
+                                                    title={t('viewAuthPoliciesList.policyData')}
+                                                    downloadJsonFile={downloadPolicyData}
                                                     closePopUp={closePopUp}
                                                     jsonData={JSON.stringify(viewDetails.policies)}
                                                 />

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 
-function DownloadJsonPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
+function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     
@@ -29,4 +29,4 @@ function DownloadJsonPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     )
 }
 
-export default DownloadJsonPopup;
+export default ViewPolicyPopup;
