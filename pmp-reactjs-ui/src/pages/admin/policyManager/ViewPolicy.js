@@ -10,6 +10,8 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
+import FocusTrap from 'focus-trap-react';
+import DownloadJsonPopup from './DownloadJsonPopup';
 
 function ViewPolicy() {
     const { t } = useTranslation();
@@ -21,10 +23,11 @@ function ViewPolicy() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [viewDetails, setViewDetails] = useState(true);
     const [viewPolicyPageHeaders, setViewPolicyPageHeaders] = useState(true);
+    const [previewJsonPopup, setPreviewJsonPopup] = useState(false);
 
     useEffect(() => {
         const data = localStorage.getItem('selectedPolicyData');
-        
+
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -45,7 +48,7 @@ function ViewPolicy() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         console.log(resData);
-                        
+
                         setViewDetails(resData);
                     }
                     else {
@@ -62,6 +65,16 @@ function ViewPolicy() {
 
     const moveBackToList = () => {
         navigate(viewPolicyPageHeaders.backLink);
+    };
+
+    const showUploadedJsonData = () => {
+        setPreviewJsonPopup(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closePopUp = () => {
+        setPreviewJsonPopup(false);
+        document.body.style.overflow = 'auto';
     };
 
     const cancelErrorMsg = () => {
@@ -166,11 +179,18 @@ function ViewPolicy() {
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
                                                     <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.jsonFilePlace')}</p>
                                                 </div>
-                                                <div className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
+                                                <div onClick={() => showUploadedJsonData()} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
                                                     <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
                                                     <img src={previewIcon} alt="" />
                                                 </div>
                                             </div>
+                                            {previewJsonPopup &&
+                                                <DownloadJsonPopup
+                                                    title={"JSON File Name Goes Here"}
+                                                    closePopUp={closePopUp}
+                                                    jsonData={'Required JSON Data'}
+                                                />
+                                            }
                                         </div>
                                     </div>
                                     <hr className={`h-px w-full bg-gray-200 border-0`} />
