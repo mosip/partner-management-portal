@@ -605,8 +605,7 @@
         "policyGroupDescription":"Description du groupe de stratégies",
         "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
         "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
-        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès !",
-        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès!"
     },
     "viewPolicyGroupDetails": {
         "viewPolicyGroup": "Afficher le groupe de stratégies",
@@ -693,7 +692,7 @@
         "proceed": "Procéder"
     },
     "serverError": {
-        "PMS_COR_001": "Paramètre d'entrée manquant",
+        "PMS_COR_001": "La longueur doit être comprise entre 1 et 128 caractères",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
         "PMS_PRT_010": "Le type de partenaire n'existe pas",
         "PMS_PRT_310": "Colonne non valide reçue : %s",
@@ -810,7 +809,7 @@
         "PMS_COR_003": "Impossible de traiter la demande",
         "PMS_POL_010": " Les politiques d'authentification ne sont pas définies par rapport à la politique",
         "PMS_POL_013": "Aucune règle disponible pour PartnerAPIKey donnée",
-        "PMS_POL_014": "Le groupe de stratégies existe avec le nom :",
+        "PMS_POL_014": "Le groupe de stratégies existe déjà sous ce nom",
         "PMS_POL_015": "Groupe de stratégies et stratégie non mappés.",
         "PMS_POL_016": "L'ID de groupe de stratégies n'existe pas",
         "PMS_POL_017": "Aucune politique disponible pour un partenaire donné",

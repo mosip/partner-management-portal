@@ -105,7 +105,6 @@ function CreatePolicyGroup() {
                     const requireData = {
                         backUrl: "/partnermanagement/admin/policy-manager/policy-group-list",
                         header: "createPolicyGroup.creatPolicyGroupSuccessHeader",
-                        description: "createPolicyGroup.creatPolicyGroupSuccessDescription"
                     }
                     setConfirmationData(requireData);
                     setCreatePolicySuccess(true);
