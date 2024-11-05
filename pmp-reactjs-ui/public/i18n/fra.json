@@ -677,10 +677,11 @@
         "upload": "Télécharger",
         "remove": "Retirer",
         "CreatePolicySuccessHeader":"Politique créée avec succès !",
-        "uploadFileError": "Une erreur inattendue s'est produite lors du téléchargement du fichier. Veuillez réessayer.",
+        "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
         "jsonParseError": "Veuillez fournir des données JSON valides",
         "uploadPolicyDataFile": "Télécharger le fichier de données de stratégie",
-        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement"
+        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement",
+        "fileUploadSuccessMsg": "Votre fichier a été téléchargé avec succès"
     },
     "consentPopup": {
         "title": "Termes et conditions",

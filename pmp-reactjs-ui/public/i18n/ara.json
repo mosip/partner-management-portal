@@ -678,10 +678,11 @@
         "upload": "رفع",
         "remove": "يزيل",
         "CreatePolicySuccessHeader":"تم إنشاء السياسة بنجاح!",
-        "uploadFileError": "حدث خطأ غير متوقع أثناء تحميل الملف. يرجى المحاولة مرة أخرى.",
+        "uploadFileError": "الرجاء تحديد ملف JSON صالح",
         "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
         "uploadPolicyDataFile": "تحميل ملف بيانات السياسة",
-        "uploadPolicyDataFileDesc": "يُسمح فقط بتحميل تنسيق الملف .json"
+        "uploadPolicyDataFileDesc": "يُسمح فقط بتحميل تنسيق الملف .json",
+        "fileUploadSuccessMsg": "لقد تم تحميل ملفك بنجاح"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
