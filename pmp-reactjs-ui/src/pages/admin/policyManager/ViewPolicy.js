@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
-import { bgOfStatus, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadCertificate, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
@@ -70,6 +70,10 @@ function ViewPolicy() {
     const showUploadedJsonData = () => {
         setPreviewJsonPopup(true);
         document.body.style.overflow = 'hidden';
+    };
+
+    const downloadJsonFile = (policyJsonData) => {
+        downloadCertificate(policyJsonData, 'policy-data-json.json')
     };
 
     const closePopUp = () => {
@@ -187,8 +191,9 @@ function ViewPolicy() {
                                             {previewJsonPopup &&
                                                 <DownloadJsonPopup
                                                     title={"JSON File Name Goes Here"}
+                                                    downloadJsonFile={downloadJsonFile}
                                                     closePopUp={closePopUp}
-                                                    jsonData={'Required JSON Data'}
+                                                    jsonData={JSON.stringify(viewDetails.policies)}
                                                 />
                                             }
                                         </div>
