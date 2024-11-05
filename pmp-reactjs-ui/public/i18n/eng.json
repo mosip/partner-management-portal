@@ -601,8 +601,7 @@
         "policyGroupDescription": "Policy Group Description",
         "enterPolicyGroupDescription": "Enter description about Policy Group here",
         "errorInCreatePolicyGroup": "While Creating Policy, we have encountered with an error.",
-        "creatPolicyGroupSuccessHeader": "Policy Group created successfully!",
-        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        "creatPolicyGroupSuccessHeader": "Policy Group created successfully!"
     },
     "viewPolicyGroupDetails": {
         "viewPolicyGroup": "View Policy Group",
@@ -689,7 +688,7 @@
         "proceed": "Proceed"
     },
     "serverError": {
-        "PMS_COR_001": "Missing Input Parameter",
+        "PMS_COR_001": "Length should be in between 1 and 128 characters",
         "PMS_PRT_002": " Policy group does not exist",
         "PMS_PRT_010": " Partner Type does not exist",
         "PMS_PRT_310": " Invalid column received : %s",
@@ -806,7 +805,7 @@
         "PMS_COR_003": "Could not process the request",
         "PMS_POL_010": " Auth Policies are not defined against to policy",
         "PMS_POL_013": "No policy available for given PartnerAPIKey",
-        "PMS_POL_014": "Policy group exists with name : ",
+        "PMS_POL_014": "Policy group already exists with this name",
         "PMS_POL_015": "Policy group and policy not mapped.",
         "PMS_POL_016": "Policy Group ID does not exist",
         "PMS_POL_017": "No policy available for given partner",

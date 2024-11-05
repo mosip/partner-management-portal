@@ -605,8 +605,7 @@
         "policyGroupDescription":"وصف مجموعة السياسات",
         "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
         "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
-        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح",
-        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح"
         
     },
     "viewPolicyGroupDetails": {
@@ -694,7 +693,7 @@
         "proceed": "يتابع"
     },
     "serverError": {
-        "PMS_COR_001": "معلمة الإدخال مفقود",
+        "PMS_COR_001": "يجب أن يتراوح الطول بين 1 و128 حرفًا",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
         "PMS_PRT_010": "نوع الشريك غير موجو",
         "PMS_PRT_310": " تم تلقي عمود غير صالح:٪ ",
@@ -810,7 +809,7 @@
         "PMS_COR_003": "لا يمكن معالجة الطلب",
         "PMS_POL_010": "لم يتم تحديد سياسات المصادقة مقابل السياسة",
         "PMS_POL_013": "لا توجد سياسة متاحة لـ PartnerAPIKey المحدد",
-        "PMS_POL_014": "توجد مجموعة نهج بالاسم:",
+        "PMS_POL_014": "مجموعة السياسات موجودة بالفعل بهذا الاسم",
         "PMS_POL_015": "لم يتم تعيين مجموعة السياسة والنهج.",
         "PMS_POL_016": "معرف مجموعة النهج غير موجود",
         "PMS_POL_017": "لا توجد سياسة متاحة لشريك معين",
