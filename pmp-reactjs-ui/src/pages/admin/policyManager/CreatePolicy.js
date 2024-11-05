@@ -13,6 +13,7 @@ import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import uploadPolicyDataFileIcon from '../../../svg/upload_policy_data.svg';
+import SuccessMessage from "../../common/SuccessMessage";
 
 function CreatePolicy() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function CreatePolicy() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [policyGroup, setPolicyGroup] = useState("");
     const [policyDescription, setPolicyDescription] = useState("");
@@ -81,6 +83,9 @@ function CreatePolicy() {
         setPolicyGroup("");
         setPolicyDescription("");
         setPolicyData("");
+        setErrorCode("");
+        setErrorMsg("");
+        setSuccessMsg("");
     };
 
     const clickOnCancel = () => {
@@ -112,7 +117,7 @@ function CreatePolicy() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        setPolicyGroupDropdownData(createDropdownData('name', '', false, resData, t));
+                        setPolicyGroupDropdownData(createDropdownData('name', 'description', false, resData, t));
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -133,6 +138,7 @@ function CreatePolicy() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
+        setSuccessMsg("");
 
         // Convert policyData from string to JSON
         let parsedPolicyData;
@@ -229,19 +235,32 @@ function CreatePolicy() {
         inputField: "min-h-10",
     };
 
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
+
+    const successcustomStyle = {
+        outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
+        innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
+    }
+
     const handleFileChange = (event) => {
+        setErrorMsg("");
+        setErrorCode("");
+        setSuccessMsg("");
         const file = event.target.files[0];
         if (file?.type === "application/json") {
             const reader = new FileReader();
             reader.onload = () => {
                 try {
                     const data = JSON.parse(reader.result);
-                    setPolicyData(JSON.stringify(data));
+                    setPolicyData(JSON.stringify(data, null, 2));
                 } catch (error) {
                     setErrorMsg(t('createPolicy.jsonParseError'));
                 }
             };
             reader.readAsText(file);
+            setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
         } else {
             setErrorMsg(t('createPolicy.uploadFileError'));
         }
@@ -257,6 +276,9 @@ function CreatePolicy() {
                 <>
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                    )}
+                    {successMsg && (
+                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                     )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
