@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
-import { bgOfStatus, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
@@ -10,6 +10,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
+import ViewPolicyPopup from './ViewPolicyPopup';
 
 function ViewPolicy() {
     const { t } = useTranslation();
@@ -21,10 +22,11 @@ function ViewPolicy() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [viewDetails, setViewDetails] = useState(true);
     const [viewPolicyPageHeaders, setViewPolicyPageHeaders] = useState(true);
+    const [previewJsonPopup, setPreviewJsonPopup] = useState(false);
 
     useEffect(() => {
         const data = localStorage.getItem('selectedPolicyData');
-        
+
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -45,7 +47,7 @@ function ViewPolicy() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         console.log(resData);
-                        
+
                         setViewDetails(resData);
                     }
                     else {
@@ -62,6 +64,20 @@ function ViewPolicy() {
 
     const moveBackToList = () => {
         navigate(viewPolicyPageHeaders.backLink);
+    };
+
+    const showUploadedJsonData = () => {
+        setPreviewJsonPopup(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const downloadPolicyData = (policyJsonData) => {
+        downloadFile(policyJsonData, 'policy-data-json.json', 'application/json');
+    };
+
+    const closePopUp = () => {
+        setPreviewJsonPopup(false);
+        document.body.style.overflow = 'auto';
     };
 
     const cancelErrorMsg = () => {
@@ -164,13 +180,21 @@ function ViewPolicy() {
                                             <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
                                                 <div className='flex items-center'>
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
-                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.jsonFilePlace')}</p>
+                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                                 </div>
-                                                <div className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
+                                                <div onClick={() => showUploadedJsonData()} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
                                                     <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
                                                     <img src={previewIcon} alt="" />
                                                 </div>
                                             </div>
+                                            {previewJsonPopup &&
+                                                <ViewPolicyPopup
+                                                    title={t('viewAuthPoliciesList.policyData')}
+                                                    downloadJsonFile={downloadPolicyData}
+                                                    closePopUp={closePopUp}
+                                                    jsonData={JSON.stringify(viewDetails.policies)}
+                                                />
+                                            }
                                         </div>
                                     </div>
                                     <hr className={`h-px w-full bg-gray-200 border-0`} />

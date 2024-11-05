@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadCertificate } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -76,7 +76,7 @@ function ViewFtmChipDetails() {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }

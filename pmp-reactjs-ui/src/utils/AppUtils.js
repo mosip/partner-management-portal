@@ -412,8 +412,8 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
     }
 };
 
-export const downloadCertificate = (certificateData, fileName) => {
-    const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
+export const downloadFile = (data, fileName, fileType) => {
+    const blob = new Blob([data], { type: fileType });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

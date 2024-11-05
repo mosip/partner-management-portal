@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { downloadCertificate, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -66,7 +66,7 @@ function PartnerCertificatesList() {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
@@ -78,7 +78,7 @@ function PartnerCertificatesList() {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
