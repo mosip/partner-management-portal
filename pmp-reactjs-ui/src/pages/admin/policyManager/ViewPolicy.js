@@ -154,7 +154,7 @@ function ViewPolicy() {
                                             </div>
                                         </div>
                                         <div className="mb-[3.5rem] max-[600px]:w-[100%] w-[30%]">
-                                            <p className="font-[600] mb-3 text-suva-gray text-xs">
+                                            <p className="font-[600] mb-1 text-suva-gray text-xs">
                                                 {t("viewAuthPoliciesList.policyData")}
                                             </p>
                                             <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
