@@ -35,7 +35,11 @@ function ViewPolicy() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const response = await HttpService.get(getPolicyManagerUrl(`/policies/${viewData.policyId}`, process.env.NODE_ENV));
+                const response = await HttpService({
+                    url: getPolicyManagerUrl(`/policies/${viewData.policyId}`, process.env.NODE_ENV),
+                    method: 'get',
+                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                });
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -101,8 +105,8 @@ function ViewPolicy() {
                                                 {viewDetails.policyName}
                                             </p>
                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                                <div className={`${bgOfStatus(viewDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                    {getStatusCode(viewDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)}
+                                                <div className={`${bgOfStatus(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                    {getStatusCode(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)}
                                                 </div>
                                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                     {t("viewDeviceDetails.createdOn") + ' ' +

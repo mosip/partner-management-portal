@@ -612,8 +612,8 @@
     "policyGroupList": {
         "policies": "Policies",
         "policyGroup": "Policy Groups",
-        "authPolicy": "Auth Policy",
-        "dataSharePolicy": "Data Share Policy",
+        "authPolicy": "Authentication Policy",
+        "dataSharePolicy": "Datashare Policy",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupId": "Policy Group ID",
         "policyGroupName": "Policy Group Name",
@@ -627,16 +627,24 @@
         "searchPolicyGroupName": "Search Policy Group Name",
         "searchPolicyGroupDescription": "Search Policy Group Description"
     },
-    "authPoliciesList": {
-        "createAuthPolicy": "Create Auth Policy",
-        "partnerId": "Partner ID",
-        "partnerType": "Partner Type",
-        "policyGroup": "Policy Group",
-        "policyName": "Policy Name",
-        "policyDescription": "Description",
-        "createdDate": "Created Date",
-        "status": "Status",
-        "action": "Action"
+    "policiesList": {
+        "createAuthPolicy": "Create Authentication Policy",
+		"createDataSharePolicy": "Create Datashare Policy",
+        "policyId":"Policy ID",
+        "policyName":"Policy Name",
+        "policyDescription": "Policy Description",
+        "policyGroup":"Policy Group",
+        "createdDate":"Created Date",
+        "status":"Status",
+        "action":"Action",
+        "listOfAuthPolicies": "List of Authentication Policy",
+        "listOfDataSharePolicies": "List of Datashare Policy",
+        "errorInAuthPolicies": "While fetching authentication policies, we have encountered with an error.",
+        "errorInDataSharePolicies": "While fetching data share policies, we have encountered with an error.",
+        "searchPolicyId": "Search Policy ID",
+        "searchPolicyName": "Search Policy Name",
+        "searchPolicyDescription": "Search Policy Description",
+        "searchPolicyGroup": "Search Policy Group"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -649,12 +657,9 @@
         "jsonFilePlace": "JSON File Name Goes Here",
         "preview": "Preview"
     },
-    "dataSharePoliciesList": {
-        "createDataSharePolicy": "Create Data Share Policy"
-    },
     "viewDataSharePoliciesList": {
-        "viewDataSharePolicy": "View Data Share Policy",
-        "listOfDataSharePolicies": "List Of Data Share Policies"
+        "viewDataSharePolicy": "View Datashare Policy",
+        "listOfDataSharePolicies": "List of Datashare Policy"
     },
     "createPolicy": {
         "policyGroup": "Policy Group",
@@ -698,9 +703,11 @@
         "PMS_PRT_314": " Missing sort field or sort type values",
         "PMS_PRT_315": " Invalid fromValue or toValue",
         "PMS_PRT_356": " Pagination cannot be null",
-        "PMS_PRT_358": " Sort type %s is not supported",
+        "PMS_PRT_358": " Sort type is not supported",
         "PMS_PRT_359": " Error occured while sorting",
-        "PMS_PRT_357": " Invalid sort field %s",
+        "PMS_PRT_357": " Invalid sort field",
+        "PMS_PRT_360": "Invalid Page No",
+        "PMS_PRT_361": "Invalid Page Size",
         "KER_PRT_390": " Invalid filter value",
         "KER-PCM-008": "Partner organization name not matched.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
@@ -747,6 +754,9 @@
         "PMS_PM_045": " Status should be either Approved or Rejected",
         "PMS_PM_051": " Extractors are not present. Please add extractors.",
         "PMS_PM_058": " Status should be either Active or De_Active",
+        "PMS_PM_059": "Error while fetching partner details.",
+        "PMS_PM_060": "The certificate for the specified partner is not available in the store",
+        "PMS_PM_061": "Error while fetching all partners details",
         "PMS_PMP_010": "Policy does not belong to the Policy Group of the Partner Manger",
         "PMS_PMP_015": "No Partner api key requests for the Policy Group",
         "PMS_PMP_007": "Partner api key does not exist",
@@ -830,6 +840,7 @@
         "PMS_POL_058": "Status cannot be changed for published policy.;",
         "PMS_POL_059": "There are no active policy groups.",
         "PMS_POL_060": "Error while fetching policy groups.",
+        "PMS_POL_061": "Error while fetching policies",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",

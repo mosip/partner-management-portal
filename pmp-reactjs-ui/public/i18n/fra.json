@@ -631,16 +631,24 @@
         "searchPolicyGroupName": "Rechercher le nom du groupe de politiques",
         "searchPolicyGroupDescription": "Description du groupe de politiques de recherche"
     },
-    "authPoliciesList": {
+    "policiesList": {
         "createAuthPolicy": "Créer une politique d'authentification",
-        "partnerId":"ID partenaire",
-        "partnerType":"Type de partenaire",
-        "policyGroup":"Groupe de politiques",
+		"createDataSharePolicy": "Créer une politique de partage de données",
+        "policyId":"ID de la politique",
         "policyName":"Nom de la politique",
-        "policyDescription": "Description",
-        "createdDate": "Date de création",
-        "status": "Statut",
-        "action": "Action"
+        "policyDescription": "Description de la politique",
+        "policyGroup":"Groupe de politiques",
+        "createdDate":"Date de création",
+        "status":"Statut",
+        "action":"Action",
+        "listOfAuthPolicies": "Liste des politiques d'authentification",
+        "listOfDataSharePolicies": "Liste des politiques de partage de données",
+        "errorInAuthPolicies": "Lors de la récupération des politiques d’authentification, nous avons rencontré une erreur.",
+        "errorInDataSharePolicies": "Lors de la récupération des politiques de partage de données, nous avons rencontré une erreur.",
+        "searchPolicyId": "Rechercher l'ID de la politique",
+        "searchPolicyName": "Rechercher le nom de la politique",
+        "searchPolicyDescription": "Description de la politique de recherche",
+        "searchPolicyGroup": "Groupe de recherche sur les politiques"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -652,9 +660,6 @@
         "jsonFilePlace": "Le nom du fichier JSON va ici",
         "policyData": "Données de police",
         "preview": "Aperçu"
-    },
-    "dataSharePoliciesList": {
-        "createDataSharePolicy": "Créer une politique de partage de données"
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "Afficher la politique de partage de données",
@@ -702,9 +707,11 @@
         "PMS_PRT_314": "Champ de tri ou valeurs de type de tri manquantes",
         "PMS_PRT_315": " FromValue ou toValue invalide",
         "PMS_PRT_356": "La pagination ne peut pas être nulle",
-        "PMS_PRT_358": "Le type de tri %s n'est pas pris en charge",
+        "PMS_PRT_358": "Le type de tri n'est pas pris en charge",
         "PMS_PRT_359": "Une erreur s'est produite lors du tri",
-        "PMS_PRT_357": " Champ de tri non valide %s",
+        "PMS_PRT_357": "Champ de tri invalide",
+        "PMS_PRT_360": "Page non valide n°",
+        "PMS_PRT_361": "Taille de page non valide",
         "KER_PRT_390": "Valeur de filtre non valide",
         "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
@@ -751,6 +758,9 @@
         "PMS_PM_045": " Le statut doit être Approuvé ou Rejeté",
         "PMS_PM_051": "Les extracteurs ne sont pas présents. Veuillez ajouter des extracteurs.",
         "PMS_PM_058": "L'état doit être Actif ou Désactivé",
+        "PMS_PM_059": "Erreur lors de la récupération des détails du partenaire.",
+        "PMS_PM_060": "Le certificat du partenaire spécifié n'est pas disponible dans la boutique",
+        "PMS_PM_061": "Erreur lors de la récupération de tous les détails des partenaires",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
         "PMS_PMP_007": "La clé API du partenaire n'existe pas",
@@ -834,6 +844,7 @@
         "PMS_POL_058": "Le statut ne peut pas être modifié pour la politique publiée.;",
         "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
+        "PMS_POL_061": "Erreur lors de la récupération des politiques",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
