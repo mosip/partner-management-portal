@@ -180,7 +180,7 @@ function ViewPolicy() {
                                             <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
                                                 <div className='flex items-center'>
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
-                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.jsonFilePlace')}</p>
+                                                    <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                                 </div>
                                                 <div onClick={() => showUploadedJsonData()} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
                                                     <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
@@ -189,7 +189,7 @@ function ViewPolicy() {
                                             </div>
                                             {previewJsonPopup &&
                                                 <ViewPolicyPopup
-                                                    title={t('viewAuthPoliciesList.jsonFilePlace')}
+                                                    title={t('viewAuthPoliciesList.policyData')}
                                                     downloadJsonFile={downloadPolicyData}
                                                     closePopUp={closePopUp}
                                                     jsonData={JSON.stringify(viewDetails.policies)}
