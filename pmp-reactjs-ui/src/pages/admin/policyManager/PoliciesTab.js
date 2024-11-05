@@ -17,6 +17,13 @@ function PoliciesTab ({activePolicyGroup, setActivePolicyGroup, activeAuthPolicy
     };
 
     const changeToAuthPolicy = () => {
+        const policyTypeData = {
+            policyType: "Auth",
+            subTitle: t('policiesList.listOfAuthPolicies'),
+            createPolicyButtonName: t('policiesList.createAuthPolicy'),
+            errorMessage: t('policiesList.errorInAuthPolicies'),
+        }
+        localStorage.setItem('policyTypeData', JSON.stringify(policyTypeData));
         navigate('/partnermanagement/admin/policy-manager/auth-policies-list')
         setActivePolicyGroup(false); 
         setActiveAuthPolicy(true);
@@ -24,6 +31,13 @@ function PoliciesTab ({activePolicyGroup, setActivePolicyGroup, activeAuthPolicy
     };
 
     const changeToDataSharePolicy = () => {
+        const policyTypeData = {
+            policyType: "DataShare",
+            subTitle: t('policiesList.listOfDataSharePolicies'),
+            createPolicyButtonName: t('policiesList.createDataSharePolicy'),
+            errorMessage: t('policiesList.errorInDataSharePolicies'),
+        }
+        localStorage.setItem('policyTypeData', JSON.stringify(policyTypeData));
         navigate('/partnermanagement/admin/policy-manager/data-share-policies-list')
         setActivePolicyGroup(false); 
         setActiveAuthPolicy(false);
