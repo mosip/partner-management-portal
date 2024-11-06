@@ -88,9 +88,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const showFtmServices = () => {
         navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     };
-    const showPendingRequests = () => {
-        setActiveIcon("pendingRequests");
-    };
     const showRootOfTrustCertificate = () => {
         navigate('/partnermanagement/admin/certificates/root-trust-certificate-list');
     };
@@ -148,9 +145,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     }
                     {enablePartnerAdminMenu && (
                         <>
-                            <li id='side_nav_pendingRequests_icon' className="duration-700 cursor-pointer" onClick={() => showPendingRequests()}>
-                                <SideNavMenuItem title={t('dashboard.pendingRequests')} id='pendingRequests' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
                             <li id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()}>
                                 <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
                             </li>

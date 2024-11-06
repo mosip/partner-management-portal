@@ -49,8 +49,6 @@
         "deviceProviderServicesDesc": "Add, View, Deactivate SBI (Secure Biometric Interface) and associated devices",
         "userRegistrationError": "Unable to register user. Try login again!",
         "verifyEmailError": "Error during user's email verification. Try login again!",
-        "pendingRequests": "Pending Requests",
-        "pendingRequestsDesc": "Approve / Reject pending requests from various partners",
         "rootOfTrustCertificate": "Root of Trust Certificate",
         "rootOfTrustCertificateDesc": "Upload Root and Intermediate Root Certificates",
         "partner": "Partner",
