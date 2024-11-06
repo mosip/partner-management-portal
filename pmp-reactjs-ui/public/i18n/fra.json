@@ -49,8 +49,6 @@
         "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
-        "pendingRequests": "Demandes en attente",
-        "pendingRequestsDesc": "Approuver / Rejeter les demandes en attente de divers partenaires",
         "rootOfTrustCertificate": "Certificat racine de confiance",
         "rootOfTrustCertificateDesc": "Télécharger des certificats racine / CA",
         "partner": "Partenaire",
