@@ -61,7 +61,11 @@
         "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
         "ftmChip": "تفاصيل اف تي ام",
         "ftmChipDesc": "عرض أو / وإلغاء تنشيط تفاصيل شريحة FTM",
-        "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات"
+        "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات",
+        "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
+        "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
+        "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
+        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات"      
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
