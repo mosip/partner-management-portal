@@ -564,7 +564,7 @@
         "certUploadStatus": "Cert. Upload Status",
         "status": "Status",
         "action": "Action",
-        "noData": "No Data",
+        "noResultsFound": "No Results Found",
         "deActivate": "Deactivate",
         "view": "View",
         "selectPartnerId": "Select Partner ID",

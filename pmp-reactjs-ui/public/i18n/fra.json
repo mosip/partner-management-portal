@@ -568,7 +568,7 @@
         "certUploadStatus": "Cert. Statut de téléchargement",
         "status": "Statut",
         "action": "Action",
-        "noData": "Aucune donnée",
+        "noResultsFound": "Aucun résultat trouvé",
         "deActivate": "Désactiver",
         "view": "Voir",
         "selectPartnerId": "Sélectionnez l'ID du partenaire",

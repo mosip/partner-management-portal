@@ -568,7 +568,7 @@
         "certUploadStatus": "شهادة. حالة التحميل",
         "status": "حالة",
         "action": "فعل",
-        "noData": "لا توجد بيانات",
+        "noResultsFound": "لم يتم العثور على نتائج",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "selectPartnerId": "حدد معرف الشريك",

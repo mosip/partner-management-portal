@@ -28,7 +28,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName, onClickBut
                             {t(customButtonName)}
                         </button>
                         :
-                        <p className="text-[#A1A1A1] mt-3">{t("partnerList.noData")}</p>
+                        <p className="text-[#A1A1A1] mt-3">{t("partnerList.noResultsFound")}</p>
                     }
                 </div>
             </div>
