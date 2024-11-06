@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
-    const previewData = JSON.stringify(jsonData, undefined, 2);
+    const previewData = JSON.stringify(jsonData, null, 2);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
