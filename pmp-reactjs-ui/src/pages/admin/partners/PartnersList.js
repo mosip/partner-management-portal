@@ -294,7 +294,7 @@ function PartnersList() {
                                     </td>
                                     <td className="text-center break-all">
                                       <div ref={(el) => (submenuRef.current[index] = el)}>
-                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
                                           tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
                                         >
                                           ...

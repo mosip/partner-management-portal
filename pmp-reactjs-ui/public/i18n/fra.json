@@ -554,7 +554,7 @@
         "caCertificates": "Certificats CA"
     },
     "partnerList":{
-        "partnerTitle": "Partenaire",
+        "partnerTitle": "Partenaires",
         "listOfPartnerTitle": "Liste des partenaires",
         "partnerId": "ID partenairePartenaires",
         "organisation": "Nom de l'organisation",

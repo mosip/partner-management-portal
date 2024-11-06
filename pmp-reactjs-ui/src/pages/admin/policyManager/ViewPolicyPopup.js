@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { onPressEnterKey } from '../../../utils/AppUtils';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
@@ -15,7 +16,7 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
                         <button onClick={() => downloadJsonFile(previewData)} className='text-xs px-[1.3rem] py-[0.8%] border-2 font-semibold rounded-md h-9 w-fix text-tory-blue bg-white border-blue-800 cursor-pointer'>
                             {t('commons.download')}
                         </button>
-                        <p onClick={closePopUp} className='bg-gray-100 text-center h-6 w-5 text-sm font-semibold rounded-[9rem] cursor-pointer'>X</p>
+                        <p onClick={closePopUp} className='bg-gray-100 text-center h-6 w-5 text-sm font-semibold rounded-[9rem] cursor-pointer' onKeyPress={(e) => onPressEnterKey(e, closePopUp)}>X</p>
                     </div>
                 </div>
                 <hr className={`h-px w-full bg-gray-200 border-0`} />
