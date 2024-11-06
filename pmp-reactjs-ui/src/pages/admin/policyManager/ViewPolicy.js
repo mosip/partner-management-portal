@@ -47,7 +47,6 @@ function ViewPolicy() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         console.log(resData);
-
                         setViewDetails(resData);
                     }
                     else {
@@ -192,7 +191,7 @@ function ViewPolicy() {
                                                     title={t('viewAuthPoliciesList.policyData')}
                                                     downloadJsonFile={downloadPolicyData}
                                                     closePopUp={closePopUp}
-                                                    jsonData={JSON.stringify(viewDetails.policies)}
+                                                    jsonData={viewDetails.policies}
                                                 />
                                             }
                                         </div>
