@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -20,11 +20,11 @@ function ViewFtmChipDetails() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [uploadCertificateData, setUploadCertificateData] = useState({});
 
     useEffect(() => {
@@ -65,38 +65,23 @@ function ViewFtmChipDetails() {
         if (state && btnName === 'cancel') {
             setShowPopup(false);
         } else if (state && btnName === 'close') {
-            navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+            navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
         }
     };
 
     const getOriginalCertificate = async (ftmDetails) => {
-        const response = await getCertificate(ftmDetails.ftmId);
+        const response = await fetchCertificate(ftmDetails.ftmId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
 
-    const downloadCertificate = (certificateData, fileName) => {
-        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-
-        document.body.appendChild(link);
-        link.click();
-
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
-    }
-
-    const getCertificate = async (ftmId) => {
+    const fetchCertificate = async (ftmId) => {
         setErrorCode("");
         setErrorMsg("");
         try {
@@ -112,7 +97,6 @@ function ViewFtmChipDetails() {
                     return null;
                 } else {
                     const resData = responseData.response;
-                    console.log('Response data:', resData);
                     return resData;
                 }
             } else {
@@ -126,7 +110,7 @@ function ViewFtmChipDetails() {
     }
 
     const moveToFtmList = () => {
-        navigate('/partnermanagement/ftmChipProviderServices/ftmList');
+        navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     };
 
     const cancelErrorMsg = () => {
@@ -147,7 +131,7 @@ function ViewFtmChipDetails() {
             )}
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftmChipProviderServices/ftmList' />
+                    <Title title={ftmDetails.title} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/ftm-chip-provider-services/ftm-list' />
                 </div>
 
                 {unexpectedError && (

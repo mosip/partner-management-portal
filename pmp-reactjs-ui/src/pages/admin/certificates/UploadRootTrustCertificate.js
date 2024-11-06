@@ -68,7 +68,7 @@ function UploadRootTrustCertificate() {
                     const resData = responseData.response;
                     const successMessage = t('uploadRootofTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/certificates/rootTrustCertificateList",
+                        backUrl: "/partnermanagement/admin/certificates/root-trust-certificate-list",
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
@@ -117,8 +117,9 @@ function UploadRootTrustCertificate() {
     };
 
     const uploadCertificateDropdownStyle = {
-        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-base",
-        dropdownLabel: "!text-sm"
+        outerDiv: "!ml-0",
+        dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-[1rem]",
+        dropdownLabel: "!text-[1.03rem]"
     }
 
     const style = {
@@ -137,7 +138,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" backLink="/partnermanagement" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink2="/partnermanagement/admin/certificates/rootTrustCertificateList" styleSet={style} />
+                            <Title title="uploadRootofTrustCertificate.uploadRootofTrustCertificate" subTitle='viewRootOfTrustCertificate.viewRootOfTrustCertificate' backLink="/partnermanagement/admin/certificates/root-trust-certificate-list" />
                         </div>
                         <div className="flex-col justify-center mt-3 h-full">
                             {!uploadSuccess ?
@@ -152,7 +153,7 @@ function UploadRootTrustCertificate() {
                                                 <div className={`flex-col p-6 border-2 bg-[#f9fafb] my-5 mx-4 rounded-xl justify-center items-center`}>
                                                     <DropdownComponent
                                                         fieldName='partnerDomain'
-                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain'
+                                                        fieldNameKey='uploadRootofTrustCertificate.partnerDomain*'
                                                         onDropDownChangeEvent={onDomainChangeEvent}
                                                         dropdownDataList={[
                                                             { fieldValue: 'FTM', fieldCode: 'FTM' },

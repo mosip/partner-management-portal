@@ -298,7 +298,7 @@ function CreateOidcClient() {
           const resData = responseData.response;
           const requiredData = {
             title: "createOidcClient.createOidcClient",
-            backUrl: "/partnermanagement/authenticationServices/oidcClientsList",
+            backUrl: "/partnermanagement/authentication-services/oidc-clients-list",
             header: "createOidcClient.requestSuccessHeader",
             description: "createOidcClient.requestSuccessMsg",
             subNavigation: "authenticationServices.authenticationServices",
@@ -375,7 +375,7 @@ function CreateOidcClient() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authenticationServices/oidcClientsList' ></Title>
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
             </div>
             {!createOidcClientSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

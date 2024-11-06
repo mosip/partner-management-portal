@@ -69,7 +69,7 @@ function SbiList() {
     }, []);
 
     const addSbi = () => {
-        navigate('/partnermanagement/deviceProviderServices/addSbi');
+        navigate('/partnermanagement/device-provider-services/add-sbi');
     };
 
     const addDevices = (sbi) => {
@@ -77,16 +77,16 @@ function SbiList() {
         setSelectedSbiData(sbi);
         const previousPath = {
             name: 'sbiList.listOfSbi',
-            path: '/partnermanagement/deviceProviderServices/sbiList',
+            path: '/partnermanagement/device-provider-services/sbi-list',
             backToSbiList: true
         };
         localStorage.setItem('previousPath', JSON.stringify(previousPath));
-        navigate('/partnermanagement/deviceProviderServices/addDevices');
+        navigate('/partnermanagement/device-provider-services/add-devices');
     };
 
     const devicesList = (sbi) => {
         setSelectedSbiData(sbi);
-        navigate('/partnermanagement/deviceProviderServices/devicesList');
+        navigate('/partnermanagement/device-provider-services/devices-list');
     }
 
     const setSelectedSbiData = (sbi) => {

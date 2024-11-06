@@ -11,13 +11,13 @@ function AuthenticationServicesTab( {activeOidcClient, setActiveOicdClient, acti
     const navigate = useNavigate();
 
     const changeToOidcClients = () => {
-        navigate('/partnermanagement/authenticationServices/oidcClientsList')
+        navigate('/partnermanagement/authentication-services/oidc-clients-list')
         setActiveOicdClient(true); 
         setActiveApiKey(false);
     };
 
     const changeToApiKey = () => {
-        navigate('/partnermanagement/authenticationServices/apiKeysList')
+        navigate('/partnermanagement/authentication-services/api-keys-list')
         setActiveOicdClient(false); 
         setActiveApiKey(true);
     };

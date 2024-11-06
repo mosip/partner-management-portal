@@ -26,7 +26,13 @@ import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipD
 import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertificateList.js';
 import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
-
+import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
+import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
+import PolicyGroupList from './pages/admin/policyManager/PolicyGroupList.js';
+import ViewPolicyGroupDetails from './pages/admin/policyManager/ViewPolicyGroupDetails.js';
+import Policies from './pages/admin/policyManager/PoliciesList.js';
+import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
+import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 
 function AppRoutes() {
 
@@ -41,108 +47,151 @@ function AppRoutes() {
         { path: '', loader: () => redirect('/partnermanagement/dashboard') },
         {
           path: 'dashboard',
-          element: <GuardedRoute><MainLayout><Dashboard/></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><Dashboard /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'userProfile',
-          element: <GuardedRoute><MainLayout><UserProfile/></MainLayout></GuardedRoute>,
+          path: 'user-profile',
+          element: <GuardedRoute><MainLayout><UserProfile /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'certificates/partnerCertificate',
-          element: <GuardedRoute><MainLayout><PartnerCertificatesList/></MainLayout></GuardedRoute>,
+          path: 'certificates/partner-certificate',
+          element: <GuardedRoute><MainLayout><PartnerCertificatesList /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'policies/policiesList',
-          element: <GuardedRoute><MainLayout><PoliciesList/></MainLayout></GuardedRoute>,
+          path: 'policies/policies-list',
+          element: <GuardedRoute><MainLayout><PoliciesList /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'policies/viewPolicyDetails',
-          element: <GuardedRoute><MainLayout><ViewPolicyDetails/></MainLayout></GuardedRoute>,
+          path: 'policies/view-policy-details',
+          element: <GuardedRoute><MainLayout><ViewPolicyDetails /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'policies/requestPolicy',
-          element: <GuardedRoute><MainLayout><RequestPolicy/></MainLayout></GuardedRoute>,
+          path: 'policies/request-policy',
+          element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/oidcClientsList',
-          element: <GuardedRoute><MainLayout><OidcClientsList/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/oidc-clients-list',
+          element: <GuardedRoute><MainLayout><OidcClientsList /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/createOidcClient',
-          element: <GuardedRoute><MainLayout><CreateOidcClient/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/create-oidc-client',
+          element: <GuardedRoute><MainLayout><CreateOidcClient /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/viewOidcClienDetails',
-          element: <GuardedRoute><MainLayout><ViewOidcClientDetails/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/view-oidc-client-details',
+          element: <GuardedRoute><MainLayout><ViewOidcClientDetails /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/editOidcClient',
-          element: <GuardedRoute><MainLayout><EditOidcClient/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/edit-oidc-client',
+          element: <GuardedRoute><MainLayout><EditOidcClient /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/apiKeysList',
-          element: <GuardedRoute><MainLayout><ApiKeysList/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/api-keys-list',
+          element: <GuardedRoute><MainLayout><ApiKeysList /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/generateApiKey',
-          element: <GuardedRoute><MainLayout><GenerateApiKey/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/generate-api-key',
+          element: <GuardedRoute><MainLayout><GenerateApiKey /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'authenticationServices/viewApiKeyDetails',
-          element: <GuardedRoute><MainLayout><ViewApiKeyDetails/></MainLayout></GuardedRoute>,
+          path: 'authentication-services/view-api-key-details',
+          element: <GuardedRoute><MainLayout><ViewApiKeyDetails /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'deviceProviderServices/sbiList',
-          element: <GuardedRoute><MainLayout><SbiList/></MainLayout></GuardedRoute>,
+          path: 'device-provider-services/sbi-list',
+          element: <GuardedRoute><MainLayout><SbiList /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'deviceProviderServices/addSbi',
-          element: <GuardedRoute><MainLayout><AddSbi/></MainLayout></GuardedRoute>,
+          path: 'device-provider-services/add-sbi',
+          element: <GuardedRoute><MainLayout><AddSbi /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'deviceProviderServices/addDevices',
-          element: <GuardedRoute><MainLayout><AddDevices/></MainLayout></GuardedRoute>
+          path: 'device-provider-services/add-devices',
+          element: <GuardedRoute><MainLayout><AddDevices /></MainLayout></GuardedRoute>
         },
         {
-          path: 'deviceProviderServices/devicesList',
-          element: <GuardedRoute><MainLayout><DevicesList/></MainLayout></GuardedRoute>
+          path: 'device-provider-services/devices-list',
+          element: <GuardedRoute><MainLayout><DevicesList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'deviceProviderServices/viewDeviceDetails',
-          element: <GuardedRoute><MainLayout><ViewDeviceDetails/></MainLayout></GuardedRoute>
+          path: 'device-provider-services/view-device-details',
+          element: <GuardedRoute><MainLayout><ViewDeviceDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'ftmChipProviderServices/ftmList',
-          element: <GuardedRoute><MainLayout><FtmList/></MainLayout></GuardedRoute>
+          path: 'ftm-chip-provider-services/ftm-list',
+          element: <GuardedRoute><MainLayout><FtmList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'ftmChipProviderServices/addFtm',
-          element: <GuardedRoute><MainLayout><AddFtm/></MainLayout></GuardedRoute>
+          path: 'ftm-chip-provider-services/add-ftm',
+          element: <GuardedRoute><MainLayout><AddFtm /></MainLayout></GuardedRoute>
         },
         {
-          path: 'ftmChipProviderServices/viewFtmChipDetails',
-          element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
+          path: 'ftm-chip-provider-services/view-ftm-chip-details',
+          element: <GuardedRoute><MainLayout><ViewFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'ftmChipProviderServices/manageFtmChipCertificate',
-          element: <GuardedRoute><MainLayout><ViewFtmChipDetails/></MainLayout></GuardedRoute>
+          path: 'ftm-chip-provider-services/manage-ftm-chip-certificate',
+          element: <GuardedRoute><MainLayout><ViewFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/rootTrustCertificateList',
-          element: <GuardedRoute><MainLayout><RootTrustCertificateList/></MainLayout></GuardedRoute>
+          path: 'admin/certificates/root-trust-certificate-list',
+          element: <GuardedRoute><MainLayout><RootTrustCertificateList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/uploadRootTrustCertificate',
-          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate/></MainLayout></GuardedRoute>
+          path: 'admin/certificates/upload-root-trust-certificate',
+          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/partnersList',
-          element: <GuardedRoute><MainLayout><PartnersList/></MainLayout></GuardedRoute>
+          path: 'admin/partners-list',
+          element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
+        }, 
+        {
+          path: 'admin/view-partner-details',
+          element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
         },
-
+        {
+          path: 'admin/policy-manager/create-policy-group',
+          element: <GuardedRoute><MainLayout><CreatePolicyGroup /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/policy-group-list',
+          element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-policy-group-details',
+          element: <GuardedRoute><MainLayout><ViewPolicyGroupDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/auth-policies-list',
+          element: <GuardedRoute><MainLayout><Policies/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/data-share-policies-list',
+          element: <GuardedRoute><MainLayout><Policies/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/create-auth-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/create-data-share-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/create-data-share-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-auth-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-data-share-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+        },
         {
           path: 'runtimeError',
-          element: <RuntimeError/>,
+          element: <RuntimeError />,
         },
       ],
     },

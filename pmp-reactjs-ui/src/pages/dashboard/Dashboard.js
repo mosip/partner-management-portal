@@ -66,6 +66,7 @@ function Dashboard() {
       console.log("Error: ", err);
     }
   }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -149,27 +150,31 @@ function Dashboard() {
   }, []);
 
   const partnerCertificatesList = () => {
-    navigate('/partnermanagement/certificates/partnerCertificate')
+    navigate('/partnermanagement/certificates/partner-certificate')
   };
 
   const policies = () => {
-    navigate('/partnermanagement/policies/policiesList')
+    navigate('/partnermanagement/policies/policies-list')
   };
 
   const deviceProviderServices = () => {
-    navigate('/partnermanagement/deviceProviderServices/sbiList')
+    navigate('/partnermanagement/device-provider-services/sbi-list')
   };
 
   const ftmChipProviderServices = () => {
-    navigate('/partnermanagement/ftmChipProviderServices/ftmList')
+    navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   };
 
-  const rootTrustCertificateList = () =>{
-    navigate('/partnermanagement/admin/certificates/rootTrustCertificateList')
+  const rootTrustCertificateList = () => {
+    navigate('/partnermanagement/admin/certificates/root-trust-certificate-list')
   }
 
-  const partnersList = () =>{
-    navigate('/partnermanagement/admin/partnersList')
+  const partnersList = () => {
+    navigate('/partnermanagement/admin/partners-list')
+  }
+
+  const policiesInAdmin = () => {
+    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
   }
 
   const cancelErrorMsg = () => {
@@ -186,8 +191,8 @@ function Dashboard() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700">
-            <p >
+          <div className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
+            <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
@@ -269,20 +274,6 @@ function Dashboard() {
             )}
             {isPartnerAdmin && (
               <>
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
-                  <div className="flex justify-center mb-5">
-                    <img src={pending_requests_icon} alt="" className="w-8 h-8"></img>
-                  </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.pendingRequests')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.pendingRequestsDesc')}
-                    </p>
-                  </div>
-                </div>
-
                 <div onClick={rootTrustCertificateList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, rootTrustCertificateList())}>
                   <div className="flex justify-center mb-5">
                     <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
@@ -297,7 +288,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnersList())}>
                   <div className="flex justify-center mb-5">
                     <img src={partner_admin_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -311,7 +302,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policiesInAdmin())}>
                   <div className="flex justify-center mb-5">
                     <img src={admin_policies_icon} alt="" className="w-8 h-8"></img>
                   </div>

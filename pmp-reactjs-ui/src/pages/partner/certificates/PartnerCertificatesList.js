@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -60,67 +60,42 @@ function PartnerCertificatesList() {
     }
 
     const getOriginalCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await getCertificate(partner.partnerId);
+        const response = await fetchCertificate(partner.partnerId);
         if (response !== null) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
 
-    const downloadCertificate = (certificateData, fileName) => {
-        const blob = new Blob([certificateData], { type: 'application/x-x509-ca-cert' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
 
-        document.body.appendChild(link);
-        link.click();
-
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
-    }
-
-    const getCertificate = async (partnerId) => {
+    const fetchCertificate = async (partnerId) => {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
-            if (response !== null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                    return null;
-                } else {
-                    const resData = responseData.response;
-                    console.log('Response data:', resData);
-                    return resData;
-                }
-            } else {
+            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+            if (responseData) {
+                const resData = responseData.response;
+                return resData;
+            }
+            else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
-                return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
@@ -135,11 +110,7 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        const errorCode = responseData.errors[0].errorCode;
-                        const errorMessage = responseData.errors[0].message;
-                        setErrorCode(errorCode);
-                        setErrorMsg(errorMessage);
-                        console.error('Error:', errorMessage);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
@@ -226,7 +197,7 @@ function PartnerCertificatesList() {
                                                             disableBtn={false}
                                                             id={'download_btn' + (index + 1)}
                                                         />
-                                                        <button id={"partner_certificate_re_upload_btn" + (index+1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
+                                                        <button id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
                                                             {t('partnerCertificatesList.reUpload')}
                                                         </button>
                                                     </div>

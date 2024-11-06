@@ -51,6 +51,8 @@ public class TestRunner {
 				                                             
 				if(test.equals("RegisterNewUser")) {
 					classes.add(RegisterNewUser);
+					classes.add(NewUserPolicy);
+				
 				}
 				if(test.equals("NewUserPolicy")) {
 					classes.add(NewUserPolicy);
