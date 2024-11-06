@@ -2,6 +2,9 @@ package io.mosip.testrig.pmprevampui.utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -40,7 +43,7 @@ public class BaseClass {
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	private static final Logger logger = Logger.getLogger(BaseClass.class);
-	protected String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
+	protected static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
 
 
 	@BeforeMethod
@@ -160,6 +163,17 @@ public class BaseClass {
 		}
 
 		return sb.toString();
+	}
+	
+	public static String Date() {
+		NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+		LocalDate currentDate = LocalDate.now();
+		String formattedDate =null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		formattedDate = currentDate.format(formatter);
+		
+		System.out.println(formattedDate);
+		return formattedDate;
 	}
 }
 

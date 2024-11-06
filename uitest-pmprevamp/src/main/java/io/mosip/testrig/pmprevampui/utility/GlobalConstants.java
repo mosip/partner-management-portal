@@ -63,5 +63,25 @@ public class GlobalConstants {
 	public static final String isViewPolicyTitle = "Verify if view policy title displayed";
 	public static final String isSelectPolicyGroupViewMoreAndLess = "Verify if select policy group view more and less is displayed";
 	public static final String isSelectPolicyGroupSubmitDisabled = "Verify if select policy group submit disabled";
-	
+	public static final String isOriginalCertificateDownloadPopupDisplayed = "Verify if Originally uploaded CA signed certificate downloaded successfully displayed";
+	public static final String isMosipCertificateDownloadPopupDisplayed = "Verify if mosip signed certificate downloaded successfully displayed";
+	public static final String iReUploadPartnerCertificateTextDisplayed = "Verify if Re-Upload partner certificate title displayed";
+	public static final String isReUploadPartnerCertificateSubTextDisplayed = "Verify if please select all fields and upload the certificate text displayed";
+	public static final String isInvalidCertFormatePopupDisplayed = "Verify if The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload text displayed";
+	public static final String TABLE = "</table>";
+	public static final String TR = "</tr>";
+	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
+	public static final String EMAILABLEREPORT2NAME = "emailable.report2.name";
+	public static final String TRTR = "</th></tr>";
+	public static final String SKIPPED = "Skipped";
+	public static final String KNOWN_ISSUE_SUBSET_STRING = "known issue;";
+	public static final String TRCLASS = "<tr class=\"";
+	public static final String colspan = " colspan=\"";
+	public static final String TDTR = "</td></tr>";
+	public static final String KNOWN_ISSUES_STRING = "known issue";
+	public static final String NUMATTN = "num attn";
+	public static final String FEATURE_NOT_SUPPORTED = "feature not supported";
+	public static final String SERVICE_NOT_DEPLOYED = "Service not deployed";
+	public static final String SERVICE_NOT_DEPLOYED_MESSAGE = "Service not deployed. Hence skipping the testcase";
+	public static final String KNOWN_ISSUES = "known issue. Hence skipping the testcase";
 }

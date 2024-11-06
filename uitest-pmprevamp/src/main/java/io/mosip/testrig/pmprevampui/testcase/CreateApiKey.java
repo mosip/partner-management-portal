@@ -22,6 +22,14 @@ public class CreateApiKey extends BaseClass {
 
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
+		dashboardpage.clickOnProfileDropdown();
+		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+
+		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		
+		loginpage.enterUserName("0"+data);
+		loginpage.enterPassword(password);
+		loginpage.ClickOnLoginButton();
 
 		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed);
 		OidcClientPage oidcClientPage=dashboardpage.clickOnAuthenticationServicesTitle();
@@ -37,10 +45,10 @@ public class CreateApiKey extends BaseClass {
 		assertTrue(apiKeyPage.isGenerateAPIKeyDisplayed(), GlobalConstants.isGenerateAPIKeyDisplayed);
 		apiKeyPage.ClickOnAPIKeyDisplayed();
 		assertTrue(apiKeyPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		apiKeyPage.selectPartnerIdDropdown("automationuiiii");
+		apiKeyPage.selectPartnerIdDropdown("0"+data);
 		
 		assertTrue(apiKeyPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
-		apiKeyPage.enterNameOfApiKeyTextBox(data+"ad");
+		apiKeyPage.enterNameOfApiKeyTextBox("0"+data);
 		
 		apiKeyPage.ClickOnSubmitButton();
 		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);

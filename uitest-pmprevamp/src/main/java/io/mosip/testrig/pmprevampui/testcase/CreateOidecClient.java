@@ -8,6 +8,7 @@ import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
 import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
+import io.mosip.testrig.pmprevampui.pages.OldPmpPage;
 import io.mosip.testrig.pmprevampui.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
 import io.mosip.testrig.pmprevampui.pages.RegisterPage;
@@ -20,7 +21,45 @@ public class CreateOidecClient extends BaseClass {
 	public void CreateOidecClient() {
 
 		DashboardPage dashboardpage = new DashboardPage(driver);
+		RegisterPage registerPage = new RegisterPage(driver);
+		dashboardpage.clickOnProfileDropdown();
+		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
+		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		
+		registerPage.openNewTab();
+        OldPmpPage oldPmpPage = new OldPmpPage(driver);
+		
+		oldPmpPage.refreshPage();
+ 		oldPmpPage.EnterUserName(userid);
+		oldPmpPage.EntePasswordTextBox(password);
+		oldPmpPage.clickOnLoginButton();
+		
+		oldPmpPage.clickOnPartnerPolicyMappingTab();
+		oldPmpPage.clickOnfilterButton();
+		oldPmpPage.EnterPartnerNameTextBox("xyz");
+		oldPmpPage.EnterRequestDetail("0"+data);
+		oldPmpPage.clickOnApplyTextButton();
+		oldPmpPage.clickOnEllipsisButton();
+		oldPmpPage.clickOnManagePolicy();
+		
+		oldPmpPage.clickOnConfirmpopup();
+		oldPmpPage.clickOnConfirmMessagePopup();
+		
+		oldPmpPage.clickOnUserProfile();
+		oldPmpPage.clickOnLogOut();
+		
+		registerPage.CloseTheTab();
+		registerPage.openPreviousTab();
+		registerPage.refreshThePage();
+		registerPage.openRevampInNewTab();
+		
+		LoginPage loginPage =  new LoginPage(driver);
+		loginPage.enterUserName("0"+data);
+		loginPage.enterPassword(password);
+		loginPage.ClickOnLoginButton();
+		
 		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed);
 		OidcClientPage oidcClientPage=dashboardpage.clickOnAuthenticationServicesTitle();
 
@@ -35,12 +74,12 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.clickOnCreateOidcClientButton();
 	
 		assertTrue(oidcClientPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		oidcClientPage.selectPartnerIdDropdown("automationuiiii");
+		oidcClientPage.selectPartnerIdDropdown("0"+data);
 		
 		assertTrue(oidcClientPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
-		oidcClientPage.selectPolicyNameDropdown(data+"ad");
+		oidcClientPage.selectPolicyNameDropdown("0"+data);
 		
-		oidcClientPage.enterNameOidcTextBox(data+"ad");
+		oidcClientPage.enterNameOidcTextBox("0"+data);
 		
 		String publicKey = ConfigManager.getrandomPublicKey() + "\"" + generateRandomString(4) + "\"}";
 		
@@ -48,8 +87,35 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnSubmitButton();
-		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
-			
+		assertTrue(oidcClientPage.isDetailsSubmittedSuccessFullyDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
+		oidcClientPage.clickConfirmationGoBackButton();
+		
+		oidcClientPage.clickOidcShowCopyPopupButton();
+		oidcClientPage.clickCopyIdButton();
+		
+		oidcClientPage.clickCopyIdCloseButton();
+		assertTrue(oidcClientPage.isOidcDetailsElipsisButtonDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
+		oidcClientPage.clickOidcDetailsElipsisButton();
+		assertTrue(oidcClientPage.isOidcDetailsViewButtonDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
+		oidcClientPage.clickOidcEditButton();
+		oidcClientPage.clickoidcEditAddNewRedirectUrl();
+		
+		oidcClientPage.EnterPublickeySecondTextBox(publicKey);
+		oidcClientPage.clickOnSubmitButton();
+		assertTrue(oidcClientPage.isModifiedSuccessfullTextMessageDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
+		oidcClientPage.clickConfirmationGoBackButton();
+		
+		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isPartnerTypeDescAscIcon);
+		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isPartnerTypeDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescISconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
+		oidcClientPage.isFilterButtonButtonEnabled();
 	}
 	
 	@Test

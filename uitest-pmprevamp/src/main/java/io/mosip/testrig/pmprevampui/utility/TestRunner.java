@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmprevampui.utility;
 
 import java.io.File;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +13,6 @@ import org.testng.xml.XmlTest;
 
 import io.mosip.testrig.pmprevampui.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
-
-
-
-
 
 
 
@@ -38,6 +35,7 @@ public class TestRunner {
 		File homeDir = null;
 		TestNG runner = new TestNG();
 		if(!ConfigManager.gettestcases().equals("")) {
+			
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
 			suite.addListener("io.mosip.testrig.pmprevampui.utility.EmailableReport");
@@ -53,8 +51,6 @@ public class TestRunner {
 				                                             
 				if(test.equals("RegisterNewUser")) {
 					classes.add(RegisterNewUser);
-					classes.add(NewUserPolicy);
-				
 				}
 				if(test.equals("NewUserPolicy")) {
 					classes.add(NewUserPolicy);
@@ -101,10 +97,11 @@ public class TestRunner {
 
 
 		}
+		
 		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
 		System.getProperties().setProperty("emailable.report2.name", "PMPUI-" + BaseTestCaseFunc.environment 
-				+ "-run-" + System.currentTimeMillis() + "-report.html");
+				+ "-run-" +BaseClass.Date()+"-report.html");
 
 		runner.run();
 		System.exit(0);

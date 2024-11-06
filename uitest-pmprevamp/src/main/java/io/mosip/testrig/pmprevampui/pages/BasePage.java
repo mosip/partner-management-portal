@@ -22,77 +22,79 @@ import io.mosip.testrig.pmprevampui.utility.Screenshot;
 public class BasePage {
 
 	protected static WebDriver driver;
-	public static String appendDate=getPreAppend()+getDateTime();
-
+	public static String appendDate = getPreAppend() + getDateTime();
 
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public static String getDateTime(){
+	public static String getDateTime() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mmHHddMMyyyy");
 		LocalDateTime now = LocalDateTime.now();
 		return dtf.format(now);
 	}
 
-	public  static void clickOnElement(WebElement element) {
+	public static void clickOnElement(WebElement element) {
 		wait(1000);
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-			wait.until(ExpectedConditions.elementToBeClickable(element));		
+			wait.until(ExpectedConditions.elementToBeClickable(element));
 			element.click();
-		}catch (Exception e) {
-			try {		
+		} catch (Exception e) {
+			try {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", element);
-			}catch (Exception exception) {
+			} catch (Exception exception) {
 				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+							+ "' width='900' height='450'/></p>");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				throw exception;  
+				throw exception;
 			}
 		}
 	}
 
-	public static void enter(WebElement element,String value)  {
-		
+	public static void enter(WebElement element, String value) {
+
 		try {
 			Thread.sleep(3000);
 			element.clear();
 			element.sendKeys(value);
-		}catch (Exception e) {
-			try {			
+		} catch (Exception e) {
+			try {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();",element);
-			}catch (Exception exception) {
+				executor.executeScript("arguments[0].click();", element);
+			} catch (Exception exception) {
 				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+							+ "' width='900' height='450'/></p>");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				throw exception;  
+				throw exception;
 			}
 		}
 	}
 
-	public static void uploadImage(WebElement element,String path) {
+	public static void uploadImage(WebElement element, String path) {
 		try {
 			wait(1000);
 			element.sendKeys(path);
-		}catch (Exception e) {
-			try {			
+		} catch (Exception e) {
+			try {
 				wait(1000);
 				element.sendKeys(path);
-			}catch (Exception exception) {
+			} catch (Exception exception) {
 				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+							+ "' width='900' height='450'/></p>");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				throw exception;  
+				throw exception;
 			}
 		}
 	}
@@ -100,8 +102,8 @@ public class BasePage {
 	public static void dropdownByIndex(WebElement element, int index) {
 
 		try {
-			Thread.sleep(50); 
-			clickOnElement(element); 
+			Thread.sleep(50);
+			clickOnElement(element);
 			Select dropdown = new Select(element);
 			dropdown.selectByIndex(index);
 
@@ -110,38 +112,36 @@ public class BasePage {
 			executor.executeScript("arguments[0].click();", element);
 		}
 	}
-	
-	public static void dropdown(WebElement element,String value) throws IOException
-	{
+
+	public static void dropdown(WebElement element, String value) throws IOException {
 
 		try {
 			Thread.sleep(50);
 			clickOnElement(element);
 			Thread.sleep(50);
-			String val="'"+value +"'";
-			click(By.xpath("//*[contains(text(),"+val+")]"));
+			String val = "'" + value + "'";
+			click(By.xpath("//*[contains(text()," + val + ")]"));
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", element);
 
 		}
 	}
 
-
 	protected static void click(By by) {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			driver.findElement(by).click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.findElement(by).click();
 	}
 
 	public static String generateRandomAlphabetString() {
@@ -163,14 +163,15 @@ public class BasePage {
 			return true;
 		} catch (Exception e) {
 			try {
-				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+						+ "' width='900' height='450'/></p>");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			return false;
 		}
 	}
-	
+
 	protected boolean isElementEnabled(WebElement element) {
 		try {
 			waitForElementToBeVisible(element);
@@ -178,7 +179,8 @@ public class BasePage {
 			return true;
 		} catch (Exception e) {
 			try {
-				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver) + "' width='900' height='450'/></p>");
+				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+						+ "' width='900' height='450'/></p>");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -199,8 +201,7 @@ public class BasePage {
 		}
 	}
 
-	public static String getPreAppend() 
-	{
+	public static String getPreAppend() {
 		String preappend = null;
 		try {
 
@@ -212,8 +213,7 @@ public class BasePage {
 		return preappend;
 	}
 
-	public static int getSplitdigit() 
-	{
+	public static int getSplitdigit() {
 		String splitdigit = null;
 		try {
 
@@ -224,14 +224,14 @@ public class BasePage {
 		}
 		return Integer.parseInt(splitdigit);
 	}
-	
-    protected String getTextFromLocator(WebElement element) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        this.waitForElementToBeVisible(element);
-        return element.getText();
-    }
+
+	protected String getTextFromLocator(WebElement element) {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		this.waitForElementToBeVisible(element);
+		return element.getText();
+	}
 }
