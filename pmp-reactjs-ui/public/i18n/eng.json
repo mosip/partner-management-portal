@@ -61,7 +61,11 @@
         "sbiDeviceDesc": "View, Deactivate Approve / Reject SBI or device details",
         "ftmChip": "FTM Chip",
         "ftmChipDesc": "View, Deactivate Approve / Reject FTM Chip details",
-        "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details"
+        "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details",
+        "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",
+        "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
+        "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
+        "requestCountFetchError": "An Unexpected error occured while fetching request count"
     },
     "header": {
         "userProfile": "User Profile",

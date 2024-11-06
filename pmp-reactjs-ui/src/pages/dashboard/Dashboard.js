@@ -32,6 +32,10 @@ function Dashboard() {
   const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
   const [isPartnerAdmin, setIsPartnerAdmin] = useState(false);
+  const [partnerPolicyMappingRequestCount, setPartnerPolicyMappingRequestCount] = useState();
+  const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
+  const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
+  const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();  
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -44,15 +48,11 @@ function Dashboard() {
     try {
       const response = await HttpService.get(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
       if (response) {
-        console.log(response)
         const responseData = response.data;
-        console.log(responseData)
         if (responseData && responseData.response) {
           const resData = responseData.response;
           let consentGiven = resData.consentGiven;
-          console.log(consentGiven)
           isUserConsentGiven = consentGiven;
-          console.log(isUserConsentGiven)
         } else {
           handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
@@ -148,6 +148,109 @@ function Dashboard() {
 
   }, []);
 
+  useEffect(() => {
+    const fetchPartnerPolicyMappingRequestCount = async () => {
+      const partnerPolicyMappingSearchRequest = createRequest({
+        filters: [{ columnName: "statusCode", type: "equals", value: "InProgress" }],
+        sort: [],
+        pagination: { pageStart: 0, pageFetch: 1 },
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/partners/apikey/request/search`, process.env.NODE_ENV),
+          partnerPolicyMappingSearchRequest
+        );
+        if (response?.data?.response) {
+          setPartnerPolicyMappingRequestCount(response.data.response.totalRecord);
+        } else {
+          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+        }
+      } catch (err) {
+        setErrorMsg(t('dashboard.requestCountFetchError'));
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    const fetchPendingApprovalSbiCount = async () => {
+      const SbiSearchRequest = createRequest({
+        filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
+        sort: [],
+        pagination: { pageStart: 0, pageFetch: 1 },
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/securebiometricinterface/search`, process.env.NODE_ENV),
+          SbiSearchRequest
+        );
+        if (response?.data?.response) {
+          setSbiPendingApprovalRequestCount(response.data.response.totalRecord);
+        } else {
+          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+        }
+      } catch (err) {
+        setErrorMsg(t('dashboard.requestCountFetchError'));
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    const fetchPendingApprovalDevicesCount = async () => {
+      const DeviceSearchRequest = createRequest({
+        filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
+        sort: [],
+        pagination: { pageStart: 0, pageFetch: 1 },
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV),
+          DeviceSearchRequest
+        );
+        if (response?.data?.response) {
+          setDevicePendingApprovalRequestCount(response.data.response.totalRecord);
+        } else {
+          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+        }
+      } catch (err) {
+        setErrorMsg(t('dashboard.requestCountFetchError'));
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    const fetchPendingApprovalFtmCount = async () => {
+      const DeviceSearchRequest = createRequest({
+        filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
+        sort: [],
+        pagination: { pageStart: 0, pageFetch: 1 },
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/ftpchipdetail/search`, process.env.NODE_ENV),
+          DeviceSearchRequest
+        );
+        if (response?.data?.response) {
+          setFtmPendingApprovalRequestCount(response.data.response.totalRecord);
+        } else {
+          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+        }
+      } catch (err) {
+        setErrorMsg(t('dashboard.requestCountFetchError'));
+        console.error("Error fetching data:", err);
+      }
+    };
+    if (isPartnerAdmin) {
+      setTimeout(() => {
+        fetchPartnerPolicyMappingRequestCount();
+        fetchPendingApprovalSbiCount();
+        fetchPendingApprovalDevicesCount();
+        fetchPendingApprovalFtmCount();
+      }, 3000);
+    }
+
+  }, [isPartnerAdmin]);
+
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')
   };
@@ -179,6 +282,14 @@ function Dashboard() {
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
+
+  const LoadingDots = () => (
+    <div className='flex space-x-1 justify-center items-center m-2'>
+      <div className='h-1 w-1 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+      <div className='h-1 w-1 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+      <div className='h-1 w-1 bg-gray-800 rounded-full animate-bounce'></div>
+    </div>
+  );
 
   return (
     <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28" : "ml-20"} overflow-x-scroll relative`}>
@@ -322,6 +433,9 @@ function Dashboard() {
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.partnerPolicyMapping')}
+                      <span className="flex justify-center items-center px-1 text-gray-600">
+                        ({partnerPolicyMappingRequestCount ? (t('dashboard.partnerPolicyMappingRequestCountDesc', { partnerPolicyMappingRequestCount: partnerPolicyMappingRequestCount })) : <LoadingDots />})
+                      </span>
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.partnerPolicyMappingDesc')}
@@ -336,6 +450,10 @@ function Dashboard() {
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.sbiDevice')}
+                      <span className="flex justify-center items-center px-1 text-gray-600">
+                        ({(sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount) ? (t('dashboard.sbiAndDevicePendingApprovalRequestCountDesc',
+                          { sbiPendingApprovalRequestCount: sbiPendingApprovalRequestCount, devicePendingApprovalRequestCount: devicePendingApprovalRequestCount })) : <LoadingDots />})
+                      </span>
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.sbiDeviceDesc')}
@@ -350,6 +468,9 @@ function Dashboard() {
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.ftmChip')}
+                      <span className="flex justify-center items-center px-1 text-gray-600">
+                        ({ftmPendingApprovalRequestCount ? (t('dashboard.ftmPendingApprovalRequestCountDesc', { ftmPendingApprovalRequestCount })) : (<LoadingDots />)})
+                      </span>
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.ftmChipDesc')}

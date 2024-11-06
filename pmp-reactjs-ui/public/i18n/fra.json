@@ -61,7 +61,11 @@
         "sbiDeviceDesc": "Afficher, Désactiver Approuver / Rejeter les détails du SBI ou de l'appareil",
         "ftmChip": "Puce FTM",
         "ftmChipDesc": "Afficher, Désactiver l'approbation / Rejet des détails de la puce FTM",
-        "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API"
+        "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API",
+        "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
+        "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
+        "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
+        "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
