@@ -12,7 +12,6 @@ import {
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
@@ -20,6 +19,7 @@ import Title from '../../common/Title.js';
 import DevicesListFilter from './DevicesListFilter.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import EmptyList from '../../common/EmptyList.js';
 
 function DevicesList() {
     const navigate = useNavigate('');
@@ -242,31 +242,12 @@ function DevicesList() {
                                 {devicesList.length === 0
                                     ?
                                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                        {
-                                            <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                                                <div className={`flex w-full justify-between`}>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.deviceType')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.deviceSubType')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.make')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.model')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.createdDate')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.status')}</h6>
-                                                    <h6 className="px-2 mx-2 text-center">{t('devicesList.action')}</h6>
-                                                </div>
-                                            </div>
-                                        }
-
-                                        <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                                        <div className="flex items-center justify-center p-24">
-                                            <div className="flex flex-col justify-center">
-                                                <img src={rectangleGrid} alt="" />
-                                                <button id='device_list_add_device_btn' onClick={() => addDevices()} type="button" disabled={!canAddDevices}
-                                                    className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 ${canAddDevices ? "bg-tory-blue text-white" : "bg-gray-400 opacity-55"}`}>
-                                                    {t('devicesList.addDevices')}
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <EmptyList 
+                                            tableHeaders={tableHeaders} 
+                                            showCustomButton={true}
+                                            customButtonName='devicesList.addDevices'
+                                            onClickButton={addDevices}
+                                        />
                                     </div>
                                     :
                                     <>

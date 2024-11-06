@@ -10,7 +10,6 @@ import {
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import ApiKeysFilter from '../authenticationServices/ApiKeysFilter.js';
 import AuthenticationServicesTab from './AuthenticationServicesTab';
 import DeactivatePopup from '../../common/DeactivatePopup';
@@ -18,6 +17,7 @@ import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
+import EmptyList from '../../common/EmptyList.js';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -193,34 +193,12 @@ function ApiKeysList() {
                         {apiKeysList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                {
-                                    activeApiKey && (
-                                        <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                                            <div className={`flex w-full justify-between`}>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.partnerId')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyGroup')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyName')}</h6>
-                                                <h6 className="px-2 mx-2">{t('apiKeysList.apiKeyLabel')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.createdDate')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.status')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.action')}</h6>
-                                            </div>
-                                        </div>)
-                                }
-
-                                <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center">
-                                        <img src={rectangleGrid} alt="" />
-                                        {activeApiKey &&
-                                            (<button id='generate_api_key_btn' onClick={generateApiKey} type="button" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, generateApiKey)}
-                                                className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                                {t('apiKeysList.generateApiKey')}
-                                            </button>)
-                                        }
-                                    </div>
-                                </div>
+                                <EmptyList 
+                                    tableHeaders={tableHeaders} 
+                                    showCustomButton={true}
+                                    customButtonName='apiKeysList.generateApiKey'
+                                    onClickButton={generateApiKey}
+                                />
                             </div>
                             :
                             <>
