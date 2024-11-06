@@ -1,9 +1,9 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="	PMP-UI-AUTOMATION-RUN">
+<suite name="	PMP Revamp UI TestRig">
 	
-	<test  name="PMP-UI-AUTOMATION-RUN"  preserve-order="true">
+	<test  name="PMP Revamp UI TestRig"  preserve-order="true">
 	
 		<classes>
 			<class name="io.mosip.testrig.pmprevampui.testcase.RegisterNewUser" />

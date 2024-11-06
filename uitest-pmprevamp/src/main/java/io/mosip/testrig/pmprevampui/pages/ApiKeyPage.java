@@ -43,6 +43,15 @@ public class ApiKeyPage extends BasePage{
 	@FindBy(xpath = "//*[contains(text(), 'Action')]")
 	private WebElement ActionHeaderText;
 	
+	@FindBy(id = "generate_partner_id_option1")
+	private WebElement generatePartnerIdOption1;
+	
+	@FindBy(id = "copy_id_btn")
+	private WebElement copyIdButton;
+	
+	
+	
+	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -52,8 +61,8 @@ public class ApiKeyPage extends BasePage{
 	}
 	
 	public  void selectPartnerIdDropdown(String value) {
-		clickOnElement(partnerIdDropdown);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'"+value+"')])[2]")));
+		 clickOnElement(partnerIdDropdown);
+		 clickOnElement(generatePartnerIdOption1);
 	}
 	
 	public boolean isPartnerIdDropdownDisplayed() {
@@ -107,4 +116,5 @@ public class ApiKeyPage extends BasePage{
 	public boolean isActionHeaderTextDisplayed() {
 		return isElementDisplayed(ActionHeaderText);
 	}
+		
 }

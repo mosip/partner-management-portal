@@ -81,6 +81,38 @@ public class OldPmpPage extends BasePage{
 	@FindBy(xpath = "//*[contains(text(), ' Yes ')]")
 	private WebElement YesButton;
 	
+	@FindBy(id = "/pmp/resources/policymapping/view")
+	private WebElement partnerPolicyMappingTab;
+	
+	@FindBy(id = "Filter")
+	private WebElement FilterButton;
+
+	@FindBy(id = "partnerName")
+	private WebElement partnerName;
+	
+	@FindBy(id = "requestDetail")
+	private WebElement requestDetail;
+	
+	@FindBy(id = "applyTxt")
+	private WebElement applyTxt;
+	
+	@FindBy(id = "ellipsis-button0")
+	private WebElement ellipsisButton0;
+	
+	@FindBy(id = "Manage Policy0")
+	private WebElement ManagePolicy0;
+	
+	@FindBy(id = "confirmpopup")
+	private WebElement confirmpopup;
+	
+	
+	
+
+	
+	
+	
+	
+	
 	public OldPmpPage(WebDriver driver) {
 		super(driver);
 	}
@@ -189,4 +221,29 @@ public class OldPmpPage extends BasePage{
 	public void refreshPage() {
 		driver.navigate().refresh();
 	}
+	
+	public  void clickOnPartnerPolicyMappingTab() {
+		clickOnElement(partnerPolicyMappingTab);
+	}
+	
+	public  void EnterPartnerNameTextBox(String value) {
+		enter(partnerName,value);
+	}
+	
+	public  void EnterRequestDetail(String value) {
+		enter(requestDetail,value);
+	}
+	
+	public  void clickOnEllipsisButton() {
+		clickOnElement(ellipsisButton0);
+	}
+	
+	public  void clickOnManagePolicy() {
+		clickOnElement(ManagePolicy0);
+	}
+	
+	public  void clickOnConfirmpopup() {
+		clickOnElement(confirmpopup);
+	}
+	
 }

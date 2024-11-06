@@ -57,6 +57,11 @@ public class ConfigManager {
 	private static String SbivalidDate = "sbivalidDate";
 	private static String PublicKey = "publicKey";
 	private static String RandomPublicKey = "randompublicKey";
+	private static String ENABLEDEBUG ="enableDebug";
+	
+	private static String PMS_DB_USER = "db-su-user";
+	private static String PMS_DB_PASS = "postgres-password";
+	private static String PMS_DB_SCHEMA = "pms_db_schema";
 	
 	private static String LogoUri = "logouri";
 	private static String RedirectUri = "redirecturi";
@@ -69,6 +74,10 @@ public class ConfigManager {
 	private static String PolicyData = "policyData";//loginlang
 	private static String DataSharepolicyData = "dataSharepolicyData";
 	private static String Testcases = "pmpscenariosToExecute";
+	private static String ReportIgnoredTestCases = "reportIgnoredTestCases";
+	private static String ReportKnownIssueTestCases = "reportKnownIssueTestCases";
+	
+	
 
 	private static String testcases;
 	private static String loginlang;
@@ -81,6 +90,15 @@ public class ConfigManager {
 	private static String logouri;
 	private static String redirectUri;
 	
+
+	
+	
+	private static String reportIgnoredTestCases;
+	private static String reportKnownIssueTestCases;
+	
+	private static String pms_db_user;
+	private static String pms_db_pass;
+	private static String pms_db_schema;
 	private static String sbivalidDate;
 	private static String bulkwait;
 	private static String sbiexpiryDate;
@@ -201,6 +219,15 @@ public class ConfigManager {
 
 		iam_pmprevamp_path = System.getenv(IAM_PMPREVAMP_PATH) == null ? propsKernel.getProperty(IAM_PMPREVAMP_PATH)
 				: System.getenv(IAM_PMPREVAMP_PATH);
+		
+		pms_db_user = getValueForKey(PMS_DB_USER);
+		pms_db_pass = getValueForKey(PMS_DB_PASS);
+		pms_db_schema = getValueForKey(PMS_DB_SCHEMA);
+		enableDebug = getValueForKey(ENABLEDEBUG);
+		reportIgnoredTestCases = getValueForKey(ReportIgnoredTestCases);
+		reportKnownIssueTestCases = getValueForKey(ReportKnownIssueTestCases);
+		
+		
 
 		iam_pmprevamp = System.getenv(IAM_PMPREVAMP) == null ? propsKernel.getProperty(IAM_PMPREVAMP)
 				: System.getenv(IAM_PMPREVAMP);
@@ -444,6 +471,14 @@ public class ConfigManager {
 		return enableDebug.equalsIgnoreCase("yes");
 	}
 
+	public static Boolean reportIgnoredTestCases() {
+		return reportIgnoredTestCases.equalsIgnoreCase("yes");
+	}
+	
+	public static Boolean reportKnownIssueTestCases() {
+		return reportKnownIssueTestCases.equalsIgnoreCase("yes");
+	}
+	
 	public static String getS3Host() {
 		return s3_host;
 	}
@@ -514,6 +549,21 @@ public class ConfigManager {
 
 	public static String getIAMRealmId() {
 		return iam_realm_id;
+	}
+	public static String getPMSDbUrl() {
+		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_pms";
+	}
+
+	public static String getPMSDbUser() {
+		return pms_db_user;
+	}
+
+	public static String getPMSDbPass() {
+		return pms_db_pass;
+	}
+	
+	public static String getPMSDbSchema() {
+		return pms_db_schema;
 	}
 
 	public static String getIAMUsersToCreate() {

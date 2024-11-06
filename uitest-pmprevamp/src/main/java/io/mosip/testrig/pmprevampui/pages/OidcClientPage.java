@@ -52,6 +52,9 @@ public class OidcClientPage extends BasePage{
 	@FindBy(id = "create_oidc_public_key")
 	private WebElement EnterPublickeyTextBox;
 	
+	@FindBy(id = "oidc_edit_enter_redirect_url2")
+	private WebElement EnterPublickeyTextBoxSecond;
+	
 	@FindBy(id = "create_oidc_logo_url")
 	private WebElement enterLogoUriTextBox;
 	
@@ -75,6 +78,125 @@ public class OidcClientPage extends BasePage{
 	
 	@FindBy(id = "create_oidc_policy_name")
 	private WebElement SelectPolicyNameForOidc;
+	
+	@FindBy(id = "create_oidc_policy_name_search_input")
+	private WebElement createOidcPolicyNameSearchInput;
+	
+	@FindBy(id = "create_oidc_policy_name_option1")
+	private WebElement createOidcPolicyNameOption1;
+	
+	
+	@FindBy(xpath = "//*[contains(text(), 'Details Submitted Successfully!')]")
+	private WebElement detailsSubmittedSuccessfully;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Activated')]")
+	private WebElement activatedText;
+	
+	
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement confirmationGoBackButton;
+	
+	@FindBy(id = "oidc_show_copy_popup_btn1")
+	private WebElement oidcShowCopyPopupButton;
+	
+	@FindBy(id = "oidc_details1")
+	private WebElement oidcDetailsElipsisButton;
+	
+	@FindBy(id = "oidc_details_view_btn")
+	private WebElement oidcDetailsViewButton;
+	
+	@FindBy(id = "oidc_client_details_back_btn")
+	private WebElement oidcClientDetailsBackButton;
+	
+	@FindBy(id = "oidc_edit_btn")
+	private WebElement oidcEditButton;
+	
+	@FindBy(id = "oidc_deactive_btn")
+	private WebElement oidcDeactiveButton;
+	
+	@FindBy(id = "copy_id_btn")
+	private WebElement copyIdButton;
+	
+	@FindBy(id = "copy_id_close_btn")
+	private WebElement copyIdCloseButton;
+	
+	@FindBy(id = "oidc_edit_add_new_redirect_url")
+	private WebElement oidcEditAddNewRedirectUrl;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Modified details submitted successfully!')]")
+	private WebElement ModifiedSuccessfullTextMessage;
+	
+	@FindBy(id = "filter_btn")
+	private WebElement filterButton;
+	
+	
+	@FindBy(id = "partnerId_desc_icon")
+	private WebElement partnerId_desc_icon;
+	
+	@FindBy(id = "partnerId_asc_icon")
+	private WebElement partnerId_asc_icon;
+	
+	@FindBy(id = "oidcClientName_desc_icon")
+	private WebElement oidcClientName_desc_icon;
+	
+	@FindBy(id = "oidcClientName_asc_icon")
+	private WebElement oidcClientName_asc_icon;
+	
+	@FindBy(id = "policyGroupName_desc_icon")
+	private WebElement policyGroupName_desc_icon;
+	
+	@FindBy(id = "policyGroupName_asc_icon")
+	private WebElement policyGroupName_asc_icon;
+	
+	@FindBy(id = "policyName_desc_icon")
+	private WebElement policyName_desc_icon;
+	
+	@FindBy(id = "policyName_asc_icon")
+	private WebElement policyName_asc_icon;
+	
+	@FindBy(id = "createdDateTime_desc_icon")
+	private WebElement createdDateTime_desc_icon;
+	
+	@FindBy(id = "createdDateTime_asc_icon")
+	private WebElement createdDateTime_asc_icon;
+	
+	@FindBy(id = "status_desc_icon")
+	private WebElement status_desc_icon;
+	
+	@FindBy(id = "status_asc_icon")
+	private WebElement status_asc_icon;
+	
+	
+//==============	
+	@FindBy(id = "oidc_select_partner_id_filter")
+	private WebElement oidcSelectPartnerIdFilter;
+	
+	@FindBy(id = "oidc_select_partner_id_filter_option1")
+	private WebElement oidcSelectPartnerIdFilterOption1;
+	
+	@FindBy(id = "oidc_select_policy_group_filter")
+	private WebElement oidcSelectPolicyGroupFilter;
+	
+	@FindBy(id = "oidc_select_policy_group_filter_option1")
+	private WebElement oidcSelectPolicyGroupFilterOption1;
+	
+	@FindBy(id = "oidc_select_policy_name_filter")
+	private WebElement oidcSelectPolicyNameFilter;
+	
+	@FindBy(id = "oidc_select_policy_name_filter_option1")
+	private WebElement oidcSelectPolicyNameFilterOption1;
+	
+	@FindBy(id = "oidc_select_client_name_filter")
+	private WebElement oidcSelectClientNameFilter;
+	
+	@FindBy(id = "oidc_select_client_name_filter_option1")
+	private WebElement oidcSelectClientNameFilterOption1;
+	
+	@FindBy(id = "oidc_select_status_filter")
+	private WebElement oidcSelectStatusFilter;
+	
+	@FindBy(id = "oidc_select_status_filter_option1")
+	private WebElement oidcSelectStatusFilterOption1;	
 	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -102,7 +224,10 @@ public class OidcClientPage extends BasePage{
 	}
 	
 	public  void selectPolicyNameDropdown(String value) {
-		dropdownByIndex(SelectPolicyNameForOidc,0);
+		clickOnElement(SelectPolicyNameForOidc);
+		enter(createOidcPolicyNameSearchInput,value);
+		clickOnElement(createOidcPolicyNameOption1);
+		
 	}
 	
 	public  void enterNameOidcTextBox(String value) {
@@ -112,6 +237,12 @@ public class OidcClientPage extends BasePage{
 	public  void enterPublicKeyTextBox(String value) {
 		enter(EnterPublickeyTextBox,value);
 	}
+	
+	public  void EnterPublickeySecondTextBox(String value) {
+		enter(EnterPublickeyTextBoxSecond,value);
+	}
+	
+	
 	
 	public  void enterLogoUrTextBox(String value) {
 		enter(enterLogoUriTextBox,value);
@@ -173,4 +304,133 @@ public class OidcClientPage extends BasePage{
 		clickOnElement(ApiKeyTab);
 	}
 	
+	public  void enterCreateOidcPolicyNameSearchInput(String value) {
+		enter(createOidcPolicyNameSearchInput,value);
+	}
+	
+	public boolean isDetailsSubmittedSuccessFullyDisplayed() {
+		return isElementDisplayed(detailsSubmittedSuccessfully);
+	}
+	
+	
+	
+	
+	
+	public boolean isActivatedTextDisplayed() {
+		return isElementDisplayed(activatedText);
+	}
+	
+	
+	
+	public  void clickConfirmationGoBackButton() {
+		clickOnElement(confirmationGoBackButton);
+	}
+	
+	public  void clickOidcShowCopyPopupButton() {
+		clickOnElement(oidcShowCopyPopupButton);
+	}
+	
+	
+	public boolean isOidcDetailsElipsisButtonDisplayed() {
+		return isElementDisplayed(oidcDetailsElipsisButton);
+	}
+	
+	public  void clickOidcDetailsElipsisButton() {
+		clickOnElement(oidcDetailsElipsisButton);
+	}
+	
+	public boolean isOidcDetailsViewButtonDisplayed() {
+		return isElementDisplayed(oidcDetailsViewButton);
+	}
+	
+	
+	public  void clickOidcClientDetailsBackButton() {
+		clickOnElement(oidcClientDetailsBackButton);
+	}
+	
+	public boolean isOidcDeactiveButtonDisplayed() {
+		return isElementDisplayed(oidcDeactiveButton);
+	}
+	
+	
+	public  void clickCopyIdButton() {
+		clickOnElement(copyIdButton);
+	}
+	
+	public  void clickCopyIdCloseButton() {
+		clickOnElement(copyIdCloseButton);
+	}
+	
+	public  void clickOidcEditButton() {
+		clickOnElement(oidcEditButton);
+	}
+	
+	public  void clickoidcEditAddNewRedirectUrl() {
+		clickOnElement(oidcEditAddNewRedirectUrl);
+	}
+	
+	public boolean isModifiedSuccessfullTextMessageDisplayed() {
+		return isElementDisplayed(ModifiedSuccessfullTextMessage);
+	}
+	
+	public boolean isPartnerIdDescIconDisplayed() {
+		return isElementDisplayed(partnerId_desc_icon);
+	}
+	
+	public boolean isPartnerIdAscIconDisplayed() {
+		return isElementDisplayed(partnerId_asc_icon);
+	}
+	
+	public boolean isOidcClientNameDescIconDisplayed() {
+		return isElementDisplayed(oidcClientName_desc_icon);
+	}
+	
+	public boolean isOidcClientNameAscIconDisplayed() {
+		return isElementDisplayed(oidcClientName_asc_icon);
+	}
+	
+	public boolean isPolicyGroupNameDescIconDisplayed() {
+		return isElementDisplayed(policyGroupName_desc_icon);
+	}
+	
+	public boolean isPolicyGroupNameAscIconDisplayed() {
+		return isElementDisplayed(policyGroupName_asc_icon);
+	}
+	
+	public boolean isPolicyNameDescIconDisplayed() {
+		return isElementDisplayed(policyName_desc_icon);
+	}
+	
+	public boolean isPolicyNameAscIconDisplayed() {
+		return isElementDisplayed(policyName_asc_icon);
+	}
+	
+	public boolean isCreatedDateTimeDescISconDisplayed() {
+		return isElementDisplayed(createdDateTime_desc_icon);
+	}
+	
+	public boolean isCreatedDateTimeAscIconDisplayed() {
+		return isElementDisplayed(createdDateTime_asc_icon);
+	}
+	
+	public boolean isStatusDescIconDisplayed() {
+		return isElementDisplayed(status_desc_icon);
+	}
+	
+	public boolean isStatusAscIconDisplayed() {
+		return isElementDisplayed(status_asc_icon);
+	}
+	
+	public boolean isFilterButtonButtonEnabled() {
+		return isElementEnabled(filterButton);
+	}
+	
+	public  void clickOnFilterButton() {
+		clickOnElement(filterButton);
+	}
+	
+	public  void clickOnOidcPartnerIdFilter(String value) {
+		clickOnElement(oidcSelectPartnerIdFilter);
+		clickOnElement(oidcSelectPartnerIdFilterOption1);
+}
 }
