@@ -56,11 +56,11 @@ function PoliciesTab ({activePolicyGroup, setActivePolicyGroup, activeAuthPolicy
             </div>
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_auth_policy_tab' onClick={changeToAuthPolicy}
-                    className={`${activeAuthPolicy ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}
+                    className={`${activeAuthPolicy ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm ${isLoginLanguageRTL && 'mr-10'}`}
                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, changeToAuthPolicy)}>
                     {t('policyGroupList.authPolicy')}
                 </h6>
-                <div className={`h-1 w-full ${activeAuthPolicy ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
+                <div className={`h-1 w-full ${isLoginLanguageRTL && 'mr-6'} ${activeAuthPolicy ? "bg-tory-blue" : "bg-transparent" } rounded-t-md`}></div>
             </div>
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_data_share_policy_tab' onClick={changeToDataSharePolicy}

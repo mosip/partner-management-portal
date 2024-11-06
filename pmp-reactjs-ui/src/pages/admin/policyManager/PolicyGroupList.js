@@ -8,7 +8,6 @@ import {
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import Title from '../../common/Title.js';
 import PoliciesTab from './PoliciesTab.js';
 import FilterButtons from '../../common/FilterButtons.js';
@@ -18,6 +17,7 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import PolicyGroupListFilter from './PolicyGroupListFilter.js';
+import EmptyList from '../../common/EmptyList.js';
 
 function PolicyGroupList() {
     const navigate = useNavigate('');
@@ -212,39 +212,6 @@ function PolicyGroupList() {
         loadingDiv: "!py-[20%]"
     }
 
-    const renderNoData = () => (
-        <>
-            <hr className="h-0.5 bg-gray-200 border-0" />
-            <div className="flex justify-between mt-5">
-                <div className="flex w-full justify-between font-[400] text-[14px] m-auto">
-                    <h6 className="px-2 mx-2">{t('policyGroupList.policyGroupId')}</h6>
-                    <h6 className="px-2 mx-2">{t('policyGroupList.policyGroupName')}</h6>
-                    <h6 className="px-2 mx-2">{t('policyGroupList.policyGroupDescription')}</h6>
-                    <h6 className="px-2 mx-2">{t('policyGroupList.createdDate')}</h6>
-                    <h6 className="px-2 mx-2">{t('policyGroupList.status')}</h6>
-                    <h6 className="px-2 mx-2">{t('policyGroupList.action')}</h6>
-                </div>
-            </div>
-
-            <hr className="h-px mx-3 my-2 bg-gray-200 border-0" />
-
-            <div className="flex items-center justify-center p-24">
-                <div className="flex flex-col items-center">
-                    {/* Ensure rectangleGrid has a valid import path and alt text for accessibility */}
-                    <img src={rectangleGrid} alt="No data available icon" />
-                    {isFilterApplied ?
-                        <p className="text-[#A1A1A1] mt-3">{t("partnerList.noData")}</p>
-                        :
-                        <button id='create_policy_group_btn' type="button" onClick={createPolicyGroup}
-                            className={`text-white font-semibold mt-8 w-[75%] bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                            {t('policyGroupList.createPolicyGroup')}
-                        </button>
-                    }
-                </div>
-            </div>
-        </>
-    );
-
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -275,7 +242,12 @@ function PolicyGroupList() {
                         </PoliciesTab>
                         {!isFilterApplied && policyGroupList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                {renderNoData()}
+                                <EmptyList 
+                                    tableHeaders={tableHeaders} 
+                                    showCustomButton={!isFilterApplied}
+                                    customButtonName='policyGroupList.createPolicyGroup'
+                                    onClickButton={createPolicyGroup}
+                                />
                             </div>
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
@@ -291,7 +263,14 @@ function PolicyGroupList() {
                                     <PolicyGroupListFilter onApplyFilter={onApplyFilter} />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && isFilterApplied && policyGroupList.length === 0 ? renderNoData() : (
+                                {tableDataLoaded && isFilterApplied && policyGroupList.length === 0 ? 
+                                    <EmptyList 
+                                        tableHeaders={tableHeaders} 
+                                        showCustomButton={!isFilterApplied}
+                                        customButtonName='policyGroupList.createPolicyGroup'
+                                        onClickButton={createPolicyGroup}
+                                    />
+                                    : (
                                     <>
                                         <div className="mx-[2%] overflow-x-scroll">
                                             <table className="table-fixed">
