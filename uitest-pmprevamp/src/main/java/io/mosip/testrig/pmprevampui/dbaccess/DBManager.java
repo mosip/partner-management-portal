@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +16,7 @@ import io.mosip.testrig.pmprevampui.utility.BaseClass;
 
 public class DBManager extends BaseClass {
 
-	private static final org.slf4j.Logger DBManager_LOGGER= org.slf4j.LoggerFactory.getLogger(DBManager.class);
+	private static final org.slf4j.Logger DBManager_LOGGER = org.slf4j.LoggerFactory.getLogger(DBManager.class);
 
 	public static void clearPMSDbData() {
 		Session session = null;
@@ -39,11 +37,14 @@ public class DBManager extends BaseClass {
 						// To Do --- Read the delete queries from a file and iterate
 						try {
 							;
-							statement.addBatch("delete from partner_policy_request where part_id ='auth_v4"+data+"'");
-							statement.addBatch("delete from partner_policy  where part_id ='auth_v4"+data+"'");
+							statement.addBatch(
+									"delete from partner_policy_request where part_id ='auth_v4" + data + "'");
+							statement.addBatch("delete from partner_policy  where part_id ='auth_v4" + data + "'");
 							statement.addBatch("delete from partner  where name ='AUTH_V4'");
-							statement.addBatch("delete from partner_policy_request where part_id ='credential_v1"+data+"'");
-							statement.addBatch("delete from partner_policy  where part_id ='credential_v1"+data+"'");
+							statement.addBatch(
+									"delete from partner_policy_request where part_id ='credential_v1" + data + "'");
+							statement
+									.addBatch("delete from partner_policy  where part_id ='credential_v1" + data + "'");
 							statement.addBatch("delete from partner  where name ='CREDENTIAL_V1'");
 							int[] result = statement.executeBatch();
 							DBManager_LOGGER.info("Success:: Executed PMS DB quiries successfully.");
@@ -71,11 +72,10 @@ public class DBManager extends BaseClass {
 	private static Session getDataBaseConnection(String dburl, String userName, String password, String schema) {
 		SessionFactory factory = null;
 		Session session = null;
-		
+
 		DBManager_LOGGER.info("dburl is" + dburl);
 		DBManager_LOGGER.info("userName is" + userName);
 		DBManager_LOGGER.info("password is" + password);
-		
 
 		try {
 			Configuration config = new Configuration();
@@ -102,4 +102,3 @@ public class DBManager extends BaseClass {
 	}
 
 }
-
