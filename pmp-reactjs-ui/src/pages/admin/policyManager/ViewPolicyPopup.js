@@ -8,7 +8,7 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
-            <div className='flex-col bg-white w-[45rem] min-h-[6rem] rounded-md relative top-[2.5rem]'>
+            <div className='flex-col bg-white w-[45rem] max-h-[33rem] rounded-md relative'>
                 <div className='flex py-2 px-5 justify-between items-center'>
                     <h2 className='font-semibold text-sm'>{title}</h2>
                     <div className='flex gap-x-9 items-center'>
