@@ -76,7 +76,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
-            } 
+            }
             const responseData = response.data;
             if (responseData && responseData.response) {
                 window.location.reload();
@@ -114,7 +114,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
-                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'?
+                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
                                         {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
