@@ -56,12 +56,12 @@
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
         "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها / رفضها من الشركاء",
+        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
-        "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
+        "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة/رفض SBI أو تفاصيل الجهاز",
         "ftmChip": "تفاصيل اف تي ام",
-        "ftmChipDesc": "عرض أو / وإلغاء تنشيط تفاصيل شريحة FTM",
-        "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات",
+        "ftmChipDesc": "عرض أو/وإلغاء تنشيط تفاصيل شريحة FTM",
+        "adminAuthenticationServicesDesc": "عرض/إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات",
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
@@ -588,7 +588,7 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
         "listOfPartners": "قائمة الشركاء",
-        "organizationName": "اسم المنظمة",
+        "organisationName": "اسم المنظمة",
         "createdOn": "تم الإنشاء بتاريخ",
         "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
         "emailId": "معرف البريد الإلكتروني",
@@ -597,7 +597,7 @@
         "originalCertificateSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح."
     },
     "deactivatePartner": {
-        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",
+        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organisationName}}",
         "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
     "createPolicyGroup": {

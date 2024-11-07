@@ -315,7 +315,7 @@ function PartnersList() {
                                                 closePopUp={closeDeactivatePopup}
                                                 popupData={{ ...partner, isDeactivatePartner: true }}
                                                 request={deactivateRequest}
-                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organizationName: partner.orgName })}
+                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
                                                 descriptionMsg='deactivatePartner.description'
                                                 headerKeyName={partner.orgName}
                                               />

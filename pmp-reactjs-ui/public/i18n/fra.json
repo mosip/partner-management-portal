@@ -52,16 +52,16 @@
         "rootOfTrustCertificate": "Certificat racine de confiance",
         "rootOfTrustCertificateDesc": "Télécharger des certificats racine / CA",
         "partner": "Partenaire",
-        "partnerDesc": "Afficher / Désactiver les détails du partenaire",
+        "partnerDesc": "Afficher/Désactiver les détails du partenaire",
         "policy": "Politique",
         "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
         "partnerPolicyMapping": "Partenaire - Cartographie des politiques",
-        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver / Rejeter les demandes de politique des partenaires",
+        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver/Rejet les demandes de politique des partenaires",
         "sbiDevice": "SBI-Appareil",
-        "sbiDeviceDesc": "Afficher, Désactiver Approuver / Rejeter les détails du SBI ou de l'appareil",
+        "sbiDeviceDesc": "Afficher, Désactiver Approuver/Rejet les détails du SBI ou de l'appareil",
         "ftmChip": "Puce FTM",
-        "ftmChipDesc": "Afficher, Désactiver l'approbation / Rejet des détails de la puce FTM",
-        "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API",
+        "ftmChipDesc": "Afficher, Désactiver l'approbation/Rejet des détails de la puce FTM",
+        "adminAuthenticationServicesDesc": "Afficher/Désactiver les détails du client OIDC ou de l'API",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
@@ -588,7 +588,7 @@
      "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",
         "listOfPartners": "Liste des partenaires",
-        "organizationName": "Nom de l'Organisation",
+        "organisationName": "Nom de l'Organisation",
         "createdOn":"Créé le",
         "expiryDate": "Date et heure d'expiration",
         "emailId": "Identifiant de courrier électronique",
@@ -597,7 +597,7 @@
         "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
      },
      "deactivatePartner": {
-         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
+         "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
          "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
      },
      "createPolicyGroup": {
