@@ -48,7 +48,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     }, [selectedPath]);
 
     useEffect(() => {
-        console.log("called");
         if (policyRequiredPartnerTypes.indexOf(partnerType) > -1) {
             setEnablePoliciesMenu(true);
         }
