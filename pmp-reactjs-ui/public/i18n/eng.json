@@ -52,16 +52,16 @@
         "rootOfTrustCertificate": "Root of Trust Certificate",
         "rootOfTrustCertificateDesc": "Upload Root and Intermediate Root Certificates",
         "partner": "Partner",
-        "partnerDesc": "View / Deactivate partner details",
+        "partnerDesc": "View/Deactivate partner details",
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
         "partnerPolicyMapping": "Partner - Policy mapping",
-        "partnerPolicyMappingDesc": "View, Deactivate, Approve / Rejected policy requests from partners",
+        "partnerPolicyMappingDesc": "View, Deactivate, Approve/Reject policy requests from partners",
         "sbiDevice": "SBI - Device",
-        "sbiDeviceDesc": "View, Deactivate Approve / Reject SBI or device details",
+        "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
         "ftmChip": "FTM Chip",
-        "ftmChipDesc": "View, Deactivate Approve / Reject FTM Chip details",
-        "adminAuthenticationServicesDesc": "View / Deactivate OIDC Client or API details",
+        "ftmChipDesc": "View, Deactivate Approve/Reject FTM Chip details",
+        "adminAuthenticationServicesDesc": "View/Deactivate OIDC Client or API details",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
@@ -136,7 +136,7 @@
         "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate",
-        "errorWhileGettingCertOrgName": "Unable to get the certificate organization name"
+        "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
     },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
@@ -584,7 +584,7 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
         "listOfPartners": "List of Partners",
-        "organizationName": "Organization Name",
+        "organisationName": "Organisation Name",
         "createdOn": "Created On",
         "expiryDate": "Expiry date & time",
         "emailId": "Email ID",
@@ -593,7 +593,7 @@
         "originalCertificateSuccessMsg": "Original Certificate downloaded successfully."
     },
     "deactivatePartner": {
-        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organization : {{organizationName}}",
+        "headerMsg": "Do you want to deactivate partner with Partner ID: {{partnerId}} belonging to Organisation : {{organisationName}}",
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "createPolicyGroup": {
@@ -713,7 +713,7 @@
         "PMS_PRT_360": "Invalid Page No",
         "PMS_PRT_361": "Invalid Page Size",
         "KER_PRT_390": " Invalid filter value",
-        "KER-PCM-008": "Partner organization name not matched.",
+        "KER-PCM-008": "Partner organisation name not matched.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
         "PMS_PRT_051": " A Partner is already registered with the same Id",
         "PMS_PRT_052": "PartnerId max length should be 36",

@@ -192,7 +192,7 @@ function ViewPartnerDetails() {
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                             <p className="font-[600] text-suva-gray text-xs">
-                                                {t("viewPartnerDetails.organizationName")}
+                                                {t("viewPartnerDetails.organisationName")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
                                                 {partnerDetails.organizationName}
