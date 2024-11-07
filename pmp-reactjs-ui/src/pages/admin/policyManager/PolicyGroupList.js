@@ -65,6 +65,7 @@ function PolicyGroupList() {
     ];
 
     useEffect(() => {
+        localStorage.setItem('activeTab',  'policyGroup');
         const fetch = async () => {
             //reset page number to 0 if filter applied or page number is out of bounds
             const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
