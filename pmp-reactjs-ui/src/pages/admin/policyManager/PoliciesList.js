@@ -150,7 +150,7 @@ function PoliciesList() {
         setSortType("desc");
         setActiveAscIcon("createdDateTime");
         setActiveDescIcon("");
-        // setSelectedRecordsPerPage(8);
+        setSelectedRecordsPerPage(8);
         setFilterAttributes({
             policyId: null,
             policyName: null,
