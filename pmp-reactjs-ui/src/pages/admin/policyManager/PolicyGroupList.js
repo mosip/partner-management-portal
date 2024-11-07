@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, createRequest, getPolicyManagerUrl,
-    handleServiceErrors, resetPageNumber, applyFilter, setPageNumberAndPageSize, onResetFilter
+    handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -26,27 +26,24 @@ function PolicyGroupList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [activePolicyGroup, setActivePolicyGroup] = useState(true);
-    const [activeAuthPolicy, setActiveAuthPolicy] = useState(false);
-    const [activeDataSharePolicy, setActiveDataSharePolicy] = useState(false);
     const [policyGroupList, setPolicyGroupList] = useState([]);
-    const [filter, setFilter] = useState(false);
+    const [expandFilter, setExpandFilter] = useState(false);
     const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("crDtimes");
-    const [activeSortDesc, setActiveSortDesc] = useState("");
-    const [viewPolicyGroupId, setViewPolicyGroupId] = useState(-1);
+    const [activeAscIcon, setActiveAscIcon] = useState("crDtimes");
+    const [activeDescIcon, setActiveDescIcon] = useState("");
+    const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
     const [sortFieldName, setSortFieldName] = useState("crDtimes");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(8);
-    const [triggerServerMethod, setTriggerServerMethod] = useState(false);
+    const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
-    const [filters, setFilters] = useState({
+    const [applyFilter, setApplyFilter ] = useState(false);
+    const [filterAttributes, setFilterAttributes] = useState({
         id: null,
         name: null,
         desc: null,
@@ -55,7 +52,7 @@ function PolicyGroupList() {
     const submenuRef = useRef([]);
 
     useEffect(() => {
-        handleMouseClickForDropdown(submenuRef, () => setViewPolicyGroupId(-1));
+        handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
 
     const tableHeaders = [
@@ -68,7 +65,7 @@ function PolicyGroupList() {
     ];
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetch = async () => {
             //reset page number to 0 if filter applied or page number is out of bounds
             const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
             setResetPageNo(false);
@@ -85,7 +82,7 @@ function PolicyGroupList() {
                 }
             });
             try {
-                triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
+                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
                 const response = await HttpService({
                     url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
                     method: 'post',
@@ -105,52 +102,53 @@ function PolicyGroupList() {
                 } else {
                     setErrorMsg(t('policyGroupList.errorInPolicyGroupList'));
                 }
-                triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
-                setTriggerServerMethod(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
             } catch (err) {
-                triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
             }
         }
-        fetchData();
-    }, [sortFieldName, sortType, pageNo, pageSize, filters]);
+        fetch();
+    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
 
     const getFiltersRequest = () => {
         let filtersArr = [];
-        if (filters.id) {
+        if (filterAttributes.id) {
             let addFilter = {
-                value: filters.id,
+                value: filterAttributes.id,
                 columnName: "id",
                 type: "contains"
             }
             filtersArr.push(addFilter);
         }
-        if (filters.name) {
+        if (filterAttributes.name) {
             let addFilter = {
-                value: filters.name,
+                value: filterAttributes.name,
                 columnName: "name",
                 type: "contains"
             }
             filtersArr.push(addFilter);
         }
-        if (filters.desc) {
+        if (filterAttributes.desc) {
             let addFilter = {
-                value: filters.desc,
+                value: filterAttributes.desc,
                 columnName: "desc",
                 type: "contains"
             }
             filtersArr.push(addFilter);
         }
-        if (filters.status) {
+        if (filterAttributes.status) {
             let addFilter = {};
-            if (filters.status === "active") {
+            if (filterAttributes.status === "active") {
                 addFilter = {
                     value: "true",
                     columnName: "isActive",
                     type: "equals"
                 }
-            } else if (filters.status === "deactivated") {
+            } else if (filterAttributes.status === "deactivated") {
                 addFilter = {
                     value: "false",
                     columnName: "isActive",
@@ -163,11 +161,11 @@ function PolicyGroupList() {
     };
 
     const onApplyFilter = (filters) => {
-        applyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
+        onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {
-        setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod);
+        setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
     }
 
     const createPolicyGroup = () => {
@@ -188,23 +186,23 @@ function PolicyGroupList() {
     };
 
     const sortAscOrder = (header) => {
-        if (order !== 'ASC' || activeSortAsc !== header) {
-            setTriggerServerMethod(true);
+        if (order !== 'ASC' || activeAscIcon !== header) {
+            setFetchData(true);
             setSortFieldName((header === 'status') ? 'isActive' : header);
             setSortType((header === 'status') ? 'asc' : 'desc');
             setOrder("ASC");
-            setActiveSortDesc("");
-            setActiveSortAsc(header);
+            setActiveDescIcon("");
+            setActiveAscIcon(header);
         }
     };
     const sortDescOrder = (header) => {
-        if (order !== 'DESC' || activeSortDesc !== header) {
-            setTriggerServerMethod(true);
+        if (order !== 'DESC' || activeDescIcon !== header) {
+            setFetchData(true);
             setSortFieldName((header === 'status') ? 'isActive' : header);
             setSortType((header === 'status') ? 'desc' : 'asc');
             setOrder("DESC");
-            setActiveSortDesc(header);
-            setActiveSortAsc("");
+            setActiveDescIcon(header);
+            setActiveAscIcon("");
         }
     };
 
@@ -225,26 +223,19 @@ function PolicyGroupList() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
-                            {isFilterApplied || policyGroupList.length > 0 ?
+                            {applyFilter || policyGroupList.length > 0 ?
                                 <button onClick={createPolicyGroup} id='create_policy_group_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('policyGroupList.createPolicyGroup')}
                                 </button>
                                 : null
                             }
                         </div>
-                        <PoliciesTab
-                            activePolicyGroup={activePolicyGroup}
-                            setActivePolicyGroup={setActivePolicyGroup}
-                            activeAuthPolicy={activeAuthPolicy}
-                            setActiveAuthPolicy={setActiveAuthPolicy}
-                            activeDataSharePolicy={activeDataSharePolicy}
-                            setActiveDataSharePolicy={setActiveDataSharePolicy}>
-                        </PoliciesTab>
-                        {!isFilterApplied && policyGroupList.length === 0 ? (
+                        <PoliciesTab></PoliciesTab>
+                        {!applyFilter && policyGroupList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <EmptyList 
                                     tableHeaders={tableHeaders} 
-                                    showCustomButton={!isFilterApplied}
+                                    showCustomButton={!applyFilter}
                                     customButtonName='policyGroupList.createPolicyGroup'
                                     onClickButton={createPolicyGroup}
                                 />
@@ -254,21 +245,18 @@ function PolicyGroupList() {
                                 <FilterButtons
                                     listTitle="policyGroupList.listOfPolicyGroups"
                                     dataListLength={totalRecords}
-                                    filter={filter}
+                                    filter={expandFilter}
                                     onResetFilter={onResetFilter}
-                                    setFilter={setFilter}
+                                    setFilter={setExpandFilter}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                {filter && (
+                                {expandFilter && (
                                     <PolicyGroupListFilter onApplyFilter={onApplyFilter} />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && isFilterApplied && policyGroupList.length === 0 ? 
+                                {tableDataLoaded && applyFilter && policyGroupList.length === 0 ? 
                                     <EmptyList 
-                                        tableHeaders={tableHeaders} 
-                                        showCustomButton={!isFilterApplied}
-                                        customButtonName='policyGroupList.createPolicyGroup'
-                                        onClickButton={createPolicyGroup}
+                                        tableHeaders={tableHeaders}
                                     />
                                     : (
                                     <>
@@ -287,8 +275,8 @@ function PolicyGroupList() {
                                                                                 sortDescOrder={sortDescOrder}
                                                                                 sortAscOrder={sortAscOrder}
                                                                                 order={order}
-                                                                                activeSortDesc={activeSortDesc}
-                                                                                activeSortAsc={activeSortAsc}
+                                                                                activeSortDesc={activeDescIcon}
+                                                                                activeSortAsc={activeAscIcon}
                                                                             />
                                                                         )}
                                                                     </div>
@@ -313,19 +301,19 @@ function PolicyGroupList() {
                                                                 </td>
                                                                 <td className="text-center break-all">
                                                                     <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                        <p id={"policy_group_list_view" + (index + 1)} onClick={() => setViewPolicyGroupId(index === viewPolicyGroupId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
-                                                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPolicyGroupId(index === viewPolicyGroupId ? null : index))}>
+                                                                        <p id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                             ...
                                                                         </p>
-                                                                        {viewPolicyGroupId === index && (
+                                                                        {actionId === index && (
                                                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                 <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
-                                                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                    <p id="policy_group_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                 </div>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
-                                                                                    <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                    <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                     <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                 </div>
                                                                             </div>

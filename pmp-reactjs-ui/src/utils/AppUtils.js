@@ -433,20 +433,20 @@ export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => 
     return effectivePageNo;
 };
 
-export const applyFilter = (filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters) => {
+export const onClickApplyFilter = (updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilters) => {
     // console.log(filters)
-    setIsFilterApplied(true);
+    setApplyFilter(true);
     setResetPageNo(true);
-    setTriggerServerMethod(true);
-    setFilters(filters);
+    setFetchData(true);
+    setFilters(updatedfilters);
 };
 
-export const setPageNumberAndPageSize = (recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod) => {
+export const setPageNumberAndPageSize = (recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData) => {
     // console.log(recordsPerPage, pageIndex);
     if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
         setPageNo(pageIndex);
         setPageSize(recordsPerPage);
-        setTriggerServerMethod(true);
+        setFetchData(true);
     }
 };
 

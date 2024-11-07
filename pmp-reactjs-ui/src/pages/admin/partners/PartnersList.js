@@ -9,7 +9,7 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
-  resetPageNumber, applyFilter, setPageNumberAndPageSize, onResetFilter
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -129,7 +129,7 @@ function PartnersList() {
   }, [sortFieldName, sortType, pageNo, pageSize, filters]);
 
   const onApplyFilter = (filters) => {
-    applyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
+    onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
