@@ -32,6 +32,7 @@ function Dashboard() {
   const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
   const [isPartnerAdmin, setIsPartnerAdmin] = useState(false);
+  const [isPolicyManager, setIsPolicyManager] = useState(false);
   const [partnerPolicyMappingRequestCount, setPartnerPolicyMappingRequestCount] = useState();
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
@@ -79,8 +80,11 @@ function Dashboard() {
         if (getUserProfile().partnerType === "FTM_PROVIDER") {
           setShowFtmServices(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN' || 'POLICY_MANAGER')) {
+        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
           setIsPartnerAdmin(true);
+        }
+        if (getUserProfile().roles.includes('POLICYMANAGER')) {
+          setIsPolicyManager(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
         // using the email id
@@ -411,21 +415,21 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
-
-                <div onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policiesInAdmin)}>
-                  <div className="flex justify-center mb-5">
-                    <img src={admin_policies_icon} alt="" className="w-8 h-8"></img>
+                {isPolicyManager && (
+                  <div onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policiesInAdmin)}>
+                    <div className="flex justify-center mb-5">
+                      <img src={admin_policies_icon} alt="" className="w-8 h-8"></img>
+                    </div>
+                    <div>
+                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.policies')}
+                      </h5>
+                      <p className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.policiesadminDesc')}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.policies')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.policiesadminDesc')}
-                    </p>
-                  </div>
-                </div>
-
+                )}
                 <div className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>

@@ -20,6 +20,12 @@ const GuardedRoute = ({ children }) => {
       navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
     };
 
+    const isPolicyManagerPath = location.pathname.includes('admin/policy-manager');
+    // If user is on a policy-manager path, ensure they have admin and policy-manager privileges
+    if (isPolicyManagerPath && (localStorage.getItem("isAdmin") === 'false' || localStorage.getItem("isPolicyManager") === 'false')) {
+      navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
+    };
+
   }, [navigate]);
 
   useEffect(() => {

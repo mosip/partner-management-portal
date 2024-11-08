@@ -31,6 +31,7 @@ export const setupResponseInterceptor = (navigate) => {
           "roles": resp.role
         };
         localStorage.setItem("isAdmin", resp.role.includes("PARTNER_ADMIN"))
+        localStorage.setItem("isPolicyManager", resp.role.includes("POLICYMANAGER"))
         setUserProfile(profile);
         console.log(profile);
       }
