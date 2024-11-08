@@ -125,12 +125,12 @@ function ViewPolicy() {
                                                 </div>
                                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                     {t("viewDeviceDetails.createdOn") + ' ' +
-                                                        formatDate(viewDetails.cr_dtimes, "date", false)
+                                                        formatDate(viewDetails.cr_dtimes, "date", true)
                                                     }
                                                 </div>
                                                 <div className="mx-1 text-gray-300">|</div>
                                                 <div className="font-semibold text-sm text-dark-blue">
-                                                    {formatDate(viewDetails.cr_dtimes, "time", false)}
+                                                    {formatDate(viewDetails.cr_dtimes, "time", true)}
                                                 </div>
                                             </div>
                                         </div>

@@ -651,7 +651,8 @@
         "searchPolicyId": "Rechercher l'ID de la politique",
         "searchPolicyName": "Rechercher le nom de la politique",
         "searchPolicyDescription": "Description de la politique de recherche",
-        "searchPolicyGroup": "Groupe de recherche sur les politiques"
+        "searchPolicyGroup": "Groupe de recherche sur les politiques",
+        "replicate": "Reproduire"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -701,7 +702,7 @@
         "proceed": "Procéder"
     },
     "serverError": {
-        "PMS_COR_001": "La longueur doit être comprise entre 1 et 128 caractères",
+        "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
         "PMS_PRT_010": "Le type de partenaire n'existe pas",
         "PMS_PRT_310": "Colonne non valide reçue : %s",

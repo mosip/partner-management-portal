@@ -647,7 +647,8 @@
         "searchPolicyId": "Search Policy ID",
         "searchPolicyName": "Search Policy Name",
         "searchPolicyDescription": "Search Policy Description",
-        "searchPolicyGroup": "Search Policy Group"
+        "searchPolicyGroup": "Search Policy Group",
+        "replicate": "Replicate"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -697,7 +698,7 @@
         "proceed": "Proceed"
     },
     "serverError": {
-        "PMS_COR_001": "Length should be in between 1 and 128 characters",
+        "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",
         "PMS_PRT_010": " Partner Type does not exist",
         "PMS_PRT_310": " Invalid column received : %s",
