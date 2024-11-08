@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, getPolicyManagerUrl,
@@ -19,15 +18,13 @@ import { HttpService } from '../../../services/HttpService.js';
 import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 
-function PoliciesList() {
-    const navigate = useNavigate('');
+function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [authPoliciesList, setAuthPoliciesList] = useState([]);
-    const [dataSharePoliciesList, setDataSharePoliciesList] = useState([]);
+    const [policiesList, setPoliciesList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
     const [order, setOrder] = useState("ASC");
     const [activeAscIcon, setActiveAscIcon] = useState("createdDateTime");
@@ -39,7 +36,7 @@ function PoliciesList() {
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(8);
-    const [fetchData, setFetchData] = useState(false);
+    const [fetchData, setFetchData] = useState(true);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
@@ -51,7 +48,6 @@ function PoliciesList() {
         policyGroupName: null,
         status: null,
     });
-    const [selectedActiveTab, setSelectedActiveTab] = useState('');
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -69,6 +65,7 @@ function PoliciesList() {
     ];
 
     useEffect(() => {
+        localStorage.setItem('activeTab', policyType);
         const fetch = async () => {
             if (fetchData) {
                 const queryParams = new URLSearchParams();
@@ -81,7 +78,7 @@ function PoliciesList() {
                 queryParams.append('pageNo', effectivePageNo);
                 setResetPageNo(false);
 
-                queryParams.append('policyType', selectedActiveTab);
+                queryParams.append('policyType', policyType);
                 if (filterAttributes.policyId) queryParams.append('policyId', filterAttributes.policyId);
                 if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
                 if (filterAttributes.policyDescription) queryParams.append('policyDescription', filterAttributes.policyDescription);
@@ -107,28 +104,16 @@ function PoliciesList() {
                             const resData = responseData.response.data;
                             setTotalRecords(responseData.response.totalResults);
                             if (resData !== null) {
-                                if (selectedActiveTab === "auth") {
-                                    setAuthPoliciesList(resData);
-                                } else if (selectedActiveTab === "dataShare") {
-                                    setDataSharePoliciesList(resData);
-                                }
+                                setPoliciesList(resData)
                             }
                             else {
-                                if (selectedActiveTab === "auth") {
-                                    setAuthPoliciesList([]);
-                                } else if (selectedActiveTab === "dataShare") {
-                                    setDataSharePoliciesList([]);
-                                }
+                                setPoliciesList([]);
                             }
                         } else {
                             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                         }
                     } else {
-                        if (selectedActiveTab === "auth") {
-                            setErrorMsg(t('policiesList.errorInAuthPolicies'));
-                        } else if (selectedActiveTab === "dataShare") {
-                            setErrorMsg(t('policiesList.errorInDataSharePolicies'));
-                        }
+                        setErrorMsg(t(fetchDataErrorMessage));
                     }
                     setTableDataLoaded(true);
                     setFetchData(false);
@@ -143,28 +128,6 @@ function PoliciesList() {
         fetch();
     }, [fetchData]);
 
-    const newActiveTab = localStorage.getItem('activeTab');
-    if (selectedActiveTab !== newActiveTab) {
-        setSelectedActiveTab(newActiveTab);
-        setPageNo(0);
-        setPageSize(8);
-        setSortFieldName("createdDateTime");
-        setSortType("desc");
-        setActiveAscIcon("createdDateTime");
-        setActiveDescIcon("");
-        setSelectedRecordsPerPage(8);
-        setFilterAttributes({
-            policyId: null,
-            policyName: null,
-            policyDescription: null,
-            policyGroupName: null,
-            status: null,
-        });
-        setExpandFilter(false);
-        setApplyFilter(false);
-        setFetchData(true);
-    }
-
     const onApplyFilter = (updatedfilters) => {
         onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
     };
@@ -175,44 +138,6 @@ function PoliciesList() {
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
-    };
-
-    const createAuthPolicy = () => {
-        if (selectedActiveTab === "auth") {
-            localStorage.setItem('policyType', 'Auth');
-            navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
-        }
-    };
-
-    const createDataSharePolicy = () => {
-        if (selectedActiveTab === "dataShare") {
-            localStorage.setItem('policyType', 'DataShare');
-            navigate('/partnermanagement/admin/policy-manager/create-data-share-policy');
-        }
-    };
-
-    const viewPolicy = (selectedPolicy) => {
-        let requiredData = {};
-        if (selectedActiveTab === "auth") {
-            requiredData = {
-                policyId: selectedPolicy.policyId,
-                header: 'viewAuthPoliciesList.viewAuthPolicy',
-                subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
-                backLink: '/partnermanagement/admin/policy-manager/auth-policies-list'
-            }
-            localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
-            navigate('/partnermanagement/admin/policy-manager/view-auth-policy')
-        }
-        if (selectedActiveTab === "dataShare") {
-            requiredData = {
-                policyId: selectedPolicy.policyId,
-                header: 'viewDataSharePoliciesList.viewDataSharePolicy',
-                subTitle: 'viewDataSharePoliciesList.listOfDataSharePolicies',
-                backLink: '/partnermanagement/admin/policy-manager/data-share-policies-list'
-            }
-            localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
-            navigate('/partnermanagement/admin/policy-manager/view-data-share-policy');
-        }
     };
 
     const showDeactivatePolicy = (policy) => {
@@ -257,52 +182,30 @@ function PoliciesList() {
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
-                            {selectedActiveTab === "auth" && (
                                 <>
-                                    {applyFilter || authPoliciesList.length > 0 ?
-                                        <button onClick={createAuthPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                            {t('policiesList.createAuthPolicy')}
+                                    {applyFilter || policiesList.length > 0 ?
+                                        <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                            {t(createPolicyButtonName)}
                                         </button>
                                         : null
                                     }
                                 </>
-                            )}
-                            {selectedActiveTab === "dataShare" && (
-                                <>
-                                    {applyFilter || dataSharePoliciesList.length > 0 ?
-                                        <button onClick={createDataSharePolicy} id='create_data_share_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
-                                            {t('policiesList.createDataSharePolicy')}
-                                        </button>
-                                        : null
-                                    }
-                                </>
-                            )}
                         </div>
                         <PoliciesTab></PoliciesTab>
-                        {!applyFilter && ((selectedActiveTab === "auth" && authPoliciesList.length === 0) || (selectedActiveTab === "dataShare" && dataSharePoliciesList.length === 0)) ?
+                        {!applyFilter && policiesList.length === 0 ?
                             (
                                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                    {selectedActiveTab === "Auth" && (
-                                        <EmptyList
-                                            tableHeaders={tableHeaders}
-                                            showCustomButton={true}
-                                            customButtonName='policiesList.createAuthPolicy'
-                                            onClickButton={createAuthPolicy}
-                                        />
-                                    )}
-                                    {selectedActiveTab === "DataShare" && (
-                                        <EmptyList
-                                            tableHeaders={tableHeaders}
-                                            showCustomButton={true}
-                                            customButtonName='policiesList.createDataSharePolicy'
-                                            onClickButton={createDataSharePolicy}
-                                        />
-                                    )}
+                                    <EmptyList
+                                        tableHeaders={tableHeaders}
+                                        showCustomButton={true}
+                                        customButtonName={createPolicyButtonName}
+                                        onClickButton={createPolicy}
+                                    />
                                 </div>
                             ) : (
                                 <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                     <FilterButtons
-                                        listTitle={selectedActiveTab === "auth" ? 'policiesList.listOfAuthPolicies' : 'policiesList.listOfDataSharePolicies'}
+                                        listTitle={subTitle}
                                         dataListLength={totalRecords}
                                         filter={expandFilter}
                                         onResetFilter={onResetFilter}
@@ -313,7 +216,7 @@ function PoliciesList() {
                                         <PoliciesListFilter onApplyFilter={onApplyFilter} />
                                     )}
                                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                    {tableDataLoaded && applyFilter && ((selectedActiveTab === "auth" && authPoliciesList.length === 0) || (selectedActiveTab === "dataShare" && dataSharePoliciesList.length === 0)) ?
+                                    {tableDataLoaded && applyFilter && policiesList.length === 0 ?
                                         <EmptyList
                                             tableHeaders={tableHeaders}
                                         />
@@ -345,7 +248,7 @@ function PoliciesList() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {(selectedActiveTab === "auth" ? authPoliciesList : dataSharePoliciesList).map((policy, index) => {
+                                                            {policiesList.map((policy, index) => {
                                                                 return (
                                                                     <tr id={"policies_list_item" + (index + 1)} key={index}
                                                                         className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policy.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
