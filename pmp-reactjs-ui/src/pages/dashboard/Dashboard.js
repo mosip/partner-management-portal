@@ -303,7 +303,7 @@ function Dashboard() {
         </span>
 
         {count && (
-          <div className="absolute hidden group-hover:block bg-[#FEF1C6] text-xs p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
+          <div className="absolute hidden group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
             {t(descriptionKey, descriptionParams)}
           </div>
         )}
