@@ -222,10 +222,10 @@ function PolicyGroupList() {
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
-                        <div className="flex justify-between mb-5">
+                        <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
                             {applyFilter || policyGroupList.length > 0 ?
-                                <button onClick={createPolicyGroup} id='create_policy_group_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button onClick={createPolicyGroup} id='create_policy_group_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
                                     {t('policyGroupList.createPolicyGroup')}
                                 </button>
                                 : null
@@ -294,7 +294,7 @@ function PolicyGroupList() {
                                                                 <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.id}</td>
                                                                 <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.name}</td>
                                                                 <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.desc}</td>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{formatDate(policyGroup.crDtimes, "date", false)}</td>
+                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{formatDate(policyGroup.crDtimes, "date", true)}</td>
                                                                 <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
                                                                     <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}

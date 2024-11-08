@@ -12,6 +12,7 @@ import PoliciesTab from './PoliciesTab.js';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import viewIcon from "../../../svg/view_icon.svg";
+import replicateIcon from "../../../svg/replicate_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
@@ -142,6 +143,10 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
 
     };
 
+    const replicatePolicy = (policy) => {
+
+    };
+
     const sortAscOrder = (header) => {
         if (order !== 'ASC' || activeAscIcon !== header) {
             setFetchData(true);
@@ -178,11 +183,11 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
-                        <div className="flex justify-between mb-5">
+                        <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
                                 <>
                                     {applyFilter || policiesList.length > 0 ?
-                                        <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                        <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
                                             {t(createPolicyButtonName)}
                                         </button>
                                         : null
@@ -254,7 +259,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                         <td onClick={() => policy.isActive && viewPolicy(policy)} className="px-2 break-all">{policy.policyName}</td>
                                                                         <td onClick={() => policy.isActive && viewPolicy(policy)} className="px-2 break-all">{policy.policyDescription}</td>
                                                                         <td onClick={() => policy.isActive && viewPolicy(policy)} className="px-2 break-all">{policy.policyGroupName}</td>
-                                                                        <td onClick={() => policy.isActive && viewPolicy(policy)} className="px-2 break-all">{formatDate(policy.createdDateTime, "date", false)}</td>
+                                                                        <td onClick={() => policy.isActive && viewPolicy(policy)} className="px-2 break-all">{formatDate(policy.createdDateTime, "date", true)}</td>
                                                                         <td onClick={() => policy.isActive && viewPolicy(policy)}>
                                                                             <div className={`${policy.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                 {policy.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
@@ -271,6 +276,11 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                         <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicy(policy))}>
                                                                                             <p id="policy_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        </div>
+                                                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => replicatePolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => replicatePolicy(policy))}>
+                                                                                            <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("policiesList.replicate")}</p>
+                                                                                            <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicy(policy))}>

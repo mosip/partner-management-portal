@@ -652,7 +652,8 @@
         "searchPolicyId": "معرف سياسة البحث",
         "searchPolicyName": "اسم سياسة البحث",
         "searchPolicyDescription": "وصف سياسة البحث",
-        "searchPolicyGroup": "مجموعة سياسة البحث"
+        "searchPolicyGroup": "مجموعة سياسة البحث",
+        "replicate": "تكرار"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
@@ -702,7 +703,7 @@
         "proceed": "يتابع"
     },
     "serverError": {
-        "PMS_COR_001": "يجب أن يتراوح الطول بين 1 و128 حرفًا",
+        "PMS_COR_001": "معلمة الإدخال مفقودة",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
         "PMS_PRT_010": "نوع الشريك غير موجو",
         "PMS_PRT_310": " تم تلقي عمود غير صالح:٪ ",

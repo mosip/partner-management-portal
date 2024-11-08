@@ -26,7 +26,7 @@ function PoliciesTab () {
     };
 
     return (
-        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%]'>
+        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%] overflow-x-auto'>
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_policy_group_tab' onClick={changeToPolicyGroup}
                     className={`${activeTab === "policyGroup" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}
