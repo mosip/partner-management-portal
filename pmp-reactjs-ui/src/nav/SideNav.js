@@ -17,6 +17,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
     const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
+    const [enablePolicyManagerMenu, setEnablePolicyManagerMenu] = useState(false);
 
     useEffect(() => {
         // console.log(selectedPath);
@@ -60,8 +61,11 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         if (partnerType === "FTM_PROVIDER") {
             setEnableFtmServicesMenu(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN' || 'POLICY_MANAGER')) {
+        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
             setEnablePartnerAdminMenu(true);
+        }
+        if (getUserProfile().roles.includes('POLICYMANAGER')) {
+            setEnablePolicyManagerMenu(true);
         }
     }, [policyRequiredPartnerTypes, partnerType]);
 
@@ -150,9 +154,11 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                             <li id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
                                 <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
-                                <SideNavMenuItem title={t('dashboard.policy')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
+                            {enablePolicyManagerMenu && (
+                                <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
+                                    <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
+                                </li>
+                            )}
                             <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1': 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
