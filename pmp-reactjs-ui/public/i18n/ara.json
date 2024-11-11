@@ -601,11 +601,11 @@
         "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
     "createPolicyGroup": {
-        "policies":"السياسات",
+        "listOfPolicyGroup": "قائمة مجموعة السياسة",
         "createPolicyGroup": "إنشاء مجموعة السياسات",
         "policyGroupName": "اسم مجموعة السياسات",
         "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
-        "policyGroupDescription":"وصف مجموعة السياسات",
+        "policyGroupDescription": "أدخل وصفًا حول مجموعة السياسات",
         "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
         "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
         "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح"
@@ -657,7 +657,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
-        "listOfAuthenticationPolicies": "عرض سياسة المصادقة",
+        "listOfAuthenticationPolicies":"قائمة سياسة المصاد",
         "policyId": "معرف السياسة",
         "policyGroup": "مجموعة السياسات",
         "policyNameDescription": "وصف اسم السياسة",

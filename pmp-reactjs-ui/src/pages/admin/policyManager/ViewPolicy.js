@@ -157,7 +157,7 @@ function ViewPolicy() {
                                         <div className="flex flex-wrap py-2 max-[450px]:flex-col">
                                             <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                                 <p className="font-[600] text-suva-gray text-xs">
-                                                    {t("viewAuthPoliciesList.policyNameDescription")}
+                                                    {t("viewAuthPoliciesList.policyDescription")}
                                                 </p>
                                                 <p className="font-[600] text-vulcan text-sm">
                                                     {viewDetails.policyDesc}

@@ -659,7 +659,7 @@
         "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
         "policyId": "ID de stratégie",
         "policyGroup": "Groupe de politiques",
-        "policyNameDescription": "Nom de la stratégie Description",
+        "policyDescription": "Description de la politique",
         "policyGroupDescription": "Description du groupe de stratégies",
         "jsonFilePlace": "Le nom du fichier JSON va ici",
         "policyData": "Données de police",
