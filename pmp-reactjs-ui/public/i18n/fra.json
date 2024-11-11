@@ -652,7 +652,7 @@
         "searchPolicyName": "Rechercher le nom de la politique",
         "searchPolicyDescription": "Description de la politique de recherche",
         "searchPolicyGroup": "Groupe de recherche sur les politiques",
-        "replicate": "Reproduire"
+        "clone": "Cloner"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",

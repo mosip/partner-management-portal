@@ -648,7 +648,7 @@
         "searchPolicyName": "Search Policy Name",
         "searchPolicyDescription": "Search Policy Description",
         "searchPolicyGroup": "Search Policy Group",
-        "replicate": "Replicate"
+        "clone": "Clone"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
