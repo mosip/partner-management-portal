@@ -43,6 +43,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("rootOfTrustCertificate");
         } else if (selectedPath.includes('partners-list')) {
             setActiveIcon("partner");
+        } else if (selectedPath.includes('policy-requests-list')) {
+            setActiveIcon("partnerPolicyMapping");
         } else {
             setActiveIcon("home");
         }
@@ -101,7 +103,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/policy-manager/policy-group-list');
     };
     const showPartnerPolicyMapping = () => {
-        setActiveIcon("partnerPolicyMapping");
+        navigate('/partnermanagement/admin/policy-requests-list');
     };
     const showSbiDeviceDetails = () => {
         setActiveIcon("sbiDeviceDetails");
