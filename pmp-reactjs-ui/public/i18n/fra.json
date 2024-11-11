@@ -601,12 +601,12 @@
          "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
      },
      "createPolicyGroup": {
-        "policies":"Politiques",
+        "listOfPolicyGroup":"Liste des groupes de politiques",
         "createPolicyGroup": "Créer un groupe de stratégies",
         "policyGroupName": "Nom du groupe de stratégies",
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
         "policyGroupDescription":"Description du groupe de stratégies",
-        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
+        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies",
         "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
         "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès!"
     },
@@ -656,10 +656,10 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
-        "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
+        "listOfAuthenticationPolicies": "Liste des politique d'authentification",
         "policyId": "ID de stratégie",
         "policyGroup": "Groupe de politiques",
-        "policyNameDescription": "Nom de la stratégie Description",
+        "policyDescription": "Description de la politique",
         "policyGroupDescription": "Description du groupe de stratégies",
         "jsonFilePlace": "Le nom du fichier JSON va ici",
         "policyData": "Données de police",
