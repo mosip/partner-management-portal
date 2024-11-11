@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 
-function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id }) {
+function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -40,6 +40,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder={t(placeHolderKey)}
+                    {...(maxLength && { maxLength })}
                     className={`rounded-[4px] h-9 w-full p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && (
