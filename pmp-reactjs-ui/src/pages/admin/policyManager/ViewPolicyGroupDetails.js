@@ -51,7 +51,7 @@ function ViewPolicyGroupDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2">
+                                <p className="font-semibold text-lg text-dark-blue mb-2 break-all">
                                     {policyGroupDetails.name}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
@@ -76,7 +76,7 @@ function ViewPolicyGroupDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyGroupDetails.policyGroupId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md break-all">
                                         {policyGroupDetails.id}
                                     </p>
                                 </div>
@@ -86,7 +86,7 @@ function ViewPolicyGroupDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyGroupDetails.policyGroupDesc")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md break-all">
                                         {policyGroupDetails.desc}
                                     </p>
                                 </div>
