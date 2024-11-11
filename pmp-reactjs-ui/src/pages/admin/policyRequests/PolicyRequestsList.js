@@ -133,7 +133,7 @@ function PolicyRequestsList() {
 
   const viewPartnerPolicyRequestDetails = (selectedPartnerPolicyRequest) => {
     localStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(selectedPartnerPolicyRequest));
-    navigate('/partnermanagement/admin/policy-manager/view-policy-request');
+    navigate('/partnermanagement/admin/view-policy-request');
   };
 
   const cancelErrorMsg = () => {

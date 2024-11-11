@@ -197,7 +197,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><PolicyRequestsList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-policy-request',
+          path: 'admin/view-policy-request',
           element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
         },
         {
