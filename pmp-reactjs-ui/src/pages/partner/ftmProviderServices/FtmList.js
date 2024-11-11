@@ -259,7 +259,7 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', false)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
