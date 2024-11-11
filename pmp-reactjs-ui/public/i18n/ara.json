@@ -653,7 +653,7 @@
         "searchPolicyName": "اسم سياسة البحث",
         "searchPolicyDescription": "وصف سياسة البحث",
         "searchPolicyGroup": "مجموعة سياسة البحث",
-        "replicate": "تكرار"
+        "clone": "استنساخ"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
