@@ -35,6 +35,7 @@ import DataSharePoliciesList from './pages/admin/policyManager/DataSharePolicies
 import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
 import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
+import ViewPolicyRequestDetails from './pages/admin/policyManager/ViewPolicyRequestDetails.js';
 
 function AppRoutes() {
 
@@ -146,10 +147,10 @@ function AppRoutes() {
         {
           path: 'admin/partners-list',
           element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
-        }, 
+        },
         {
           path: 'admin/view-partner-details',
-          element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/create-policy-group',
@@ -157,7 +158,7 @@ function AppRoutes() {
         },
         {
           path: 'admin/policy-manager/policy-group-list',
-          element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><PolicyGroupList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/view-policy-group-details',
@@ -165,35 +166,39 @@ function AppRoutes() {
         },
         {
           path: 'admin/policy-manager/auth-policies-list',
-          element: <GuardedRoute><MainLayout><AuthPoliciesList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AuthPoliciesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/data-share-policies-list',
-          element: <GuardedRoute><MainLayout><DataSharePoliciesList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><DataSharePoliciesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/create-auth-policy',
-          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/create-data-share-policy',
-          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/create-data-share-policy',
-          element: <GuardedRoute><MainLayout><CreatePolicy/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/view-auth-policy',
-          element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/view-data-share-policy',
-          element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-requests-list',
-          element: <GuardedRoute><MainLayout><PolicyRequestsList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><PolicyRequestsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-policy-request',
+          element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

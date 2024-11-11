@@ -45,7 +45,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("partner");
         } else if (selectedPath.includes('policy-requests-list')) {
             setActiveIcon("partnerPolicyMapping");
-        } else {
+        }
+        else {
             setActiveIcon("home");
         }
     }, [selectedPath]);
@@ -161,7 +162,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                                     <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
                                 </li>
                             )}
-                            <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1': 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
+                            <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>

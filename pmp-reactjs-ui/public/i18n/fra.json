@@ -692,20 +692,6 @@
         "authPolicyConfirmationMessage": "La Politique d'Authentification pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!",
         "dataSharePolicyConfirmationMessage": "La Politique de Partage de Données pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!"
     },
-    "consentPopup": {
-        "title": "Termes et conditions",
-        "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
-        "checkBoxDesc": "J'ai lu les conditions générales et j'accepte que mes données soient stockées et traitées aux fins indiquées.",
-        "proceed": "Procéder",
-        "logoutMsg": "Si vous ne souhaitez pas aller plus loin, vous pouvez",
-        "consentFetchError": "Erreur lors de la récupération du consentement de l'utilisateur",
-        "consentSaveError": "Erreur lors de l'enregistrement du consentement de l'utilisateur"
-    },
-    "blockerMessage": {
-        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
-        "cancel": "Annuler",
-        "proceed": "Procéder"
-    },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Demandes de Politique",
         "listOfPartnerPolicyMappingRequestTitle": "Liste des Demandes de Politique",
@@ -735,6 +721,30 @@
         "selectPartnerType": "Sélectionner le Type de Partenaire",
         "selectPolicyGroup": "Sélectionner le Groupe de Politiques",
         "searchPolicyName": "Rechercher le Nom de la Politique"
+    },
+    "viewPolicyRequest": {
+        "viewPolicyRequest": "Afficher la demande de politique",
+        "listOfPolicyRequests": "Liste des demandes de politique",
+        "partnerId": "Identifiant du partenaire",
+        "partnerType": "Type de partenaire",
+        "policyId": "ID de stratégie",
+        "policyDesc": "Description de la politique",
+        "policyGroup": "Groupe de politiques",
+        "policyGroupDesc": "Description du groupe de stratégies"
+    },
+    "consentPopup": {
+        "title": "Termes et conditions",
+        "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
+        "checkBoxDesc": "J'ai lu les conditions générales et j'accepte que mes données soient stockées et traitées aux fins indiquées.",
+        "proceed": "Procéder",
+        "logoutMsg": "Si vous ne souhaitez pas aller plus loin, vous pouvez",
+        "consentFetchError": "Erreur lors de la récupération du consentement de l'utilisateur",
+        "consentSaveError": "Erreur lors de l'enregistrement du consentement de l'utilisateur"
+    },
+    "blockerMessage": {
+        "description": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "cancel": "Annuler",
+        "proceed": "Procéder"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
