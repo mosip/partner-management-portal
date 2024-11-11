@@ -109,7 +109,7 @@ function ViewPolicyDetails() {
                             </div>
                             <div className="w-[50%]  my-5">
                                 <p className="font-semibold text-suva-gray text-xs">
-                                    {t("viewPolicyDetails.policyDescription")}
+                                    {t("viewPolicyRequest.policyDesc")}
                                 </p>
                                 <p className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyDescription}

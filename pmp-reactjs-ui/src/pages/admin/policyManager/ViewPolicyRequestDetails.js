@@ -4,6 +4,8 @@ import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } fro
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
+import adminImage from "../../../svg/admin.png";
+import partnerImage from "../../../svg/partner.png";
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -32,7 +34,7 @@ function ViewPolicyRequestDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-5`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewPolicyRequest.viewPolicyRequest' subTitle='viewPolicyRequest.listOfPolicyRequests' backLink='/partnermanagement/admin/policy-requests-list' />
                 </div>
@@ -90,7 +92,7 @@ function ViewPolicyRequestDetails() {
                                     {t("viewPolicyRequest.policyDesc")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyDesc ? policyRequestDetails.policyDesc : '-'}
+                                    {policyRequestDetails.policyNameDescription ? policyRequestDetails.policyNameDescription : '-'}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
@@ -106,8 +108,77 @@ function ViewPolicyRequestDetails() {
                                     {t("viewPolicyRequest.policyGroupDesc")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyGroupDesc ? policyRequestDetails.policyGroupDesc : '-'}
+                                    {policyRequestDetails.policyGroupDescription ? policyRequestDetails.policyGroupDescription : '-'}
                                 </p>
+                            </div>
+                        </div>
+                        <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
+                        <div className="py-3">
+                            <p className="font-semibold text-vulcan text-base mb-3">
+                                {t("viewPolicyDetails.comments")}
+                            </p>
+                            <div>
+                                <div className="flex font-semibold w-full ">
+                                    <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
+                                        <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
+                                        <img src={adminImage} alt="Example" className="w-8 h-8" />
+                                    </span>
+                                    <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
+                                        <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
+                                        <h4 className="text-sm  text-[#031640]">
+                                            {t("viewPolicyDetails.adminComments")}
+                                        </h4>
+                                        <div className="flex items-center justify-start mt-4">
+                                            <div
+                                                className={`${bgOfStatus(
+                                                    policyRequestDetails.status
+                                                )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
+                                            >
+                                                {getStatusCode(policyRequestDetails.status, t)}
+                                            </div>
+                                            <div>
+                                                {policyRequestDetails.updatedDateTime && (
+                                                    <div className="flex">
+                                                        <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "date", true)}
+                                                        </div>
+                                                        <div className="mx-3 text-gray-300">|</div>
+                                                        <div className="font-semibold text-sm text-dark-blue">
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "time", true)}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <div className="flex font-semibold w-full">
+                                        <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
+                                            <img src={partnerImage} alt="Example" className="w-8 h-8" />
+                                        </span>
+                                        <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
+                                            <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
+                                            <h4 className="text-sm text-[#031640]">
+                                                {t("viewPolicyDetails.partnerComments")}
+                                            </h4>
+                                            <span className="text-sm mt-3 break-all break-normal break-words">
+                                                {policyRequestDetails.partnerComments}
+                                            </span>
+                                            <hr className="h-px w-full bg-gray-200 border-0 my-4" />
+                                            <div className="flex items-center justify-start">
+                                                <div className="font-semibold text-xs text-dark-blue">
+                                                    {t("viewPolicyDetails.createdOn") + ' ' +
+                                                        formatDate(policyRequestDetails.createdDateTime, "date", true)}
+                                                </div>
+                                                <div className="mx-3 text-gray-300">|</div>
+                                                <div className="font-semibold text-xs text-dark-blue">
+                                                    {formatDate(policyRequestDetails.createdDateTime, "time", true)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
