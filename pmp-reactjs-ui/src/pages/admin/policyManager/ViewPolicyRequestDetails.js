@@ -92,7 +92,7 @@ function ViewPolicyRequestDetails() {
                                     {t("viewPolicyRequest.policyDesc")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyNameDescription ? policyRequestDetails.policyNameDescription : '-'}
+                                    {policyRequestDetails.policyNameDescription}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
@@ -108,7 +108,7 @@ function ViewPolicyRequestDetails() {
                                     {t("viewPolicyRequest.policyGroupDesc")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyGroupDescription ? policyRequestDetails.policyGroupDescription : '-'}
+                                    {policyRequestDetails.policyGroupDescription}
                                 </p>
                             </div>
                         </div>
@@ -163,7 +163,7 @@ function ViewPolicyRequestDetails() {
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
                                             <span className="text-sm mt-3 break-all break-normal break-words">
-                                                {policyRequestDetails.partnerComments}
+                                                {policyRequestDetails.requestDetail}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
