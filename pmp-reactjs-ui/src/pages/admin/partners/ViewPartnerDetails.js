@@ -171,11 +171,11 @@ function ViewPartnerDetails() {
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
-                                                    formatDate(partnerDetails.createdDateTime, "date", false)}
+                                                    formatDate(partnerDetails.createdDateTime, "date", true)}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(partnerDetails.createdDateTime, "time", false)}
+                                                {formatDate(partnerDetails.createdDateTime, "time", true)}
                                             </div>
                                         </div>
                                     </div>
