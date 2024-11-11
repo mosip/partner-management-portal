@@ -34,6 +34,7 @@ import AuthPoliciesList from './pages/admin/policyManager/AuthPoliciesList.js';
 import DataSharePoliciesList from './pages/admin/policyManager/DataSharePoliciesList.js';
 import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
 import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
+import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
 
 function AppRoutes() {
 
@@ -189,6 +190,10 @@ function AppRoutes() {
         {
           path: 'admin/policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy/></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-requests-list',
+          element: <GuardedRoute><MainLayout><PolicyRequestsList/></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
