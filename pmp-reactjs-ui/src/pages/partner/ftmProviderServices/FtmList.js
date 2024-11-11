@@ -17,6 +17,7 @@ import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import DeactivatePopup from '../../common/DeactivatePopup';
 import EmptyList from '../../common/EmptyList';
+import { getAppConfig } from '../../../services/ConfigService';
 
 function FtmList() {
   const navigate = useNavigate('');
@@ -48,7 +49,11 @@ function FtmList() {
     handleMouseClickForDropdown(submenuRef, () => setViewFtmId(-1));
   }, [submenuRef]);
 
-  useEffect(() => {
+  useEffect(async () => {
+    const configData = await getAppConfig();
+    if (configData && configData['itemsPerPage']) {
+      setSelectedRecordsPerPage(Number(configData['itemsPerPage']));
+    }
     const fetchData = async () => {
       try {
         setDataLoaded(false);
