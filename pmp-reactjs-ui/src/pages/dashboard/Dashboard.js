@@ -283,6 +283,10 @@ function Dashboard() {
     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
   }
 
+  const partnerPolicyMappingRequestList = () => {
+    navigate('/partnermanagement/admin/policy-requests-list')
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -446,7 +450,7 @@ function Dashboard() {
                     </div>
                   </div>
                 )}
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
                   <div className="flex justify-center mb-5">
                     <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>
                   </div>
