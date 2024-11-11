@@ -48,7 +48,7 @@ function FtmList() {
     handleMouseClickForDropdown(submenuRef, () => setViewFtmId(-1));
   }, [submenuRef]);
 
-  useEffect(async () => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
