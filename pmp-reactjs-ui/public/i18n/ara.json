@@ -660,7 +660,7 @@
         "listOfAuthenticationPolicies":"قائمة سياسة المصاد",
         "policyId": "معرف السياسة",
         "policyGroup": "مجموعة السياسات",
-        "policyNameDescription": "وصف اسم السياسة",
+        "policyDescription": "وصف السياسة",
         "policyGroupDescription": "وصف مجموعة السياسات",
         "policyData": "بيانات السياسة",
         "jsonFilePlace": "اسم ملف JSON يظهر هنا",

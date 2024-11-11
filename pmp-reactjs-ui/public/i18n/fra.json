@@ -656,7 +656,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
-        "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
+        "listOfAuthenticationPolicies": "Liste des politique d'authentification",
         "policyId": "ID de stratégie",
         "policyGroup": "Groupe de politiques",
         "policyDescription": "Description de la politique",
