@@ -116,7 +116,7 @@ function ViewPolicy() {
                                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                         <div className="flex-col">
-                                            <p className="font-bold text-md text-dark-blue mb-2">
+                                            <p className="font-bold text-md text-dark-blue mb-2 break-all">
                                                 {viewDetails.policyName}
                                             </p>
                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
@@ -141,7 +141,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyId")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyId}
                                                 </p>
                                             </div>
@@ -149,7 +149,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyGroup")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyGroupName}
                                                 </p>
                                             </div>
@@ -159,7 +159,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyDesc}
                                                 </p>
                                             </div>
@@ -167,7 +167,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyGroupDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyGroupDesc}
                                                 </p>
                                             </div>
