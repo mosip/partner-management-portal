@@ -733,13 +733,13 @@
         "policyGroup": "Groupe de politiques",
         "policyGroupDesc": "Description du groupe de stratégies"
     },
-    "acceptRejectRequestPopup": {
-        "header": "Voulez-vous {{selectedOpt}} le 'Nom de la stratégie du partenaire'",
-        "description": "En cliquant sur Confirmer, la politique du partenaire sera {{selectedOption}}",
+    "approveRejectRequestPopup": {
+        "header": "Voulez-vous approuver/rejeter la politique",
+        "description": "Veuillez lire attentivement les détails de la police avant de faire votre choix.",
+        "approveReject":"Approuver / Rejeter",
+        "deActivate": "Désactiver",
         "approve":"Approuver",
         "reject": "Rejeter",
-        "approved":"approuvé",
-        "rejected": "rejeté",
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici"
     },

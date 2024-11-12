@@ -734,13 +734,13 @@
         "policyGroup": "مجموعة السياسات",
         "policyGroupDesc": "وصف مجموعة السياسات"
     },
-    "acceptRejectRequestPopup": {
-        "header": "هل تريد {{selectedOpt}} اسم سياسة الشريك",
-        "description": "عند النقر على تأكيد، ستكون سياسة الشريك {{selectedOption}}",
+    "approveRejectRequestPopup": {
+        "header": "هل ترغب في الموافقة/الرفض على السياسة",
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ اختيارك",
+        "approveReject":"موافقة / رفض",
+        "deActivate": "إلغاء التنشيط",
         "approve":"يعتمد",
         "reject": "يرفض",
-        "approved":"موافقة",
-        "rejected": "مرفوض",
         "comments": "تعليقات",
         "commentPlaceholder": "اكتب تعليقك هنا"
     },

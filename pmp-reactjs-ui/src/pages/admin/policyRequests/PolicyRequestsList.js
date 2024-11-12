@@ -26,8 +26,7 @@ import { HttpService } from "../../../services/HttpService";
 import viewIcon from "../../../svg/view_icon.svg";
 import EmptyList from "../../common/EmptyList";
 import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
-import approveIcon from "../../../svg/policy_request_approve_icon.svg";
-import rejectIcon from "../../../svg/policy_request_reject_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import ApproveRejectPolicyRequestPopup from "./ApproveRejectPolicyRequestPopup";
 
 function PolicyRequestsList() {
@@ -54,8 +53,6 @@ function PolicyRequestsList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedOpt, setSelectedOpt] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
   const [resetPageNo, setResetPageNo] = useState(false);
   const [requestData, setRequestData] = useState({});
   const [filters, setFilters] = useState({
@@ -174,22 +171,7 @@ function PolicyRequestsList() {
     setShowPopup(false);
   };
 
-  const policyRequestStatus = (requestStatus) => {
-    let status;
-    if (requestStatus === 'approve') {
-      status = "approved";
-      setSelectedOpt(t('acceptRejectRequestPopup.approve'));
-      setSelectedOption(t('acceptRejectRequestPopup.approved'));
-    }
-    else {
-      status = "rejected";
-      setSelectedOpt(t('acceptRejectRequestPopup.reject'));
-      setSelectedOption(t('acceptRejectRequestPopup.rejected'));
-    }
-    const request = createRequest({
-      status: status
-    });
-    setRequestData(request);
+  const approveRejectPolicyRequest = () => {
     setShowPopup(true);
     document.body.style.overflow = "hidden";
   };
@@ -305,18 +287,8 @@ function PolicyRequestsList() {
                                           </p>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => policyRequestStatus('approve')} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policyRequestStatus())}> 
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#1F9F66] cursor-pointer' : 'text-[#A5A5A5]'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.approve")}</p>
-                                                {policyRequest.status === 'InProgress' &&
-                                                  <img src={approveIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                }
-                                              </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => policyRequestStatus('reject')} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policyRequestStatus())}>
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#E21D1D] cursor-pointer' : 'text-[#A5A5A5]'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.reject")}</p>
-                                                {policyRequest.status === 'InProgress' &&
-                                                  <img src={rejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                }
+                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest()} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, approveRejectPolicyRequest())}>
+                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectRequestPopup.approveReject")}</p>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
@@ -324,13 +296,15 @@ function PolicyRequestsList() {
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                              <div className={`flex justify-between hover:bg-gray-100`} tabIndex="0">
+                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 text-[#E21D1D] cursor-pointer ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.deActivate")}</p>
+                                                <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                              </div>
+                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               {showPopup &&
                                                 <ApproveRejectPolicyRequestPopup
-                                                  headerMsg={t('acceptRejectRequestPopup.header', { selectedOpt: selectedOpt })}
-                                                  descriptionMsg={t('acceptRejectRequestPopup.description', { selectedOption: selectedOption })}
-                                                  request={requestData}
-                                                  closePopUp={closePolicyRequetPopup}
                                                   popupData={policyRequest}
+                                                  closePopUp={closePolicyRequetPopup}
                                                 />
                                               }
                                             </div>

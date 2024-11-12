@@ -729,13 +729,13 @@
         "policyGroup": "Policy Group",
         "policyGroupDesc": "Policy Group Description"
     },
-    "acceptRejectRequestPopup": {
-        "header": "Do you want to {{selectedOpt}} the 'Partner Policy Name'",
-        "description": "On clicking Confirm, partner policy will be {{selectedOption}}",
-        "approve":"Approve",
+    "approveRejectRequestPopup": {
+        "header": "Do you want to Approve/Reject the Policy",
+        "description": "Please review the policy details carefully before making your choice.",
+        "approveReject":"Approve / Reject",
+        "deActivate": "Deactivate",
+        "approve": "Approve",
         "reject": "Reject",
-        "approved":"approved",
-        "rejected": "rejected",
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here"
     },
