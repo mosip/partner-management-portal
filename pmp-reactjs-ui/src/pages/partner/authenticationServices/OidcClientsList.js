@@ -30,7 +30,7 @@ function OidcClientsList() {
     const [activeOidcClient, setActiveOicdClient] = useState(true);
     const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");

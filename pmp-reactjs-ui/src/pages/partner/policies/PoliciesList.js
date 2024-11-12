@@ -32,7 +32,7 @@ function PoliciesList() {
   const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [isDescending, setIsDescending] = useState(false);
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
