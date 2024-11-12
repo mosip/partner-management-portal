@@ -28,7 +28,7 @@ import EmptyList from "../../common/EmptyList";
 import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveIcon from "../../../svg/policy_request_approve_icon.svg";
 import rejectIcon from "../../../svg/policy_request_reject_icon.svg";
-import AcceptRejectRequestPopup from "./AcceptRejectRequestPopup";
+import ApproveRejectPolicyRequestPopup from "./ApproveRejectPolicyRequestPopup";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -325,7 +325,7 @@ function PolicyRequestsList() {
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               {showPopup &&
-                                                <AcceptRejectRequestPopup
+                                                <ApproveRejectPolicyRequestPopup
                                                   headerMsg={t('acceptRejectRequestPopup.header', { selectedOpt: selectedOpt })}
                                                   descriptionMsg={t('acceptRejectRequestPopup.description', { selectedOption: selectedOption })}
                                                   request={requestData}

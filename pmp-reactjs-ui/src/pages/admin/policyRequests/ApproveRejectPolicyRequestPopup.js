@@ -6,7 +6,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import { HttpService } from '../../../services/HttpService';
 
-function AcceptRejectRequestPopup({ headerMsg, descriptionMsg, popupData, request, closePopUp }) {
+function ApproveRejectPolicyRequestPopup({ headerMsg, descriptionMsg, popupData, request, closePopUp }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -102,4 +102,4 @@ function AcceptRejectRequestPopup({ headerMsg, descriptionMsg, popupData, reques
     )
 }
 
-export default AcceptRejectRequestPopup;
+export default ApproveRejectPolicyRequestPopup;
