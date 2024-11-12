@@ -13,7 +13,8 @@ import {
   formatDate,
   bgOfStatus,
   onClickApplyFilter,
-  resetPageNumber, setPageNumberAndPageSize, onResetFilter
+  resetPageNumber, setPageNumberAndPageSize, onResetFilter,
+  createRequest
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -43,11 +44,11 @@ function PolicyRequestsList() {
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -56,6 +57,7 @@ function PolicyRequestsList() {
   const [selectedOpt, setSelectedOpt] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [resetPageNo, setResetPageNo] = useState(false);
+  const [requestData, setRequestData] = useState({});
   const [filters, setFilters] = useState({
     partnerId: null,
     partnerType: null,
@@ -172,21 +174,25 @@ function PolicyRequestsList() {
     setShowPopup(false);
   };
 
-  const approvePolicyRequest = () => {
-    setSelectedOpt(t('acceptRejectRequestPopup.approve'));
-    setSelectedOption(t('acceptRejectRequestPopup.approved'));
+  const policyRequestStatus = (requestStatus) => {
+    let status;
+    if (requestStatus === 'approve') {
+      status = "approved";
+      setSelectedOpt(t('acceptRejectRequestPopup.approve'));
+      setSelectedOption(t('acceptRejectRequestPopup.approved'));
+    }
+    else {
+      status = "rejected";
+      setSelectedOpt(t('acceptRejectRequestPopup.reject'));
+      setSelectedOption(t('acceptRejectRequestPopup.rejected'));
+    }
+    const request = createRequest({
+      status: status
+    });
+    setRequestData(request);
     setShowPopup(true);
     document.body.style.overflow = "hidden";
   };
-
-  const rejectPolicyRequest = () => {
-    setSelectedOpt(t('acceptRejectRequestPopup.reject'));
-    setSelectedOption(t('acceptRejectRequestPopup.rejected'));
-    setShowPopup(true);
-    document.body.style.overflow = "hidden";
-  };
-
-
 
   const styles = {
     loadingDiv: "!py-[20%]"
@@ -276,9 +282,6 @@ function PolicyRequestsList() {
                               </thead>
                               <tbody>
                                 {policyRequestsData.map((policyRequest, index) => {
-                                  {
-                                    console.log(policyRequest.status)
-                                  }
                                   return (
                                     <tr id={"partner_list_item" + (index + 1)} key={index}
                                       className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
@@ -302,16 +305,16 @@ function PolicyRequestsList() {
                                           </p>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div disabled={policyRequest.status === 'approved'} onClick={approvePolicyRequest} className={`flex justify-between ${policyRequest.status !== 'approved' && 'hover:bg-gray-100'} `} tabIndex="0">
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer ${policyRequest.status !== 'approved' ? 'text-[#1F9F66]' : 'text-[#A5A5A5] cursor-none'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.approve")}</p>
-                                                {policyRequest.status !== 'approved' &&
+                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => policyRequestStatus('approve')} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policyRequestStatus())}> 
+                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#1F9F66] cursor-pointer' : 'text-[#A5A5A5]'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.approve")}</p>
+                                                {policyRequest.status === 'InProgress' &&
                                                   <img src={approveIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                 }
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div disabled={policyRequest.status === 'rejected'} onClick={rejectPolicyRequest} className={`flex justify-between ${policyRequest.status !== 'rejected' && 'hover:bg-gray-100'}`} tabIndex="0">
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer ${policyRequest.status !== 'rejected' ? 'text-[#E21D1D]' : 'text-[#A5A5A5] cursor-none'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.reject")}</p>
-                                                {policyRequest.status !== 'rejected' &&
+                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => policyRequestStatus('reject')} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policyRequestStatus())}>
+                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#E21D1D] cursor-pointer' : 'text-[#A5A5A5]'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.reject")}</p>
+                                                {policyRequest.status === 'InProgress' &&
                                                   <img src={rejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                 }
                                               </div>
@@ -325,6 +328,7 @@ function PolicyRequestsList() {
                                                 <AcceptRejectRequestPopup
                                                   headerMsg={t('acceptRejectRequestPopup.header', { selectedOpt: selectedOpt })}
                                                   descriptionMsg={t('acceptRejectRequestPopup.description', { selectedOption: selectedOption })}
+                                                  request={requestData}
                                                   closePopUp={closePolicyRequetPopup}
                                                   popupData={policyRequest}
                                                 />
