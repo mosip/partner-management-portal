@@ -85,7 +85,7 @@ function ApproveRejectPolicyRequestPopup({ popupData, closePopUp }) {
                             </div>
                             <hr className="h-px bg-gray-100 border-[0.02rem]" />
                             <div className='space-y-4 px-[1.5rem] my-4'>
-                                <div className={`flex-col space-y-3 text-center justify-center w-[21rem] h-[5.5rem] place-self-center`}>
+                                <div className={`flex-col space-y-3 text-center justify-center w-[21.5rem] h-[5.5rem] place-self-center`}>
                                     <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                         {!isLoginLanguageRTL ? t('approveRejectRequestPopup.header') + ' ?' : t('approveRejectRequestPopup.header')}
                                     </p>
