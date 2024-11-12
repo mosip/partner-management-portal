@@ -76,6 +76,12 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
+            } else if (popupData.isDeactivatePolicyGroup) {
+                response = await HttpService.put(getPartnerManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             }
             const responseData = response.data;
             if (responseData && responseData.response) {

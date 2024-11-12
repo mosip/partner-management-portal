@@ -655,6 +655,10 @@
         "searchPolicyGroup": "Groupe de recherche sur les politiques",
         "clone": "Cloner"
     },
+    "deactivatePolicyGroup": {
+        "headerMsg": "Voulez-vous désactiver le groupe de stratégies ",
+        "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
         "listOfAuthenticationPolicies": "Liste des politique d'authentification",
