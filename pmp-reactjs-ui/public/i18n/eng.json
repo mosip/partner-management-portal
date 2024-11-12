@@ -116,7 +116,8 @@
         "errorInCertificateList": "There is some error in fetching the certificates. Try again later!",
         "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
         "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
-        "certificateExpired": "Certificate has expired. Please upload a valid certificate"
+        "certificateExpired": "Certificate has expired. Please upload a valid certificate",
+        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
