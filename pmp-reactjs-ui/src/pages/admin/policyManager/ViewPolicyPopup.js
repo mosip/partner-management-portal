@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { onPressEnterKey } from '../../../utils/AppUtils';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {

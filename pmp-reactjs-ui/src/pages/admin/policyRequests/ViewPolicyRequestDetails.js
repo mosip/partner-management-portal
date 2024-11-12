@@ -87,7 +87,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
-                            <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                            <div className={`w-[48%] max-[600px]:w-[100%]`}>
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewPolicyRequest.policyDesc")}
                                 </p>

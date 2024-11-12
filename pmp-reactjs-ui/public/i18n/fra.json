@@ -733,6 +733,16 @@
         "policyGroup": "Groupe de politiques",
         "policyGroupDesc": "Description du groupe de stratégies"
     },
+    "acceptRejectRequestPopup": {
+        "header": "Voulez-vous {{selectedOpt}} le 'Nom de la stratégie du partenaire'",
+        "description": "En cliquant sur Confirmer, la politique du partenaire sera {{selectedOption}}",
+        "approve":"Approuver",
+        "reject": "Rejeter",
+        "approved":"approuvé",
+        "rejected": "rejeté",
+        "comments": "Commentaires",
+        "commentPlaceholder": "Écrivez votre commentaire ici"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
