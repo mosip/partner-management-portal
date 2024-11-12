@@ -203,7 +203,7 @@ function PartnerCertificatesList() {
                                                                 {t('partnerCertificatesList.reUpload')}
                                                             </button>
                                                             {!partner.isPartnerActive && (
-                                                                <div className="absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 right-0 rounded-md shadow-md">
+                                                                <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
                                                                     {t('partnerCertificatesList.disabledBtnHoverMsg')}
                                                                 </div>
                                                             )}

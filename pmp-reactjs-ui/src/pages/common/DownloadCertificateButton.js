@@ -26,7 +26,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                         )
                     }
                     {disableBtn && disabledBtnHoverMsg && (
-                        <div className="absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 right-5 rounded-md shadow-md">
+                        <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
                             {t(disabledBtnHoverMsg)}
                         </div>
                     )}
