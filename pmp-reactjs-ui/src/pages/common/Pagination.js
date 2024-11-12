@@ -11,12 +11,20 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [selectedPage, setSelectedPage] = useState(0);
-    const itemsPerPageOptions = [8, 16, 24, 32];
+    const [itemsPerPageOptions, setItemsPerPageOptions] = useState([8, 16, 24, 32]);
     const itemsCountSelectionRef = useRef(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(itemsCountSelectionRef, () => setIsItemsPerPageOpen(false));
     }, [itemsCountSelectionRef]);
+
+    useEffect(() => {
+        let itemsPerPage = localStorage.getItem('itemsPerPage');
+        if (itemsPerPage) {
+            itemsPerPage = Number(itemsPerPage);
+            setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
+        }
+    }, []);
 
     useEffect(() => {
         if (isServerSideFilter) {

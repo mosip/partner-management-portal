@@ -60,6 +60,16 @@ function MainLayout({ children }) {
         }
     };
 
+    const getItemPerPage = async () => {
+        try {
+            const configData = await getAppConfig();
+            const itemsPerPage = Number(configData['itemsPerPage']);
+            localStorage.setItem('itemsPerPage', itemsPerPage);
+        } catch (error) {
+            console.error("Error fetching item per page value:", error);
+        }
+    }
+
     useEffect(() => {
         const langCode = getUserProfile() ? getUserProfile().langCode: null;
         if (langCode != null) {
@@ -73,6 +83,10 @@ function MainLayout({ children }) {
             }
             i18n.changeLanguage(langCode);
         }
+
+        const initializeItemsPerPage = async () => {
+            await getItemPerPage()
+        };
 
         const initialize = async () => {
             await getTimerValues();
@@ -88,6 +102,7 @@ function MainLayout({ children }) {
         };
 
         initialize();
+        initializeItemsPerPage();
 
         return () => {
             events.forEach(event => {
