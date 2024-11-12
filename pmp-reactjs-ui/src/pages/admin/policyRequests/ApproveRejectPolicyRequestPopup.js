@@ -79,7 +79,7 @@ function ApproveRejectPolicyRequestPopup({ popupData, closePopUp }) {
                             <div className='flex justify-between px-[1.5rem] my-4'>
                                 <div className='flex-col justify-around space-y-2'>
                                     <p className='text-[1rem] font-bold'>{popupData.policyName}</p>
-                                    <p className='text-[#A5A5A5] text-xs'>{'#' + popupData.partnerId}</p>
+                                    <p className='text-[#A5A5A5] text-xs'>{'# ' + popupData.partnerId}</p>
                                 </div>
                                 <img src={close_icon} alt="" className='h-6 hover:cursor-pointer mx-1' onClick={() => closingPopUp()}/>
                             </div>
