@@ -206,7 +206,7 @@ function PolicyGroupList() {
         }
     };
 
-    const closeDeactivatePopup = () => {
+    const closePopup = () => {
         setShowDeactivatePopup(false);
         setActionId(-1);
         document.body.style.overflow = 'auto';
@@ -339,10 +339,10 @@ function PolicyGroupList() {
                                                                                         <DeactivatePopup
                                                                                             headerMsg={t('deactivatePolicyGroup.headerMsg')}
                                                                                             descriptionMsg={t('deactivatePolicyGroup.description')}
-                                                                                            popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
+                                                                                            popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
                                                                                             request={deactivateRequest}
                                                                                             headerKeyName={policyGroup.name}
-                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            closePopUp={closePopup}
                                                                                         />
                                                                                     )}
                                                                                 </div>

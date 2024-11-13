@@ -8,6 +8,7 @@
         "back": "خلف",
         "cancel": "يلغي",
         "submit": "إرسال",
+        "okay": "تمام",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
         "somethingWentWrong": "هناك خطأ ما!",
@@ -662,6 +663,10 @@
     "deactivatePolicyGroup": {
         "headerMsg": "هل تريد إلغاء تنشيط مجموعة السياسات",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط مجموعة السياسات المحددة"
+    },
+    "activePoliciesDetectedMsg": {
+        "header": "خطأ: تم اكتشاف السياسات النشطة",
+        "description": "هناك {{noOfAssociatedPolicies}} سياسات نشطة مرتبطة بمجموعة السياسات هذه، يرجى إلغاء تنشيطها قبل المتابعة"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",

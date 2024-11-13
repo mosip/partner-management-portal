@@ -8,6 +8,7 @@
         "back": "Dos",
         "cancel": "Annuler",
         "submit": "Soumettre",
+        "okay": "D'accord",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
@@ -661,6 +662,10 @@
     "deactivatePolicyGroup": {
         "headerMsg": "Voulez-vous désactiver le groupe de stratégies",
         "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
+    },
+    "activePoliciesDetectedMsg": {
+        "header": "Erreur : stratégies actives détectées !",
+        "description": "Il existe {{noOfAssociatedPolicies}} stratégies actives associées à ce groupe de stratégies. Veuillez les désactiver avant de continuer."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
