@@ -145,9 +145,15 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
 
     };
 
+    const onClickClone = () => {
+        setShowClonePopup(true);
+        document.body.style.overflow = "hidden";
+    };
+
     const closeClonePolicyPopup = () => {
         setActionId(-1);
         setShowClonePopup(false);
+        document.body.style.overflow = 'auto';
     };
 
     const sortAscOrder = (header) => {
@@ -281,7 +287,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => setShowClonePopup(true)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setShowClonePopup(true))}>
+                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone()} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone())}>
                                                                                             <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
                                                                                             <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
