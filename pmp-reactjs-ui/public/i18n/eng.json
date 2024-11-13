@@ -652,7 +652,7 @@
         "clone": "Clone"
     },
     "deactivatePolicyGroup": {
-        "headerMsg": "Do you want to deactivate Policy Group ",
+        "headerMsg": "Do you want to deactivate the Policy Group ",
         "description": "Upon clicking ‘Confirm’, the selected policy group will be deactivated."
     },
     "viewAuthPoliciesList": {

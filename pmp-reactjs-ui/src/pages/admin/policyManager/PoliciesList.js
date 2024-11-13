@@ -267,7 +267,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                         </td>
                                                                         <td className="text-center break-all">
                                                                             <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                                <p id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                                                                <p id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                     ...
                                                                                 </p>

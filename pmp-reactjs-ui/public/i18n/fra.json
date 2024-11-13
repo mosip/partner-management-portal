@@ -656,7 +656,7 @@
         "clone": "Cloner"
     },
     "deactivatePolicyGroup": {
-        "headerMsg": "Voulez-vous désactiver le groupe de stratégies ",
+        "headerMsg": "Voulez-vous désactiver le groupe de stratégies",
         "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
     },
     "viewAuthPoliciesList": {
