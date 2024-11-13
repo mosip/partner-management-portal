@@ -39,7 +39,7 @@ function PolicyRequestsList() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policyRequestsData, setPolicyRequestsData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
@@ -54,13 +54,13 @@ function PolicyRequestsList() {
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
-  const [requestData, setRequestData] = useState({});
   const [filters, setFilters] = useState({
     partnerId: null,
     partnerType: null,
     status: null,
     orgName: null,
     policyGroupName: null,
+    policyId: null,
     policyName: null,
   });
   const submenuRef = useRef([]);
@@ -74,6 +74,7 @@ function PolicyRequestsList() {
     { id: "partnerType", headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
     { id: "orgName", headerNameKey: "partnerPolicyMappingRequestList.organisation" },
     { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
+    { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
     { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
     { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
     { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
@@ -96,6 +97,7 @@ function PolicyRequestsList() {
       if (filters.partnerType) queryParams.append('partnerTypeCode', filters.partnerType);
       if (filters.orgName) queryParams.append('orgName', filters.orgName);
       if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
+      if (filters.policyId) queryParams.append('policyId', filters.policyId);
       if (filters.policyName) queryParams.append('policyName', filters.policyName);
       if (filters.status) queryParams.append('status', filters.status);
 
@@ -267,12 +269,13 @@ function PolicyRequestsList() {
                                   return (
                                     <tr id={"partner_list_item" + (index + 1)} key={index}
                                       className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.partnerId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.orgName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.partnerId}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.orgName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyGroupName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyId}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1text-xs font-semibold rounded-md`}>
                                           {getStatusCode(policyRequest.status, t)}

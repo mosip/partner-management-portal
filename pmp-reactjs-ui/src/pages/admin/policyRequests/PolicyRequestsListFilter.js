@@ -24,6 +24,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
     partnerType: "",
     status: "",
     orgName: "",
+    policyId: "",
     policyName: "",
     policyGroupName: ""
   });
@@ -140,13 +141,22 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         id="policy_group_filter"
       />
       <TextInputComponent
+        fieldName="policyId"
+        onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.policyId}
+        fieldNameKey="partnerPolicyMappingRequestList.policyId"
+        placeHolderKey="partnerPolicyMappingRequestList.searchPolicyId"
+        styleSet={styleSet}
+        id="policy_id_filter"
+      />
+      <TextInputComponent
         fieldName="policyName"
         onTextChange={onFilterChangeEvent}
         textBoxValue={filters.policyName}
         fieldNameKey="partnerPolicyMappingRequestList.policyName"
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyName"
         styleSet={styleSet}
-        id="policy_name\_filter"
+        id="policy_name_filter"
       />
       <DropdownComponent
         fieldName="status"

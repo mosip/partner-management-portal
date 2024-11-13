@@ -714,6 +714,7 @@
         "partnerId": "ID Partenaire",
         "organisation": "Organisation",
         "policyGroupName": "Groupe de Politiques",
+        "policyId": "ID de la politique",
         "policyName": "Nom de la Politique",
         "createdDate": "Date de Création",
         "partnerType": "Type de Partenaire",
@@ -736,7 +737,8 @@
         "searchPolicyGroup": "Rechercher le Groupe de Politiques",
         "selectPartnerType": "Sélectionner le Type de Partenaire",
         "selectPolicyGroup": "Sélectionner le Groupe de Politiques",
-        "searchPolicyName": "Rechercher le Nom de la Politique"
+        "searchPolicyName": "Rechercher le Nom de la Politique",
+        "searchPolicyId": "Rechercher l'ID de la politique"
     },
     "viewPolicyRequest": {
         "viewPolicyRequest": "Afficher la demande de politique",
