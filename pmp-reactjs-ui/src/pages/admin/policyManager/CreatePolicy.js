@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, createDropdownData, createRequest } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -127,22 +127,7 @@ function CreatePolicy() {
                     setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
                 }
-                const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPolicyGroupDropdownData(createDropdownData('name', 'description', false, resData, t));
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('commons.errorInResponse'));
-                }
+                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
@@ -202,7 +187,7 @@ function CreatePolicy() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('requestPolicy.errorInMapPolicy'));
+                setErrorMsg(t('createPolicy.errorInCreatePolicy'));
             }
         } catch (err) {
             setErrorMsg(err);

@@ -691,7 +691,18 @@
         "authPolicyConfirmationHeader": "Authentication Policy created successfully!",
         "dataSharePolicyConfirmationHeader": "Datashare Policy created successfully!",
         "authPolicyConfirmationMessage": "Authentication Policy for Policy Group : {{policyGroupName}} has been created successfully!",
-        "dataSharePolicyConfirmationMessage": "Datashare Policy for Policy Group : {{policyGroupName}} has been created successfully!"
+        "dataSharePolicyConfirmationMessage": "Datashare Policy for Policy Group : {{policyGroupName}} has been created successfully!",
+        "errorInCreatePolicy": "While creating policy, we have encountered with an error."
+    },
+    "clonePolicyPopup": {
+        "title": "Clone Policy",
+        "description1": "Select the policy group where you would like to nest the cloned policy",
+        "description2" :"along with its specified details. Ensure the required policy group has been created beforehand, as only existing policy groups will appear in the dropdown for selection.",
+        "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
+        "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
+        "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
+        "close":"Close",
+        "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Policy Requests",

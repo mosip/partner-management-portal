@@ -695,7 +695,18 @@
         "authPolicyConfirmationHeader": "Politique d'Authentification créée avec succès!",
         "dataSharePolicyConfirmationHeader": "Politique de Partage de Données créée avec succès!",
         "authPolicyConfirmationMessage": "La Politique d'Authentification pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!",
-        "dataSharePolicyConfirmationMessage": "La Politique de Partage de Données pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!"
+        "dataSharePolicyConfirmationMessage": "La Politique de Partage de Données pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!",
+        "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur."
+    },
+    "clonePolicyPopup": {
+        "title": "Politique de clonage",
+        "description1": "Sélectionnez le groupe de politiques dans lequel vous souhaitez imbriquer la politique clonée",
+        "description2" :"ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
+        "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
+        "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
+        "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
+        "close": "Fermer",
+        "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Demandes de Politique",

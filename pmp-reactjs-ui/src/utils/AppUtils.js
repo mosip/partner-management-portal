@@ -453,3 +453,52 @@ export const setPageNumberAndPageSize = (recordsPerPage, pageIndex, pageNo, setP
 export const onResetFilter = () => {
     window.location.reload();
 };
+
+export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService({
+            url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
+            method: 'get',
+            baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
+        });
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('selectPolicyPopup.policyGroupError'));
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        setErrorMsg(err);
+    }
+};
+
+export const getPolicyDetails = async(HttpService, policyId, setErrorCode, setErrorMsg) => {
+    try {
+        const response = await HttpService({
+            url: getPolicyManagerUrl(`/policies/${policyId}`, process.env.NODE_ENV),
+            method: 'get',
+            baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+        });
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            }
+            else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } 
+        return null;
+    } catch (err) {
+        setErrorMsg(err);
+        console.error('Error fetching data:', err);
+        return null;
+    }
+};
