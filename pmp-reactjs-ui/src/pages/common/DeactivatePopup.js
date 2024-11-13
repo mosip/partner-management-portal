@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -77,10 +77,11 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     }
                 });
             } else if (popupData.isDeactivatePolicyGroup) {
-                response = await HttpService.put(getPartnerManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV), request, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                 response = await HttpService({
+                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
+                    method: 'put',
+                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
                 });
             }
             const responseData = response.data;

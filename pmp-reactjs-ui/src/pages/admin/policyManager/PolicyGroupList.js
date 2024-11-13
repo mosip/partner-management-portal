@@ -306,7 +306,6 @@ function PolicyGroupList() {
                                                     </thead>
                                                     <tbody>
                                                         {policyGroupList.map((policyGroup, index) => {
-                                                            console.log(policyGroup);
                                                             return (
                                                                 <tr id={"policy_group_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
