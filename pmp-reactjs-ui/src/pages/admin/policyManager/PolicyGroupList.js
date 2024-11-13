@@ -18,6 +18,7 @@ import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import PolicyGroupListFilter from './PolicyGroupListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function PolicyGroupList() {
     const navigate = useNavigate('');
@@ -33,22 +34,24 @@ function PolicyGroupList() {
     const [activeDescIcon, setActiveDescIcon] = useState("");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("crDtimes");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
-    const [applyFilter, setApplyFilter ] = useState(false);
+    const [applyFilter, setApplyFilter] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         id: null,
         name: null,
         desc: null,
         status: null,
     });
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -65,7 +68,7 @@ function PolicyGroupList() {
     ];
 
     useEffect(() => {
-        localStorage.setItem('activeTab',  'policyGroup');
+        localStorage.setItem('activeTab', 'policyGroup');
         const fetch = async () => {
             //reset page number to 0 if filter applied or page number is out of bounds
             const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
@@ -182,10 +185,6 @@ function PolicyGroupList() {
         navigate('/partnermanagement/admin/policy-manager/view-policy-group-details');
     };
 
-    const showDeactivatePolicyGroup = (policyGroup) => {
-
-    };
-
     const sortAscOrder = (header) => {
         if (order !== 'ASC' || activeAscIcon !== header) {
             setFetchData(true);
@@ -207,9 +206,28 @@ function PolicyGroupList() {
         }
     };
 
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+        setActionId(-1);
+        document.body.style.overflow = 'auto';
+    };
+
+    const showDeactivatePolicyGroup = (policyGroup) => {
+        if (policyGroup.isActive) {
+            const request = createRequest({
+                name: policyGroup.name,
+                desc: policyGroup.desc,
+                isActive: false
+            });
+            setDeactivateRequest(request);
+            setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
     const styles = {
         loadingDiv: "!py-[20%]"
-    }
+    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -234,8 +252,8 @@ function PolicyGroupList() {
                         <PoliciesTab></PoliciesTab>
                         {!applyFilter && policyGroupList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                <EmptyList 
-                                    tableHeaders={tableHeaders} 
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
                                     showCustomButton={!applyFilter}
                                     customButtonName='policyGroupList.createPolicyGroup'
                                     onClickButton={createPolicyGroup}
@@ -255,88 +273,98 @@ function PolicyGroupList() {
                                     <PolicyGroupListFilter onApplyFilter={onApplyFilter} />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && applyFilter && policyGroupList.length === 0 ? 
-                                    <EmptyList 
+                                {tableDataLoaded && applyFilter && policyGroupList.length === 0 ?
+                                    <EmptyList
                                         tableHeaders={tableHeaders}
                                     />
                                     : (
-                                    <>
-                                        <div className="mx-[2%] overflow-x-scroll">
-                                            <table className="table-fixed">
-                                                <thead>
-                                                    <tr>
-                                                        {tableHeaders.map((header, index) => {
+                                        <>
+                                            <div className="mx-[2%] overflow-x-scroll">
+                                                <table className="table-fixed">
+                                                    <thead>
+                                                        <tr>
+                                                            {tableHeaders.map((header, index) => {
+                                                                return (
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                            {t(header.headerNameKey)}
+                                                                            {header.id !== "action" && (
+                                                                                <SortingIcon
+                                                                                    headerId={header.id}
+                                                                                    sortDescOrder={sortDescOrder}
+                                                                                    sortAscOrder={sortAscOrder}
+                                                                                    order={order}
+                                                                                    activeSortDesc={activeDescIcon}
+                                                                                    activeSortAsc={activeAscIcon}
+                                                                                />
+                                                                            )}
+                                                                        </div>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {policyGroupList.map((policyGroup, index) => {
                                                             return (
-                                                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
-                                                                    <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                        {t(header.headerNameKey)}
-                                                                        {header.id !== "action" && (
-                                                                            <SortingIcon
-                                                                                headerId={header.id}
-                                                                                sortDescOrder={sortDescOrder}
-                                                                                sortAscOrder={sortAscOrder}
-                                                                                order={order}
-                                                                                activeSortDesc={activeDescIcon}
-                                                                                activeSortAsc={activeAscIcon}
-                                                                            />
-                                                                        )}
-                                                                    </div>
-                                                                </th>
+                                                                <tr id={"policy_group_list_item" + (index + 1)} key={index}
+                                                                    className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.id}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.name}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.desc}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{formatDate(policyGroup.crDtimes, "date", true)}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
+                                                                        <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                            {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="text-center break-all">
+                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                                                            <p id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                                ...
+                                                                            </p>
+                                                                            {actionId === index && (
+                                                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
+                                                                                        <p id="policy_group_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                    </div>
+                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                    <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
+                                                                                        <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                        <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                    </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup
+                                                                                            headerMsg={t('deactivatePolicyGroup.headerMsg')}
+                                                                                            descriptionMsg={t('deactivatePolicyGroup.description')}
+                                                                                            popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
+                                                                                            request={deactivateRequest}
+                                                                                            headerKeyName={policyGroup.name}
+                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                             );
                                                         })}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {policyGroupList.map((policyGroup, index) => {
-                                                        return (
-                                                            <tr id={"policy_group_list_item" + (index + 1)} key={index}
-                                                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.id}</td>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.name}</td>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{policyGroup.desc}</td>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{formatDate(policyGroup.crDtimes, "date", true)}</td>
-                                                                <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
-                                                                    <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                        {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
-                                                                    </div>
-                                                                </td>
-                                                                <td className="text-center break-all">
-                                                                    <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                        <p id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
-                                                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
-                                                                            ...
-                                                                        </p>
-                                                                        {actionId === index && (
-                                                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
-                                                                                    <p id="policy_group_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                </div>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
-                                                                                    <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                    <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                </div>
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <Pagination
-                                            dataListLength={totalRecords}
-                                            selectedRecordsPerPage={selectedRecordsPerPage}
-                                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                            setFirstIndex={setFirstIndex}
-                                            isServerSideFilter={true}
-                                            getPaginationValues={getPaginationValues}
-                                        />
-                                    </>
-                                )}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <Pagination
+                                                dataListLength={totalRecords}
+                                                selectedRecordsPerPage={selectedRecordsPerPage}
+                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                                setFirstIndex={setFirstIndex}
+                                                isServerSideFilter={true}
+                                                getPaginationValues={getPaginationValues}
+                                            />
+                                        </>
+                                    )}
                             </div>
                         )
                         }

@@ -656,6 +656,10 @@
         "searchPolicyGroup": "مجموعة سياسة البحث",
         "clone": "استنساخ"
     },
+    "deactivatePolicyGroup": {
+        "headerMsg": "هل تريد إلغاء تنشيط مجموعة السياسات",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط مجموعة السياسات المحددة"
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
         "listOfAuthenticationPolicies":"قائمة سياسة المصاد",

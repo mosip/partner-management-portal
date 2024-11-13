@@ -651,6 +651,10 @@
         "searchPolicyGroup": "Search Policy Group",
         "clone": "Clone"
     },
+    "deactivatePolicyGroup": {
+        "headerMsg": "Do you want to deactivate the Policy Group ",
+        "description": "Upon clicking ‘Confirm’, the selected policy group will be deactivated."
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
         "listOfAuthenticationPolicies": "List of Authentication Policy",
