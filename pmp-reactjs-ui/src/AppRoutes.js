@@ -35,7 +35,7 @@ import DataSharePoliciesList from './pages/admin/policyManager/DataSharePolicies
 import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
 import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
-import ViewPolicyRequestDetails from './pages/admin/policyManager/ViewPolicyRequestDetails.js';
+import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
 
 function AppRoutes() {
 
@@ -174,10 +174,6 @@ function AppRoutes() {
         },
         {
           path: 'admin/policy-manager/create-auth-policy',
-          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
-        },
-        {
-          path: 'admin/policy-manager/create-data-share-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
