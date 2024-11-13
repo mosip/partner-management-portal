@@ -26,7 +26,7 @@ import { HttpService } from "../../../services/HttpService";
 import viewIcon from "../../../svg/view_icon.svg";
 import EmptyList from "../../common/EmptyList";
 import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
-import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import ApproveRejectPolicyRequestPopup from "./ApproveRejectPolicyRequestPopup";
 
 function PolicyRequestsList() {
@@ -289,18 +289,13 @@ function PolicyRequestsList() {
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest()} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, approveRejectPolicyRequest())}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectRequestPopup.approveReject")}</p>
+                                                <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div className={`flex justify-between hover:bg-gray-100`} tabIndex="0">
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 text-[#E21D1D] cursor-pointer ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.deActivate")}</p>
-                                                <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                              </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               {showPopup &&
                                                 <ApproveRejectPolicyRequestPopup
                                                   popupData={policyRequest}
