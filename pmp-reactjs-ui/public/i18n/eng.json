@@ -162,7 +162,8 @@
         "pendingCertUpload": "Pending For Certificate Upload",
         "expired": "Expired",
         "uploaded": "Uploaded",
-        "notUploaded": "Not Uploaded"
+        "notUploaded": "Not Uploaded",
+        "draft": "Draft"
     },
     "policies": {
         "policies": "Policies",
@@ -649,7 +650,9 @@
         "searchPolicyName": "Search Policy Name",
         "searchPolicyDescription": "Search Policy Description",
         "searchPolicyGroup": "Search Policy Group",
-        "clone": "Clone"
+        "clone": "Clone",
+        "edit": "Edit",
+        "publish": "Publish"
     },
     "deactivatePolicyGroup": {
         "headerMsg": "Do you want to deactivate the Policy Group ",

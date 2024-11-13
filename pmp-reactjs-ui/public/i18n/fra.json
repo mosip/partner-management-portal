@@ -162,7 +162,8 @@
         "pendingCertUpload": "En attente de téléchargement du certificat",
         "expired": "Expiré",
         "uploaded": "Téléchargé",
-        "notUploaded": "Non téléchargé"
+        "notUploaded": "Non téléchargé",
+        "draft": "Brouillon"
     },
     "policies": {
         "policies": "Stratégies",
@@ -653,7 +654,9 @@
         "searchPolicyName": "Rechercher le nom de la politique",
         "searchPolicyDescription": "Description de la politique de recherche",
         "searchPolicyGroup": "Groupe de recherche sur les politiques",
-        "clone": "Cloner"
+        "clone": "Cloner",
+        "edit": "Modifier",
+        "publish": "Publier"
     },
     "deactivatePolicyGroup": {
         "headerMsg": "Voulez-vous désactiver le groupe de stratégies",

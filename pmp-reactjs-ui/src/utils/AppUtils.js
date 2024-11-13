@@ -57,7 +57,7 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.rejected');
         } else if (status === "deactivated" || status === "inactive") {
             return t('statusCodes.deactivated');
-        } else if (status === "active") {
+        } else if (status === "active" || status === "activated") {
             return t('statusCodes.activated');
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
@@ -67,6 +67,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.uploaded');
         } else if (status === "not_uploaded") {
             return t('statusCodes.notUploaded');
+        } else if (status === "draft") {
+            return t('statusCodes.draft');
         } else if (status === "-") {
             return "-"
         }
@@ -278,13 +280,13 @@ export const validateUrl = (index, value, length, urlArr, t) => {
 }
 
 export const bgOfStatus = (status) => {
-    if (status === "approved" || status === "ACTIVE") {
+    if (status === "approved" || status === "ACTIVE" || status === "activated") {
         return ("bg-[#D1FADF] text-[#155E3E]")
     }
     else if (status === "rejected") {
         return ("bg-[#FAD6D1] text-[#5E1515]")
     }
-    else if (status === "InProgress" || status === 'pending_approval') {
+    else if (status === "InProgress" || status === 'pending_approval' || status === 'draft') {
         return ("bg-[#FEF1C6] text-[#6D1C00]")
     }
     else if (status === 'pending_cert_upload') {

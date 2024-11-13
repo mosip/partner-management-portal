@@ -84,6 +84,13 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     data: request
                 });
             }
+            else if (popupData.isDeactivatePolicy) {
+                response = await HttpService({
+                    url: getPolicyManagerUrl(`/policies/${popupData.policyId}`, process.env.NODE_ENV),
+                    method: 'patch',
+                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                });
+            }
             const responseData = response.data;
             if (responseData && responseData.response) {
                 window.location.reload();

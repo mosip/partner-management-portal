@@ -162,7 +162,8 @@
         "pendingCertUpload": "في انتظار تحميل الشهادة",
         "expired": "منتهي الصلاحية",
         "uploaded": "تم الرفع",
-        "notUploaded": "لم يتم الرفع"
+        "notUploaded": "لم يتم الرفع",
+        "draft": "مسودة"
     },
     "policies": {
         "policies": "سياسات",
@@ -654,7 +655,9 @@
         "searchPolicyName": "اسم سياسة البحث",
         "searchPolicyDescription": "وصف سياسة البحث",
         "searchPolicyGroup": "مجموعة سياسة البحث",
-        "clone": "استنساخ"
+        "clone": "استنساخ",
+        "edit": "تحرير",
+        "publish": "نشر"
     },
     "deactivatePolicyGroup": {
         "headerMsg": "هل تريد إلغاء تنشيط مجموعة السياسات",
