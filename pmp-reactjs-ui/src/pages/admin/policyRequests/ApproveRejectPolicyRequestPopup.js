@@ -93,13 +93,6 @@ function ApproveRejectPolicyRequestPopup({ popupData, closePopUp }) {
                                         {t('approveRejectRequestPopup.description')}
                                     </p>
                                 </div>
-                                <div>
-                                    <p className='text-sm leading-snug'>{t('approveRejectRequestPopup.comments')}</p>
-                                    <textarea
-                                        className="h-10 w-full px-2 py-3 my-1 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                        placeholder={t('approveRejectRequestPopup.commentPlaceholder')}
-                                    />
-                                </div>
                             </div>
                             <hr className="h-px bg-gray-100 border-[0.02rem]" />
                             <div className="flex flex-row items-center justify-between space-x-3 p-[6%]">
