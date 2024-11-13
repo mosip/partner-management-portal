@@ -145,9 +145,11 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
 
     };
 
-    const onClickClone = () => {
-        setShowClonePopup(true);
-        document.body.style.overflow = "hidden";
+    const onClickClone = (selectedPolicy) => {
+        if (selectedPolicy.isActive === true) {
+            setShowClonePopup(true);
+            document.body.style.overflow = "hidden";
+        }
     };
 
     const closeClonePolicyPopup = () => {
@@ -287,7 +289,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone()} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone())}>
+                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
                                                                                             <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
                                                                                             <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
