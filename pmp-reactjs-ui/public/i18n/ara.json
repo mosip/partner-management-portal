@@ -692,7 +692,18 @@
         "authPolicyConfirmationHeader": "تم إنشاء سياسة المصادقة بنجاح!",
         "dataSharePolicyConfirmationHeader": "تم إنشاء سياسة مشاركة البيانات بنجاح!",
         "authPolicyConfirmationMessage": "تم إنشاء سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح!",
-        "dataSharePolicyConfirmationMessage": "تم إنشاء سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح!"
+        "dataSharePolicyConfirmationMessage": "تم إنشاء سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح!",
+        "errorInCreatePolicy": "أثناء إنشاء السياسة، واجهنا خطأً."
+    },
+    "clonePolicyPopup": {
+        "title": "سياسة الاستنساخ",
+        "description1": "حدد مجموعة السياسات التي ترغب في تعشيش السياسة المستنسخة فيها",
+        "description2" :"إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
+        "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
+        "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
+        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "close": "يغلق",
+        "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "طلبات السياسة",

@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
-import { bgOfStatus, downloadFile, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPolicyDetails, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
@@ -36,27 +36,13 @@ function ViewPolicy() {
 
         const fetchData = async () => {
             setDataLoaded(false);
-            try {
-                const response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/${viewData.policyId}`, process.env.NODE_ENV),
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        console.log(resData);
-                        setViewDetails(resData);
-                    }
-                    else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                }
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Error fetching data:', err)
+            const policyData = await getPolicyDetails(HttpService, viewData.policyId, setErrorCode, setErrorMsg);
+            if (policyData !== null) {
+                setViewDetails(policyData);
+            } else {
+                setErrorMsg(t('clonePolicyPopup.errorInPolicyDetails'));
             }
+            setDataLoaded(true);
         };
         fetchData();
     }, []);

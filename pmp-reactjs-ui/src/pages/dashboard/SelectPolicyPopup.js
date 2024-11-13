@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPolicyManagerUrl, getPartnerManagerUrl, handleServiceErrors, logout, createDropdownData
+    getPolicyGroupList, getPartnerManagerUrl, handleServiceErrors, logout
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
@@ -33,30 +33,8 @@ function SelectPolicyPopup() {
     useEffect(() => {
         const fetchData = async () => {
             setDataLoaded(false);
-            try {
-                const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
-                        console.log(`Response data: ${resData.length}`);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('selectPolicyPopup.policyGroupError'));
-                }
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
-                setDataLoaded(true);
-            }
+            await getPolicyGroupList(HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t);
+            setDataLoaded(true);
         };
         fetchData();
     }, []);
