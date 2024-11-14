@@ -21,6 +21,8 @@ import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
+import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
+import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
 
 function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
     const { t } = useTranslation();
@@ -291,12 +293,12 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                     <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickPublish(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickPublish(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.publish")}</p>
-                                                                                            <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={publishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
-                                                                                            <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicy(policy))}>
@@ -316,7 +318,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                         )}
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicy(policy))}>
-                                                                                            <p id="policy_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                            <p id="policy_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                             <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                     </div>

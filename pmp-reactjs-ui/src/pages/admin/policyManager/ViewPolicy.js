@@ -39,6 +39,7 @@ function ViewPolicy() {
             const policyData = await getPolicyDetails(HttpService, viewData.policyId, setErrorCode, setErrorMsg);
             if (policyData !== null) {
                 setViewDetails(policyData);
+                console.log(policyData)
             } else {
                 setErrorMsg(t('clonePolicyPopup.errorInPolicyDetails'));
             }
@@ -63,6 +64,16 @@ function ViewPolicy() {
     const closePopUp = () => {
         setPreviewJsonPopup(false);
         document.body.style.overflow = 'auto';
+    };
+
+    const getPolicyStatus = (policy) => {
+        if (policy.is_Active === true && policy.schema !== null) {
+            return 'activated';
+        } else if (policy.is_Active === false && policy.schema !== null) {
+            return 'deactivated';
+        } else if (policy.schema === null && policy.is_Active === false) {
+            return 'draft';
+        }
     };
 
     const cancelErrorMsg = () => {
@@ -106,8 +117,8 @@ function ViewPolicy() {
                                                 {viewDetails.policyName}
                                             </p>
                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                                <div className={`${bgOfStatus(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                    {getStatusCode(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)}
+                                                <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                    {getStatusCode(getPolicyStatus(viewDetails), t)}
                                                 </div>
                                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                     {t("viewDeviceDetails.createdOn") + ' ' +
