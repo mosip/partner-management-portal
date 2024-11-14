@@ -715,6 +715,7 @@
         "partnerId": "معرّف الشريك",
         "organisation": "المنظمة",
         "policyGroupName": "مجموعة السياسات",
+        "policyId": "معرف السياسة",
         "policyName": "اسم السياسة",
         "createdDate": "تاريخ الإنشاء",
         "partnerType": "نوع الشريك",
@@ -737,7 +738,8 @@
         "searchPolicyGroup": "بحث عن مجموعة السياسات",
         "selectPartnerType": "اختر نوع الشريك",
         "selectPolicyGroup": "اختر مجموعة السياسات",
-        "searchPolicyName": "بحث عن اسم السياسة"
+        "searchPolicyName": "بحث عن اسم السياسة",
+        "searchPolicyId": "معرف سياسة البحث"
     },
     "viewPolicyRequest": {
         "viewPolicyRequest": "عرض طلب السياسة",

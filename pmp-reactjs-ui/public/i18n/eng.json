@@ -710,6 +710,7 @@
         "partnerId": "Partner ID",
         "organisation": "Organisation",
         "policyGroupName": "Policy Group",
+        "policyId": "Policy ID",
         "policyName": "Policy Name",
         "createdDate": "Created Date",
         "partnerType": "Partner Type",
@@ -732,7 +733,8 @@
         "searchPolicyGroup": "Search Policy Group",
         "selectPartnerType": "Select Partner Type",
         "selectPolicyGroup": "Select Policy Group",
-        "searchPolicyName": "Search Policy Name"
+        "searchPolicyName": "Search Policy Name",
+        "searchPolicyId": "Search Policy ID"
     },
     "viewPolicyRequest": {
         "viewPolicyRequest": "View Policy Request",

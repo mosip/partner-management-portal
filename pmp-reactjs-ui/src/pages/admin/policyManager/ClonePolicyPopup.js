@@ -115,7 +115,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[65%] !min-h-12 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-2"
     }
 
     return (
