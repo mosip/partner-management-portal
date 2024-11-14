@@ -14,7 +14,7 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [showErrorPopup, setShowErrorPopup] = useState(false);
+    const [showAlertErrorMessage, setShowAlertErrorMessage] = useState(false);
     const [countOfAssociatedPolicies, setCountOfAssociatedPolicies] = useState(0);
 
     const cancelErrorMsg = () => {
@@ -50,7 +50,7 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
                     if (errorCode === 'PMS_POL_056') {
-                        setShowErrorPopup(true);
+                        setShowAlertErrorMessage(true);
                         await getActiveAssociatedPolicies();
                     } else {
                         setErrorCode(errorCode);
@@ -86,7 +86,7 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
     };
 
     const closeErrorPopUp = () => {
-        setShowErrorPopup(false);
+        setShowAlertErrorMessage(false);
         closePopUp();
     };
 
@@ -101,13 +101,13 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[390px]  ${showErrorPopup ? 'w-[22rem] h-[30rem]' : 'w-[55%]'} mx-auto rounded-lg shadow-lg h-fit`}>
+            <div className={`bg-white md:w-[390px]  ${showAlertErrorMessage ? 'w-[22rem] h-[30rem]' : 'w-[55%]'} mx-auto rounded-lg shadow-lg h-fit`}>
                 {!dataLoaded && (
                     <LoadingIcon styleSet={styles} />
                 )}
                 {dataLoaded && (
                     <div className="relative">
-                        {showErrorPopup
+                        {showAlertErrorMessage
                             ? (
                                 <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
                                     <img src={activePoliciesDetectedIcon} alt="" className='h-[5.5rem] place-self-center' />
