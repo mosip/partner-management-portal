@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
-import { isLangRTL, LoadingDots, onPressEnterKey } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
 import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
+import LoadingCount from '../common/LoadingCount.js';
 import SelectPolicyPopup from './SelectPolicyPopup.js';
 
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
@@ -295,7 +296,7 @@ function Dashboard() {
     <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
       <div className="relative group flex items-center justify-center w-full">
         <span className="font-medium p-2 rounded">
-          {count ? count : <LoadingDots />}
+          {count ? count : <LoadingCount />}
         </span>
 
         {count && (

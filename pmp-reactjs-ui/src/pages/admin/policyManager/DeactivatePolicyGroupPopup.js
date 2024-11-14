@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { getPolicyManagerUrl, handleServiceErrors, isLangRTL, LoadingDots } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import activePoliciesDetectedIcon from '../../../svg/active_policies_detected_icon.svg';
 import LoadingIcon from '../../common/LoadingIcon';
+import LoadingCount from '../../common/LoadingCount';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 
@@ -114,7 +115,7 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
                                         {t('activePoliciesDetectedMsg.header')}
                                     </p>
                                     <p className="text-sm text-center text-[#666666] break-normal p-2">
-                                        {t('activePoliciesDetectedMsg.description', { noOfAssociatedPolicies: countOfAssociatedPolicies ? countOfAssociatedPolicies : <LoadingDots /> })}
+                                        {t('activePoliciesDetectedMsg.description', { noOfAssociatedPolicies: countOfAssociatedPolicies ? countOfAssociatedPolicies : <LoadingCount /> })}
                                     </p>
                                     <button id="active_policies_detected_msg_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
                                         {t('commons.okay')}
