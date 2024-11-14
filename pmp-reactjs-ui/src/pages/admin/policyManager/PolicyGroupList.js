@@ -339,7 +339,7 @@ function PolicyGroupList() {
                                                                                         <DeactivatePolicyGroupPopup
                                                                                             header={t('deactivatePolicyGroup.headerMsg')}
                                                                                             description={t('deactivatePolicyGroup.description')}
-                                                                                            popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
+                                                                                            popupData={policyGroup}
                                                                                             request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}

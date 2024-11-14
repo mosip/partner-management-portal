@@ -33,14 +33,12 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
         document.body.style.overflow = "auto"
         try {
             let response;
-            if (popupData.isDeactivatePolicyGroup) {
-                response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
-                    method: 'put',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                    data: request
-                });
-            }
+            response = await HttpService({
+                url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
+                method: 'put',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                data: request
+            });
             const responseData = response.data;
             if (responseData && responseData.response) {
                 window.location.reload();
@@ -117,7 +115,7 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
                                     <p className="text-sm text-center text-[#666666] break-normal p-2">
                                         {t('activePoliciesDetectedMsg.description', { noOfAssociatedPolicies: countOfAssociatedPolicies ? countOfAssociatedPolicies : <LoadingCount /> })}
                                     </p>
-                                    <button id="active_policies_detected_msg_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
+                                    <button id="alert_error_popup_okay_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
                                         {t('commons.okay')}
                                     </button>
                                 </div>
@@ -128,19 +126,19 @@ function DeactivatePolicyGroupPopup({ header, description, popupData, request, h
                                 )}
                                 <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                     {!isLoginLanguageRTL ?
-                                        <p className="text-base leading-snug font-semibold text-black break-words px-[6%]">
-                                            {t(header)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
+                                        <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
+                                            {t(header)} {' - ' + headerKeyName + ' ?'}
                                         </p>
-                                        : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
-                                            {t(header)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
+                                        : <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
+                                            {t(header)} '{ ' - ' + headerKeyName}'
                                         </p>
                                     }
                                     <p className="text-sm text-[#666666] break-normal py-[5%]">
                                         {t(description)}
                                     </p>
                                     <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
-                                        <button id="deactivate_cancel_btn" onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
-                                        <button id="deactivate_submit_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
+                                        <button id="deactivate_policy_group_cancel_btn" onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                                        <button id="deactivate_policy_group__confirm_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                                     </div>
                                 </div>
                             </>
