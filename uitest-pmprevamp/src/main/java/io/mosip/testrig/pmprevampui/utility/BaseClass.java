@@ -151,19 +151,7 @@ public class BaseClass {
 		return "Commit Id is: " + properties.getProperty("git.commit.id.abbrev") + " & Branch Name is:" + properties.getProperty("git.branch");
 	}
 
-	public static String generateRandomString(int length) {
-		String alphabet = "abcdefghijklmnopqrstuvwxyz";
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
 
-		for (int i = 0; i < length; i++) {
-			int index = random.nextInt(alphabet.length());
-			char randomChar = alphabet.charAt(index);
-			sb.append(randomChar);
-		}
-
-		return sb.toString();
-	}
 	
 	public static String Date() {
 		NumberFormat integerFormat = NumberFormat.getIntegerInstance();

@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
 import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
@@ -14,6 +15,7 @@ import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
 import io.mosip.testrig.pmprevampui.pages.RegisterPage;
 import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
+import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class CreateOidecClient extends BaseClass {
 
@@ -81,7 +83,7 @@ public class CreateOidecClient extends BaseClass {
 		
 		oidcClientPage.enterNameOidcTextBox("0"+data);
 		
-		String publicKey = ConfigManager.getrandomPublicKey() + "\"" + generateRandomString(4) + "\"}";
+		String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
 		
 		oidcClientPage.enterPublicKeyTextBox(publicKey);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
@@ -100,8 +102,8 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.clickOidcEditButton();
 		oidcClientPage.clickoidcEditAddNewRedirectUrl();
 		
-		oidcClientPage.EnterPublickeySecondTextBox(publicKey);
-		oidcClientPage.clickOnSubmitButton();
+		oidcClientPage.EnterPublickeySecondTextBox(ConfigManager.getRedirectUri()+"c");
+		oidcClientPage.clickOnOidcEditSubmitButton();
 		assertTrue(oidcClientPage.isModifiedSuccessfullTextMessageDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
 		oidcClientPage.clickConfirmationGoBackButton();
 		
@@ -115,7 +117,19 @@ public class CreateOidecClient extends BaseClass {
 		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
 		assertTrue(oidcClientPage.isCreatedDateTimeDescISconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
 		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
-		oidcClientPage.isFilterButtonButtonEnabled();
+		assertTrue(oidcClientPage.isFilterButtonButtonEnabled(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		
+		
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.clickOnOidcPartnerIdFilter();
+		oidcClientPage.clickOnOidcSelectPolicyGroupFilter();
+		oidcClientPage.clickOnOidcSelectPolicyNameFilter();
+		oidcClientPage.clickOnOidcSelectClientNameFilter();
+		oidcClientPage.clickOnOidcSelectStatusFilter();
+		
+		assertTrue(oidcClientPage.isfilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(oidcClientPage.isFilterButtonButtonEnabled(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		
 	}
 	
 	@Test
@@ -136,10 +150,7 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.selectPolicyNameDropdown(data+"ad");
 		
 		oidcClientPage.enterNameOidcTextBox(" ");
-		
-		String publicKey = ConfigManager.getrandomPublicKey() + "\"" + generateRandomString(4) + "\"}";
-		
-		oidcClientPage.enterPublicKeyTextBox(publicKey);
+		oidcClientPage.enterPublicKeyTextBox(" ");
 		oidcClientPage.enterLogoUrTextBox(" ");
 		oidcClientPage.enterRedirectUriTextBox(" ");
 		

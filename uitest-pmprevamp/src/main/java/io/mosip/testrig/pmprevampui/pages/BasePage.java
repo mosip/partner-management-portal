@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -58,6 +59,28 @@ public class BasePage {
 	}
 
 	public static void enter(WebElement element, String value) {
+
+		try {
+			Thread.sleep(3000);
+			element.clear();
+			element.sendKeys(value);
+		} catch (Exception e) {
+			try {
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].click();", element);
+			} catch (Exception exception) {
+				try {
+					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+							+ "' width='900' height='450'/></p>");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				throw exception;
+			}
+		}
+	}
+	
+	public static void enter(WebElement element, CharSequence[] value) {
 
 		try {
 			Thread.sleep(3000);

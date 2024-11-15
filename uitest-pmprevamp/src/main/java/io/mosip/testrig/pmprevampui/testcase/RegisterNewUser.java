@@ -186,7 +186,5 @@ public class RegisterNewUser extends BaseClass {
 		
 		partnerCertificatePage.clickOnMosipSignedCertificateDownloadButton();
 		assertTrue(partnerCertificatePage.isMosipSignedCertPopupDisplayed(), GlobalConstants.isMosipCertificateDownloadPopupDisplayed);
-		
-		
 	}	
 }

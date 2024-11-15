@@ -15,7 +15,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(xpath = "//div[@class='flex flex-col items-center']")
 	private WebElement policiesEmptyTable;
 
-	@FindBy(id = "policies_request_policy_btn")
+	@FindBy(id = "create_policy_group_btn")
 	private WebElement requestPolicyButton;
 
 	@FindBy(id = "policies_request_btn")
