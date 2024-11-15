@@ -42,7 +42,7 @@ function ViewPolicyRequestDetails() {
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col py-3">
                             <p className="font-bold text-sm text-dark-blue mb-2">
-                                {policyRequestDetails.policyName}
+                                {policyRequestDetails.partnerId}
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -61,20 +61,20 @@ function ViewPolicyRequestDetails() {
                     </div>
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                <p className="font-[600] text-suva-gray text-xs">
-                                    {t("viewPolicyRequest.partnerId")}
-                                </p>
-                                <p className="font-[600] text-vulcan text-sm">
-                                    {policyRequestDetails.partnerId}
-                                </p>
-                            </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
                                 <p className="font-[600] text-suva-gray text-xs">
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm">
                                     {policyRequestDetails.partnerType}
+                                </p>
+                            </div>
+                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                <p className="font-[600] text-suva-gray text-xs">
+                                    {t("viewPolicyRequest.organisation")}
+                                </p>
+                                <p className="font-[600] text-vulcan text-sm">
+                                    {policyRequestDetails.orgName}
                                 </p>
                             </div>
                         </div>
@@ -89,10 +89,10 @@ function ViewPolicyRequestDetails() {
                             </div>
                             <div className={`w-[48%] max-[600px]:w-[100%]`}>
                                 <p className="font-[600] text-suva-gray text-xs">
-                                    {t("viewPolicyRequest.policyDesc")}
+                                    {t("viewPolicyRequest.policyName")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyNameDescription}
+                                    {policyRequestDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
@@ -101,14 +101,6 @@ function ViewPolicyRequestDetails() {
                                 </p>
                                 <p className="font-[600] text-vulcan text-sm break-normal">
                                     {policyRequestDetails.policyGroupName}
-                                </p>
-                            </div>
-                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
-                                    {t("viewPolicyRequest.policyGroupDesc")}
-                                </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
-                                    {policyRequestDetails.policyGroupDescription}
                                 </p>
                             </div>
                         </div>
@@ -140,11 +132,11 @@ function ViewPolicyRequestDetails() {
                                                 {policyRequestDetails.updatedDateTime && (
                                                     <div className="flex">
                                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(policyRequestDetails.updatedDateTime, "date", true)}
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "date", false)}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
                                                         <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate(policyRequestDetails.updatedDateTime, "time", true)}
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "time", false)}
                                                         </div>
                                                     </div>
                                                 )}
@@ -169,11 +161,11 @@ function ViewPolicyRequestDetails() {
                                             <div className="flex items-center justify-start">
                                                 <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
-                                                        formatDate(policyRequestDetails.createdDateTime, "date", true)}
+                                                        formatDate(policyRequestDetails.createdDateTime, "date", false)}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-semibold text-xs text-dark-blue">
-                                                    {formatDate(policyRequestDetails.createdDateTime, "time", true)}
+                                                    {formatDate(policyRequestDetails.createdDateTime, "time", false)}
                                                 </div>
                                             </div>
                                         </div>

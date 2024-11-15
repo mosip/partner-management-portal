@@ -56,7 +56,7 @@
         "partnerDesc": "View/Deactivate partner details",
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
-        "partnerPolicyMapping": "Partner - Policy mapping",
+        "partnerPolicyMapping": "Partner - Policy Linking",
         "partnerPolicyMappingDesc": "View, Deactivate, Approve/Reject policy requests from partners",
         "sbiDevice": "SBI - Device",
         "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
@@ -713,10 +713,10 @@
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
     },
     "partnerPolicyMappingRequestList": {
-        "partnerPolicyMappingRequestTitle": "Policy Requests",
-        "listOfPartnerPolicyMappingRequestTitle": "List of Policy Requests",
+        "partnerPolicyMappingRequestTitle": "Partner - Policy Linking",
+        "listOfPartnerPolicyMappingRequestTitle": "List of Partner-Policy Linkages",
         "partnerId": "Partner ID",
-        "organisation": "Organisation",
+        "organisation": "Organisation Name",
         "policyGroupName": "Policy Group",
         "policyId": "Policy ID",
         "policyName": "Policy Name",
@@ -745,19 +745,19 @@
         "searchPolicyId": "Search Policy ID"
     },
     "viewPolicyRequest": {
-        "viewPolicyRequest": "View Policy Request",
-        "listOfPolicyRequests": "List of Policy Requests",
+        "viewPolicyRequest": "View Partner-Policy Linking",
+        "listOfPolicyRequests": "List of Partner Policy Linkages",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyId": "Policy ID",
-        "policyDesc": "Policy Description",
-        "policyGroup": "Policy Group",
-        "policyGroupDesc": "Policy Group Description"
+        "policyName": "Policy Name",
+        "organisation": "Organisation Name",
+        "policyGroup": "Policy Group"
     },
     "approveRejectRequestPopup": {
         "header": "Do you want to Approve/Reject the Policy",
-        "description": "Please review the policy details carefully before making your choice.",
-        "approveReject": "Approve / Reject",
+        "description": "Please review the policy details carefully before taking appropriate action.",
+        "approveReject":"Approve / Reject",
         "deActivate": "Deactivate",
         "approve": "Approve",
         "reject": "Reject",
