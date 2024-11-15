@@ -431,7 +431,7 @@ export const downloadFile = (data, fileName, fileType) => {
 
 export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => {
     const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo; 
+    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
     return effectivePageNo;
 };
 
@@ -480,7 +480,7 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
     }
 };
 
-export const getPolicyDetails = async(HttpService, policyId, setErrorCode, setErrorMsg) => {
+export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setErrorMsg) => {
     try {
         const response = await HttpService({
             url: getPolicyManagerUrl(`/policies/${policyId}`, process.env.NODE_ENV),
@@ -496,7 +496,7 @@ export const getPolicyDetails = async(HttpService, policyId, setErrorCode, setEr
             else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
-        } 
+        }
         return null;
     } catch (err) {
         setErrorMsg(err);
