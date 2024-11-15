@@ -20,9 +20,9 @@ import { HttpService } from '../../../services/HttpService.js';
 import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
-import DeactivatePopup from '../../common/DeactivatePopup.js';
 import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
 import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
+import PublishPolicyPopup from './PublishPolicyPopup.js';
 
 function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
     const { t } = useTranslation();
@@ -57,6 +57,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     });
     const submenuRef = useRef([]);
     const [showClonePopup, setShowClonePopup] = useState(false);
+    const [showPublishPolicyPopup, setShowPublishPolicyPopup] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
@@ -152,11 +153,20 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const onClickPublish = (selectedPolicy) => {
-       
+       if (selectedPolicy.status === "draft") {
+            setShowPublishPolicyPopup(true);
+            document.body.style.overflow = "hidden";
+       }
     };
 
     const onClickEdit = (selectedPolicy) => {
        
+    };
+
+    const closePublishPolicyPopup = () => {
+        setActionId(-1);
+        setShowPublishPolicyPopup(false);
+        document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
@@ -295,6 +305,12 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.publish")}</p>
                                                                                             <img src={publishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
+                                                                                        {showPublishPolicyPopup && (
+                                                                                            <PublishPolicyPopup
+                                                                                                policyDetails={policy}
+                                                                                                closePopUp={closePublishPolicyPopup}
+                                                                                            />
+                                                                                        )}
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
