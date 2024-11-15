@@ -55,7 +55,7 @@
         "partnerDesc": "Afficher/Désactiver les détails du partenaire",
         "policy": "Politique",
         "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
-        "partnerPolicyMapping": "Partenaire - Cartographie des politiques",
+        "partnerPolicyMapping": "Partenaire - Liens politiques",
         "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver/Rejet les demandes de politique des partenaires",
         "sbiDevice": "SBI-Appareil",
         "sbiDeviceDesc": "Afficher, Désactiver Approuver/Rejet les détails du SBI ou de l'appareil",
@@ -712,10 +712,10 @@
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "partnerPolicyMappingRequestList": {
-        "partnerPolicyMappingRequestTitle": "Demandes de Politique",
-        "listOfPartnerPolicyMappingRequestTitle": "Liste des Demandes de Politique",
+        "partnerPolicyMappingRequestTitle": "Partenaire - Liens politiques",
+        "listOfPartnerPolicyMappingRequestTitle": "Liste des partenaires-Liens politiques",
         "partnerId": "ID Partenaire",
-        "organisation": "Organisation",
+        "organisation": "Nom de l'organisation",
         "policyGroupName": "Groupe de Politiques",
         "policyId": "ID de la politique",
         "policyName": "Nom de la Politique",
@@ -744,18 +744,18 @@
         "searchPolicyId": "Rechercher l'ID de la politique"
     },
     "viewPolicyRequest": {
-        "viewPolicyRequest": "Afficher la demande de politique",
-        "listOfPolicyRequests": "Liste des demandes de politique",
+        "viewPolicyRequest": "Voir les liens vers la politique des partenaires",
+        "listOfPolicyRequests": "Liste des liens vers les politiques des partenaires",
         "partnerId": "Identifiant du partenaire",
         "partnerType": "Type de partenaire",
         "policyId": "ID de stratégie",
-        "policyDesc": "Description de la politique",
-        "policyGroup": "Groupe de politiques",
-        "policyGroupDesc": "Description du groupe de stratégies"
+        "policyName": "Nom de la Politique",
+        "organisation": "Nom de l'organisation",
+        "policyGroup": "Groupe de politiques"
     },
     "approveRejectRequestPopup": {
         "header": "Voulez-vous approuver/rejeter la politique",
-        "description": "Veuillez lire attentivement les détails de la police avant de faire votre choix.",
+        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre les mesures appropriées.",
         "approveReject":"Approuver / Rejeter",
         "deActivate": "Désactiver",
         "approve":"Approuver",
