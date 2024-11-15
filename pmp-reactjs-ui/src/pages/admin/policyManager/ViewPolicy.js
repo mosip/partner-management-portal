@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
-import { bgOfStatus, downloadFile, formatDate, getPolicyManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPolicyDetails, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
@@ -36,27 +36,14 @@ function ViewPolicy() {
 
         const fetchData = async () => {
             setDataLoaded(false);
-            try {
-                const response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/${viewData.policyId}`, process.env.NODE_ENV),
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        console.log(resData);
-                        setViewDetails(resData);
-                    }
-                    else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                }
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Error fetching data:', err)
+            const policyData = await getPolicyDetails(HttpService, viewData.policyId, setErrorCode, setErrorMsg);
+            if (policyData !== null) {
+                setViewDetails(policyData);
+                console.log(policyData)
+            } else {
+                setErrorMsg(t('clonePolicyPopup.errorInPolicyDetails'));
             }
+            setDataLoaded(true);
         };
         fetchData();
     }, []);
@@ -77,6 +64,16 @@ function ViewPolicy() {
     const closePopUp = () => {
         setPreviewJsonPopup(false);
         document.body.style.overflow = 'auto';
+    };
+
+    const getPolicyStatus = (policy) => {
+        if (policy.is_Active === true && policy.schema !== null) {
+            return 'activated';
+        } else if (policy.is_Active === false && policy.schema !== null) {
+            return 'deactivated';
+        } else if (policy.schema === null && policy.is_Active === false) {
+            return 'draft';
+        }
     };
 
     const cancelErrorMsg = () => {
@@ -116,21 +113,21 @@ function ViewPolicy() {
                                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                         <div className="flex-col">
-                                            <p className="font-bold text-md text-dark-blue mb-2">
+                                            <p className="font-bold text-md text-dark-blue mb-2 break-all">
                                                 {viewDetails.policyName}
                                             </p>
                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                                <div className={`${bgOfStatus(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                    {getStatusCode(viewDetails.is_Active ? 'ACTIVE' : 'INACTIVE', t)}
+                                                <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                    {getStatusCode(getPolicyStatus(viewDetails), t)}
                                                 </div>
                                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                     {t("viewDeviceDetails.createdOn") + ' ' +
-                                                        formatDate(viewDetails.cr_dtimes, "date", false)
+                                                        formatDate(viewDetails.cr_dtimes, "date", true)
                                                     }
                                                 </div>
                                                 <div className="mx-1 text-gray-300">|</div>
                                                 <div className="font-semibold text-sm text-dark-blue">
-                                                    {formatDate(viewDetails.cr_dtimes, "time", false)}
+                                                    {formatDate(viewDetails.cr_dtimes, "time", true)}
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +138,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyId")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyId}
                                                 </p>
                                             </div>
@@ -149,7 +146,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyGroup")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyGroupName}
                                                 </p>
                                             </div>
@@ -157,9 +154,9 @@ function ViewPolicy() {
                                         <div className="flex flex-wrap py-2 max-[450px]:flex-col">
                                             <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                                 <p className="font-[600] text-suva-gray text-xs">
-                                                    {t("viewAuthPoliciesList.policyNameDescription")}
+                                                    {t("viewAuthPoliciesList.policyDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyDesc}
                                                 </p>
                                             </div>
@@ -167,7 +164,7 @@ function ViewPolicy() {
                                                 <p className="font-[600] text-suva-gray text-xs">
                                                     {t("viewAuthPoliciesList.policyGroupDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm">
+                                                <p className="font-[600] text-vulcan text-sm break-all">
                                                     {viewDetails.policyGroupDesc}
                                                 </p>
                                             </div>
@@ -181,7 +178,7 @@ function ViewPolicy() {
                                                     <img src={fileUploadBlue} className="h-7" alt="" />
                                                     <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                                 </div>
-                                                <div onClick={() => showUploadedJsonData()} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer'>
+                                                <div onClick={showUploadedJsonData} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer' tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, showUploadedJsonData)}>
                                                     <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
                                                     <img src={previewIcon} alt="" />
                                                 </div>

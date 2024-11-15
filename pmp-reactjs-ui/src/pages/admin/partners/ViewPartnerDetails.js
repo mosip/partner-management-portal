@@ -73,7 +73,7 @@ function ViewPartnerDetails() {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('viewPartnerDetails.originalCertificateSuccessMsg'));
-                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer','application/x-x509-ca-cert')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
@@ -95,10 +95,15 @@ function ViewPartnerDetails() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
-            if (responseData) {
-                const resData = responseData.response;
-                return resData;
+            if (partnerId) {
+                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+                if (responseData) {
+                    const resData = responseData.response;
+                    return resData;
+                }
+                else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
@@ -161,16 +166,16 @@ function ViewPartnerDetails() {
                                             {partnerDetails.partnerId}
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                {partnerDetails.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
+                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
-                                                    formatDate(partnerDetails.createdDateTime, "date", false)}
+                                                    formatDate(partnerDetails.createdDateTime, "date", true)}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(partnerDetails.createdDateTime, "time", false)}
+                                                {formatDate(partnerDetails.createdDateTime, "time", true)}
                                             </div>
                                         </div>
                                     </div>
@@ -187,7 +192,7 @@ function ViewPartnerDetails() {
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                             <p className="font-[600] text-suva-gray text-xs">
-                                                {t("viewPartnerDetails.organizationName")}
+                                                {t("viewPartnerDetails.organisationName")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
                                                 {partnerDetails.organizationName}
@@ -223,13 +228,13 @@ function ViewPartnerDetails() {
                                         <div className={`flex-col`}>
                                             <div className={`flex py-[1rem] px-5 ${partnerDetails.isActive === false ? 'bg-gray-100' : 'bg-[#f3fdf3]'} justify-between items-center max-520:flex-col`}>
                                                 <div className="flex space-x-4 items-center">
-                                                    { partnerDetails.isActive === false
+                                                    {partnerDetails.isActive === false
                                                         ? <img src={fileUploadDisabled} className="h-8" alt="" />
                                                         : <img src={fileUpload} className="h-8" alt="" />
                                                     }
                                                     <div className='flex-col p-3 items-center'>
                                                         <h6 className={`text-sm ${partnerDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                            {"Partner Certificate"}
+                                                            {t("viewPartnerDetails.partnerCertificate")}
                                                         </h6>
                                                     </div>
                                                 </div>

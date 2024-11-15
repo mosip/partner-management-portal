@@ -150,6 +150,7 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.selectPolicyNameDropdown(data+"ad");
 		
 		oidcClientPage.enterNameOidcTextBox(" ");
+		
 		oidcClientPage.enterPublicKeyTextBox(" ");
 		oidcClientPage.enterLogoUrTextBox(" ");
 		oidcClientPage.enterRedirectUriTextBox(" ");

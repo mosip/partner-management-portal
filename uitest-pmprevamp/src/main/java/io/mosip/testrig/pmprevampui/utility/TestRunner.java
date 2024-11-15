@@ -11,6 +11,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import io.mosip.testrig.pmprevampui.dbaccess.DBManager;
 import io.mosip.testrig.pmprevampui.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 
@@ -29,6 +30,7 @@ public class TestRunner {
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
 		startTestRunner();
+		
 	}
 
 	public static void startTestRunner() throws Exception {
@@ -52,18 +54,18 @@ public class TestRunner {
 				if(test.equals("RegisterNewUser")) {
 					classes.add(RegisterNewUser);
 				}
-				if(test.equals("NewUserPolicy")) {
-					classes.add(NewUserPolicy);
-				}
-				if(test.equals("CreateOidecClient")) {
-					classes.add(CreateOidecClient);
-				}
-				if(test.equals("CreateApiKey")) {
-					classes.add(CreateApiKey);
-				}
+//				if(test.equals("NewUserPolicy")) {
+//					classes.add(NewUserPolicy);
+//				}
+//				if(test.equals("CreateOidecClient")) {
+//					classes.add(CreateOidecClient);
+//				}
+//				if(test.equals("CreateApiKey")) {
+//					classes.add(CreateApiKey);
+//				}
 				
 				
-    
+				DBManager.clearPMSDbData();
 			}
 
 

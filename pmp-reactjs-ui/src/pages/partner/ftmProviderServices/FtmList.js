@@ -11,12 +11,12 @@ import {
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
 import LoadingIcon from '../../common/LoadingIcon';
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import FilterButtons from '../../common/FilterButtons';
 import FtmListFilter from './FtmListFilter';
 import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import DeactivatePopup from '../../common/DeactivatePopup';
+import EmptyList from '../../common/EmptyList';
 
 function FtmList() {
   const navigate = useNavigate('');
@@ -26,7 +26,7 @@ function FtmList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [order, setOrder] = useState("ASC");
   const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
@@ -215,29 +215,12 @@ function FtmList() {
             </div>
             {ftmList.length === 0 ?
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg">
-                <div className="flex justify-between py-2 px-2 pt-4 text-sm font-semibold text-[#6F6E6E] overflow-x-scroll no-scrollbar">
-                  <div className={`flex w-full justify-between`}>
-                    <h6 className="px-2 mx-2">{t('ftmList.partnerId')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.make')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.model')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.createdDate')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.certificateUploadDate')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.certificateExpiryDate')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.certExpiryStatus')}</h6>
-                    <h6 className="px-2 mx-2">{t('ftmList.status')}</h6>
-                    <h6 className="px-2 mx-2 text-center">{t('ftmList.action')}</h6>
-                  </div>
-                </div>
-                <hr className="h-px mx-3 bg-gray-200 border-0" />
-                <div className="flex items-center justify-center p-24">
-                  <div className="flex flex-col justify-center">
-                    <img src={rectangleGrid} alt="" />
-                    <button id='add_ftm_chip_btn' onClick={() => addFtm()} type="button"
-                      className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                      {t('ftmList.addFtmBtn')}
-                    </button>
-                  </div>
-                </div>
+                <EmptyList 
+                  tableHeaders={tableHeaders} 
+                  showCustomButton={true}
+                  customButtonName='ftmList.addFtmBtn'
+                  onClickButton={addFtm}
+                />
               </div>
               :
               <>
@@ -276,7 +259,7 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', false)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>

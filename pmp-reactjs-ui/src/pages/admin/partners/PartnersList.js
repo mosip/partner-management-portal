@@ -9,12 +9,11 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
-  resetPageNumber, applyFilter, setPageNumberAndPageSize, onResetFilter
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
-import rectangleGrid from "../../../svg/rectangle_grid.svg";
 import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
 import SortingIcon from "../../common/SortingIcon";
@@ -23,6 +22,7 @@ import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import EmptyList from "../../common/EmptyList";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -38,11 +38,11 @@ function PartnersList() {
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -129,7 +129,7 @@ function PartnersList() {
   }, [sortFieldName, sortType, pageNo, pageSize, filters]);
 
   const onApplyFilter = (filters) => {
-    applyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
+    onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
@@ -192,34 +192,6 @@ function PartnersList() {
     loadingDiv: "!py-[20%]"
   }
 
-  const renderNoData = () => (
-    <>
-      <hr className="h-0.5 bg-gray-200 border-0" />
-      <div className="flex justify-between mt-5">
-        <div className="flex w-full justify-between font-[400] text-[14px] m-auto">
-          <h6 className="mx-5"> {t("partnerList.partnerId")}</h6>
-          <h6>{t("partnerList.partnerType")}</h6>
-          <h6>{t("partnerList.organisation")}</h6>
-          <h6>{t("partnerList.policyGroup")}</h6>
-          <h6>{t("partnerList.email")}</h6>
-          <h6>{t("partnerList.certUploadStatus")}</h6>
-          <h6>{t("partnerList.status")}</h6>
-          <h6 className="mx-5">{t("partnerList.action")}</h6>
-        </div>
-      </div>
-      
-      <hr className="h-px mx-3 my-2 bg-gray-200 border-0" />
-      
-      <div className="flex items-center justify-center p-24">
-        <div className="flex flex-col items-center">
-          {/* Ensure rectangleGrid has a valid import path and alt text for accessibility */}
-          <img src={rectangleGrid} alt="No data available icon" />
-          <p className="text-[#A1A1A1] mt-3">{t("partnerList.noData")}</p>
-        </div>
-      </div>
-    </>
-  );  
-
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && <LoadingIcon />}
@@ -253,7 +225,7 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  {renderNoData()}
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
                 </div>
               ) : (
                 <>
@@ -274,7 +246,9 @@ function PartnersList() {
                       />
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                    {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? renderNoData() : (
+                    {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? 
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                      : (
                       <>
                         <div className="mx-[2%] overflow-x-scroll">
                           <table className="table-fixed">
@@ -320,7 +294,7 @@ function PartnersList() {
                                     </td>
                                     <td className="text-center break-all">
                                       <div ref={(el) => (submenuRef.current[index] = el)}>
-                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
                                           tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
                                         >
                                           ...
@@ -341,7 +315,7 @@ function PartnersList() {
                                                 closePopUp={closeDeactivatePopup}
                                                 popupData={{ ...partner, isDeactivatePartner: true }}
                                                 request={deactivateRequest}
-                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organizationName: partner.orgName })}
+                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
                                                 descriptionMsg='deactivatePartner.description'
                                                 headerKeyName={partner.orgName}
                                               />

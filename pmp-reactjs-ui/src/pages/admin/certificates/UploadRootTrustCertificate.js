@@ -5,7 +5,6 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title'; import DropdownComponent from "../../common/fields/DropdownComponent";
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
-import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';

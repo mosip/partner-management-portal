@@ -10,7 +10,6 @@ import {
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import OidcClientsFilter from './OidcClientsFilter';
 import AuthenticationServicesTab from './AuthenticationServicesTab.js';
@@ -19,6 +18,7 @@ import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
+import EmptyList from '../../common/EmptyList.js';
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -30,7 +30,7 @@ function OidcClientsList() {
     const [activeOidcClient, setActiveOicdClient] = useState(true);
     const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
@@ -222,35 +222,12 @@ function OidcClientsList() {
                         {oidcClientsList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                {
-                                    activeOidcClient && (
-                                        <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                                            <div className={`flex w-full justify-between`}>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.partnerId')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyGroup')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyName')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.oidcClientName')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.createdDate')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.status')}</h6>
-                                                <h6 className="px-2 mx-2 text-center">{t('authenticationServices.oidcClientId')}</h6>
-                                                <h6 className="px-2 mx-2 text-center">{t('authenticationServices.action')}</h6>
-                                            </div>
-                                        </div>)
-                                }
-
-                                <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center">
-                                        <img src={rectangleGrid} alt="" />
-                                        {activeOidcClient &&
-                                            (<button id='create_oidc_btn' onClick={() => createOidcClient()} type="button"
-                                                className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                                {t('authenticationServices.createOidcClientBtn')}
-                                            </button>)
-                                        }
-                                    </div>
-                                </div>
+                                <EmptyList 
+                                    tableHeaders={tableHeaders} 
+                                    showCustomButton={true}
+                                    customButtonName='createOidcClient.createOidcClient'
+                                    onClickButton={createOidcClient}
+                                />
                             </div>
                             :
                             <>

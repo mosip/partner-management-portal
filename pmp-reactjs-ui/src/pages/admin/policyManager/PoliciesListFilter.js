@@ -13,8 +13,9 @@ function PoliciesListFilter({ onApplyFilter }) {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
-      { status: 'active' },
-      { status: 'deactivated' }
+      { status: 'activated' },
+      { status: 'deactivated'},
+      { status: 'draft'}
     ]);
     const [filters, setFilters] = useState({
       policyId: "",

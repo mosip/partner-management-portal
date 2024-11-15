@@ -152,7 +152,6 @@ public class BaseClass {
 	}
 
 
-	
 	public static String Date() {
 		NumberFormat integerFormat = NumberFormat.getIntegerInstance();
 		LocalDate currentDate = LocalDate.now();

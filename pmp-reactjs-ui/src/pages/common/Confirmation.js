@@ -21,7 +21,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
                         {t(confirmationData.header)}
                     </h1>
                     <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
-                        {t(confirmationData.description)} <br></br>
+                    {confirmationData.descriptionParams ? t(confirmationData.description, confirmationData.descriptionParams) : t(confirmationData.description)}
                         {confirmationData.description1 && (
                             <span className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</span>
                         )}

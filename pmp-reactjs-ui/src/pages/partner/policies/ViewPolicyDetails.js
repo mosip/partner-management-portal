@@ -53,11 +53,11 @@ function ViewPolicyDetails() {
                             </div>
                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3":"ml-3"} text-xs text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
-                                    formatDate(policyDetails.createdDateTime, "date", false)}
+                                    formatDate(policyDetails.createdDateTime, "date", true)}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
                             <div className="font-semibold text-xs text-dark-blue">
-                                {formatDate(policyDetails.createdDateTime, "time", false)}
+                                {formatDate(policyDetails.createdDateTime, "time", true)}
                             </div>
                         </div>
                     </div>
@@ -173,11 +173,11 @@ function ViewPolicyDetails() {
                                             <div className="flex items-center justify-start">
                                                 <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
-                                                        formatDate(policyDetails.createdDateTime, "date", false)}
+                                                        formatDate(policyDetails.createdDateTime, "date", true)}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-semibold text-xs text-dark-blue">
-                                                    {formatDate(policyDetails.createdDateTime, "time", false)}
+                                                    {formatDate(policyDetails.createdDateTime, "time", true)}
                                                 </div>
                                             </div>
                                         </div>

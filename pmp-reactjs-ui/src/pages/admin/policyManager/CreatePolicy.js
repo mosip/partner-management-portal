@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, createDropdownData, createRequest } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -33,6 +33,13 @@ function CreatePolicy() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [policyType, setPolicyType] = useState(null);
     const [backLink, setBackLink] = useState("");
+    const [title, setTitle] = useState("");
+    const [subTitle, setSubTitle] = useState("");
+    const [policyNamePlaceHolderKey, setPolicyNamePlaceHolderKey] = useState("");
+    const [policyDescriptionPlaceHolderKey, setPolicyDescriptionPlaceHolderKey] = useState("");
+    const [confirmationHeader, setConfirmationHeader] = useState("");
+    const [confirmationMessage, setConfirmationMessage] = useState("");
+
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
     let isCancelledClicked = false;
@@ -104,26 +111,23 @@ function CreatePolicy() {
                 }
                 setPolicyType(storedPolicyType);
                 if (storedPolicyType === 'DataShare') {
+                    setTitle('createPolicy.createDataSharePolicyTitle');
+                    setSubTitle('policiesList.listOfDataSharePolicies');
+                    setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
+                    setConfirmationHeader('createPolicy.dataSharePolicyConfirmationHeader');
+                    setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
                 } else if (storedPolicyType === 'Auth') {
+                    setTitle('createPolicy.createAuthPolicyTitle');
+                    setSubTitle('policiesList.listOfAuthPolicies');
+                    setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
+                    setConfirmationHeader('createPolicy.authPolicyConfirmationHeader');
+                    setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
                 }
-                const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPolicyGroupDropdownData(createDropdownData('name', 'description', false, resData, t));
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('commons.errorInResponse'));
-                }
+                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
@@ -173,7 +177,9 @@ function CreatePolicy() {
                 if (responseData && responseData.response) {
                     const requiredData = {
                         backUrl: backLink,
-                        header: "createPolicy.CreatePolicySuccessHeader",
+                        header: confirmationHeader,
+                        description: confirmationMessage,
+                        descriptionParams : {policyGroupName : policyGroup},
                     }
                     setConfirmationData(requiredData);
                     setCreatePolicySuccess(true);
@@ -181,7 +187,7 @@ function CreatePolicy() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('requestPolicy.errorInMapPolicy'));
+                setErrorMsg(t('createPolicy.errorInCreatePolicy'));
             }
         } catch (err) {
             setErrorMsg(err);
@@ -201,6 +207,8 @@ function CreatePolicy() {
     };
 
     const handlePolicyDataChange = (e) => {
+        setErrorMsg("");
+        setSuccessMsg("");
         const { value } = e.target;
         setPolicyData(value);
     };
@@ -282,7 +290,7 @@ function CreatePolicy() {
                     )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title='policyGroupList.policies' subTitle='policyGroupList.policies' backLink={backLink}></Title>
+                            <Title title={title} subTitle={subTitle} backLink={backLink}></Title>
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
@@ -310,16 +318,17 @@ function CreatePolicy() {
                                                         textBoxValue={policyName}
                                                         onTextChange={onTextChange}
                                                         fieldNameKey="createPolicy.policyName*"
-                                                        placeHolderKey="createPolicy.writePolicyName"
+                                                        placeHolderKey={policyNamePlaceHolderKey}
                                                         styleSet={styleSet}
                                                         id="policy_name_box"
+                                                        maxLength={128}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-full">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                        {t('createPolicy.policyDescription')}<span className="text-crimson-red">*</span>
+                                                        {t('createPolicy.policyDescription')}<span className="text-crimson-red px-1">*</span>
                                                     </label>
                                                     <textarea
                                                         id="policy_description_box"
@@ -327,7 +336,8 @@ function CreatePolicy() {
                                                         value={policyDescription}
                                                         onChange={(e) => handlePolicyDescriptionChange(e)}
                                                         className="w-full min-h-11 h-11 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar"
-                                                        placeholder={t('createPolicy.writePolicyDescription')}
+                                                        placeholder={t(policyDescriptionPlaceHolderKey)}
+                                                        maxLength={256}
                                                     />
                                                 </div>
                                             </div>
@@ -365,6 +375,7 @@ function CreatePolicy() {
                                                             onChange={(e) => handlePolicyDataChange(e)}
                                                             className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
                                                             placeholder={t('createPolicy.policyDataDesc')}
+                                                            disabled={!policyData}
                                                         />
                                                     </div>
                                                 </div>
