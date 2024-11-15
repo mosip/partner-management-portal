@@ -7,6 +7,7 @@ import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcCli
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
+import LoadingCount from '../common/LoadingCount.js';
 import SelectPolicyPopup from './SelectPolicyPopup.js';
 
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
@@ -291,19 +292,11 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  const LoadingDots = () => (
-    <div className='flex justify-center items-center m-2'>
-      <div className='h-1 w-1 mx-px bg-[#6D1C00] rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-      <div className='h-1 w-1 mx-px bg-[#6D1C00] rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-      <div className='h-1 w-1 mx-px bg-[#6D1C00] rounded-full animate-bounce'></div>
-    </div>
-  );
-
   const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
     <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
       <div className="relative group flex items-center justify-center w-full">
         <span className="font-medium p-2 rounded">
-          {count ? count : <LoadingDots />}
+          {count ? count : <LoadingCount />}
         </span>
 
         {count && (

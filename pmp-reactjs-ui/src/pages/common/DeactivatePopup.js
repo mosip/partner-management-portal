@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL } from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -14,7 +14,6 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -76,30 +75,16 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (popupData.isDeactivatePolicyGroup) {
-                 response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
-                    method: 'put',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                    data: request
-                });
-            }
-            const responseData = response.data;
-            if (responseData && responseData.response) {
-                window.location.reload();
-            } else {
-                setDataLoaded(true);
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
             setDataLoaded(true);
             setErrorMsg(err);
         }
-    }
+    };
 
     const styles = {
         loadingDiv: "!py-[35%]"
-    }
+    };
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
@@ -142,6 +127,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                     <button id="deactivate_submit_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                                 </div>
                             </div>
+
                         </div>
                     )}
                 </div>
