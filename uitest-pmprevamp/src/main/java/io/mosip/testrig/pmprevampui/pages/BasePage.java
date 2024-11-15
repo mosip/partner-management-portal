@@ -79,7 +79,7 @@ public class BasePage {
 			}
 		}
 	}
-	
+
 	public static void enter(WebElement element, CharSequence[] value) {
 
 		try {

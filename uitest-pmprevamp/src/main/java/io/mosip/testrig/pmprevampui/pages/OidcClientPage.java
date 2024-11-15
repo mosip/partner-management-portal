@@ -63,10 +63,10 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "create_oidc_submit_btn")
 	private WebElement submitButton;
-	
+
 	@FindBy(id = "oidc_edit_submit_btn")
 	private WebElement oidcEditSubmitButton;
-	
+
 	@FindBy(xpath = "(//*[contains(text(), 'Enter a valid URI')])[1]")
 	private WebElement enterValidUriForLogoUriText;
 
@@ -195,10 +195,10 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "oidc_select_status_filter_option1")
 	private WebElement oidcSelectStatusFilterOption1;
-	
+
 	@FindBy(id = "filter_reset_btn")
 	private WebElement filterResetButton;
-	
+
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
@@ -422,39 +422,37 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(oidcSelectPartnerIdFilter);
 		clickOnElement(oidcSelectPartnerIdFilterOption1);
 	}
-	
+
 	public void clickOnOidcSelectPolicyGroupFilter() {
 		clickOnElement(oidcSelectPolicyGroupFilter);
 		clickOnElement(oidcSelectPolicyGroupFilterOption1);
 	}
-	
+
 	public void clickOnOidcSelectPolicyNameFilter() {
 		clickOnElement(oidcSelectPolicyNameFilter);
 		clickOnElement(oidcSelectPolicyNameFilterOption1);
 	}
-	
+
 	public void clickOnOidcSelectClientNameFilter() {
 		clickOnElement(oidcSelectClientNameFilter);
 		clickOnElement(oidcSelectClientNameFilterOption1);
 	}
-	
+
 	public void clickOnOidcSelectStatusFilter() {
 		clickOnElement(oidcSelectStatusFilter);
 		clickOnElement(oidcSelectStatusFilterOption1);
 	}
-	
+
 	public boolean isfilterResetButtonDisplayed() {
 		return isElementDisplayed(filterResetButton);
 	}
-	
+
 	public void clickOnFilterResetButton() {
 		clickOnElement(filterResetButton);
 	}
-	
+
 	public void clickOnOidcEditSubmitButton() {
 		clickOnElement(oidcEditSubmitButton);
 	}
-	
-	
-	
+
 }

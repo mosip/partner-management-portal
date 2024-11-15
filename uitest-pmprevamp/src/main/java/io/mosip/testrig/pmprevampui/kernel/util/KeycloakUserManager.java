@@ -40,7 +40,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 	public static Properties propsKernel = getproperty(
 			TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
-	
+
 //	public static JSONObject  propsPublicKey = readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json");
 
 	private static Keycloak getKeycloakInstance() {
@@ -206,24 +206,24 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 		}
 	}
-	
+
 	public static String readJsonData(String path) {
-		 String propsPublicKey =null;
+		String propsPublicKey = null;
 		try {
-            JSONObject obj = new JSONObject(new JSONTokener(new FileReader(path)));
-            String name = obj.getString("kid");
-            obj.put("kid", generateRandomString(37));
-             propsPublicKey= obj.toString();
-            System.out.println("kty: " + name);
-            System.out.println("kty: " + propsPublicKey);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			JSONObject obj = new JSONObject(new JSONTokener(new FileReader(path)));
+			String name = obj.getString("kid");
+			obj.put("kid", generateRandomString(37));
+			propsPublicKey = obj.toString();
+			System.out.println("kty: " + name);
+			System.out.println("kty: " + propsPublicKey);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return propsPublicKey;
-    }
-	
+	}
+
 	public static String generateRandomString(int length) {
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
 		StringBuilder sb = new StringBuilder();
