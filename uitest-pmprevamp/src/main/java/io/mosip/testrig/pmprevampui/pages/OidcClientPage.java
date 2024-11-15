@@ -199,8 +199,6 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "filter_reset_btn")
 	private WebElement filterResetButton;
 	
-	
-
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}

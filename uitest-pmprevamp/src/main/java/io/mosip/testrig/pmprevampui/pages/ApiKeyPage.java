@@ -64,8 +64,6 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_view")
 	private WebElement apiKeyView;
 	
-	
-	
 	@FindBy(id = "partnerId_desc_icon")
 	private WebElement partnerId_desc_icon;
 
@@ -140,8 +138,6 @@ public class ApiKeyPage extends BasePage {
 	
 	@FindBy(id = "api_key_status_filter")
 	private WebElement apiKeyStatusFilterOption1;
-	
-	
 	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
@@ -321,8 +317,4 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(apiKeyStatusFilter);
 		clickOnElement(apiKeyStatusFilterOption1);
 	}
-	
-	
-	
-	
 }
