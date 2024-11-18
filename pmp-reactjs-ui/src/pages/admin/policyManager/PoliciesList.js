@@ -25,7 +25,7 @@ import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
 import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
 import PublishPolicyPopup from './PublishPolicyPopup.js';
 
-function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
+function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy, editPolicy }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -38,11 +38,11 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     const [activeDescIcon, setActiveDescIcon] = useState("");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -146,9 +146,9 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const showDeactivatePolicy = (policy) => {
-        if(policy.status === 'activated') {
+        if (policy.status === 'activated') {
             setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
-            if(policyType === 'auth') {
+            if (policyType === 'auth') {
                 setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
             } else if (policyType === 'dataShare') {
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
@@ -165,14 +165,14 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const onClickPublish = (selectedPolicy) => {
-       if (selectedPolicy.status === "draft") {
+        if (selectedPolicy.status === "draft") {
             setShowPublishPolicyPopup(true);
             document.body.style.overflow = "hidden";
-       }
+        }
     };
 
     const onClickEdit = (selectedPolicy) => {
-       
+
     };
 
     const closePublishPolicyPopup = () => {
@@ -221,7 +221,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
+                <LoadingIcon />
             )}
             {dataLoaded && (
                 <>
@@ -231,16 +231,16 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
-                                <>
-                                    {applyFilter || policiesList.length > 0 ?
-                                        <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
-                                            {t(createPolicyButtonName)}
-                                        </button>
-                                        : null
-                                    }
-                                </>
+                            <>
+                                {applyFilter || policiesList.length > 0 ?
+                                    <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
+                                        {t(createPolicyButtonName)}
+                                    </button>
+                                    : null
+                                }
+                            </>
                         </div>
-                        <PoliciesTab></PoliciesTab>
+                        <PoliciesTab />
                         {!applyFilter && policiesList.length === 0 ?
                             (
                                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -330,17 +330,17 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             />
                                                                                         )}
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
-                                                                                            <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
-                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                        </div>
-                                                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicy(policy))}>
                                                                                             <p id="policy_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft'  ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
+                                                                                        <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => editPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => editPolicy(policy))}>
+                                                                                            <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
+                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        </div>
+                                                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
                                                                                             <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status !== 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
                                                                                             <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
@@ -360,7 +360,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                                 header={deactivatePolicyHeader}
                                                                                                 description={deactivatePolicyDescription}
                                                                                                 popupData={{ ...policy, isDeactivatePolicy: true }}
-                                                                                                headerKeyName={ policy.policyName}
+                                                                                                headerKeyName={policy.policyName}
                                                                                                 closePopUp={closeDeactivatePopup}
                                                                                                 errorHeaderMsg={'activePolicyRequestsDetectedMsg.header'}
                                                                                                 errorDescriptionMsg={'activePolicyRequestsDetectedMsg.description'}
