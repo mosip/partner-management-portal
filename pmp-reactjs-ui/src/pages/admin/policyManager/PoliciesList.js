@@ -300,7 +300,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                             {policiesList.map((policy, index) => {
                                                                 return (
                                                                     <tr id={"policies_list_item" + (index + 1)} key={index}
-                                                                        className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                        className={`border-t border-[#E5EBFA] ${policy.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyId}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyName}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyDescription}</td>
