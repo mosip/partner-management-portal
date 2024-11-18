@@ -18,7 +18,7 @@ import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import PolicyGroupListFilter from './PolicyGroupListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
-import DeactivatePolicyGroupPopup from './DeactivatePolicyGroupPopup.js';
+import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
 
 function PolicyGroupList() {
     const navigate = useNavigate('');
@@ -336,13 +336,15 @@ function PolicyGroupList() {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePolicyGroupPopup && (
-                                                                                        <DeactivatePolicyGroupPopup
-                                                                                            header={t('deactivatePolicyGroup.headerMsg')}
-                                                                                            description={t('deactivatePolicyGroup.description')}
-                                                                                            popupData={policyGroup}
+                                                                                        <DeactivatePolicyPopup
+                                                                                            header={'deactivatePolicyGroup.headerMsg'}
+                                                                                            description={'deactivatePolicyGroup.description'}
+                                                                                            popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
                                                                                             request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
+                                                                                            errorHeaderMsg={'activePoliciesDetectedMsg.header'}
+                                                                                            errorDescriptionMsg={'activePoliciesDetectedMsg.description'}
                                                                                         />
                                                                                     )}
                                                                                 </div>

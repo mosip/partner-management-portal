@@ -22,6 +22,7 @@ import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
 import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
 import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
+import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
 import PublishPolicyPopup from './PublishPolicyPopup.js';
 
 function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
@@ -48,6 +49,8 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
+    const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -143,6 +146,15 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const showDeactivatePolicy = (policy) => {
+        if(policy.status === 'activated') {
+            setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
+            if(policyType === 'auth') {
+                setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
+            } else if (policyType === 'dataShare') {
+                setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
+            }
+            setShowDeactivatePopup(true);
+        }
     };
 
     const onClickClone = (selectedPolicy) => {
@@ -172,6 +184,12 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     const closeClonePolicyPopup = () => {
         setActionId(-1);
         setShowClonePopup(false);
+        document.body.style.overflow = 'auto';
+    };
+
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+        setActionId(-1);
         document.body.style.overflow = 'auto';
     };
 
@@ -337,6 +355,17 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <p id="policy_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                             <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
+                                                                                        {showDeactivatePopup && (
+                                                                                            <DeactivatePolicyPopup
+                                                                                                header={deactivatePolicyHeader}
+                                                                                                description={deactivatePolicyDescription}
+                                                                                                popupData={{ ...policy, isDeactivatePolicy: true }}
+                                                                                                headerKeyName={ policy.policyName}
+                                                                                                closePopUp={closeDeactivatePopup}
+                                                                                                errorHeaderMsg={'activePolicyRequestsDetectedMsg.header'}
+                                                                                                errorDescriptionMsg={'activePolicyRequestsDetectedMsg.description'}
+                                                                                            />
+                                                                                        )}
                                                                                     </div>
                                                                                 )}
                                                                             </div>

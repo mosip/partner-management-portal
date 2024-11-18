@@ -767,6 +767,15 @@
         "organisation": "اسم المنظمة",
         "policyGroup": "مجموعة السياسات"
     },
+    "deactivatePolicyPopup": {
+        "headerMsg": "هل تريد تعطيل السياسة",
+        "authPolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة المصادقة المحددة.",
+        "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "خطأ: تم اكتشاف طلب سياسة الشريك!",
+        "description": "ترتبط طلبات سياسة معلقة بهذه السياسة. يرجى اتخاذ الإجراء المناسب في شاشة قائمة ربط سياسات الشركاء"
+    },
     "approveRejectRequestPopup": {
         "header": "هل ترغب في الموافقة/الرفض على السياسة",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب.",

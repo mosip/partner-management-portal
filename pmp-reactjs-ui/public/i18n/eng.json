@@ -762,6 +762,15 @@
         "organisation": "Organisation Name",
         "policyGroup": "Policy Group"
     },
+    "deactivatePolicyPopup": {
+        "headerMsg": "Do you want to deactivate Policy",
+        "authPolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Authentication Policy will be deactivated.",
+        "dataSharePolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Datashare Policy will be deactivated."
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "Error: Partner - Policy Request Detected!",
+        "description": "Pending policy requests are associated with this policy. Please take appropriate action in List of Partner Policy Linking screen"
+    },
     "approveRejectRequestPopup": {
         "header": "Do you want to Approve/Reject the Policy",
         "description": "Please review the policy details carefully before taking appropriate action.",
