@@ -758,6 +758,16 @@
         "organisation": "Nom de l'organisation",
         "policyGroup": "Groupe de politiques"
     },
+    "deactivatePolicyPopup": {
+        "authPolicyheaderMsg": "Voulez-vous désactiver la politique",
+        "authPolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique d'authentification sélectionnée sera désactivée.",
+        "dataSharePolicyheaderMsg": "Voulez-vous désactiver la politique",
+        "dataSharePolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique de partage de données sélectionnée sera désactivée."
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "Erreur : Demande de politique de partenaire détectée !",
+        "description": "Des demandes de politique en attente sont associées à cette politique. Veuillez prendre les mesures appropriées dans l'écran de la liste de liaison des politiques des partenaires"
+    },
     "approveRejectRequestPopup": {
         "header": "Voulez-vous approuver/rejeter la politique",
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre les mesures appropriées.",
