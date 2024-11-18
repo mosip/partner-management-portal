@@ -28,7 +28,8 @@
         "errorInResponse": "أثناء جلب جميع سياسات شركاء المصادقة المعتمدة، واجهنا خطأ",
         "filterBtn": "منقي",
         "resetFilter": "تصفية إعادة تعيين",
-        "itemsPerPage": "مواد لكل صفحة"
+        "itemsPerPage": "مواد لكل صفحة",
+        "close": "يغلق"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
@@ -714,8 +715,15 @@
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
         "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
-        "close": "يغلق",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
+    },
+    "publishPolicyPopup": {
+        "title": "سياسة النشر",
+        "description1": "بالنقر فوق نشر السياسة",
+        "description2": "سيتم نشرها ولن تكون قابلة للتعديل بعد الآن. ستصبح متاحة لاختيار الشريك فقط بعد نشر السياسة.",
+        "errorInPublishPolicy": "أثناء نشر السياسة، واجهنا خطأً.",
+        "successMsg": "تم نشر {{policyName}} بنجاح!",
+        "publish": "نشر"
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "شريك - ربط السياسات",
