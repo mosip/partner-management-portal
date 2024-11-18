@@ -88,5 +88,7 @@ public class GlobalConstants {
 	public static final String isFiletrButtonDisplayedOrEnabled = "Verify if filter button displayed";
 	public static final String isGoBackButtonDisplayed = "Verify if go back button displayed";
 	public static final String isApiListDisplayed = "Verify if api list is displayed";
+	public static final String isUserIdDoesNotExietDisplayed = "Verify if api list is displayed";
+	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
 	
 }

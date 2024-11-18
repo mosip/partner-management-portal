@@ -54,15 +54,15 @@ public class TestRunner {
 				if(test.equals("RegisterNewUser")) {
 					classes.add(RegisterNewUser);
 				}
-//				if(test.equals("NewUserPolicy")) {
-//					classes.add(NewUserPolicy);
-//				}
-//				if(test.equals("CreateOidecClient")) {
-//					classes.add(CreateOidecClient);
-//				}
-//				if(test.equals("CreateApiKey")) {
-//					classes.add(CreateApiKey);
-//				}
+				if(test.equals("NewUserPolicy")) {
+					classes.add(NewUserPolicy);
+				}
+				if(test.equals("CreateOidecClient")) {
+					classes.add(CreateOidecClient);
+				}
+				if(test.equals("CreateApiKey")) {
+					classes.add(CreateApiKey);
+				}
 				
 				
 				DBManager.clearPMSDbData();

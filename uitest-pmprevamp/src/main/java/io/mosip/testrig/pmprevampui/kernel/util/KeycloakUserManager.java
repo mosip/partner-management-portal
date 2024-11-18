@@ -211,11 +211,11 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		String propsPublicKey = null;
 		try {
 			JSONObject obj = new JSONObject(new JSONTokener(new FileReader(path)));
-			String name = obj.getString("kid");
-			obj.put("kid", generateRandomString(37));
+			String name = obj.getString("n");
+			obj.put("n", generateRandomString(2051));
 			propsPublicKey = obj.toString();
-			System.out.println("kty: " + name);
-			System.out.println("kty: " + propsPublicKey);
+			System.out.println("n: " + name);
+			System.out.println("n: " + propsPublicKey);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
