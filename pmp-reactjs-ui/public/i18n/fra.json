@@ -885,7 +885,7 @@
         "PMS_PMP_018": "La politique a expiré.",
         "PMS_PRT_108": "Le groupe de stratégies est obligatoire pour Auth_Partner",
         "PMS_PRT_110": "Le nom de la clé API saisi existe déjà. Fournissez un nom de clé API unique et soumettez-le.",
-        "PMS_AUT_002": "Le compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur",
+        "PMS_AUT_002": "Votre compte partenaire pour le type de partenaire donné a été désactivé par l'administrateur, ce qui fait que vous ne pourrez plus effectuer cette activité",
         "PMS_AUT_003": "Les détails de l'appareil existent déjà pour la même marque et/ou le même modèle",
         "PMS_AUT_004": "Demande en double reçue",
         "PMS_AUT_005": "Les détails du périphérique pour l'ID %s n'existent pas",

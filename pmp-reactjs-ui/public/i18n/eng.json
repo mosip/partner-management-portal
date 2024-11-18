@@ -881,7 +881,7 @@
         "PMS_PMP_018": "Policy expired.",
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
         "PMS_PRT_110": "Entered API Key name already exists. Provide a unique API Key name and submit.",
-        "PMS_AUT_002": "Partner account for given partner type has been deactivated by Admin",
+        "PMS_AUT_002": "Your Partner account for given partner type has been deactivated by Admin, due to which you will no longer be able to perform this activity",
         "PMS_AUT_003": "Device Details already exists for the same make and/or model",
         "PMS_AUT_004": "Duplicate request received",
         "PMS_AUT_005": "Device detail for id %s does not exist",

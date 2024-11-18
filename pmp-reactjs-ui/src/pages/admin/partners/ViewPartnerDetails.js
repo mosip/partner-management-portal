@@ -127,7 +127,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-9 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
