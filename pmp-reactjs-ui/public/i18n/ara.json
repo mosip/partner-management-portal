@@ -702,11 +702,11 @@
         "enterDataSharePolicyName": "أدخل اسمًا لسياسة مشاركة البيانات",
         "authPolicyDescription": "أدخل وصفًا لسياسة المصادقة",
         "dataSharePolicyDescription": "أدخل وصفًا لسياسة مشاركة البيانات",
-        "authPolicyConfirmationHeader": "تم إنشاء سياسة المصادقة بنجاح!",
-        "dataSharePolicyConfirmationHeader": "تم إنشاء سياسة مشاركة البيانات بنجاح!",
-        "authPolicyConfirmationMessage": "تم إنشاء سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح!",
-        "dataSharePolicyConfirmationMessage": "تم إنشاء سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح!",
-        "errorInCreatePolicy": "أثناء إنشاء السياسة، واجهنا خطأً."
+        "policyConfirmationHeader": "تم حفظ السياسة كمسودة",
+        "authPolicyConfirmationMessage": "هذه السياسة الخاصة بالمصادقة حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات المصادقة'",
+        "dataSharePolicyConfirmationMessage": "هذه السياسة الخاصة بمشاركة البيانات حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات مشاركة البيانات'",
+        "errorInCreatePolicy": "أثناء إنشاء السياسة، واجهنا خطأً.",
+        "saveAsDraft": "حفظ كمسودة"
     },
     "clonePolicyPopup": {
         "title": "سياسة الاستنساخ",

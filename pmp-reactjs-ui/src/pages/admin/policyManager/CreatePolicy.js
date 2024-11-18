@@ -110,12 +110,12 @@ function CreatePolicy() {
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
+                setConfirmationHeader('createPolicy.policyConfirmationHeader');
                 if (storedPolicyType === 'DataShare') {
                     setTitle('createPolicy.createDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
-                    setConfirmationHeader('createPolicy.dataSharePolicyConfirmationHeader');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
                 } else if (storedPolicyType === 'Auth') {
@@ -123,7 +123,6 @@ function CreatePolicy() {
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
-                    setConfirmationHeader('createPolicy.authPolicyConfirmationHeader');
                     setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
                 }
@@ -179,7 +178,6 @@ function CreatePolicy() {
                         backUrl: backLink,
                         header: confirmationHeader,
                         description: confirmationMessage,
-                        descriptionParams : {policyGroupName : policyGroup},
                     }
                     setConfirmationData(requiredData);
                     setCreatePolicySuccess(true);
@@ -263,12 +261,12 @@ function CreatePolicy() {
                 try {
                     const data = JSON.parse(reader.result);
                     setPolicyData(JSON.stringify(data, null, 2));
+                    setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
                 } catch (error) {
                     setErrorMsg(t('createPolicy.jsonParseError'));
                 }
             };
             reader.readAsText(file);
-            setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
         } else {
             setErrorMsg(t('createPolicy.uploadFileError'));
         }
@@ -354,7 +352,16 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
+                                                            <label
+                                                                htmlFor="fileInput"
+                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
+                                                                tabIndex="0"
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter') {
+                                                                        document.getElementById('fileInput').click();
+                                                                    }
+                                                                }}
+                                                            >
                                                                 <span className="px-2">{t('createPolicy.upload')}</span>
                                                             </label>
                                                             <input
@@ -365,6 +372,7 @@ function CreatePolicy() {
                                                                 onChange={handleFileChange}
                                                             />
                                                         </div>
+
                                                     </div>
                                                     <hr className="border bg-medium-gray h-px" />
                                                     <div className="flex items-center p-5 bg-white rounded-lg">
@@ -388,7 +396,7 @@ function CreatePolicy() {
                                     <button id="create_policy_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="create_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('createPolicy.saveAsDraft')}</button>
                                     </div>
                                 </div>
                             </div>

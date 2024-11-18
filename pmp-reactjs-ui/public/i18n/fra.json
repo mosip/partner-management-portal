@@ -701,11 +701,11 @@
         "enterDataSharePolicyName": "Entrer un nom pour la Politique de Partage de Données",
         "authPolicyDescription": "Entrer une description pour la Politique d'Authentification",
         "dataSharePolicyDescription": "Entrer une description pour la Politique de Partage de Données",
-        "authPolicyConfirmationHeader": "Politique d'Authentification créée avec succès!",
-        "dataSharePolicyConfirmationHeader": "Politique de Partage de Données créée avec succès!",
-        "authPolicyConfirmationMessage": "La Politique d'Authentification pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!",
-        "dataSharePolicyConfirmationMessage": "La Politique de Partage de Données pour le Groupe de Politique : {{policyGroupName}} a été créée avec succès!",
-        "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur."
+        "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
+        "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
+        "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
+        "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
+        "saveAsDraft": "Enregistrer en tant que brouillon"
     },
     "clonePolicyPopup": {
         "title": "Politique de clonage",
