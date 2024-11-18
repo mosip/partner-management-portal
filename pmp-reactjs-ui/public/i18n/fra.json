@@ -28,7 +28,8 @@
         "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires d'authentification approuvées, nous avons rencontré une erreur",
         "filterBtn": "Filtre",
         "resetFilter": "Réinitialiser le filtre",
-        "itemsPerPage": "Objets par page"
+        "itemsPerPage": "Objets par page",
+        "close":"Fermer"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
@@ -713,8 +714,15 @@
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
         "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
-        "close": "Fermer",
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
+    },
+    "publishPolicyPopup": {
+        "title": "Politique de publication",
+        "description1": "En cliquant sur « Publier », la politique",
+        "description2": "sera publié et ne sera plus modifiable. Il ne sera disponible pour la sélection des partenaires qu'après la publication de la politique.",
+        "errorInPublishPolicy": "Lors de la publication de la politique, nous avons rencontré une erreur.",
+        "successMsg": "{{policyName}} a été publié avec succès !",
+        "publish": "Publier"
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Partenaire - Liens politiques",

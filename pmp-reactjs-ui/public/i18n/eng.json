@@ -28,7 +28,8 @@
         "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error",
         "filterBtn": "Filter",
         "resetFilter": "Reset Filter",
-        "itemsPerPage": "Items per page"
+        "itemsPerPage": "Items per page",
+        "close":"Close"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -709,8 +710,15 @@
         "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
         "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
         "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
-        "close": "Close",
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
+    },
+    "publishPolicyPopup": {
+        "title": "Publish Policy",
+        "description1": "By clicking ‘Publish,’ the policy",
+        "description2": "will be published and no longer be editable. It will become available for partner selection only after the policy is published.",
+        "errorInPublishPolicy": "While publishing the policy, we have encountered with an error.",
+        "successMsg": "{{policyName}} has been published successfully!",
+        "publish": "Publish"
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Partner - Policy Linking",

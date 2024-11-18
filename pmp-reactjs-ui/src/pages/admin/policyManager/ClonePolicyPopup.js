@@ -39,7 +39,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         fetchData();
     }, []);
 
-    const closingPopUp = () => {
+    const cancelPopUp = () => {
         document.body.style.overflow = "auto"
         closePopUp();
     };
@@ -49,7 +49,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         window.location.reload();
     };
 
-    const clickOnSubmit = async () => {
+    const clickOnClone = async () => {
         setErrorCode("");
         setErrorMsg("");
         setCloneSccesss(false);
@@ -114,8 +114,9 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-2"
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !w-full !min-h-12 !p-3 !-mb-2",
+        cancelIcon: "!top-4 !mt-[3.25rem]"
     }
 
     return (
@@ -127,16 +128,16 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     )}
                     {dataLoaded && (
                         <div className="relative">
+                            <div className="px-6 py-3">
+                                <h3 className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
+                            </div>
+                            <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             {successMsg && (
                                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
-                            <div className="px-6 py-3">
-                                <h3 className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
-                            </div>
-                            <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-2 px-6">
                                 <p className="text-sm font-normal text-[#414141] break-normal">{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span>, {t('clonePolicyPopup.description2')}
@@ -159,14 +160,14 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="px-6 py-3 flex justify-end relative">
                                 <button disabled={cloneSuccess} className={`w-36 h-10 m-1 ${cloneSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed' : 'border-[#1447B2] text-tory-blue bg-white'}  border rounded-lg  text-sm font-semibold relative z-60`}
-                                    onClick={closingPopUp}
+                                    onClick={cancelPopUp}
                                     id="clone_policy_cancel">
                                     {t('commons.cancel')}
                                 </button>
                                 { !cloneSuccess ? 
                                     <button className={`w-36 h-10 m-1  border rounded-lg text-white text-sm font-semibold relative z-60 
                                         ${selectedPolicyGroup ? 'bg-tory-blue border-[#1447B2] cursor-pointer' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-not-allowed'}`}
-                                        onClick={clickOnSubmit}
+                                        onClick={clickOnClone}
                                         disabled={!selectedPolicyGroup}
                                         id="clone_policy_button">
                                         {t('policiesList.clone')}
@@ -174,7 +175,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                     <button className={`w-36 h-10 m-1  border rounded-lg text-white text-sm font-semibold relative z-60 bg-tory-blue border-[#1447B2] cursor-pointer'`}
                                         onClick={clickOnClose}
                                         id="clone_policy_close_button">
-                                        {t('clonePolicyPopup.close')}
+                                        {t('commons.close')}
                                     </button>
                                 }
                                 
