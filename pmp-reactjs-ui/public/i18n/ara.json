@@ -762,7 +762,6 @@
     "deactivatePolicyPopup": {
         "headerMsg": "هل تريد تعطيل السياسة",
         "authPolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة المصادقة المحددة.",
-        "dataSharePolicyheaderMsg": "هل تريد تعطيل السياسة",
         "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
     },
     "activePolicyRequestsDetectedMsg": {

@@ -757,7 +757,6 @@
     "deactivatePolicyPopup": {
         "headerMsg": "Do you want to deactivate Policy",
         "authPolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Authentication Policy will be deactivated.",
-        "dataSharePolicyheaderMsg": "Do you want to deactivate Policy",
         "dataSharePolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Datashare Policy will be deactivated."
     },
     "activePolicyRequestsDetectedMsg": {
