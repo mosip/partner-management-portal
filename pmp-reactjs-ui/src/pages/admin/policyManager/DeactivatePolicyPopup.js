@@ -55,10 +55,10 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
-                    if (errorCode === 'PMS_POL_056') {
+                    if (popupData.isDeactivatePolicyGroup && errorCode === 'PMS_POL_056') {
                         setShowAlertErrorMessage(true);
                         await getActiveAssociatedPolicies();
-                    } else if (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064') {
+                    } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
                         setShowAlertErrorMessage(true);
                     } else {
                         setErrorCode(errorCode);

@@ -759,7 +759,7 @@
         "policyGroup": "Groupe de politiques"
     },
     "deactivatePolicyPopup": {
-        "authPolicyheaderMsg": "Voulez-vous désactiver la politique",
+        "headerMsg": "Voulez-vous désactiver la politique",
         "authPolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique d'authentification sélectionnée sera désactivée.",
         "dataSharePolicyheaderMsg": "Voulez-vous désactiver la politique",
         "dataSharePolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique de partage de données sélectionnée sera désactivée."

@@ -145,11 +145,10 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
 
     const showDeactivatePolicy = (policy) => {
         if(policy.status === 'activated') {
+            setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
             if(policyType === 'auth') {
-                setDeactivatePolicyHeader('deactivatePolicyPopup.authPolicyheaderMsg');
                 setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
             } else if (policyType === 'dataShare') {
-                setDeactivatePolicyHeader('deactivatePolicyPopup.dataSharePolicyheaderMsg');
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
             }
             setShowDeactivatePopup(true);
@@ -177,7 +176,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
         document.body.style.overflow = 'auto';
     };
 
-    const closePopup = () => {
+    const closeDeactivatePopup = () => {
         setShowDeactivatePopup(false);
         setActionId(-1);
         document.body.style.overflow = 'auto';
@@ -345,7 +344,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                                 description={deactivatePolicyDescription}
                                                                                                 popupData={{ ...policy, isDeactivatePolicy: true }}
                                                                                                 headerKeyName={ policy.policyName}
-                                                                                                closePopUp={closePopup}
+                                                                                                closePopUp={closeDeactivatePopup}
                                                                                                 errorHeaderMsg={t('activePolicyRequestsDetectedMsg.header')}
                                                                                                 errorDescriptionMsg={t('activePolicyRequestsDetectedMsg.description')}
                                                                                             />
