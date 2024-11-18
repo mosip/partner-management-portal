@@ -120,7 +120,7 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
                                 <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
                                     <img src={errorIcon} alt="" className='h-[5.5rem] place-self-center' />
                                     <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
-                                        {errorHeaderMsg}
+                                        {t(errorHeaderMsg)}
                                     </p>
                                     <p className="text-sm text-center text-[#666666] break-normal p-2">
                                         {countOfAssociatedPolicies

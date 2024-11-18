@@ -337,14 +337,14 @@ function PolicyGroupList() {
                                                                                     </div>
                                                                                     {showDeactivatePolicyGroupPopup && (
                                                                                         <DeactivatePolicyPopup
-                                                                                            header={t('deactivatePolicyGroup.headerMsg')}
-                                                                                            description={t('deactivatePolicyGroup.description')}
+                                                                                            header={'deactivatePolicyGroup.headerMsg'}
+                                                                                            description={'deactivatePolicyGroup.description'}
                                                                                             popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
                                                                                             request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
-                                                                                            errorHeaderMsg={t('activePoliciesDetectedMsg.header')}
-                                                                                            errorDescriptionMsg={t('activePoliciesDetectedMsg.description')}
+                                                                                            errorHeaderMsg={'activePoliciesDetectedMsg.header'}
+                                                                                            errorDescriptionMsg={'activePoliciesDetectedMsg.description'}
                                                                                         />
                                                                                     )}
                                                                                 </div>
