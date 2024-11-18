@@ -57,7 +57,7 @@
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
         "partnerPolicyMapping": "شريك - ربط السياسات",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
+        "partnerPolicyMappingDesc": "عرض وقبول/ رفض طلبات ربط السياسة من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
         "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة/رفض SBI أو تفاصيل الجهاز",
         "ftmChip": "تفاصيل اف تي ام",
@@ -678,6 +678,10 @@
         "policyData": "بيانات السياسة",
         "jsonFilePlace": "اسم ملف JSON يظهر هنا",
         "preview": "معاينة"
+    },
+    "editPolicy": {
+        "edit": "يحرر",
+        "editPolicies": "تحرير السياسات"
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",

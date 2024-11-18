@@ -20,11 +20,10 @@ import { HttpService } from '../../../services/HttpService.js';
 import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
-import DeactivatePopup from '../../common/DeactivatePopup.js';
 import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
 import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
 
-function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
+function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy, editPolicy}) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -47,7 +46,6 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -142,6 +140,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const showDeactivatePolicy = (policy) => {
+
     };
 
     const onClickClone = (selectedPolicy) => {
@@ -212,7 +211,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                     }
                                 </>
                         </div>
-                        <PoliciesTab></PoliciesTab>
+                        <PoliciesTab />
                         {!applyFilter && policiesList.length === 0 ?
                             (
                                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -296,7 +295,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <img src={publishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
+                                                                                        <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => editPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => editPolicy(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
                                                                                             <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>

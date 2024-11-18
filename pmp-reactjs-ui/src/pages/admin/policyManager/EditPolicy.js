@@ -1,21 +1,20 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate, useBlocker } from "react-router-dom";
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next";
+import { useBlocker, useNavigate } from "react-router-dom";
+import { getPolicyDetails, getPolicyGroupList, isLangRTL } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest } from '../../../utils/AppUtils';
-import { HttpService } from '../../../services/HttpService';
-import LoadingIcon from "../../common/LoadingIcon";
-import ErrorMessage from "../../common/ErrorMessage";
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
-import Confirmation from "../../common/Confirmation";
-import TextInputComponent from "../../common/fields/TextInputComponent";
+import ErrorMessage from "../../common/ErrorMessage";
+import LoadingIcon from "../../common/LoadingIcon";
 import uploadPolicyDataFileIcon from '../../../svg/upload_policy_data.svg';
-import SuccessMessage from "../../common/SuccessMessage";
+import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
+import { HttpService } from "../../../services/HttpService";
+import TextInputComponent from "../../common/fields/TextInputComponent";
+import Confirmation from "../../common/Confirmation";
+import BlockerPrompt from "../../common/BlockerPrompt";
 
-function CreatePolicy() {
+
+function EditPolicy() {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -23,18 +22,16 @@ function CreatePolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [policyName, setPolicyName] = useState("");
+    const [requiredPolicyData, setRequiredPolicyData] = useState({});
     const [policyGroup, setPolicyGroup] = useState("");
-    const [policyDescription, setPolicyDescription] = useState("");
+    const [policyName, setPolicyName] = useState("");
     const [policyData, setPolicyData] = useState("");
+    const [policyDescription, setPolicyDescription] = useState("");
     const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
-    const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
-    const [confirmationData, setConfirmationData] = useState({});
-    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [editPolicySuccess, setEditPolicySuccess] = useState(false);
     const [policyType, setPolicyType] = useState(null);
     const [backLink, setBackLink] = useState("");
-    const [title, setTitle] = useState("");
-    const [subTitle, setSubTitle] = useState("");
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [policyNamePlaceHolderKey, setPolicyNamePlaceHolderKey] = useState("");
     const [policyDescriptionPlaceHolderKey, setPolicyDescriptionPlaceHolderKey] = useState("");
     const [confirmationHeader, setConfirmationHeader] = useState("");
@@ -44,23 +41,76 @@ function CreatePolicy() {
     const policyDataRef = useRef(null);
     let isCancelledClicked = false;
 
-    const cancelErrorMsg = () => {
-        setErrorMsg("");
-    };
-
-    const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-        if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
-            setIsSubmitClicked(false);
-            isCancelledClicked = false;
-            setCreatePolicySuccess(false);
-            return false;
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked || isCancelledClicked || editPolicySuccess) {
+                setIsSubmitClicked(false);
+                isCancelledClicked(false);
+                return false;
+            }
+            return (
+                (policyGroup || policyName || policyDescription || policyData) &&
+                currentLocation.pathname !== nextLocation.pathname
+            );
         }
+    );
 
-        return (
-            (policyGroup || policyName || policyDescription || policyData) &&
-            currentLocation.pathname !== nextLocation.pathname
-        );
-    });
+    useEffect(() => {
+        const fetchData = async () => {
+            const selectedPolicyData = localStorage.getItem('selectedPolicyData');
+            if (selectedPolicyData) {
+                try {
+                    const data = JSON.parse(selectedPolicyData);
+                    console.log(data);
+                    setRequiredPolicyData(data);
+                    let policyDetails = await getPolicyDetails(HttpService, data.policyId, setErrorCode, setErrorMsg, t);
+                    console.log(policyDetails);
+                    setPolicyGroup(policyDetails.policyGroupName)
+                    setPolicyName(policyDetails.policyGroupName)
+                    setPolicyDescription(policyDetails.policyDesc)
+                    setPolicyData(JSON.stringify(policyDetails.policies.allowedKycAttributes, null, 2))
+                } catch (err) {
+                    console.error('Error in editPolicy page :', err);
+                };
+            };
+            setDataLoaded(false);
+            try {
+                const storedPolicyType = localStorage.getItem('policyType');
+                if (!storedPolicyType) {
+                    console.err('policy Type not found');
+                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+                }
+                setPolicyType(storedPolicyType);
+                if (storedPolicyType === 'Auth') {
+                    setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
+                    setConfirmationHeader('createPolicy.authPolicyConfirmationHeader');
+                    setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
+                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
+                } else if (storedPolicyType === 'DataShare') {
+                    setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
+                    setConfirmationHeader('createPolicy.dataSharePolicyConfirmationHeader');
+                    setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
+                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                }
+                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
+
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+            setDataLoaded(true);
+        };
+        fetchData();
+    }, []);
+
+    const adjustTextareaHeight = (ref) => {
+        if (ref && ref.current) {
+            ref.current.style.height = 'auto';
+            ref.current.style.height = `${ref.current.scrollHeight}px`;
+        }
+    };
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () =>
@@ -81,7 +131,25 @@ function CreatePolicy() {
     }, [policyGroup, policyName, policyDescription, policyData]);
 
 
-    const onChangePolicyGroup = async (fieldName, selectedValue) => {
+    useEffect(() => {
+        adjustTextareaHeight(policyDescriptionRef);
+    }, [policyDescription]);
+
+
+    useEffect(() => {
+        adjustTextareaHeight(policyDataRef);
+    }, [policyData]);
+
+
+    const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
+        setErrorCode("");
+        setErrorMsg("");
+        // setDataLoaded(false);
+        setSuccessMsg("");
+    };
+
+    const onEditPolicyGroup = async (fieldName, selectedValue) => {
         setPolicyGroup(selectedValue);
     };
 
@@ -100,105 +168,20 @@ function CreatePolicy() {
         navigate(backLink)
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setDataLoaded(false);
-            try {
-                const storedPolicyType = localStorage.getItem('policyType');
-                if (!storedPolicyType) {
-                    console.err('policy Type not found');
-                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
-                }
-                setPolicyType(storedPolicyType);
-                if (storedPolicyType === 'DataShare') {
-                    setTitle('createPolicy.createDataSharePolicyTitle');
-                    setSubTitle('policiesList.listOfDataSharePolicies');
-                    setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
-                    setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
-                    setConfirmationHeader('createPolicy.dataSharePolicyConfirmationHeader');
-                    setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'Auth') {
-                    setTitle('createPolicy.createAuthPolicyTitle');
-                    setSubTitle('policiesList.listOfAuthPolicies');
-                    setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
-                    setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
-                    setConfirmationHeader('createPolicy.authPolicyConfirmationHeader');
-                    setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
-                }
-                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
-            }
-            setDataLoaded(true);
-        };
-        fetchData();
-    }, []);
+    const onTextChange = (fieldName, fieldValue) => {
+        setPolicyName(fieldValue);
+    };
 
-    const clickOnSubmit = async () => {
-        setIsSubmitClicked(true);
-        setErrorCode("");
+    const styleSet = {
+        inputField: "min-h-10",
+    };
+
+    const cancelErrorMsg = () => {
         setErrorMsg("");
-        setDataLoaded(false);
-        setSuccessMsg("");
-
-        // Convert policyData from string to JSON
-        let parsedPolicyData;
-        try {
-            parsedPolicyData = JSON.parse(policyData);
-            if (Array.isArray(parsedPolicyData) || parsedPolicyData === null) {
-                throw new Error("Parsed data is not a valid JSON object");
-            }
-        } catch (error) {
-            setErrorMsg(t('createPolicy.jsonParseError'));
-            setIsSubmitClicked(false);
-            setDataLoaded(true);
-            return;
-        }
-        let request = createRequest({
-            name: policyName,
-            policyGroupName: policyGroup,
-            policyType: policyType,
-            desc: policyDescription,
-            policies: parsedPolicyData,
-            version: "1.1"
-        });
-        try {
-            const response = await HttpService({
-                url: getPolicyManagerUrl('/policies', process.env.NODE_ENV),
-                method: 'post',
-                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                data: request
-            });
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    const requiredData = {
-                        backUrl: backLink,
-                        header: confirmationHeader,
-                        description: confirmationMessage,
-                        descriptionParams: { policyGroupName: policyGroup },
-                    }
-                    setConfirmationData(requiredData);
-                    setCreatePolicySuccess(true);
-                } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                }
-            } else {
-                setErrorMsg(t('createPolicy.errorInCreatePolicy'));
-            }
-        } catch (err) {
-            setErrorMsg(err);
-            console.log("Error fetching data: ", err);
-        }
-        setDataLoaded(true);
-        setIsSubmitClicked(false);
-    }
+    };
 
     const isFormValid = () => {
-        return policyGroup && policyName && policyDescription.trim() && policyData.trim();
+        return policyGroup && policyName && policyDescription.trim() && policyData;
     };
 
     const handlePolicyDescriptionChange = (e) => {
@@ -213,44 +196,12 @@ function CreatePolicy() {
         setPolicyData(value);
     };
 
-    const adjustTextareaHeight = (ref) => {
-        if (ref && ref.current) {
-            ref.current.style.height = 'auto';
-            ref.current.style.height = `${ref.current.scrollHeight}px`;
-        }
-    };
-
-    useEffect(() => {
-        adjustTextareaHeight(policyDescriptionRef);
-    }, [policyDescription]);
-
-    useEffect(() => {
-        adjustTextareaHeight(policyDataRef);
-    }, [policyData]);
-
     const styles = {
         outerDiv: "!ml-0 !mb-0",
         dropdownLabel: "!text-sm !mb-1",
         dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
         selectionBox: "!top-10"
-    }
-
-    const onTextChange = (fieldName, fieldValue) => {
-        setPolicyName(fieldValue);
     };
-
-    const styleSet = {
-        inputField: "min-h-10",
-    };
-
-    const cancelSuccessMsg = () => {
-        setSuccessMsg("");
-    };
-
-    const successcustomStyle = {
-        outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
-        innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
-    }
 
     const handleFileChange = (event) => {
         setErrorMsg("");
@@ -285,14 +236,11 @@ function CreatePolicy() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
-                    {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
-                    )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title={title} subTitle={subTitle} backLink={backLink}></Title>
+                            <Title title={requiredPolicyData.header} subTitle={requiredPolicyData.subTitle} backLink={requiredPolicyData.backLink} />
                         </div>
-                        {!createPolicySuccess ?
+                        {!editPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
                                     <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
@@ -303,13 +251,13 @@ function CreatePolicy() {
                                                     <DropdownWithSearchComponent
                                                         fieldName='policyGroup'
                                                         dropdownDataList={policyGroupDropdownData}
-                                                        onDropDownChangeEvent={onChangePolicyGroup}
+                                                        onDropDownChangeEvent={onEditPolicyGroup}
                                                         fieldNameKey='createPolicy.policyGroup*'
                                                         placeHolderKey='createPolicy.selectPolicyGroup'
                                                         searchKey='commons.search'
                                                         selectedDropdownValue={policyGroup}
                                                         styleSet={styles}
-                                                        id='policy_group_dropdown'
+                                                        id='edit_policy_group_dropdown'
                                                     />
                                                 </div>
                                                 <div className={`flex flex-col w-2/4 ${isLoginLanguageRTL ? "mr-4" : "ml-4"}`}>
@@ -385,14 +333,14 @@ function CreatePolicy() {
                                 </div>
                                 <div className="border bg-medium-gray" />
                                 <div className="flex flex-row px-[3%] py-5 justify-between">
-                                    <button id="create_policy_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <button id="edit_policy_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                        <button id="create_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="edit_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="edit_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation />
                         }
                     </div>
                 </>
@@ -402,4 +350,4 @@ function CreatePolicy() {
     )
 }
 
-export default CreatePolicy;
+export default EditPolicy;

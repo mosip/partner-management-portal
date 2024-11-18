@@ -57,7 +57,7 @@
         "policy": "Politique",
         "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
         "partnerPolicyMapping": "Partenaire - Liens politiques",
-        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver/Rejet les demandes de politique des partenaires",
+        "partnerPolicyMappingDesc": "Afficher, approuver/rejeter les demandes de liaison de politique des partenaires",
         "sbiDevice": "SBI-Appareil",
         "sbiDeviceDesc": "Afficher, Désactiver Approuver/Rejet les détails du SBI ou de l'appareil",
         "ftmChip": "Puce FTM",
@@ -677,6 +677,10 @@
         "jsonFilePlace": "Le nom du fichier JSON va ici",
         "policyData": "Données de police",
         "preview": "Aperçu"
+    },
+    "editPolicy": {
+        "edit": "Modifier",
+        "editPolicies": "Modifier les politiques"
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "Afficher la politique de partage de données",

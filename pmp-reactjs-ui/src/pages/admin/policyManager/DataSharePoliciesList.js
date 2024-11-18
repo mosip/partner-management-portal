@@ -20,15 +20,28 @@ function DataSharePoliciesList() {
         navigate('/partnermanagement/admin/policy-manager/view-data-share-policy');
     };
 
+    const editDataSharePolicy = (selectedPolicy) => {
+        const requiredData = {
+            policyId: selectedPolicy.policyId,
+            header: 'editPolicy.editPolicies',
+            subTitle: 'viewDataSharePoliciesList.listOfDataSharePolicies',
+            backLink: '/partnermanagement/admin/policy-manager/data-share-policies-list'
+        }
+        localStorage.setItem('policyType', 'DataShare');
+        localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        navigate('/partnermanagement/admin/policy-manager/edit-data-share-policy');
+    };
+
     return (
         <PoliciesList
-            policyType = 'dataShare'
-            createPolicyButtonName = 'policiesList.createDataSharePolicy'
-            createPolicy = {createDataSharePolicy}
-            subTitle = 'policiesList.listOfDataSharePolicies'
-            fetchDataErrorMessage = 'policiesList.errorInDataSharePolicies'
-            viewPolicy = {viewDataSharePolicy}>
-        </PoliciesList>
+            policyType='dataShare'
+            createPolicyButtonName='policiesList.createDataSharePolicy'
+            createPolicy={createDataSharePolicy}
+            subTitle='policiesList.listOfDataSharePolicies'
+            fetchDataErrorMessage='policiesList.errorInDataSharePolicies'
+            viewPolicy={viewDataSharePolicy}
+            editPolicy={editDataSharePolicy}
+        />
     );
 }
 

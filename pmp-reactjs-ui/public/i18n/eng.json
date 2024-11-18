@@ -57,7 +57,7 @@
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
         "partnerPolicyMapping": "Partner - Policy Linking",
-        "partnerPolicyMappingDesc": "View, Deactivate, Approve/Reject policy requests from partners",
+        "partnerPolicyMappingDesc": "View, Approve/ Reject policy linking requests from partners",
         "sbiDevice": "SBI - Device",
         "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
         "ftmChip": "FTM Chip",
@@ -656,7 +656,7 @@
         "publish": "Publish"
     },
     "deactivatePolicyGroup": {
-        "headerMsg": "Do you want to deactivate the Policy Group ",
+        "headerMsg": "Do you want to deactivate Policy Group ",
         "description": "Upon clicking ‘Confirm’, the selected policy group will be deactivated."
     },
     "activePoliciesDetectedMsg": {
@@ -673,6 +673,10 @@
         "policyData": "Policy Data",
         "jsonFilePlace": "JSON File Name Goes Here",
         "preview": "Preview"
+    },
+    "editPolicy": {
+        "edit": "Edit",
+        "editPolicies": "Edit Policies"
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "View Datashare Policy",
