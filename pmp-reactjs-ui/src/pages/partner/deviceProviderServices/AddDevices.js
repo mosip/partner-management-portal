@@ -343,12 +343,16 @@ function AddDevices() {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
             let errorMessage = responseData.errors[0].message;
+            const serverErrors = t('serverError', { returnObjects: true });
             if (errorCode) {
-                const serverErrors = t('serverError', { returnObjects: true });
-                if (serverErrors[errorCode]) {
-                    errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                if (errorCode === "PMS_AUT_002") {
+                    errorMessage = serverErrors[errorCode];
                 } else {
-                    errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                    if (serverErrors[errorCode]) {
+                        errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                    } else {
+                        errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                    }
                 }
             } else {
                 errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;

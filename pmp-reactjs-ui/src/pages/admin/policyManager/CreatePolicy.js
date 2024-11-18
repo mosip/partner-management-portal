@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -158,10 +158,10 @@ function CreatePolicy() {
             return;
         }
         let request = createRequest({
-            name: policyName,
+            name: trimAndReplace(policyName),
             policyGroupName: policyGroup,
             policyType: policyType,
-            desc: policyDescription,
+            desc: trimAndReplace(policyDescription),
             policies: parsedPolicyData,
             version: "1.1"
         });
