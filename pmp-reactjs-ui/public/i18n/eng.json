@@ -8,6 +8,7 @@
         "back": "Back",
         "cancel": "Cancel",
         "submit": "Submit",
+        "okay": "Okay",
         "sessionIdleLogout": "Due to inactivity, you will be logged out",
         "partnersHelpText": "Auto-populated based on Partner ID selected",
         "somethingWentWrong": "Something went wrong!",
@@ -55,7 +56,7 @@
         "partnerDesc": "View/Deactivate partner details",
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
-        "partnerPolicyMapping": "Partner - Policy mapping",
+        "partnerPolicyMapping": "Partner - Policy Linking",
         "partnerPolicyMappingDesc": "View, Deactivate, Approve/Reject policy requests from partners",
         "sbiDevice": "SBI - Device",
         "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
@@ -634,14 +635,14 @@
     },
     "policiesList": {
         "createAuthPolicy": "Create Authentication Policy",
-		"createDataSharePolicy": "Create Datashare Policy",
-        "policyId":"Policy ID",
-        "policyName":"Policy Name",
+        "createDataSharePolicy": "Create Datashare Policy",
+        "policyId": "Policy ID",
+        "policyName": "Policy Name",
         "policyDescription": "Policy Description",
-        "policyGroup":"Policy Group",
-        "createdDate":"Created Date",
-        "status":"Status",
-        "action":"Action",
+        "policyGroup": "Policy Group",
+        "createdDate": "Created Date",
+        "status": "Status",
+        "action": "Action",
         "listOfAuthPolicies": "List of Authentication Policy",
         "listOfDataSharePolicies": "List of Datashare Policy",
         "errorInAuthPolicies": "While fetching authentication policies, we have encountered with an error.",
@@ -657,6 +658,10 @@
     "deactivatePolicyGroup": {
         "headerMsg": "Do you want to deactivate the Policy Group ",
         "description": "Upon clicking ‘Confirm’, the selected policy group will be deactivated."
+    },
+    "activePoliciesDetectedMsg": {
+        "header": "Error: Active Policies Detected!",
+        "description": "There are {{noOfAssociatedPolicies}} active policies associated with this policy group. Please deactivate them before proceeding further"
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -700,18 +705,18 @@
     "clonePolicyPopup": {
         "title": "Clone Policy",
         "description1": "Select the policy group where you would like to nest the cloned policy",
-        "description2" :"along with its specified details. Ensure the required policy group has been created beforehand, as only existing policy groups will appear in the dropdown for selection.",
+        "description2": "along with its specified details. Ensure the required policy group has been created beforehand, as only existing policy groups will appear in the dropdown for selection.",
         "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
         "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
         "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
-        "close":"Close",
+        "close": "Close",
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
     },
     "partnerPolicyMappingRequestList": {
-        "partnerPolicyMappingRequestTitle": "Policy Requests",
-        "listOfPartnerPolicyMappingRequestTitle": "List of Policy Requests",
+        "partnerPolicyMappingRequestTitle": "Partner - Policy Linking",
+        "listOfPartnerPolicyMappingRequestTitle": "List of Partner-Policy Linkages",
         "partnerId": "Partner ID",
-        "organisation": "Organisation",
+        "organisation": "Organisation Name",
         "policyGroupName": "Policy Group",
         "policyId": "Policy ID",
         "policyName": "Policy Name",
@@ -740,18 +745,18 @@
         "searchPolicyId": "Search Policy ID"
     },
     "viewPolicyRequest": {
-        "viewPolicyRequest": "View Policy Request",
-        "listOfPolicyRequests": "List of Policy Requests",
+        "viewPolicyRequest": "View Partner-Policy Linking",
+        "listOfPolicyRequests": "List of Partner Policy Linkages",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyId": "Policy ID",
-        "policyDesc": "Policy Description",
-        "policyGroup": "Policy Group",
-        "policyGroupDesc": "Policy Group Description"
+        "policyName": "Policy Name",
+        "organisation": "Organisation Name",
+        "policyGroup": "Policy Group"
     },
     "approveRejectRequestPopup": {
         "header": "Do you want to Approve/Reject the Policy",
-        "description": "Please review the policy details carefully before making your choice.",
+        "description": "Please review the policy details carefully before taking appropriate action.",
         "approveReject":"Approve / Reject",
         "deActivate": "Deactivate",
         "approve": "Approve",

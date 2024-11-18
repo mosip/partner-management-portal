@@ -73,9 +73,9 @@ function PolicyRequestsList() {
     { id: "partnerId", headerNameKey: "partnerPolicyMappingRequestList.partnerId" },
     { id: "partnerType", headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
     { id: "orgName", headerNameKey: "partnerPolicyMappingRequestList.organisation" },
-    { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
     { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
     { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
+    { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
     { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
     { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
     { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
@@ -173,9 +173,11 @@ function PolicyRequestsList() {
     setShowPopup(false);
   };
 
-  const approveRejectPolicyRequest = () => {
-    setShowPopup(true);
-    document.body.style.overflow = "hidden";
+  const approveRejectPolicyRequest = (policyRequest) => {
+    if (policyRequest.status === 'InProgress') {
+      setShowPopup(true);
+      document.body.style.overflow = "hidden";
+    }
   };
 
   const styles = {
@@ -269,13 +271,13 @@ function PolicyRequestsList() {
                                   return (
                                     <tr id={"partner_list_item" + (index + 1)} key={index}
                                       className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.partnerId}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.partnerId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.orgName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyGroupName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{policyRequest.policyName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.orgName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyId}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1text-xs font-semibold rounded-md`}>
                                           {getStatusCode(policyRequest.status, t)}
@@ -290,7 +292,7 @@ function PolicyRequestsList() {
                                           </p>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest()} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, approveRejectPolicyRequest())}>
+                                              <div disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, approveRejectPolicyRequest(policyRequest))}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectRequestPopup.approveReject")}</p>
                                                 <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>

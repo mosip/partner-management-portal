@@ -18,7 +18,7 @@ import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import PolicyGroupListFilter from './PolicyGroupListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
-import DeactivatePopup from '../../common/DeactivatePopup.js';
+import DeactivatePolicyGroupPopup from './DeactivatePolicyGroupPopup.js';
 
 function PolicyGroupList() {
     const navigate = useNavigate('');
@@ -50,8 +50,8 @@ function PolicyGroupList() {
         desc: null,
         status: null,
     });
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
+    const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
+    const [deactivatePolicyGroupRequest, setDeactivatePolicyGroupRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -206,8 +206,8 @@ function PolicyGroupList() {
         }
     };
 
-    const closeDeactivatePopup = () => {
-        setShowDeactivatePopup(false);
+    const closePopup = () => {
+        setShowDeactivatePolicyGroupPopup(false);
         setActionId(-1);
         document.body.style.overflow = 'auto';
     };
@@ -219,8 +219,8 @@ function PolicyGroupList() {
                 desc: policyGroup.desc,
                 isActive: false
             });
-            setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setDeactivatePolicyGroupRequest(request);
+            setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
     };
@@ -332,17 +332,17 @@ function PolicyGroupList() {
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
-                                                                                        <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                        <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
-                                                                                    {showDeactivatePopup && (
-                                                                                        <DeactivatePopup
-                                                                                            headerMsg={t('deactivatePolicyGroup.headerMsg')}
-                                                                                            descriptionMsg={t('deactivatePolicyGroup.description')}
-                                                                                            popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
-                                                                                            request={deactivateRequest}
+                                                                                    {showDeactivatePolicyGroupPopup && (
+                                                                                        <DeactivatePolicyGroupPopup
+                                                                                            header={t('deactivatePolicyGroup.headerMsg')}
+                                                                                            description={t('deactivatePolicyGroup.description')}
+                                                                                            popupData={policyGroup}
+                                                                                            request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
-                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            closePopUp={closePopup}
                                                                                         />
                                                                                     )}
                                                                                 </div>

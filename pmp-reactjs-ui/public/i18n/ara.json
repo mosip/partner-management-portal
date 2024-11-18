@@ -8,6 +8,7 @@
         "back": "خلف",
         "cancel": "يلغي",
         "submit": "إرسال",
+        "okay": "تمام",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
         "somethingWentWrong": "هناك خطأ ما!",
@@ -55,7 +56,7 @@
         "partnerDesc": "عرض و/أو إلغاء تنشيط تفاصيل الشريك",
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
-        "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
+        "partnerPolicyMapping": "شريك - ربط السياسات",
         "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
         "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة/رفض SBI أو تفاصيل الجهاز",
@@ -663,6 +664,10 @@
         "headerMsg": "هل تريد إلغاء تنشيط مجموعة السياسات",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط مجموعة السياسات المحددة"
     },
+    "activePoliciesDetectedMsg": {
+        "header": "خطأ: تم اكتشاف السياسات النشطة",
+        "description": "هناك {{noOfAssociatedPolicies}} سياسات نشطة مرتبطة بمجموعة السياسات هذه، يرجى إلغاء تنشيطها قبل المتابعة"
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
         "listOfAuthenticationPolicies":"قائمة سياسة المصاد",
@@ -713,10 +718,10 @@
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "partnerPolicyMappingRequestList": {
-        "partnerPolicyMappingRequestTitle": "طلبات السياسة",
-        "listOfPartnerPolicyMappingRequestTitle": "قائمة طلبات السياسة",
+        "partnerPolicyMappingRequestTitle": "شريك - ربط السياسات",
+        "listOfPartnerPolicyMappingRequestTitle": "قائمة الروابط بين الشركاء والسياسات",
         "partnerId": "معرّف الشريك",
-        "organisation": "المنظمة",
+        "organisation": "اسم المنظمة",
         "policyGroupName": "مجموعة السياسات",
         "policyId": "معرف السياسة",
         "policyName": "اسم السياسة",
@@ -745,18 +750,18 @@
         "searchPolicyId": "معرف سياسة البحث"
     },
     "viewPolicyRequest": {
-        "viewPolicyRequest": "عرض طلب السياسة",
-        "listOfPolicyRequests": "قائمة طلبات السياسة",
+        "viewPolicyRequest": "عرض ربط سياسة الشريك",
+        "listOfPolicyRequests": "قائمة روابط سياسات الشركاء",
         "partnerId": "معرف الشريك",
         "partnerType": "نوع الشريك",
         "policyId": "معرف السياسة",
-        "policyDesc": "وصف السياسة",
-        "policyGroup": "مجموعة السياسات",
-        "policyGroupDesc": "وصف مجموعة السياسات"
+        "policyName": "اسم السياسة",
+        "organisation": "اسم المنظمة",
+        "policyGroup": "مجموعة السياسات"
     },
     "approveRejectRequestPopup": {
         "header": "هل ترغب في الموافقة/الرفض على السياسة",
-        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ اختيارك",
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب.",
         "approveReject":"موافقة / رفض",
         "deActivate": "إلغاء التنشيط",
         "approve":"يعتمد",

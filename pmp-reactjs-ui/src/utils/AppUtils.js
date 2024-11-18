@@ -280,20 +280,23 @@ export const validateUrl = (index, value, length, urlArr, t) => {
 }
 
 export const bgOfStatus = (status) => {
-    if (status === "approved" || status === "ACTIVE" || status === "activated") {
-        return ("bg-[#D1FADF] text-[#155E3E]")
-    }
-    else if (status === "rejected") {
-        return ("bg-[#FAD6D1] text-[#5E1515]")
-    }
-    else if (status === "InProgress" || status === 'pending_approval' || status === 'draft') {
-        return ("bg-[#FEF1C6] text-[#6D1C00]")
-    }
-    else if (status === 'pending_cert_upload') {
-        return ("bg-[#ee763060] text-[#6D1C00]")
-    }
-    else if (status === "deactivated" || status === "INACTIVE") {
-        return ("bg-[#EAECF0] text-[#525252]")
+    if (status) {
+        status = status.toLowerCase();
+        if (status === "approved" || status === "active" || status === "activated") {
+            return ("bg-[#D1FADF] text-[#155E3E]")
+        }
+        else if (status === "rejected") {
+            return ("bg-[#FAD6D1] text-[#5E1515]")
+        }
+        else if (status === "inprogress" || status === 'pending_approval' || status === 'draft') {
+            return ("bg-[#FEF1C6] text-[#6D1C00]")
+        }
+        else if (status === 'pending_cert_upload') {
+            return ("bg-[#ee763060] text-[#6D1C00]")
+        }
+        else if (status === "deactivated" || status === "inactive") {
+            return ("bg-[#EAECF0] text-[#525252]")
+        }
     }
 }
 
@@ -431,7 +434,7 @@ export const downloadFile = (data, fileName, fileType) => {
 
 export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => {
     const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo; 
+    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
     return effectivePageNo;
 };
 
@@ -480,7 +483,7 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
     }
 };
 
-export const getPolicyDetails = async(HttpService, policyId, setErrorCode, setErrorMsg) => {
+export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setErrorMsg) => {
     try {
         const response = await HttpService({
             url: getPolicyManagerUrl(`/policies/${policyId}`, process.env.NODE_ENV),
@@ -496,7 +499,7 @@ export const getPolicyDetails = async(HttpService, policyId, setErrorCode, setEr
             else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
-        } 
+        }
         return null;
     } catch (err) {
         setErrorMsg(err);
