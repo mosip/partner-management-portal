@@ -697,11 +697,11 @@
         "enterDataSharePolicyName": "Enter name for Datashare Policy",
         "authPolicyDescription": "Enter description about Authentication Policy",
         "dataSharePolicyDescription": "Enter description about Datashare Policy",
-        "authPolicyConfirmationHeader": "Authentication Policy created successfully!",
-        "dataSharePolicyConfirmationHeader": "Datashare Policy created successfully!",
-        "authPolicyConfirmationMessage": "Authentication Policy for Policy Group : {{policyGroupName}} has been created successfully!",
-        "dataSharePolicyConfirmationMessage": "Datashare Policy for Policy Group : {{policyGroupName}} has been created successfully!",
-        "errorInCreatePolicy": "While creating policy, we have encountered with an error."
+        "policyConfirmationHeader": "Policy saved as Draft",
+        "authPolicyConfirmationMessage": "This Authentication Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Authentication Policies' page",
+        "dataSharePolicyConfirmationMessage": "This Datashare Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Datashare Policies' page",
+        "errorInCreatePolicy": "While creating policy, we have encountered with an error.",
+        "saveAsDraft": "Save as Draft"
     },
     "clonePolicyPopup": {
         "title": "Clone Policy",
