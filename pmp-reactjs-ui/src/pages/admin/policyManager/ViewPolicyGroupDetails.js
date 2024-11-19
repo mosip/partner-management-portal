@@ -18,7 +18,7 @@ function ViewPolicyGroupDetails() {
     };
 
     useEffect(() => {
-        const selectedPolicy = localStorage.getItem('selectedPolicyGroup');
+        const selectedPolicy = localStorage.getItem('selectedPolicyGroupAttributes');
         if (!selectedPolicy) {
             setUnexpectedError(true);
             return;

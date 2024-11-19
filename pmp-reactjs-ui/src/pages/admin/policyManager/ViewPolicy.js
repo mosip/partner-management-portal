@@ -25,7 +25,7 @@ function ViewPolicy() {
     const [previewJsonPopup, setPreviewJsonPopup] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedPolicyData');
+        const data = localStorage.getItem('selectedPolicyAttributes');
 
         if (!data) {
             setUnexpectedError(true);

@@ -181,7 +181,7 @@ function PolicyGroupList() {
     };
 
     const viewPolicyGroupDetails = (selectedPolicyGroup) => {
-        localStorage.setItem('selectedPolicyGroup', JSON.stringify(selectedPolicyGroup));
+        localStorage.setItem('selectedPolicyGroupAttributes', JSON.stringify(selectedPolicyGroup));
         navigate('/partnermanagement/admin/policy-manager/view-policy-group-details');
     };
 
@@ -343,8 +343,6 @@ function PolicyGroupList() {
                                                                                             request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
-                                                                                            errorHeaderMsg={'activePoliciesDetectedMsg.header'}
-                                                                                            errorDescriptionMsg={'activePoliciesDetectedMsg.description'}
                                                                                         />
                                                                                     )}
                                                                                 </div>

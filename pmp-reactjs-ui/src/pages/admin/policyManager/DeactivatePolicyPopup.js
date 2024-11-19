@@ -4,18 +4,18 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import errorIcon from '../../../svg/error_icon.svg';
 import LoadingIcon from '../../common/LoadingIcon';
-import LoadingCount from '../../common/LoadingCount';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 
-function DeactivatePolicyPopup({ header, description, popupData, request, headerKeyName, closePopUp, errorHeaderMsg, errorDescriptionMsg }) {
+function DeactivatePolicyPopup({ header, description, popupData, request, headerKeyName, closePopUp }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
     const [showAlertErrorMessage, setShowAlertErrorMessage] = useState(false);
-    const [countOfAssociatedPolicies, setCountOfAssociatedPolicies] = useState(0);
+    const [errorHeaderMsg, setErrorHeaderMsg] = useState('');
+    const [errorDescriptionMsg, setErrorDescriptionMsg] = useState('');
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -24,6 +24,16 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
     const closingPopUp = () => {
         document.body.style.overflow = "auto"
         closePopUp()
+    };
+
+    const setPolicyErrorMessage = (errorCode) => {
+        if (errorCode === 'PMS_POL_064') {
+            setErrorHeaderMsg(t('pendingPolicyRequestsDetectedMsg.header'))
+            setErrorDescriptionMsg(t('pendingPolicyRequestsDetectedMsg.description'))
+        } else if (errorCode === 'PMS_POL_063') {
+            setErrorHeaderMsg(t('activePolicyRequestsDetectedMsg.header'))
+            setErrorDescriptionMsg(t('activePolicyRequestsDetectedMsg.description'))
+        }
     };
 
     const clickOnConfirm = async () => {
@@ -51,14 +61,14 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
             if (responseData && responseData.response) {
                 window.location.reload();
             } else {
-                setDataLoaded(true);
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
                     if (popupData.isDeactivatePolicyGroup && errorCode === 'PMS_POL_056') {
-                        setShowAlertErrorMessage(true);
                         await getActiveAssociatedPolicies();
+                        setShowAlertErrorMessage(true);
                     } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
+                        setPolicyErrorMessage(errorCode);
                         setShowAlertErrorMessage(true);
                     } else {
                         setErrorCode(errorCode);
@@ -68,9 +78,9 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
                 }
             }
         } catch (err) {
-            setDataLoaded(true);
             setErrorMsg(err);
         }
+        setDataLoaded(true);
     };
 
     const getActiveAssociatedPolicies = async () => {
@@ -83,8 +93,8 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
             const responseData = response.data;
             if (responseData && responseData.response) {
                 const resData = responseData.response;
-                setCountOfAssociatedPolicies(resData.length);
-                console.log(resData.length)
+                setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'))
+                setErrorDescriptionMsg(t('activePoliciesDetectedMsg.description', {noOfAssociatedPolicies: resData.length}));
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
@@ -120,15 +130,10 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
                                 <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
                                     <img src={errorIcon} alt="" className='h-[5.5rem] place-self-center' />
                                     <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
-                                        {t(errorHeaderMsg)}
+                                        {errorHeaderMsg}
                                     </p>
                                     <p className="text-sm text-center text-[#666666] break-normal p-2">
-                                        {countOfAssociatedPolicies
-                                            ? t(errorDescriptionMsg, {
-                                                noOfAssociatedPolicies: countOfAssociatedPolicies || <LoadingCount />
-                                            })
-                                            : t(errorDescriptionMsg)
-                                        }
+                                        {errorDescriptionMsg}
                                     </p>
                                     <button id="alert_error_popup_okay_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
                                         {t('commons.okay')}

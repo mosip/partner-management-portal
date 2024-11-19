@@ -780,8 +780,12 @@
         "dataSharePolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique de partage de données sélectionnée sera désactivée."
     },
     "activePolicyRequestsDetectedMsg": {
-        "header": "Erreur : Demande de politique de partenaire détectée !",
-        "description": "Des demandes de politique en attente sont associées à cette politique. Veuillez prendre les mesures appropriées dans l'écran de la liste de liaison des politiques des partenaires"
+        "header": "Erreur : association partenaire-stratégie active détectée!",
+        "description": "Des partenaires actifs sont actuellement associés à cette politique. Veuillez désactiver tous les partenaires actifs associés à cette politique avant de tenter de la désactiver."
+    },
+    "pendingPolicyRequestsDetectedMsg": {
+        "header": "Erreur : Partenaire - Demande de stratégie détectée !",
+        "description": "Les demandes de stratégie en attente sont associées à cette stratégie. Veuillez prendre les mesures appropriées dans l'écran Liste des liens vers les politiques des partenaires."
     },
     "approveRejectRequestPopup": {
         "header": "Voulez-vous approuver/rejeter la politique",

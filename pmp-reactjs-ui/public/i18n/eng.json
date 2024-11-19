@@ -776,6 +776,10 @@
         "dataSharePolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Datashare Policy will be deactivated."
     },
     "activePolicyRequestsDetectedMsg": {
+        "header": "Error: Active Partner-Policy Association Detected!",
+        "description": "Active partners are currently associated to this policy. Please deactivate all active partners associated to this policy before attempting to deactivate it"
+    },
+    "pendingPolicyRequestsDetectedMsg": {
         "header": "Error: Partner - Policy Request Detected!",
         "description": "Pending policy requests are associated with this policy. Please take appropriate action in List of Partner Policy Linking screen"
     },
