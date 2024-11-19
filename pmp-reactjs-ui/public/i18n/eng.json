@@ -601,7 +601,7 @@
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "createPolicyGroup": {
-        "listOfPolicyGroup": "List of Policy Group",
+        "listOfPolicyGroups": "List of Policy Groups",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupName": "Policy Group Name",
         "enterNameforPolicyGroup": "Enter name for Policy Group",
@@ -644,8 +644,8 @@
         "createdDate": "Created Date",
         "status": "Status",
         "action": "Action",
-        "listOfAuthPolicies": "List of Authentication Policy",
-        "listOfDataSharePolicies": "List of Datashare Policy",
+        "listOfAuthPolicies": "List of Authentication Policies",
+        "listOfDataSharePolicies": "List of Datashare Policies",
         "errorInAuthPolicies": "While fetching authentication policies, we have encountered with an error.",
         "errorInDataSharePolicies": "While fetching data share policies, we have encountered with an error.",
         "searchPolicyId": "Search Policy ID",
@@ -666,7 +666,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
-        "listOfAuthenticationPolicies": "List of Authentication Policy",
+        "listOfAuthenticationPolicies": "List of Authentication Policies",
         "policyId": "Policy ID",
         "policyGroup": "Policy Group",
         "policyDescription": "Policy Description",
@@ -690,7 +690,7 @@
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "View Datashare Policy",
-        "listOfDataSharePolicies": "List of Datashare Policy"
+        "listOfDataSharePolicies": "List of Datashare Policies"
     },
     "createPolicy": {
         "policyGroup": "Policy Group",
@@ -930,7 +930,7 @@
         "PMS_POL_006": "Unsupported Authentication Type in the Policy File",
         "PMS_POL_007": "eKYC attribute missing in the policy file",
         "PMS_POL_008": "Policy ID does not exist",
-        "PMS_POL_009": "A policy with this name already exists",
+        "PMS_POL_009": "The given policy name already exists. Please try with a different policy name",
         "PMS_COR_002": "Invalid Input Parameter _ ",
         "PMS_COR_003": "Could not process the request",
         "PMS_POL_010": " Auth Policies are not defined against to policy",

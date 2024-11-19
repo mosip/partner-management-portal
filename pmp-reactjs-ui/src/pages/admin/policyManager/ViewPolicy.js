@@ -120,12 +120,12 @@ function ViewPolicy() {
                                                 <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                                     {getStatusCode(getPolicyStatus(viewDetails), t)}
                                                 </div>
-                                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                                     {t("viewDeviceDetails.createdOn") + ' ' +
                                                         formatDate(viewDetails.cr_dtimes, "date", true)
                                                     }
                                                 </div>
-                                                <div className="mx-1 text-gray-300">|</div>
+                                                <div className="mx-2 text-gray-300">|</div>
                                                 <div className="font-semibold text-sm text-dark-blue">
                                                     {formatDate(viewDetails.cr_dtimes, "time", true)}
                                                 </div>

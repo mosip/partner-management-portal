@@ -337,7 +337,7 @@ function EditPolicy() {
                                                             <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
                                                             <div className="flex-col p-1 items-center">
                                                                 <h6 className={`text-sm font-semibold text-dark-blue`}>
-                                                                    {t('editPolicy.reUploadPolicyData')}
+                                                                    {t('editPolicy.reUploadPolicyData')}<span className="text-crimson-red mx-1">*</span>
                                                                 </h6>
                                                                 <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>

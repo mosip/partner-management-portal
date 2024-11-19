@@ -327,7 +327,7 @@ function CreatePolicy() {
                                                             <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
                                                             <div className="flex-col p-1 items-center">
                                                                 <h6 className={`text-sm font-semibold text-dark-blue`}>
-                                                                    {t('createPolicy.uploadPolicyDataFile')}
+                                                                    {t('createPolicy.uploadPolicyDataFile')}<span className="text-crimson-red mx-1">*</span>
                                                                 </h6>
                                                                 <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>

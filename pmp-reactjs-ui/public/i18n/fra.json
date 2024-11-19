@@ -605,7 +605,7 @@
          "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
      },
      "createPolicyGroup": {
-        "listOfPolicyGroup":"Liste des groupes de politiques",
+        "listOfPolicyGroups":"Liste des groupes de politiques",
         "createPolicyGroup": "Créer un groupe de stratégies",
         "policyGroupName": "Nom du groupe de stratégies",
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
@@ -670,7 +670,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
-        "listOfAuthenticationPolicies": "Liste des politique d'authentification",
+        "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
         "policyId": "ID de stratégie",
         "policyGroup": "Groupe de politiques",
         "policyDescription": "Description de la politique",
@@ -934,7 +934,7 @@
         "PMS_POL_006": "Type d'authentification non pris en charge dans le fichier de stratégie",
         "PMS_POL_007": "Attribut eKYC manquant dans le fichier de stratégie",
         "PMS_POL_008": "L'ID de stratégie n'existe pas",
-        "PMS_POL_009": "Une stratégie portant ce nom existe déjà",
+        "PMS_POL_009": "Le nom de stratégie donné existe déjà. Veuillez essayer avec un nom de stratégie différent.",
         "PMS_COR_002": "Paramètre d'entrée non valide -",
         "PMS_COR_003": "Impossible de traiter la demande",
         "PMS_POL_010": " Les politiques d'authentification ne sont pas définies par rapport à la politique",
