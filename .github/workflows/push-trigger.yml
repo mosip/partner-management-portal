@@ -53,7 +53,7 @@ jobs:
   sonar-analysis-pmp-ui:
     needs: build-maven-pmp-ui
     if: "${{ github.event_name != 'pull_request' }}"
-    uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@master
+    uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@develop
     with:
       SERVICE_LOCATION: pmp-ui
     secrets:
