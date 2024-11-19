@@ -605,7 +605,7 @@
         "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
     "createPolicyGroup": {
-        "listOfPolicyGroup": "قائمة مجموعة السياسة",
+        "listOfPolicyGroups": "قائمة مجموعات السياسة",
         "createPolicyGroup": "إنشاء مجموعة السياسات",
         "policyGroupName": "اسم مجموعة السياسات",
         "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
@@ -648,8 +648,8 @@
         "createdDate": "تاريخ الإنشاء",
         "status": "حالة",
         "action": "فعل",
-        "listOfAuthPolicies": "قائمة سياسة المصادقة",
-        "listOfDataSharePolicies": "قائمة سياسة مشاركة البيانات",
+        "listOfAuthPolicies": "قائمة سياسة السياسات",
+        "listOfDataSharePolicies": "قائمة سياسة مشاركة السياسات",
         "errorInAuthPolicies": "أثناء جلب سياسات المصادقة، واجهنا خطأً.",
         "errorInDataSharePolicies": "أثناء جلب سياسات مشاركة البيانات، واجهنا خطأً.",
         "searchPolicyId": "معرف سياسة البحث",
@@ -674,7 +674,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
-        "listOfAuthenticationPolicies": "قائمة سياسة المصاد",
+        "listOfAuthenticationPolicies": "قائمة سياسة السياسات",
         "policyId": "معرف السياسة",
         "policyGroup": "مجموعة السياسات",
         "policyDescription": "وصف السياسة",
@@ -698,7 +698,7 @@
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",
-        "listOfDataSharePolicies": "قائمة سياسات مشاركة البيانات"
+        "listOfDataSharePolicies": "قائمة سياسات مشاركة السياسات"
     },
     "createPolicy": {
         "policyGroup": "مجموعة السياسات",
@@ -787,10 +787,6 @@
         "headerMsg": "هل تريد تعطيل السياسة",
         "authPolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة المصادقة المحددة.",
         "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
-    },
-    "activePolicyRequestsDetectedMsg": {
-        "header": "خطأ: تم اكتشاف طلب سياسة الشريك!",
-        "description": "ترتبط طلبات سياسة معلقة بهذه السياسة. يرجى اتخاذ الإجراء المناسب في شاشة قائمة ربط سياسات الشركاء"
     },
     "approveRejectRequestPopup": {
         "header": "هل ترغب في الموافقة/الرفض على السياسة",

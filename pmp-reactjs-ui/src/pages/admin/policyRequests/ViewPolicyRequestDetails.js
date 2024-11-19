@@ -48,11 +48,11 @@ function ViewPolicyRequestDetails() {
                                 <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(policyRequestDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(policyRequestDetails.createdDateTime, "date", false)}
                                 </div>
-                                <div className="mx-1 text-gray-300">|</div>
+                                <div className="mx-2 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
                                     {formatDate(policyRequestDetails.createdDateTime, "time", false)}
                                 </div>

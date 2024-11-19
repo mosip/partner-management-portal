@@ -443,7 +443,7 @@ function Dashboard() {
                     </div>
                   </div>
                 )}
-                <div onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
                   <div className="flex justify-center mb-5">
                     <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -462,7 +462,7 @@ function Dashboard() {
                   /> 
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
                   <div className="flex justify-center mb-5">
                     <img src={deviceProviderServices_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -484,7 +484,7 @@ function Dashboard() {
                   />
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
                   <div className="flex justify-center mb-5">
                     <img src={ftmServicesIcon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -503,7 +503,7 @@ function Dashboard() {
                   />
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
                   <div className="flex justify-center mb-5">
                     <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                   </div>
