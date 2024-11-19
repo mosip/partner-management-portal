@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useBlocker, useNavigate } from "react-router-dom";
-import { createRequest, getPolicyDetails, getPolicyGroupList, getPolicyManagerUrl, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { createRequest, getPolicyDetails, getPolicyManagerUrl, handleServiceErrors, isLangRTL, trimAndReplace, handleFileChange } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
 import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
 import uploadPolicyDataFileIcon from '../../../svg/upload_policy_data.svg';
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
 import { HttpService } from "../../../services/HttpService";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import Confirmation from "../../common/Confirmation";
 import BlockerPrompt from "../../common/BlockerPrompt";
+import SuccessMessage from "../../common/SuccessMessage";
 
 function EditPolicy() {
     const navigate = useNavigate();
@@ -21,22 +21,23 @@ function EditPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [selectedPolicyData, setSelectedPolicyData] = useState({});
-    const [policyGroup, setPolicyGroup] = useState("");
-    const [policyName, setPolicyName] = useState("");
-    const [policyData, setPolicyData] = useState("");
-    const [policyDetails, setPolicyDetails] = useState({});
-    const [confirmationData, setConfirmationData] = useState({});
-    const [policyDescription, setPolicyDescription] = useState("");
-    const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
-    const [editPolicySuccess, setEditPolicySuccess] = useState(false);
     const [policyType, setPolicyType] = useState(null);
-    const [backLink, setBackLink] = useState("");
-    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [title, setTitle] = useState("");
+    const [subTitle, setSubTitle] = useState("");
     const [policyNamePlaceHolderKey, setPolicyNamePlaceHolderKey] = useState("");
     const [policyDescriptionPlaceHolderKey, setPolicyDescriptionPlaceHolderKey] = useState("");
     const [confirmationHeader, setConfirmationHeader] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
+    const [backLink, setBackLink] = useState("");
+    const [policyId, setPolicyId] = useState("");
+    const [policyDetails, setPolicyDetails] = useState({});
+    const [policyName, setPolicyName] = useState("");
+    const [policyDescription, setPolicyDescription] = useState("");
+    const [policyData, setPolicyData] = useState("");
+    const [confirmationData, setConfirmationData] = useState({});
+    const [editPolicySuccess, setEditPolicySuccess] = useState(false);
+    
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
@@ -50,53 +51,55 @@ function EditPolicy() {
                 return false;
             }
             return (
-                (policyName !== "" || policyDescription !== "" || policyData !== "") && currentLocation.pathname !== nextLocation.pathname
+                ((trimAndReplace(policyName) !== policyDetails.policyName) || 
+                (trimAndReplace(policyDescription) !== policyDetails.policyDesc) || 
+                (policyData !== JSON.stringify(policyDetails.policies, null, 2))) && currentLocation.pathname !== nextLocation.pathname
             );
         }
     );
 
     useEffect(() => {
         const fetchData = async () => {
-            const selectedPolicy = localStorage.getItem('selectedPolicyData');
-            if (selectedPolicy) {
-                try {
-                    const data = JSON.parse(selectedPolicy);
-                    setSelectedPolicyData(data);
-                    let policyDetails = await getPolicyDetails(HttpService, data.policyId, setErrorCode, setErrorMsg, t);
-                    console.log(policyDetails);
-
-                    setPolicyGroup(policyDetails.policyGroupName)
-                    setPolicyName(policyDetails.policyName)
-                    setPolicyDescription(policyDetails.policyDesc)
-                    setPolicyData(JSON.stringify(policyDetails.policies, null, 2))
-                    setPolicyDetails(policyDetails);
-                } catch (err) {
-                    console.error('Error in editPolicy page :', err);
-                };
-            };
             setDataLoaded(false);
             try {
-                const storedPolicyType = localStorage.getItem('policyType');
+                const storedPolicyType = localStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
-                if (storedPolicyType === 'Auth') {
-                    setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
-                    setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
-                    setConfirmationHeader('editPolicy.authPolicyConfirmationHeader');
-                    setConfirmationMessage('editPolicy.authPolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
-                } else if (storedPolicyType === 'DataShare') {
+                if (storedPolicyType === 'dataShare') {
+                    setTitle('editPolicy.editDataSharePolicyTitle');
+                    setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationHeader('editPolicy.dataSharePolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                } else if (storedPolicyType === 'auth') {
+                    setTitle('editPolicy.editAuthPolicyTitle');
+                    setSubTitle('policiesList.listOfAuthPolicies');
+                    setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
+                    setConfirmationHeader('editPolicy.authPolicyConfirmationHeader');
+                    setConfirmationMessage('editPolicy.authPolicyConfirmationMessage');
+                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
                 }
-                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
-
+                const selectedPolicyId = localStorage.getItem('policyId');
+                if (selectedPolicyId) {
+                    setPolicyId(selectedPolicyId)
+                    let policyInfo = await getPolicyDetails(HttpService, selectedPolicyId, setErrorCode, setErrorMsg, t);
+                    if (policyInfo !== null) {
+                        setPolicyDetails(policyInfo);
+                        setPolicyName(policyInfo.policyName)
+                        setPolicyDescription(policyInfo.policyDesc)
+                        setPolicyData(JSON.stringify(policyInfo.policies, null, 2));
+                    } else {
+                        setErrorMsg(t('clonePolicyPopup.errorInPolicyDetails'))
+                    }
+                } else {
+                    setErrorMsg(t('editPolicy.policyIdNotExist'))
+                }
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
@@ -114,8 +117,10 @@ function EditPolicy() {
     };
 
     useEffect(() => {
-        const shouldWarnBeforeUnload = () =>
-            policyGroup || policyName || policyDescription || policyData;
+        const shouldWarnBeforeUnload = () => 
+            (trimAndReplace(policyName) !== policyDetails.policyName) || 
+            (trimAndReplace(policyDescription) !== policyDetails.policyDesc) || 
+            (policyData !== JSON.stringify(policyDetails.policies, null, 2));
 
         const handleBeforeUnload = (event) => {
             if (shouldWarnBeforeUnload() && !isSubmitClicked) {
@@ -129,7 +134,7 @@ function EditPolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [policyGroup, policyName, policyDescription, policyData]);
+    }, [policyName, policyDescription, policyData]);
 
 
     useEffect(() => {
@@ -163,15 +168,15 @@ function EditPolicy() {
             return;
         }
         let request = createRequest({
-            name: policyName,
-            policyGroupName: policyGroup,
-            desc: policyDescription,
+            name: trimAndReplace(policyName),
+            policyGroupName: policyDetails.policyGroupName,
+            desc: trimAndReplace(policyDescription),
             policies: JSON.parse(policyData),
             version: '1.1'
         });
         try {
             const response = await HttpService({
-                url: getPolicyManagerUrl(`/policies/${selectedPolicyData.policyId}`, process.env.NODE_ENV),
+                url: getPolicyManagerUrl(`/policies/${policyId}`, process.env.NODE_ENV),
                 method: 'put',
                 baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
                 data: request
@@ -183,7 +188,7 @@ function EditPolicy() {
                         backUrl: backLink,
                         header: confirmationHeader,
                         description: confirmationMessage,
-                        descriptionParams: { policyGroupName: policyGroup },
+                        descriptionParams: { policyGroupName: policyDetails.policyGroupName },
                     }
                     setConfirmationData(requiredData);
                     setEditPolicySuccess(true);
@@ -191,7 +196,7 @@ function EditPolicy() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('createPolicy.errorInCreatePolicy'));
+                setErrorMsg(t('editPolicy.errorInEditPolicy'));
             }
         } catch (err) {
             setErrorMsg(err);
@@ -201,15 +206,10 @@ function EditPolicy() {
         setIsSubmitClicked(false);
     };
 
-    const onEditPolicyGroup = async (fieldName, selectedValue) => {
-        setPolicyGroup(selectedValue);
-    };
-
     const clearForm = () => {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
-        setPolicyGroup(policyDetails.policyGroupName);
         setPolicyName(policyDetails.policyName);
         setPolicyDescription(policyDetails.policyDesc);
         setPolicyData(JSON.stringify(policyDetails.policies, null, 2));
@@ -220,7 +220,7 @@ function EditPolicy() {
         navigate(backLink);
     }
 
-    const onTextChange = (fieldName, fieldValue) => {
+    const onPolicyNameChange = (fieldName, fieldValue) => {
         setPolicyName(fieldValue);
     };
 
@@ -228,8 +228,16 @@ function EditPolicy() {
         setErrorMsg("");
     };
 
+    const cancelSuccessMsg = () => {
+        setSuccessMsg("");
+    };
+
     const isFormValid = () => {
-        return policyGroup && policyName && policyDescription.trim() && policyData;
+        return (
+        (trimAndReplace(policyName) !== policyDetails.policyName) ||
+        (trimAndReplace(policyDescription) !== policyDetails.policyDesc) ||
+        (policyData !== JSON.stringify(policyDetails.policies, null, 2)))
+        && policyName.trim() !== "" && policyDescription !== "" && policyData !== "";
     };
 
     const handlePolicyDescriptionChange = (e) => {
@@ -244,39 +252,18 @@ function EditPolicy() {
         setPolicyData(value);
     };
 
-    const styles = {
-        outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-sm !mb-1",
-        dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start !text-vulcan !bg-platinum-gray",
-        selectionBox: "!top-10"
-    };
-
-    const handleFileChange = (event) => {
-        setErrorMsg("");
-        setErrorCode("");
-        setSuccessMsg("");
-        const file = event.target.files[0];
-        if (file?.type === "application/json") {
-            const reader = new FileReader();
-            reader.onload = () => {
-                try {
-                    const data = JSON.parse(reader.result);
-                    setPolicyData(JSON.stringify(data, null, 2));
-                } catch (error) {
-                    setErrorMsg(t('createPolicy.jsonParseError'));
-                }
-            };
-            reader.readAsText(file);
-            setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
-        } else {
-            setErrorMsg(t('createPolicy.uploadFileError'));
-        }
-        event.target.value = '';
-    };
+    const onFileChangeEvent = (event) => {
+        handleFileChange(event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t);
+    }
 
     const styleSet = {
         inputField: "min-h-10",
     };
+
+    const successCustomStyle = {
+        outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
+        innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
+    }
 
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
@@ -288,9 +275,12 @@ function EditPolicy() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
+                    {successMsg && (
+                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
+                    )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title={selectedPolicyData.header} subTitle={selectedPolicyData.subTitle} backLink={selectedPolicyData.backLink} />
+                            <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>
                         {!editPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
@@ -300,24 +290,22 @@ function EditPolicy() {
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between my-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-2/4">
-                                                    <DropdownWithSearchComponent
-                                                        fieldName='policyGroup'
-                                                        dropdownDataList={policyGroupDropdownData}
-                                                        onDropDownChangeEvent={onEditPolicyGroup}
-                                                        fieldNameKey='createPolicy.policyGroup*'
-                                                        placeHolderKey='createPolicy.selectPolicyGroup'
-                                                        searchKey='commons.search'
-                                                        selectedDropdownValue={policyGroup}
-                                                        styleSet={styles}
-                                                        id='edit_policy_group_dropdown'
-                                                        disabled
-                                                    />
+                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                        {t('createPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span>
+                                                    </label>
+                                                    <button disabled className="flex items-center justify-between w-full min-h-11 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                        overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                                                        <span className="w-full break-all break-normal break-words text-wrap text-start">{policyDetails.policyGroupName}</span>
+                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                                 <div className={`flex flex-col w-2/4 ${isLoginLanguageRTL ? "mr-4" : "ml-4"}`}>
                                                     <TextInputComponent
                                                         fieldName="policyName"
                                                         textBoxValue={policyName}
-                                                        onTextChange={onTextChange}
+                                                        onTextChange={onPolicyNameChange}
                                                         fieldNameKey="createPolicy.policyName*"
                                                         placeHolderKey={policyNamePlaceHolderKey}
                                                         styleSet={styleSet}
@@ -349,21 +337,21 @@ function EditPolicy() {
                                                             <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
                                                             <div className="flex-col p-1 items-center">
                                                                 <h6 className={`text-sm font-semibold text-dark-blue`}>
-                                                                    {t('createPolicy.uploadPolicyDataFile')}
+                                                                    {t('editPolicy.reUploadPolicyData')}
                                                                 </h6>
                                                                 <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>
                                                         </div>
                                                         <div>
                                                             <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
-                                                                <span className="px-2">{t('createPolicy.upload')}</span>
+                                                                <span className="px-2">{t('editPolicy.reuploadBtn')}</span>
                                                             </label>
                                                             <input
                                                                 type="file"
                                                                 id="fileInput"
                                                                 accept=".json"
                                                                 style={{ display: 'none' }}
-                                                                onChange={handleFileChange}
+                                                                onChange={onFileChangeEvent}
                                                             />
                                                         </div>
                                                     </div>

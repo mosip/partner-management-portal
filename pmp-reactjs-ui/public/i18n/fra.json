@@ -681,11 +681,16 @@
     },
     "editPolicy": {
         "edit": "Modifier",
-        "editPolicies": "Modifier les politiques",
+        "editAuthPolicyTitle": "Modifier la politique d'authentification",
+        "editDataSharePolicyTitle": "Modifier la politique de partage de données",
         "authPolicyConfirmationHeader": "Politique d'authentification mise à jour et soumise avec succès!",
         "dataSharePolicyConfirmationHeader": "Politique de partage de données mise à jour et soumise avec succès !",
         "authPolicyConfirmationMessage": "La stratégie d'authentification pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran « Liste des politiques d'authentification'.",
-        "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'."
+        "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'.",
+        "errorInEditPolicy": "Lors de l'édition de la politique, nous avons rencontré une erreur.",
+        "reUploadPolicyData": "Re-télécharger les données de politique",
+        "reuploadBtn": "Re-télécharger",
+        "policyIdNotExist": "Détails de la politique non trouvés : l’ID de politique fourni n’existe pas."
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "Afficher la politique de partage de données",

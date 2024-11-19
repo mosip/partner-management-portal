@@ -685,11 +685,16 @@
     },
     "editPolicy": {
         "edit": "يحرر",
-        "editPolicies": "تحرير السياسات",
+        "editAuthPolicyTitle": "تعديل سياسة المصادقة",
+        "editDataSharePolicyTitle": "تعديل سياسة مشاركة البيانات",
         "authPolicyConfirmationHeader": "تم تحديث سياسة المصادقة وإرسالها بنجاح",
         "dataSharePolicyConfirmationHeader": "تم تحديث سياسة مشاركة البيانات وإرسالها بنجاح",
         "authPolicyConfirmationMessage": "تم تحديث سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات المصادقة",
-        "dataSharePolicyConfirmationMessage": "تم تحديث سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات مشاركة البيانات"
+        "dataSharePolicyConfirmationMessage": "تم تحديث سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات مشاركة البيانات",
+        "errorInEditPolicy": "أثناء تحرير السياسة، واجهنا خطأً.",
+        "reUploadPolicyData": "إعادة تحميل بيانات السياسة",
+        "reuploadBtn": "إعادة التحميل",
+        "policyIdNotExist": "لم يتم العثور على تفاصيل السياسة: معرف السياسة المقدم غير موجود."
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",

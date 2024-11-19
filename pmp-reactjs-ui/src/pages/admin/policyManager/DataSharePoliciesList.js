@@ -20,14 +20,7 @@ function DataSharePoliciesList() {
     };
 
     const editDataSharePolicy = (selectedPolicy) => {
-        const requiredData = {
-            policyId: selectedPolicy.policyId,
-            header: 'editPolicy.editPolicies',
-            subTitle: 'viewDataSharePoliciesList.listOfDataSharePolicies',
-            backLink: '/partnermanagement/admin/policy-manager/data-share-policies-list'
-        }
-        localStorage.setItem('policyType', 'DataShare');
-        localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        localStorage.setItem('policyId', selectedPolicy.policyId);
         navigate('/partnermanagement/admin/policy-manager/edit-data-share-policy');
     };
 

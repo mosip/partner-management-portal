@@ -172,7 +172,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const onClickEdit = (selectedPolicy) => {
-
+        if (selectedPolicy.status === "draft") {
+            editPolicy(selectedPolicy);
+        }
     };
 
     const closePublishPolicyPopup = () => {
@@ -335,7 +337,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => editPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => editPolicy(policy))}>
+                                                                                        <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
                                                                                             <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
