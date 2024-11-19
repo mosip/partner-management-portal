@@ -18,12 +18,12 @@ function ViewPolicyGroupDetails() {
     };
 
     useEffect(() => {
-        const selectedPolicy = localStorage.getItem('selectedPolicyGroupAttributes');
-        if (!selectedPolicy) {
+        const selectedPolicyGroup = localStorage.getItem('selectedPolicyGroupAttributes');
+        if (!selectedPolicyGroup) {
             setUnexpectedError(true);
             return;
         }
-        let policyGroupData = JSON.parse(selectedPolicy);
+        let policyGroupData = JSON.parse(selectedPolicyGroup);
         setPolicyGroupDetails(policyGroupData);
     }, []);
 
