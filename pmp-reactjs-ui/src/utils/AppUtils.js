@@ -507,3 +507,26 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         return null;
     }
 };
+
+export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t) => {
+    setErrorMsg("");
+    setErrorCode("");
+    setSuccessMsg("");
+    const file = event.target.files[0];
+    if (file?.type === "application/json") {
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const data = JSON.parse(reader.result);
+                setPolicyData(JSON.stringify(data, null, 2));
+                setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
+            } catch (error) {
+                setErrorMsg(t('createPolicy.jsonParseError'));
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        setErrorMsg(t('createPolicy.uploadFileError'));
+    }
+    event.target.value = '';
+};  

@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -104,21 +104,21 @@ function CreatePolicy() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const storedPolicyType = localStorage.getItem('policyType');
+                const storedPolicyType = localStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
                 setConfirmationHeader('createPolicy.policyConfirmationHeader');
-                if (storedPolicyType === 'DataShare') {
+                if (storedPolicyType === 'dataShare') {
                     setTitle('createPolicy.createDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'Auth') {
+                } else if (storedPolicyType === 'auth') {
                     setTitle('createPolicy.createAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
@@ -248,30 +248,11 @@ function CreatePolicy() {
     const successcustomStyle = {
         outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
         innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
-    }
+    }  
 
-    const handleFileChange = (event) => {
-        setErrorMsg("");
-        setErrorCode("");
-        setSuccessMsg("");
-        const file = event.target.files[0];
-        if (file?.type === "application/json") {
-            const reader = new FileReader();
-            reader.onload = () => {
-                try {
-                    const data = JSON.parse(reader.result);
-                    setPolicyData(JSON.stringify(data, null, 2));
-                    setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
-                } catch (error) {
-                    setErrorMsg(t('createPolicy.jsonParseError'));
-                }
-            };
-            reader.readAsText(file);
-        } else {
-            setErrorMsg(t('createPolicy.uploadFileError'));
-        }
-        event.target.value = '';
-    };    
+    const onFileChangeEvent = (event) => {
+        handleFileChange(event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t);
+    }
 
     return (
         <div className={`mt-2 w-full ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
@@ -369,7 +350,7 @@ function CreatePolicy() {
                                                                 id="fileInput"
                                                                 accept=".json"
                                                                 style={{ display: 'none' }}
-                                                                onChange={handleFileChange}
+                                                                onChange={onFileChangeEvent}
                                                             />
                                                         </div>
 
