@@ -934,7 +934,7 @@
         "PMS_POL_006": "Type d'authentification non pris en charge dans le fichier de stratégie",
         "PMS_POL_007": "Attribut eKYC manquant dans le fichier de stratégie",
         "PMS_POL_008": "L'ID de stratégie n'existe pas",
-        "PMS_POL_009": "Une stratégie portant ce nom existe déjà",
+        "PMS_POL_009": "Le nom de stratégie donné existe déjà. Veuillez essayer avec un nom de stratégie différent.",
         "PMS_COR_002": "Paramètre d'entrée non valide -",
         "PMS_COR_003": "Impossible de traiter la demande",
         "PMS_POL_010": " Les politiques d'authentification ne sont pas définies par rapport à la politique",

@@ -930,7 +930,7 @@
         "PMS_POL_006": "Unsupported Authentication Type in the Policy File",
         "PMS_POL_007": "eKYC attribute missing in the policy file",
         "PMS_POL_008": "Policy ID does not exist",
-        "PMS_POL_009": "A policy with this name already exists",
+        "PMS_POL_009": "The given policy name already exists. Please try with a different policy name",
         "PMS_COR_002": "Invalid Input Parameter _ ",
         "PMS_COR_003": "Could not process the request",
         "PMS_POL_010": " Auth Policies are not defined against to policy",
