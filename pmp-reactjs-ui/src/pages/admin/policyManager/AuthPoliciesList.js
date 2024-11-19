@@ -5,7 +5,6 @@ function AuthPoliciesList() {
     const navigate = useNavigate('');
 
     const createAuthPolicy = () => {
-        localStorage.setItem('policyType', 'Auth');
         navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
     };
 
@@ -16,7 +15,7 @@ function AuthPoliciesList() {
             subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
             backLink: '/partnermanagement/admin/policy-manager/auth-policies-list'
         }
-        localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
         navigate('/partnermanagement/admin/policy-manager/view-auth-policy');
     };
 

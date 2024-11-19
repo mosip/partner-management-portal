@@ -362,8 +362,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                                 popupData={{ ...policy, isDeactivatePolicy: true }}
                                                                                                 headerKeyName={policy.policyName}
                                                                                                 closePopUp={closeDeactivatePopup}
-                                                                                                errorHeaderMsg={'activePolicyRequestsDetectedMsg.header'}
-                                                                                                errorDescriptionMsg={'activePolicyRequestsDetectedMsg.description'}
                                                                                             />
                                                                                         )}
                                                                                     </div>
