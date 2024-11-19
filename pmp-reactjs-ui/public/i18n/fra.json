@@ -679,6 +679,14 @@
         "policyData": "Données de police",
         "preview": "Aperçu"
     },
+    "editPolicy": {
+        "edit": "Modifier",
+        "editPolicies": "Modifier les politiques",
+        "authPolicyConfirmationHeader": "Politique d'authentification mise à jour et soumise avec succès!",
+        "dataSharePolicyConfirmationHeader": "Politique de partage de données mise à jour et soumise avec succès !",
+        "authPolicyConfirmationMessage": "La stratégie d'authentification pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran « Liste des politiques d'authentification'.",
+        "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'."
+    },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "Afficher la politique de partage de données",
         "listOfDataSharePolicies": "Liste des politiques de partage de données"

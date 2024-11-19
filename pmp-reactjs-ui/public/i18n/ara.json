@@ -67,7 +67,7 @@
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
-        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات"      
+        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -613,26 +613,25 @@
         "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
         "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
         "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح"
-        
     },
     "viewPolicyGroupDetails": {
         "viewPolicyGroup": "إظهار مجموعة السياسات",
-        "listOfPolicyGroups":"قائمة مجموعات السياسة",
-        "policyGroupId":"معرف مجموعة السياسات",
+        "listOfPolicyGroups": "قائمة مجموعات السياسة",
+        "policyGroupId": "معرف مجموعة السياسات",
         "policyGroupDesc": "وصف مجموعة السياسات"
     },
     "policyGroupList": {
         "policies": "السياسات",
-        "policyGroup":"مجموعات السياسات",
+        "policyGroup": "مجموعات السياسات",
         "authPolicy": "سياسة المصادقة",
         "dataSharePolicy": "سياسة مشاركة البيانات",
         "createPolicyGroup": "إنشاء مجموعة سياسات",
         "policyGroupId": "معرف مجموعة السياسات",
-        "policyGroupName":"اسم مجموعة السياسات",
-        "policyGroupDescription":"وصف مجموعة السياسات",
-        "createdDate":"تاريخ الإنشاء",
-        "status":"حالة",
-        "action":"فعل",
+        "policyGroupName": "اسم مجموعة السياسات",
+        "policyGroupDescription": "وصف مجموعة السياسات",
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
         "listOfPolicyGroups": "قائمة مجموعات السياسات",
         "errorInPolicyGroupList": "أثناء جلب قائمة مجموعات السياسات، واجهنا خطأً.",
         "searchPolicyGroupId": "معرف مجموعة سياسة البحث",
@@ -641,14 +640,14 @@
     },
     "policiesList": {
         "createAuthPolicy": "إنشاء سياسة المصادقة",
-		"createDataSharePolicy": "إنشاء سياسة مشاركة البيانات",
-        "policyId":"معرف السياسة",
-        "policyName":"اسم السياسة",
+        "createDataSharePolicy": "إنشاء سياسة مشاركة البيانات",
+        "policyId": "معرف السياسة",
+        "policyName": "اسم السياسة",
         "policyDescription": "وصف السياسة",
-        "policyGroup":"مجموعة السياسات",
-        "createdDate":"تاريخ الإنشاء",
-        "status":"حالة",
-        "action":"فعل",
+        "policyGroup": "مجموعة السياسات",
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
         "listOfAuthPolicies": "قائمة سياسة المصادقة",
         "listOfDataSharePolicies": "قائمة سياسة مشاركة البيانات",
         "errorInAuthPolicies": "أثناء جلب سياسات المصادقة، واجهنا خطأً.",
@@ -671,7 +670,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
-        "listOfAuthenticationPolicies":"قائمة سياسة المصاد",
+        "listOfAuthenticationPolicies": "قائمة سياسة المصاد",
         "policyId": "معرف السياسة",
         "policyGroup": "مجموعة السياسات",
         "policyDescription": "وصف السياسة",
@@ -679,6 +678,14 @@
         "policyData": "بيانات السياسة",
         "jsonFilePlace": "اسم ملف JSON يظهر هنا",
         "preview": "معاينة"
+    },
+    "editPolicy": {
+        "edit": "يحرر",
+        "editPolicies": "تحرير السياسات",
+        "authPolicyConfirmationHeader": "تم تحديث سياسة المصادقة وإرسالها بنجاح",
+        "dataSharePolicyConfirmationHeader": "تم تحديث سياسة مشاركة البيانات وإرسالها بنجاح",
+        "authPolicyConfirmationMessage": "تم تحديث سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات المصادقة",
+        "dataSharePolicyConfirmationMessage": "تم تحديث سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات مشاركة البيانات"
     },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",
@@ -711,7 +718,7 @@
     "clonePolicyPopup": {
         "title": "سياسة الاستنساخ",
         "description1": "حدد مجموعة السياسات التي ترغب في تعشيش السياسة المستنسخة فيها",
-        "description2" :"إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
+        "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
         "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
@@ -779,9 +786,9 @@
     "approveRejectRequestPopup": {
         "header": "هل ترغب في الموافقة/الرفض على السياسة",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب.",
-        "approveReject":"موافقة / رفض",
+        "approveReject": "موافقة / رفض",
         "deActivate": "إلغاء التنشيط",
-        "approve":"يعتمد",
+        "approve": "يعتمد",
         "reject": "يرفض",
         "comments": "تعليقات",
         "commentPlaceholder": "اكتب تعليقك هنا"

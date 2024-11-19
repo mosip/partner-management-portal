@@ -675,6 +675,14 @@
         "jsonFilePlace": "JSON File Name Goes Here",
         "preview": "Preview"
     },
+    "editPolicy": {
+        "edit": "Edit",
+        "editPolicies": "Edit Policies",
+        "authPolicyConfirmationHeader": "Authentication Policy updated and submitted successfully!",
+        "dataSharePolicyConfirmationHeader": "Data-Share Policy updated and submitted successfully!",
+        "authPolicyConfirmationMessage": "The Authentication Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Authentication Policies' screen.",
+        "dataSharePolicyConfirmationMessage": "The Data-Share Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Data Share Policies' screen."
+    },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "View Datashare Policy",
         "listOfDataSharePolicies": "List of Datashare Policy"
@@ -774,7 +782,7 @@
     "approveRejectRequestPopup": {
         "header": "Do you want to Approve/Reject the Policy",
         "description": "Please review the policy details carefully before taking appropriate action.",
-        "approveReject":"Approve / Reject",
+        "approveReject": "Approve / Reject",
         "deActivate": "Deactivate",
         "approve": "Approve",
         "reject": "Reject",

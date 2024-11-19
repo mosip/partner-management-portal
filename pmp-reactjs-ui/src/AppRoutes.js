@@ -36,6 +36,7 @@ import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
 import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
+import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 
 function AppRoutes() {
 
@@ -185,8 +186,16 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/policy-manager/edit-auth-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/edit-data-share-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-requests-list',
