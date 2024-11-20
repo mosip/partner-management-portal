@@ -26,7 +26,7 @@ function FtmList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [order, setOrder] = useState("ASC");
   const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
@@ -215,17 +215,18 @@ function FtmList() {
             </div>
             {ftmList.length === 0 ?
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg">
-                <EmptyList 
-                  tableHeaders={tableHeaders} 
+                <EmptyList
+                  tableHeaders={tableHeaders}
                   showCustomButton={true}
                   customButtonName='ftmList.addFtmBtn'
+                  buttonId='add_ftm'
                   onClickButton={addFtm}
                 />
               </div>
               :
               <>
                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                  <FilterButtons listTitle='ftmList.listOfFtm' dataListLength={filteredftmList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                  <FilterButtons titleId='list_of_ftm' listTitle='ftmList.listOfFtm' dataListLength={filteredftmList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                   <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                   {filter &&
                     <FtmListFilter
@@ -240,10 +241,18 @@ function FtmList() {
                           {tableHeaders.map((header, index) => {
                             return (
                               <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
-                                <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
-                                    <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                    <SortingIcon
+                                      id={`${header.headerNameKey}_sorting_icon`}
+                                      headerId={header.id}
+                                      sortDescOrder={sortDescOrder}
+                                      sortAscOrder={sortAscOrder}
+                                      order={order}
+                                      activeSortDesc={activeSortDesc}
+                                      activeSortAsc={activeSortAsc}
+                                    />
                                   )}
                                 </div>
                               </th>

@@ -27,7 +27,7 @@ function ApiKeysList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("ASC");
     const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
     const [activeSortDesc, setActiveSortDesc] = useState("");
@@ -191,17 +191,18 @@ function ApiKeysList() {
                         {apiKeysList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                <EmptyList 
-                                    tableHeaders={tableHeaders} 
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
                                     showCustomButton={true}
                                     customButtonName='apiKeysList.generateApiKey'
+                                    buttonId='generate_api_key'
                                     onClickButton={generateApiKey}
                                 />
                             </div>
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataListLength={filteredApiKeysList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons titleId='list_of_api_key_requests' listTitle='apiKeysList.listOfApiKeyRequests' dataListLength={filteredApiKeysList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <ApiKeysFilter
@@ -216,10 +217,18 @@ function ApiKeysList() {
                                                     {tableHeaders.map((header, index) => {
                                                         return (
                                                             <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                <div className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
-                                                                        <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                                                        <SortingIcon
+                                                                            id={`${header.headerNameKey}_sorting_icon`}
+                                                                            headerId={header.id}
+                                                                            sortDescOrder={sortDescOrder}
+                                                                            sortAscOrder={sortAscOrder}
+                                                                            order={order}
+                                                                            activeSortDesc={activeSortDesc}
+                                                                            activeSortAsc={activeSortAsc}
+                                                                        />
                                                                     )}
                                                                 </div>
                                                             </th>
@@ -245,7 +254,7 @@ function ApiKeysList() {
 
                                                                 <td className="px-2 mx-2">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <p id={'api_list_action' + (index+1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewApiKeyId(index === viewApiKeyId ? null : index))}>
+                                                                        <p id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>

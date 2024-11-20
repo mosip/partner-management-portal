@@ -174,34 +174,34 @@ function ViewFtmChipDetails() {
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                    <p className="font-[600] text-suva-gray text-xs">
+                                    <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-xs">
                                         {t("viewOidcClientDetails.partnerId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_partner_id" className="font-[600] text-vulcan text-sm">
                                         {ftmDetails.partnerId}
                                     </p>
                                 </div>
                                 <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                    <p className="font-[600] text-suva-gray text-xs">
+                                    <p id="ftm_chip_details_label_partner_type" className="font-[600] text-suva-gray text-xs">
                                         {t("viewOidcClientDetails.partnerType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_ftm_chip_provider" className="font-[600] text-vulcan text-sm">
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
                                 <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                    <p className="font-[600] text-suva-gray text-xs">
+                                    <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-xs">
                                         {t("ftmList.make")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_make" className="font-[600] text-vulcan text-sm">
                                         {ftmDetails.make}
                                     </p>
                                 </div>
                                 <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                    <p className="font-[600] text-suva-gray text-xs">
+                                    <p id="ftm_chip_details_label_model" className="font-[600] text-suva-gray text-xs">
                                         {t("ftmList.model")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_model" className="font-[600] text-vulcan text-sm">
                                         {ftmDetails.model}
                                     </p>
                                 </div>
@@ -212,16 +212,16 @@ function ViewFtmChipDetails() {
                                     <div className={`flex py-[1rem] px-5 ${ftmDetails.status === "deactivated" ? 'bg-gray-100' : 'bg-[#F9FBFF]'} justify-between items-center max-520:flex-col`}>
                                         <div className="flex space-x-4 items-center ">
                                             { ftmDetails.status === "deactivated" ? 
-                                                <img src={fileUploadDisabled} className="h-8" alt="" />
+                                                <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                             :
-                                                <img src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
+                                                <img id='file_upload_blue' src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
                                             }
                                             <div className="flex-col p-3 items-center">
-                                                <h6 className={`text-sm ${ftmDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                <h6 id="ftm_chip_details__certificate_label" className={`text-sm ${ftmDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                     {ftmDetails.isViewFtmChipDetails ? t('viewFtmChipDetails.ftmChipCertificate') : ftmDetails.isCertificateAvailable ? t('viewFtmChipDetails.ftmChipCertificate') : t('manageFtmChipCertificate.uploadFtmCertificate')}
                                                 </h6>
                                                 {ftmDetails.isManageFtmCertificate && (
-                                                    <p className="text-xs text-light-gray">{ftmDetails.isCertificateAvailable ? null : t('manageFtmChipCertificate.certificateFormatMsg')}</p>
+                                                    <p id="ftm_chip_details_certificate_context" className="text-xs text-light-gray">{ftmDetails.isCertificateAvailable ? null : t('manageFtmChipCertificate.certificateFormatMsg')}</p>
                                                 )}
                                             </div>
                                         </div>
@@ -252,16 +252,16 @@ function ViewFtmChipDetails() {
                                     <hr className="border bg-medium-gray h-px" />
                                     <div className="flex items-center p-5 bg-white rounded-lg">
                                         <div className="flex-col space-y-1">
-                                            <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                            <p className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
+                                            <p id="ftm_chip_details_partner_type_label" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                            <p id="ftm_chip_details_partner_type_context" className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}</p>
+                                            <p id="ftm_chip_details_label_expiry_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                            <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}</p>
+                                            <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}</p>
                                         </div>
                                     </div>
                                 </div>

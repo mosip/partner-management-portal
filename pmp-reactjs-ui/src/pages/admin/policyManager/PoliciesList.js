@@ -250,6 +250,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                         tableHeaders={tableHeaders}
                                         showCustomButton={true}
                                         customButtonName={createPolicyButtonName}
+                                        buttonId='create_policy'
                                         onClickButton={createPolicy}
                                     />
                                 </div>

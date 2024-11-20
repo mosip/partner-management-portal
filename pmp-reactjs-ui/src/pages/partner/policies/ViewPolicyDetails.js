@@ -65,18 +65,18 @@ function ViewPolicyDetails() {
                     <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
                             <div className="w-[50%] mb-4">
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_id_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-5 w-[50%]">
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerType")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_type_context' className="font-semibold text-vulcan text-sm">
                                     {getPartnerTypeDescription(policyDetails.partnerType, t)}
                                 </p>
                             </div>
@@ -84,48 +84,48 @@ function ViewPolicyDetails() {
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="flex flex-wrap pt-4">
                             <div className={`w-[49%] ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className="w-[50%]">
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] my-5 ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className="w-[50%]  my-5">
-                                <p className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyDescription}
                                 </p>
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="mt-3">
-                            <p className="font-semibold text-vulcan text-base mb-3">
+                            <p id='policy_details_comments' className="font-semibold text-vulcan text-base mb-3">
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
                                 <div className="flex font-semibold w-full ">
                                     <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL?"ml-3":"mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
                                         <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL?"after:right-[1.2rem]":"after:left-[1.2rem]"} after:mt-7`}></div>
-                                        <img src={adminImage} alt="Example" className="w-8 h-8" />
+                                        <img src={adminImage} alt="Example" className="w-8 h-8" id='admin_image' />
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
                                         <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
