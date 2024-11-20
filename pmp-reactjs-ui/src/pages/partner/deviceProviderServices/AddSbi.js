@@ -200,7 +200,7 @@ function AddSbi() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -209,7 +209,7 @@ function AddSbi() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7 font-inter">
+                    <div className="flex-col mt-8 font-inter">
                         <div className="flex justify-between">
                             <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/device-provider-services/sbi-list' />
                         </div>

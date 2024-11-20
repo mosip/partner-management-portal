@@ -254,7 +254,7 @@ function EditOidcClient() {
 
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -263,7 +263,7 @@ function EditOidcClient() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-8">
                         <div className="flex justify-between">
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
                         </div>

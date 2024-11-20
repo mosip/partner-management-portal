@@ -373,7 +373,7 @@ function CreateOidcClient() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-8">
             <div className="flex justify-between">
               <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
             </div>

@@ -127,7 +127,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-9 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -139,7 +139,7 @@ function ViewPartnerDetails() {
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
-                    <div className={`flex-col bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
