@@ -151,27 +151,27 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     }
                     {enablePartnerAdminMenu && (
                         <>
-                            <li id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()}>
+                            <li id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()} onKeyPress={(e) => { e.key === 'Enter' && showRootOfTrustCertificate() }}>
                                 <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
+                            <li id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()} onKeyPress={(e) => { e.key === 'Enter' && showPartner() }}>
                                 <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             {enablePolicyManagerMenu && (
-                                <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
+                                <li id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies() } onKeyPress={(e) => { e.key === 'Enter' && showAdminPolicies() }}>
                                     <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
                                 </li>
                             )}
-                            <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
+                            <li id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()} onKeyPress={(e) => { e.key === 'Enter' && showPartnerPolicyMapping() }}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
+                            <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()} onKeyPress={(e) => { e.key === 'Enter' && showSbiDeviceDetails() }}>
                                 <SideNavMenuItem title={t('dashboard.sbiDevice')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>
+                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()} onKeyPress={(e) => { e.key === 'Enter' && showAdminFtmDetails() }}>
                                 <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmDetails' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
+                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()} onKeyPress={(e) => { e.key === 'Enter' && showAdminAuthenticationServices() }}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                         </>
