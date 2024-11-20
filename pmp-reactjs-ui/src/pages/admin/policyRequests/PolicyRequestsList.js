@@ -217,7 +217,7 @@ function PolicyRequestsList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                 </div>
               ) : (
                 <>
@@ -239,7 +239,7 @@ function PolicyRequestsList() {
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && isFilterApplied && policyRequestsData.length === 0 ?
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                       : (
                         <>
                           <div className="mx-[2%] overflow-x-scroll">

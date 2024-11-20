@@ -329,15 +329,15 @@ function Dashboard() {
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
             {!isPartnerAdmin &&
-              < div id='dashboard_partner_certificated_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+              < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon'/>
                 </div>
                 <div>
-                  <h5 id='dashboard_partner_certificated_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_partner_certificate_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.partnerCertificate')}
                   </h5>
-                  <p id='dashboard_partner_certificated_list_description' className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_partner_certificate_list_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.partnerCertificateDesc')}
                   </p>
                 </div>

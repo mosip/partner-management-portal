@@ -168,7 +168,7 @@ function PoliciesList() {
                     tableHeaders={tableHeaders}
                     showCustomButton={true}
                     customButtonName='policies.requestPolicyBtn'
-                    butttonId='show_request_policy'
+                    buttonId='show_request_policy'
                     onClickButton={showRequestPolicy}
                   />
                 </div>

@@ -224,7 +224,7 @@ function OidcClientsList() {
                                     tableHeaders={tableHeaders}
                                     showCustomButton={true}
                                     customButtonName='createOidcClient.createOidcClient'
-                                    butttonId= 'create_oid_client'
+                                    buttonId= 'create_oid_client'
                                     onClickButton={createOidcClient}
                                 />
                             </div>

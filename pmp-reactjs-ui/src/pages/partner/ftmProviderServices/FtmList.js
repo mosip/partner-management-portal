@@ -219,7 +219,7 @@ function FtmList() {
                   tableHeaders={tableHeaders}
                   showCustomButton={true}
                   customButtonName='ftmList.addFtmBtn'
-                  butttonId='add_ftm'
+                  buttonId='add_ftm'
                   onClickButton={addFtm}
                 />
               </div>

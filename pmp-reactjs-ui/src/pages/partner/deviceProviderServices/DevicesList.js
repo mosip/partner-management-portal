@@ -246,7 +246,7 @@ function DevicesList() {
                                             tableHeaders={tableHeaders}
                                             showCustomButton={true}
                                             customButtonName='devicesList.addDevices'
-                                            butttonId='add_devices'
+                                            buttonId='add_devices'
                                             onClickButton={addDevices}
                                         />
                                     </div>

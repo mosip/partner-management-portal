@@ -65,18 +65,18 @@ function ViewPolicyDetails() {
                     <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
                             <div className="w-[50%] mb-4">
-                                <p id='view_policy_details_label_partner_id' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>
-                                <p id='view_policy_details_context_partner_id' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_id_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-5 w-[50%]">
-                                <p id='view_policy_details_label_partner_type' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerType")}
                                 </p>
-                                <p id='view_policy_details_context_partnerType' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_type_context' className="font-semibold text-vulcan text-sm">
                                     {getPartnerTypeDescription(policyDetails.partnerType, t)}
                                 </p>
                             </div>
@@ -84,41 +84,41 @@ function ViewPolicyDetails() {
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="flex flex-wrap pt-4">
                             <div className={`w-[49%] ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
-                                <p id='view_policy_details_label_policy_group_name' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
-                                <p id='view_policy_details_context_policy_group_name' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className="w-[50%]">
-                                <p id='view_policy_details_label_policy_name' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
-                                <p id='view_policy_details_context_policy_name' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] my-5 ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
-                                <p id='view_policy_details_label_policy_group_description' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
-                                <p id='view_policy_details_context_policy_group_description' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className="w-[50%]  my-5">
-                                <p id='view_policy_details_label_policy_name_description' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>
-                                <p id='view_policy_details_context_policy_description' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-sm break-normal">
                                     {policyDetails.policyDescription}
                                 </p>
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="mt-3">
-                            <p id='view_policy_details_label_comments' className="font-semibold text-vulcan text-base mb-3">
+                            <p id='policy_details_comments' className="font-semibold text-vulcan text-base mb-3">
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>

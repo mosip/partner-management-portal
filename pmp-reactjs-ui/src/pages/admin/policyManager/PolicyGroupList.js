@@ -256,6 +256,7 @@ function PolicyGroupList() {
                                     tableHeaders={tableHeaders}
                                     showCustomButton={!applyFilter}
                                     customButtonName='policyGroupList.createPolicyGroup'
+                                    buttonId= 'create_policy_group'
                                     onClickButton={createPolicyGroup}
                                 />
                             </div>

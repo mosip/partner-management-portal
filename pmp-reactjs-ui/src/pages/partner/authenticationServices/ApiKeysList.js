@@ -195,7 +195,7 @@ function ApiKeysList() {
                                     tableHeaders={tableHeaders}
                                     showCustomButton={true}
                                     customButtonName='apiKeysList.generateApiKey'
-                                    butttonId='generate_api_key'
+                                    buttonId='generate_api_key'
                                     onClickButton={generateApiKey}
                                 />
                             </div>
