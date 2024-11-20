@@ -37,6 +37,8 @@ import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
 import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
+import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
+import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 
 function AppRoutes() {
 
@@ -204,6 +206,14 @@ function AppRoutes() {
         {
           path: 'admin/view-policy-request',
           element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/oidc-clients-list',
+          element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/api-keys-list',
+          element: <GuardedRoute><MainLayout><AdminApiKeysList /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
