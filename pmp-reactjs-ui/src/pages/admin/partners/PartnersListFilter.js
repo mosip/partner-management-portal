@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { useBlocker } from 'react-router-dom';
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
+import { createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, isFilterChanged } from "../../../utils/AppUtils.js";
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
+import BlockerPrompt from "../../common/BlockerPrompt";
 
 function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
@@ -49,6 +51,35 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
     fetchData();
   }, [t]);
+
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => {
+      if (!isFilterChanged(filters)) {
+        return false;
+      }
+      return (
+        (isFilterChanged(filters)) &&
+        currentLocation.pathname !== nextLocation.pathname
+      );
+    }
+  );
+
+  useEffect(() => {
+    const shouldWarnBeforeUnload = () => {
+      return isFilterChanged(filters);
+    };
+
+    const handleBeforeUnload = (event) => {
+      if (shouldWarnBeforeUnload()) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [filters]);
 
   async function fetchPartnerTypeData() {
     const request = createRequest({
@@ -188,6 +219,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
           {t("partnerList.applyFilter")}
         </button>
       </div>
+      <BlockerPrompt blocker={blocker} />
     </div>
   );
 }

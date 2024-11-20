@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useBlocker } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import {
   getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus
+  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, isFilterChanged
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -16,6 +16,7 @@ import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import Title from '../../common/Title';
 import EmptyList from '../../common/EmptyList';
+import BlockerPrompt from "../../common/BlockerPrompt";
 
 function PoliciesList() {
 
@@ -45,6 +46,35 @@ function PoliciesList() {
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(-1));
   }, [submenuRef]);
+
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => {
+      if (!isFilterChanged(filterQuery)) {
+        return false;
+      }
+      return (
+        (isFilterChanged(filterQuery)) &&
+        currentLocation.pathname !== nextLocation.pathname
+      );
+    }
+  );
+
+  useEffect(() => {
+    const shouldWarnBeforeUnload = () => {
+      return isFilterChanged(filterQuery);
+    };
+
+    const handleBeforeUnload = (event) => {
+      if (shouldWarnBeforeUnload()) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [filterQuery]);
 
   const tableHeaders = [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
@@ -255,7 +285,7 @@ function PoliciesList() {
 
         </>
       )}
-
+      <BlockerPrompt blocker={blocker} />
     </div>
   )
 

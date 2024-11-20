@@ -540,3 +540,12 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
     }
     event.target.value = '';
 };  
+
+export const isFilterChanged = (filterQuery) => {
+    const hasNonEmptyField = Object.values(filterQuery).some(
+        (value) =>
+            value !== '' && value !== null && value !== undefined
+    );
+
+    return hasNonEmptyField;
+};
