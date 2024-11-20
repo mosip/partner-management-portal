@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import rectangleGrid from "../../svg/rectangle_grid.svg";
 
-function EmptyList({tableHeaders, showCustomButton, customButtonName, onClickButton}) {
+function EmptyList({tableHeaders, showCustomButton, customButtonName,butttonId, onClickButton}) {
     const { t } = useTranslation();
     return (
         <>
@@ -23,7 +23,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName, onClickBut
                     {/* Ensure rectangleGrid has a valid import path and alt text for accessibility */}
                     <img src={rectangleGrid} alt="No data available icon" />
                     { showCustomButton ?
-                        <button id='create_policy_group_btn' type="button" onClick={onClickButton}
+                        <button id={butttonId} type="button" onClick={onClickButton}
                             className={`text-white font-semibold mt-8 w-[75%] bg-tory-blue rounded-md text-sm mx-8 py-3`}>
                             {t(customButtonName)}
                         </button>

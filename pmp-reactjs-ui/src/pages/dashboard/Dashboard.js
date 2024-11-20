@@ -322,7 +322,7 @@ function Dashboard() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
+          <div id='welcome_msg' className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
             <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
@@ -331,13 +331,13 @@ function Dashboard() {
             {!isPartnerAdmin &&
               < div id='dashboard_partner_certificated_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
-                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
+                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_partner_certificated_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.partnerCertificate')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_partner_certificated_list_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.partnerCertificateDesc')}
                   </p>
                 </div>
@@ -346,13 +346,13 @@ function Dashboard() {
             {!isPartnerAdmin && showPolicies && (
               <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
                 <div className="flex justify-center mb-5">
-                  <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+                  <img src={policiesIcon} alt="" className="w-8 h-8" id='dashboard_policies_card_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                  <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
                     {t('dashboard.policies')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.policiesDesc')}
                   </p>
                 </div>
@@ -361,13 +361,13 @@ function Dashboard() {
             {!isPartnerAdmin && showAuthenticationServices && (
               <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
-                  <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
+                  <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                  <h5 id='dashboard_authentication_clients_list_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
                     {t('dashboard.authenticationServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_authentication_clients_list_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.authenticationServicesDesc')}
                   </p>
                 </div>
@@ -376,13 +376,13 @@ function Dashboard() {
             {!isPartnerAdmin && showDeviceProviderServices && (
               <div id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" />
+                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" id='dashboard_device_provider_service_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_device_provider_service_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.deviceProviderServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_device_provider_service_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.deviceProviderServicesDesc')}
                   </p>
                 </div>
@@ -391,13 +391,13 @@ function Dashboard() {
             {!isPartnerAdmin && showFtmServices && (
               <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" id='dashboard_ftm_chip_provider_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_ftm_chip_provider_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.ftmChipProviderServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_ftm_chip_provider_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>

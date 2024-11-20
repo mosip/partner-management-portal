@@ -103,18 +103,18 @@ function ViewOidcClientDetails() {
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                             <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_partner_id' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p id='view_oidc_details_context_partner_id' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_partner_type' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p id='view_oidc_details_context_auth_partner' className="font-[600] text-vulcan text-sm">
                                     {t("partnerTypes.authPartner")}
                                 </p>
                             </div>
@@ -122,34 +122,34 @@ function ViewOidcClientDetails() {
                         <hr className={`h-px w-full bg-gray-200 border-0`} />
                         <div className={`flex flex-wrap pt-3`}>
                             <div className={`w-[49%] max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_policy_group' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='view_oidc_details_context_policy_group_name' className="font-[600] text-vulcan text-sm break-normal">
                                     {oidcClientDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%]`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_policy_name' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='view_oidc_details_context_policy_name' className="font-[600] text-vulcan text-sm break-normal">
                                     {oidcClientDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_policy_group_description' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='view_oidc_details_context_policy_group_description' className="font-[600] text-vulcan text-sm break-normal">
                                     {oidcClientDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_policy_name_description' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='view_oidc_details_context_policy_description' className="font-[600] text-vulcan text-sm break-normal">
                                     {oidcClientDetails.policyDescription}
                                 </p>
                             </div>
@@ -157,35 +157,35 @@ function ViewOidcClientDetails() {
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="space-y-6">
                             <div className="my-4">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_oidc_client_name' className="font-[600] text-suva-gray text-xs">
                                     {t("authenticationServices.oidcClientName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='view_oidc_details_context_client_name' className="font-[600] text-vulcan text-sm break-normal">
                                     {oidcClientDetails.clientName}
                                 </p>
                             </div>
                             <div className="my-3 space-y-2">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_public_key' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm text-wrap line-clamp-6 w-[90%]">
+                                <p id='view_oidc_details_context_public_key' className="font-[600] text-vulcan text-sm text-wrap line-clamp-6 w-[90%]">
                                     {oidcClientDetails.publicKey}
                                 </p>
                             </div>
                             <div className="my-4 space-y-1">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='view_oidc_details_label_logo_uri' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.logoUri")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p id='view_oidc_details_context_logo_uri' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.logoUri}
                                 </p>
                             </div>
                             <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
                                 <div className="flex-col space-y-1 w-[50%]">
-                                    <p className="font-[600] text-suva-gray text-xs">
+                                    <p id='view_oidc_details_label_redirect_uris' className="font-[600] text-suva-gray text-xs">
                                         {t("viewOidcClientDetails.redirectUri")}
                                     </p>
-                                    <div className="flex-col">
+                                    <div id='oidc_client_redirect_uris' className="flex-col">
                                         {(oidcClientDetails.redirectUris).map((uri, index) => {
                                             return (
                                                 <ul>
@@ -203,10 +203,10 @@ function ViewOidcClientDetails() {
                                     </div>
                                 </div>
                                 <div className="flex-col space-y-1 w-[50%]">
-                                    <p className="font-[600] text-suva-gray text-xs max-[800px]:mt-4 max-[1020px]:mt-4">
-                                        {t("viewOidcClientDetails.grantTypes")}
+                                    <p id='view_oidc_details_label_grant_types' className="font-[600] text-suva-gray text-xs max-[800px]:mt-4 max-[1020px]:mt-4">
+                                        {t("viewOidcClientDetails.grant_types")}
                                     </p>
-                                    <div className="flex-col">
+                                    <div id='oidc_client_grant_types' className="flex-col">
                                         {(oidcClientDetails.grantTypes).map((type, index) => {
                                             return (
                                                 <ul>

@@ -85,34 +85,34 @@ function ViewDeviceDetails() {
                             <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                     <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_partner_id" className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.partnerId")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_partner_id" className="font-[600] text-vulcan text-sm">
                                             {selectedSbidata.partnerId}
                                         </p>
                                     </div>
                                     <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_partner_type" className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.partnerType")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_partner_type" className="font-[600] text-vulcan text-sm">
                                             {t("partnerTypes.deviceProvider")}
                                         </p>
                                     </div>
                                     <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_device_type" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.deviceType")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_device_type" className="font-[600] text-vulcan text-sm">
                                             {deviceDetails.deviceTypeCode}
                                         </p>
                                     </div>
                                     <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_device_sub_type" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.deviceSubType")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_device_sub_type" className="font-[600] text-vulcan text-sm">
                                             {deviceDetails.deviceSubTypeCode}
                                         </p>
                                     </div>
@@ -120,26 +120,26 @@ function ViewDeviceDetails() {
                                 <hr className={`h-px w-full bg-gray-200 border-0`} />
                                 <div className={`flex flex-wrap pt-2`}>
                                     <div className={`w-[49%] pt-2 max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_make" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.make")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_make" className="font-[600] text-vulcan text-sm">
                                             {deviceDetails.make}
                                         </p>
                                     </div>
                                     <div className={`w-[50%] pt-2 max-[600px]:w-[100%]`}>
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_model" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.model")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_model" className="font-[600] text-vulcan text-sm">
                                             {deviceDetails.model}
                                         </p>
                                     </div>
                                     <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                        <p className="font-[600] text-suva-gray text-xs">
+                                        <p id="device_details_label_sbi_version" className="font-[600] text-suva-gray text-xs">
                                             {t("addSbis.sbiVersion")}
                                         </p>
-                                        <p className="font-[600] text-vulcan text-sm">
+                                        <p id="device_details_context_sbi_version" className="font-[600] text-vulcan text-sm">
                                             {selectedSbidata.sbiVersion}
                                         </p>
                                     </div>

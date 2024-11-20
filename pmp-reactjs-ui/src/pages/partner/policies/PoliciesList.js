@@ -32,7 +32,7 @@ function PoliciesList() {
   const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [isDescending, setIsDescending] = useState(false);
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
@@ -146,11 +146,11 @@ function PoliciesList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
-              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}></Title>
+              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}/>
 
               {policiesList.length > 0 ?
                 <button id='policies_request_btn' onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
@@ -164,17 +164,18 @@ function PoliciesList() {
               {policiesList.length === 0
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                  <EmptyList 
-                    tableHeaders={tableHeaders} 
+                  <EmptyList
+                    tableHeaders={tableHeaders}
                     showCustomButton={true}
                     customButtonName='policies.requestPolicyBtn'
+                    butttonId='show_request_policy'
                     onClickButton={showRequestPolicy}
                   />
                 </div>
                 :
                 <>
                   <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
-                    <FilterButtons listTitle='policies.listOfPolicies' dataListLength={filteredPoliciesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                    <FilterButtons titleId='list_of_policies' listTitle='policies.listOfPolicies' dataListLength={filteredPoliciesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter &&
                       <PoliciesFilter
@@ -189,10 +190,18 @@ function PoliciesList() {
                             {tableHeaders.map((header, index) => {
                               return (
                                 <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
-                                  <div className="mx-2 flex gap-x-0 items-center">
+                                  <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
-                                      <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                      <SortingIcon
+                                        id={`${header.headerNameKey}_sorting_icon`}
+                                        headerId={header.id}
+                                        sortDescOrder={sortDescOrder}
+                                        sortAscOrder={sortAscOrder}
+                                        order={order}
+                                        activeSortDesc={activeSortDesc}
+                                        activeSortAsc={activeSortAsc}
+                                      />
                                     )}
                                   </div>
                                 </th>

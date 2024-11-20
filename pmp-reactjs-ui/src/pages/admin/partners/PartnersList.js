@@ -225,7 +225,7 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                 </div>
               ) : (
                 <>
@@ -247,7 +247,7 @@ function PartnersList() {
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? 
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}/>
                       : (
                       <>
                         <div className="mx-[2%] overflow-x-scroll">
