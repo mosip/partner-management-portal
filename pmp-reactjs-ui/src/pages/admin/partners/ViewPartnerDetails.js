@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
-import ErrorMessage from '../../common/ErrorMessage';
+import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
 
@@ -48,6 +48,7 @@ function ViewPartnerDetails() {
                         const resData = responseData.response;
                         setPartnerDetails(resData);
                     } else {
+                        setUnexpectedError(true);
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
@@ -114,10 +115,6 @@ function ViewPartnerDetails() {
         }
     }
 
-    const cancelErrorMsg = () => {
-        setErrorMsg("");
-    };
-
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
@@ -127,19 +124,16 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-9 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
-                    {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
-                    )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
-                    <div className={`flex-col bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
@@ -149,7 +143,8 @@ function ViewPartnerDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
+                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
                                         <button onClick={moveToPartnersList} type="button"
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
