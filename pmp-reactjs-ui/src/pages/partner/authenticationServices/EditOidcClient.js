@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
@@ -11,6 +11,7 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import BlockerPrompt from "../../common/BlockerPrompt";
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -24,7 +25,8 @@ function EditOidcClient() {
     const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
     const [editOidcClientSuccess, setEditOidcClientSuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
-
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    let isCancelledClicked = false;
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
         policyGroupName: '',
@@ -45,6 +47,43 @@ function EditOidcClient() {
         redirectUris: [],
         grantTypes: [],
     });
+
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked || isCancelledClicked || editOidcClientSuccess) {
+                setIsSubmitClicked(false);
+                isCancelledClicked = false;
+                return false;
+            }
+            return (
+                (checkIfRedirectUrisIsUpdated() ||
+                (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+                (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
+                (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName)) && currentLocation.pathname !== nextLocation.pathname
+            );
+        }
+    );
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () => 
+            checkIfRedirectUrisIsUpdated() ||
+            (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
+            (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName);
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [oidcClientDetails.redirectUris, oidcClientDetails.grantTypes[0], oidcClientDetails.logoUri, oidcClientDetails.clientName]);
 
     const createGrantTypesDropdownData = useCallback((dataList) => {
         let dataArr = [];
@@ -183,8 +222,8 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (oidcClientDetails.clientName.trim() !== selectedClientDetails.clientName))
-            && oidcClientDetails.clientName.trim() !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName))
+            && trimAndReplace(oidcClientDetails.clientName) !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
@@ -202,6 +241,7 @@ function EditOidcClient() {
     }
 
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
@@ -216,7 +256,6 @@ function EditOidcClient() {
                 "eng": trimAndReplace(oidcClientDetails.clientName)
             }
         });
-        console.log(request);
         try {
             const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
                 headers: {
@@ -243,6 +282,12 @@ function EditOidcClient() {
             setDataLoaded(true);
             setErrorMsg(err);
         }
+        setIsSubmitClicked(false);
+    }
+
+    const clickOnCancel = () => {
+        isCancelledClicked = true;
+        moveToOidcClientsList(navigate);
     }
 
     const styles = {
@@ -405,7 +450,7 @@ function EditOidcClient() {
                                 <div className="flex flex-row px-[3%] py-[2%] justify-between">
                                     <button id="oidc_edit_clear_form_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                                     <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                        <button id="oidc_edit_cancel_btn" onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     </div>
                                 </div>
@@ -414,8 +459,8 @@ function EditOidcClient() {
                         }
                     </div>
                 </>
-            )
-            }
+            )}
+            <BlockerPrompt blocker={blocker} />
         </div >
     )
 }

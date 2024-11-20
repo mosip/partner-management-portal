@@ -12,7 +12,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import OidcClientsFilter from './OidcClientsFilter';
-import AuthenticationServicesTab from './AuthenticationServicesTab.js';
+import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
@@ -27,8 +27,6 @@ function OidcClientsList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [activeOidcClient, setActiveOicdClient] = useState(true);
-    const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
     const [order, setOrder] = useState("ASC");
@@ -213,10 +211,10 @@ function OidcClientsList() {
                             }
                         </div>
                         <AuthenticationServicesTab
-                            activeOidcClient={activeOidcClient}
-                            setActiveOicdClient={setActiveOicdClient}
-                            activeApiKey={activeApiKey}
-                            setActiveApiKey={setActiveApiKey}
+                            activeOidcClient={true}
+                            oidcClientPath='/partnermanagement/authentication-services/oidc-clients-list'
+                            activeApiKey={false}
+                            apiKeyPath='/partnermanagement/authentication-services/api-keys-list'
                         />
 
                         {oidcClientsList.length === 0

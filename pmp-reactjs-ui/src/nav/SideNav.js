@@ -45,6 +45,8 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("partner");
         } else if (selectedPath.includes('policy-requests-list')) {
             setActiveIcon("partnerPolicyMapping");
+        } else if (selectedPath.includes('admin/authentication-services')) {
+            setActiveIcon("authenticationServices");
         }
         else {
             setActiveIcon("home");
@@ -113,7 +115,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("ftmDetails");
     };
     const showAdminAuthenticationServices = () => {
-        setActiveIcon("authenticationServices");
+        navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
     };
 
     return (
