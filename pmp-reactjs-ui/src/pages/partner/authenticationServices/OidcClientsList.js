@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useBlocker } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
-    onPressEnterKey
+    onPressEnterKey, isFilterChanged
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -19,6 +19,7 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
 import EmptyList from '../../common/EmptyList.js';
+import BlockerPrompt from "../../common/BlockerPrompt";
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -49,6 +50,35 @@ function OidcClientsList() {
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
 
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+          if (!isFilterChanged(filterQuery)) {
+            return false;
+          }
+          return (
+            (isFilterChanged(filterQuery)) &&
+            currentLocation.pathname !== nextLocation.pathname
+          );
+        }
+      );
+    
+      useEffect(() => {
+        const shouldWarnBeforeUnload = () => {
+          return isFilterChanged(filterQuery);
+        };
+    
+        const handleBeforeUnload = (event) => {
+          if (shouldWarnBeforeUnload()) {
+            event.preventDefault();
+            event.returnValue = '';
+          }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, [filterQuery]);
+    
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
@@ -323,6 +353,7 @@ function OidcClientsList() {
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div>
     )
 }
