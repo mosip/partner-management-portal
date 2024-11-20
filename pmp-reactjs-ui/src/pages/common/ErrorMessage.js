@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import cancelIcon from '../../svg/cancel_icon.svg';
-import { isLangRTL } from "../../utils/AppUtils";
+import { isLangRTL, getErrorMessage } from "../../utils/AppUtils";
 import { getUserProfile } from "../../services/UserProfileService";
 
 function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
@@ -10,16 +10,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     useEffect(() => {
-        if (errorCode) {
-            const serverErrors = t('serverError', { returnObjects: true });
-            if (serverErrors[errorCode]) {
-                setErrorMsg(serverErrors[errorCode]);
-            } else {
-                setErrorMsg(errorMessage)
-            }
-        } else {
-            setErrorMsg(errorMessage);
-        }
+        setErrorMsg(getErrorMessage(errorCode, t, errorMessage));
         console.log(errorCode, errorMessage)
     }, [t, errorCode, errorMessage]);
 

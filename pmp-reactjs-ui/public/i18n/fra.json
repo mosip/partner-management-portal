@@ -29,7 +29,8 @@
         "filterBtn": "Filtre",
         "resetFilter": "Réinitialiser le filtre",
         "itemsPerPage": "Objets par page",
-        "close":"Fermer"
+        "close":"Fermer",
+        "unexpectedError": "Nous avons rencontré une erreur inattendue"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",

@@ -29,7 +29,8 @@
         "filterBtn": "منقي",
         "resetFilter": "تصفية إعادة تعيين",
         "itemsPerPage": "مواد لكل صفحة",
-        "close": "يغلق"
+        "close": "يغلق",
+        "unexpectedError": "لقد واجهنا خطأ غير متوقع"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",

@@ -398,6 +398,16 @@ export const trimAndReplace = (str) => {
     return str.trim().replace(/\s+/g, ' ');
 };
 
+export const getErrorMessage = (errorCode, t, errorMessage) => {
+    const serverErrors = t('serverError', { returnObjects: true });
+
+    if (errorCode && serverErrors[errorCode]) {
+        return serverErrors[errorCode];
+    } else {
+        return errorMessage;
+    }
+};
+
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
