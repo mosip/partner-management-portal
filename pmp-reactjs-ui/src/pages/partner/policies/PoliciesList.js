@@ -88,7 +88,7 @@ function PoliciesList() {
   }
 
   const showViewPolicyDetails = (selectedPolicyData) => {
-    localStorage.setItem('selectedPolicyData', JSON.stringify(selectedPolicyData));
+    localStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
     navigate('/partnermanagement/policies/view-policy-details')
   };
 

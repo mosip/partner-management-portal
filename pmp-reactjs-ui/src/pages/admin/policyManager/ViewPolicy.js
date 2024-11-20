@@ -48,6 +48,18 @@ function ViewPolicy() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape' || event.key === 'Esc') {
+                closePopUp();
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     const moveBackToList = () => {
         navigate(viewPolicyPageHeaders.backLink);
     };
