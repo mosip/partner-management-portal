@@ -133,44 +133,44 @@ function ViewPolicy() {
                                         </div>
                                     </div>
                                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                                        <div className="flex flex-wrap py-2 max-[450px]:flex-col">
-                                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                                <p className="font-[600] text-suva-gray text-xs">
+                                        <div className="flex flex-wrap py-2 max-[450px]:flex-col justify-evenly">
+                                            <div className="w-[48%] max-[600px]:w-[100%] mb-3">
+                                                <p className="font-[600] text-suva-gray text-sm">
                                                     {t("viewAuthPoliciesList.policyId")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm break-all">
+                                                <p className="font-[600] text-vulcan text-md break-all">
                                                     {viewDetails.policyId}
                                                 </p>
                                             </div>
-                                            <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                                <p className="font-[600] text-suva-gray text-xs">
+                                            <div className="mb-3 max-[600px]:w-[100%] w-[48%]">
+                                                <p className="font-[600] text-suva-gray text-sm">
                                                     {t("viewAuthPoliciesList.policyGroup")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm break-all">
+                                                <p className="font-[600] text-vulcan text-md break-all">
                                                     {viewDetails.policyGroupName}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="flex flex-wrap py-2 max-[450px]:flex-col">
-                                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                                <p className="font-[600] text-suva-gray text-xs">
+                                        <div className="flex flex-wrap py-2 max-[450px]:flex-col justify-evenly">
+                                            <div className="w-[48%] max-[600px]:w-[100%] mb-3">
+                                                <p className="font-[600] text-suva-gray text-sm">
                                                     {t("viewAuthPoliciesList.policyDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm break-all">
+                                                <p className="font-[600] text-vulcan text-md break-all">
                                                     {viewDetails.policyDesc}
                                                 </p>
                                             </div>
-                                            <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                                <p className="font-[600] text-suva-gray text-xs">
+                                            <div className="mb-3 max-[600px]:w-[100%] w-[48%]">
+                                                <p className="font-[600] text-suva-gray text-sm">
                                                     {t("viewAuthPoliciesList.policyGroupDescription")}
                                                 </p>
-                                                <p className="font-[600] text-vulcan text-sm break-all">
+                                                <p className="font-[600] text-vulcan text-md break-all">
                                                     {viewDetails.policyGroupDesc}
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="mb-[3.5rem] max-[600px]:w-[100%] w-[30%]">
-                                            <p className="font-[600] mb-1 text-suva-gray text-xs">
+                                            <p className="font-[600] mb-1 text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyData")}
                                             </p>
                                             <div className='flex flex-wrap justify-between px-3 items-center h-[5.5rem] border-2 border-[#fedff] rounded-md bg-[#f4f6fb] '>
