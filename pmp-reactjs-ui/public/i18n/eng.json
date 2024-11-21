@@ -278,6 +278,7 @@
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
+        "orgName": "Organisation",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
         "oidcClientName": "OIDC Client Name",
@@ -299,6 +300,7 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
+        "searchOidcClientName": "Search OIDC Client Name",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
     },
     "viewOidcClientDetails": {
