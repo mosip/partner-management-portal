@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
+    extractOidcClientName
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -18,6 +19,7 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminOidcClientsList () {
     const navigate = useNavigate('');
@@ -45,6 +47,7 @@ function AdminOidcClientsList () {
     const [applyFilter, setApplyFilter] = useState(false);
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -156,21 +159,18 @@ function AdminOidcClientsList () {
         }
     };
 
-    const extractOidcClientName = (clientName) => {
-        try {
-            const obj = JSON.parse(clientName);
-            return obj['eng'];
-        } catch {
-            return clientName;
-        }
-    }
-
     const viewOidcClientDetails = (client) => {
 
     };
 
     const deactivateOidcClient = (client) => {
+        setShowDeactivatePopup(true);
+        document.body.style.overflow = "hidden";
+    };
 
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
     };
 
     const cancelErrorMsg = () => {
@@ -295,6 +295,9 @@ function AdminOidcClientsList () {
                                                                                         <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{...client, isDeactivateOidcClientByAdmin: true}} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={extractOidcClientName(client.oidcClientName)} />
+                                                                                    )}
                                                                                 </div>
                                                                             )}
                                                                         </div>
