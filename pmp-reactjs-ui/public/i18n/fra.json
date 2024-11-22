@@ -279,6 +279,7 @@
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",
+        "orgName": "Organisation",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
         "oidcClientName": "Nom du client OIDC",
@@ -300,6 +301,7 @@
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "selectStatus": "Sélectionnez le statut",
+        "searchOidcClientName": "Rechercher le nom du client OIDC",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
     },
     "viewOidcClientDetails": {

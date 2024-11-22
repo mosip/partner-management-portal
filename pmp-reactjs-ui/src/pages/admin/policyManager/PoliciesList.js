@@ -199,7 +199,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         if (order !== 'ASC' || activeAscIcon !== header) {
             setFetchData(true);
             setSortFieldName(header);
-            setSortType('ASC');
+            setSortType('DESC');
             setOrder("ASC");
             setActiveDescIcon("");
             setActiveAscIcon(header);
@@ -209,7 +209,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         if (order !== 'DESC' || activeDescIcon !== header) {
             setFetchData(true);
             setSortFieldName(header);
-            setSortType('DESC');
+            setSortType('ASC');
             setOrder("DESC");
             setActiveDescIcon(header);
             setActiveAscIcon("");

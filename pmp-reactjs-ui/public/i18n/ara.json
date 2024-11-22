@@ -279,6 +279,7 @@
     },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",
+        "orgName": "منظمة",
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "oidcClientName": "اسم عميل OIDC",
@@ -300,6 +301,7 @@
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
+        "searchOidcClientName": "البحث عن اسم عميل OIDC",
         "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
     },
     "viewOidcClientDetails": {
