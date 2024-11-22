@@ -111,8 +111,9 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     setDataLoaded(true);
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
+            } else {
+                setDataLoaded(true);
             }
-            setDataLoaded(true);
         } catch (err) {
             setDataLoaded(true);
             setErrorMsg(err);
