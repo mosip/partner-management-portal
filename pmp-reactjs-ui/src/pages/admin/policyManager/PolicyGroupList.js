@@ -29,9 +29,9 @@ function PolicyGroupList() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [policyGroupList, setPolicyGroupList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
-    const [order, setOrder] = useState("ASC");
-    const [activeAscIcon, setActiveAscIcon] = useState("crDtimes");
-    const [activeDescIcon, setActiveDescIcon] = useState("");
+    const [order, setOrder] = useState("DESC");
+    const [activeAscIcon, setActiveAscIcon] = useState("");
+    const [activeDescIcon, setActiveDescIcon] = useState("crDtimes");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
@@ -189,7 +189,7 @@ function PolicyGroupList() {
         if (order !== 'ASC' || activeAscIcon !== header) {
             setFetchData(true);
             setSortFieldName((header === 'status') ? 'isActive' : header);
-            setSortType((header === 'status') ? 'asc' : 'desc');
+            setSortType((header === 'status') ? 'desc' : 'asc');
             setOrder("ASC");
             setActiveDescIcon("");
             setActiveAscIcon(header);
@@ -199,7 +199,7 @@ function PolicyGroupList() {
         if (order !== 'DESC' || activeDescIcon !== header) {
             setFetchData(true);
             setSortFieldName((header === 'status') ? 'isActive' : header);
-            setSortType((header === 'status') ? 'desc' : 'asc');
+            setSortType((header === 'status') ? 'asc' : 'desc');
             setOrder("DESC");
             setActiveDescIcon(header);
             setActiveAscIcon("");

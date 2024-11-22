@@ -29,9 +29,9 @@ function PoliciesList() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policiesList, setPoliciesList] = useState([]);
   const [filteredPoliciesList, setFilteredPoliciesList] = useState([]);
-  const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-  const [activeSortDesc, setActiveSortDesc] = useState("");
+  const [order, setOrder] = useState("DESC");
+  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [firstIndex, setFirstIndex] = useState(0);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [isDescending, setIsDescending] = useState(false);

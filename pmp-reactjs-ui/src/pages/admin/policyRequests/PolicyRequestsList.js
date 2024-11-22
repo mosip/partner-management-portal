@@ -38,9 +38,9 @@ function PolicyRequestsList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policyRequestsData, setPolicyRequestsData] = useState([]);
-  const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-  const [activeSortDesc, setActiveSortDesc] = useState("");
+  const [order, setOrder] = useState("DESC");
+  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
@@ -150,7 +150,7 @@ function PolicyRequestsList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName(header);
-      setSortType("desc");
+      setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
       setActiveSortAsc(header);
@@ -161,7 +161,7 @@ function PolicyRequestsList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName(header);
-      setSortType("asc");
+      setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
       setActiveSortAsc("");
@@ -275,8 +275,8 @@ function PolicyRequestsList() {
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.orgName}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1text-xs font-semibold rounded-md`}>
