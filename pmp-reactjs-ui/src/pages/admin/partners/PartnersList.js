@@ -33,7 +33,7 @@ function PartnersList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
@@ -150,7 +150,7 @@ function PartnersList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("desc");
+      setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
       setActiveSortAsc(header);
@@ -161,7 +161,7 @@ function PartnersList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("asc");
+      setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
       setActiveSortAsc("");

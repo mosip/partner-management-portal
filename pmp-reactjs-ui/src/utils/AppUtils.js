@@ -215,12 +215,12 @@ export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilter
                 sortedList = [...filteredList].sort((a, b) => {
                     const dateA = new Date(a[sortItem]);
                     const dateB = new Date(b[sortItem]);
-                    return dateA - dateB;
+                    return dateB - dateA;
                 });
             }
             else {
                 sortedList = [...filteredList].sort((a, b) =>
-                    a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
+                    a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
                 );
             }
             setFilteredList(sortedList);
@@ -245,12 +245,12 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
                 sortedList = [...filteredList].sort((a, b) => {
                     const dateA = new Date(a[sortItem]);
                     const dateB = new Date(b[sortItem]);
-                    return dateB - dateA;
+                    return dateA - dateB;
                 });
             }
             else {
                 sortedList = [...filteredList].sort((a, b) =>
-                    a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
+                    a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
                 );
             }
             setFilteredList(sortedList);

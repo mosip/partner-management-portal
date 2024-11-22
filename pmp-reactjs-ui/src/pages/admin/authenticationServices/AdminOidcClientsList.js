@@ -28,9 +28,9 @@ function AdminOidcClientsList () {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [oidcClientsList, setOidcClientsList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
-    const [order, setOrder] = useState("ASC");
-    const [activeAscIcon, setActiveAscIcon] = useState("createdDateTime");
-    const [activeDescIcon, setActiveDescIcon] = useState("");
+    const [order, setOrder] = useState("DESC");
+    const [activeAscIcon, setActiveAscIcon] = useState("");
+    const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
@@ -130,7 +130,7 @@ function AdminOidcClientsList () {
         if (order !== 'ASC' || activeAscIcon !== header) {
             setFetchData(true);
             setSortFieldName(header);
-            setSortType('DESC');
+            setSortType('ASC');
             setOrder("ASC");
             setActiveDescIcon("");
             setActiveAscIcon(header);
@@ -141,7 +141,7 @@ function AdminOidcClientsList () {
         if (order !== 'DESC' || activeDescIcon !== header) {
             setFetchData(true);
             setSortFieldName(header);
-            setSortType('ASC');
+            setSortType('DESC');
             setOrder("DESC");
             setActiveDescIcon(header);
             setActiveAscIcon("");
