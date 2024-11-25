@@ -801,9 +801,14 @@
         "comments": "تعليقات",
         "commentPlaceholder": "اكتب تعليقك هنا"
     },
+    "viewAdminOidcClientDetails": {
+        "organisation": "منظمة",
+        "errorWhileGettingOidcClientDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأ",
+        "errorWhileGettingGroupDetails": "أثناء جلب تفاصيل مجموعة السياسات، واجهنا خطأ"
+    },
     "deactivateOidc": {
-        "header":"هل أنت متأكد أنك تريد إلغاء تنشيط عميل OIDC؟",
-        "description":"عند النقر فوق تأكيد، سيتم إلغاء تنشيط معرف عميل OIDC ولن يكون من الممكن استخدامه للمصادقة.",
+        "header": "هل أنت متأكد أنك تريد إلغاء تنشيط عميل OIDC؟",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط معرف عميل OIDC ولن يكون من الممكن استخدامه للمصادقة.",
         "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
     },
     "consentPopup": {

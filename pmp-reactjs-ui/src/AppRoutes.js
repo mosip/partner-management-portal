@@ -39,6 +39,7 @@ import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyReq
 import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
 import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
+import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 
 function AppRoutes() {
 
@@ -210,6 +211,10 @@ function AppRoutes() {
         {
           path: 'admin/authentication-services/oidc-clients-list',
           element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-oidc-client-details',
+          element: <GuardedRoute><MainLayout><ViewAdminOidcClientDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/authentication-services/api-keys-list',

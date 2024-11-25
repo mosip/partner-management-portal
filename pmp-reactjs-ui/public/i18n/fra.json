@@ -805,6 +805,11 @@
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici"
     },
+    "viewAdminOidcClientDetails": {
+        "organisation": "Organisation",
+        "errorWhileGettingOidcClientDetails": "Lors de la récupération des détails du client OIDC, nous avons rencontré une erreur.",
+        "errorWhileGettingGroupDetails": "Lors de la récupération des détails du groupe de stratégies, nous avons rencontré une erreur."
+    },
     "deactivateOidc": {
         "header":"Etes-vous sûr de vouloir désactiver le client OIDC",
         "description":"En cliquant sur ' Confirmer ', l’ID client OIDC sera désactivé et ne pourra plus être utilisé pour l’authentification.",

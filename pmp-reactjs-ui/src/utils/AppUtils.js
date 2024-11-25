@@ -578,3 +578,14 @@ export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, 
         return null;
     }
 };
+
+export const copyClientId = (data, textToCopied, setCopied) => {
+    if (data.status === "ACTIVE") {
+        navigator.clipboard.writeText(textToCopied).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
+};
