@@ -801,6 +801,11 @@
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here"
     },
+    "viewAdminOidcClientDetails": {
+        "organisation": "Organisation",
+        "errorWhileGettingOidcClientDetails": "While fetching Policy Group details, we have encountered with an error.",
+        "errorWhileGettingGroupDetails": "While fetching Policy Group details, we have encountered with an error."
+    },
     "deactivateOidc": {
         "header":"Are you sure you want to Deactivate OIDC Client",
         "description":"On clicking ‘Confirm’, the OIDC Client ID will be deactivated and can no longer be used for authentication.",
