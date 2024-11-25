@@ -348,12 +348,12 @@
         "confirm": "يتأكد"
     },
     "apiKeysList": {
-        "apiKeyLabel": "اسم مفتاح API",
+        "apiKeyName": "اسم مفتاح واجهة برمجة التطبيقات",
         "apiKeyId": "معرف مفتاح API",
         "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",
         "listOfApiKeyRequests": "قائمة مفاتيح API",
-        "selectApiKeyLabel": "حدد اسم مفتاح API",
+        "searchApiKeyName": "البحث عن اسم مفتاح واجهة برمجة التطبيقات",
         "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأن مفتاح API لن يكون مرئيًا بعد الآن بمجرد إغلاق النافذة.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ."
     },
