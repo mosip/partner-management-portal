@@ -348,12 +348,12 @@
         "confirm": "Confirmer"
     },
     "apiKeysList": {
-        "apiKeyLabel": "Nom de la clé API",
+        "apiKeyName": "Nom de la clé API",
         "apiKeyId": "ID de clé API",
         "apiKey": "clé API",
         "generateApiKey": "Générer une clé API",
         "listOfApiKeyRequests": "Liste des clés API",
-        "selectApiKeyLabel": "Sélectionnez le nom de la clé API",
+        "searchApiKeyName": "Rechercher le nom de la clé API",
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
     },
@@ -894,6 +894,9 @@
         "PMS_PM_059": "Erreur lors de la récupération des détails du partenaire.",
         "PMS_PM_060": "Le certificat du partenaire spécifié n'est pas disponible dans la boutique",
         "PMS_PM_061": "Erreur lors de la récupération de tous les détails des partenaires",
+        "PMS_PM_062": "Erreur lors de la récupération de toutes les demandes de mappage des politiques partenaires",
+        "PMS_PM_063": "Le partenaire sélectionné a déjà été désactivé.",
+        "PMS_PM_064": "Erreur lors de la récupération de toutes les demandes de clé API",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
         "PMS_PMP_007": "La clé API du partenaire n'existe pas",
