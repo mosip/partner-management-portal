@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, isLangRTL, handleServiceErrors, getOidcClientDetails, createRequest } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL, handleServiceErrors} from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -45,39 +45,12 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
-            } else if (popupData.isDeactivateOidcClientByPartner || popupData.isDeactivateOidcClientByAdmin) {
-                let deactivateOidc = false;
-                let oidcClientId = "";
-                if (popupData.isDeactivateOidcClientByAdmin) {
-                    const oidcClientDetails = await getOidcClientDetails(HttpService, popupData.oidcClientId, setErrorCode, setErrorMsg);
-                    if (oidcClientDetails !== null) {
-                        request = createRequest({
-                            logoUri: oidcClientDetails.logoUri,
-                            redirectUris: oidcClientDetails.redirectUris,
-                            status: "INACTIVE",
-                            grantTypes: oidcClientDetails.grantTypes,
-                            clientName: oidcClientDetails.name,
-                            clientAuthMethods: oidcClientDetails.clientAuthMethods,
-                            clientNameLangMap: {
-                                "eng": oidcClientDetails.name
-                            }
-                        });
-                        deactivateOidc = true;
-                        oidcClientId = popupData.oidcClientId;
-                    } else {
-                        setErrorMsg(t('deactivateOidc.errorInOidcDetails'))
+            } else if (popupData.clientName) {
+                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                } else {
-                    deactivateOidc = true;
-                    oidcClientId = popupData.clientId;
-                }
-                if (deactivateOidc) {
-                    response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientId}`, process.env.NODE_ENV), request, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                }
+                });
             } else if (popupData.isDeactivateDevice) {
                 response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deactivate-device`, process.env.NODE_ENV), request, {
                     headers: {
@@ -103,16 +76,12 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     }
                 });
             }
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    window.location.reload();
-                } else {
-                    setDataLoaded(true);
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                }
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                window.location.reload();
             } else {
                 setDataLoaded(true);
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
             setDataLoaded(true);
