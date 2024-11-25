@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, copyOidcClientId, formatDate, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +28,7 @@ function ViewAdminOidcClientDetails() {
     const copyToolTipRef = useRef(null);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedAdminOidcClient');
+        const data = localStorage.getItem('selectedOidcClientAttributes');
         handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
         if (!data) {
             setUnexpectedError(true);
@@ -121,14 +121,14 @@ function ViewAdminOidcClientDetails() {
                                     </div>
 
                                     <div id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                                        tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, copyOidcClientId(selectedClientData, selectedClientData.oidcClientId, setCopied))}>
+                                        tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, copyClientId(selectedClientData, selectedClientData.oidcClientId, setCopied))}>
                                         <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
                                             <p className={`text-md font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.oidcClientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
-                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyOidcClientId(selectedClientData, selectedClientData.oidcClientId, setCopied)} />
+                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(selectedClientData, selectedClientData.oidcClientId, setCopied)} />
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
                                             )}

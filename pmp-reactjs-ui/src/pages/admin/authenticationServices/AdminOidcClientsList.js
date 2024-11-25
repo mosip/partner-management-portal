@@ -163,7 +163,7 @@ function AdminOidcClientsList () {
     };
 
     const viewOidcClientDetails = (selectedClient) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClient));
+        localStorage.setItem('selectedOidcClientAttributes', JSON.stringify(selectedClient));
         navigate('/partnermanagement/admin/authentication-services/view-oidc-client-details');
     };
 
