@@ -559,9 +559,9 @@ export const extractOidcClientName = (clientName) => {
     }
 }
 
-export const getOidcClientDetails = async (HttpService, oidcClientId, setErrorCode, setErrorMsg) => {
+export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${oidcClientId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientId}`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
