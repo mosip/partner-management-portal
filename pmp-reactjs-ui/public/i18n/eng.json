@@ -825,6 +825,10 @@
         "cancel": "Cancel",
         "proceed": "Proceed"
     },
+    "adminDeactivateApiKey": {
+        "title": "Are you sure you want to Deactivate API Key",
+        "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
+    },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",

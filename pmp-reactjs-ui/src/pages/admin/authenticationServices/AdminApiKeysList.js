@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -16,6 +16,7 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminApiKeysList () {
     const { t } = useTranslation();
@@ -41,12 +42,13 @@ function AdminApiKeysList () {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
         policyGroupName: null,
         policyName: null,
-        apiKeyName: null,
+        apiKeyLabel: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -56,7 +58,7 @@ function AdminApiKeysList () {
         { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyName", headerNameKey: "apiKeysList.apiKeyName" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -82,7 +84,7 @@ function AdminApiKeysList () {
             if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
             if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
             if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-            if (filterAttributes.apiKeyName) queryParams.append('apiKeyName', filterAttributes.apiKeyName);
+            if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
             if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
             const url = `${getPartnerManagerUrl('/partners/apikey/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -147,7 +149,22 @@ function AdminApiKeysList () {
 
     };
 
-    const deactivateApiKey = (apiKey) => {}
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
+    };
+
+    const deactivateApiKey = (selectedApiKeyData) => {
+        if (selectedApiKeyData.status === "activated") {
+            const request = createRequest({
+                label: selectedApiKeyData.apiKeyLabel,
+                status: "De-Active"
+            });
+            setDeactivateRequest(request);
+            setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
+        }
+    }
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -234,7 +251,7 @@ function AdminApiKeysList () {
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{apiKey.orgName ? apiKey.orgName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{apiKey.policyName ? apiKey.policyName : '-'}</td>
-                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{apiKey.apiKeyName}</td>
+                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{apiKey.apiKeyLabel}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2 break-all">{formatDate(apiKey.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)}>
                                                                         <div className={`${bgOfStatus(apiKey.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -258,6 +275,16 @@ function AdminApiKeysList () {
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup
+                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            popupData={apiKey}
+                                                                                            request={deactivateRequest}
+                                                                                            headerMsg="adminDeactivateApiKey.title"
+                                                                                            descriptionMsg="adminDeactivateApiKey.description"
+                                                                                            headerKeyName={apiKey.apiKeyLabel}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
                                                                             )}
                                                                         </div>
