@@ -84,4 +84,11 @@ public class GlobalConstants {
 	public static final String SERVICE_NOT_DEPLOYED = "Service not deployed";
 	public static final String SERVICE_NOT_DEPLOYED_MESSAGE = "Service not deployed. Hence skipping the testcase";
 	public static final String KNOWN_ISSUES = "known issue. Hence skipping the testcase";
+	public static final String isResetFiletrButtonDisplayed = "Verify if rest filter button displayed";
+	public static final String isFiletrButtonDisplayedOrEnabled = "Verify if filter button displayed";
+	public static final String isGoBackButtonDisplayed = "Verify if go back button displayed";
+	public static final String isApiListDisplayed = "Verify if api list is displayed";
+	public static final String isUserIdDoesNotExietDisplayed = "Verify if api list is displayed";
+	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
+	
 }

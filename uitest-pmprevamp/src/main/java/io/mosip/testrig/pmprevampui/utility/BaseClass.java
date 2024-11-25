@@ -3,6 +3,7 @@ package io.mosip.testrig.pmprevampui.utility;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class BaseClass {
 		driver.get(envPathPmpRevamp);
 		logger.info("launch url --"+envPathPmpRevamp);
 		driver.manage().window().maximize();
-		Thread.sleep(500);	
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 		BasePage.enter(driver.findElement(By.id("username")), "automationuiiii");
 		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
@@ -151,20 +152,7 @@ public class BaseClass {
 		return "Commit Id is: " + properties.getProperty("git.commit.id.abbrev") + " & Branch Name is:" + properties.getProperty("git.branch");
 	}
 
-	public static String generateRandomString(int length) {
-		String alphabet = "abcdefghijklmnopqrstuvwxyz";
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
 
-		for (int i = 0; i < length; i++) {
-			int index = random.nextInt(alphabet.length());
-			char randomChar = alphabet.charAt(index);
-			sb.append(randomChar);
-		}
-
-		return sb.toString();
-	}
-	
 	public static String Date() {
 		NumberFormat integerFormat = NumberFormat.getIntegerInstance();
 		LocalDate currentDate = LocalDate.now();

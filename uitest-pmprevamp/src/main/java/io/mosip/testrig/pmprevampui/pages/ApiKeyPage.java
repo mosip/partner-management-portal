@@ -19,7 +19,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_policy_name")
 	private WebElement policyNameDropdown;
 
-	@FindBy(id = "generate_api_key_btn")
+	@FindBy(id = "create_policy_group_btn")
 	private WebElement generateAPIKey;
 
 	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
@@ -48,6 +48,96 @@ public class ApiKeyPage extends BasePage {
 
 	@FindBy(id = "copy_id_btn")
 	private WebElement copyIdButton;
+
+	@FindBy(id = "copy_id_close_btn")
+	private WebElement copyIdCloseButton;
+
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement confirmationGoBackButton;
+
+	@FindBy(id = "api_list_item1")
+	private WebElement apiListItem1;
+
+	@FindBy(id = "api_list_action1")
+	private WebElement apiListAction;
+
+	@FindBy(id = "api_key_view")
+	private WebElement apiKeyView;
+
+	@FindBy(id = "partnerId_desc_icon")
+	private WebElement partnerId_desc_icon;
+
+	@FindBy(id = "partnerId_asc_icon")
+	private WebElement partnerId_asc_icon;
+
+	@FindBy(id = "apiKeyLabel_desc_icon")
+	private WebElement apiKeyLabel_desc_icon;
+
+	@FindBy(id = "apiKeyLabel_asc_icon")
+	private WebElement apiKeyLabel_asc_icon;
+
+	@FindBy(id = "policyGroupName_desc_icon")
+	private WebElement policyGroupName_desc_icon;
+
+	@FindBy(id = "policyGroupName_asc_icon")
+	private WebElement policyGroupName_asc_icon;
+
+	@FindBy(id = "policyName_desc_icon")
+	private WebElement policyName_desc_icon;
+
+	@FindBy(id = "policyName_asc_icon")
+	private WebElement policyName_asc_icon;
+
+	@FindBy(id = "createdDateTime_desc_icon")
+	private WebElement createdDateTime_desc_icon;
+
+	@FindBy(id = "createdDateTime_asc_icon")
+	private WebElement createdDateTime_asc_icon;
+
+	@FindBy(id = "status_desc_icon")
+	private WebElement status_desc_icon;
+
+	@FindBy(id = "status_asc_icon")
+	private WebElement status_asc_icon;
+
+	@FindBy(id = "api_key_deactivate")
+	private WebElement apiKeyDeactivate;
+
+	@FindBy(id = "filter_btn")
+	private WebElement filterButton;
+
+	@FindBy(id = "filter_reset_btn")
+	private WebElement filterResetButton;
+
+	@FindBy(id = "api_key_partner_id_filter")
+	private WebElement apiKeyPartnerIdFilter;
+
+	@FindBy(id = "api_key_partner_id_filter_option1")
+	private WebElement apiKeyPartnerIdFilterOption1;
+
+	@FindBy(id = "api_key_policy_group_filter")
+	private WebElement apiKeyPolicyGroupFilter;
+
+	@FindBy(id = "api_key_policy_group_filter_option1")
+	private WebElement apiKeyPolicyGroupFilterOption1;
+
+	@FindBy(id = "api_key_policy_name_filter")
+	private WebElement apiKeyPolicyNameFilter;
+
+	@FindBy(id = "api_key_policy_name_filter_option1")
+	private WebElement apiKeyPolicyNameFilterOption1;
+
+	@FindBy(id = "api_key_name_filter")
+	private WebElement apiKeyNameFilter;
+
+	@FindBy(id = "api_key_name_filter_option1")
+	private WebElement apiKeyNameFilterOption1;
+
+	@FindBy(id = "api_key_status_filter")
+	private WebElement apiKeyStatusFilter;
+
+	@FindBy(id = "api_key_status_filter")
+	private WebElement apiKeyStatusFilterOption1;
 
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
@@ -114,4 +204,116 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(ActionHeaderText);
 	}
 
+	public void clickOnCopyIdButton() {
+		clickOnElement(copyIdButton);
+	}
+
+	public void clickOnCopyIdCloseButton() {
+		clickOnElement(copyIdCloseButton);
+	}
+
+	public boolean isConfirmationGoBackButtonDisplayed() {
+		return isElementDisplayed(confirmationGoBackButton);
+	}
+
+	public void clickOnConfirmationGoBackButton() {
+		clickOnElement(confirmationGoBackButton);
+	}
+
+	public boolean isApiListItem1Displayed() {
+		return isElementDisplayed(apiListItem1);
+	}
+
+	public void clickOnapiListActionButton() {
+		clickOnElement(apiListAction);
+	}
+
+	public void clickOnApiKeyViewButton() {
+		clickOnElement(apiKeyView);
+	}
+
+	public boolean isPartnerIdDescIconDisplayed() {
+		return isElementDisplayed(partnerId_desc_icon);
+	}
+
+	public boolean isPartnerIdAscIconDisplayed() {
+		return isElementDisplayed(partnerId_asc_icon);
+	}
+
+	public boolean isApiKeyLabelDescIconDisplayed() {
+		return isElementDisplayed(apiKeyLabel_desc_icon);
+	}
+
+	public boolean isApiKeyLabelAscIconDisplayed() {
+		return isElementDisplayed(apiKeyLabel_asc_icon);
+	}
+
+	public boolean isPolicyGroupNameDescIconDisplayed() {
+		return isElementDisplayed(policyGroupName_desc_icon);
+	}
+
+	public boolean isPolicyGroupNameAscIconDisplayed() {
+		return isElementDisplayed(policyGroupName_asc_icon);
+	}
+
+	public boolean isPolicyNameDescIconDisplayed() {
+		return isElementDisplayed(policyName_desc_icon);
+	}
+
+	public boolean isPolicyNameAscIconDisplayed() {
+		return isElementDisplayed(policyName_asc_icon);
+	}
+
+	public boolean isCreatedDateTimeDescISconDisplayed() {
+		return isElementDisplayed(createdDateTime_desc_icon);
+	}
+
+	public boolean isCreatedDateTimeAscIconDisplayed() {
+		return isElementDisplayed(createdDateTime_asc_icon);
+	}
+
+	public boolean isStatusDescIconDisplayed() {
+		return isElementDisplayed(status_desc_icon);
+	}
+
+	public boolean isStatusAscIconDisplayed() {
+		return isElementDisplayed(status_asc_icon);
+	}
+
+	public boolean isFilterButtonButtonEnabled() {
+		return isElementEnabled(filterButton);
+	}
+
+	public void clickOnFilterButton() {
+		clickOnElement(filterButton);
+	}
+
+	public void clickOnFilterResetButton() {
+		clickOnElement(filterResetButton);
+	}
+
+	public void clickOnApiKeyPartnerIdFilter() {
+		clickOnElement(apiKeyPartnerIdFilter);
+		clickOnElement(apiKeyPartnerIdFilterOption1);
+	}
+
+	public void clickOnApiKeySelectPolicyGroupFilter() {
+		clickOnElement(apiKeyPolicyGroupFilter);
+		clickOnElement(apiKeyPolicyGroupFilterOption1);
+	}
+
+	public void clickOnApiKeySelectPolicyNameFilter() {
+		clickOnElement(apiKeyPolicyNameFilter);
+		clickOnElement(apiKeyPolicyNameFilterOption1);
+	}
+
+	public void clickOnApiKeySelectClientNameFilter() {
+		clickOnElement(apiKeyNameFilter);
+		clickOnElement(apiKeyNameFilterOption1);
+	}
+
+	public void clickOnApiKeySelectStatusFilter() {
+		clickOnElement(apiKeyStatusFilter);
+		clickOnElement(apiKeyStatusFilterOption1);
+	}
 }

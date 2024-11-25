@@ -38,14 +38,13 @@ public class DBManager extends BaseClass {
 						try {
 							;
 							statement.addBatch(
-									"delete from partner_policy_request where part_id ='auth_v4" + data + "'");
-							statement.addBatch("delete from partner_policy  where part_id ='auth_v4" + data + "'");
-							statement.addBatch("delete from partner  where name ='AUTH_V4'");
-							statement.addBatch(
-									"delete from partner_policy_request where part_id ='credential_v1" + data + "'");
-							statement
-									.addBatch("delete from partner_policy  where part_id ='credential_v1" + data + "'");
-							statement.addBatch("delete from partner  where name ='CREDENTIAL_V1'");
+									"delete from partner_policy_request where part_id ='0" + data + "n'");
+							statement.addBatch("delete from partner_policy_request  where part_id ='0" + data + "'");
+							statement.addBatch("delete from partner  where name ='xyz'AND id ='0" + data + "'");
+							statement.addBatch("delete from auth_policy where cr_by ='pmpui-auto11'");
+							statement.addBatch("delete from policy_group where cr_by ='pmpui-auto11'");
+							
+
 							int[] result = statement.executeBatch();
 							DBManager_LOGGER.info("Success:: Executed PMS DB quiries successfully.");
 							for (int i : result) {

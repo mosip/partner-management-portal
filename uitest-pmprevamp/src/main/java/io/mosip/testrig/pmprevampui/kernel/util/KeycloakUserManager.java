@@ -2,14 +2,22 @@ package io.mosip.testrig.pmprevampui.kernel.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.ws.rs.core.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.json.simple.parser.JSONParser;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
@@ -32,6 +40,8 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 	public static Properties propsKernel = getproperty(
 			TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
+
+//	public static JSONObject  propsPublicKey = readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json");
 
 	private static Keycloak getKeycloakInstance() {
 		Keycloak key = null;
@@ -195,6 +205,37 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			}
 
 		}
+	}
+
+	public static String readJsonData(String path) {
+		String propsPublicKey = null;
+		try {
+			JSONObject obj = new JSONObject(new JSONTokener(new FileReader(path)));
+			String name = obj.getString("n");
+			obj.put("n", generateRandomString(2051));
+			propsPublicKey = obj.toString();
+			System.out.println("n: " + name);
+			System.out.println("n: " + propsPublicKey);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return propsPublicKey;
+	}
+
+	public static String generateRandomString(int length) {
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(alphabet.length());
+			char randomChar = alphabet.charAt(index);
+			sb.append(randomChar);
+		}
+
+		return sb.toString();
 	}
 
 }
