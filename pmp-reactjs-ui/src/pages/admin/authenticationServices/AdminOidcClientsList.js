@@ -176,10 +176,10 @@ function AdminOidcClientsList () {
                     redirectUris: oidcClientDetails.redirectUris,
                     status: "INACTIVE",
                     grantTypes: oidcClientDetails.grantTypes,
-                    clientName: oidcClientDetails.name,
+                    clientName: extractOidcClientName(oidcClientDetails.name),
                     clientAuthMethods: oidcClientDetails.clientAuthMethods,
                     clientNameLangMap: {
-                        "eng": oidcClientDetails.name
+                        "eng": extractOidcClientName(oidcClientDetails.name)
                     }
                 });
                 setDeactivateRequest(request);
@@ -281,7 +281,7 @@ function AdminOidcClientsList () {
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.orgName ? client.orgName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyGroupName ? client.policyGroupName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyName ? client.policyName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{extractOidcClientName(client.clientName)}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.clientName ? client.clientName: '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{formatDate(client.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
                                                                         <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -319,7 +319,7 @@ function AdminOidcClientsList () {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={extractOidcClientName(client.clientName)} />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientName} />
                                                                                     )}
                                                                                 </div>
                                                                             )}
