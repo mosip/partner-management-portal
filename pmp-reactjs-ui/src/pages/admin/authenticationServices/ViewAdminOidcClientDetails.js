@@ -35,12 +35,14 @@ function ViewAdminOidcClientDetails() {
             return;
         }
         const clientData = JSON.parse(data);
+        console.log(clientData);
+        
         setSelectedClientData(clientData);
 
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientData.oidcClientId}`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientData.clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
