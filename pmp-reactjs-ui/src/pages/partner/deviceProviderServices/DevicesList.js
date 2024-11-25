@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useBlocker } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     onPressEnterKey,
     moveToSbisList, populateDeactivatedStatus,
-    createRequest, isFilterChanged
+    createRequest
 } from '../../../utils/AppUtils.js';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -20,7 +20,6 @@ import DevicesListFilter from './DevicesListFilter.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import EmptyList from '../../common/EmptyList.js';
-import BlockerPrompt from "../../common/BlockerPrompt";
 
 function DevicesList() {
     const navigate = useNavigate('');
@@ -55,35 +54,6 @@ function DevicesList() {
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewDeviceId(-1));
     }, [submenuRef]);
-
-    const blocker = useBlocker(
-        ({ currentLocation, nextLocation }) => {
-          if (!isFilterChanged(filterQuery)) {
-            return false;
-          }
-          return (
-            (isFilterChanged(filterQuery)) &&
-            currentLocation.pathname !== nextLocation.pathname
-          );
-        }
-      );
-    
-      useEffect(() => {
-        const shouldWarnBeforeUnload = () => {
-          return isFilterChanged(filterQuery);
-        };
-    
-        const handleBeforeUnload = (event) => {
-          if (shouldWarnBeforeUnload()) {
-            event.preventDefault();
-            event.returnValue = '';
-          }
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-          window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-      }, [filterQuery]);
 
     useEffect(() => {
         const selectedSbi = localStorage.getItem('selectedSbiData');
@@ -368,7 +338,6 @@ function DevicesList() {
                     </div>
                 </>
             )}
-            <BlockerPrompt blocker={blocker} />
         </div>
     )
 }

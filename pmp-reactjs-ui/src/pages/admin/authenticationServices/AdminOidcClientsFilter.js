@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useBlocker } from 'react-router-dom';
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isFilterChanged } from "../../../utils/AppUtils.js";
+import { createDropdownData } from "../../../utils/AppUtils.js";
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
-import BlockerPrompt from "../../common/BlockerPrompt";
 
 function AdminOidcClientsFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -34,35 +32,6 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
         };
         fetchData();
     }, [t]);
-
-    const blocker = useBlocker(
-        ({ currentLocation, nextLocation }) => {
-          if (!isFilterChanged(filters)) {
-            return false;
-          }
-          return (
-            (isFilterChanged(filters)) &&
-            currentLocation.pathname !== nextLocation.pathname
-          );
-        }
-    );
-
-    useEffect(() => {
-        const shouldWarnBeforeUnload = () => {
-          return isFilterChanged(filters);
-        };
-    
-        const handleBeforeUnload = (event) => {
-          if (shouldWarnBeforeUnload()) {
-            event.preventDefault();
-            event.returnValue = '';
-          }
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-          window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [filters]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setIsFilterActive(true);
@@ -150,7 +119,6 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 {t("partnerList.applyFilter")}
                 </button>
             </div>
-            <BlockerPrompt blocker={blocker} />
         </div>
     );
 }

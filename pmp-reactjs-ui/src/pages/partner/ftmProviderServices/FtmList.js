@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useBlocker } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from '../../../services/HttpService';
 import {
   isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  onPressEnterKey, createRequest, populateDeactivatedStatus, isFilterChanged
+  onPressEnterKey, createRequest, populateDeactivatedStatus
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -17,7 +17,6 @@ import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import DeactivatePopup from '../../common/DeactivatePopup';
 import EmptyList from '../../common/EmptyList';
-import BlockerPrompt from "../../common/BlockerPrompt";
 
 function FtmList() {
   const navigate = useNavigate('');
@@ -48,35 +47,6 @@ function FtmList() {
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewFtmId(-1));
   }, [submenuRef]);
-
-  const blocker = useBlocker(
-    ({ currentLocation, nextLocation }) => {
-      if (!isFilterChanged(filterQuery)) {
-        return false;
-      }
-      return (
-        (isFilterChanged(filterQuery)) &&
-        currentLocation.pathname !== nextLocation.pathname
-      );
-    }
-  );
-
-  useEffect(() => {
-    const shouldWarnBeforeUnload = () => {
-      return isFilterChanged(filterQuery);
-    };
-
-    const handleBeforeUnload = (event) => {
-      if (shouldWarnBeforeUnload()) {
-        event.preventDefault();
-        event.returnValue = '';
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [filterQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -346,7 +316,6 @@ function FtmList() {
           </div>
         </>
       )}
-      <BlockerPrompt blocker={blocker} />
     </div>
   )
 }
