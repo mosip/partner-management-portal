@@ -35,8 +35,6 @@ function ViewAdminOidcClientDetails() {
             return;
         }
         const clientData = JSON.parse(data);
-        console.log(clientData);
-        
         setSelectedClientData(clientData);
 
         const fetchData = async () => {
@@ -48,7 +46,7 @@ function ViewAdminOidcClientDetails() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setOidcClientDetails(resData);
-                        
+                        console.log(oidcClientDetails);
                     } else {
                         setUnexpectedError(true);
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -106,7 +104,7 @@ function ViewAdminOidcClientDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="font-bold text-sm text-dark-blue mb-2">{selectedClientData.oidcClientName}</p>
+                                        <p className="font-bold text-sm text-dark-blue mb-2">{selectedClientData.clientName}</p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(selectedClientData.status, t)}
@@ -123,27 +121,26 @@ function ViewAdminOidcClientDetails() {
                                     </div>
 
                                     <div id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                                        tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, copyClientId(selectedClientData, selectedClientData.oidcClientId, setCopied))}>
+                                        tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, copyClientId(selectedClientData, selectedClientData.clientId, setCopied))}>
                                         <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
                                             <p className={`text-md font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
-                                                {selectedClientData.oidcClientId}
+                                                {selectedClientData.clientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
-                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(selectedClientData, selectedClientData.oidcClientId, setCopied)} />
+                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} />
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
                                             )}
+                                            {copied &&
+                                                (
+                                                    <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[3.5rem] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "left-10" : "right-10"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                                        <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied!')}</p>
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     </div>
-                                    
-                                    {copied &&
-                                        (
-                                            <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[4.3%] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
-                                                <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied!')}</p>
-                                            </div>
-                                        )
-                                    }
                                 </div>
 
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
@@ -215,14 +212,14 @@ function ViewAdminOidcClientDetails() {
                                                 {t("authenticationServices.oidcClientName")}
                                             </p>
                                             <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm break-normal">
-                                                {selectedClientData.oidcClientName}
+                                                {selectedClientData.clientName}
                                             </p>
                                         </div>
                                         <div className="my-3 space-y-2">
                                             <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.publicKey")}
                                             </p>
-                                            <p id='oidc_client_details_public_key_context' className="font-[600] text-vulcan text-sm text-wrap line-clamp-6 w-[90%]">
+                                            <p id='oidc_client_details_public_key_context' className="font-[600] text-vulcan text-sm text-wrap w-[90%]">
                                                 {oidcClientDetails.publicKey}
                                             </p>
                                         </div>
