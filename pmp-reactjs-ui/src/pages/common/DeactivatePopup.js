@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, isLangRTL, handleServiceErrors } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL, handleServiceErrors} from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -95,7 +95,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-6"
     }
 
     return (

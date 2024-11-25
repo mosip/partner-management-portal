@@ -801,6 +801,11 @@
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here"
     },
+    "deactivateOidc": {
+        "header":"Are you sure you want to Deactivate OIDC Client",
+        "description":"On clicking ‘Confirm’, the OIDC Client ID will be deactivated and can no longer be used for authentication.",
+        "errorInOidcDetails": "While fetching OIDC client details, we have encountered with an error."
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",

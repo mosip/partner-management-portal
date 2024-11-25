@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
+    extractOidcClientName,
+    getOidcClientDetails,
+    createRequest
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -18,6 +21,7 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminOidcClientsList () {
     const navigate = useNavigate('');
@@ -45,12 +49,14 @@ function AdminOidcClientsList () {
     const [applyFilter, setApplyFilter] = useState(false);
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
         policyGroupName: null,
         policyName: null,
-        oidcClientName: null,
+        clientName: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -64,10 +70,10 @@ function AdminOidcClientsList () {
         { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: "clientName", headerNameKey: "oidcClientsList.oidcClientName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: "clientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
@@ -87,7 +93,7 @@ function AdminOidcClientsList () {
             if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
             if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
             if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-            if (filterAttributes.oidcClientName) queryParams.append('oidcClientName', filterAttributes.oidcClientName);
+            if (filterAttributes.clientName) queryParams.append('clientName', filterAttributes.clientName);
             if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
             const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -156,21 +162,37 @@ function AdminOidcClientsList () {
         }
     };
 
-    const extractOidcClientName = (clientName) => {
-        try {
-            const obj = JSON.parse(clientName);
-            return obj['eng'];
-        } catch {
-            return clientName;
-        }
-    }
-
     const viewOidcClientDetails = (client) => {
 
     };
 
-    const deactivateOidcClient = (client) => {
+    const deactivateOidcClient = async (client) => {
+        if (client.status === "ACTIVE") {
+            const oidcClientDetails = await getOidcClientDetails(HttpService, client.clientId, setErrorCode, setErrorMsg);
+            if (oidcClientDetails !== null) {
+                const request = createRequest({
+                    logoUri: oidcClientDetails.logoUri,
+                    redirectUris: oidcClientDetails.redirectUris,
+                    status: "INACTIVE",
+                    grantTypes: oidcClientDetails.grantTypes,
+                    clientName: oidcClientDetails.name,
+                    clientAuthMethods: oidcClientDetails.clientAuthMethods,
+                    clientNameLangMap: {
+                        "eng": oidcClientDetails.name
+                    }
+                });
+                setDeactivateRequest(request);
+                setShowDeactivatePopup(true);
+                document.body.style.overflow = "hidden";
+            } else {
+                setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
+            }
+        }
+    };
 
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
     };
 
     const cancelErrorMsg = () => {
@@ -233,7 +255,7 @@ function AdminOidcClientsList () {
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (header.id !== "oidcClientId") && (
+                                                                            {(header.id !== "action") && (header.id !== "clientId") && (
                                                                                 <SortingIcon
                                                                                     headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
@@ -258,7 +280,7 @@ function AdminOidcClientsList () {
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.orgName ? client.orgName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyGroupName ? client.policyGroupName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyName ? client.policyName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{extractOidcClientName(client.oidcClientName)}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{extractOidcClientName(client.clientName)}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{formatDate(client.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
                                                                         <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -274,7 +296,7 @@ function AdminOidcClientsList () {
                                                                                     transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                             </svg>
                                                                             {showClientIdPopup && (
-                                                                                <CopyIdPopUp closePopUp={setShowClientIdPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.oidcClientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                                <CopyIdPopUp closePopUp={setShowClientIdPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
                                                                             )}
                                                                         </div>
                                                                     </td>
@@ -295,6 +317,9 @@ function AdminOidcClientsList () {
                                                                                         <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={extractOidcClientName(client.clientName)} />
+                                                                                    )}
                                                                                 </div>
                                                                             )}
                                                                         </div>

@@ -549,3 +549,32 @@ export const isFilterChanged = (filterQuery) => {
 
     return hasNonEmptyField;
 };
+
+export const extractOidcClientName = (clientName) => {
+    try {
+        const obj = JSON.parse(clientName);
+        return obj['eng'];
+    } catch {
+        return clientName;
+    }
+}
+
+export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            }
+            else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Error in getOidcClientDetails:', error);
+        return null;
+    }
+};
