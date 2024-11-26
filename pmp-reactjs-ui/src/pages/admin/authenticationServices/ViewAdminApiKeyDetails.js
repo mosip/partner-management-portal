@@ -152,14 +152,6 @@ function ViewAdminApiKeyDetails() {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="my-4">
-                                        <p id='api_key_details_api_key_name_label' className="font-[600] text-suva-gray text-xs">
-                                            {t("viewApiKeyDetails.apiKeyName")}
-                                        </p>
-                                        <p id='api_key_details_api_key_label_context' className="font-[600] text-vulcan text-sm">
-                                            {apiKeyDetails.apiKeyLabel}
-                                        </p>
-                                    </div>
                                 </div>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
