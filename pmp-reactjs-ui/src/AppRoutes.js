@@ -40,6 +40,7 @@ import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
 import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
+import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
 
 function AppRoutes() {
 
@@ -219,6 +220,10 @@ function AppRoutes() {
         {
           path: 'admin/authentication-services/api-keys-list',
           element: <GuardedRoute><MainLayout><AdminApiKeysList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-api-key-details',
+          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
