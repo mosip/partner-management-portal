@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
-    extractOidcClientName,
     getOidcClientDetails,
-    createRequest
+    createRequest,
+    getExtractedClientNames
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -104,8 +104,9 @@ function AdminOidcClientsList () {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response.data;
+                        const dataWithExtractedClientNames = getExtractedClientNames(resData);
                         setTotalRecords(responseData.response.totalResults);
-                        setOidcClientsList(resData);
+                        setOidcClientsList(dataWithExtractedClientNames);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -176,10 +177,10 @@ function AdminOidcClientsList () {
                     redirectUris: oidcClientDetails.redirectUris,
                     status: "INACTIVE",
                     grantTypes: oidcClientDetails.grantTypes,
-                    clientName: extractOidcClientName(oidcClientDetails.name),
+                    clientName: client.clientName,
                     clientAuthMethods: oidcClientDetails.clientAuthMethods,
                     clientNameLangMap: {
-                        "eng": extractOidcClientName(oidcClientDetails.name)
+                        "eng": client.clientName
                     }
                 });
                 setDeactivateRequest(request);
@@ -256,7 +257,7 @@ function AdminOidcClientsList () {
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (header.id !== "clientId") && (
+                                                                            {(header.id !== "action") && (header.id !== "clientId") && (header.id !== "clientName") && (
                                                                                 <SortingIcon
                                                                                     headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
@@ -281,7 +282,7 @@ function AdminOidcClientsList () {
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.orgName ? client.orgName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyGroupName ? client.policyGroupName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyName ? client.policyName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{extractOidcClientName(client.clientName)}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.clientName}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{formatDate(client.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
                                                                         <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -319,7 +320,7 @@ function AdminOidcClientsList () {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={extractOidcClientName(client.clientName)} />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientName} />
                                                                                     )}
                                                                                 </div>
                                                                             )}

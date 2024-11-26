@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
 import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, 
-    trimAndReplace, extractOidcClientName } from "../../../utils/AppUtils";
+    trimAndReplace } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import DropdownComponent from "../../common/fields/DropdownComponent";
@@ -374,7 +374,7 @@ function EditOidcClient() {
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-[562px]">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input id="oidc_edit_enter_client_name_input" value={extractOidcClientName(oidcClientDetails.clientName)} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
+                                                    <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                     />
                                                 </div>

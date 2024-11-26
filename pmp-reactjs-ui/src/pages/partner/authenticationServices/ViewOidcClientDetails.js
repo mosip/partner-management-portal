@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, bgOfStatus, onPressEnterKey, copyClientId } from "../../../utils/AppUtils";
-import { formatDate, moveToOidcClientsList, getStatusCode, extractOidcClientName } from "../../../utils/AppUtils";
+import { formatDate, moveToOidcClientsList, getStatusCode } from "../../../utils/AppUtils";
 import content_copy_icon from "../../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import Title from "../../common/Title";
@@ -49,7 +49,7 @@ function ViewOidcClientDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-bold text-sm text-dark-blue mb-2">{extractOidcClientName(oidcClientDetails.clientName)}</p>
+                            <p className="font-bold text-sm text-dark-blue mb-2">{oidcClientDetails.clientName}</p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -149,7 +149,7 @@ function ViewOidcClientDetails() {
                                     {t("authenticationServices.oidcClientName")}
                                 </p>
                                 <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm break-normal">
-                                    {extractOidcClientName(oidcClientDetails.clientName)}
+                                    {oidcClientDetails.clientName}
                                 </p>
                             </div>
                             <div className="my-3 space-y-2">

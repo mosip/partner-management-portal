@@ -542,25 +542,29 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
 };  
 
 export const extractOidcClientName = (clientName) => {
-    if (clientName) {
-        try {
-            const jsonObj = JSON.parse(clientName);
-            if (jsonObj['eng']) {
-                return jsonObj['eng'];
-            } 
-            if (jsonObj['@none']) {
-                return jsonObj['@none'];
-            }
-            // If neither "eng" nor "@none" is present, return the original string
-            return clientName;
-        } catch {
-            // If the string is not a valid JSON, return as it is
-            return clientName;
+    try {
+        const jsonObj = JSON.parse(clientName);
+        if (jsonObj['eng']) {
+            return jsonObj['eng'];
+        } 
+        if (jsonObj['@none']) {
+            return jsonObj['@none'];
         }
-    } else {
-        return "-";
+        // If neither "eng" nor "@none" is present, return the original string
+        return clientName;
+    } catch {
+        // If the string is not a valid JSON, return as it is
+        return clientName;
     }
 }
+
+export const getExtractedClientNames = (data) => {
+    // Updating the status based on the condition
+    const extractedList = data.map(item => {
+        return { ...item, clientName: extractOidcClientName(item.clientName) };
+    });
+    return extractedList;
+};
 
 export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
     try {
