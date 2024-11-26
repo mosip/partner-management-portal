@@ -16,10 +16,12 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminApiKeysList () {
     const { t } = useTranslation();
+    const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -145,10 +147,6 @@ function AdminApiKeysList () {
         }
     };
 
-    const viewApiKeyRequestDetails = (apiKey) => {
-
-    };
-
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
@@ -165,6 +163,11 @@ function AdminApiKeysList () {
             document.body.style.overflow = "hidden";
         }
     }
+
+    const viewApiKeyRequestDetails = (selectedApiKey) => {
+        localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
+    };
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
