@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
-    onPressEnterKey
+    onPressEnterKey, extractOidcClientName
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -125,10 +125,10 @@ function OidcClientsList() {
                 redirectUris: selectedClientdata.redirectUris,
                 status: "INACTIVE",
                 grantTypes: selectedClientdata.grantTypes,
-                clientName: selectedClientdata.clientName,
+                clientName: extractOidcClientName(selectedClientdata.clientName),
                 clientAuthMethods: selectedClientdata.clientAuthMethods,
                 clientNameLangMap: {
-                    "eng": selectedClientdata.clientName
+                    "eng": extractOidcClientName(selectedClientdata.clientName)
                 }
             });
             setDeactivateRequest(request);
@@ -273,7 +273,7 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{extractOidcClientName(client.clientName)}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -312,7 +312,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.oidcClientName} />
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={extractOidcClientName(client.clientName)} />
                                                                                 )}
                                                                             </div>
                                                                         )}

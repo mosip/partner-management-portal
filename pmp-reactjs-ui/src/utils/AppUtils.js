@@ -542,11 +542,23 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
 };  
 
 export const extractOidcClientName = (clientName) => {
-    try {
-        const obj = JSON.parse(clientName);
-        return obj['eng'];
-    } catch {
-        return clientName;
+    if (clientName) {
+        try {
+            const jsonObj = JSON.parse(clientName);
+            if (jsonObj['eng']) {
+                return jsonObj['eng'];
+            } 
+            if (jsonObj['@none']) {
+                return jsonObj['@none'];
+            }
+            // If neither "eng" nor "@none" is present, return the original string
+            return clientName;
+        } catch {
+            // If the string is not a valid JSON, return as it is
+            return clientName;
+        }
+    } else {
+        return "-";
     }
 }
 
