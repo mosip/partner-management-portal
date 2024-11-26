@@ -4,8 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, 
-    trimAndReplace } from "../../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import DropdownComponent from "../../common/fields/DropdownComponent";
