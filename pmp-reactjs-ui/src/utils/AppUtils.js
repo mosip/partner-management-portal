@@ -561,10 +561,32 @@ export const extractOidcClientName = (clientName) => {
 export const getExtractedClientNames = (data) => {
     // Updating the status based on the condition
     const extractedList = data.map(item => {
-        return { ...item, clientName: extractOidcClientName(item.clientName) };
+        return { 
+            ...item, 
+            jsonClientName: item.clientName,
+            clientName: extractOidcClientName(item.clientName) 
+        };
     });
     return extractedList;
 };
+
+export const getClientNameLangMap = (clientName, jsonClientName) => {
+    try {
+        const jsonObject = JSON.parse(jsonClientName);
+        const newJsonObject = {};
+        Object.keys(jsonObject).forEach(key => {
+            if (key !== '@none') {
+                newJsonObject[key] = clientName;
+            }
+        });
+        return newJsonObject;
+    } catch {
+        const newJsonObject = {
+            eng : clientName
+        }
+        return newJsonObject;
+    }
+}
 
 export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
     try {

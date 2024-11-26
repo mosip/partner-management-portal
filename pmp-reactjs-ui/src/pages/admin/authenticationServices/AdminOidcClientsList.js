@@ -6,7 +6,8 @@ import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFi
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
     getOidcClientDetails,
     createRequest,
-    getExtractedClientNames
+    getExtractedClientNames,
+    getClientNameLangMap
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -179,9 +180,7 @@ function AdminOidcClientsList () {
                     grantTypes: oidcClientDetails.grantTypes,
                     clientName: client.clientName,
                     clientAuthMethods: oidcClientDetails.clientAuthMethods,
-                    clientNameLangMap: {
-                        "eng": client.clientName
-                    }
+                    clientNameLangMap: getClientNameLangMap(client.clientName, client.jsonClientName)
                 });
                 setDeactivateRequest(request);
                 setShowDeactivatePopup(true);
