@@ -543,10 +543,48 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
 
 export const extractOidcClientName = (clientName) => {
     try {
-        const obj = JSON.parse(clientName);
-        return obj['eng'];
-    } catch {
+        const jsonObj = JSON.parse(clientName);
+        if (jsonObj['eng']) {
+            return jsonObj['eng'];
+        } 
+        if (jsonObj['@none']) {
+            return jsonObj['@none'];
+        }
+        // If neither "eng" nor "@none" is present, return the original string
         return clientName;
+    } catch {
+        // If the string is not a valid JSON, return as it is
+        return clientName;
+    }
+}
+
+export const getExtractedClientNames = (data) => {
+    // Updating the status based on the condition
+    const extractedList = data.map(item => {
+        return { 
+            ...item, 
+            clientNameLangMap: item.clientName,
+            clientName: extractOidcClientName(item.clientName) 
+        };
+    });
+    return extractedList;
+};
+
+export const getClientNameLangMap = (clientName, clientNameLangMap) => {
+    try {
+        const jsonObject = JSON.parse(clientNameLangMap);
+        const newJsonObject = {};
+        Object.keys(jsonObject).forEach(key => {
+            if (key !== '@none') {
+                newJsonObject[key] = clientName;
+            }
+        });
+        return newJsonObject;
+    } catch {
+        const newJsonObject = {
+            eng : clientName
+        }
+        return newJsonObject;
     }
 }
 

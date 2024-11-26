@@ -4,7 +4,9 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace } from "../../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
+    getClientNameLangMap
+ } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import DropdownComponent from "../../common/fields/DropdownComponent";
@@ -32,6 +34,7 @@ function EditOidcClient() {
         policyGroupName: '',
         policyName: '',
         clientName: '',
+        clientNameLangMap: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -42,6 +45,7 @@ function EditOidcClient() {
         policyGroupName: '',
         policyName: '',
         clientName: '',
+        clientNameLangMap: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -252,9 +256,7 @@ function EditOidcClient() {
             grantTypes: oidcClientDetails.grantTypes,
             clientName: trimAndReplace(oidcClientDetails.clientName),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
-            clientNameLangMap: {
-                "eng": trimAndReplace(oidcClientDetails.clientName)
-            }
+            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientName), oidcClientDetails.clientNameLangMap)
         });
         try {
             const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
