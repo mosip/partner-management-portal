@@ -20,7 +20,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
         orgName: "",
         policyGroupName: "",
         policyName: "",
-        apiKeyName: "",
+        apiKeyLabel: "",
         status: ""
     });
 
@@ -90,7 +90,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 id="policy_name_filter"
             />
             <TextInputComponent
-                fieldName="apiKeyName"
+                fieldName="apiKeyLabel"
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="apiKeysList.apiKeyName"
                 placeHolderKey="apiKeysList.searchApiKeyName"

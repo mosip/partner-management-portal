@@ -829,6 +829,10 @@
         "cancel": "Annuler",
         "proceed": "Procéder"
     },
+    "adminDeactivateApiKey": {
+        "title": "Êtes-vous sûr de vouloir désactiver la clé API",
+        "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
