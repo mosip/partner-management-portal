@@ -34,7 +34,7 @@ function EditOidcClient() {
         policyGroupName: '',
         policyName: '',
         clientName: '',
-        jsonClientName: '',
+        clientNameLangMap: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -45,7 +45,7 @@ function EditOidcClient() {
         policyGroupName: '',
         policyName: '',
         clientName: '',
-        jsonClientName: '',
+        clientNameLangMap: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -256,7 +256,7 @@ function EditOidcClient() {
             grantTypes: oidcClientDetails.grantTypes,
             clientName: trimAndReplace(oidcClientDetails.clientName),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
-            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientName), oidcClientDetails.jsonClientName)
+            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientName), oidcClientDetails.clientNameLangMap)
         });
         try {
             const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {

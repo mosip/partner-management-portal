@@ -180,7 +180,7 @@ function AdminOidcClientsList () {
                     grantTypes: oidcClientDetails.grantTypes,
                     clientName: client.clientName,
                     clientAuthMethods: oidcClientDetails.clientAuthMethods,
-                    clientNameLangMap: getClientNameLangMap(client.clientName, client.jsonClientName)
+                    clientNameLangMap: getClientNameLangMap(client.clientName, client.clientNameLangMap)
                 });
                 setDeactivateRequest(request);
                 setShowDeactivatePopup(true);

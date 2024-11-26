@@ -563,16 +563,16 @@ export const getExtractedClientNames = (data) => {
     const extractedList = data.map(item => {
         return { 
             ...item, 
-            jsonClientName: item.clientName,
+            clientNameLangMap: item.clientName,
             clientName: extractOidcClientName(item.clientName) 
         };
     });
     return extractedList;
 };
 
-export const getClientNameLangMap = (clientName, jsonClientName) => {
+export const getClientNameLangMap = (clientName, clientNameLangMap) => {
     try {
-        const jsonObject = JSON.parse(jsonClientName);
+        const jsonObject = JSON.parse(clientNameLangMap);
         const newJsonObject = {};
         Object.keys(jsonObject).forEach(key => {
             if (key !== '@none') {
