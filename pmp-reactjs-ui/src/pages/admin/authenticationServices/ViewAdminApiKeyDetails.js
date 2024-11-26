@@ -76,7 +76,7 @@ function ViewAdminApiKeyDetails() {
                                             {apiKeyDetails.apiKeyLabel}
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus('activated')} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(apiKeyDetails.status, t)}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
@@ -92,7 +92,7 @@ function ViewAdminApiKeyDetails() {
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                        <div className="w-[49%] max-[600px]:w-[100%] mb-3">
+                                        <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                             <p id='api_key_details_partner_id_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
@@ -127,7 +127,7 @@ function ViewAdminApiKeyDetails() {
                                                 {apiKeyDetails.policyGroupName}
                                             </p>
                                         </div>
-                                        <div className={`w-[50%] max-[600px]:w-[100%]`}>
+                                        <div className={`w-[49%] max-[600px]:w-[100%]`}>
                                             <p id='api_key_details_policy_name_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.policyName")}
                                             </p>
