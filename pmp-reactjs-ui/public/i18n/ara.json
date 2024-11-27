@@ -481,6 +481,7 @@
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "addFtmBtn": "إضافة شريحة FTM",
         "partnerId": "معرف الشريك",
+        "orgName":"منظمة",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
@@ -499,6 +500,8 @@
         "selectMakeName": "حدد إنشاء اسم",
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة",
+        "searchMake": "نموذج البحث",
+        "searchModel": "نموذج البحث",
         "expired": "منتهي الصلاحية",
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
     },
