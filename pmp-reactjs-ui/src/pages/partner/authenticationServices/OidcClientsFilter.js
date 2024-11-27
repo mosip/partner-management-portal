@@ -6,7 +6,7 @@ import { createDropdownData } from "../../../utils/AppUtils.js";
 function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     const { t } = useTranslation();
     const [partnerIdData, setPartnerIdData] = useState([]);
-    const [oidcClientNameData, setOidcClientNameData] = useState([]);
+    const [clientNameEngData, setclientNameEngData] = useState([]);
     const [policyGroupData, setpolicyGroupData] = useState([]);
     const [policyNameData, setPolicyNameData] = useState([]);
     const [statusData, setStatusData] = useState([]);
@@ -14,7 +14,7 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     useEffect(() => {
         const fetchData = async () => {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPartnerId')));
-            setOidcClientNameData(createDropdownData('clientName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectOidcClientType')));
+            setclientNameEngData(createDropdownData('clientNameEng', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectOidcClientType')));
             setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyGroup')));
             setPolicyNameData(createDropdownData('policyName', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectPolicyName')));
             setStatusData(createDropdownData('status', '', true, filteredOidcClientsList, t, t('oidcClientsList.selectStatus')));
@@ -64,8 +64,8 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
                     id='oidc_select_policy_name_filter'>
                 </DropdownComponent>
                 <DropdownComponent
-                    fieldName='clientName'
-                    dropdownDataList={oidcClientNameData}
+                    fieldName='clientNameEng'
+                    dropdownDataList={clientNameEngData}
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey='oidcClientsList.oidcClientName'
                     placeHolderKey='oidcClientsList.selectOidcClientType'
