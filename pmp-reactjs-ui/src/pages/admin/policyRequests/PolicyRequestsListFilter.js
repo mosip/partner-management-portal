@@ -13,7 +13,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [isFilterActive, setIsFilterActive] = useState(false);
   const [statusDropdownData, setStatusDropdownData] = useState([
     { status: 'approved' },
     { status: 'rejected' },
@@ -80,7 +79,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
-    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -88,7 +86,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   };
 
   const areFiltersEmpty = () => {
-    return !isFilterActive && Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "");
   };
 
   const styles = {
@@ -175,7 +173,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
           type="button"
           disabled={areFiltersEmpty()}
           className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-not-allowed' : 'bg-tory-blue'}`}
+          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
         >
           {t("partnerPolicyMappingRequestList.applyFilter")}
         </button>
