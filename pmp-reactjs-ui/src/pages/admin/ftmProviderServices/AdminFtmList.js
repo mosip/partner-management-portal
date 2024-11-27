@@ -82,7 +82,7 @@ function AdminFtmList () {
         ];
         setTotalRecords(list.length);
         setFtmList(list);
-    })
+    }, []);
 
     const onApplyFilter = (filters) => {
         onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
