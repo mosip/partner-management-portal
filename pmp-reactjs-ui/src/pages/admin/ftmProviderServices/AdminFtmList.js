@@ -26,11 +26,11 @@ function AdminFtmList () {
     const [expandFilter, setExpandFilter] = useState(false);
     const [order, setOrder] = useState("DESC");
     const [activeAscIcon, setActiveAscIcon] = useState("");
-    const [activeDescIcon, setActiveDescIcon] = useState("crDtimes");
+    const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
-    const [sortFieldName, setSortFieldName] = useState("crDtimes");
+    const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
@@ -65,6 +65,24 @@ function AdminFtmList () {
         { id: "status", headerNameKey: "ftmList.status" },
         { id: "action", headerNameKey: 'ftmList.action' }
     ];
+
+    useEffect(() => {
+        const list = [	
+            {"ftmId":"10000","partnerId":"A10001","orgName":"ABC","make":"make1","model":"model1","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
+            {"ftmId":"20000","partnerId":"A10002","orgName":"BCD","make":"make2","model":"model2","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-18T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-18T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-18T10:25:37.009826"},
+            {"ftmId":"30000","partnerId":"A10003","orgName":"CDE","make":"make3","model":"model3","status":"pending_approval","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-19T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-19T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-19T10:25:37.009826"},
+            {"ftmId":"40000","partnerId":"A10004","orgName":"DEF","make":"make4","model":"model4","status":"pending_cert_upload","isCertificateAvailable":false,"certificateUploadDateTime":null,"certificateExpiryDateTime":null,"isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
+            {"ftmId":"50000","partnerId":"A10005","orgName":"EFG","make":"make5","model":"model5","status":"deactivated","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-20T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-20T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-20T10:25:37.009826"},
+            {"ftmId":"60000","partnerId":"A10006","orgName":"FGH","make":"make6","model":"model6","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2023-10-21T10:25:46.000+00:00","certificateExpiryDateTime":"2024-10-21T10:25:46.000+00:00","isCertificateExpired":true,"createdDateTime":"2024-09-21T10:25:37.009826"},
+            {"ftmId":"70000","partnerId":"A10007","orgName":"GHI","make":"make7","model":"model7","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
+            {"ftmId":"80000","partnerId":"A10008","orgName":"ABC","make":"make8","model":"model8","status":"pending_approval","isCertificateAvailable":true,"certificateUploadDateTime":"2023-09-22T10:25:46.000+00:00","certificateExpiryDateTime":"2024-09-22T10:25:46.000+00:00","isCertificateExpired":true,"createdDateTime":"2024-09-22T10:25:37.009826"},
+            {"ftmId":"90000","partnerId":"A10009","orgName":"ABCDEF","make":"make9","model":"model9","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-23T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-23T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-23T10:25:37.009826"},
+            {"ftmId":"10001","partnerId":"A10010","orgName":"ABC","make":"make10","model":"model10","status":"deactivated","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
+            {"ftmId":"10002","partnerId":"A10011","orgName":"XXX","make":"make11","model":"model11","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"}
+        ];
+        setTotalRecords(list.length);
+        setFtmList(list);
+    })
 
     const onApplyFilter = (filters) => {
         onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
@@ -182,12 +200,13 @@ function AdminFtmList () {
                                                             return (
                                                             <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.partnerId}</td>
+                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.orgName}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.make}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.model}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.createdDateTime, 'date', true)}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className={`px-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className={`px-2 break-all`}>{ftm.certificateExpiryStatus}</td>
+                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className={`px-2 break-all`}>{ftm.isCertificateExpired ? 'Expired' : '-'}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(ftm.status, t)}
