@@ -541,7 +541,7 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
     event.target.value = '';
 };  
 
-export const extractOidcClientName = (clientName) => {
+export const getClientNameEng = (clientName) => {
     try {
         const jsonObj = JSON.parse(clientName);
         if (jsonObj['eng']) {
@@ -558,31 +558,31 @@ export const extractOidcClientName = (clientName) => {
     }
 }
 
-export const getExtractedClientNames = (data) => {
+export const populateClientNames = (data) => {
     // Updating the status based on the condition
     const extractedList = data.map(item => {
         return { 
             ...item, 
-            clientNameLangMap: item.clientName,
-            clientName: extractOidcClientName(item.clientName) 
+            clientNameJson: item.clientName,
+            clientNameEng: getClientNameEng(item.clientName) 
         };
     });
     return extractedList;
 };
 
-export const getClientNameLangMap = (clientName, clientNameLangMap) => {
+export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
     try {
-        const jsonObject = JSON.parse(clientNameLangMap);
+        const jsonObject = JSON.parse(clientNameJson);
         const newJsonObject = {};
         Object.keys(jsonObject).forEach(key => {
             if (key !== '@none') {
-                newJsonObject[key] = clientName;
+                newJsonObject[key] = clientNameEng;
             }
         });
         return newJsonObject;
     } catch {
         const newJsonObject = {
-            eng : clientName
+            eng : clientNameEng
         }
         return newJsonObject;
     }

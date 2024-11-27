@@ -33,8 +33,8 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        clientName: '',
-        clientNameLangMap: '',
+        clientNameEng: '',
+        clientNameJson: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -44,8 +44,8 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        clientName: '',
-        clientNameLangMap: '',
+        clientNameEng: '',
+        clientNameJson: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -63,7 +63,7 @@ function EditOidcClient() {
                 (checkIfRedirectUrisIsUpdated() ||
                 (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
                 (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-                (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName)) && currentLocation.pathname !== nextLocation.pathname
+                (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng)) && currentLocation.pathname !== nextLocation.pathname
             );
         }
     );
@@ -73,7 +73,7 @@ function EditOidcClient() {
             checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName);
+            (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng);
 
         const handleBeforeUnload = (event) => {
             if (shouldWarnBeforeUnload() && !isSubmitClicked) {
@@ -87,7 +87,7 @@ function EditOidcClient() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [oidcClientDetails.redirectUris, oidcClientDetails.grantTypes[0], oidcClientDetails.logoUri, oidcClientDetails.clientName]);
+    }, [oidcClientDetails.redirectUris, oidcClientDetails.grantTypes[0], oidcClientDetails.logoUri, oidcClientDetails.clientNameEng]);
 
     const createGrantTypesDropdownData = useCallback((dataList) => {
         let dataArr = [];
@@ -138,7 +138,7 @@ function EditOidcClient() {
     const onChangeOidcClientName = (value) => {
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
-            clientName: value
+            clientNameEng: value
         }));
     }
 
@@ -226,8 +226,8 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (trimAndReplace(oidcClientDetails.clientName) !== selectedClientDetails.clientName))
-            && trimAndReplace(oidcClientDetails.clientName) !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng))
+            && trimAndReplace(oidcClientDetails.clientNameEng) !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
@@ -254,9 +254,9 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: trimAndReplace(oidcClientDetails.clientName),
+            clientName: trimAndReplace(oidcClientDetails.clientNameEng),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
-            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientName), oidcClientDetails.clientNameLangMap)
+            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientNameEng), oidcClientDetails.clientNameJson)
         });
         try {
             const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
@@ -375,7 +375,7 @@ function EditOidcClient() {
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-[562px]">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
+                                                    <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientNameEng} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                     />
                                                 </div>

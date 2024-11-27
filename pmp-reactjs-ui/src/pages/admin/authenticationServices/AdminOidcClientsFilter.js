@@ -19,7 +19,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
       orgName: "",
       policyGroupName: "",
       policyName: "",
-      clientName: "",
+      clientNameEng: "",
       status: "",
     });
 
@@ -88,7 +88,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 id="policy_name_filter"
             />
             <TextInputComponent
-                fieldName="clientName"
+                fieldName="clientNameEng"
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.oidcClientName"
                 placeHolderKey="oidcClientsList.searchOidcClientName"
