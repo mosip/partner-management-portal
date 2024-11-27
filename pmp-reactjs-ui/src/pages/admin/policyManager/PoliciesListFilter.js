@@ -10,7 +10,7 @@ function PoliciesListFilter({ onApplyFilter }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [isFilterActive, setIsFilterActive] = useState(false);
+    const [isFilterActive, setIsFilterActive] = useState(true);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
       { status: 'activated' },
@@ -44,7 +44,7 @@ function PoliciesListFilter({ onApplyFilter }) {
     };
 
     const areFiltersEmpty = () => {
-        return !isFilterActive && Object.values(filters).every(value => value === "");
+        return isFilterActive && Object.values(filters).every(value => value === "");
       };
     
     const styles = {
@@ -108,7 +108,7 @@ function PoliciesListFilter({ onApplyFilter }) {
               type="button"
               disabled={areFiltersEmpty()}
               className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-              ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-not-allowed' : 'bg-tory-blue'}`}
+              ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
             >
               {t("partnerList.applyFilter")}
             </button>
