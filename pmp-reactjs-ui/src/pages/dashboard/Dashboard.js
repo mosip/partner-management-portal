@@ -155,21 +155,22 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchPartnerPolicyMappingRequestCount = async () => {
-      const partnerPolicyMappingSearchRequest = createRequest({
-        filters: [{ columnName: "statusCode", type: "equals", value: "InProgress" }],
-        sort: [],
-        pagination: { pageStart: 0, pageFetch: 1 },
-      });
+      const queryParams = new URLSearchParams();
+      queryParams.append('status', 'InProgress');
+      queryParams.append('pageSize', '1');
 
+      const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
-        const response = await HttpService.post(
-          getPartnerManagerUrl(`/partners/apikey/request/search`, process.env.NODE_ENV),
-          partnerPolicyMappingSearchRequest
-        );
-        if (response?.data?.response) {
-          setPartnerPolicyMappingRequestCount(response.data.response.totalRecord);
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setPartnerPolicyMappingRequestCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
         } else {
-          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
         setErrorMsg(t('dashboard.requestCountFetchError'));
