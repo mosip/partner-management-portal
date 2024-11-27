@@ -45,8 +45,6 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon("partner");
         } else if (selectedPath.includes('policy-requests-list')) {
             setActiveIcon("partnerPolicyMapping");
-        } else if (selectedPath.includes('admin/authentication-services')) {
-            setActiveIcon("authenticationServices");
         }
         else {
             setActiveIcon("home");
@@ -112,7 +110,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         setActiveIcon("sbiDeviceDetails");
     };
     const showAdminFtmDetails = () => {
-        setActiveIcon("ftmDetails");
+        navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
     };
     const showAdminAuthenticationServices = () => {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
@@ -171,9 +169,9 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                                 <SideNavMenuItem title={t('dashboard.sbiDevice')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()} onKeyPress={(e) => { e.key === 'Enter' && showAdminFtmDetails() }}>
-                                <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmDetails' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                             </li>
-                            <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()} onKeyPress={(e) => { e.key === 'Enter' && showAdminAuthenticationServices() }}>
+                            <li id='side_nav_authentication_services_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()} onKeyPress={(e) => { e.key === 'Enter' && showAdminAuthenticationServices() }}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                         </>

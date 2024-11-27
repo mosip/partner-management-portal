@@ -476,6 +476,7 @@
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "addFtmBtn": "Add FTM Chip",
         "partnerId": "Partner ID",
+        "orgName":"Organisation",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
@@ -494,6 +495,8 @@
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
+        "searchMake": "Search Make",
+        "searchModel": "Search Model",
         "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
     },

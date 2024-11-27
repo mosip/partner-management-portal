@@ -481,6 +481,7 @@
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "addFtmBtn": "Ajouter la puce FTM",
         "partnerId": "ID partenaire",
+        "orgName":"Organisation",
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
         "model": "Modèle",
@@ -499,6 +500,8 @@
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
+        "searchMake": "Rechercher une marque",
+        "searchModel": "Rechercher un modèle",
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur."
     },

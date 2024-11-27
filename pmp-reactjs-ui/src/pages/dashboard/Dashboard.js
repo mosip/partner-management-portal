@@ -292,6 +292,10 @@ function Dashboard() {
     navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
   }
 
+  const adminftmChipProviderServices = () => {
+    navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -488,7 +492,7 @@ function Dashboard() {
                   />
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
+                <div onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
                   <div className="flex justify-center mb-5">
                     <img src={ftmServicesIcon} alt="" className="w-8 h-8"></img>
                   </div>
