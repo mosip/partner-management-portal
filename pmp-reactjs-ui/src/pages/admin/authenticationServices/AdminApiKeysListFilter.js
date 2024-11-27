@@ -9,7 +9,6 @@ import { getUserProfile } from '../../../services/UserProfileService';
 function AdminApiKeysListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [isFilterActive, setIsFilterActive] = useState(true);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
         { status: 'activated' },
@@ -34,7 +33,6 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
     }, [t]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
-        setIsFilterActive(true);
         setFilters((prevFilters) => ({
             ...prevFilters,
             [fieldName]: selectedFilter
@@ -42,7 +40,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
     };
 
     const areFiltersEmpty = () => {
-        return isFilterActive && Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "");
     };
 
     const styles = {

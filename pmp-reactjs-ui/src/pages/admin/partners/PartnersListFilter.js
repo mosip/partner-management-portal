@@ -14,7 +14,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [isFilterActive, setIsFilterActive] = useState(true);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
@@ -87,7 +86,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
-    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -95,7 +93,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const areFiltersEmpty = () => {
-    return isFilterActive && Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "");
   };
 
   const styles = {

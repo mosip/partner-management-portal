@@ -13,7 +13,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [isFilterActive, setIsFilterActive] = useState(true);
   const [statusDropdownData, setStatusDropdownData] = useState([
     { status: 'approved' },
     { status: 'rejected' },
@@ -80,7 +79,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
-    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -88,7 +86,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   };
 
   const areFiltersEmpty = () => {
-    return isFilterActive && Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "");
   };
 
   const styles = {

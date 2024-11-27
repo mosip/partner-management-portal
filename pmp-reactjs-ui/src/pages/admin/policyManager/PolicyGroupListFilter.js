@@ -9,7 +9,6 @@ import { getUserProfile } from '../../../services/UserProfileService';
 function PolicyGroupListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [isFilterActive, setIsFilterActive] = useState(true);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
       { status: 'active' },
@@ -33,7 +32,6 @@ function PolicyGroupListFilter({ onApplyFilter }) {
     }, [t]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
-      setIsFilterActive(true);
       setFilters((prevFilters) => ({
         ...prevFilters,
         [fieldName]: selectedFilter
@@ -41,7 +39,7 @@ function PolicyGroupListFilter({ onApplyFilter }) {
     };
 
     const areFiltersEmpty = () => {
-        return isFilterActive && Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "");
       };
     
     const styles = {
