@@ -48,7 +48,6 @@ function ApproveRejectPopup({
                     ftpChipDetailId: popupData.ftmId,
                     approvalStatus: status === "Approved" ? true : false
                 });
-                console.log(request)
                 response = await HttpService.patch(getPartnerManagerUrl(`/ftpchipdetail`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
