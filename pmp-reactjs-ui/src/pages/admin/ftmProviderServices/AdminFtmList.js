@@ -14,6 +14,7 @@ import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
 import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, } from '../../../utils/AppUtils';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 
 function AdminFtmList () {
     const navigate = useNavigate('');
@@ -39,6 +40,7 @@ function AdminFtmList () {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -101,8 +103,16 @@ function AdminFtmList () {
     };
 
     const approveRejectFtmDetails = (ftm) => {
-        
+        if (ftm.status === 'pending_approval') {
+            setShowFtmApproveRejectPopup(true);
+            document.body.style.overflow = "hidden";
+          }
     };
+
+    const closeApproveRejectPopup = () => {
+        setActionId(-1);
+        setShowFtmApproveRejectPopup(false);
+      };
 
     const deactivateFtmDetails = (ftm) => {
         
@@ -221,9 +231,19 @@ function AdminFtmList () {
                                                                         {actionId === index && (
                                                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                 <div onClick={() => approveRejectFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => approveRejectFtmDetails(ftm))}>
-                                                                                    <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectRequestPopup.approveReject")}</p>
+                                                                                    <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                     <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                </div>
+                                                                                    </div>
+                                                                                    {showFtmApproveRejectPopup &&
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...ftm, isFtmRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            title={ftm.make}
+                                                                                            subtitle={`# ${ftm.model}`}
+                                                                                            header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
+                                                                                            description={t('ftmRequestApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    }
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <div className="flex justify-between hover:bg-gray-100" onClick={() => viewFtmChipDetails(ftm)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmChipDetails(ftm))}>
                                                                                     <p id="ftm_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>

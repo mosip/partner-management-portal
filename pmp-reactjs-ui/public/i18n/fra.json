@@ -798,15 +798,21 @@
         "header": "Erreur : Partenaire - Demande de stratégie détectée !",
         "description": "Les demandes de stratégie en attente sont associées à cette stratégie. Veuillez prendre les mesures appropriées dans l'écran Liste des liens vers les politiques des partenaires."
     },
-    "approveRejectRequestPopup": {
-        "header": "Voulez-vous approuver/rejeter la politique",
-        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre les mesures appropriées.",
+    "approveRejectPopup": {
         "approveReject":"Approuver / Rejeter",
         "deActivate": "Désactiver",
         "approve":"Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "Voulez-vous Approuver/Rejeter la politique",
+        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}}",
+        "description": "Veuillez examiner attentivement les détails de la puce FTM et le certificat associé avant de prendre une décision appropriée."
     },
     "viewAdminOidcClientDetails": {
         "organisation": "Organisation",

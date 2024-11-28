@@ -794,15 +794,21 @@
         "authPolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة المصادقة المحددة.",
         "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
     },
-    "approveRejectRequestPopup": {
-        "header": "هل ترغب في الموافقة/الرفض على السياسة",
-        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب.",
+    "approveRejectPopup": {
         "approveReject": "موافقة / رفض",
         "deActivate": "إلغاء التنشيط",
         "approve": "يعتمد",
         "reject": "يرفض",
         "comments": "تعليقات",
         "commentPlaceholder": "اكتب تعليقك هنا"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}",
+        "description": "يرجى مراجعة تفاصيل شريحة FTM والشهادة المرتبطة بها بعناية قبل اتخاذ الإجراء المناسب."
     },
     "viewAdminOidcClientDetails": {
         "organisation": "منظمة",
