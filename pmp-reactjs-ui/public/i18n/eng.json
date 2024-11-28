@@ -794,15 +794,21 @@
         "header": "Error: Partner - Policy Request Detected!",
         "description": "Pending policy requests are associated with this policy. Please take appropriate action in List of Partner Policy Linking screen"
     },
-    "approveRejectRequestPopup": {
-        "header": "Do you want to Approve/Reject the Policy",
-        "description": "Please review the policy details carefully before taking appropriate action.",
+    "approveRejectPopup": {
         "approveReject": "Approve / Reject",
         "deActivate": "Deactivate",
         "approve": "Approve",
         "reject": "Reject",
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the Policy",
+        "description": "Please review the policy details carefully before taking appropriate action."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}",
+        "description": "Please review the FTM Chip details and associated certificate carefully before taking appropriate action."
     },
     "viewAdminOidcClientDetails": {
         "organisation": "Organisation",
