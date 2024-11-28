@@ -5,6 +5,7 @@ import { HttpService } from '../../services/HttpService';
 import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
 import close_icon from '../../svg/close_icon.svg';
+import FocusTrap from 'focus-trap-react';
 
 function ApproveRejectPopup({ 
     popupData, 
@@ -75,6 +76,7 @@ function ApproveRejectPopup({
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default mx-1 break-normal">
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
             <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-lg h-fit">
                 {!dataLoaded ? (
                     <LoadingIcon styleSet={{ loadingDiv: '!py-[35%]' }} />
@@ -100,6 +102,7 @@ function ApproveRejectPopup({
                                         alt="close"
                                         className="h-6 hover:cursor-pointer mx-1"
                                         onClick={closingPopUp}
+                                        tabIndex={0}
                                     />
                                 </div>
                                 <hr className="h-px bg-gray-100 border-[0.02rem]" />
@@ -129,6 +132,7 @@ function ApproveRejectPopup({
                     </>
                 )}
             </div>
+            </FocusTrap>
         </div>
     );
 }
