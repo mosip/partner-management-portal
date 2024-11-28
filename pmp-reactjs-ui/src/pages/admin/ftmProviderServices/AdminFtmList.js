@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
+import { HttpService } from '../../../services/HttpService.js';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -13,7 +14,7 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, } from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 
 function AdminFtmList () {
@@ -46,7 +47,6 @@ function AdminFtmList () {
         orgName: null,
         make: null,
         model: null,
-        certificateExpiryStatus: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -69,22 +69,50 @@ function AdminFtmList () {
     ];
 
     useEffect(() => {
-        const list = [	
-            {"ftmId":"10000","partnerId":"A10001","orgName":"ABC","make":"make1","model":"model1","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
-            {"ftmId":"20000","partnerId":"A10002","orgName":"BCD","make":"make2","model":"model2","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-18T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-18T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-18T10:25:37.009826"},
-            {"ftmId":"30000","partnerId":"A10003","orgName":"CDE","make":"make3","model":"model3","status":"pending_approval","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-19T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-19T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-19T10:25:37.009826"},
-            {"ftmId":"40000","partnerId":"A10004","orgName":"DEF","make":"make4","model":"model4","status":"pending_cert_upload","isCertificateAvailable":false,"certificateUploadDateTime":null,"certificateExpiryDateTime":null,"isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
-            {"ftmId":"50000","partnerId":"A10005","orgName":"EFG","make":"make5","model":"model5","status":"deactivated","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-20T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-20T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-20T10:25:37.009826"},
-            {"ftmId":"60000","partnerId":"A10006","orgName":"FGH","make":"make6","model":"model6","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2023-10-21T10:25:46.000+00:00","certificateExpiryDateTime":"2024-10-21T10:25:46.000+00:00","isCertificateExpired":true,"createdDateTime":"2024-09-21T10:25:37.009826"},
-            {"ftmId":"70000","partnerId":"A10007","orgName":"GHI","make":"make7","model":"model7","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
-            {"ftmId":"80000","partnerId":"A10008","orgName":"ABC","make":"make8","model":"model8","status":"pending_approval","isCertificateAvailable":true,"certificateUploadDateTime":"2023-09-22T10:25:46.000+00:00","certificateExpiryDateTime":"2024-09-22T10:25:46.000+00:00","isCertificateExpired":true,"createdDateTime":"2024-09-22T10:25:37.009826"},
-            {"ftmId":"90000","partnerId":"A10009","orgName":"ABCDEF","make":"make9","model":"model9","status":"approved","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-23T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-23T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-23T10:25:37.009826"},
-            {"ftmId":"10001","partnerId":"A10010","orgName":"ABC","make":"make10","model":"model10","status":"deactivated","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"},
-            {"ftmId":"10002","partnerId":"A10011","orgName":"XXX","make":"make11","model":"model11","status":"rejected","isCertificateAvailable":true,"certificateUploadDateTime":"2024-09-17T10:25:46.000+00:00","certificateExpiryDateTime":"2025-09-17T10:25:46.000+00:00","isCertificateExpired":false,"createdDateTime":"2024-09-17T10:25:37.009826"}
-        ];
-        setTotalRecords(list.length);
-        setFtmList(list);
-    }, []);
+        const fetch = async () => {
+            const queryParams = new URLSearchParams();
+            queryParams.append('sortFieldName', sortFieldName);
+            queryParams.append('sortType', sortType);
+            queryParams.append('pageSize', pageSize);
+
+            //reset page number to 0 if filter applied or page number is out of bounds
+            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+            queryParams.append('pageNo', effectivePageNo);
+            setResetPageNo(false);
+
+            if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+            if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+            if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
+            if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
+            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+
+            const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+            try {
+                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+                const response = await HttpService.get(url);
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response.data;
+                        setTotalRecords(responseData.response.totalResults);
+                        setFtmList(resData);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('ftmList.errorInFtmList'));
+                }
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
+            } catch (err) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+        }
+        fetch();
+    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
 
     const onApplyFilter = (filters) => {
         onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
