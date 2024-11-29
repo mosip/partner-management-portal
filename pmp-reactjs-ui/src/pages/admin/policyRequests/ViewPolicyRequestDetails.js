@@ -121,11 +121,7 @@ function ViewPolicyRequestDetails() {
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4">
-                                            <div
-                                                className={`${bgOfStatus(
-                                                    policyRequestDetails.status
-                                                )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
-                                            >
+                                            <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md`}>
                                                 {getStatusCode(policyRequestDetails.status, t)}
                                             </div>
                                             <div>
