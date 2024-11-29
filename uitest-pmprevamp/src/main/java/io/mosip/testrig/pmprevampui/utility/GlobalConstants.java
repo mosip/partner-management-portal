@@ -33,6 +33,11 @@ public class GlobalConstants {
 	public static final String isNoDataTextDisplaed = "Verify if Policy dropdown no policy data text displayed";
 	public static final String isPolicyEmptyTableIsDisplayed = "Verify if policies empty table displayed";
 	public static final String isAuthenticationServicesDisplayed = "Verify if authentication services title is displayed";
+	
+	public static final String isRedirectUri2TextBoxDisplayed = "Verify if authentication services title is displayed";
+	public static final String isLogoUriempty = "verify if Enter Logo URI is precent";
+	public static final String isInvalidLogoUriErrorVissible = "verify if Invalid Logo Uri Error message is issiblet";
+
 	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";
 	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
 	public static final String isEnterRedirectUriTextDisplayed = "Verify if enter valid redirect uri text displayed";

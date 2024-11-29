@@ -133,6 +133,7 @@ public class DashboardPage extends BasePage {
 	public boolean isAuthenticationServicesTitleDisplayed() {
 		return isElementDisplayed(AuthenticationServices);
 	}
+	
 
 	public PoliciesPage clickOnPoliciesTitle() {
 		clickOnElement(policiesTitle);

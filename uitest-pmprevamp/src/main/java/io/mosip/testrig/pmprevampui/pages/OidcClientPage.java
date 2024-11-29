@@ -7,8 +7,17 @@ import org.openqa.selenium.support.FindBy;
 
 public class OidcClientPage extends BasePage {
 
-	@FindBy(id = "create_oidc_btn")
+	@FindBy(id = "create_oid_client")
 	private WebElement createOidcClient;
+	
+	@FindBy(id = "add_new_redirect_url")
+	private WebElement redirectUriAddNew;	
+	
+	@FindBy(id = "delete_redirect_url2")
+	private WebElement RedirectUri2Delete;	
+	
+	@FindBy(id = "create_oidc_redirect_url2")
+	private WebElement RedirectUri2;
 
 	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
 	private WebElement partnerIDHeaderText;
@@ -57,13 +66,22 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "create_oidc_logo_url")
 	private WebElement enterLogoUriTextBox;
+	
+	@FindBy(xpath = "//*[@placeholder='Enter Logo URI']")  
+	private WebElement enterLogoUriTextBoxEmpty;
+	
+	@FindBy(xpath = "//*[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI']")  
+	private WebElement InvalidLogoUriError;
 
 	@FindBy(id = "create_oidc_redirect_url1")
 	private WebElement enterRedirectUriTextBox;
 
 	@FindBy(id = "create_oidc_submit_btn")
 	private WebElement submitButton;
-
+	
+	@FindBy(id = "create_oidc_clear_form")
+	private WebElement clearForm;
+	
 	@FindBy(xpath = "(//*[contains(text(), 'Enter a valid URI')])[1]")
 	private WebElement enterValidUriForLogoUriText;
 
@@ -204,6 +222,14 @@ public class OidcClientPage extends BasePage {
 	public void clickOnCreateOidcClientButton() {
 		clickOnElement(createOidcClient);
 	}
+	
+	public void clickOnRedirectUriAddNew() {
+		clickOnElement(redirectUriAddNew);
+	}
+	
+	public void clickOnRedirectUri2Delete() {
+		clickOnElement(RedirectUri2Delete);
+	}
 
 	public void selectPartnerIdDropdown(String value) {
 		clickOnElement(SelectPartneridForOidc);
@@ -217,7 +243,17 @@ public class OidcClientPage extends BasePage {
 	public boolean isPolicyNameDropdownDisplayed() {
 		return isElementDisplayed(SelectPolicyNameForOidc);
 	}
+	
+	public boolean isLogoUriempty() {
 
+		return isElementDisplayed(enterLogoUriTextBoxEmpty);
+	}
+	
+	public boolean isInvalidLogoUriErrorVissible() {
+
+		return isElementDisplayed(InvalidLogoUriError);
+	}
+	
 	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(SelectPolicyNameForOidc);
 		enter(createOidcPolicyNameSearchInput, value);
@@ -246,6 +282,10 @@ public class OidcClientPage extends BasePage {
 
 	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
+	}
+	
+	public void clickOnClearFormButton() {
+		clickOnElement(clearForm);
 	}
 
 	public boolean isEnterValidUriForLogoUriTextDisplayed() {
@@ -294,6 +334,10 @@ public class OidcClientPage extends BasePage {
 
 	public void clickOnApiKeyTab() {
 		clickOnElement(ApiKeyTab);
+	}
+	
+	public boolean isRedirectUri2TextBoxDisplayed() {
+		return isElementDisplayed(RedirectUri2);
 	}
 
 	public void enterCreateOidcPolicyNameSearchInput(String value) {
