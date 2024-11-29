@@ -61,9 +61,6 @@ function AdminFtmList () {
         { id: "make", headerNameKey: "ftmList.make" },
         { id: "model", headerNameKey: "ftmList.model" },
         { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
-        { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
-        { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
-        { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
         { id: "status", headerNameKey: "ftmList.status" },
         { id: "action", headerNameKey: 'ftmList.action' }
     ];
@@ -214,7 +211,7 @@ function AdminFtmList () {
                                                         <tr>
                                                             {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
@@ -242,9 +239,6 @@ function AdminFtmList () {
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.make}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.model}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.createdDateTime, 'date', true)}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className={`px-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className={`px-2 break-all`}>{ftm.isCertificateExpired ? 'Expired' : '-'}</td>
                                                                 <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(ftm.status, t)}
