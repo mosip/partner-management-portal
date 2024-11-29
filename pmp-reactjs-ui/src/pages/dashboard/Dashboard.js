@@ -179,7 +179,7 @@ function Dashboard() {
     };
 
     const fetchPendingApprovalSbiCount = async () => {
-      const SbiSearchRequest = createRequest({
+      const sbiSearchRequest = createRequest({
         filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
         sort: [],
         pagination: { pageStart: 0, pageFetch: 1 },
@@ -188,7 +188,7 @@ function Dashboard() {
       try {
         const response = await HttpService.post(
           getPartnerManagerUrl(`/securebiometricinterface/search`, process.env.NODE_ENV),
-          SbiSearchRequest
+          sbiSearchRequest
         );
         if (response?.data?.response) {
           setSbiPendingApprovalRequestCount(response.data.response.totalRecord);
@@ -202,7 +202,7 @@ function Dashboard() {
     };
 
     const fetchPendingApprovalDevicesCount = async () => {
-      const DeviceSearchRequest = createRequest({
+      const deviceSearchRequest = createRequest({
         filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
         sort: [],
         pagination: { pageStart: 0, pageFetch: 1 },
@@ -211,7 +211,7 @@ function Dashboard() {
       try {
         const response = await HttpService.post(
           getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV),
-          DeviceSearchRequest
+          deviceSearchRequest
         );
         if (response?.data?.response) {
           setDevicePendingApprovalRequestCount(response.data.response.totalRecord);
@@ -225,27 +225,29 @@ function Dashboard() {
     };
 
     const fetchPendingApprovalFtmCount = async () => {
-      const DeviceSearchRequest = createRequest({
-        filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
-        sort: [],
-        pagination: { pageStart: 0, pageFetch: 1 },
-      });
+      const queryParams = new URLSearchParams();
+      queryParams.append('status', 'pending_approval')
+      queryParams.append('pageSize', '1');
 
+      const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
-        const response = await HttpService.post(
-          getPartnerManagerUrl(`/ftpchipdetail/search`, process.env.NODE_ENV),
-          DeviceSearchRequest
-        );
-        if (response?.data?.response) {
-          setFtmPendingApprovalRequestCount(response.data.response.totalRecord);
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setFtmPendingApprovalRequestCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
         } else {
-          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
         setErrorMsg(t('dashboard.requestCountFetchError'));
         console.error("Error fetching data:", err);
       }
     };
+
     if (isPartnerAdmin) {
       setTimeout(() => {
         fetchPartnerPolicyMappingRequestCount();
