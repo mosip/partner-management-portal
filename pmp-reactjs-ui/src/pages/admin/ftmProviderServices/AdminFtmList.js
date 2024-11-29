@@ -14,8 +14,9 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest} from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminFtmList () {
     const navigate = useNavigate('');
@@ -42,6 +43,8 @@ function AdminFtmList () {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -140,8 +143,20 @@ function AdminFtmList () {
       };
 
     const deactivateFtmDetails = (ftm) => {
-        
+        if (ftm.status === "approved") {
+            const request = createRequest({
+              ftmId: ftm.ftmId,
+            }, "mosip.pms.deactivate.ftm.post", true);
+            setDeactivateRequest(request);
+            setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
+          }
     };
+
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
+      };
 
     const sortAscOrder = (header) => {
         if (order !== 'ASC' || activeAscIcon !== header) {
@@ -273,9 +288,12 @@ function AdminFtmList () {
                                                                                 </div>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <div onClick={() => deactivateFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`}tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateFtmDetails(ftm))}>
-                                                                                    <p id="ftm_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                    <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                </div>
+                                                                                        <p id="ftm_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                        <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                    </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                                                                    )}
                                                                             </div>
                                                                         )}
                                                                     </div>
