@@ -9,16 +9,12 @@ import { getUserProfile } from '../../../services/UserProfileService';
 function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
-    const [certExpiryStatus, setCertExpiryStatus] = useState([]);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [certExpiryStatusDropdownData, setCertExpiryStatusDropdownData] = useState([
-        { certificateUploadStatus: 'expired' },
-        { certificateUploadStatus: 'valid' }
-    ]);
     const [statusDropdownData, setStatusDropdownData] = useState([
         { status: 'approved' },
         { status: 'rejected' },
         { status: 'pending_approval' },
+        { status: 'pending_cert_upload' },
         { status: 'deactivated' }
     ]);
     const [filters, setFilters] = useState({
@@ -26,7 +22,6 @@ function AdminFtmListFilter ({ onApplyFilter }) {
         orgName: "",
         make: "",
         model: "",
-        certificateExpiryStatus: "",
         status: ""
     });
 
@@ -34,9 +29,6 @@ function AdminFtmListFilter ({ onApplyFilter }) {
         const fetchData = async () => {
             setStatus(
                 createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-            );
-            setCertExpiryStatus(
-                createDropdownData("certificateExpiryStatus", "", true, certExpiryStatusDropdownData, t, t("ftmList.selectCertificateExpiryStatus"))
             );
         };
         fetchData();
@@ -96,16 +88,6 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchModel"
                 styleSet={styleSet}
                 id="model_filter"
-            />
-            <DropdownComponent
-                fieldName="certificateExpiryStatus"
-                dropdownDataList={certExpiryStatus}
-                onDropDownChangeEvent={onFilterChangeEvent}
-                fieldNameKey="ftmList.certificateExpiryStatus"
-                placeHolderKey="ftmList.selectCertificateExpiryStatus"
-                styleSet={styles}
-                isPlaceHolderPresent={true}
-                id="certiifcate_expiry_status_filter"
             />
             <DropdownComponent
                 fieldName="status"
