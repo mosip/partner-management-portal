@@ -28,15 +28,16 @@ function ViewAdminFtmChipDetails() {
         const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
         if (!selectedFtmData) {
             setUnexpectedError(true);
-            return
+            return;
         }
-        setFtmDetails(JSON.parse(selectedFtmData));
+        const selectedFtmDetails = JSON.parse(selectedFtmData);
+        setFtmDetails(selectedFtmDetails);
 
         const fetchCertificateDetails = async () => {
             setErrorCode("");
             setErrorMsg("");
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmDetails.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + selectedFtmDetails.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
