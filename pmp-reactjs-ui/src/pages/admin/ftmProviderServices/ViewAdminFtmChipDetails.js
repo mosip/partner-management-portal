@@ -32,7 +32,7 @@ function ViewAdminFtmChipDetails() {
         }
         setFtmDetails(JSON.parse(selectedFtmData));
 
-        const fetchCertificateData = async () => {
+        const fetchCertificateDetails = async () => {
             setErrorCode("");
             setErrorMsg("");
             try {
@@ -54,7 +54,7 @@ function ViewAdminFtmChipDetails() {
                 setErrorMsg(err);
             }
         }
-        fetchCertificateData();
+        fetchCertificateDetails();
     }, []);
 
     const getOriginalCertificate = async () => {
