@@ -232,7 +232,7 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/ftm-chip-provider-services/view-admin-ftm-chip-details',
+          path: 'admin/ftm-chip-provider-services/view-ftm-chip-details',
           element: <GuardedRoute><MainLayout><ViewAdminFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {

@@ -25,19 +25,18 @@ function ViewAdminFtmChipDetails() {
     const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedFtmAttributes');
-        if (!data) {
+        const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
+        if (!selectedFtmData) {
             setUnexpectedError(true);
             return
         }
-        const ftmData = JSON.parse(data);
-        setFtmDetails(ftmData);
+        setFtmDetails(JSON.parse(selectedFtmData));
 
         const fetchCertificateData = async () => {
             setErrorCode("");
             setErrorMsg("");
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmData.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmDetails.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -58,45 +57,14 @@ function ViewAdminFtmChipDetails() {
         fetchCertificateData();
     }, []);
 
-    const getOriginalCertificate = async (ftmDetails) => {
-        const response = await fetchCertificate(ftmDetails.ftmId);
-        if (response !== null) {
-            if (response.isCaSignedCertificateExpired) {
-                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-            } else {
-                setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
-                downloadFile(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
-            }
+    const getOriginalCertificate = async () => {
+        if (certificateDetails.isCaSignedCertificateExpired) {
+            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+        } else {
+            setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
+            downloadFile(certificateDetails.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
         }
     }
-
-    const fetchCertificate = async (ftmId) => {
-        setErrorCode("");
-        setErrorMsg("");
-        try {
-            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
-            if (response !== null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                    return null;
-                } else {
-                    const resData = responseData.response;
-                    return resData;
-                }
-            } else {
-                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
-                return null;
-            }
-        } catch (err) {
-            console.error('Error fetching certificate:', err);
-            setErrorMsg(err);
-        }
-    };
 
     const moveToAdminFtmList = () => {
         navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
@@ -205,7 +173,7 @@ function ViewAdminFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate()}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {t('commons.download')}
                                                 </button>

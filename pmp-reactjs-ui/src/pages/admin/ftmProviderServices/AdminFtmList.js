@@ -128,7 +128,7 @@ function AdminFtmList() {
 
     const viewFtmChipDetails = (ftm) => {
         localStorage.setItem('selectedFtmAttributes', JSON.stringify(ftm));
-        navigate('/partnermanagement/admin/ftm-chip-provider-services/view-admin-ftm-chip-details');
+        navigate('/partnermanagement/admin/ftm-chip-provider-services/view-ftm-chip-details');
     };
 
     const approveRejectFtmDetails = (ftm) => {
