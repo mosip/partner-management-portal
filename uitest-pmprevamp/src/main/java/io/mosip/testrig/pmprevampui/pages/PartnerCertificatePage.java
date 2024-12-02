@@ -90,8 +90,6 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement GoBackButton;
-	
-	
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);

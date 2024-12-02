@@ -20,7 +20,7 @@ public class DashboardPage extends BasePage {
 	private WebElement selectPolicyGroupPopUp;
 
 	@FindBy(xpath = "//div[@class='relative w-full']/button")
-//	select_policy_group_dropdown
+
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(xpath = "//*[text()='No Data Available.']")
@@ -65,9 +65,6 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
 	
-	
-	
-	
 	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
 	private WebElement RootOFTrustCertText;
 	
@@ -82,8 +79,6 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 	
-	
-
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -211,14 +206,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(policyButton);
 	}
 	
-	
-
 	public void clickOnPartnerPolicyMappingTab() {
 		clickOnElement(PartnerPolicyMappingTab);
 	}
-	
-	
-	
-	
 	
 }

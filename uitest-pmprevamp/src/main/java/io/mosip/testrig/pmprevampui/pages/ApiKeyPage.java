@@ -196,7 +196,6 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//*[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 	
-	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
