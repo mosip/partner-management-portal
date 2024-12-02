@@ -61,7 +61,7 @@ function PartnerCertificatesList() {
 
     const getOriginalCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
@@ -73,7 +73,7 @@ function PartnerCertificatesList() {
 
     const getMosipSignedCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
@@ -96,10 +96,12 @@ function PartnerCertificatesList() {
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
             setErrorMsg(err);
+            return null;
         }
     }
 
