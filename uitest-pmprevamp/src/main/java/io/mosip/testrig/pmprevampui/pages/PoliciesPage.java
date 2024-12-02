@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmprevampui.utility.TestRunner;
+
 public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "title_back_icon")
@@ -15,7 +17,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(xpath = "//div[@class='flex flex-col items-center']")
 	private WebElement policiesEmptyTable;
 
-	@FindBy(id = "create_policy_group_btn")
+	@FindBy(id = "show_request_policy")
 	private WebElement requestPolicyButton;
 
 	@FindBy(id = "policies_request_btn")
@@ -51,7 +53,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "sub_title_btn")
 	private WebElement PolicyButton;
 
-	@FindBy(xpath = "//*[text()='List of Policy Requests (1)']")
+	@FindBy(id = "list_of_policies")
 	private WebElement ListOfPolicyRequested;
 
 	@FindBy(xpath = "//*[text()='Pending For Approval']")
@@ -80,10 +82,16 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "policy_group_filter")
 	private WebElement policyGroupFilter;
-
+	
+	@FindBy(id = "policy_group_filter_option1")
+	private WebElement policyGroupFilterOption1;
+	
 	@FindBy(id = "policy_name_filter")
 	private WebElement policyNameFilter;
-
+	
+	@FindBy(id = "policy_name_filter_option1")
+	private WebElement policyNameFilterOption1;
+	
 	@FindBy(id = "policy_status_filter")
 	private WebElement policyStatusFilter;
 
@@ -155,7 +163,103 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
+	
+	@FindBy(id = "request_policy_partner_id_option1")
+	private WebElement requestPolicyPartnerIdOption1;
+	
+	@FindBy(id = "policies_auth_policy_tab")
+	private WebElement policiesAuthPolicyTab;
+	
+	@FindBy(id = "create_auth_policy_btn")
+	private WebElement createAuthPolicyButton;
+	
+	@FindBy(id = "policy_name_box")
+	private WebElement policyNameBox;
+	
+	@FindBy(id = "policy_description_box")
+	private WebElement policyDescriptionBox;
+	
+	@FindBy(id = "policy_data_box")
+	private WebElement policyDataBox;
+	
+	@FindBy(id = "fileInput")
+	private WebElement uploadFile;
+	
+	@FindBy(id = "create_policy_form_submit_btn")
+	private WebElement createPolicyFormSubmitButton;
+	
+	@FindBy(id = "policy_group_dropdown")
+	private WebElement policyGroupDropdown;
 
+	@FindBy(id = "policy_group_dropdown_search_input")
+	private WebElement policyGroupDropdownSearchInput;
+	
+	@FindBy(id = "policy_group_dropdown_option1")
+	private WebElement policyGroupDropdownOption1;
+	
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement goBackButton;
+	
+	@FindBy(id = "policy_group_filter")
+	private WebElement policyGroupFilterBox;
+	
+	@FindBy(id = "apply_filter__btn")
+	private WebElement applyFilterButton;
+	
+	@FindBy(id = "policies_list_view1")
+	private WebElement policiesListViewElipsisButton;
+	
+	@FindBy(id = "policy_publish_btn")
+	private WebElement policyPublishButton;
+	
+	@FindBy(id = "publish_policy_button")
+	private WebElement publishPolicyButton;
+	
+	@FindBy(id = "success_msg_close")
+	private WebElement successMsgCloseButton;
+	
+	@FindBy(id = "publish_policy_close_button")
+	private WebElement publishPolicyCloseButton;
+	
+	@FindBy(id = "policy_details_partner_id_label")
+	private WebElement policyDetailsPartnerIdLabel;
+	
+	@FindBy(id = "policy_details_policy_group_name_context")
+	private WebElement policyDetailsPolicyGroupNameContext;
+	
+	@FindBy(id = "policy_details_partner_type_label")
+	private WebElement policyDetailsPartnerTypeLabel;
+	
+	@FindBy(id = "policy_details_partner_type_context")
+	private WebElement policyDetailsPartnerTypeContext;
+	
+	@FindBy(id = "policy_details_policy_group_name_label")
+	private WebElement policyDetailsPolicyGroupNameLabel;
+	
+	@FindBy(id = "policy_details_policy_name_context")
+	private WebElement policyDetailsPolicyNameContext;
+	
+	@FindBy(id = "policy_details_policy_group_description_label")
+	private WebElement policyDetailsPolicyGroupDescriptionLabel;
+	
+	@FindBy(id = "policy_details_policy_group_description_context")
+	private WebElement policyDetailsPolicyGroupDescriptionContext;
+	
+	@FindBy(id = "policy_details_policy_name_description_label")
+	private WebElement policyDetailsPolicyNameDescriptionLabel;
+	
+	@FindBy(id = "policy_details_policy_name_description_context")
+	private WebElement policyDetailsPolicyNameDescriptionContext;
+	
+	@FindBy(id = "policy_details_comments")
+	private WebElement policyDetailsComments;
+	
+	@FindBy(id = "request_policies_form_clear_btn")
+	private WebElement requestPoliciesFormClearButton;
+	
+	@FindBy(id = "request_policies_form_cancel_btn")
+	private WebElement requestPoliciesFormCancelButton;
+	
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -184,14 +288,14 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policies_request_btn);
 	}
 
-	public void selectPartnerIdDropdown(String value) {
+	public void selectPartnerIdDropdown() {
 		clickOnElement(partnerIdDropdown);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[2]")));
+		clickOnElement(requestPolicyPartnerIdOption1);
 	}
 
 	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
-//		enter(SearchBox,value);
+		enter(searchBoxForPolicyName,value);
 		clickOnElement(requestPolicyNameOption);
 	}
 
@@ -272,9 +376,9 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(BackButton);
 	}
 
-	public void clickOnPolicyPartnerIdFilter(String value) {
+	public void clickOnPolicyPartnerIdFilter() {
 		clickOnElement(policyPartnerIdFilter);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[2]")));
+		clickOnElement(policyPartnerIdFilterOption1);
 	}
 
 	public void clickOnPolicyPartnerTypeFilter() {
@@ -282,14 +386,14 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policyPartnerTypeFilterOption1);
 	}
 
-	public void clickOnPolicyGroupFilter(String value) {
+	public void clickOnPolicyGroupFilter() {
 		clickOnElement(policyGroupFilter);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[3]")));
+		clickOnElement(policyGroupFilterOption1);
 	}
 
-	public void clickOnPolicyNameFilter(String value) {
+	public void clickOnPolicyNameFilter() {
 		clickOnElement(policyNameFilter);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[3]")));
+		clickOnElement(policyNameFilterOption1);
 	}
 
 	public void clickOnPolicyStatusFilter() {
@@ -389,4 +493,130 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policyListItem1);
 	}
 
+	public void clickOnpoliciesAuthPolicyTab() {
+		clickOnElement(policiesAuthPolicyTab);
+	}
+	
+	public void clickOnCreateAuthPolicyButton() {
+		clickOnElement(createAuthPolicyButton);
+	}
+	
+	public void enterPolicyName(String val) {
+		enter(policyNameBox,val);
+	}
+	
+	public void enterpolicyDescription(String val) {
+		enter(policyDescriptionBox,val);
+	}
+	
+	public void uploadPolicyData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\policyData.json");
+	}
+	
+	public void clickOnCreatePolicyFormSubmitButton() {
+		clickOnElement(createPolicyFormSubmitButton);
+	}
+	
+	public void selectpolicyGroupDropdown(String value) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput,value);
+		clickOnElement(policyGroupDropdownOption1);
+	}
+
+	public void clickOngoBackButton() {
+		clickOnElement(goBackButton);
+	}
+	
+	public void enterpolicyGroupFilterBox(String val) {
+		enter(policyGroupFilterBox, val);
+	}
+	
+	public void clickOnApplyFilterButton() {
+		clickOnElement(applyFilterButton);
+	}
+	
+	public void clickOnPoliciesListViewElipsisButton() {
+		clickOnElement(policiesListViewElipsisButton);
+	}
+	
+	public void clickOnPolicyPublishButton() {
+		clickOnElement(policyPublishButton);
+	}
+	
+	public void clickOnPublishPolicyButton() {
+		clickOnElement(publishPolicyButton);
+	}
+	
+	public void clickOnSuccessMsgCloseButton() {
+		clickOnElement(successMsgCloseButton);
+	}
+	
+	public void clickOnPublishPolicyCloseButton() {
+		clickOnElement(publishPolicyCloseButton);
+	}
+	
+	public boolean isPolicyDetailsPartnerIdLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPartnerIdLabel);
+	}
+	
+	public boolean isPolicyDetailsPolicyGroupNameContextDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyGroupNameContext);
+	}
+	
+	public boolean isPolicyDetailsPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPartnerTypeLabel);
+	}
+	
+	public boolean isPolicyDetailsPartnerTypeContextDisplayed() {
+		return isElementDisplayed(policyDetailsPartnerTypeContext);
+	}
+	
+	public boolean isPolicyDetailsPolicyGroupNameLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyGroupNameLabel);
+	}
+	
+	public boolean isPolicyDetailsPolicyNameContextDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyNameContext);
+	}
+	
+	public boolean isPolicyDetailsPolicyGroupDescriptionLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyGroupDescriptionLabel);
+	}
+	
+	public boolean isPolicyDetailsPolicyGroupDescriptionContextDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyGroupDescriptionContext);
+	}
+	
+	public boolean isPolicyDetailsPolicyNameDescriptionLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyNameDescriptionLabel);
+	}
+	
+	public boolean isPolicyDetailsPolicyNameDescriptionContextDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyNameDescriptionContext);
+	}
+	
+	public boolean isPolicyDetailsCommentsDisplayed() {
+		return isElementDisplayed(policyDetailsComments);
+	}
+	
+	public void clickOnRequestPoliciesFormClearButton() {
+		clickOnElement(requestPoliciesFormClearButton);
+	}
+	
+	public String getThePolicyCommentBoxText() {
+		return getTextFromAttribute(commentsTextBox,"placeholder");
+	}
+	
+	public String getThepolicyNameDropdownBoxText() {
+		return getTextFromLocator(policyNameDropdown);
+	}
+	
+	public void clickOnRequestPoliciesFormCancelButton() {
+		clickOnElement(requestPoliciesFormCancelButton);
+	}
+	
+	public void clickOnSubTitleHomeButton() {
+		clickOnElement(subTitleHomeButton);
+	}
+	
 }

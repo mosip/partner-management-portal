@@ -1,4 +1,5 @@
 package io.mosip.testrig.pmprevampui.fw.util;
+
 import static io.restassured.RestAssured.given;
 
 import java.io.BufferedReader;
@@ -9,20 +10,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import org.json.JSONObject;
 
 import io.mosip.testrig.pmprevampui.authentication.fw.util.RestClient;
+import io.mosip.testrig.pmprevampui.dbaccess.DBManager;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.kernel.util.KernelAuthentication;
 import io.mosip.testrig.pmprevampui.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmprevampui.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class AdminTestUtil extends BaseTestCaseFunc  {
+public class AdminTestUtil extends BaseTestCaseFunc {
 
-	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(RestClient.class);
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RestClient.class);
 	public static String token;
 	public static String user;
 	public static String tokenRoleIdRepo = "idrepo";
@@ -32,7 +34,6 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 			+ "config/healthCheckEndpoint.properties";
 	public static boolean initialized = false;
 
-	
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())
 			return serverComponentsCommitDetails;
@@ -67,22 +68,23 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 		serverComponentsCommitDetails = stringBuilder.toString();
 		return serverComponentsCommitDetails;
 	}
+
 	public static void closeBufferedReader(BufferedReader bufferedReader) {
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
 			} catch (IOException e) {
-	//			logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
+				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
-	
+
 	public static void closeFileReader(FileReader fileReader) {
 		if (fileReader != null) {
 			try {
 				fileReader.close();
 			} catch (IOException e) {
-			//	logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
+				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
@@ -101,27 +103,48 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 		}
 		return path + "- No Response";
 	}
-	 public static String UserMapping() {
+
+	public static String UserMapping() {
 		return user;
-		 
-	 }
-	 
-	 public static void initialize() {
-	    	if (initialized == false) {
-	    		ConfigManager.init();
-	    		
-	    		
-	        	BaseTestCaseFunc.initialize();
-	        	HashMap<String, List<String>> attrmap=new HashMap<String, List<String>>();
-				List<String> list=new ArrayList<String>();
-				String val= "11000000";
-				list.add(val);
-				attrmap.put("individualId",list);
-	        	KeycloakUserManager.createUsers();
-	        	BaseTestCaseFunc.mapUserToZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"),"CSB");
-	    		BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule+"-"+propsKernel.getProperty("admin_userName"));	
-	    		initialized = true;
-	    	}
-	    }
-	
+
+	}
+
+	public static void initialize() {
+		if (initialized == false) {
+			ConfigManager.init();
+
+			BaseTestCaseFunc.initialize();
+			HashMap<String, List<String>> attrmap = new HashMap<String, List<String>>();
+			List<String> list = new ArrayList<String>();
+			String val = "11000000";
+			list.add(val);
+			attrmap.put("individualId", list);
+
+			DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
+					ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
+					TestRunner.getResourcePath() + "\\" + "config\\partnerRevampDataDeleteQueries.txt");
+
+			DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
+					ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
+					TestRunner.getResourcePath() + "/" + "config/partnerRevampDataDeleteQueriesForKeyMgr.txt");
+
+			DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
+					ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+					TestRunner.getResourcePath() + "/" + "config/partnerRevampDataDeleteQueriesForIDA.txt");
+			KeycloakUserManager.removeUser();
+			KeycloakUserManager.createUsers();
+			BaseTestCaseFunc.DefinePolicyGroup();
+			BaseTestCaseFunc.DefinePolicy();
+			BaseTestCaseFunc.CreateAdminPartner();
+//				BaseTestCaseFunc.CreateAuthPartner();   // need this code.
+//				BaseTestCaseFunc.UploadCaCertPartner();
+//				BaseTestCaseFunc.UploadSubCaCertPartner();
+
+			BaseTestCaseFunc.mapUserToZone(
+					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"), "CSB");
+			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"));
+			initialized = true;
+		}
+	}
+
 }

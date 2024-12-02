@@ -29,6 +29,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
+import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
@@ -81,7 +82,10 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("masterdata-220005")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-
+			} else if (needsToBeCreatedUser.equals("auth")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			} else if (needsToBeCreatedUser.equals("nocert")) {
+				moduleSpecificUser = needsToBeCreatedUser;
 			}
 
 			else {
@@ -93,7 +97,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			user.setUsername(moduleSpecificUser);
 			user.setFirstName(moduleSpecificUser);
 			user.setLastName(moduleSpecificUser);
-			user.setEmail("automation" + moduleSpecificUser + "@automationlabs.com");
+			user.setEmail("automation" + moduleSpecificUser + BaseClass.data + "@automationlabs.com");
 			// Get realm
 			RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
 			UsersResource usersRessource = realmResource.users();
@@ -103,7 +107,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 			logger.info("Repsonse: %s %s%n" + response.getStatus() + response.getStatusInfo());
 			if (response.getStatus() == 409) {
-				break;
+				continue;
 			}
 
 			String userId = CreatedResponseUtil.getCreatedId(response);
@@ -212,7 +216,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		try {
 			JSONObject obj = new JSONObject(new JSONTokener(new FileReader(path)));
 			String name = obj.getString("n");
-			obj.put("n", generateRandomString(2051));
+//			obj.put("n", generateRandomString(340));
 			propsPublicKey = obj.toString();
 			System.out.println("n: " + name);
 			System.out.println("n: " + propsPublicKey);

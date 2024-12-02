@@ -40,11 +40,12 @@ public class BaseClass {
 	protected String envPathPmpRevamp = ConfigManager.getiam_pmprevamp_path();
 	protected String PmpRevamp = ConfigManager.getiam_pmprevamp();
 	protected String env=ConfigManager.getiam_apienvuser();
-	protected String userid = KeycloakUserManager.moduleSpecificUser;
+	protected String[] Alluserid = ConfigManager.getIAMUsersToCreate().split(",");
+	protected String userid = BaseTestCaseFunc.currentModule + "-" +Alluserid[1];
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	private static final Logger logger = Logger.getLogger(BaseClass.class);
-	protected static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
+	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
 
 
 	@BeforeMethod
@@ -75,8 +76,24 @@ public class BaseClass {
 		driver.get(envPathPmpRevamp);
 		logger.info("launch url --"+envPathPmpRevamp);
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-		BasePage.enter(driver.findElement(By.id("username")), "automationuiiii");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		String language1 = null;
+//		try {
+//
+//			language1 = ConfigManager.getloginlang();
+//			String loginlang = null;
+//			System.out.println(language1);
+//			if(!language1.equals("sin")) {
+//				loginlang = JsonUtil.JsonObjArrayListParsing2(ConfigManager.getlangcode());
+//				driver.findElement(By.xpath("//*[@id='kc-locale-dropdown']")).click();
+//				String var = "//li/a[contains(text(),'" + loginlang + "')]";
+//				driver.findElement(By.xpath(var)).click();
+//			}
+//		} catch (Exception e) {
+//			e.getMessage();
+//		}
+		
+		BasePage.enter(driver.findElement(By.id("username")), userid);
 		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
 

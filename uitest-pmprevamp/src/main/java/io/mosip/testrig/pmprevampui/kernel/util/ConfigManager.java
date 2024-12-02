@@ -43,6 +43,7 @@ public class ConfigManager {
 	private static String MASTER_DB_USER = "db-su-user";
 	private static String MASTER_DB_PASS = "postgres-password";
 	private static String MASTER_DB_SCHEMA = "master_db_schema";
+	private static String IDA_DB_SCHEMA = "ida_db_schema";
 	private static String IAM_REALM_ID = "keycloak-realm-id";
 	private static String IAM_USERS_TO_CREATE = "iam-users-to-create";
 	private static String IAM_USERS_PASSWORD = "iam-users-password";
@@ -57,27 +58,31 @@ public class ConfigManager {
 	private static String SbivalidDate = "sbivalidDate";
 	private static String PublicKey = "publicKey";
 	private static String RandomPublicKey = "randompublicKey";
-	private static String ENABLEDEBUG ="enableDebug";
-	
+	private static String ENABLEDEBUG = "enableDebug";
+
+	private static String MOSIPPMSAPPID = "mosip_pms_app_id";
+	private static String MOSIPPMSCLIENTID = "mosip_pms_client_id";
+	private static String MOSIPPMSCLIENTSECRATES = "mosip_pms_client_secret";
+	private static String MOSIPPARTNERCLIENTID = "mosip_partner_client_id";
+	private static String MOSIPPARTNERCLIENTSECRATES = "mosip_partner_client_secret";
+
 	private static String PMS_DB_USER = "db-su-user";
 	private static String PMS_DB_PASS = "postgres-password";
 	private static String PMS_DB_SCHEMA = "pms_db_schema";
-	
+
 	private static String LogoUri = "logouri";
 	private static String RedirectUri = "redirecturi";
 	private static String SignPublicKey = "signPublicKey";
 	private static String Headless = "headless";
 	private static String Docker = "docker";
 	private static String Langcode = "langcode";
-	private static String SbiexpiryDate = "sbiexpiryDate";//loginlang
+	private static String SbiexpiryDate = "sbiexpiryDate";// loginlang
 	private static String Loginlang = "loginlang";
-	private static String PolicyData = "policyData";//loginlang
+	private static String PolicyData = "policyData";// loginlang
 	private static String DataSharepolicyData = "dataSharepolicyData";
 	private static String Testcases = "pmpscenariosToExecute";
 	private static String ReportIgnoredTestCases = "reportIgnoredTestCases";
 	private static String ReportKnownIssueTestCases = "reportKnownIssueTestCases";
-	
-	
 
 	private static String testcases;
 	private static String loginlang;
@@ -89,13 +94,16 @@ public class ConfigManager {
 	private static String randomPublicKey;
 	private static String logouri;
 	private static String redirectUri;
-	
 
-	
-	
+	private static String mosipappid;
+	private static String mosippmsclientid;
+	private static String mosippmsclientsecret;
+	private static String mosippartnerclientid;
+	private static String mosippartnerclentsecret;
+
 	private static String reportIgnoredTestCases;
 	private static String reportKnownIssueTestCases;
-	
+
 	private static String pms_db_user;
 	private static String pms_db_pass;
 	private static String pms_db_schema;
@@ -136,6 +144,7 @@ public class ConfigManager {
 	private static String master_db_user;
 	private static String master_db_pass;
 	private static String master_db_schema;
+	private static String ida_db_schema;
 	private static String iamExternalURL;
 	private static String iam_realm_id;
 	private static String iam_users_to_create;
@@ -208,6 +217,7 @@ public class ConfigManager {
 		master_db_user = getValueForKey(MASTER_DB_USER);
 		master_db_pass = getValueForKey(MASTER_DB_PASS);
 		master_db_schema = getValueForKey(MASTER_DB_SCHEMA);
+		ida_db_schema = getValueForKey(IDA_DB_SCHEMA);
 		serviceNotDeployedList = System.getenv(SERVICES_NOT_DEPLOYED) == null
 				? propsKernel.getProperty(SERVICES_NOT_DEPLOYED)
 				: System.getenv(SERVICES_NOT_DEPLOYED);
@@ -219,15 +229,20 @@ public class ConfigManager {
 
 		iam_pmprevamp_path = System.getenv(IAM_PMPREVAMP_PATH) == null ? propsKernel.getProperty(IAM_PMPREVAMP_PATH)
 				: System.getenv(IAM_PMPREVAMP_PATH);
-		
+
 		pms_db_user = getValueForKey(PMS_DB_USER);
 		pms_db_pass = getValueForKey(PMS_DB_PASS);
 		pms_db_schema = getValueForKey(PMS_DB_SCHEMA);
 		enableDebug = getValueForKey(ENABLEDEBUG);
 		reportIgnoredTestCases = getValueForKey(ReportIgnoredTestCases);
 		reportKnownIssueTestCases = getValueForKey(ReportKnownIssueTestCases);
-		
-		
+
+		mosipappid = getValueForKey(MOSIPPMSAPPID);
+
+		mosippmsclientid = getValueForKey(MOSIPPMSCLIENTID);
+		mosippmsclientsecret = getValueForKey(MOSIPPMSCLIENTSECRATES);
+		mosippartnerclientid = getValueForKey(MOSIPPARTNERCLIENTID);
+		mosippartnerclentsecret = getValueForKey(MOSIPPARTNERCLIENTSECRATES);
 
 		iam_pmprevamp = System.getenv(IAM_PMPREVAMP) == null ? propsKernel.getProperty(IAM_PMPREVAMP)
 				: System.getenv(IAM_PMPREVAMP);
@@ -295,11 +310,12 @@ public class ConfigManager {
 		randomPublicKey = System.getenv(RandomPublicKey) == null ? propsKernel.getProperty(RandomPublicKey)
 				: System.getenv(RandomPublicKey);
 		propsKernel.setProperty(RandomPublicKey, randomPublicKey);
-		
-		logouri =System.getenv(LogoUri) == null ? propsKernel.getProperty(LogoUri) : System.getenv(LogoUri);
+
+		logouri = System.getenv(LogoUri) == null ? propsKernel.getProperty(LogoUri) : System.getenv(LogoUri);
 		propsKernel.setProperty(LogoUri, logouri);
-		
-		redirectUri =System.getenv(RedirectUri) == null ? propsKernel.getProperty(RedirectUri) : System.getenv(RedirectUri);
+
+		redirectUri = System.getenv(RedirectUri) == null ? propsKernel.getProperty(RedirectUri)
+				: System.getenv(RedirectUri);
 		propsKernel.setProperty(RedirectUri, redirectUri);
 
 		signPublicKey = System.getenv(SignPublicKey) == null ? propsKernel.getProperty(SignPublicKey)
@@ -366,18 +382,19 @@ public class ConfigManager {
 	public static String getpublicKey() {
 		return publicKey;
 	}
-	
+
 	public static String getrandomPublicKey() {
 		return randomPublicKey;
 	}
-	
+
 	public static String getLogouri() {
 		return logouri;
 	}
-	
+
 	public static String getRedirectUri() {
 		return redirectUri;
 	}
+
 	public static String getsbivalidDate() {
 		return sbivalidDate;
 	}
@@ -474,11 +491,11 @@ public class ConfigManager {
 	public static Boolean reportIgnoredTestCases() {
 		return reportIgnoredTestCases.equalsIgnoreCase("yes");
 	}
-	
+
 	public static Boolean reportKnownIssueTestCases() {
 		return reportKnownIssueTestCases.equalsIgnoreCase("yes");
 	}
-	
+
 	public static String getS3Host() {
 		return s3_host;
 	}
@@ -550,8 +567,13 @@ public class ConfigManager {
 	public static String getIAMRealmId() {
 		return iam_realm_id;
 	}
+
 	public static String getPMSDbUrl() {
 		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_pms";
+	}
+
+	public static String getKMDbUrl() {
+		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_keymgr";
 	}
 
 	public static String getPMSDbUser() {
@@ -561,13 +583,37 @@ public class ConfigManager {
 	public static String getPMSDbPass() {
 		return pms_db_pass;
 	}
-	
+
 	public static String getPMSDbSchema() {
 		return pms_db_schema;
 	}
 
+	public static String getIDADBSchema() {
+		return ida_db_schema;
+	}
+
 	public static String getIAMUsersToCreate() {
 		return iam_users_to_create;
+	}
+
+	public static String getPmsAppId() {
+		return mosipappid;
+	}
+
+	public static String getPmsClientId() {
+		return mosippmsclientid;
+	}
+
+	public static String getPmsClientSecret() {
+		return mosippmsclientsecret;
+	}
+
+	public static String getPartnerClientId() {
+		return mosippartnerclientid;
+	}
+
+	public static String getPartnerClientSecret() {
+		return mosippartnerclentsecret;
 	}
 
 	public static String getIAMUsersPassword() {
@@ -576,7 +622,7 @@ public class ConfigManager {
 
 	public static String getRolesForUser(String userId) {
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
-		return propsKernel.getProperty("roles");
+		return propsKernel.getProperty("roles." + userId);
 	}
 
 	public static boolean isInServiceNotDeployedList(String stringToFind) {

@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.utility.JsonUtil;
 import io.mosip.testrig.pmprevampui.utility.Screenshot;
 
 public class BasePage {
@@ -182,6 +183,8 @@ public class BasePage {
 
 	protected boolean isElementDisplayed(WebElement element) {
 		try {
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			Thread.sleep(2000);
 			waitForElementToBeVisible(element);
 			return true;
 		} catch (Exception e) {
@@ -257,4 +260,19 @@ public class BasePage {
 		this.waitForElementToBeVisible(element);
 		return element.getText();
 	}
+
+	protected String getTextFromAttribute(WebElement element, String atrr) {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		this.waitForElementToBeVisible(element);
+		return element.getAttribute(atrr);
+	}
+
+	public static String getTestData() {
+		return JsonUtil.readJsonFileText("TestData.json");
+	}
+
 }
