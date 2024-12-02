@@ -189,6 +189,19 @@ function FtmList() {
     }
   };
 
+  const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
+    if (deactivationResponse && !deactivationResponse.isActive) {
+        setViewFtmId(-1);
+        setShowDeactivatePopup(false);
+        // Update the specific row in the state with the new status
+        setFtmList((prevList) =>
+            prevList.map(ftm =>
+                ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
+            )
+        );
+    }
+  };
+
   const closeDeactivatePopup = () => {
     setViewFtmId(-1);
     setShowDeactivatePopup(false);
@@ -296,7 +309,7 @@ function FtmList() {
                                           {t('ftmList.deActivate')}
                                         </p>
                                         {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                         )}
                                       </div>
                                     )}

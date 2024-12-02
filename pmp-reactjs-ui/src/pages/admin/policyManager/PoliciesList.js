@@ -189,6 +189,19 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         document.body.style.overflow = 'auto';
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setPoliciesList((prevList) =>
+                prevList.map(policy =>
+                policy.policyId === selectedPolicy.policyId ? { ...policy, status: "deactivated" } : policy
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setShowDeactivatePopup(false);
         setActionId(-1);
@@ -365,6 +378,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                                 popupData={{ ...policy, isDeactivatePolicy: true }}
                                                                                                 headerKeyName={policy.policyName}
                                                                                                 closePopUp={closeDeactivatePopup}
+                                                                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policy)}
                                                                                             />
                                                                                         )}
                                                                                     </div>

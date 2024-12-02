@@ -150,6 +150,19 @@ function ApiKeysList() {
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
+        if (deactivationResponse !== "") {
+            setViewApiKeyId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setApiKeysList((prevList) =>
+                prevList.map(apiKey =>
+                    apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel ? { ...apiKey, status: "INACTIVE" } : apiKey
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setViewApiKeyId(-1);
         setShowDeactivatePopup(false);
@@ -266,7 +279,7 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}
