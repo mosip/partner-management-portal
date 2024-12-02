@@ -14,7 +14,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [isFilterActive, setIsFilterActive] = useState(false);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
@@ -87,7 +86,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
-    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -95,7 +93,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const areFiltersEmpty = () => {
-    return !isFilterActive && Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "");
   };
 
   const styles = {
@@ -183,7 +181,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
           type="button"
           disabled={areFiltersEmpty()}
           className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-not-allowed' : 'bg-tory-blue'}`}
+          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
         >
           {t("partnerList.applyFilter")}
         </button>

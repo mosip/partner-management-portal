@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import PoliciesList from "./PoliciesList";
 
-function AuthPoliciesList () {
+function AuthPoliciesList() {
     const navigate = useNavigate('');
 
     const createAuthPolicy = () => {
-        localStorage.setItem('policyType', 'Auth');
         navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
     };
 
@@ -16,19 +15,26 @@ function AuthPoliciesList () {
             subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
             backLink: '/partnermanagement/admin/policy-manager/auth-policies-list'
         }
-        localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
         navigate('/partnermanagement/admin/policy-manager/view-auth-policy');
     };
-    
+
+    const editAuthPolicy = (selectedPolicy) => {
+        localStorage.setItem('policyId', selectedPolicy.policyId);
+        navigate('/partnermanagement/admin/policy-manager/edit-auth-policy');
+    };
+
     return (
         <PoliciesList
-            policyType = 'auth'
-            createPolicyButtonName = 'policiesList.createAuthPolicy'
-            createPolicy = {createAuthPolicy}
-            subTitle = 'policiesList.listOfAuthPolicies'
-            fetchDataErrorMessage = 'policiesList.errorInAuthPolicies'
-            viewPolicy = {viewAuthPolicy}>
-        </PoliciesList>
+            policyType='auth'
+            createPolicyButtonName='policiesList.createAuthPolicy'
+            createPolicy={createAuthPolicy}
+            subTitle='policiesList.listOfAuthPolicies'
+            fetchDataErrorMessage='policiesList.errorInAuthPolicies'
+            viewPolicy={viewAuthPolicy}
+            editPolicy={editAuthPolicy}
+            />
+            
     );
 }
 

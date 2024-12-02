@@ -20,11 +20,12 @@ import { HttpService } from '../../../services/HttpService.js';
 import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
-import DeactivatePopup from '../../common/DeactivatePopup.js';
 import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
 import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
+import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
+import PublishPolicyPopup from './PublishPolicyPopup.js';
 
-function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy}) {
+function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy, editPolicy }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -32,22 +33,24 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     const [dataLoaded, setDataLoaded] = useState(true);
     const [policiesList, setPoliciesList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
-    const [order, setOrder] = useState("ASC");
-    const [activeAscIcon, setActiveAscIcon] = useState("createdDateTime");
-    const [activeDescIcon, setActiveDescIcon] = useState("");
+    const [order, setOrder] = useState("DESC");
+    const [activeAscIcon, setActiveAscIcon] = useState("");
+    const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
     const [firstIndex, setFirstIndex] = useState(0);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
+    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
+    const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -57,6 +60,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     });
     const submenuRef = useRef([]);
     const [showClonePopup, setShowClonePopup] = useState(false);
+    const [showPublishPolicyPopup, setShowPublishPolicyPopup] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
@@ -142,6 +146,15 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const showDeactivatePolicy = (policy) => {
+        if (policy.status === 'activated') {
+            setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
+            if (policyType === 'auth') {
+                setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
+            } else if (policyType === 'dataShare') {
+                setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
+            }
+            setShowDeactivatePopup(true);
+        }
     };
 
     const onClickClone = (selectedPolicy) => {
@@ -152,16 +165,33 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     };
 
     const onClickPublish = (selectedPolicy) => {
-       
+        if (selectedPolicy.status === "draft") {
+            setShowPublishPolicyPopup(true);
+            document.body.style.overflow = "hidden";
+        }
     };
 
     const onClickEdit = (selectedPolicy) => {
-       
+        if (selectedPolicy.status === "draft") {
+            editPolicy(selectedPolicy);
+        }
+    };
+
+    const closePublishPolicyPopup = () => {
+        setActionId(-1);
+        setShowPublishPolicyPopup(false);
+        document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
         setActionId(-1);
         setShowClonePopup(false);
+        document.body.style.overflow = 'auto';
+    };
+
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+        setActionId(-1);
         document.body.style.overflow = 'auto';
     };
 
@@ -193,7 +223,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
+                <LoadingIcon />
             )}
             {dataLoaded && (
                 <>
@@ -203,16 +233,16 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' ></Title>
-                                <>
-                                    {applyFilter || policiesList.length > 0 ?
-                                        <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
-                                            {t(createPolicyButtonName)}
-                                        </button>
-                                        : null
-                                    }
-                                </>
+                            <>
+                                {applyFilter || policiesList.length > 0 ?
+                                    <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
+                                        {t(createPolicyButtonName)}
+                                    </button>
+                                    : null
+                                }
+                            </>
                         </div>
-                        <PoliciesTab></PoliciesTab>
+                        <PoliciesTab />
                         {!applyFilter && policiesList.length === 0 ?
                             (
                                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -220,6 +250,7 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                         tableHeaders={tableHeaders}
                                         showCustomButton={true}
                                         customButtonName={createPolicyButtonName}
+                                        buttonId='create_policy'
                                         onClickButton={createPolicy}
                                     />
                                 </div>
@@ -272,11 +303,11 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                             {policiesList.map((policy, index) => {
                                                                 return (
                                                                     <tr id={"policies_list_item" + (index + 1)} key={index}
-                                                                        className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyId}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyName}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyDescription}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{policy.policyGroupName}</td>
+                                                                        className={`border-t border-[#E5EBFA] ${policy.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[6.7rem] pr-[0.8rem]' : 'pr-[6.7rem] pl-[0.8rem]'} break-all`}>{policy.policyId}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[7.5rem] pr-[0.8rem]' : 'pr-[7.5rem] pl-[0.8rem]'} break-all`}>{policy.policyName}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[6.7rem] pr-[0.8rem]' : 'pr-[6rem] pl-[0.8rem]'} break-all`}>{policy.policyDescription}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[5.5rem] pr-[0.8rem]' : 'pr-[7.5rem] pl-[0.8rem]'} break-all`}>{policy.policyGroupName}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{formatDate(policy.createdDateTime, "date", true)}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)}>
                                                                             <div className={`${bgOfStatus(policy.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -295,18 +326,24 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.publish")}</p>
                                                                                             <img src={publishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
-                                                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
-                                                                                            <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
-                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                        </div>
+                                                                                        {showPublishPolicyPopup && (
+                                                                                            <PublishPolicyPopup
+                                                                                                policyDetails={policy}
+                                                                                                closePopUp={closePublishPolicyPopup}
+                                                                                            />
+                                                                                        )}
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicy(policy))}>
                                                                                             <p id="policy_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft'  ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
+                                                                                        <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
+                                                                                            <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
+                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        </div>
+                                                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                        <div className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
                                                                                             <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status !== 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
                                                                                             <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
@@ -321,6 +358,15 @@ function PoliciesList({policyType, createPolicyButtonName, createPolicy, subTitl
                                                                                             <p id="policy_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                             <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                         </div>
+                                                                                        {showDeactivatePopup && (
+                                                                                            <DeactivatePolicyPopup
+                                                                                                header={deactivatePolicyHeader}
+                                                                                                description={deactivatePolicyDescription}
+                                                                                                popupData={{ ...policy, isDeactivatePolicy: true }}
+                                                                                                headerKeyName={policy.policyName}
+                                                                                                closePopUp={closeDeactivatePopup}
+                                                                                            />
+                                                                                        )}
                                                                                     </div>
                                                                                 )}
                                                                             </div>

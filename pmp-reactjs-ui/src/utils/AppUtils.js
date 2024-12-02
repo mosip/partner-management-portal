@@ -215,12 +215,12 @@ export const toggleSortDescOrder = (sortItem, isDateCol, filteredList, setFilter
                 sortedList = [...filteredList].sort((a, b) => {
                     const dateA = new Date(a[sortItem]);
                     const dateB = new Date(b[sortItem]);
-                    return dateA - dateB;
+                    return dateB - dateA;
                 });
             }
             else {
                 sortedList = [...filteredList].sort((a, b) =>
-                    a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
+                    a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
                 );
             }
             setFilteredList(sortedList);
@@ -245,12 +245,12 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
                 sortedList = [...filteredList].sort((a, b) => {
                     const dateA = new Date(a[sortItem]);
                     const dateB = new Date(b[sortItem]);
-                    return dateB - dateA;
+                    return dateA - dateB;
                 });
             }
             else {
                 sortedList = [...filteredList].sort((a, b) =>
-                    a[sortItem].toLowerCase() < b[sortItem].toLowerCase() ? 1 : -1
+                    a[sortItem].toLowerCase() > b[sortItem].toLowerCase() ? 1 : -1
                 );
             }
             setFilteredList(sortedList);
@@ -398,6 +398,16 @@ export const trimAndReplace = (str) => {
     return str.trim().replace(/\s+/g, ' ');
 };
 
+export const getErrorMessage = (errorCode, t, errorMessage) => {
+    const serverErrors = t('serverError', { returnObjects: true });
+
+    if (errorCode && serverErrors[errorCode]) {
+        return serverErrors[errorCode];
+    } else {
+        return errorMessage;
+    }
+};
+
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
@@ -505,5 +515,106 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         setErrorMsg(err);
         console.error('Error fetching data:', err);
         return null;
+    }
+};
+
+export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t) => {
+    setErrorMsg("");
+    setErrorCode("");
+    setSuccessMsg("");
+    const file = event.target.files[0];
+    if (file?.type === "application/json") {
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const data = JSON.parse(reader.result);
+                setPolicyData(JSON.stringify(data, null, 2));
+                setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
+            } catch (error) {
+                setErrorMsg(t('createPolicy.jsonParseError'));
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        setErrorMsg(t('createPolicy.uploadFileError'));
+    }
+    event.target.value = '';
+};  
+
+export const getClientNameEng = (clientName) => {
+    try {
+        const jsonObj = JSON.parse(clientName);
+        if (jsonObj['eng']) {
+            return jsonObj['eng'];
+        } 
+        if (jsonObj['@none']) {
+            return jsonObj['@none'];
+        }
+        // If neither "eng" nor "@none" is present, return the original string
+        return clientName;
+    } catch {
+        // If the string is not a valid JSON, return as it is
+        return clientName;
+    }
+}
+
+export const populateClientNames = (data) => {
+    // Updating the status based on the condition
+    const extractedList = data.map(item => {
+        return { 
+            ...item, 
+            clientNameJson: item.clientName,
+            clientNameEng: getClientNameEng(item.clientName) 
+        };
+    });
+    return extractedList;
+};
+
+export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
+    try {
+        const jsonObject = JSON.parse(clientNameJson);
+        const newJsonObject = {};
+        Object.keys(jsonObject).forEach(key => {
+            if (key !== '@none') {
+                newJsonObject[key] = clientNameEng;
+            }
+        });
+        return newJsonObject;
+    } catch {
+        const newJsonObject = {
+            eng : clientNameEng
+        }
+        return newJsonObject;
+    }
+}
+
+export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            }
+            else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Error in getOidcClientDetails:', error);
+        return null;
+    }
+};
+
+export const copyClientId = (data, textToCopied, setCopied) => {
+    if (data.status === "ACTIVE") {
+        navigator.clipboard.writeText(textToCopied).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
     }
 };

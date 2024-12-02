@@ -343,12 +343,16 @@ function AddDevices() {
         if (responseData && responseData.errors && responseData.errors.length > 0) {
             const errorCode = responseData.errors[0].errorCode;
             let errorMessage = responseData.errors[0].message;
+            const serverErrors = t('serverError', { returnObjects: true });
             if (errorCode) {
-                const serverErrors = t('serverError', { returnObjects: true });
-                if (serverErrors[errorCode]) {
-                    errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                if (errorCode === "PMS_AUT_002") {
+                    errorMessage = serverErrors[errorCode];
                 } else {
-                    errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                    if (serverErrors[errorCode]) {
+                        errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                    } else {
+                        errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                    }
                 }
             } else {
                 errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
@@ -435,7 +439,7 @@ function AddDevices() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -444,7 +448,7 @@ function AddDevices() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-8">
                         <div className="flex justify-between mb-5">
                             <Title
                                 title='addDevices.addDevices'

@@ -5,14 +5,16 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
-    onPressEnterKey
+    onPressEnterKey,
+    populateClientNames,
+    getClientNameLangMap
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import OidcClientsFilter from './OidcClientsFilter';
-import AuthenticationServicesTab from './AuthenticationServicesTab.js';
+import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
@@ -27,13 +29,11 @@ function OidcClientsList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [activeOidcClient, setActiveOicdClient] = useState(true);
-    const [activeApiKey, setActiveApiKey] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
-    const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-    const [activeSortDesc, setActiveSortDesc] = useState("");
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [order, setOrder] = useState("DESC");
+    const [activeSortAsc, setActiveSortAsc] = useState("");
+    const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
 
@@ -50,7 +50,7 @@ function OidcClientsList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
-
+    
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
@@ -64,7 +64,8 @@ function OidcClientsList() {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
-                        const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+                        const populatedData = populateClientNames(resData);
+                        const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setOidcClientsList(sortedData);
                         setFilteredOidcClientsList(sortedData);
                     } else {
@@ -86,7 +87,7 @@ function OidcClientsList() {
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "oidcClientName", headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
@@ -127,11 +128,9 @@ function OidcClientsList() {
                 redirectUris: selectedClientdata.redirectUris,
                 status: "INACTIVE",
                 grantTypes: selectedClientdata.grantTypes,
-                clientName: selectedClientdata.clientName,
+                clientName: selectedClientdata.clientNameEng,
                 clientAuthMethods: selectedClientdata.clientAuthMethods,
-                clientNameLangMap: {
-                    "eng": selectedClientdata.clientName
-                }
+                clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
             });
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
@@ -200,7 +199,7 @@ function OidcClientsList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -213,26 +212,27 @@ function OidcClientsList() {
                             }
                         </div>
                         <AuthenticationServicesTab
-                            activeOidcClient={activeOidcClient}
-                            setActiveOicdClient={setActiveOicdClient}
-                            activeApiKey={activeApiKey}
-                            setActiveApiKey={setActiveApiKey}
+                            activeOidcClient={true}
+                            oidcClientPath='/partnermanagement/authentication-services/oidc-clients-list'
+                            activeApiKey={false}
+                            apiKeyPath='/partnermanagement/authentication-services/api-keys-list'
                         />
 
                         {oidcClientsList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                <EmptyList 
-                                    tableHeaders={tableHeaders} 
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
                                     showCustomButton={true}
                                     customButtonName='createOidcClient.createOidcClient'
+                                    buttonId= 'create_oid_client'
                                     onClickButton={createOidcClient}
                                 />
                             </div>
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='oidcClientsList.listOfOidcClients' dataListLength={filteredOidcClientsList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons titleId='list_of_oidc_clients' listTitle='oidcClientsList.listOfOidcClients' dataListLength={filteredOidcClientsList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <OidcClientsFilter
@@ -247,10 +247,18 @@ function OidcClientsList() {
                                                     {tableHeaders.map((header, index) => {
                                                         return (
                                                             <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
-                                                            <div className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "oidcClientId") && (
-                                                                        <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                                                        <SortingIcon
+                                                                            id={`${header.headerNameKey}_sorting_icon`}
+                                                                            headerId={header.id}
+                                                                            sortDescOrder={sortDescOrder}
+                                                                            sortAscOrder={sortAscOrder}
+                                                                            order={order}
+                                                                            activeSortDesc={activeSortDesc}
+                                                                            activeSortAsc={activeSortAsc}
+                                                                        />
                                                                     )}
                                                                 </div>
                                                             </th>
@@ -266,7 +274,7 @@ function OidcClientsList() {
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientName}</td>
+                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -305,7 +313,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.oidcClientName}/>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
                                                                                 )}
                                                                             </div>
                                                                         )}

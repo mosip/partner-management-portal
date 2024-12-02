@@ -147,7 +147,7 @@ function CreatePolicyGroup() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.listOfPolicyGroup' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
+                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.listOfPolicyGroups' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

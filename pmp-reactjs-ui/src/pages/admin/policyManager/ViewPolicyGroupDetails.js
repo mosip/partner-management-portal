@@ -18,12 +18,12 @@ function ViewPolicyGroupDetails() {
     };
 
     useEffect(() => {
-        const selectedPolicy = localStorage.getItem('selectedPolicyGroup');
-        if (!selectedPolicy) {
+        const selectedPolicyGroup = localStorage.getItem('selectedPolicyGroupAttributes');
+        if (!selectedPolicyGroup) {
             setUnexpectedError(true);
             return;
         }
-        let policyGroupData = JSON.parse(selectedPolicy);
+        let policyGroupData = JSON.parse(selectedPolicyGroup);
         setPolicyGroupDetails(policyGroupData);
     }, []);
 
@@ -58,12 +58,12 @@ function ViewPolicyGroupDetails() {
                                     <div className={`${bgOfStatus(policyGroupDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                         {getStatusCode(policyGroupDetails.isActive ? 'active' : 'inactive', t)}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
                                             formatDate(policyGroupDetails.crDtimes, "date", true)
                                         }
                                     </div>
-                                    <div className="mx-1 text-gray-300">|</div>
+                                    <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
                                         {formatDate(policyGroupDetails.crDtimes, "time", true)}
                                     </div>

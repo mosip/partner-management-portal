@@ -1,16 +1,19 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace } from "../../../utils/AppUtils";
+import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
+    getClientNameLangMap
+ } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import BlockerPrompt from "../../common/BlockerPrompt";
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -24,12 +27,14 @@ function EditOidcClient() {
     const [grantTypesDropdownData, setGrantTypesDropdownData] = useState([]);
     const [editOidcClientSuccess, setEditOidcClientSuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
-
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    let isCancelledClicked = false;
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        clientName: '',
+        clientNameEng: '',
+        clientNameJson: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
@@ -39,12 +44,50 @@ function EditOidcClient() {
         partnerId: '',
         policyGroupName: '',
         policyName: '',
-        clientName: '',
+        clientNameEng: '',
+        clientNameJson: '',
         publicKey: '',
         logoUri: '',
         redirectUris: [],
         grantTypes: [],
     });
+
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked || isCancelledClicked || editOidcClientSuccess) {
+                setIsSubmitClicked(false);
+                isCancelledClicked = false;
+                return false;
+            }
+            return (
+                (checkIfRedirectUrisIsUpdated() ||
+                (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+                (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
+                (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng)) && currentLocation.pathname !== nextLocation.pathname
+            );
+        }
+    );
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () => 
+            checkIfRedirectUrisIsUpdated() ||
+            (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+            (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
+            (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng);
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [oidcClientDetails.redirectUris, oidcClientDetails.grantTypes[0], oidcClientDetails.logoUri, oidcClientDetails.clientNameEng]);
 
     const createGrantTypesDropdownData = useCallback((dataList) => {
         let dataArr = [];
@@ -95,7 +138,7 @@ function EditOidcClient() {
     const onChangeOidcClientName = (value) => {
         setOidcClientDetails(prevDetails => ({
             ...prevDetails,
-            clientName: value
+            clientNameEng: value
         }));
     }
 
@@ -183,8 +226,8 @@ function EditOidcClient() {
         return (checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-            (oidcClientDetails.clientName.trim() !== selectedClientDetails.clientName))
-            && oidcClientDetails.clientName.trim() !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
+            (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng))
+            && trimAndReplace(oidcClientDetails.clientNameEng) !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
@@ -202,6 +245,7 @@ function EditOidcClient() {
     }
 
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
@@ -210,13 +254,10 @@ function EditOidcClient() {
             redirectUris: getRedirectUris(),
             status: oidcClientDetails.status,
             grantTypes: oidcClientDetails.grantTypes,
-            clientName: trimAndReplace(oidcClientDetails.clientName),
+            clientName: trimAndReplace(oidcClientDetails.clientNameEng),
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
-            clientNameLangMap: {
-                "eng": trimAndReplace(oidcClientDetails.clientName)
-            }
+            clientNameLangMap: getClientNameLangMap(trimAndReplace(oidcClientDetails.clientNameEng), oidcClientDetails.clientNameJson)
         });
-        console.log(request);
         try {
             const response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${oidcClientDetails.clientId}`, process.env.NODE_ENV), request, {
                 headers: {
@@ -243,6 +284,12 @@ function EditOidcClient() {
             setDataLoaded(true);
             setErrorMsg(err);
         }
+        setIsSubmitClicked(false);
+    }
+
+    const clickOnCancel = () => {
+        isCancelledClicked = true;
+        moveToOidcClientsList(navigate);
     }
 
     const styles = {
@@ -254,7 +301,7 @@ function EditOidcClient() {
 
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -263,7 +310,7 @@ function EditOidcClient() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-8">
                         <div className="flex justify-between">
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
                         </div>
@@ -328,7 +375,7 @@ function EditOidcClient() {
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-[562px]">
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
+                                                    <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientNameEng} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                     />
                                                 </div>
@@ -405,7 +452,7 @@ function EditOidcClient() {
                                 <div className="flex flex-row px-[3%] py-[2%] justify-between">
                                     <button id="oidc_edit_clear_form_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                                     <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                        <button id="oidc_edit_cancel_btn" onClick={() => moveToOidcClientsList(navigate)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                                        <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     </div>
                                 </div>
@@ -414,8 +461,8 @@ function EditOidcClient() {
                         }
                     </div>
                 </>
-            )
-            }
+            )}
+            <BlockerPrompt blocker={blocker} />
         </div >
     )
 }

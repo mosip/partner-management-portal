@@ -48,11 +48,11 @@ function ViewPolicyRequestDetails() {
                                 <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(policyRequestDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(policyRequestDetails.createdDateTime, "date", false)}
                                 </div>
-                                <div className="mx-1 text-gray-300">|</div>
+                                <div className="mx-2 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
                                     {formatDate(policyRequestDetails.createdDateTime, "time", false)}
                                 </div>
@@ -62,44 +62,44 @@ function ViewPolicyRequestDetails() {
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.partnerType}
                                 </p>
                             </div>
                             <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.organisation")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.orgName}
                                 </p>
                             </div>
                         </div>
                         <div className={`flex flex-wrap pt-3`}>
                             <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-md break-normal">
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
                             <div className={`w-[48%] max-[600px]:w-[100%]`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-md break-normal">
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p className="font-[600] text-vulcan text-md break-normal">
                                     {policyRequestDetails.policyGroupName}
                                 </p>
                             </div>
@@ -121,11 +121,7 @@ function ViewPolicyRequestDetails() {
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4">
-                                            <div
-                                                className={`${bgOfStatus(
-                                                    policyRequestDetails.status
-                                                )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
-                                            >
+                                            <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md`}>
                                                 {getStatusCode(policyRequestDetails.status, t)}
                                             </div>
                                             <div>

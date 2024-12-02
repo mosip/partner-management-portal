@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, isLangRTL } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL, handleServiceErrors} from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -76,6 +76,13 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                     }
                 });
             }
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                window.location.reload();
+            } else {
+                setDataLoaded(true);
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
         } catch (err) {
             setDataLoaded(true);
             setErrorMsg(err);
@@ -88,7 +95,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-6"
     }
 
     return (

@@ -14,7 +14,6 @@ import {
   bgOfStatus,
   onClickApplyFilter,
   resetPageNumber, setPageNumberAndPageSize, onResetFilter,
-  createRequest
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -27,7 +26,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import EmptyList from "../../common/EmptyList";
 import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
-import ApproveRejectPolicyRequestPopup from "./ApproveRejectPolicyRequestPopup";
+import ApproveRejectPopup from "../../common/ApproveRejectPopup";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -38,9 +37,9 @@ function PolicyRequestsList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policyRequestsData, setPolicyRequestsData] = useState([]);
-  const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-  const [activeSortDesc, setActiveSortDesc] = useState("");
+  const [order, setOrder] = useState("DESC");
+  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
@@ -150,7 +149,7 @@ function PolicyRequestsList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName(header);
-      setSortType("desc");
+      setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
       setActiveSortAsc(header);
@@ -161,14 +160,14 @@ function PolicyRequestsList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName(header);
-      setSortType("asc");
+      setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
       setActiveSortAsc("");
     }
   };
 
-  const closePolicyRequetPopup = () => {
+  const closePolicyRequestPopup = () => {
     setViewPartnersId(-1);
     setShowPopup(false);
   };
@@ -217,7 +216,7 @@ function PolicyRequestsList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                 </div>
               ) : (
                 <>
@@ -239,7 +238,7 @@ function PolicyRequestsList() {
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && isFilterApplied && policyRequestsData.length === 0 ?
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                       : (
                         <>
                           <div className="mx-[2%] overflow-x-scroll">
@@ -275,8 +274,8 @@ function PolicyRequestsList() {
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-normal">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.orgName}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2 break-all">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1text-xs font-semibold rounded-md`}>
@@ -293,7 +292,7 @@ function PolicyRequestsList() {
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, approveRejectPolicyRequest(policyRequest))}>
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectRequestPopup.approveReject")}</p>
+                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                 <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
@@ -302,9 +301,13 @@ function PolicyRequestsList() {
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                               </div>
                                               {showPopup &&
-                                                <ApproveRejectPolicyRequestPopup
-                                                  popupData={policyRequest}
-                                                  closePopUp={closePolicyRequetPopup}
+                                                <ApproveRejectPopup
+                                                  popupData={{ ...policyRequest, isPartnerPolicyRequest: true }} 
+                                                  closePopUp={closePolicyRequestPopup}
+                                                  title={policyRequest.policyName}
+                                                  subtitle={`# ${policyRequest.policyId}`}
+                                                  header={t('partnerPolicyRequestApproveRejectPopup.header')}
+                                                  description={t('partnerPolicyRequestApproveRejectPopup.description')}
                                                 />
                                               }
                                             </div>

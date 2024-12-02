@@ -28,7 +28,9 @@
         "errorInResponse": "While fetching all approved auth partner policies, we have encountered with an error",
         "filterBtn": "Filter",
         "resetFilter": "Reset Filter",
-        "itemsPerPage": "Items per page"
+        "itemsPerPage": "Items per page",
+        "close":"Close",
+        "unexpectedError": "We have encountered an unexpected error"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -53,16 +55,16 @@
         "rootOfTrustCertificate": "Root of Trust Certificate",
         "rootOfTrustCertificateDesc": "Upload Root and Intermediate Root Certificates",
         "partner": "Partner",
-        "partnerDesc": "View/Deactivate partner details",
+        "partnerDesc": "View, Deactivate partner details",
         "policy": "Policy",
         "policiesadminDesc": "Create Policy Group, Authentication  and Datashare Policy",
         "partnerPolicyMapping": "Partner - Policy Linking",
         "partnerPolicyMappingDesc": "View, Deactivate, Approve/Reject policy requests from partners",
         "sbiDevice": "SBI - Device",
-        "sbiDeviceDesc": "View, Deactivate Approve/Reject SBI or device details",
+        "sbiDeviceDesc": "View, Deactivate, Approve/Reject SBI or device details",
         "ftmChip": "FTM Chip",
-        "ftmChipDesc": "View, Deactivate Approve/Reject FTM Chip details",
-        "adminAuthenticationServicesDesc": "View/Deactivate OIDC Client or API details",
+        "ftmChipDesc": "View, Deactivate, Approve/Reject FTM Chip details",
+        "adminAuthenticationServicesDesc": "View, Deactivate OIDC Client or API details",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
@@ -276,6 +278,7 @@
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
+        "orgName": "Organisation",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
         "oidcClientName": "OIDC Client Name",
@@ -297,6 +300,7 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
+        "searchOidcClientName": "Search OIDC Client Name",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
     },
     "viewOidcClientDetails": {
@@ -343,12 +347,12 @@
         "confirm": "Confirm"
     },
     "apiKeysList": {
-        "apiKeyLabel": "API Key Name",
+        "apiKeyName": "API Key Name",
         "apiKeyId": "API Key ID",
         "apiKey": "API Key",
         "generateApiKey": "Generate API Key",
         "listOfApiKeyRequests": "List of API Keys",
-        "selectApiKeyLabel": "Select API Key Name",
+        "searchApiKeyName": "Search API Key Name",
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure to copy the API key before closing this window because the API key will not be visible anymore once the window is closed.",
         "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
     },
@@ -472,6 +476,7 @@
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "addFtmBtn": "Add FTM Chip",
         "partnerId": "Partner ID",
+        "orgName":"Organisation",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
@@ -490,6 +495,8 @@
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
+        "searchMake": "Search Make",
+        "searchModel": "Search Model",
         "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
     },
@@ -600,7 +607,7 @@
         "description": "Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal."
     },
     "createPolicyGroup": {
-        "listOfPolicyGroup": "List of Policy Group",
+        "listOfPolicyGroups": "List of Policy Groups",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupName": "Policy Group Name",
         "enterNameforPolicyGroup": "Enter name for Policy Group",
@@ -643,8 +650,8 @@
         "createdDate": "Created Date",
         "status": "Status",
         "action": "Action",
-        "listOfAuthPolicies": "List of Authentication Policy",
-        "listOfDataSharePolicies": "List of Datashare Policy",
+        "listOfAuthPolicies": "List of Authentication Policies",
+        "listOfDataSharePolicies": "List of Datashare Policies",
         "errorInAuthPolicies": "While fetching authentication policies, we have encountered with an error.",
         "errorInDataSharePolicies": "While fetching data share policies, we have encountered with an error.",
         "searchPolicyId": "Search Policy ID",
@@ -665,7 +672,7 @@
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
-        "listOfAuthenticationPolicies": "List of Authentication Policy",
+        "listOfAuthenticationPolicies": "List of Authentication Policies",
         "policyId": "Policy ID",
         "policyGroup": "Policy Group",
         "policyDescription": "Policy Description",
@@ -674,9 +681,22 @@
         "jsonFilePlace": "JSON File Name Goes Here",
         "preview": "Preview"
     },
+    "editPolicy": {
+        "edit": "Edit",
+        "editAuthPolicyTitle": "Edit Authentication Policy",
+        "editDataSharePolicyTitle": "Edit Datashare Policy",
+        "authPolicyConfirmationHeader": "Authentication Policy updated and submitted successfully!",
+        "dataSharePolicyConfirmationHeader": "Data-Share Policy updated and submitted successfully!",
+        "authPolicyConfirmationMessage": "The Authentication Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Authentication Policies' screen.",
+        "dataSharePolicyConfirmationMessage": "The Data-Share Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Data Share Policies' screen.",
+        "errorInEditPolicy": "While editing policy, we have encountered with an error.",
+        "reUploadPolicyData": "Re-Upload Policy Data",
+        "reuploadBtn": "Re-Upload",
+        "policyIdNotExist": "Policy details not found: The provided Policy ID does not exist."
+    },
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "View Datashare Policy",
-        "listOfDataSharePolicies": "List of Datashare Policy"
+        "listOfDataSharePolicies": "List of Datashare Policies"
     },
     "createPolicy": {
         "policyGroup": "Policy Group",
@@ -696,11 +716,11 @@
         "enterDataSharePolicyName": "Enter name for Datashare Policy",
         "authPolicyDescription": "Enter description about Authentication Policy",
         "dataSharePolicyDescription": "Enter description about Datashare Policy",
-        "authPolicyConfirmationHeader": "Authentication Policy created successfully!",
-        "dataSharePolicyConfirmationHeader": "Datashare Policy created successfully!",
-        "authPolicyConfirmationMessage": "Authentication Policy for Policy Group : {{policyGroupName}} has been created successfully!",
-        "dataSharePolicyConfirmationMessage": "Datashare Policy for Policy Group : {{policyGroupName}} has been created successfully!",
-        "errorInCreatePolicy": "While creating policy, we have encountered with an error."
+        "policyConfirmationHeader": "Policy saved as Draft",
+        "authPolicyConfirmationMessage": "This Authentication Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Authentication Policies' page",
+        "dataSharePolicyConfirmationMessage": "This Datashare Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Datashare Policies' page",
+        "errorInCreatePolicy": "While creating policy, we have encountered with an error.",
+        "saveAsDraft": "Save as Draft"
     },
     "clonePolicyPopup": {
         "title": "Clone Policy",
@@ -709,8 +729,15 @@
         "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
         "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
         "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
-        "close": "Close",
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
+    },
+    "publishPolicyPopup": {
+        "title": "Publish Policy",
+        "description1": "By clicking ‘Publish,’ the policy",
+        "description2": "will be published and no longer be editable. It will become available for partner selection only after the policy is published.",
+        "errorInPublishPolicy": "While publishing the policy, we have encountered with an error.",
+        "successMsg": "{{policyName}} has been published successfully!",
+        "publish": "Publish"
     },
     "partnerPolicyMappingRequestList": {
         "partnerPolicyMappingRequestTitle": "Partner - Policy Linking",
@@ -754,15 +781,44 @@
         "organisation": "Organisation Name",
         "policyGroup": "Policy Group"
     },
-    "approveRejectRequestPopup": {
-        "header": "Do you want to Approve/Reject the Policy",
-        "description": "Please review the policy details carefully before taking appropriate action.",
-        "approveReject":"Approve / Reject",
+    "deactivatePolicyPopup": {
+        "headerMsg": "Do you want to deactivate Policy",
+        "authPolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Authentication Policy will be deactivated.",
+        "dataSharePolicyDescriptionMsg": "Upon clicking ‘Confirm’, the selected Datashare Policy will be deactivated."
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "Error: Active Partner-Policy Association Detected!",
+        "description": "Active partners are currently associated to this policy. Please deactivate all active partners associated to this policy before attempting to deactivate it"
+    },
+    "pendingPolicyRequestsDetectedMsg": {
+        "header": "Error: Partner - Policy Request Detected!",
+        "description": "Pending policy requests are associated with this policy. Please take appropriate action in List of Partner Policy Linking screen"
+    },
+    "approveRejectPopup": {
+        "approveReject": "Approve / Reject",
         "deActivate": "Deactivate",
         "approve": "Approve",
         "reject": "Reject",
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the Policy",
+        "description": "Please review the policy details carefully before taking appropriate action."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}",
+        "description": "Please review the FTM Chip details and associated certificate carefully before taking appropriate action."
+    },
+    "viewAdminOidcClientDetails": {
+        "organisation": "Organisation",
+        "errorWhileGettingOidcClientDetails": "While fetching Policy Group details, we have encountered with an error.",
+        "errorWhileGettingGroupDetails": "While fetching Policy Group details, we have encountered with an error."
+    },
+    "deactivateOidc": {
+        "header":"Are you sure you want to Deactivate OIDC Client",
+        "description":"On clicking ‘Confirm’, the OIDC Client ID will be deactivated and can no longer be used for authentication.",
+        "errorInOidcDetails": "While fetching OIDC client details, we have encountered with an error."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -777,6 +833,10 @@
         "description": "Your changes will be lost, are you sure you want to proceed?",
         "cancel": "Cancel",
         "proceed": "Proceed"
+    },
+    "adminDeactivateApiKey": {
+        "title": "Are you sure you want to Deactivate API Key",
+        "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
@@ -843,6 +903,9 @@
         "PMS_PM_059": "Error while fetching partner details.",
         "PMS_PM_060": "The certificate for the specified partner is not available in the store",
         "PMS_PM_061": "Error while fetching all partners details",
+        "PMS_PM_062": "Error while fetching all partner policy mapping requests",
+        "PMS_PM_063": "The selected partner has already been deactivated.",
+        "PMS_PM_064": "Error while fetching all api key requests",
         "PMS_PMP_010": "Policy does not belong to the Policy Group of the Partner Manger",
         "PMS_PMP_015": "No Partner api key requests for the Policy Group",
         "PMS_PMP_007": "Partner api key does not exist",
@@ -864,7 +927,7 @@
         "PMS_PMP_018": "Policy expired.",
         "PMS_PRT_108": "Policy group is Mandatory for Auth_Partner",
         "PMS_PRT_110": "Entered API Key name already exists. Provide a unique API Key name and submit.",
-        "PMS_AUT_002": "Partner account for given partner type has been deactivated by Admin",
+        "PMS_AUT_002": "Your Partner account for given partner type has been deactivated by Admin, due to which you will no longer be able to perform this activity",
         "PMS_AUT_003": "Device Details already exists for the same make and/or model",
         "PMS_AUT_004": "Duplicate request received",
         "PMS_AUT_005": "Device detail for id %s does not exist",
@@ -896,7 +959,7 @@
         "PMS_POL_006": "Unsupported Authentication Type in the Policy File",
         "PMS_POL_007": "eKYC attribute missing in the policy file",
         "PMS_POL_008": "Policy ID does not exist",
-        "PMS_POL_009": "A policy with this name already exists",
+        "PMS_POL_009": "The given policy name already exists. Please try with a different policy name",
         "PMS_COR_002": "Invalid Input Parameter _ ",
         "PMS_COR_003": "Could not process the request",
         "PMS_POL_010": " Auth Policies are not defined against to policy",
@@ -953,6 +1016,10 @@
         "PMS_POLICY_ERROR_005": "Policy Group Id is empty.",
         "PMS_POLICY_ERROR_006": "Error while fetching OIDC clients list.",
         "PMS_POLICY_ERROR_007": "Error while fetching API Key requests",
+        "PMS_POLICY_ERROR_008": "No matching policy group was found for the provided partner",
+        "PMS_POLICY_ERROR_009": "The given partner ID does not belong to the user.So unable to create OIDC client",
+        "PMS_POLICY_ERROR_010": "The given partner ID does not belong to the user.So unable to update OIDC client details",
+        "PMS_POLICY_ERROR_011": "The given partner ID does not belong to the user.So unable to get OIDC client details",
         "PMS_ESI_001": "Client public key already exists.",
         "PMS_ESI_002": "Partner policy mapping is not approved. Please check mapping status.",
         "PMS_ESI_003": "Policy having mandatory auths. So client can't be created for the same.",

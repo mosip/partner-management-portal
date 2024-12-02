@@ -220,7 +220,7 @@ function AddFtm() {
   }
 
   return (
-    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs`}>
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter max-[450px]:text-xs relative`}>
       {!dataLoaded && (
         <LoadingIcon />
       )}
@@ -229,7 +229,7 @@ function AddFtm() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-8">
             <div className="flex justify-between">
               <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftm-chip-provider-services/ftm-list' />
             </div>

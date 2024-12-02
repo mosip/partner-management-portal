@@ -98,6 +98,5 @@ public class CreateOidecClient extends BaseClass {
 		oidcClientPage.clickOnCreateOidcClearForm();
 		
 		assertFalse(oidcClientPage.isCreateOidcRedirectUrl5Displayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
-		
 	}
 }

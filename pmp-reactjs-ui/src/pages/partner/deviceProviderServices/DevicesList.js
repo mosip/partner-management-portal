@@ -30,10 +30,10 @@ function DevicesList() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
-    const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-    const [activeSortDesc, setActiveSortDesc] = useState("");
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [order, setOrder] = useState("DESC");
+    const [activeSortAsc, setActiveSortAsc] = useState("");
+    const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
@@ -197,7 +197,7 @@ function DevicesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -242,17 +242,18 @@ function DevicesList() {
                                 {devicesList.length === 0
                                     ?
                                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                        <EmptyList 
-                                            tableHeaders={tableHeaders} 
+                                        <EmptyList
+                                            tableHeaders={tableHeaders}
                                             showCustomButton={true}
                                             customButtonName='devicesList.addDevices'
+                                            buttonId='add_devices'
                                             onClickButton={addDevices}
                                         />
                                     </div>
                                     :
                                     <>
                                         <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                            <FilterButtons listTitle='devicesList.listOfDevices' dataListLength={filteredDevicesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                            <FilterButtons titleId='list_of_devices' listTitle='devicesList.listOfDevices' dataListLength={filteredDevicesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                             <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                             {filter &&
                                                 <DevicesListFilter
@@ -267,10 +268,17 @@ function DevicesList() {
                                                             {tableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                        <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
-                                                                                <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                                                                <SortingIcon
+                                                                                    headerId={header.id}
+                                                                                    sortDescOrder={sortDescOrder}
+                                                                                    sortAscOrder={sortAscOrder}
+                                                                                    order={order}
+                                                                                    activeSortDesc={activeSortDesc}
+                                                                                    activeSortAsc={activeSortAsc}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </th>
@@ -282,7 +290,7 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr id={'device_list_device_item' +  (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>

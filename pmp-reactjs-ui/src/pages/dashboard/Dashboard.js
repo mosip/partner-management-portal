@@ -155,21 +155,22 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchPartnerPolicyMappingRequestCount = async () => {
-      const partnerPolicyMappingSearchRequest = createRequest({
-        filters: [{ columnName: "statusCode", type: "equals", value: "InProgress" }],
-        sort: [],
-        pagination: { pageStart: 0, pageFetch: 1 },
-      });
+      const queryParams = new URLSearchParams();
+      queryParams.append('status', 'InProgress');
+      queryParams.append('pageSize', '1');
 
+      const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
-        const response = await HttpService.post(
-          getPartnerManagerUrl(`/partners/apikey/request/search`, process.env.NODE_ENV),
-          partnerPolicyMappingSearchRequest
-        );
-        if (response?.data?.response) {
-          setPartnerPolicyMappingRequestCount(response.data.response.totalRecord);
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setPartnerPolicyMappingRequestCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
         } else {
-          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
         setErrorMsg(t('dashboard.requestCountFetchError'));
@@ -288,6 +289,14 @@ function Dashboard() {
     navigate('/partnermanagement/admin/policy-requests-list')
   }
 
+  const adminAuthenticationServices = () => {
+    navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
+  }
+
+  const adminftmChipProviderServices = () => {
+    navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -318,22 +327,22 @@ function Dashboard() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
+          <div id='welcome_msg' className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
             <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
             {!isPartnerAdmin &&
-              < div id='dashboard_partner_certificated_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+              < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
-                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8"></img>
+                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_partner_certificate_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.partnerCertificate')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_partner_certificate_list_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.partnerCertificateDesc')}
                   </p>
                 </div>
@@ -342,13 +351,13 @@ function Dashboard() {
             {!isPartnerAdmin && showPolicies && (
               <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
                 <div className="flex justify-center mb-5">
-                  <img src={policiesIcon} alt="" className="w-8 h-8"></img>
+                  <img src={policiesIcon} alt="" className="w-8 h-8" id='dashboard_policies_card_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                  <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
                     {t('dashboard.policies')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.policiesDesc')}
                   </p>
                 </div>
@@ -357,13 +366,13 @@ function Dashboard() {
             {!isPartnerAdmin && showAuthenticationServices && (
               <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
-                  <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
+                  <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                  <h5 id='dashboard_authentication_clients_list_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
                     {t('dashboard.authenticationServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_authentication_clients_list_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.authenticationServicesDesc')}
                   </p>
                 </div>
@@ -372,13 +381,13 @@ function Dashboard() {
             {!isPartnerAdmin && showDeviceProviderServices && (
               <div id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" />
+                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" id='dashboard_device_provider_service_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_device_provider_service_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.deviceProviderServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_device_provider_service_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.deviceProviderServicesDesc')}
                   </p>
                 </div>
@@ -387,13 +396,13 @@ function Dashboard() {
             {!isPartnerAdmin && showFtmServices && (
               <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" id='dashboard_ftm_chip_provider_icon'/>
                 </div>
                 <div>
-                  <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_ftm_chip_provider_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.ftmChipProviderServices')}
                   </h5>
-                  <p className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_ftm_chip_provider_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
@@ -443,7 +452,7 @@ function Dashboard() {
                     </div>
                   </div>
                 )}
-                <div onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
                   <div className="flex justify-center mb-5">
                     <img src={partner_policy_mapping_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -462,7 +471,7 @@ function Dashboard() {
                   /> 
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
                   <div className="flex justify-center mb-5">
                     <img src={deviceProviderServices_icon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -484,7 +493,7 @@ function Dashboard() {
                   />
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
                   <div className="flex justify-center mb-5">
                     <img src={ftmServicesIcon} alt="" className="w-8 h-8"></img>
                   </div>
@@ -503,7 +512,7 @@ function Dashboard() {
                   />
                 </div>
 
-                <div className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl">
+                <div onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
                   <div className="flex justify-center mb-5">
                     <img src={authServiceIcon} alt="" className="w-8 h-8"></img>
                   </div>

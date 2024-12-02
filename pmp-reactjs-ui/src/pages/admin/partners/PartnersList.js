@@ -33,7 +33,7 @@ function PartnersList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
@@ -150,7 +150,7 @@ function PartnersList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("desc");
+      setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
       setActiveSortAsc(header);
@@ -161,7 +161,7 @@ function PartnersList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("asc");
+      setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
       setActiveSortAsc("");
@@ -225,7 +225,7 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                 </div>
               ) : (
                 <>
@@ -247,7 +247,7 @@ function PartnersList() {
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                     {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? 
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}></EmptyList>
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}/>
                       : (
                       <>
                         <div className="mx-[2%] overflow-x-scroll">
@@ -279,11 +279,11 @@ function PartnersList() {
                                 return (
                                   <tr id={"partner_list_item" + (index + 1)} key={index}
                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[4.5rem] pr-[0.8rem]' : 'pr-[5.8rem] pl-[0.8rem]'} break-all`}>{partner.partnerId}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5.5rem] pr-[0.8rem]' : 'pr-[4.5rem] pl-[0.8rem]'} break-all`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5rem] pr-[0.8rem]' : 'pr-[2.1rem] pl-[0.8rem]'} break-all`}>{partner.orgName}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[3rem] pr-[0.8rem]' : 'pr-[4rem] pl-[0.8rem]'} break-all`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[1.8rem] pr-[0.8rem]' : 'pr-[3.8rem] pl-[0.8rem]'} break-all`}>{partner.emailAddress}</td>
                                     <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                       {getStatusCode(partner.certificateUploadStatus, t)}
                                     </td>

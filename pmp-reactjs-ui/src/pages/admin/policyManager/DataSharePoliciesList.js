@@ -5,7 +5,6 @@ function DataSharePoliciesList() {
     const navigate = useNavigate('');
 
     const createDataSharePolicy = () => {
-        localStorage.setItem('policyType', 'DataShare');
         navigate('/partnermanagement/admin/policy-manager/create-data-share-policy');
     };
 
@@ -16,8 +15,13 @@ function DataSharePoliciesList() {
             subTitle: 'viewDataSharePoliciesList.listOfDataSharePolicies',
             backLink: '/partnermanagement/admin/policy-manager/data-share-policies-list'
         }
-        localStorage.setItem('selectedPolicyData', JSON.stringify(requiredData));
+        localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
         navigate('/partnermanagement/admin/policy-manager/view-data-share-policy');
+    };
+
+    const editDataSharePolicy = (selectedPolicy) => {
+        localStorage.setItem('policyId', selectedPolicy.policyId);
+        navigate('/partnermanagement/admin/policy-manager/edit-data-share-policy');
     };
 
     return (
@@ -27,8 +31,9 @@ function DataSharePoliciesList() {
             createPolicy = {createDataSharePolicy}
             subTitle = 'policiesList.listOfDataSharePolicies'
             fetchDataErrorMessage = 'policiesList.errorInDataSharePolicies'
-            viewPolicy = {viewDataSharePolicy}>
-        </PoliciesList>
+            viewPolicy = {viewDataSharePolicy}
+            editPolicy = {editDataSharePolicy}
+            />
     );
 }
 

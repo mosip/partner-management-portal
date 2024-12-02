@@ -36,6 +36,12 @@ import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
 import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
 import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
+import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
+import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
+import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
+import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
+import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 
 function AppRoutes() {
 
@@ -185,8 +191,16 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/policy-manager/edit-auth-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/edit-data-share-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-requests-list',
@@ -195,6 +209,26 @@ function AppRoutes() {
         {
           path: 'admin/view-policy-request',
           element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/oidc-clients-list',
+          element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-oidc-client-details',
+          element: <GuardedRoute><MainLayout><ViewAdminOidcClientDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/api-keys-list',
+          element: <GuardedRoute><MainLayout><AdminApiKeysList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-api-key-details',
+          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/ftm-chip-provider-services/ftm-list',
+          element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
