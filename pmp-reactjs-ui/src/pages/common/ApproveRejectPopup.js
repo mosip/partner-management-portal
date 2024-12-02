@@ -47,7 +47,7 @@ function ApproveRejectPopup({
             if (popupData.isFtmRequest) {
                 const request =  createRequest({
                     ftpChipDetailId: popupData.ftmId,
-                    approvalStatus: status === "Approved" ? true : false
+                    approvalStatus: status === "approved" ? true : false
                 });
                 response = await HttpService.patch(getPartnerManagerUrl(`/ftpchipdetail`, process.env.NODE_ENV), request, {
                     headers: {
@@ -94,8 +94,10 @@ function ApproveRejectPopup({
                             <div>
                                 <div className="flex justify-between px-[1.5rem] my-4">
                                     <div className="flex-col space-y-2">
-                                        <p className="text-base font-bold">{title}</p>
-                                        <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
+                                        <p className="text-sm font-bold">{title}</p>
+                                        {subtitle && (
+                                            <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
+                                         )}
                                     </div>
                                     <img
                                         src={close_icon}

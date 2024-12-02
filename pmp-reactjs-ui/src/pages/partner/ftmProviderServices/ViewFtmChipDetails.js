@@ -71,7 +71,7 @@ function ViewFtmChipDetails() {
 
     const getOriginalCertificate = async (ftmDetails) => {
         const response = await fetchCertificate(ftmDetails.ftmId);
-        if (response !== null) {
+        if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
@@ -86,7 +86,7 @@ function ViewFtmChipDetails() {
         setErrorMsg("");
         try {
             const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
-            if (response !== null) {
+            if (response) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;

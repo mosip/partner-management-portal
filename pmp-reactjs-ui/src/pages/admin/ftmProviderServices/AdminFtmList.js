@@ -275,8 +275,7 @@ function AdminFtmList () {
                                                                                         <ApproveRejectPopup
                                                                                             popupData={{ ...ftm, isFtmRequest: true }}
                                                                                             closePopUp={closeApproveRejectPopup}
-                                                                                            title={ftm.make}
-                                                                                            subtitle={`# ${ftm.model}`}
+                                                                                            title={`${ftm.make} | ${ftm.model}`}
                                                                                             header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
                                                                                             description={t('ftmRequestApproveRejectPopup.description')}
                                                                                         />

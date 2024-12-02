@@ -63,7 +63,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 } else if (popupData.isUploadFtmCertificate) {
                     response = await HttpService.post(getPartnerManagerUrl('/ftpchipdetail/uploadcertificate', process.env.NODE_ENV), uploadRequest)
                 }
-                if (response !== null) {
+                if (response) {
                     const resData = response.data.response;
                     if (response.data.errors && response.data.errors.length > 0) {
                         const errorCode = response.data.errors[0].errorCode;
