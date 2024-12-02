@@ -39,28 +39,15 @@ public class TestRunner {
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
 			suite.addListener("io.mosip.testrig.pmprevampui.utility.EmailableReport");
-//			XmlClass RegisterNewUser= new XmlClass("io.mosip.testrig.pmprevampui.testcase.RegisterNewUser");
-//			XmlClass NewUserPolicy = new XmlClass("io.mosip.testrig.pmprevampui.testcase.NewUserPolicy");
-//			XmlClass CreateOidecClient = new XmlClass("io.mosip.testrig.pmprevampui.testcase.CreateOidecClient");
-//			XmlClass CreateApiKey = new XmlClass("io.mosip.testrig.pmprevampui.testcase.CreateApiKey");
-			XmlClass UploadCertWIthAdmin = new XmlClass("io.mosip.testrig.pmprevampui.testcase.UploadCertWIthAdmin");
+			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmprevampui.testcase.AuthPartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] Scenarioname = ConfigManager.gettestcases().split(",");
 			for (String test : Scenarioname) {
 
-				if (test.equals("UploadCertWIthAdmin")) {
-					classes.add(UploadCertWIthAdmin);
+				if (test.equals("AuthPartnerTest")) {
+					classes.add(AuthPartnerTest);
 				}
-//				if(test.equals("NewUserPolicy")) {
-//					classes.add(NewUserPolicy);
-//				}
-//				if(test.equals("CreateOidecClient")) {
-//					classes.add(CreateOidecClient);
-//				}
-//				if(test.equals("CreateApiKey")) {
-//					classes.add(CreateApiKey);
-//				}
 
 			}
 
