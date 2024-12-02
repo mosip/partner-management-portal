@@ -8,7 +8,7 @@ import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
+function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -78,7 +78,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
             }
             const responseData = response.data;
             if (responseData && responseData.response) {
-                window.location.reload();
+                onClickConfirm();
             } else {
                 setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);

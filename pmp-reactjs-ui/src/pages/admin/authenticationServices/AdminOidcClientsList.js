@@ -84,19 +84,19 @@ function AdminOidcClientsList () {
             queryParams.append('sortFieldName', sortFieldName);
             queryParams.append('sortType', sortType);
             queryParams.append('pageSize', pageSize);
-
+    
             //reset page number to 0 if filter applied or page number is out of bounds
             const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
             queryParams.append('pageNo', effectivePageNo);
             setResetPageNo(false);
-
+    
             if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
             if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
             if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
             if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
             if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
             if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
-
+    
             const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
             try {
                 fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
@@ -172,7 +172,7 @@ function AdminOidcClientsList () {
     const deactivateOidcClient = async (client) => {
         if (client.status === "ACTIVE") {
             const oidcClientDetails = await getOidcClientDetails(HttpService, client.clientId, setErrorCode, setErrorMsg);
-            if (oidcClientDetails !== null) {
+            if (oidcClientDetails) {
                 const request = createRequest({
                     logoUri: oidcClientDetails.logoUri,
                     redirectUris: oidcClientDetails.redirectUris,
@@ -190,6 +190,25 @@ function AdminOidcClientsList () {
             }
         }
     };
+
+    const onClickConfirmDeactivate = async (clientId) => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
+        try {
+            const updatedClient = await getOidcClientDetails(HttpService, clientId, setErrorCode, setErrorMsg);
+            if (updatedClient) {
+                setOidcClientsList((prevList) => 
+                    prevList.map(client => 
+                        client.clientId === clientId ? { ...client, status: "INACTIVE" } : client
+                    )
+                );
+            } else {
+                setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
+            }
+        } catch (error) {
+            console.error("Error updating client:", error);
+        }
+    }
 
     const closeDeactivatePopup = () => {
         setActionId(-1);
@@ -319,7 +338,7 @@ function AdminOidcClientsList () {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />
+                                                                                        <DeactivatePopup onClickConfirm={() => onClickConfirmDeactivate(client.clientId)} closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />
                                                                                     )}
                                                                                 </div>
                                                                             )}
