@@ -15,4 +15,7 @@ import io.mosip.testrig.pmprevampui.pages.RegisterPage;
 import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
-public class CreateApiKey extends BaseClass {}
+public class FTMDeviceTest extends BaseClass {
+
+
+}

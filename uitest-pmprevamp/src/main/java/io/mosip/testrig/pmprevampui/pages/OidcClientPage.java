@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class OidcClientPage extends BasePage {
 
-	@FindBy(id = "create_policy_group_btn")
+	@FindBy(id = "create_oid_client")
 	private WebElement createOidcClient;
 
 	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
@@ -82,11 +82,12 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'No Data Available.')]")
 	private WebElement NoDataAvailableText;
 	
-	
-
 	@FindBy(id = "create_oidc_partner_id")
 	private WebElement SelectPartneridForOidc;
-
+	
+	@FindBy(id = "create_oidc_partner_id_option1")
+	private WebElement createOidcPartnerIdOption1;
+	
 	@FindBy(id = "create_oidc_policy_name")
 	private WebElement SelectPolicyNameForOidc;
 
@@ -228,6 +229,8 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oidc_cancel_btn")
 	private WebElement createOidcCancelButton;
 	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement subTitleHomeButton;
 	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -241,9 +244,9 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(createOidcClient);
 	}
 
-	public void selectPartnerIdDropdown(String value) {
+	public void selectPartnerIdDropdown() {
 		clickOnElement(SelectPartneridForOidc);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[2]")));
+		clickOnElement(createOidcPartnerIdOption1);
 	}
 
 	public boolean isPartnerIdDropdownDisplayed() {
@@ -529,6 +532,8 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(createOidcCancelButton);
 	}
 	
-	
+	public boolean isSubTitleHomeButtonDisplayed() {
+		return isElementDisplayed(subTitleHomeButton);
+	}
 	
 }

@@ -15,59 +15,41 @@ import io.mosip.testrig.pmprevampui.dbaccess.DBManager;
 import io.mosip.testrig.pmprevampui.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 
-
-
 public class TestRunner {
 	static TestListenerAdapter tla = new TestListenerAdapter();
 	public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-	public static String uin="";
-	public static String perpetualVid="";
-	public static String onetimeuseVid="";
-	public static String temporaryVid="";
+	public static String uin = "";
+	public static String perpetualVid = "";
+	public static String onetimeuseVid = "";
+	public static String temporaryVid = "";
 
 	static TestNG testNg;
 
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
 		startTestRunner();
-		
+
 	}
 
 	public static void startTestRunner() throws Exception {
 		File homeDir = null;
 		TestNG runner = new TestNG();
-		if(!ConfigManager.gettestcases().equals("")) {
-			
+		if (!ConfigManager.gettestcases().equals("")) {
+
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
 			suite.addListener("io.mosip.testrig.pmprevampui.utility.EmailableReport");
-			XmlClass RegisterNewUser= new XmlClass("io.mosip.testrig.pmprevampui.testcase.RegisterNewUser");
-			XmlClass NewUserPolicy = new XmlClass("io.mosip.testrig.pmprevampui.testcase.NewUserPolicy");
-			XmlClass CreateOidecClient = new XmlClass("io.mosip.testrig.pmprevampui.testcase.CreateOidecClient");
-			XmlClass CreateApiKey = new XmlClass("io.mosip.testrig.pmprevampui.testcase.CreateApiKey");
-			
+			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmprevampui.testcase.AuthPartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
-			String[] Scenarioname=ConfigManager.gettestcases().split(",");
-			for(String test:Scenarioname) {
-				                                             
-				if(test.equals("RegisterNewUser")) {
-					classes.add(RegisterNewUser);
-				}
-				if(test.equals("NewUserPolicy")) {
-					classes.add(NewUserPolicy);
-				}
-				if(test.equals("CreateOidecClient")) {
-					classes.add(CreateOidecClient);
-				}
-				if(test.equals("CreateApiKey")) {
-					classes.add(CreateApiKey);
-				}
-				
-				
-				DBManager.clearPMSDbData();
-			}
+			String[] Scenarioname = ConfigManager.gettestcases().split(",");
+			for (String test : Scenarioname) {
 
+				if (test.equals("AuthPartnerTest")) {
+					classes.add(AuthPartnerTest);
+				}
+
+			}
 
 			XmlTest test = new XmlTest(suite);
 			test.setName("MyTest");
@@ -78,7 +60,7 @@ public class TestRunner {
 
 			runner.setXmlSuites(suites);
 
-		}else {
+		} else {
 			List<String> suitefiles = new ArrayList<String>();
 			String os = System.getProperty("os.name");
 			if (checkRunType().contains("IDE") || os.toLowerCase().contains("windows") == true) {
@@ -97,19 +79,28 @@ public class TestRunner {
 
 			runner.setTestSuites(suitefiles);
 
-
 		}
-		
+
 		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
-		System.getProperties().setProperty("emailable.report2.name", "PMPUI-" + BaseTestCaseFunc.environment 
-				+ "-run-" +BaseClass.Date()+"-report.html");
+		System.getProperties().setProperty("emailable.report2.name",
+				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
 
 		runner.run();
+		DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
+				ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
+				TestRunner.getResourcePath() + "\\" + "config\\partnerRevampDataDeleteQueries.txt");
+
+		DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
+				ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
+				TestRunner.getResourcePath() + "/" + "config/partnerRevampDataDeleteQueriesForKeyMgr.txt");
+
+		DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
+				ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+				TestRunner.getResourcePath() + "/" + "config/partnerRevampDataDeleteQueriesForIDA.txt");
 		System.exit(0);
+
 	}
-
-
 
 	public static String getGlobalResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
@@ -126,7 +117,7 @@ public class TestRunner {
 
 	public static String getResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
-			return new File(jarUrl).getParentFile().getAbsolutePath().toString()+"/resources/";
+			return new File(jarUrl).getParentFile().getAbsolutePath().toString() + "/resources/";
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
 			String path = System.getProperty("user.dir") + System.getProperty("path.config");
 
@@ -143,17 +134,17 @@ public class TestRunner {
 		else
 			return "IDE";
 	}
-	public static String GetKernalFilename(){
-		String path = System.getProperty("env.user");
-		String kernalpath=null;
-		if(System.getProperty("env.user")==null || System.getProperty("env.user").equals("")) {
-			kernalpath="Kernel.properties";
 
-		}else {
-			kernalpath="Kernel_"+path+".properties";
+	public static String GetKernalFilename() {
+		String path = System.getProperty("env.user");
+		String kernalpath = null;
+		if (System.getProperty("env.user") == null || System.getProperty("env.user").equals("")) {
+			kernalpath = "Kernel.properties";
+
+		} else {
+			kernalpath = "Kernel_" + path + ".properties";
 		}
 		return kernalpath;
 	}
-
 
 }

@@ -9,7 +9,10 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
-
+	
+	@FindBy(id = "dashboard_authentication_clients_list_card_header")
+	private WebElement authenticationHeader;
+	
 	@FindBy(id = "header_user_profile_logout_btn")
 	private WebElement logoutButton;
 
@@ -17,7 +20,7 @@ public class DashboardPage extends BasePage {
 	private WebElement selectPolicyGroupPopUp;
 
 	@FindBy(xpath = "//div[@class='relative w-full']/button")
-//	select_policy_group_dropdown
+
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(xpath = "//*[text()='No Data Available.']")
@@ -26,7 +29,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_search_input")
 	private WebElement SearchBox;
 
-	@FindBy(xpath = "//*[text()='Submit']")
+	@FindBy(id = "select_policy_group_submit")
 	private WebElement submitButton;
 
 	@FindBy(xpath = "//*[@class='min-h-2']")
@@ -38,10 +41,10 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "default-checkbox")
 	private WebElement checkbox;
 
-	@FindBy(xpath = "//*[text()='Proceed']")
+	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
 
-	@FindBy(id = "dashboard_partner_certificated_list_card")
+	@FindBy(id = "dashboard_partner_certificate_list_card")
 	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
@@ -61,7 +64,21 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
+	
+	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
+	private WebElement RootOFTrustCertText;
+	
+	@FindBy(id = "root_certificate_upload_btn")
+	private WebElement rootCertificateUploadButton;
+	
 
+	@FindBy(xpath = "//*[text()='Policies']")
+	private WebElement policyButton;
+	
+	
+	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
+	private WebElement PartnerPolicyMappingTab;
+	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -80,6 +97,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isSelectPolicyGroupPopUpDisplayed() {
+		
 		return isElementDisplayed(selectPolicyGroupPopUp);
 	}
 
@@ -89,6 +107,9 @@ public class DashboardPage extends BasePage {
 
 	public void selectSelectPolicyGroupDropdown(String value) {
 		clickOnElement(selectPolicyGroupDropdown);
+		if(!isElementDisplayed(SearchBox)){
+		clickOnElement(selectPolicyGroupDropdown);
+		}
 		enter(SearchBox, value);
 		String val = "'" + value + "'";
 //		click(By.xpath("//*[contains(text(),"+val+")]"));
@@ -168,5 +189,25 @@ public class DashboardPage extends BasePage {
 	public void clickOnSelectPolicyGroupLogout() {
 		clickOnElement(selectPolicyGroupLogout);
 	}
-
+	
+	public void clickOnAuthenticationHeader() {
+		clickOnElement(authenticationHeader);
+	}
+	
+	public void clickOnRootOFTrustCertText() {
+		clickOnElement(RootOFTrustCertText);
+	}
+	
+	public void clickOnRootCertificateUploadButton() {
+		clickOnElement(rootCertificateUploadButton);
+	}
+	
+	public void clickOnPolicyButton() {
+		clickOnElement(policyButton);
+	}
+	
+	public void clickOnPartnerPolicyMappingTab() {
+		clickOnElement(PartnerPolicyMappingTab);
+	}
+	
 }

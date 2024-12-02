@@ -7,10 +7,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class ApiKeyPage extends BasePage {
 
-	@FindBy(xpath = "Enter a name for API key")
+	@FindBy(id = "generate_api_key_name")
 	private WebElement enterNameOfApiKeyTextBox;
 
-	@FindBy(xpath = "generate_submit_btn")
+	@FindBy(id = "generate_submit_btn")
 	private WebElement submitButton;
 
 	@FindBy(id = "generate_partner_id")
@@ -18,8 +18,14 @@ public class ApiKeyPage extends BasePage {
 
 	@FindBy(id = "generate_policy_name")
 	private WebElement policyNameDropdown;
-
-	@FindBy(id = "create_policy_group_btn")
+	
+	@FindBy(id = "generate_policy_name_search_input")
+	private WebElement generatePolicyNameSearchInputBox;
+	
+	@FindBy(id = "generate_policy_name_option1")
+	private WebElement generatePolicyNameOption1;
+	
+	@FindBy(id = "generate_api_key")
 	private WebElement generateAPIKey;
 
 	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
@@ -138,7 +144,58 @@ public class ApiKeyPage extends BasePage {
 
 	@FindBy(id = "api_key_status_filter")
 	private WebElement apiKeyStatusFilterOption1;
-
+	
+	@FindBy(id = "title_back_icon")
+	private WebElement backicon;
+	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement subTitleHomeButton;
+	
+	@FindBy(id = "sub_title_btn")
+	private WebElement subTitleButton;
+	
+	@FindBy(id = "api_key_details_partner_id_label")
+	private WebElement apiKeyDetailsPartnerIdLabel;
+	
+	@FindBy(id = "api_key_details_partner_id_context")
+	private WebElement apiKeyDetailsPartnerIdContext;
+	
+	@FindBy(id = "api_key_details_policy_group_label")
+	private WebElement apiKeyDetailsPolicyGroupLabel;
+	
+	@FindBy(id = "api_key_details_policy_group_name_context")
+	private WebElement apiKeyDetailsPolicyGroupNameContext;
+	
+	@FindBy(id = "api_key_details_policy_name_label")
+	private WebElement apiKeyDetailsPolicyNameLabel;
+	
+	@FindBy(id = "api_key_details_policy_name_context")
+	private WebElement apiKeyDetailsPolicyNameContext;
+	
+	@FindBy(id = "api_key_details_policy_group_description_label")
+	private WebElement apiKeyDetailsPolicyGoupDescriptionLabel;
+	
+	@FindBy(id = "api_key_details_policy_group_description_context")
+	private WebElement apiKeyDetailsPolicyGroupDescriptionContext;
+	
+	@FindBy(id = "api_key_details_policy_name_description_label")
+	private WebElement apiKeyDetailsPolicyNameDescriptionLabel;
+	
+	@FindBy(id = "api_key_details_policy_description_context")
+	private WebElement apiKeyDetailsPolicyDescriptionContext;
+	
+	@FindBy(id = "api_key_details_api_key_name_label")
+	private WebElement apiKeyDetailsApiKeyNameLabel;
+	
+	@FindBy(id = "api_key_details_api_key_label_context")
+	private WebElement apiKeyDetailsApiKeyLabelContext;
+	
+	@FindBy(id = "view_api_key_back_btn")
+	private WebElement viewApiKeyBackButton;
+	
+	@FindBy(xpath = "//*[text()='No Data Available.']")
+	private WebElement noDataAvailableText;
+	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -147,9 +204,13 @@ public class ApiKeyPage extends BasePage {
 		enter(enterNameOfApiKeyTextBox, value);
 	}
 
-	public void selectPartnerIdDropdown(String value) {
+	public void selectPartnerIdDropdown() {
 		clickOnElement(partnerIdDropdown);
 		clickOnElement(generatePartnerIdOption1);
+	}
+	
+	public void ClickOnPartnerIdDropdown() {
+		clickOnElement(partnerIdDropdown);
 	}
 
 	public boolean isPartnerIdDropdownDisplayed() {
@@ -161,7 +222,9 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void selectPolicyNameDropdown(String value) {
-		dropdownByIndex(policyNameDropdown, 0);
+		clickOnElement(policyNameDropdown);
+		enter(generatePolicyNameSearchInputBox,value);
+		clickOnElement(generatePolicyNameOption1);
 	}
 
 	public boolean isGenerateAPIKeyDisplayed() {
@@ -224,7 +287,7 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(apiListItem1);
 	}
 
-	public void clickOnapiListActionButton() {
+	public void clickOnapiListElipsisButton() {
 		clickOnElement(apiListAction);
 	}
 
@@ -316,4 +379,77 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(apiKeyStatusFilter);
 		clickOnElement(apiKeyStatusFilterOption1);
 	}
+	
+	public boolean isBackiconDisplayed() {
+		return isElementDisplayed(backicon);
+	}
+	
+	public boolean isSubTitleHomeButtonDisplayed() {
+		return isElementDisplayed(subTitleHomeButton);
+	}
+	
+	public boolean isSubTitleButtonDisplayed() {
+		return isElementDisplayed(subTitleButton);
+	}
+	
+	public boolean isApiKeyDetailsPartnerIdLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPartnerIdLabel);
+	}
+	
+	public boolean isApiKeyDetailsPartnerIdContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPartnerIdContext);
+	}
+	
+	public boolean isApiKeyDetailsPolicyGroupLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyGroupLabel);
+	}
+	
+	public boolean isApiKeyDetailsPolicyGroupNameContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyGroupNameContext);
+	}
+	
+	public boolean isApiKeyDetailsPolicyNameLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyNameLabel);
+	}
+	
+	public boolean isApiKeyDetailsPolicyNameContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyNameContext);
+	}
+	
+	public boolean isApiKeyDetailsPolicyGoupDescriptionLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyGoupDescriptionLabel);
+	}
+	
+	public boolean isApiKeyDetailsPolicyGroupDescriptionContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyGroupDescriptionContext);
+	}
+	
+	public boolean isApiKeyDetailsPolicyNameDescriptionLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyNameDescriptionLabel);
+	}
+	
+	public boolean isApiKeyDetailsPolicyDescriptionContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsPolicyDescriptionContext);
+	}
+	
+	public boolean isApiKeyDetailsApiKeyNameLabelDisplayed() {
+		return isElementDisplayed(apiKeyDetailsApiKeyNameLabel);
+	}
+	
+	public boolean isApiKeyDetailsApiKeyLabelContextDisplayed() {
+		return isElementDisplayed(apiKeyDetailsApiKeyLabelContext);
+	}
+	
+	public boolean isViewApiKeyBackButtonDisplayed() {
+		return isElementDisplayed(viewApiKeyBackButton);
+	}
+	
+	public void clickOnViewApiKeyBackButton() {
+		clickOnElement(viewApiKeyBackButton);
+	}
+	
+	public boolean isnoDataAvailableTextDisplayed() {
+		return isElementDisplayed(noDataAvailableText);
+	}
+	
 }
