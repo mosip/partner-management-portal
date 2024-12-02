@@ -42,6 +42,7 @@ import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysL
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
+import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 
 function AppRoutes() {
 
@@ -229,6 +230,10 @@ function AppRoutes() {
         {
           path: 'admin/ftm-chip-provider-services/ftm-list',
           element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/ftm-chip-provider-services/view-ftm-chip-details',
+          element: <GuardedRoute><MainLayout><ViewAdminFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',
