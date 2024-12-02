@@ -148,6 +148,12 @@ function SbiList() {
         }
     }
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            window.location.reload();
+        }
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} max-[500px]:overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -227,7 +233,7 @@ function SbiList() {
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (
-                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
+                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
                                                             )}
                                                         </div>
                                                     )}

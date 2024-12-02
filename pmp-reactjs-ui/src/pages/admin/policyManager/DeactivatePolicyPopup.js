@@ -7,7 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 
-function DeactivatePolicyPopup({ header, description, popupData, request, headerKeyName, closePopUp }) {
+function DeactivatePolicyPopup({ header, description, popupData, request, headerKeyName, closePopUp, onClickConfirm }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -59,7 +59,7 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
             }
             const responseData = response.data;
             if (responseData && responseData.response) {
-                window.location.reload();
+                onClickConfirm(responseData.response);
             } else {
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;

@@ -184,6 +184,19 @@ function DevicesList() {
         }
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setViewDeviceId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setDevicesList((prevList) =>
+                prevList.map(device =>
+                    device.id === selectedDevice.id ? { ...device, status: "deactivated", isActive: false } : device
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setViewDeviceId(-1);
         setShowDeactivatePopup(false);
@@ -316,7 +329,7 @@ function DevicesList() {
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}
