@@ -199,7 +199,7 @@ function AdminOidcClientsList () {
             if (updatedClient) {
                 setOidcClientsList((prevList) => 
                     prevList.map(client => 
-                        client.clientId === clientId ? { ...client, status: "INACTIVE" } : client
+                        client.clientId === clientId ? { ...client, status: updatedClient.status } : client
                     )
                 );
             } else {
