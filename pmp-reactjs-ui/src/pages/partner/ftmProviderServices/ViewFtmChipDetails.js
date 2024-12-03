@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile, checkExpiryDate } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -211,9 +211,9 @@ function ViewFtmChipDetails() {
                                 <div className={`flex-col`}>
                                     <div className={`flex py-[1rem] px-5 ${ftmDetails.status === "deactivated" ? 'bg-gray-100' : 'bg-[#F9FBFF]'} justify-between items-center max-520:flex-col`}>
                                         <div className="flex space-x-4 items-center ">
-                                            { ftmDetails.status === "deactivated" ? 
+                                            {ftmDetails.status === "deactivated" ?
                                                 <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
-                                            :
+                                                :
                                                 <img id='file_upload_blue' src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
                                             }
                                             <div className="flex-col p-3 items-center">
@@ -257,11 +257,15 @@ function ViewFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}</p>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${checkExpiryDate(ftmDetails.certificateExpiryDateTime) ? 'text-red-700' : 'text-charcoal-gray'}`}>
+                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}
+                                            </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">{formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}</p>
+                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
+                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
