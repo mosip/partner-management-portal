@@ -196,6 +196,21 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//*[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 	
+	@FindBy(id = "generate_api_key_btn")
+	private WebElement apiKeyListPageGenerateApiKeyBtn;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Select Partner ID')]")
+	private WebElement partnerIdHelpText;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Select policy for which API Key is required')]")
+	private WebElement policyNameHelpText;
+
+	@FindBy(id = "generate_clear_form")
+	private WebElement clearButton;
+	
+	@FindBy(id = "generate_cancel_btn")
+	private WebElement cancelButton;
+	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -452,4 +467,35 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(noDataAvailableText);
 	}
 	
+	public boolean isApiKeyListPageGenerateApiKeyBtnDisplayed() {
+		return isElementDisplayed(apiKeyListPageGenerateApiKeyBtn);
+	}
+	
+	public void clickOnApiKeyListPageGenerateApiKeyBtnDisplayed() {
+		clickOnElement(apiKeyListPageGenerateApiKeyBtn);
+	}
+	
+	public boolean isPartnerIdHelpTextDisplayed() {
+		return isElementDisplayed(partnerIdHelpText);
+	}
+	
+	public boolean isPolicyNameHelpTextDisplayed() {
+		return isElementDisplayed(policyNameHelpText);
+	}
+	
+	public boolean isClearButtonDisplayed() {
+		return isElementDisplayed(clearButton);
+	}
+	
+	public void clickOnClearButton() {
+		clickOnElement(clearButton);
+	}
+	
+	public boolean isCancelButtonDisplayed() {
+		return isElementDisplayed(cancelButton);
+	}
+	
+	public void clickOnCancelButton() {
+		clickOnElement(cancelButton);
+	}
 }

@@ -392,6 +392,7 @@ public class AuthPartnerTest extends BaseClass {
 		
 		apiKeyPage.selectPolicyNameDropdown(data);
 		assertTrue(apiKeyPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
+		apiKeyPage.selectPolicyNameDropdown(data);
 		apiKeyPage.enterNameOfApiKeyTextBox("0"+data);
 		
 		apiKeyPage.ClickOnSubmitButton();
@@ -403,6 +404,30 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnConfirmationGoBackButton();
 		assertTrue(apiKeyPage.isApiListItem1Displayed(), GlobalConstants.isApiListDisplayed);
 		
+		assertTrue(apiKeyPage.isApiKeyListPageGenerateApiKeyBtnDisplayed(), GlobalConstants.isApiKeyListPageGenerateApiKeyBtnDisplayed);
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtnDisplayed();
+		assertTrue(apiKeyPage.isPartnerIdHelpTextDisplayed(), GlobalConstants.isPartnerIdHelpTextDisplayed);
+		assertTrue(apiKeyPage.isPolicyNameHelpTextDisplayed(), GlobalConstants.isPolicyNameHelpTextDisplayed);
+        apiKeyPage.selectPartnerIdDropdown();
+		assertTrue(apiKeyPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
+		apiKeyPage.selectPolicyNameDropdown(data);
+		apiKeyPage.enterNameOfApiKeyTextBox("0"+data);
+		assertTrue(apiKeyPage.isClearButtonDisplayed(), GlobalConstants.isClearButtonDisplayed);
+		apiKeyPage.clickOnClearButton();
+		assertTrue(apiKeyPage.isCancelButtonDisplayed(), GlobalConstants.isCancelButtonDisplayed);
+		apiKeyPage.clickOnCancelButton();
+		assertTrue(apiKeyPage.isApiListItem1Displayed(), GlobalConstants.isApiListDisplayed);
+		
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtnDisplayed();
+		apiKeyPage.selectPartnerIdDropdown();
+		assertTrue(apiKeyPage.isPolicyNameDropdownDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
+		apiKeyPage.selectPolicyNameDropdown(data);
+		apiKeyPage.enterNameOfApiKeyTextBox("#$%#&*");
+		apiKeyPage.ClickOnSubmitButton();
+		apiKeyPage.clickOnCopyIdButton();
+		apiKeyPage.clickOnCopyIdCloseButton();
+		assertTrue(apiKeyPage.isConfirmationGoBackButtonDisplayed(), GlobalConstants.isGoBackButtonDisplayed);
+		apiKeyPage.clickOnConfirmationGoBackButton();
 		
 		assertTrue(apiKeyPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
 		assertTrue(apiKeyPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
@@ -446,6 +471,8 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnViewApiKeyBackButton();
 		
 		assertTrue(apiKeyPage.isBackiconDisplayed(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		
+		
 	}
 	
 	@Test(priority = 5)

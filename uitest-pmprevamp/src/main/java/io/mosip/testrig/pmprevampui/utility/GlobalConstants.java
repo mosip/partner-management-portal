@@ -102,5 +102,10 @@ public class GlobalConstants {
 	public static final String REQUEST = "request";
 	public static final String TOKEN = "token";
 	public static final String EXCEPTION_STRING_2 = "Exception ";
+	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify api key list page generate api key button displayed";
+	public static final String isPartnerIdHelpTextDisplayed = "Verify partner ID help text displayed";
+	public static final String isPolicyNameHelpTextDisplayed = "Verify policy name help text displayed";
+	public static final String isClearButtonDisplayed = "Verify clear button displayed";
+	public static final String isCancelButtonDisplayed = "Verify cancel button displayed";
 	
 }
