@@ -50,7 +50,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             <div className="relative w-full" ref={dropdownRef}>
                 <button id={id} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'} rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
-                    <span className='w-full break-all break-normal break-words text-wrap text-start'>{
+                    <span className='w-full break-all text-wrap text-start'>{
                         selectedDropdownEntry ?
                             dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
                             : t(placeHolderKey)}
@@ -72,7 +72,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
-                                                className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-normal break-words
+                                                className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>

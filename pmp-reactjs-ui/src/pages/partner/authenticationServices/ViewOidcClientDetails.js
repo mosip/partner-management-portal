@@ -42,7 +42,7 @@ function ViewOidcClientDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
                 </div>
@@ -113,7 +113,7 @@ function ViewOidcClientDetails() {
                                 <p id='oidc_client_details_policy_group_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyGroupName}
                                 </p>
                             </div>
@@ -121,7 +121,7 @@ function ViewOidcClientDetails() {
                                 <p id='oidc_client_details_policy_name_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyName}
                                 </p>
                             </div>
@@ -129,7 +129,7 @@ function ViewOidcClientDetails() {
                                 <p id='oidc_client_details_policy_group_description_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyGroupDescription}
                                 </p>
                             </div>
@@ -137,7 +137,7 @@ function ViewOidcClientDetails() {
                                 <p id='oidc_client_details_policy_name_description_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.policyDescription}
                                 </p>
                             </div>
@@ -148,7 +148,7 @@ function ViewOidcClientDetails() {
                                 <p id='oidc_client_details_oidc_client_name_label' className="font-[600] text-suva-gray text-xs">
                                     {t("authenticationServices.oidcClientName")}
                                 </p>
-                                <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm">
                                     {oidcClientDetails.clientNameEng}
                                 </p>
                             </div>

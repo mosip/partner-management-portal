@@ -290,12 +290,12 @@ function AdminOidcClientsList () {
                                                             return (
                                                                 <tr id={"oidc_client_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === 'INACTIVE' ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.partnerId}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.orgName ? client.orgName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyGroupName ? client.policyGroupName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.policyName ? client.policyName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{client.clientNameEng}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2 break-all">{formatDate(client.createdDateTime, "date", true)}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.orgName ? client.orgName : '-'}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyGroupName ? client.policyGroupName : '-'}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyName ? client.policyName : '-'}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.clientNameEng}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{formatDate(client.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
                                                                         <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(client.status, t)}
@@ -314,7 +314,7 @@ function AdminOidcClientsList () {
                                                                             )}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center break-all">
+                                                                    <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <p id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                 tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>

@@ -87,7 +87,7 @@ function ViewAdminFtmChipDetails() {
             {successMsg && (
                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
-            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
                     <Title title={'viewFtmChipDetails.viewFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
                 </div>
