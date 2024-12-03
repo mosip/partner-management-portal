@@ -107,7 +107,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/policy-requests-list');
     };
     const showSbiDeviceDetails = () => {
-        setActiveIcon("sbiDeviceDetails");
+        navigate('/partnermanagement/admin/device-provider-services/sbi-list');
     };
     const showAdminFtmDetails = () => {
         navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
@@ -166,7 +166,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()} onKeyPress={(e) => { e.key === 'Enter' && showSbiDeviceDetails() }}>
-                                <SideNavMenuItem title={t('dashboard.sbiDevice')} id='sbiDeviceDetails' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.sbiDevice')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
                             </li>
                             <li id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()} onKeyPress={(e) => { e.key === 'Enter' && showAdminFtmDetails() }}>
                                 <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />

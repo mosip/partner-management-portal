@@ -299,6 +299,10 @@ function Dashboard() {
     navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
   }
 
+  const adminDeviceProviderServices = () => {
+    navigate('/partnermanagement/admin/device-provider-services/sbi-list');
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -473,7 +477,7 @@ function Dashboard() {
                   /> 
                 </div>
 
-                <div className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0">
+                <div onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
                   <div className="flex justify-center mb-5">
                     <img src={deviceProviderServices_icon} alt="" className="w-8 h-8"></img>
                   </div>

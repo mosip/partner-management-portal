@@ -375,7 +375,10 @@
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
         "addSbiDevices": "Ajouter SBI - Appareil",
-        "listOfDevices": "Liste des appareils pour"
+        "listOfDevices": "Liste des appareils pour",
+        "sbiDetails": "Détails SBI",
+        "deviceDetails": "Détails de l'appareil",
+        "sbiDeviceDetails": "SBI - Détails de l'appareil"
     },
     "addSbis": {
         "addSbi": "Ajouter un SBI",
@@ -405,7 +408,13 @@
         "devicesCountTxt": "sont associés à ce SBI",
         "addDevices": "Ajouter des périphériques",
         "viewDevices": "Afficher les périphériques",
+        "version": "Version",
+        "searchVersion": "Rechercher la version SBI",
+        "linkedDevices": "Appareils liés",
+        "status":"Statut",
+        "action": "Action",
         "partnerId": "ID partenaire",
+        "orgName":"Organisation",
         "partnerType": "Type de partenaire",
         "device": "appareil",
         "createdDate": "Date de création de SBI",

@@ -375,7 +375,10 @@
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
         "addSbiDevices": "إضافة SBI - الجهاز",
-        "listOfDevices": "قائمة الأجهزة ل"
+        "listOfDevices": "قائمة الأجهزة ل",
+        "sbiDetails": "تفاصيل SBI",
+        "deviceDetails": "تفاصيل الجهاز",
+        "sbiDeviceDetails": "SBI - تفاصيل الجهاز"
     },
     "addSbis": {
         "addSbi": "إضافة SBI",
@@ -405,7 +408,13 @@
         "devicesCountTxt": "مرتبطة بجهاز SBI هذا",
         "addDevices": "إضافة أجهزة",
         "viewDevices": "عرض الأجهزة",
+        "version": "الإصدار",
+        "searchVersion": "البحث عن إصدار SBI",
+        "linkedDevices": "الأجهزة المرتبطة",
+        "status":"حالة",
+        "action": "الإجراء",
         "partnerId": "معرف الشريك",
+        "orgName":"منظمة",
         "partnerType": "نوع الشريك",
         "device": "جهاز",
         "createdDate": "تاريخ إنشاء SBI",
