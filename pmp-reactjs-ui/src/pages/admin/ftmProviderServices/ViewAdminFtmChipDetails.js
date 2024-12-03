@@ -80,16 +80,16 @@ function ViewAdminFtmChipDetails() {
     };
 
     return (
-        <>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {errorMsg && (
                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
             )}
             {successMsg && (
                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewFtmChipDetails.listOfFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
+                    <Title title={'viewFtmChipDetails.viewFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
                 </div>
 
                 {unexpectedError && (
@@ -187,16 +187,16 @@ function ViewAdminFtmChipDetails() {
                                             <p id="ftm_chip_details_partner_type_label" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
                                             <p id="ftm_chip_details_partner_type_context" className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
                                         </div>
-                                        <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="ftm_chip_details_label_expiry_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-charcoal-gray'} `}>
-                                                {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
-                                            </p>
-                                        </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                             <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
                                                 {formatDate(certificateDetails.caSignedCertUploadDateTime, 'dateTime', false)}
+                                            </p>
+                                        </div>
+                                        <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
+                                            <p id="ftm_chip_details_label_expiry_date_time" className={`text-xs font-semibold ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-sm ${certificateDetails.isCaSignedCertificateExpired ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                                {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>
                                     </div>
@@ -212,7 +212,7 @@ function ViewAdminFtmChipDetails() {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     )
 }
 
