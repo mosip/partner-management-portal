@@ -12,7 +12,6 @@ import {
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
@@ -20,6 +19,7 @@ import Title from '../../common/Title.js';
 import DevicesListFilter from './DevicesListFilter.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import EmptyList from '../../common/EmptyList.js';
 
 function DevicesList() {
     const navigate = useNavigate('');
@@ -30,10 +30,10 @@ function DevicesList() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
-    const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-    const [activeSortDesc, setActiveSortDesc] = useState("");
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [order, setOrder] = useState("DESC");
+    const [activeSortAsc, setActiveSortAsc] = useState("");
+    const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
@@ -184,6 +184,19 @@ function DevicesList() {
         }
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setViewDeviceId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setDevicesList((prevList) =>
+                prevList.map(device =>
+                    device.id === selectedDevice.id ? { ...device, status: "deactivated", isActive: false } : device
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setViewDeviceId(-1);
         setShowDeactivatePopup(false);
@@ -197,7 +210,7 @@ function DevicesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
@@ -242,36 +255,18 @@ function DevicesList() {
                                 {devicesList.length === 0
                                     ?
                                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                        {
-                                            <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                                                <div className={`flex w-full justify-between`}>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.deviceType')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.deviceSubType')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.make')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.model')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.createdDate')}</h6>
-                                                    <h6 className="px-2 mx-2">{t('devicesList.status')}</h6>
-                                                    <h6 className="px-2 mx-2 text-center">{t('devicesList.action')}</h6>
-                                                </div>
-                                            </div>
-                                        }
-
-                                        <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                                        <div className="flex items-center justify-center p-24">
-                                            <div className="flex flex-col justify-center">
-                                                <img src={rectangleGrid} alt="" />
-                                                <button id='device_list_add_device_btn' onClick={() => addDevices()} type="button" disabled={!canAddDevices}
-                                                    className={`font-semibold mt-8 rounded-md text-sm mx-8 py-3 ${canAddDevices ? "bg-tory-blue text-white" : "bg-gray-400 opacity-55"}`}>
-                                                    {t('devicesList.addDevices')}
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <EmptyList
+                                            tableHeaders={tableHeaders}
+                                            showCustomButton={true}
+                                            customButtonName='devicesList.addDevices'
+                                            buttonId='add_devices'
+                                            onClickButton={addDevices}
+                                        />
                                     </div>
                                     :
                                     <>
                                         <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                            <FilterButtons listTitle='devicesList.listOfDevices' dataListLength={filteredDevicesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                            <FilterButtons titleId='list_of_devices' listTitle='devicesList.listOfDevices' dataListLength={filteredDevicesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                             <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                             {filter &&
                                                 <DevicesListFilter
@@ -286,10 +281,17 @@ function DevicesList() {
                                                             {tableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                        <div className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
-                                                                                <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                                                                <SortingIcon
+                                                                                    headerId={header.id}
+                                                                                    sortDescOrder={sortDescOrder}
+                                                                                    sortAscOrder={sortAscOrder}
+                                                                                    order={order}
+                                                                                    activeSortDesc={activeSortDesc}
+                                                                                    activeSortAsc={activeSortAsc}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </th>
@@ -301,7 +303,7 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr id={'device_list_device_item' +  (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
@@ -323,11 +325,11 @@ function DevicesList() {
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <p id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
+                                                                                        <p id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}

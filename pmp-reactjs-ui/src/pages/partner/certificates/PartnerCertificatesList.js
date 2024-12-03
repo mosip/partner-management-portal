@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { downloadCertificate, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -61,24 +61,24 @@ function PartnerCertificatesList() {
 
     const getOriginalCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
 
     const getMosipSignedCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
@@ -96,10 +96,12 @@ function PartnerCertificatesList() {
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
             setErrorMsg(err);
+            return null;
         }
     }
 
@@ -194,12 +196,20 @@ function PartnerCertificatesList() {
                                                             onClickSecondOption={getMosipSignedCertificate}
                                                             requiredData={partner}
                                                             styleSet={dropdownStyle}
-                                                            disableBtn={false}
+                                                            disableBtn={!partner.isPartnerActive}
+                                                            disabledBtnHoverMsg="partnerCertificatesList.disabledBtnHoverMsg"
                                                             id={'download_btn' + (index + 1)}
                                                         />
-                                                        <button id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="h-10 w-28 text-xs p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">
-                                                            {t('partnerCertificatesList.reUpload')}
-                                                        </button>
+                                                        <div className="relative group">
+                                                            <button disabled={!partner.isPartnerActive} id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className={`h-10 w-28 relative text-xs p-3 py-2 ${partner.isPartnerActive ? "text-tory-blue bg-white border border-blue-800" : "bg-white border border-gray-300 text-[#6f7070]"}  font-semibold rounded-md text-center`}>
+                                                                {t('partnerCertificatesList.reUpload')}
+                                                            </button>
+                                                            {!partner.isPartnerActive && (
+                                                                <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+                                                                    {t('partnerCertificatesList.disabledBtnHoverMsg')}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     : <button id={"partner_certificate_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
                                                         {t('partnerCertificatesList.upload')}

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadCertificate, formatDate, getPartnerManagerUrl, getCertificate, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
-import ErrorMessage from '../../common/ErrorMessage';
+import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
 
@@ -48,6 +48,7 @@ function ViewPartnerDetails() {
                         const resData = responseData.response;
                         setPartnerDetails(resData);
                     } else {
+                        setUnexpectedError(true);
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
@@ -68,24 +69,24 @@ function ViewPartnerDetails() {
 
     const getOriginalCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('viewPartnerDetails.originalCertificateSuccessMsg'));
-                downloadCertificate(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer')
+                downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
 
     const getMosipSignedCertificate = async (partner) => {
         const response = await fetchCertificate(partner.partnerId);
-        if (response !== null) {
+        if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadCertificate(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer')
+                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
@@ -95,10 +96,15 @@ function ViewPartnerDetails() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
-            if (responseData) {
-                const resData = responseData.response;
-                return resData;
+            if (partnerId) {
+                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+                if (responseData) {
+                    const resData = responseData.response;
+                    return resData;
+                }
+                else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
             }
             else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
@@ -109,10 +115,6 @@ function ViewPartnerDetails() {
         }
     }
 
-    const cancelErrorMsg = () => {
-        setErrorMsg("");
-    };
-
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
@@ -122,19 +124,16 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
             {dataLoaded && (
                 <>
-                    {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
-                    )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
-                    <div className={`flex-col bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
@@ -144,7 +143,8 @@ function ViewPartnerDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
+                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
                                         <button onClick={moveToPartnersList} type="button"
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
@@ -161,16 +161,16 @@ function ViewPartnerDetails() {
                                             {partnerDetails.partnerId}
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]': 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                                {partnerDetails.isActive ? t('statusCodes.activated'): t('statusCodes.deactivated')}
+                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                                {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
-                                                    formatDate(partnerDetails.createdDateTime, "date", false)}
+                                                    formatDate(partnerDetails.createdDateTime, "date", true)}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(partnerDetails.createdDateTime, "time", false)}
+                                                {formatDate(partnerDetails.createdDateTime, "time", true)}
                                             </div>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@ function ViewPartnerDetails() {
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                             <p className="font-[600] text-suva-gray text-xs">
-                                                {t("viewPartnerDetails.organizationName")}
+                                                {t("viewPartnerDetails.organisationName")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
                                                 {partnerDetails.organizationName}
@@ -223,13 +223,13 @@ function ViewPartnerDetails() {
                                         <div className={`flex-col`}>
                                             <div className={`flex py-[1rem] px-5 ${partnerDetails.isActive === false ? 'bg-gray-100' : 'bg-[#f3fdf3]'} justify-between items-center max-520:flex-col`}>
                                                 <div className="flex space-x-4 items-center">
-                                                    { partnerDetails.isActive === false
+                                                    {partnerDetails.isActive === false
                                                         ? <img src={fileUploadDisabled} className="h-8" alt="" />
                                                         : <img src={fileUpload} className="h-8" alt="" />
                                                     }
                                                     <div className='flex-col p-3 items-center'>
                                                         <h6 className={`text-sm ${partnerDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                            {"Partner Certificate"}
+                                                            {t("viewPartnerDetails.partnerCertificate")}
                                                         </h6>
                                                     </div>
                                                 </div>

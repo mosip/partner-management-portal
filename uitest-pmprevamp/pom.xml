@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.mosip.test</groupId>
 	<artifactId>uitest-pmprevamp</artifactId>
@@ -15,7 +17,8 @@
 	</licenses>
 	<scm>
 		<connection>scm:git:git://github.com/mosip/Partner-management-portal.git</connection>
-		<developerConnection>scm:git:ssh://github.com:mosip/Partner-management-portal.git</developerConnection>
+		<developerConnection>
+			scm:git:ssh://github.com:mosip/Partner-management-portal.git</developerConnection>
 		<url>https://github.com/mosip/Partner-management-portal</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -46,8 +49,8 @@
 		<webdrivermanager.version>5.1.0</webdrivermanager.version>
 		<keycloak-admin-client.version>17.0.1</keycloak-admin-client.version>
 		<fileName>pmprevampui-1.2.1-SNAPSHOT-jar-with-dependencies</fileName>
-		
-			<!-- maven -->
+
+		<!-- maven -->
 		<maven.compiler.target>21</maven.compiler.target>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.version>3.8.0</maven.compiler.version>
@@ -148,6 +151,16 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.17.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${testng.version}</version>
@@ -237,7 +250,8 @@
 							<dateFormat>MM/dd/yyyy HH:mm:ss Z</dateFormat>
 							<abbrevLength>8</abbrevLength>
 							<generateGitPropertiesFile>true</generateGitPropertiesFile>
-							<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+							<generateGitPropertiesFilename>
+								${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
 						</configuration>
 					</execution>
 				</executions>
@@ -268,8 +282,10 @@
 						</goals>
 						<configuration>
 							<target>
-								<!-- Create a shell script to run the JAR file with executable permission -->
-								<chmod file="${project.build.directory}/*.jar" perm="ugo+rx" />
+								<!-- Create a shell script to run the JAR file
+								with executable permission -->
+								<chmod file="${project.build.directory}/*.jar"
+									perm="ugo+rx" />
 							</target>
 						</configuration>
 					</execution>
@@ -288,12 +304,16 @@
 						<configuration>
 							<finalName>${fileName}</finalName>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>io.mosip.testrig.pmprevampui.utility.TestRunner</mainClass>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>
+										io.mosip.testrig.pmprevampui.utility.TestRunner</mainClass>
 								</transformer>
 							</transformers>
-							<!-- add this to prevent some security issues when merging everything together -->
+							<!-- add this to prevent some security issues when
+							merging everything together -->
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>

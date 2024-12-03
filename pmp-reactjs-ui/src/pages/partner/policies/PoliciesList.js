@@ -11,11 +11,11 @@ import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import FilterButtons from '../../common/FilterButtons';
 import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import Title from '../../common/Title';
+import EmptyList from '../../common/EmptyList';
 
 function PoliciesList() {
 
@@ -28,11 +28,11 @@ function PoliciesList() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policiesList, setPoliciesList] = useState([]);
   const [filteredPoliciesList, setFilteredPoliciesList] = useState([]);
-  const [order, setOrder] = useState("ASC");
-  const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-  const [activeSortDesc, setActiveSortDesc] = useState("");
+  const [order, setOrder] = useState("DESC");
+  const [activeSortAsc, setActiveSortAsc] = useState("");
+  const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [isDescending, setIsDescending] = useState(false);
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
@@ -88,7 +88,7 @@ function PoliciesList() {
   }
 
   const showViewPolicyDetails = (selectedPolicyData) => {
-    localStorage.setItem('selectedPolicyData', JSON.stringify(selectedPolicyData));
+    localStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
     navigate('/partnermanagement/policies/view-policy-details')
   };
 
@@ -146,11 +146,11 @@ function PoliciesList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
-              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}></Title>
+              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}/>
 
               {policiesList.length > 0 ?
                 <button id='policies_request_btn' onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
@@ -164,33 +164,18 @@ function PoliciesList() {
               {policiesList.length === 0
                 ?
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                  <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                    <div className="flex w-full justify-between">
-                      <h6 className="ml-5 mr-3">{t('policies.partnerId')}</h6>
-                      <h6>{t('policies.partnerType')}</h6>
-                      <h6>{t('policies.policyGroupName')}</h6>
-                      <h6>{t('policies.policyName')}</h6>
-                      <h6>{t('policies.createdDate')}</h6>
-                      <h6>{t('policies.status')}</h6>
-                      <h6 className="mx-4">{t('policies.action')}</h6>
-                    </div>
-                  </div>
-
-                  <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                  <div className="flex items-center justify-center p-24">
-                    <div className="flex flex-col items-center">
-                      <img src={rectangleGrid} alt="" />
-                      <button id='policies_request_policy_btn' onClick={() => showRequestPolicy()} type="button" className="text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm h-11 px-5 py-3">
-                        {t('policies.requestPolicyBtn')}
-                      </button>
-                    </div>
-                  </div>
+                  <EmptyList
+                    tableHeaders={tableHeaders}
+                    showCustomButton={true}
+                    customButtonName='policies.requestPolicyBtn'
+                    buttonId='show_request_policy'
+                    onClickButton={showRequestPolicy}
+                  />
                 </div>
                 :
                 <>
                   <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
-                    <FilterButtons listTitle='policies.listOfPolicies' dataListLength={filteredPoliciesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                    <FilterButtons titleId='list_of_policies' listTitle='policies.listOfPolicies' dataListLength={filteredPoliciesList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter &&
                       <PoliciesFilter
@@ -205,10 +190,18 @@ function PoliciesList() {
                             {tableHeaders.map((header, index) => {
                               return (
                                 <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
-                                  <div className="mx-2 flex gap-x-0 items-center">
+                                  <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
-                                      <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                      <SortingIcon
+                                        id={`${header.headerNameKey}_sorting_icon`}
+                                        headerId={header.id}
+                                        sortDescOrder={sortDescOrder}
+                                        sortAscOrder={sortAscOrder}
+                                        order={order}
+                                        activeSortDesc={activeSortDesc}
+                                        activeSortAsc={activeSortAsc}
+                                      />
                                     )}
                                   </div>
                                 </th>
@@ -224,7 +217,7 @@ function PoliciesList() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
-                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', false)}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
                                   <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(partner.status, t)}
@@ -262,7 +255,6 @@ function PoliciesList() {
 
         </>
       )}
-
     </div>
   )
 

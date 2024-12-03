@@ -14,7 +14,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-  const [isFilterActive, setIsFilterActive] = useState(false);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
@@ -87,7 +86,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
-    setIsFilterActive(true);
     setFilters((prevFilters) => ({
       ...prevFilters,
       [fieldName]: selectedFilter
@@ -95,7 +93,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const areFiltersEmpty = () => {
-    return !isFilterActive && Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "");
   };
 
   const styles = {
@@ -103,7 +101,9 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   const styleSet = {
-    inputField: "min-w-64 w-auto",
+    inputField: "min-w-64 h-9",
+    inputLabel: "mb-2",
+    outerDiv: "ml-4"
   };
 
   return (
@@ -111,6 +111,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="partnerId"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.partnerId}
         fieldNameKey="partnerList.partnerId"
         placeHolderKey="partnerList.searchPartnerId"
         styleSet={styleSet}
@@ -129,6 +130,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="orgName"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.orgName}
         fieldNameKey="partnerList.organisation"
         placeHolderKey="partnerList.searchOrganisation"
         styleSet={styleSet}
@@ -137,6 +139,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="policyGroupName"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.policyGroupName}
         fieldNameKey="partnerList.policyGroup"
         placeHolderKey="partnerList.searchPolicyGroup"
         styleSet={styleSet}
@@ -145,6 +148,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       <TextInputComponent
         fieldName="emailAddress"
         onTextChange={onFilterChangeEvent}
+        textBoxValue={filters.emailAddress}
         fieldNameKey="partnerList.email"
         placeHolderKey="partnerList.searchEmailAddress"
         styleSet={styleSet}
@@ -177,7 +181,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
           type="button"
           disabled={areFiltersEmpty()}
           className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-not-allowed' : 'bg-tory-blue'}`}
+          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
         >
           {t("partnerList.applyFilter")}
         </button>

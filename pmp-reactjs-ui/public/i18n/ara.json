@@ -8,6 +8,7 @@
         "back": "خلف",
         "cancel": "يلغي",
         "submit": "إرسال",
+        "okay": "تمام",
         "sessionIdleLogout": "بسبب عدم النشاط، سيتم تسجيل خروجك",
         "partnersHelpText": "يتم ملؤها تلقائيًا بناءً على معرف الشريك المحدد",
         "somethingWentWrong": "هناك خطأ ما!",
@@ -27,7 +28,9 @@
         "errorInResponse": "أثناء جلب جميع سياسات شركاء المصادقة المعتمدة، واجهنا خطأ",
         "filterBtn": "منقي",
         "resetFilter": "تصفية إعادة تعيين",
-        "itemsPerPage": "مواد لكل صفحة"
+        "itemsPerPage": "مواد لكل صفحة",
+        "close": "يغلق",
+        "unexpectedError": "لقد واجهنا خطأ غير متوقع"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
@@ -49,21 +52,23 @@
         "deviceProviderServicesDesc": "إضافة وعرض وإلغاء تنشيط SBI (الواجهة البيومترية الآمنة) والأجهزة المرتبطة بها",
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
-        "pendingRequests": "الطلبات المعلقة",
-        "pendingRequestsDesc": "الموافقة على / رفض الطلبات المعلقة من مختلف الشركاء",
         "rootOfTrustCertificate": "جذر شهادة الثقة",
         "rootOfTrustCertificateDesc": "تحميل شهادات الجذر/CA",
         "partner": "شريك",
-        "partnerDesc": "عرض و/أو إلغاء تنشيط تفاصيل الشريك",
+        "partnerDesc": "عرض، إلغاء تنشيط تفاصيل الشريك",
         "policy": "سياسة",
         "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
-        "partnerPolicyMapping": "الشريك - رسم خرائط السياسة",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها / رفضها من الشركاء",
+        "partnerPolicyMapping": "شريك - ربط السياسات",
+        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
         "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
-        "sbiDeviceDesc": "عرض وإلغاء تنشيط الموافقة / رفض SBI أو تفاصيل الجهاز",
+        "sbiDeviceDesc": "عرض أو إلغاء تنشيط أو الموافقة على/رفض تفاصيل الجهاز أو SBI",
         "ftmChip": "تفاصيل اف تي ام",
-        "ftmChipDesc": "عرض أو / وإلغاء تنشيط تفاصيل شريحة FTM",
-        "adminAuthenticationServicesDesc": "عرض / إلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقات"
+        "ftmChipDesc": "عرض تفاصيل شريحة FTM وإلغاء تنشيطها والموافقة عليها/رفضها",
+        "adminAuthenticationServicesDesc": "عرض وإلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقاتs",
+        "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
+        "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
+        "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
+        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -114,7 +119,8 @@
         "errorInCertificateList": "هناك خطأ ما في جلب الشهادات. حاول مرة أخرى في وقت لاحق!",
         "originalCertificateSuccessMsg": "تم تنزيل الشهادة الموقعة من CA التي تم تحميلها في الأصل بنجاح.",
         "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
-        "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة"
+        "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
+        "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'"
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -159,7 +165,8 @@
         "pendingCertUpload": "في انتظار تحميل الشهادة",
         "expired": "منتهي الصلاحية",
         "uploaded": "تم الرفع",
-        "notUploaded": "لم يتم الرفع"
+        "notUploaded": "لم يتم الرفع",
+        "draft": "مسودة"
     },
     "policies": {
         "policies": "سياسات",
@@ -272,6 +279,7 @@
     },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",
+        "orgName": "منظمة",
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "oidcClientName": "اسم عميل OIDC",
@@ -293,6 +301,7 @@
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
+        "searchOidcClientName": "البحث عن اسم عميل OIDC",
         "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
     },
     "viewOidcClientDetails": {
@@ -339,12 +348,12 @@
         "confirm": "يتأكد"
     },
     "apiKeysList": {
-        "apiKeyLabel": "اسم مفتاح API",
+        "apiKeyName": "اسم مفتاح واجهة برمجة التطبيقات",
         "apiKeyId": "معرف مفتاح API",
         "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",
         "listOfApiKeyRequests": "قائمة مفاتيح API",
-        "selectApiKeyLabel": "حدد اسم مفتاح API",
+        "searchApiKeyName": "البحث عن اسم مفتاح واجهة برمجة التطبيقات",
         "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأن مفتاح API لن يكون مرئيًا بعد الآن بمجرد إغلاق النافذة.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ."
     },
@@ -472,6 +481,7 @@
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "addFtmBtn": "إضافة شريحة FTM",
         "partnerId": "معرف الشريك",
+        "orgName":"منظمة",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
@@ -490,6 +500,8 @@
         "selectMakeName": "حدد إنشاء اسم",
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة",
+        "searchMake": "نموذج البحث",
+        "searchModel": "نموذج البحث",
         "expired": "منتهي الصلاحية",
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً."
     },
@@ -556,7 +568,7 @@
         "caCertificates": "شهادات كاليفورنيا"
     },
     "partnerList": {
-        "partnerTitle": "شريك",
+        "partnerTitle": "الشركاء",
         "listOfPartnerTitle": "قائمة الشركاء",
         "partnerId": "معرف الشريك",
         "organisation": "اسم المنظمة",
@@ -566,7 +578,7 @@
         "certUploadStatus": "شهادة. حالة التحميل",
         "status": "حالة",
         "action": "فعل",
-        "noData": "لا توجد بيانات",
+        "noResultsFound": "لم يتم العثور على نتائج",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "selectPartnerId": "حدد معرف الشريك",
@@ -586,54 +598,230 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
         "listOfPartners": "قائمة الشركاء",
-        "organizationName": "اسم المنظمة",
+        "organisationName": "اسم المنظمة",
         "createdOn": "تم الإنشاء بتاريخ",
         "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
         "emailId": "معرف البريد الإلكتروني",
+        "partnerCertificate": "شهادة الشريك",
         "errorInPartnerList": "أثناء جلب تفاصيل الشريك، واجهنا خطأ",
         "originalCertificateSuccessMsg": "تم تنزيل الشهادة الأصلية بنجاح."
     },
     "deactivatePartner": {
-        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organizationName}}",
+        "headerMsg": "هل تريد إلغاء تنشيط الشريك بمعرف الشريك: {{partnerId}} التابع للمؤسسة: {{organisationName}}",
         "description": "عند النقر على تأكيد، سيتم إلغاء تنشيط الشريك المحدد ولن يتمكن بعد ذلك من إجراء أي عمليات في بوابة PMS"
     },
     "createPolicyGroup": {
-        "policies":"السياسات",
+        "listOfPolicyGroups": "قائمة مجموعات السياسة",
         "createPolicyGroup": "إنشاء مجموعة السياسات",
         "policyGroupName": "اسم مجموعة السياسات",
         "enterNameforPolicyGroup": "أدخل اسمًا لمجموعة السياسات",
-        "policyGroupDescription":"وصف مجموعة السياسات",
+        "policyGroupDescription": "أدخل وصفًا حول مجموعة السياسات",
         "enterPolicyGroupDescription": "أدخل وصفًا حول مجموعة السياسات هنا",
         "errorInCreatePolicyGroup": "أثناء إنشاء السياسة، واجهنا خطأ",
-        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح",
-        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
-        
+        "creatPolicyGroupSuccessHeader": "تم إنشاء مجموعة السياسات بنجاح"
+    },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "إظهار مجموعة السياسات",
+        "listOfPolicyGroups": "قائمة مجموعات السياسة",
+        "policyGroupId": "معرف مجموعة السياسات",
+        "policyGroupDesc": "وصف مجموعة السياسات"
     },
     "policyGroupList": {
         "policies": "السياسات",
-        "policyGroup":"مجموعة السياسات",
+        "policyGroup": "مجموعات السياسات",
         "authPolicy": "سياسة المصادقة",
         "dataSharePolicy": "سياسة مشاركة البيانات",
         "createPolicyGroup": "إنشاء مجموعة سياسات",
         "policyGroupId": "معرف مجموعة السياسات",
-        "policyGroupName":"اسم مجموعة السياسات",
-        "policyGroupDescription":"وصف مجموعة السياسات",
-        "status":"حالة",
-        "action":"فعل"
+        "policyGroupName": "اسم مجموعة السياسات",
+        "policyGroupDescription": "وصف مجموعة السياسات",
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
+        "listOfPolicyGroups": "قائمة مجموعات السياسات",
+        "errorInPolicyGroupList": "أثناء جلب قائمة مجموعات السياسات، واجهنا خطأً.",
+        "searchPolicyGroupId": "معرف مجموعة سياسة البحث",
+        "searchPolicyGroupName": "البحث عن اسم مجموعة السياسات",
+        "searchPolicyGroupDescription": "وصف مجموعة سياسة البحث"
     },
-    "authPoliciesList": {
+    "policiesList": {
         "createAuthPolicy": "إنشاء سياسة المصادقة",
-        "partnerId":"معرف الشريك",
-        "partnerType":"نوع الشريك",
-        "policyGroup":"مجموعة السياسات",
-        "policyName":"اسم السياسة",
-        "policyDescription": "وصف",
-        "createdDate":"تاريخ الإنشاء",
-        "status":"حالة",
-        "action":"فعل"
+        "createDataSharePolicy": "إنشاء سياسة مشاركة البيانات",
+        "policyId": "معرف السياسة",
+        "policyName": "اسم السياسة",
+        "policyDescription": "وصف السياسة",
+        "policyGroup": "مجموعة السياسات",
+        "createdDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
+        "listOfAuthPolicies": "قائمة سياسة السياسات",
+        "listOfDataSharePolicies": "قائمة سياسة مشاركة السياسات",
+        "errorInAuthPolicies": "أثناء جلب سياسات المصادقة، واجهنا خطأً.",
+        "errorInDataSharePolicies": "أثناء جلب سياسات مشاركة البيانات، واجهنا خطأً.",
+        "searchPolicyId": "معرف سياسة البحث",
+        "searchPolicyName": "اسم سياسة البحث",
+        "searchPolicyDescription": "وصف سياسة البحث",
+        "searchPolicyGroup": "مجموعة سياسة البحث",
+        "clone": "استنساخ",
+        "edit": "تحرير",
+        "publish": "نشر"
     },
-    "dataSharePoliciesList": {
-        "createDataSharePolicy": "إنشاء سياسة مشاركة البيانات"
+    "deactivatePolicyGroup": {
+        "headerMsg": "هل تريد إلغاء تنشيط مجموعة السياسات",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط مجموعة السياسات المحددة"
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "خطأ: تم اكتشاف اقتران نهج الشريك النشط",
+        "description": "الشركاء النشطون مرتبطون حاليًا بهذه السياسة. يرجى إلغاء تنشيط جميع الشركاء النشطين المرتبطين بهذه السياسة قبل محاولة إلغاء تنشيطها"
+    },
+    "pendingPolicyRequestsDetectedMsg": {
+        "header": "خطأ: الشريك - تم اكتشاف طلب السياسة!",
+        "description": "ترتبط طلبات السياسة المعلقة بهذه السياسة. يرجى اتخاذ الإجراء المناسب في شاشة ربط قائمة سياسات الشركاء"
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy": "عرض سياسة المصادقة",
+        "listOfAuthenticationPolicies": "قائمة سياسة السياسات",
+        "policyId": "معرف السياسة",
+        "policyGroup": "مجموعة السياسات",
+        "policyDescription": "وصف السياسة",
+        "policyGroupDescription": "وصف مجموعة السياسات",
+        "policyData": "بيانات السياسة",
+        "jsonFilePlace": "اسم ملف JSON يظهر هنا",
+        "preview": "معاينة"
+    },
+    "editPolicy": {
+        "edit": "يحرر",
+        "editAuthPolicyTitle": "تعديل سياسة المصادقة",
+        "editDataSharePolicyTitle": "تعديل سياسة مشاركة البيانات",
+        "authPolicyConfirmationHeader": "تم تحديث سياسة المصادقة وإرسالها بنجاح",
+        "dataSharePolicyConfirmationHeader": "تم تحديث سياسة مشاركة البيانات وإرسالها بنجاح",
+        "authPolicyConfirmationMessage": "تم تحديث سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات المصادقة",
+        "dataSharePolicyConfirmationMessage": "تم تحديث سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات مشاركة البيانات",
+        "errorInEditPolicy": "أثناء تحرير السياسة، واجهنا خطأً.",
+        "reUploadPolicyData": "إعادة تحميل بيانات السياسة",
+        "reuploadBtn": "إعادة التحميل",
+        "policyIdNotExist": "لم يتم العثور على تفاصيل السياسة: معرف السياسة المقدم غير موجود."
+    },
+    "viewDataSharePoliciesList": {
+        "viewDataSharePolicy": "عرض سياسة مشاركة البيانات",
+        "listOfDataSharePolicies": "قائمة سياسات مشاركة السياسات"
+    },
+    "createPolicy": {
+        "policyGroup": "مجموعة السياسات",
+        "selectPolicyGroup": "اختر مجموعة السياسات",
+        "policyName": "اسم السياسة",
+        "policyDescription": "وصف السياسة",
+        "policyDataDesc": "قم بتحميل ملف JSON بنجاح لعرض محتواه هنا",
+        "upload": "تحميل",
+        "uploadFileError": "يرجى اختيار ملف JSON صالح",
+        "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
+        "uploadPolicyDataFile": "تحميل بيانات السياسة",
+        "uploadPolicyDataFileDesc": "يُسمح بتحميل ملفات بتنسيق .json فقط",
+        "fileUploadSuccessMsg": "تم تحميل بيانات السياسة بنجاح",
+        "createAuthPolicyTitle": "إنشاء سياسة المصادقة",
+        "createDataSharePolicyTitle": "إنشاء سياسة مشاركة البيانات",
+        "enterAuthPolicyName": "أدخل اسمًا لسياسة المصادقة",
+        "enterDataSharePolicyName": "أدخل اسمًا لسياسة مشاركة البيانات",
+        "authPolicyDescription": "أدخل وصفًا لسياسة المصادقة",
+        "dataSharePolicyDescription": "أدخل وصفًا لسياسة مشاركة البيانات",
+        "policyConfirmationHeader": "تم حفظ السياسة كمسودة",
+        "authPolicyConfirmationMessage": "هذه السياسة الخاصة بالمصادقة حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات المصادقة'",
+        "dataSharePolicyConfirmationMessage": "هذه السياسة الخاصة بمشاركة البيانات حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات مشاركة البيانات'",
+        "errorInCreatePolicy": "أثناء إنشاء السياسة، واجهنا خطأً.",
+        "saveAsDraft": "حفظ كمسودة"
+    },
+    "clonePolicyPopup": {
+        "title": "سياسة الاستنساخ",
+        "description1": "حدد مجموعة السياسات التي ترغب في تعشيش السياسة المستنسخة فيها",
+        "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
+        "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
+        "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
+        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
+    },
+    "publishPolicyPopup": {
+        "title": "سياسة النشر",
+        "description1": "بالنقر فوق نشر السياسة",
+        "description2": "سيتم نشرها ولن تكون قابلة للتعديل بعد الآن. ستصبح متاحة لاختيار الشريك فقط بعد نشر السياسة.",
+        "errorInPublishPolicy": "أثناء نشر السياسة، واجهنا خطأً.",
+        "successMsg": "تم نشر {{policyName}} بنجاح!",
+        "publish": "نشر"
+    },
+    "partnerPolicyMappingRequestList": {
+        "partnerPolicyMappingRequestTitle": "شريك - ربط السياسات",
+        "listOfPartnerPolicyMappingRequestTitle": "قائمة الروابط بين الشركاء والسياسات",
+        "partnerId": "معرّف الشريك",
+        "organisation": "اسم المنظمة",
+        "policyGroupName": "مجموعة السياسات",
+        "policyId": "معرف السياسة",
+        "policyName": "اسم السياسة",
+        "createdDate": "تاريخ الإنشاء",
+        "partnerType": "نوع الشريك",
+        "status": "الحالة",
+        "action": "الإجراء",
+        "deActivate": "تعطيل",
+        "selectPartnerId": "اختر معرّف الشريك",
+        "selectOrganisation": "اختر المنظمة",
+        "selectPartnerName": "اختر اسم الشريك",
+        "selectPolicyName": "اختر اسم السياسة",
+        "selectStatus": "اختر الحالة",
+        "errorInpartnerPolicyMappingRequestList": "واجهنا خطأ أثناء جلب تفاصيل طلبات الربط بسياسات الشريك.",
+        "view": "عرض",
+        "approve": "الموافقة",
+        "reject": "رفض",
+        "applyFilter": "تطبيق الآن",
+        "searchPartnerId": "بحث عن معرّف الشريك",
+        "searchOrganisation": "بحث عن المنظمة",
+        "searchEmailAddress": "بحث عن عنوان البريد الإلكتروني",
+        "searchPolicyGroup": "بحث عن مجموعة السياسات",
+        "selectPartnerType": "اختر نوع الشريك",
+        "selectPolicyGroup": "اختر مجموعة السياسات",
+        "searchPolicyName": "بحث عن اسم السياسة",
+        "searchPolicyId": "معرف سياسة البحث"
+    },
+    "viewPolicyRequest": {
+        "viewPolicyRequest": "عرض ربط سياسة الشريك",
+        "listOfPolicyRequests": "قائمة روابط سياسات الشركاء",
+        "partnerId": "معرف الشريك",
+        "partnerType": "نوع الشريك",
+        "policyId": "معرف السياسة",
+        "policyName": "اسم السياسة",
+        "organisation": "اسم المنظمة",
+        "policyGroup": "مجموعة السياسات"
+    },
+    "deactivatePolicyPopup": {
+        "headerMsg": "هل تريد تعطيل السياسة",
+        "authPolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة المصادقة المحددة.",
+        "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
+    },
+    "approveRejectPopup": {
+        "approveReject": "موافقة / رفض",
+        "deActivate": "إلغاء التنشيط",
+        "approve": "يعتمد",
+        "reject": "يرفض",
+        "comments": "تعليقات",
+        "commentPlaceholder": "اكتب تعليقك هنا"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}",
+        "description": "يرجى مراجعة تفاصيل شريحة FTM والشهادة المرتبطة بها بعناية قبل اتخاذ الإجراء المناسب."
+    },
+    "viewAdminOidcClientDetails": {
+        "organisation": "منظمة",
+        "errorWhileGettingOidcClientDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأ",
+        "errorWhileGettingGroupDetails": "أثناء جلب تفاصيل مجموعة السياسات، واجهنا خطأ"
+    },
+    "deactivateOidc": {
+        "header": "هل أنت متأكد أنك تريد إلغاء تنشيط عميل OIDC؟",
+        "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط معرف عميل OIDC ولن يكون من الممكن استخدامه للمصادقة.",
+        "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
+    },
+    "viewAdminFtmDetails": {
+        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",
@@ -649,8 +837,12 @@
         "cancel": "يلغي",
         "proceed": "يتابع"
     },
+    "adminDeactivateApiKey": {
+        "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
+        "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
+    },
     "serverError": {
-        "PMS_COR_001": "معلمة الإدخال مفقود",
+        "PMS_COR_001": "معلمة الإدخال مفقودة",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
         "PMS_PRT_010": "نوع الشريك غير موجو",
         "PMS_PRT_310": " تم تلقي عمود غير صالح:٪ ",
@@ -660,9 +852,11 @@
         "PMS_PRT_314": "حقل الفرز أو قيم نوع الفرز مفقو",
         "PMS_PRT_315": "غير صالح من القيمة أو إلى القيمة",
         "PMS_PRT_356": "لا يمكن أن يكون ترقيم الصفحات فارغًا",
-        "PMS_PRT_358": " نوع الفرز٪ s غير معتم",
+        "PMS_PRT_358": "لا يتم دعم نوع الفرز",
         "PMS_PRT_359": " حدث خطأ أثناء الفر",
-        "PMS_PRT_357": "حقل فرز غير صالح٪ ",
+        "PMS_PRT_357": "حقل الفرز غير صالح",
+        "PMS_PRT_360": "رقم الصفحة غير صالح",
+        "PMS_PRT_361": "حجم الصفحة غير صالح",
         "KER_PRT_390": "قيمة التصفية غير صالح",
         "PMS_PRT_001": "تم تسجيل الشريك بنفس الاسم بالفعل",
         "PMS_PRT_051": " تم تسجيل الشريك بالفعل بنفس المعرف",
@@ -690,7 +884,7 @@
         "PMS_KKS_001": " API لا يمكن الوصول إليها",
         "PMS_PRT_107": "الردود من API لاغي",
         "PMS_PRT_500": "غير قادر على معالجة الطلب",
-        "PMS_PMP_016": "الشريك غير نشط",
+        "PMS_PMP_016": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع شريك معين بواسطة المسؤول، ونتيجة لذلك لن تتمكن بعد الآن من أداء هذا النشاط",
         "PMS_PRT_098": "السياسة المقدمة بموجب مجموعة سياسة الشريك غير موجودة.",
         "PMS_PMP_019": "السياسة غير نشطة.",
         "PMS_PMP_023": "مجموعة السياسة غير نشطة.",
@@ -708,6 +902,12 @@
         "PMS_PM_045": " يجب أن تكون الحالة إما موافق عليها أو مرفوضة",
         "PMS_PM_051": " النازعون غير موجودين. الرجاء إضافة مستخرج.",
         "PMS_PM_058": " يجب أن تكون الحالة إما نشطة أو غير نشطة",
+        "PMS_PM_059": "حدث خطأ أثناء جلب تفاصيل الشريك.",
+        "PMS_PM_060": "الشهادة الخاصة بالشريك المحدد غير متوفرة في المتجر",
+        "PMS_PM_061": "خطأ أثناء جلب تفاصيل جميع الشركاء",
+        "PMS_PM_062": "خطأ أثناء جلب جميع طلبات ربط سياسات الشريك",
+        "PMS_PM_063": "الشريك المحدد تم تعطيله بالفعل.",
+        "PMS_PM_064": "خطأ أثناء جلب جميع طلبات مفاتيح API",
         "PMS_PMP_010": "لا تنتمي السياسة إلى مجموعة السياسات التابعة للمدير الشريك",
         "PMS_PMP_015": "لا توجد طلبات مفتاح API للشريك لمجموعة السياسات",
         "PMS_PMP_007": "مفتاح API الشريك غير موجود",
@@ -729,13 +929,13 @@
         "PMS_PMP_018": "انتهت صلاحية السياسة.",
         "PMS_PRT_108": "مجموعة السياسات إلزامية لـ Auth_Partner",
         "PMS_PRT_110": "اسم مفتاح API الذي تم إدخاله موجود بالفعل. قم بتوفير اسم مفتاح API فريد وإرساله",
-        "PMS_AUT_002": "تم تعطيل هذا الشريك بواسطة مسؤول الشريك",
+        "PMS_AUT_002": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، ونتيجة لذلك لن تتمكن من القيام بهذا النشاط",
         "PMS_AUT_003": "تفاصيل الجهاز موجودة بالفعل لنفس الماركة و/أو الطراز",
         "PMS_AUT_004": "تم استلام طلب مكرر",
         "PMS_AUT_005": "تفاصيل الجهاز للمعرف٪ s غير موجودة",
         "PMS_AUT_512": "توجد تفاصيل SBI لإصدار SBI المحدد. لا يمكن إضافة SBI متعددة بنفس إصدار SBI.",
         "PMS_AUT_025": "يجب أن تكون حالة الموافقة نشطة / إلغاء تنشيط ؛",
-        "PMP_AUT_030": "الشريك غير نشط",
+        "PMP_AUT_030": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع شريك معين بواسطة المسؤول، ونتيجة لذلك لن تتمكن بعد الآن من أداء هذا النشاط",
         "PMP_AUT_031": "معرف شريحة بروتوكول نقل الملفات غير موجود.",
         "PMP_AUT_032": "تفاصيل شريحة FTM موجودة بالفعل لنفس الماركة والطراز",
         "PMP_AUT_033": "لم يتم تحميل الشهادة.",
@@ -761,12 +961,12 @@
         "PMS_POL_006": "نوع المصادقة غير المدعوم في ملف النهج",
         "PMS_POL_007": "سمة eKYC مفقودة في ملف السياسة",
         "PMS_POL_008": "معرف السياسة غير موجود",
-        "PMS_POL_009": "توجد سياسة المصادقة بالاسم:",
+        "PMS_POL_009": "اسم السياسة المحدد موجود بالفعل. يرجى المحاولة باستخدام اسم سياسة مختلف",
         "PMS_COR_002": "معلمة إدخال غير صالحة -",
         "PMS_COR_003": "لا يمكن معالجة الطلب",
         "PMS_POL_010": "لم يتم تحديد سياسات المصادقة مقابل السياسة",
         "PMS_POL_013": "لا توجد سياسة متاحة لـ PartnerAPIKey المحدد",
-        "PMS_POL_014": "توجد مجموعة نهج بالاسم:",
+        "PMS_POL_014": "مجموعة السياسات موجودة بالفعل بهذا الاسم",
         "PMS_POL_015": "لم يتم تعيين مجموعة السياسة والنهج.",
         "PMS_POL_016": "معرف مجموعة النهج غير موجود",
         "PMS_POL_017": "لا توجد سياسة متاحة لشريك معين",
@@ -791,6 +991,7 @@
         "PMS_POL_058": "لا يمكن تغيير الحالة للنهج المنشور .؛",
         "PMS_POL_059": "لا توجد مجموعات سياسة نشطة.",
         "PMS_POL_060": "حدث خطأ أثناء جلب مجموعات السياسات.",
+        "PMS_POL_061": "خطأ أثناء جلب السياسات",
         "KER-PCM-006": "لم يتم العثور على شهادات CA الجذر/CA المتوسطة.",
         "KER-PCM-008": "اسم المنظمة الشريكة غير متطابق",
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
@@ -800,7 +1001,6 @@
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",
-        "PMS_PV_005": "معلمة إدخال غير صالحة - رمز الخطأ في بيانات السياسة",
         "PMS_PRT_053": "هذه السياسة معلقة بالفعل للموافقة عليها مقابل معرف الشريك الخاص بك.",
         "PMS_PRT_060": "تمت الموافقة على هذه السياسة بالفعل مقابل معرف الشريك الخاص بك.",
         "PMS_AUT_028": "تم رفض تفاصيل الجهاز الخاصة بمعرف $ID. لا يمكن استخدام نفس التفاصيل لرسم الخرائط.",
@@ -819,6 +1019,10 @@
         "PMS_POLICY_ERROR_005": "معرف مجموعة السياسات فارغ.",
         "PMS_POLICY_ERROR_006": "حدث خطأ أثناء جلب قائمة عملاء OIDC.",
         "PMS_POLICY_ERROR_007": "حدث خطأ أثناء جلب طلبات مفتاح API",
+        "PMS_POLICY_ERROR_008": "لم يتم العثور على مجموعة سياسة مطابقة للشريك المقدم",
+        "PMS_POLICY_ERROR_009": "معرف الشريك المعطى لا ينتمي إلى المستخدم. لذلك لا يمكن إنشاء عميل OIDC",
+        "PMS_POLICY_ERROR_010": "معرف الشريك المعطى لا ينتمي للمستخدم. لذا لا يمكن تحديث تفاصيل عميل OIDC",
+        "PMS_POLICY_ERROR_011": "معرف الشريك المعطى لا ينتمي إلى المستخدم. لذا لا يمكن الحصول على تفاصيل عميل OIDC",
         "PMS_ESI_001": "المفتاح العام للعميل موجود بالفعل.",
         "PMS_ESI_002": "لم تتم الموافقة على تعيين سياسة الشريك. يرجى التحقق من حالة التعيين.",
         "PMS_ESI_003": "سياسة لها مصادقة إلزامية. لذلك لا يمكن إنشاء العميل لنفسه.",
@@ -879,6 +1083,10 @@
         "PMS_FTM_ERROR_007": "تم إلغاء تنشيط FTM المحدد بالفعل",
         "PMS_FTM_ERROR_008": "يجب أن يكون FTM المحدد معلقًا أو معتمدًا",
         "PMS_FTM_ERROR_009": "غير قادر على تنزيل شهادة FTM الأصلية",
-        "PMS_FTM_ERROR_010": "FTM المحدد ليس في حالة معتمدة"
+        "PMS_FTM_ERROR_010": "FTM المحدد ليس في حالة معتمدة",
+        "PMS_PV_001": "فشل في قراءة المخطط",
+        "PMS_PV_002": "فشل التحقق من صحة كائن السياسة",
+        "PMS_PV_003": "فشل تحليل كائن السياسة أو تحويله.",
+        "PMS_PV_004": "مخطط السياسة غير صالح"
     }
 }

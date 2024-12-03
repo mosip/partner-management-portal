@@ -176,14 +176,14 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    const requireDataData = {
+                    const requiredData = {
                         title: "requestPolicy.requestPolicy",
                         backUrl: "/partnermanagement/policies/policies-list",
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",
                     }
-                    setConfirmationData(requireDataData);
+                    setConfirmationData(requiredData);
                     setRequestPolicySuccess(true);
                     console.log(`Response data: ${resData.length}`);
                 } else {
@@ -244,7 +244,7 @@ function RequestPolicy() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-8">
                         <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list'></Title>
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">

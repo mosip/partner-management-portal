@@ -29,9 +29,20 @@ import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
 import PolicyGroupList from './pages/admin/policyManager/PolicyGroupList.js';
+import ViewPolicyGroupDetails from './pages/admin/policyManager/ViewPolicyGroupDetails.js';
 import AuthPoliciesList from './pages/admin/policyManager/AuthPoliciesList.js';
 import DataSharePoliciesList from './pages/admin/policyManager/DataSharePoliciesList.js';
-
+import CreatePolicy from './pages/admin/policyManager/CreatePolicy.js';
+import ViewPolicy from './pages/admin/policyManager/ViewPolicy.js';
+import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.js';
+import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
+import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
+import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
+import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
+import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
+import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
+import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 
 function AppRoutes() {
 
@@ -143,10 +154,10 @@ function AppRoutes() {
         {
           path: 'admin/partners-list',
           element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
-        }, 
+        },
         {
           path: 'admin/view-partner-details',
-          element: <GuardedRoute><MainLayout><ViewPartnerDetails/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/create-policy-group',
@@ -154,15 +165,75 @@ function AppRoutes() {
         },
         {
           path: 'admin/policy-manager/policy-group-list',
-          element: <GuardedRoute><MainLayout><PolicyGroupList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><PolicyGroupList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-policy-group-details',
+          element: <GuardedRoute><MainLayout><ViewPolicyGroupDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/auth-policies-list',
-          element: <GuardedRoute><MainLayout><AuthPoliciesList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AuthPoliciesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/policy-manager/data-share-policies-list',
-          element: <GuardedRoute><MainLayout><DataSharePoliciesList/></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><DataSharePoliciesList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/create-auth-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/create-data-share-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-auth-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/edit-auth-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/view-data-share-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-manager/edit-data-share-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/policy-requests-list',
+          element: <GuardedRoute><MainLayout><PolicyRequestsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/view-policy-request',
+          element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/oidc-clients-list',
+          element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-oidc-client-details',
+          element: <GuardedRoute><MainLayout><ViewAdminOidcClientDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/api-keys-list',
+          element: <GuardedRoute><MainLayout><AdminApiKeysList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/view-api-key-details',
+          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/ftm-chip-provider-services/ftm-list',
+          element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/ftm-chip-provider-services/view-ftm-chip-details',
+          element: <GuardedRoute><MainLayout><ViewAdminFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

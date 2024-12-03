@@ -8,6 +8,7 @@
         "back": "Dos",
         "cancel": "Annuler",
         "submit": "Soumettre",
+        "okay": "D'accord",
         "sessionIdleLogout": "En raison de votre inactivité, vous serez déconnecté",
         "partnersHelpText": "Rempli automatiquement en fonction de l'ID de partenaire sélectionné",
         "somethingWentWrong": "Quelque chose s'est mal passé !",
@@ -27,7 +28,9 @@
         "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires d'authentification approuvées, nous avons rencontré une erreur",
         "filterBtn": "Filtre",
         "resetFilter": "Réinitialiser le filtre",
-        "itemsPerPage": "Objets par page"
+        "itemsPerPage": "Objets par page",
+        "close":"Fermer",
+        "unexpectedError": "Nous avons rencontré une erreur inattendue"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
@@ -49,21 +52,23 @@
         "deviceProviderServicesDesc": "Ajouter, afficher, désactiver SBI (Secure Biometric Interface) et les appareils associés",
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
-        "pendingRequests": "Demandes en attente",
-        "pendingRequestsDesc": "Approuver / Rejeter les demandes en attente de divers partenaires",
         "rootOfTrustCertificate": "Certificat racine de confiance",
         "rootOfTrustCertificateDesc": "Télécharger des certificats racine / CA",
         "partner": "Partenaire",
-        "partnerDesc": "Afficher / Désactiver les détails du partenaire",
+        "partnerDesc": "Afficher, désactiver les détails du partenaire",
         "policy": "Politique",
         "policiesadminDesc": "Créer un groupe de stratégies, une stratégie d'authentification et de partage de données",
-        "partnerPolicyMapping": "Partenaire - Cartographie des politiques",
-        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver / Rejeter les demandes de politique des partenaires",
+        "partnerPolicyMapping": "Partenaire - Liens politiques",
+        "partnerPolicyMappingDesc": "Afficher, Désactiver, Approuver/Rejet les demandes de politique des partenaires",
         "sbiDevice": "SBI-Appareil",
-        "sbiDeviceDesc": "Afficher, Désactiver Approuver / Rejeter les détails du SBI ou de l'appareil",
+        "sbiDeviceDesc": "Afficher, désactiver, approuver/rejeter les détails du SBI ou de l'appareil",
         "ftmChip": "Puce FTM",
-        "ftmChipDesc": "Afficher, Désactiver l'approbation / Rejet des détails de la puce FTM",
-        "adminAuthenticationServicesDesc": "Afficher / Désactiver les détails du client OIDC ou de l'API"
+        "ftmChipDesc": "Afficher, désactiver, approuver/rejeter les détails de la puce FTM",
+        "adminAuthenticationServicesDesc": "Afficher, désactiver le client OIDC ou les détails de l'API",
+        "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
+        "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
+        "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
+        "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -114,7 +119,8 @@
         "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!",
         "originalCertificateSuccessMsg": "Le certificat signé par l'autorité de certification initialement téléchargé a été téléchargé avec succès.",
         "mosipSignedCertificateSuccessMsg": "Certificat signé MOSIP téléchargé avec succès.",
-        "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide"
+        "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide",
+        "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
@@ -159,7 +165,8 @@
         "pendingCertUpload": "En attente de téléchargement du certificat",
         "expired": "Expiré",
         "uploaded": "Téléchargé",
-        "notUploaded": "Non téléchargé"
+        "notUploaded": "Non téléchargé",
+        "draft": "Brouillon"
     },
     "policies": {
         "policies": "Stratégies",
@@ -272,6 +279,7 @@
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",
+        "orgName": "Organisation",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
         "oidcClientName": "Nom du client OIDC",
@@ -293,6 +301,7 @@
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "selectStatus": "Sélectionnez le statut",
+        "searchOidcClientName": "Rechercher le nom du client OIDC",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
     },
     "viewOidcClientDetails": {
@@ -339,12 +348,12 @@
         "confirm": "Confirmer"
     },
     "apiKeysList": {
-        "apiKeyLabel": "Nom de la clé API",
+        "apiKeyName": "Nom de la clé API",
         "apiKeyId": "ID de clé API",
         "apiKey": "clé API",
         "generateApiKey": "Générer une clé API",
         "listOfApiKeyRequests": "Liste des clés API",
-        "selectApiKeyLabel": "Sélectionnez le nom de la clé API",
+        "searchApiKeyName": "Rechercher le nom de la clé API",
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
     },
@@ -472,6 +481,7 @@
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "addFtmBtn": "Ajouter la puce FTM",
         "partnerId": "ID partenaire",
+        "orgName":"Organisation",
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
         "model": "Modèle",
@@ -490,6 +500,8 @@
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
+        "searchMake": "Rechercher une marque",
+        "searchModel": "Rechercher un modèle",
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur."
     },
@@ -556,7 +568,7 @@
         "caCertificates": "Certificats CA"
     },
     "partnerList":{
-        "partnerTitle": "Partenaire",
+        "partnerTitle": "Partenaires",
         "listOfPartnerTitle": "Liste des partenaires",
         "partnerId": "ID partenairePartenaires",
         "organisation": "Nom de l'organisation",
@@ -566,7 +578,7 @@
         "certUploadStatus": "Cert. Statut de téléchargement",
         "status": "Statut",
         "action": "Action",
-        "noData": "Aucune donnée",
+        "noResultsFound": "Aucun résultat trouvé",
         "deActivate": "Désactiver",
         "view": "Voir",
         "selectPartnerId": "Sélectionnez l'ID du partenaire",
@@ -586,53 +598,234 @@
      "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",
         "listOfPartners": "Liste des partenaires",
-        "organizationName": "Nom de l'Organisation",
+        "organisationName": "Nom de l'Organisation",
         "createdOn":"Créé le",
         "expiryDate": "Date et heure d'expiration",
         "emailId": "Identifiant de courrier électronique",
+        "partnerCertificate": "Certificat de partenaire",
         "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
         "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
      },
      "deactivatePartner": {
-         "headerMsg": "En cliquant sur Confirmer, le partenaire sélectionné sera désactivé et n'aura plus accès pour effectuer aucune opération dans le portail PMS",
+         "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
          "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
      },
      "createPolicyGroup": {
-        "policies":"Politiques",
+        "listOfPolicyGroups":"Liste des groupes de politiques",
         "createPolicyGroup": "Créer un groupe de stratégies",
         "policyGroupName": "Nom du groupe de stratégies",
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
         "policyGroupDescription":"Description du groupe de stratégies",
-        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies ici",
+        "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies",
         "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
-        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès !",
-        "creatPolicyGroupSuccessDescription": "Lorem Ipsum"
+        "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès!"
+    },
+    "viewPolicyGroupDetails": {
+        "viewPolicyGroup": "Afficher le groupe de stratégies",
+        "listOfPolicyGroups":"Liste des groupes de stratégies",
+        "policyGroupId":"ID du groupe de stratégies",
+        "policyGroupDesc": "Description du groupe de stratégies"
     },
     "policyGroupList": {
         "policies": "Politiques",
-        "policyGroup":"Groupe de politiques",
+        "policyGroup":"Groupes de politiques",
         "authPolicy": "Politique d'authentification",
         "dataSharePolicy": "Politique de partage des données",
         "createPolicyGroup": "Créer un groupe de politiques",
         "policyGroupId": "ID du groupe de politiques",
         "policyGroupName":"Nom du groupe de politiques",
         "policyGroupDescription":"Description du groupe de politiques",
-        "status":"Statut",
-        "action":"Action"
-    },
-    "authPoliciesList": {
-        "createAuthPolicy": "Créer une politique d'authentification",
-        "partnerId":"ID partenaire",
-        "partnerType":"Type de partenaire",
-        "policyGroup":"Groupe de politiques",
-        "policyName":"Nom de la politique",
-        "policyDescription": "Description",
         "createdDate":"Date de création",
         "status":"Statut",
-        "action":"Action"
+        "action":"Action",
+        "listOfPolicyGroups": "Liste des groupes de politiques",
+        "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur.",
+        "searchPolicyGroupId": "ID de groupe de politiques de recherche",
+        "searchPolicyGroupName": "Rechercher le nom du groupe de politiques",
+        "searchPolicyGroupDescription": "Description du groupe de politiques de recherche"
     },
-    "dataSharePoliciesList": {
-        "createDataSharePolicy": "Créer une politique de partage de données"
+    "policiesList": {
+        "createAuthPolicy": "Créer une politique d'authentification",
+		"createDataSharePolicy": "Créer une politique de partage de données",
+        "policyId":"ID de la politique",
+        "policyName":"Nom de la politique",
+        "policyDescription": "Description de la politique",
+        "policyGroup":"Groupe de politiques",
+        "createdDate":"Date de création",
+        "status":"Statut",
+        "action":"Action",
+        "listOfAuthPolicies": "Liste des politiques d'authentification",
+        "listOfDataSharePolicies": "Liste des politiques de partage de données",
+        "errorInAuthPolicies": "Lors de la récupération des politiques d’authentification, nous avons rencontré une erreur.",
+        "errorInDataSharePolicies": "Lors de la récupération des politiques de partage de données, nous avons rencontré une erreur.",
+        "searchPolicyId": "Rechercher l'ID de la politique",
+        "searchPolicyName": "Rechercher le nom de la politique",
+        "searchPolicyDescription": "Description de la politique de recherche",
+        "searchPolicyGroup": "Groupe de recherche sur les politiques",
+        "clone": "Cloner",
+        "edit": "Modifier",
+        "publish": "Publier"
+    },
+    "deactivatePolicyGroup": {
+        "headerMsg": "Voulez-vous désactiver le groupe de stratégies",
+        "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
+    },
+    "activePoliciesDetectedMsg": {
+        "header": "Erreur : stratégies actives détectées !",
+        "description": "Il existe {{noOfAssociatedPolicies}} stratégies actives associées à ce groupe de stratégies. Veuillez les désactiver avant de continuer."
+    },
+    "viewAuthPoliciesList": {
+        "viewAuthPolicy": "Afficher la politique d'authentification",
+        "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
+        "policyId": "ID de stratégie",
+        "policyGroup": "Groupe de politiques",
+        "policyDescription": "Description de la politique",
+        "policyGroupDescription": "Description du groupe de stratégies",
+        "jsonFilePlace": "Le nom du fichier JSON va ici",
+        "policyData": "Données de police",
+        "preview": "Aperçu"
+    },
+    "editPolicy": {
+        "edit": "Modifier",
+        "editAuthPolicyTitle": "Modifier la politique d'authentification",
+        "editDataSharePolicyTitle": "Modifier la politique de partage de données",
+        "authPolicyConfirmationHeader": "Politique d'authentification mise à jour et soumise avec succès!",
+        "dataSharePolicyConfirmationHeader": "Politique de partage de données mise à jour et soumise avec succès !",
+        "authPolicyConfirmationMessage": "La stratégie d'authentification pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran « Liste des politiques d'authentification'.",
+        "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'.",
+        "errorInEditPolicy": "Lors de l'édition de la politique, nous avons rencontré une erreur.",
+        "reUploadPolicyData": "Re-télécharger les données de politique",
+        "reuploadBtn": "Re-télécharger",
+        "policyIdNotExist": "Détails de la politique non trouvés : l’ID de politique fourni n’existe pas."
+    },
+    "viewDataSharePoliciesList": {
+        "viewDataSharePolicy": "Afficher la politique de partage de données",
+        "listOfDataSharePolicies": "Liste des politiques de partage de données"
+    },
+    "createPolicy": {
+        "policyGroup": "Groupe de Politique",
+        "selectPolicyGroup": "Sélectionner un groupe de politique",
+        "policyName": "Nom de la Politique",
+        "policyDescription": "Description de la Politique",
+        "policyDataDesc": "Téléchargez le fichier JSON avec succès pour afficher son contenu ici",
+        "upload": "Télécharger",
+        "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
+        "jsonParseError": "Veuillez fournir des données JSON valides",
+        "uploadPolicyDataFile": "Télécharger les données de la politique",
+        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement",
+        "fileUploadSuccessMsg": "Les données de la politique ont été téléchargées avec succès",
+        "createAuthPolicyTitle": "Créer une Politique d'Authentification",
+        "createDataSharePolicyTitle": "Créer une Politique de Partage de Données",
+        "enterAuthPolicyName": "Entrer un nom pour la Politique d'Authentification",
+        "enterDataSharePolicyName": "Entrer un nom pour la Politique de Partage de Données",
+        "authPolicyDescription": "Entrer une description pour la Politique d'Authentification",
+        "dataSharePolicyDescription": "Entrer une description pour la Politique de Partage de Données",
+        "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
+        "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
+        "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
+        "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
+        "saveAsDraft": "Enregistrer en tant que brouillon"
+    },
+    "clonePolicyPopup": {
+        "title": "Politique de clonage",
+        "description1": "Sélectionnez le groupe de politiques dans lequel vous souhaitez imbriquer la politique clonée",
+        "description2" :"ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
+        "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
+        "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
+        "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
+        "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
+    },
+    "publishPolicyPopup": {
+        "title": "Politique de publication",
+        "description1": "En cliquant sur « Publier », la politique",
+        "description2": "sera publié et ne sera plus modifiable. Il ne sera disponible pour la sélection des partenaires qu'après la publication de la politique.",
+        "errorInPublishPolicy": "Lors de la publication de la politique, nous avons rencontré une erreur.",
+        "successMsg": "{{policyName}} a été publié avec succès !",
+        "publish": "Publier"
+    },
+    "partnerPolicyMappingRequestList": {
+        "partnerPolicyMappingRequestTitle": "Partenaire - Liens politiques",
+        "listOfPartnerPolicyMappingRequestTitle": "Liste des partenaires-Liens politiques",
+        "partnerId": "ID Partenaire",
+        "organisation": "Nom de l'organisation",
+        "policyGroupName": "Groupe de Politiques",
+        "policyId": "ID de la politique",
+        "policyName": "Nom de la Politique",
+        "createdDate": "Date de Création",
+        "partnerType": "Type de Partenaire",
+        "status": "Statut",
+        "action": "Action",
+        "deActivate": "Désactiver",
+        "selectPartnerId": "Sélectionner l'ID Partenaire",
+        "selectOrganisation": "Sélectionner l'Organisation",
+        "selectPartnerName": "Sélectionner le Nom du Partenaire",
+        "selectPolicyName": "Sélectionner le Nom de la Politique",
+        "selectStatus": "Sélectionner le Statut",
+        "errorInpartnerPolicyMappingRequestList": "Une erreur est survenue lors de la récupération des détails des demandes de mappage de politique partenaire.",
+        "view": "Voir",
+        "approve": "Approuver",
+        "reject": "Rejeter",
+        "applyFilter": "Appliquer Maintenant",
+        "searchPartnerId": "Rechercher l'ID Partenaire",
+        "searchOrganisation": "Rechercher l'Organisation",
+        "searchEmailAddress": "Rechercher l'Adresse Email",
+        "searchPolicyGroup": "Rechercher le Groupe de Politiques",
+        "selectPartnerType": "Sélectionner le Type de Partenaire",
+        "selectPolicyGroup": "Sélectionner le Groupe de Politiques",
+        "searchPolicyName": "Rechercher le Nom de la Politique",
+        "searchPolicyId": "Rechercher l'ID de la politique"
+    },
+    "viewPolicyRequest": {
+        "viewPolicyRequest": "Voir les liens vers la politique des partenaires",
+        "listOfPolicyRequests": "Liste des liens vers les politiques des partenaires",
+        "partnerId": "Identifiant du partenaire",
+        "partnerType": "Type de partenaire",
+        "policyId": "ID de stratégie",
+        "policyName": "Nom de la Politique",
+        "organisation": "Nom de l'organisation",
+        "policyGroup": "Groupe de politiques"
+    },
+    "deactivatePolicyPopup": {
+        "headerMsg": "Voulez-vous désactiver la politique",
+        "authPolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique d'authentification sélectionnée sera désactivée.",
+        "dataSharePolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique de partage de données sélectionnée sera désactivée."
+    },
+    "activePolicyRequestsDetectedMsg": {
+        "header": "Erreur : association partenaire-stratégie active détectée!",
+        "description": "Des partenaires actifs sont actuellement associés à cette politique. Veuillez désactiver tous les partenaires actifs associés à cette politique avant de tenter de la désactiver."
+    },
+    "pendingPolicyRequestsDetectedMsg": {
+        "header": "Erreur : Partenaire - Demande de stratégie détectée !",
+        "description": "Les demandes de stratégie en attente sont associées à cette stratégie. Veuillez prendre les mesures appropriées dans l'écran Liste des liens vers les politiques des partenaires."
+    },
+    "approveRejectPopup": {
+        "approveReject":"Approuver / Rejeter",
+        "deActivate": "Désactiver",
+        "approve":"Approuver",
+        "reject": "Rejeter",
+        "comments": "Commentaires",
+        "commentPlaceholder": "Écrivez votre commentaire ici"
+    },
+    "partnerPolicyRequestApproveRejectPopup": {
+        "header": "Voulez-vous Approuver/Rejeter la politique",
+        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
+    },
+    "ftmRequestApproveRejectPopup": {
+        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}}",
+        "description": "Veuillez examiner attentivement les détails de la puce FTM et le certificat associé avant de prendre une décision appropriée."
+    },
+    "viewAdminOidcClientDetails": {
+        "organisation": "Organisation",
+        "errorWhileGettingOidcClientDetails": "Lors de la récupération des détails du client OIDC, nous avons rencontré une erreur.",
+        "errorWhileGettingGroupDetails": "Lors de la récupération des détails du groupe de stratégies, nous avons rencontré une erreur."
+    },
+    "deactivateOidc": {
+        "header":"Etes-vous sûr de vouloir désactiver le client OIDC",
+        "description":"En cliquant sur ' Confirmer ', l’ID client OIDC sera désactivé et ne pourra plus être utilisé pour l’authentification.",
+        "errorInOidcDetails": "Lors de la récupération des détails du client OIDC, nous avons rencontré une erreur."
+    },
+    "viewAdminFtmDetails": {
+        "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -648,6 +841,10 @@
         "cancel": "Annuler",
         "proceed": "Procéder"
     },
+    "adminDeactivateApiKey": {
+        "title": "Êtes-vous sûr de vouloir désactiver la clé API",
+        "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
@@ -659,9 +856,11 @@
         "PMS_PRT_314": "Champ de tri ou valeurs de type de tri manquantes",
         "PMS_PRT_315": " FromValue ou toValue invalide",
         "PMS_PRT_356": "La pagination ne peut pas être nulle",
-        "PMS_PRT_358": "Le type de tri %s n'est pas pris en charge",
+        "PMS_PRT_358": "Le type de tri n'est pas pris en charge",
         "PMS_PRT_359": "Une erreur s'est produite lors du tri",
-        "PMS_PRT_357": " Champ de tri non valide %s",
+        "PMS_PRT_357": "Champ de tri invalide",
+        "PMS_PRT_360": "Page non valide n°",
+        "PMS_PRT_361": "Taille de page non valide",
         "KER_PRT_390": "Valeur de filtre non valide",
         "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
@@ -690,7 +889,7 @@
         "PMS_KKS_001": " API non accessible",
         "PMS_PRT_107": "La réponse de l'api est nulle",
         "PMS_PRT_500": "Impossible de traiter la demande.",
-        "PMS_PMP_016": "Le partenaire n'est pas actif.",
+        "PMS_PMP_016": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
         "PMS_PRT_098": "La politique donnée dans le groupe de politiques du partenaire n'existe pas.",
         "PMS_PMP_019": "La stratégie n'est pas active.",
         "PMS_PMP_023": "Le groupe de stratégies n'est pas actif.",
@@ -708,6 +907,12 @@
         "PMS_PM_045": " Le statut doit être Approuvé ou Rejeté",
         "PMS_PM_051": "Les extracteurs ne sont pas présents. Veuillez ajouter des extracteurs.",
         "PMS_PM_058": "L'état doit être Actif ou Désactivé",
+        "PMS_PM_059": "Erreur lors de la récupération des détails du partenaire.",
+        "PMS_PM_060": "Le certificat du partenaire spécifié n'est pas disponible dans la boutique",
+        "PMS_PM_061": "Erreur lors de la récupération de tous les détails des partenaires",
+        "PMS_PM_062": "Erreur lors de la récupération de toutes les demandes de mappage des politiques partenaires",
+        "PMS_PM_063": "Le partenaire sélectionné a déjà été désactivé.",
+        "PMS_PM_064": "Erreur lors de la récupération de toutes les demandes de clé API",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
         "PMS_PMP_007": "La clé API du partenaire n'existe pas",
@@ -729,13 +934,13 @@
         "PMS_PMP_018": "La politique a expiré.",
         "PMS_PRT_108": "Le groupe de stratégies est obligatoire pour Auth_Partner",
         "PMS_PRT_110": "Le nom de la clé API saisi existe déjà. Fournissez un nom de clé API unique et soumettez-le.",
-        "PMS_AUT_002": "Ce partenaire a été désactivé par l'administrateur du partenaire",
+        "PMS_AUT_002": "Votre compte partenaire pour le type de partenaire donné a été désactivé par l'administrateur, ce qui fait que vous ne pourrez plus effectuer cette activité",
         "PMS_AUT_003": "Les détails de l'appareil existent déjà pour la même marque et/ou le même modèle",
         "PMS_AUT_004": "Demande en double reçue",
         "PMS_AUT_005": "Les détails du périphérique pour l'ID %s n'existent pas",
         "PMS_AUT_512": "Les détails SBI existent pour la version SBI donnée. Plusieurs SBI avec la même version SBI ne peuvent pas être ajoutés.",
         "PMS_AUT_025": "ApprovalStatus doit être Activer/Désactiver",
-        "PMP_AUT_030": "Le partenaire n'est pas actif",
+        "PMP_AUT_030": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
         "PMP_AUT_031": "l'identifiant de la puce ftp n'existe pas.",
         "PMP_AUT_032": "Les détails de la puce FTM existent déjà pour la même marque et le même modèle",
         "PMP_AUT_033": "Le certificat n'est pas téléchargé.",
@@ -756,17 +961,17 @@
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
         "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
-        "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name :",
+        "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",
         "PMS_POL_006": "Type d'authentification non pris en charge dans le fichier de stratégie",
         "PMS_POL_007": "Attribut eKYC manquant dans le fichier de stratégie",
         "PMS_POL_008": "L'ID de stratégie n'existe pas",
-        "PMS_POL_009": "La politique d'authentification existe avec le nom :",
+        "PMS_POL_009": "Le nom de stratégie donné existe déjà. Veuillez essayer avec un nom de stratégie différent.",
         "PMS_COR_002": "Paramètre d'entrée non valide -",
         "PMS_COR_003": "Impossible de traiter la demande",
         "PMS_POL_010": " Les politiques d'authentification ne sont pas définies par rapport à la politique",
         "PMS_POL_013": "Aucune règle disponible pour PartnerAPIKey donnée",
-        "PMS_POL_014": "Le groupe de stratégies existe avec le nom :",
+        "PMS_POL_014": "Le groupe de stratégies existe déjà sous ce nom",
         "PMS_POL_015": "Groupe de stratégies et stratégie non mappés.",
         "PMS_POL_016": "L'ID de groupe de stratégies n'existe pas",
         "PMS_POL_017": "Aucune politique disponible pour un partenaire donné",
@@ -791,6 +996,7 @@
         "PMS_POL_058": "Le statut ne peut pas être modifié pour la politique publiée.;",
         "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
+        "PMS_POL_061": "Erreur lors de la récupération des politiques",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
@@ -799,7 +1005,6 @@
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
-        "PMS_PV_005": "Paramètre d'entrée non valide - errorCode dans les données de stratégie",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
         "PMS_PRT_060": "Cette politique a déjà été approuvée par rapport à votre identifiant de partenaire.",
         "PMS_AUT_028": "Les détails de l'appareil pour l'identifiant $ID sont rejetés. Impossible d'utiliser les mêmes détails pour le mappage.",
@@ -818,6 +1023,10 @@
         "PMS_POLICY_ERROR_005": "LID du groupe de stratégies est vide.",
         "PMS_POLICY_ERROR_006": "Erreur lors de la récupération de la liste des clients OIDC.",
         "PMS_POLICY_ERROR_007": "Error while fetching API Key requestsErreur lors de la récupération des demandes de clé API",
+        "PMS_POLICY_ERROR_008": "Aucun groupe de politiques correspondant n'a été trouvé pour le partenaire fourni",
+        "PMS_POLICY_ERROR_009": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc de créer un client OIDC",
+        "PMS_POLICY_ERROR_010": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc de mettre à jour les détails du client OIDC",
+        "PMS_POLICY_ERROR_011": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les détails du client OIDC",
         "PMS_ESI_001": "La clé publique du client existe déjà.",
         "PMS_ESI_002": "Le mappage des règles du partenaire n'est pas approuvé. Veuillez vérifier l'état du mappage.",
         "PMS_ESI_003": "Politique ayant des autorisations obligatoires. Le client ne peut donc pas être créé pour la même chose.",
@@ -878,6 +1087,10 @@
         "PMS_FTM_ERROR_007": "Le FTM sélectionné est déjà désactivé",
         "PMS_FTM_ERROR_008": "Le FTM sélectionné doit être en attente d'approbation ou approuvé",
         "PMS_FTM_ERROR_009": "Impossible de télécharger le certificat FTM d'origine",
-        "PMS_FTM_ERROR_010": "Le FTM sélectionné n'est pas dans un statut approuvé"
+        "PMS_FTM_ERROR_010": "Le FTM sélectionné n'est pas dans un statut approuvé",
+        "PMS_PV_001": "Échec de la lecture du schéma",
+        "PMS_PV_002": "Échec de la validation de l'objet de stratégie",
+        "PMS_PV_003": "Échec de l'analyse ou de la conversion de l'objet de stratégie",
+        "PMS_PV_004": "Schéma de stratégie non valide"
     }
 }

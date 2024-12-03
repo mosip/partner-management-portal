@@ -91,10 +91,11 @@ function CreatePolicyGroup() {
             desc: trimAndReplace(policyGroupDesc)
         });
         try {
-            const response = await HttpService.post(getPolicyManagerUrl(`/policies/group/new`, process.env.NODE_ENV), request, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await HttpService({
+                url: getPolicyManagerUrl('/policies/group/new', process.env.NODE_ENV),
+                method: 'post',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                data: request
             });
             if (response) {
                 const responseData = response.data;
@@ -104,7 +105,6 @@ function CreatePolicyGroup() {
                     const requireData = {
                         backUrl: "/partnermanagement/admin/policy-manager/policy-group-list",
                         header: "createPolicyGroup.creatPolicyGroupSuccessHeader",
-                        description: "createPolicyGroup.creatPolicyGroupSuccessDescription"
                     }
                     setConfirmationData(requireData);
                     setCreatePolicySuccess(true);
@@ -147,7 +147,7 @@ function CreatePolicyGroup() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.policies' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
+                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.listOfPolicyGroups' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

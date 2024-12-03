@@ -148,6 +148,12 @@ function SbiList() {
         }
     }
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            window.location.reload();
+        }
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} max-[500px]:overflow-x-scroll font-inter`}>
             {!dataLoaded && (
@@ -222,12 +228,12 @@ function SbiList() {
                                                     <button id={'sbi_list_hamburger' + (index +1)} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
                                                     <img id={'sbi_list_arrow' + (index +1)} src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
-                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-crimson-red' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
+                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
                                                             <p id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (
-                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
+                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
                                                             )}
                                                         </div>
                                                     )}

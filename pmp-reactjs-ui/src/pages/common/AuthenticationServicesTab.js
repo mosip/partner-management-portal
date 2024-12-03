@@ -1,25 +1,21 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../services/UserProfileService';
+import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 
-function AuthenticationServicesTab( {activeOidcClient, setActiveOicdClient, activeApiKey, setActiveApiKey} ) {
+function AuthenticationServicesTab( {activeOidcClient, oidcClientPath, activeApiKey, apiKeyPath} ) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
 
     const changeToOidcClients = () => {
-        navigate('/partnermanagement/authentication-services/oidc-clients-list')
-        setActiveOicdClient(true); 
-        setActiveApiKey(false);
+        navigate(oidcClientPath)
     };
 
     const changeToApiKey = () => {
-        navigate('/partnermanagement/authentication-services/api-keys-list')
-        setActiveOicdClient(false); 
-        setActiveApiKey(true);
+        navigate(apiKeyPath)
     };
 
     return (

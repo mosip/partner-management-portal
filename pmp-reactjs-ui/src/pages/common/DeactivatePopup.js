@@ -3,18 +3,17 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL, handleServiceErrors} from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
 
-function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
+function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -76,10 +75,10 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                         'Content-Type': 'application/json'
                     }
                 });
-            } 
+            }
             const responseData = response.data;
             if (responseData && responseData.response) {
-                window.location.reload();
+                onClickConfirm(responseData.response);
             } else {
                 setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -88,15 +87,15 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
             setDataLoaded(true);
             setErrorMsg(err);
         }
-    }
+    };
 
     const styles = {
         loadingDiv: "!py-[35%]"
-    }
+    };
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-6"
     }
 
     return (
@@ -114,7 +113,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
-                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'?
+                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
                                         {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
@@ -135,6 +134,7 @@ function DeactivatePopup({ closePopUp, popupData, request, headerMsg, descriptio
                                     <button id="deactivate_submit_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                                 </div>
                             </div>
+
                         </div>
                     )}
                 </div>

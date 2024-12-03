@@ -9,11 +9,11 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
-import rectangleGrid from "../../../svg/rectangle_grid.svg";
 import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
 import SortingIcon from "../../common/SortingIcon";
@@ -22,6 +22,7 @@ import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import EmptyList from "../../common/EmptyList";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -32,16 +33,16 @@ function PartnersList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')): 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -83,8 +84,7 @@ function PartnersList() {
       queryParams.append('pageSize', pageSize);
 
       //reset page number to 0 if filter applied or page number is out of bounds
-      const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-      const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
+      const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo); 
       queryParams.append('pageNo', effectivePageNo);      
       setResetPageNo(false);
       
@@ -129,20 +129,11 @@ function PartnersList() {
   }, [sortFieldName, sortType, pageNo, pageSize, filters]);
 
   const onApplyFilter = (filters) => {
-    console.log(filters)
-    setIsFilterApplied(true);
-    setResetPageNo(true);
-    setTriggerServerMethod(true);
-    setFilters(filters);
+    onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
-    // console.log(recordsPerPage, pageIndex);
-    if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
-      setPageNo(pageIndex);
-      setPageSize(recordsPerPage);
-      setTriggerServerMethod(true);
-    }
+    setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod);
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
@@ -159,7 +150,7 @@ function PartnersList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("desc");
+      setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
       setActiveSortAsc(header);
@@ -170,7 +161,7 @@ function PartnersList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
-      setSortType("asc");
+      setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
       setActiveSortAsc("");
@@ -179,10 +170,6 @@ function PartnersList() {
 
   const style = {
     backArrowIcon: "!mt-[9%]",
-  };
-
-  const onResetFilter = () => {
-    window.location.reload();
   };
 
   const showDeactivatePartner = (selectedPartnerdata) => {
@@ -201,37 +188,22 @@ function PartnersList() {
     setShowDeactivatePopup(false);
   }
 
+  const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
+    if (deactivationResponse && deactivationResponse.message) {
+      setViewPartnersId(-1);
+      setShowDeactivatePopup(false);
+      // Update the specific row in the state with the new status
+      setPartnersData((prevList) =>
+          prevList.map(partner =>
+            partner.partnerId === selectedPartnerData.partnerId ? { ...partner, isActive: false } : partner
+          )
+      );
+    }
+  };
+
   const styles = {
     loadingDiv: "!py-[20%]"
   }
-
-  const renderNoData = () => (
-    <>
-      <hr className="h-0.5 bg-gray-200 border-0" />
-      <div className="flex justify-between mt-5">
-        <div className="flex w-full justify-between font-[400] text-[14px] m-auto">
-          <h6 className="mx-5"> {t("partnerList.partnerId")}</h6>
-          <h6>{t("partnerList.partnerType")}</h6>
-          <h6>{t("partnerList.organisation")}</h6>
-          <h6>{t("partnerList.policyGroup")}</h6>
-          <h6>{t("partnerList.email")}</h6>
-          <h6>{t("partnerList.certUploadStatus")}</h6>
-          <h6>{t("partnerList.status")}</h6>
-          <h6 className="mx-5">{t("partnerList.action")}</h6>
-        </div>
-      </div>
-      
-      <hr className="h-px mx-3 my-2 bg-gray-200 border-0" />
-      
-      <div className="flex items-center justify-center p-24">
-        <div className="flex flex-col items-center">
-          {/* Ensure rectangleGrid has a valid import path and alt text for accessibility */}
-          <img src={rectangleGrid} alt="No data available icon" />
-          <p className="text-[#A1A1A1] mt-3">{t("partnerList.noData")}</p>
-        </div>
-      </div>
-    </>
-  );  
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -266,7 +238,7 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  {renderNoData()}
+                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                 </div>
               ) : (
                 <>
@@ -287,7 +259,9 @@ function PartnersList() {
                       />
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                    {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? renderNoData() : (
+                    {tableDataLoaded && isFilterApplied && partnersData.length === 0 ? 
+                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false}/>
+                      : (
                       <>
                         <div className="mx-[2%] overflow-x-scroll">
                           <table className="table-fixed">
@@ -318,11 +292,11 @@ function PartnersList() {
                                 return (
                                   <tr id={"partner_list_item" + (index + 1)} key={index}
                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.partnerId}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.orgName}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className="px-2 break-all">{partner.emailAddress}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[4.5rem] pr-[0.8rem]' : 'pr-[5.8rem] pl-[0.8rem]'} break-all`}>{partner.partnerId}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5.5rem] pr-[0.8rem]' : 'pr-[4.5rem] pl-[0.8rem]'} break-all`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5rem] pr-[0.8rem]' : 'pr-[2.1rem] pl-[0.8rem]'} break-all`}>{partner.orgName}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[3rem] pr-[0.8rem]' : 'pr-[4rem] pl-[0.8rem]'} break-all`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[1.8rem] pr-[0.8rem]' : 'pr-[3.8rem] pl-[0.8rem]'} break-all`}>{partner.emailAddress}</td>
                                     <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                       {getStatusCode(partner.certificateUploadStatus, t)}
                                     </td>
@@ -333,7 +307,7 @@ function PartnersList() {
                                     </td>
                                     <td className="text-center break-all">
                                       <div ref={(el) => (submenuRef.current[index] = el)}>
-                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                        <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
                                           tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
                                         >
                                           ...
@@ -342,19 +316,20 @@ function PartnersList() {
                                           <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                             <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
                                               <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                              <img src={viewIcon} alt="" className="pr-2"></img>
+                                              <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                             </div>
                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                             <div className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
-                                              <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-crimson-red" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                              <img src={deactivateIcon} alt="" className="pr-2"></img>
+                                              <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                              <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                             </div>
                                             {showDeactivatePopup && (
                                               < DeactivatePopup
+                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
                                                 closePopUp={closeDeactivatePopup}
                                                 popupData={{ ...partner, isDeactivatePartner: true }}
                                                 request={deactivateRequest}
-                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organizationName: partner.orgName })}
+                                                headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
                                                 descriptionMsg='deactivatePartner.description'
                                                 headerKeyName={partner.orgName}
                                               />

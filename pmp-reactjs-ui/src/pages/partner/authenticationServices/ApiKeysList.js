@@ -10,14 +10,14 @@ import {
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
-import rectangleGrid from '../../../svg/rectangle_grid.svg';
 import ApiKeysFilter from '../authenticationServices/ApiKeysFilter.js';
-import AuthenticationServicesTab from './AuthenticationServicesTab';
+import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
 import DeactivatePopup from '../../common/DeactivatePopup';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
+import EmptyList from '../../common/EmptyList.js';
 
 function ApiKeysList() {
     const navigate = useNavigate('');
@@ -26,13 +26,11 @@ function ApiKeysList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [activeOidcClient, setActiveOicdClient] = useState(false);
-    const [activeApiKey, setActiveApiKey] = useState(true);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
-    const [order, setOrder] = useState("ASC");
-    const [activeSortAsc, setActiveSortAsc] = useState("createdDateTime");
-    const [activeSortDesc, setActiveSortDesc] = useState("");
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [order, setOrder] = useState("DESC");
+    const [activeSortAsc, setActiveSortAsc] = useState("");
+    const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
@@ -152,6 +150,19 @@ function ApiKeysList() {
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
+        if (deactivationResponse !== "") {
+            setViewApiKeyId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setApiKeysList((prevList) =>
+                prevList.map(apiKey =>
+                    apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel ? { ...apiKey, status: "INACTIVE" } : apiKey
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setViewApiKeyId(-1);
         setShowDeactivatePopup(false);
@@ -184,48 +195,27 @@ function ApiKeysList() {
                             }
                         </div>
                         <AuthenticationServicesTab
-                            activeOidcClient={activeOidcClient}
-                            setActiveOicdClient={setActiveOicdClient}
-                            activeApiKey={activeApiKey}
-                            setActiveApiKey={setActiveApiKey}
+                            activeOidcClient={false}
+                            oidcClientPath='/partnermanagement/authentication-services/oidc-clients-list'
+                            activeApiKey={true}
+                            apiKeyPath='/partnermanagement/authentication-services/api-keys-list'
                         />
 
                         {apiKeysList.length === 0
                             ?
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                {
-                                    activeApiKey && (
-                                        <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                                            <div className={`flex w-full justify-between`}>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.partnerId')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyGroup')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.policyName')}</h6>
-                                                <h6 className="px-2 mx-2">{t('apiKeysList.apiKeyLabel')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.createdDate')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.status')}</h6>
-                                                <h6 className="px-2 mx-2">{t('authenticationServices.action')}</h6>
-                                            </div>
-                                        </div>)
-                                }
-
-                                <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center">
-                                        <img src={rectangleGrid} alt="" />
-                                        {activeApiKey &&
-                                            (<button id='generate_api_key_btn' onClick={generateApiKey} type="button" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, generateApiKey)}
-                                                className={`text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm mx-8 py-3`}>
-                                                {t('apiKeysList.generateApiKey')}
-                                            </button>)
-                                        }
-                                    </div>
-                                </div>
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
+                                    showCustomButton={true}
+                                    customButtonName='apiKeysList.generateApiKey'
+                                    buttonId='generate_api_key'
+                                    onClickButton={generateApiKey}
+                                />
                             </div>
                             :
                             <>
                                 <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg">
-                                    <FilterButtons listTitle='apiKeysList.listOfApiKeyRequests' dataListLength={filteredApiKeysList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
+                                    <FilterButtons titleId='list_of_api_key_requests' listTitle='apiKeysList.listOfApiKeyRequests' dataListLength={filteredApiKeysList.length} filter={filter} onResetFilter={onResetFilter} setFilter={setFilter}></FilterButtons>
                                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                     {filter &&
                                         <ApiKeysFilter
@@ -240,10 +230,18 @@ function ApiKeysList() {
                                                     {tableHeaders.map((header, index) => {
                                                         return (
                                                             <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                <div className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
-                                                                        <SortingIcon headerId={header.id} sortDescOrder={sortDescOrder} sortAscOrder={sortAscOrder} order={order} activeSortDesc={activeSortDesc} activeSortAsc={activeSortAsc}></SortingIcon>
+                                                                        <SortingIcon
+                                                                            id={`${header.headerNameKey}_sorting_icon`}
+                                                                            headerId={header.id}
+                                                                            sortDescOrder={sortDescOrder}
+                                                                            sortAscOrder={sortAscOrder}
+                                                                            order={order}
+                                                                            activeSortDesc={activeSortDesc}
+                                                                            activeSortAsc={activeSortAsc}
+                                                                        />
                                                                     )}
                                                                 </div>
                                                             </th>
@@ -260,7 +258,7 @@ function ApiKeysList() {
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date', false)}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date', true)}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(apiKey.status, t)}
@@ -269,7 +267,7 @@ function ApiKeysList() {
 
                                                                 <td className="px-2 mx-2">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <p id={'api_list_action' + (index+1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewApiKeyId(index === viewApiKeyId ? null : index))}>
+                                                                        <p id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewApiKeyId(index === viewApiKeyId ? null : index))}>
                                                                             ...</p>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
@@ -277,11 +275,11 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-crimson-red cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(apiKey))}>
+                                                                                <p id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(apiKey))}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

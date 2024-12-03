@@ -2,6 +2,10 @@ package io.mosip.testrig.pmprevampui.utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -36,11 +40,12 @@ public class BaseClass {
 	protected String envPathPmpRevamp = ConfigManager.getiam_pmprevamp_path();
 	protected String PmpRevamp = ConfigManager.getiam_pmprevamp();
 	protected String env=ConfigManager.getiam_apienvuser();
-	protected String userid = KeycloakUserManager.moduleSpecificUser;
+	protected String[] Alluserid = ConfigManager.getIAMUsersToCreate().split(",");
+	protected String userid = BaseTestCaseFunc.currentModule + "-" +Alluserid[1];
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	private static final Logger logger = Logger.getLogger(BaseClass.class);
-	protected String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
+	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
 
 
 	@BeforeMethod
@@ -71,8 +76,24 @@ public class BaseClass {
 		driver.get(envPathPmpRevamp);
 		logger.info("launch url --"+envPathPmpRevamp);
 		driver.manage().window().maximize();
-		Thread.sleep(500);	
-		BasePage.enter(driver.findElement(By.id("username")), "automationuiiii");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		String language1 = null;
+//		try {
+//
+//			language1 = ConfigManager.getloginlang();
+//			String loginlang = null;
+//			System.out.println(language1);
+//			if(!language1.equals("sin")) {
+//				loginlang = JsonUtil.JsonObjArrayListParsing2(ConfigManager.getlangcode());
+//				driver.findElement(By.xpath("//*[@id='kc-locale-dropdown']")).click();
+//				String var = "//li/a[contains(text(),'" + loginlang + "')]";
+//				driver.findElement(By.xpath(var)).click();
+//			}
+//		} catch (Exception e) {
+//			e.getMessage();
+//		}
+		
+		BasePage.enter(driver.findElement(By.id("username")), userid);
 		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
 
@@ -148,18 +169,16 @@ public class BaseClass {
 		return "Commit Id is: " + properties.getProperty("git.commit.id.abbrev") + " & Branch Name is:" + properties.getProperty("git.branch");
 	}
 
-	public static String generateRandomString(int length) {
-		String alphabet = "abcdefghijklmnopqrstuvwxyz";
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
 
-		for (int i = 0; i < length; i++) {
-			int index = random.nextInt(alphabet.length());
-			char randomChar = alphabet.charAt(index);
-			sb.append(randomChar);
-		}
-
-		return sb.toString();
+	public static String Date() {
+		NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+		LocalDate currentDate = LocalDate.now();
+		String formattedDate =null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		formattedDate = currentDate.format(formatter);
+		
+		System.out.println(formattedDate);
+		return formattedDate;
 	}
 }
 

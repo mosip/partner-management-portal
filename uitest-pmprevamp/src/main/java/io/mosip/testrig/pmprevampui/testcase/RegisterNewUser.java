@@ -17,7 +17,7 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class RegisterNewUser extends BaseClass {
 
-	@Test(priority = 1)
+	@Test(priority = 1,description = "This is a test case register new user")
 	public void registerNewUser() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 
@@ -43,7 +43,6 @@ public class RegisterNewUser extends BaseClass {
 		oldPmpPage.clickOnPolicyMenuGroupTab();
 		
 		oldPmpPage.clickOnCreatePolicyGroup();
-		
 		
 		oldPmpPage.EnterNameTextBox("0"+data);
 		oldPmpPage.EnterDescriptionTextBox("0"+data);
@@ -130,42 +129,5 @@ public class RegisterNewUser extends BaseClass {
 	}
 	
 	
-	@Test(priority = 2, dependsOnMethods = {"registerNewUser"})
-	public void ReuploadTheCertificates() {
-
-		DashboardPage dashboardpage = new DashboardPage(driver);
-
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-		
-		RegisterPage registerPage =  new RegisterPage(driver);
-		LoginPage loginPage =  new LoginPage(driver);
-		loginPage.enterUserName("0"+data);
-		loginPage.enterPassword(password);
-		loginPage.ClickOnLoginButton();
-
-		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(), GlobalConstants.isPartnerCertificateTitleDisplayed);
-		PartnerCertificatePage partnerCertificatePage=dashboardpage.clickOnPartnerCertificateTitle();
-
- 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.clickOnUploadButton();
-
-		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(), GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.clickOnCloseButton();
-		dashboardpage = partnerCertificatePage.clickOnHomeButton();
-
-		dashboardpage.clickOnPartnerCertificateTitle();
-		
-		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-	}	
+	
 }

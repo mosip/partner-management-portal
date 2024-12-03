@@ -49,11 +49,11 @@ function ViewApiKeyDetails() {
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(apiKeyDetails.createdDateTime, "date", false)}
+                                        formatDate(apiKeyDetails.createdDateTime, "date", true)}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate(apiKeyDetails.createdDateTime, "time", false)}
+                                    {formatDate(apiKeyDetails.createdDateTime, "time", true)}
                                 </div>
                             </div>
                         </div>
@@ -61,18 +61,18 @@ function ViewApiKeyDetails() {
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                             <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_partner_id_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p id='api_key_details_partner_id_context' className="font-[600] text-vulcan text-sm">
                                     {apiKeyDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_partner_type_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm">
+                                <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-sm">
                                     {t("partnerTypes.authPartner")}
                                 </p>
                             </div>
@@ -80,45 +80,37 @@ function ViewApiKeyDetails() {
                         <hr className={`h-px w-full bg-gray-200 border-0`} />
                         <div className={`flex flex-wrap pt-3`}>
                             <div className={`w-[49%] max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_policy_group_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='api_key_details_policy_group_name_context' className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%]`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_policy_name_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='api_key_details_policy_name_context' className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_policy_group_description_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='api_key_details_policy_group_description_context' className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-xs">
+                                <p id='api_key_details_policy_name_description_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.policyNameDescription")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-sm break-normal">
+                                <p id='api_key_details_policy_description_context' className="font-[600] text-vulcan text-sm break-normal">
                                     {apiKeyDetails.policyDescription}
                                 </p>
                             </div>
-                        </div>
-                        <div className="my-4">
-                            <p className="font-[600] text-suva-gray text-xs">
-                                {t("viewApiKeyDetails.apiKeyName")}
-                            </p>
-                            <p className="font-[600] text-vulcan text-sm">
-                                {apiKeyDetails.apiKeyLabel}
-                            </p>
                         </div>
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
