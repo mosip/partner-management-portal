@@ -188,6 +188,19 @@ function PartnersList() {
     setShowDeactivatePopup(false);
   }
 
+  const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
+    if (deactivationResponse && deactivationResponse.message) {
+      setViewPartnersId(-1);
+      setShowDeactivatePopup(false);
+      // Update the specific row in the state with the new status
+      setPartnersData((prevList) =>
+          prevList.map(partner =>
+            partner.partnerId === selectedPartnerData.partnerId ? { ...partner, isActive: false } : partner
+          )
+      );
+    }
+  };
+
   const styles = {
     loadingDiv: "!py-[20%]"
   }
@@ -312,6 +325,7 @@ function PartnersList() {
                                             </div>
                                             {showDeactivatePopup && (
                                               < DeactivatePopup
+                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
                                                 closePopUp={closeDeactivatePopup}
                                                 popupData={{ ...partner, isDeactivatePartner: true }}
                                                 request={deactivateRequest}

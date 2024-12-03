@@ -80,7 +80,7 @@ function ApiKeysList() {
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyLabel" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -149,6 +149,19 @@ function ApiKeysList() {
         const isDateCol = (header === "createdDateTime") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
+
+    const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
+        if (deactivationResponse !== "") {
+            setViewApiKeyId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setApiKeysList((prevList) =>
+                prevList.map(apiKey =>
+                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "INACTIVE" } : apiKey
+                )
+            );
+        }
+    };
 
     const closeDeactivatePopup = () => {
         setViewApiKeyId(-1);
@@ -266,7 +279,7 @@ function ApiKeysList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
                                                                                 )}
                                                                             </div>
                                                                         )}

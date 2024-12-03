@@ -164,6 +164,19 @@ function AdminApiKeysList () {
         }
     }
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
+        if (deactivationResponse !== "") {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setApiKeysList((prevList) =>
+                    prevList.map(apiKey =>
+                        (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
+                    )
+            );
+        }
+    };
+
     const viewApiKeyRequestDetails = (selectedApiKey) => {
         localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
@@ -281,6 +294,7 @@ function AdminApiKeysList () {
                                                                                     {showDeactivatePopup && (
                                                                                         <DeactivatePopup
                                                                                             closePopUp={closeDeactivatePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)}
                                                                                             popupData={apiKey}
                                                                                             request={deactivateRequest}
                                                                                             headerMsg="adminDeactivateApiKey.title"

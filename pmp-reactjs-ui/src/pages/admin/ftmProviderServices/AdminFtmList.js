@@ -14,11 +14,11 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest} from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus } from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
-function AdminFtmList () {
+function AdminFtmList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -127,36 +127,73 @@ function AdminFtmList () {
     };
 
     const viewFtmChipDetails = (ftm) => {
-
+        localStorage.setItem('selectedFtmAttributes', JSON.stringify(ftm));
+        navigate('/partnermanagement/admin/ftm-chip-provider-services/view-ftm-chip-details');
     };
 
     const approveRejectFtmDetails = (ftm) => {
         if (ftm.status === 'pending_approval') {
             setShowFtmApproveRejectPopup(true);
             document.body.style.overflow = "hidden";
-          }
+        }
+    };
+
+    const onClickApproveReject = (responseData, status, selectedFtm) => {
+        if (responseData !== "") {
+            setActionId(-1);
+            setShowFtmApproveRejectPopup(false);
+            // Update the specific row in the state with the new status
+            setFtmList((prevList) =>
+                prevList.map(ftm =>
+                    ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : ftm
+                )
+            );
+          document.body.style.overflow = "auto";
+        }
+    };
+
+    const updateActiveState = (status) => {
+        if (status === "approved") {
+          return true;
+        }
+        if (status === "rejected") {
+          return false;
+        }
     };
 
     const closeApproveRejectPopup = () => {
         setActionId(-1);
         setShowFtmApproveRejectPopup(false);
-      };
+    };
 
     const deactivateFtmDetails = (ftm) => {
         if (ftm.status === "approved") {
             const request = createRequest({
-              ftmId: ftm.ftmId,
+                ftmId: ftm.ftmId,
             }, "mosip.pms.deactivate.ftm.post", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
-          }
+        }
+    };
+
+    const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setFtmList((prevList) =>
+                prevList.map(ftm =>
+                    ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
+                )
+            );
+        }
     };
 
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
-      };
+    };
 
     const sortAscOrder = (header) => {
         if (order !== 'ASC' || activeAscIcon !== header) {
@@ -197,14 +234,14 @@ function AdminFtmList () {
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
                         </div>
-                        { !applyFilter && ftmList.length === 0 ? (
+                        {!applyFilter && ftmList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <EmptyList tableHeaders={tableHeaders} />
                             </div>
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
-                                    titleId='list_of_ftm_chip' 
+                                    titleId='list_of_ftm_chip'
                                     listTitle='ftmList.listOfFtm'
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
@@ -212,11 +249,11 @@ function AdminFtmList () {
                                     setFilter={setExpandFilter}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                { expandFilter && (
+                                {expandFilter && (
                                     <AdminFtmListFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                { !tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                { tableDataLoaded && applyFilter && ftmList.length === 0 ?
+                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
+                                {tableDataLoaded && applyFilter && ftmList.length === 0 ?
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
@@ -248,56 +285,57 @@ function AdminFtmList () {
                                                     <tbody>
                                                         {ftmList.map((ftm, index) => {
                                                             return (
-                                                            <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.partnerId}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.orgName}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.make}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.model}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.createdDateTime, 'date', true)}</td>
-                                                                <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 mx-2">
-                                                                    <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                        {getStatusCode(ftm.status, t)}
-                                                                    </div>
-                                                                </td>
-                                                                <td className="text-center break-all">
-                                                                    <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                        <p id={"ftm_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
-                                                                            ...
-                                                                        </p>
-                                                                        {actionId === index && (
-                                                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                <div onClick={() => approveRejectFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => approveRejectFtmDetails(ftm))}>
-                                                                                    <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                                                    <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.partnerId}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.orgName}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.make}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{ftm.model}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 break-all">{formatDate(ftm.createdDateTime, 'date', true)}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2 mx-2">
+                                                                        <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                            {getStatusCode(ftm.status, t)}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="text-center break-all">
+                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                                                            <p id={"ftm_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                                ...
+                                                                            </p>
+                                                                            {actionId === index && (
+                                                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                                                                    <div onClick={() => approveRejectFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => approveRejectFtmDetails(ftm))}>
+                                                                                        <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                                                        <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showFtmApproveRejectPopup &&
                                                                                         <ApproveRejectPopup
                                                                                             popupData={{ ...ftm, isFtmRequest: true }}
                                                                                             closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, ftm)}
                                                                                             title={`${ftm.make} | ${ftm.model}`}
                                                                                             header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
                                                                                             description={t('ftmRequestApproveRejectPopup.description')}
                                                                                         />
                                                                                     }
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <div className="flex justify-between hover:bg-gray-100" onClick={() => viewFtmChipDetails(ftm)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmChipDetails(ftm))}>
-                                                                                    <p id="ftm_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
-                                                                                </div>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <div onClick={() => deactivateFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`}tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateFtmDetails(ftm))}>
+                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewFtmChipDetails(ftm)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmChipDetails(ftm))}>
+                                                                                        <p id="ftm_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                    </div>
+                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                    <div onClick={() => deactivateFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateFtmDetails(ftm))}>
                                                                                         <p id="ftm_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                                                                     )}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                             )
                                                         })
                                                         }

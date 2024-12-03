@@ -191,6 +191,19 @@ function AdminOidcClientsList () {
         }
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
+        if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setOidcClientsList((prevList) =>
+                prevList.map(client =>
+                    client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
+                )
+            );
+        }
+    };
+
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
@@ -319,7 +332,7 @@ function AdminOidcClientsList () {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />
                                                                                     )}
                                                                                 </div>
                                                                             )}

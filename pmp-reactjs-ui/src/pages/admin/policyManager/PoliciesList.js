@@ -177,6 +177,17 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         }
     };
 
+    const publishSuccess = (selectedPolicy) => {
+        setActionId(-1);
+        setShowPublishPolicyPopup(false);
+        setPoliciesList((prevList) =>
+            prevList.map(policy =>
+                policy.policyId === selectedPolicy.policyId ? { ...policy, status: 'activated' } : policy
+            )
+        );
+        document.body.style.overflow = 'auto';
+    }
+
     const closePublishPolicyPopup = () => {
         setActionId(-1);
         setShowPublishPolicyPopup(false);
@@ -187,6 +198,19 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         setActionId(-1);
         setShowClonePopup(false);
         document.body.style.overflow = 'auto';
+    };
+
+    const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setPoliciesList((prevList) =>
+                prevList.map(policy =>
+                policy.policyId === selectedPolicy.policyId ? { ...policy, status: "deactivated" } : policy
+                )
+            );
+        }
     };
 
     const closeDeactivatePopup = () => {
@@ -330,6 +354,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                             <PublishPolicyPopup
                                                                                                 policyDetails={policy}
                                                                                                 closePopUp={closePublishPolicyPopup}
+                                                                                                onClickPublish={() => publishSuccess(policy)}
                                                                                             />
                                                                                         )}
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
@@ -365,6 +390,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                                 popupData={{ ...policy, isDeactivatePolicy: true }}
                                                                                                 headerKeyName={policy.policyName}
                                                                                                 closePopUp={closeDeactivatePopup}
+                                                                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policy)}
                                                                                             />
                                                                                         )}
                                                                                     </div>

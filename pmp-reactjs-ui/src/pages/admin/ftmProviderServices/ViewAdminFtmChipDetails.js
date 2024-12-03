@@ -11,9 +11,6 @@ import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
-import adminImage from "../../../svg/admin.png";
-import partnerImage from "../../../svg/partner.png";
-import UploadCertificate from '../../partner/certificates/UploadCertificate';
 import { HttpService } from '../../../services/HttpService';
 
 function ViewAdminFtmChipDetails() {
@@ -21,87 +18,54 @@ function ViewAdminFtmChipDetails() {
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [ftmDetails, setFtmDetails] = useState({});
-    const [dataLoaded, setDataLoaded] = useState(false);
-    const [selectedFtmDetails, setSelectedFtmDetails] = useState({});
+    const [certificateDetails, setCertificateDetails] = useState({});
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedFtmAttributes');
-        if (!data) {
+        const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
+        if (!selectedFtmData) {
             setUnexpectedError(true);
-            return
+            return;
         }
-        const ftmData = JSON.parse(data);
-        setSelectedFtmDetails(ftmData);
+        const selectedFtmDetails = JSON.parse(selectedFtmData);
+        setFtmDetails(selectedFtmDetails);
+
+        const fetchCertificateDetails = async () => {
+            setErrorCode("");
+            setErrorMsg("");
+            try {
+                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + selectedFtmDetails.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setCertificateDetails(resData);
+                    }
+                    else {
+                        handleServiceErrors(setErrorCode, setErrorMsg, responseData);
+                    }
+                } else {
+                    setErrorMsg(t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
+                }
+            } catch (err) {
+                console.error('Error fetching certificate Details:', err);
+                setErrorMsg(err);
+            }
+        }
+        fetchCertificateDetails();
     }, []);
 
-    const getOriginalCertificate = async (ftmDetails) => {
-        const response = await fetchCertificate(ftmDetails.ftmId);
-        if (response !== null) {
-            if (response.isCaSignedCertificateExpired) {
-                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
-            } else {
-                setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
-                downloadFile(response.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
-            }
+    const getOriginalCertificate = async () => {
+        if (certificateDetails.isCaSignedCertificateExpired) {
+            setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+        } else {
+            setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
+            downloadFile(certificateDetails.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert')
         }
     }
-
-    const fetchCertificate = async (ftmId) => {
-        setErrorCode("");
-        setErrorMsg("");
-        try {
-            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + '96376' + '/original-ftm-certificate', process.env.NODE_ENV));
-            if (response !== null) {
-                const responseData = response.data;
-                if (responseData.errors && responseData.errors.length > 0) {
-                    const errorCode = responseData.errors[0].errorCode;
-                    const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
-                    return null;
-                } else {
-                    const resData = responseData.response;
-                    return resData;
-                }
-            } else {
-                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
-                return null;
-            }
-        } catch (err) {
-            console.error('Error fetching certificate:', err);
-            setErrorMsg(err);
-        }
-    };
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             setDataLoaded(false);
-    //             const response = await HttpService.get(getPartnerManagerUrl(`/partners/${selectedFtmDetails.partnerId}/v2`, process.env.NODE_ENV));
-    //             if (response) {
-    //                 const responseData = response.data;
-    //                 if (responseData && responseData.response) {
-    //                     const resData = responseData.response;
-    //                     setFtmDetails(resData);
-    //                 } else {
-    //                     setUnexpectedError(true);
-    //                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-    //                 }
-    //             } else {
-    //                 setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
-    //             }
-    //             setDataLoaded(true);
-    //         } catch (err) {
-    //             console.error('Error fetching data:', err);
-    //             setErrorMsg(err);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
 
     const moveToAdminFtmList = () => {
         navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
@@ -150,8 +114,8 @@ function ViewAdminFtmChipDetails() {
                                     {ftmDetails.make} - {ftmDetails.model}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`${bgOfStatus(selectedFtmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                        {getStatusCode(selectedFtmDetails.status, t)}
+                                    <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                        {getStatusCode(ftmDetails.status, t)}
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
@@ -194,12 +158,12 @@ function ViewAdminFtmChipDetails() {
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
-                                    <div className={`flex py-[1rem] px-5 ${(selectedFtmDetails.status === 'rejected' || selectedFtmDetails.status === 'deactivated') ? 'bg-gray-100' : (selectedFtmDetails.status === 'pending_approval' || selectedFtmDetails.status === "pending_cert_upload") ? 'bg-[#f7f9fe]' : 'bg-[#f0fff6]'} justify-between items-center max-520:flex-col`}>
+                                    <div className={`flex py-[1rem] px-5 ${(ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ? 'bg-gray-100' : (ftmDetails.status === 'pending_approval' || ftmDetails.status === "pending_cert_upload") ? 'bg-[#f7f9fe]' : 'bg-[#f0fff6]'} justify-between items-center max-520:flex-col`}>
                                         <div className="flex space-x-4 items-center ">
-                                            {(selectedFtmDetails.status === 'rejected' || selectedFtmDetails.status === 'deactivated') ?
+                                            {(ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ?
                                                 <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                                 :
-                                                <img id='file_upload_blue' src={selectedFtmDetails.status === 'pending_approval' ? fileUploadBlue : !ftmDetails.isCertificateAvailable ? file : fileUpload} className="h-8" alt="" />
+                                                <img id='file_upload_blue' src={ftmDetails.status === 'pending_approval' ? fileUploadBlue : !ftmDetails.isCertificateAvailable ? file : fileUpload} className="h-8" alt="" />
                                             }
                                             <div className="flex-col p-3 items-center">
                                                 <h6 id="ftm_chip_details__certificate_label" className={`text-sm ${true ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
@@ -210,8 +174,8 @@ function ViewAdminFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='download_btn' disabled={selectedFtmDetails.status !== 'approved' && selectedFtmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                    className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(selectedFtmDetails.status !== 'approved' && selectedFtmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate()}
+                                                    className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {t('commons.download')}
                                                 </button>
                                             </div>
@@ -226,79 +190,14 @@ function ViewAdminFtmChipDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
                                             <p id="ftm_chip_details_context_expiry_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}
+                                                {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                             <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}
+                                                {formatDate(certificateDetails.caSignedCertUploadDateTime, 'dateTime', false)}
                                             </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
-                            <div className="py-3">
-                                <p className="font-semibold text-vulcan text-base mb-3">
-                                    {t("viewPolicyDetails.comments")}
-                                </p>
-                                <div>
-                                    <div className="flex font-semibold w-full ">
-                                        <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
-                                            <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
-                                            <img src={adminImage} alt="Example" className="w-8 h-8" />
-                                        </span>
-                                        <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
-                                            <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                            <h4 className="text-sm  text-[#031640]">
-                                                {t("viewPolicyDetails.adminComments")}
-                                            </h4>
-                                            <div className="flex items-center justify-start mt-4">
-                                                <div className={`${bgOfStatus(selectedFtmDetails.status)}flex w-fit py-1.5 px-3 text-xs rounded-md`}>
-                                                    {getStatusCode(selectedFtmDetails.status, t)}
-                                                </div>
-                                                <div>
-                                                    {ftmDetails.updatedDateTime && (
-                                                        <div className="flex">
-                                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                                {formatDate(ftmDetails.updatedDateTime, "date", false)}
-                                                            </div>
-                                                            <div className="mx-3 text-gray-300">|</div>
-                                                            <div className="font-semibold text-sm text-dark-blue">
-                                                                {formatDate(ftmDetails.updatedDateTime, "time", false)}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mt-4">
-                                        <div className="flex font-semibold w-full">
-                                            <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
-                                                <img src={partnerImage} alt="Example" className="w-8 h-8" />
-                                            </span>
-                                            <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
-                                                <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
-                                                <h4 className="text-sm text-[#031640]">
-                                                    {t("viewPolicyDetails.partnerComments")}
-                                                </h4>
-                                                <span className="text-sm mt-3 break-all break-normal break-words">
-                                                    {ftmDetails.requestDetail}
-                                                </span>
-                                                <hr className="h-px w-full bg-gray-200 border-0 my-4" />
-                                                <div className="flex items-center justify-start">
-                                                    <div className="font-semibold text-xs text-dark-blue">
-                                                        {t("viewPolicyDetails.createdOn") + ' ' +
-                                                            formatDate(ftmDetails.createdDateTime, "date", false)}
-                                                    </div>
-                                                    <div className="mx-3 text-gray-300">|</div>
-                                                    <div className="font-semibold text-xs text-dark-blue">
-                                                        {formatDate(ftmDetails.createdDateTime, "time", false)}
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

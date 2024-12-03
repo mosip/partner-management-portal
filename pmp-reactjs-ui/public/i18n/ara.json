@@ -353,7 +353,8 @@
         "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",
         "listOfApiKeyRequests": "قائمة مفاتيح API",
-        "searchApiKeyName": "البحث عن اسم مفتاح واجهة برمجة التطبيقات",
+        "searchApiKeyName": "اسم مفتاح API للبحث",
+        "selectApiKeyName": "حدد اسم مفتاح API",
         "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأن مفتاح API لن يكون مرئيًا بعد الآن بمجرد إغلاق النافذة.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ."
     },
@@ -819,6 +820,9 @@
         "header": "هل أنت متأكد أنك تريد إلغاء تنشيط عميل OIDC؟",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط معرف عميل OIDC ولن يكون من الممكن استخدامه للمصادقة.",
         "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
+    },
+    "viewAdminFtmDetails": {
+        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
     },
     "consentPopup": {
         "title": "الأحكام والشروط",

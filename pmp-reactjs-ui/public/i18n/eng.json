@@ -29,7 +29,7 @@
         "filterBtn": "Filter",
         "resetFilter": "Reset Filter",
         "itemsPerPage": "Items per page",
-        "close":"Close",
+        "close": "Close",
         "unexpectedError": "We have encountered an unexpected error"
     },
     "dashboard": {
@@ -353,6 +353,7 @@
         "generateApiKey": "Generate API Key",
         "listOfApiKeyRequests": "List of API Keys",
         "searchApiKeyName": "Search API Key Name",
+        "selectApiKeyName": "Select API Key Name",
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure to copy the API key before closing this window because the API key will not be visible anymore once the window is closed.",
         "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
     },
@@ -476,7 +477,7 @@
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "addFtmBtn": "Add FTM Chip",
         "partnerId": "Partner ID",
-        "orgName":"Organisation",
+        "orgName": "Organisation",
         "listOfFtm": "List of FTM Chip details",
         "make": "Make",
         "model": "Model",
@@ -816,9 +817,12 @@
         "errorWhileGettingGroupDetails": "While fetching Policy Group details, we have encountered with an error."
     },
     "deactivateOidc": {
-        "header":"Are you sure you want to Deactivate OIDC Client",
-        "description":"On clicking ‘Confirm’, the OIDC Client ID will be deactivated and can no longer be used for authentication.",
+        "header": "Are you sure you want to Deactivate OIDC Client",
+        "description": "On clicking ‘Confirm’, the OIDC Client ID will be deactivated and can no longer be used for authentication.",
         "errorInOidcDetails": "While fetching OIDC client details, we have encountered with an error."
+    },
+    "viewAdminFtmDetails": {
+        "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
     },
     "consentPopup": {
         "title": "Terms and Conditions",

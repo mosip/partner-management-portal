@@ -7,7 +7,7 @@ import { HttpService } from '../../../services/HttpService.js';
 import { getPolicyManagerUrl, handleServiceErrors } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 
-function PublishPolicyPopup ({policyDetails, closePopUp}) {
+function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
@@ -30,7 +30,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp}) {
 
     const clickOnClose = () => {
         document.body.style.overflow = "auto"
-        window.location.reload();
+        onClickPublish();
     };
 
     const clickOnPublish = async () => {

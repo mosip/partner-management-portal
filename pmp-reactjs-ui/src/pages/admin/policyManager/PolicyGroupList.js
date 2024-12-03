@@ -225,6 +225,19 @@ function PolicyGroupList() {
         }
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setActionId(-1);
+            setShowDeactivatePolicyGroupPopup(false);
+            // Update the specific row in the state with the new status
+            setPolicyGroupList((prevList) =>
+                prevList.map(policyGroup =>
+                    policyGroup.id === selectedPolicyGroup.id ? { ...policyGroup, isActive: false } : policyGroup
+                )
+            );
+        }
+    };
+
     const styles = {
         loadingDiv: "!py-[20%]"
     };
@@ -344,6 +357,7 @@ function PolicyGroupList() {
                                                                                             request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
                                                                                         />
                                                                                     )}
                                                                                 </div>

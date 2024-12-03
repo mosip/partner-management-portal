@@ -186,6 +186,19 @@ function OidcClientsList() {
         setShowDeactivatePopup(false);
     };
 
+    const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
+        if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
+            setViewClientId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setOidcClientsList((prevList) =>
+                prevList.map(client =>
+                    client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
+                )
+          );
+        }
+    };
+
     const styles = {
         outerDiv: "!bg-opacity-[16%]"
     }
@@ -313,7 +326,7 @@ function OidcClientsList() {
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
                                                                                 )}
                                                                             </div>
                                                                         )}

@@ -14,6 +14,7 @@ import {
   bgOfStatus,
   onClickApplyFilter,
   resetPageNumber, setPageNumberAndPageSize, onResetFilter,
+  getApproveRejectStatus,
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -167,6 +168,20 @@ function PolicyRequestsList() {
     }
   };
 
+  const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
+    if (responseData !== "") {
+      setViewPartnersId(-1);
+      setShowPopup(false);
+      // Update the specific row in the state with the new status
+      setPolicyRequestsData((prevList) =>
+        prevList.map(policyRequest =>
+          policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status)  } : policyRequest
+        )
+      );
+      document.body.style.overflow = "auto";
+    }
+  }
+
   const closePolicyRequestPopup = () => {
     setViewPartnersId(-1);
     setShowPopup(false);
@@ -304,6 +319,7 @@ function PolicyRequestsList() {
                                                 <ApproveRejectPopup
                                                   popupData={{ ...policyRequest, isPartnerPolicyRequest: true }} 
                                                   closePopUp={closePolicyRequestPopup}
+                                                  approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, policyRequest)}
                                                   title={policyRequest.policyName}
                                                   subtitle={`# ${policyRequest.policyId}`}
                                                   header={t('partnerPolicyRequestApproveRejectPopup.header')}
