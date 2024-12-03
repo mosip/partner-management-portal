@@ -17,7 +17,7 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPartnerId')));
             setpolicyGroupData(createDropdownData('policyGroupName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyGroup')));
             setPolicyNameData(createDropdownData('policyName', '', true, filteredApiKeysList, t, t('oidcClientsList.selectPolicyName')));
-            setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t, t('apiKeysList.selectApiKeyLabel')));
+            setApiKeyLabelData(createDropdownData('apiKeyLabel', '', true, filteredApiKeysList, t, t('apiKeysList.selectApiKeyName')));
             setStatusData(createDropdownData('status', '', true, filteredApiKeysList, t, t('oidcClientsList.selectStatus')));
         };
         fetchData();
@@ -68,8 +68,8 @@ function ApiKeysFilter({ filteredApiKeysList, onFilterChange }) {
                     fieldName='apiKeyLabel'
                     dropdownDataList={apiKeyLabelData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='apiKeysList.apiKeyLabel'
-                    placeHolderKey='apiKeysList.selectApiKeyLabel'
+                    fieldNameKey='apiKeysList.apiKeyName'
+                    placeHolderKey='apiKeysList.selectApiKeyName'
                     searchKey='commons.search'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
