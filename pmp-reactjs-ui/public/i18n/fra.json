@@ -411,6 +411,7 @@
         "version": "Version",
         "searchVersion": "Rechercher la version SBI",
         "linkedDevices": "Appareils liés",
+        "status":"Statut",
         "action": "Action",
         "partnerId": "ID partenaire",
         "orgName":"Organisation",

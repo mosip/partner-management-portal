@@ -406,6 +406,7 @@
         "version": "Version",
         "searchVersion": "Search SBI Version",
         "linkedDevices": "Linked Devices",
+        "status": "Status",
         "action": "Action",
         "partnerId": "Partner ID",
         "orgName":"Organisation",

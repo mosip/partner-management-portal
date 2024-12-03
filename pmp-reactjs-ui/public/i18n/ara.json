@@ -411,6 +411,7 @@
         "version": "الإصدار",
         "searchVersion": "البحث عن إصدار SBI",
         "linkedDevices": "الأجهزة المرتبطة",
+        "status":"حالة",
         "action": "الإجراء",
         "partnerId": "معرف الشريك",
         "orgName":"منظمة",
