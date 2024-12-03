@@ -110,7 +110,7 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
 
     const customStyle = {
         outerDiv: "!flex !justify-end",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-[55%] !min-h-12 !p-3 !m-1 !-mb-6"
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !w-full !min-h-12 !p-3 !m-1 !-mb-6"
     }
 
     const styles = {

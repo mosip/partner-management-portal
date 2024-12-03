@@ -43,6 +43,8 @@ import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/Vie
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
+import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
+import AdminDevicesList from './pages/admin/deviceProviderServices/AdminDevicesList.js';
 
 function AppRoutes() {
 
@@ -234,6 +236,14 @@ function AppRoutes() {
         {
           path: 'admin/ftm-chip-provider-services/view-ftm-chip-details',
           element: <GuardedRoute><MainLayout><ViewAdminFtmChipDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/device-provider-services/sbi-list',
+          element: <GuardedRoute><MainLayout><AdminSbiList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/device-provider-services/devices-list',
+          element: <GuardedRoute><MainLayout><AdminDevicesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

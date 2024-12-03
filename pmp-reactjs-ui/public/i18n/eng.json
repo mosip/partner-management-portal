@@ -373,7 +373,10 @@
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",
         "addSbiDevices": "Add SBI - Device",
-        "listOfDevices": "List Of Devices for"
+        "listOfDevices": "List Of Devices for",
+        "sbiDetails": "SBI Details",
+        "deviceDetails": "Device Details",
+        "sbiDeviceDetails": "SBI - Device Details"
     },
     "addSbis": {
         "addSbi": "Add SBI",
@@ -400,7 +403,12 @@
         "pendingForApprovalContx": "pending for approval under this SBI",
         "addDevices": "Add Devices",
         "viewDevices": "View Devices",
+        "version": "Version",
+        "searchVersion": "Search SBI Version",
+        "linkedDevices": "Linked Devices",
+        "action": "Action",
         "partnerId": "Partner ID",
+        "orgName":"Organisation",
         "partnerType": "Partner Type",
         "device": "device",
         "createdDate": "SBI Created Date",
