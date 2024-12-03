@@ -157,7 +157,7 @@ function ApiKeysList() {
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
-                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId) ? { ...apiKey, status: "INACTIVE" } : apiKey
+                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "INACTIVE" } : apiKey
                 )
             );
         }
