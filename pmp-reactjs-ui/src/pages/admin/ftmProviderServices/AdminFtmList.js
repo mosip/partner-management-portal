@@ -223,7 +223,7 @@ function AdminFtmList() {
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
+                <LoadingIcon />
             )}
             {dataLoaded && (
                 <>

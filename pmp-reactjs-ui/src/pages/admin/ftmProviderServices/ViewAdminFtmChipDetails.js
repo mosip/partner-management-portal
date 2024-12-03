@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, checkExpiryDate, downloadFile, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -189,7 +189,7 @@ function ViewAdminFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${checkExpiryDate(certificateDetails.caSignedCertExpiryDateTime) ? 'text-red-700' : 'text-charcoal-gray'} `}>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-charcoal-gray'} `}>
                                                 {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>

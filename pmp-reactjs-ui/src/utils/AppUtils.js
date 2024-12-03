@@ -21,12 +21,6 @@ export const formatDate = (dateString, format, isTimeInUTC) => {
     }
 };
 
-export const checkExpiryDate = (expiryDateTime) => {
-    const currentDate = new Date().toLocaleString();
-    const expiryDate = new Date(expiryDateTime).toLocaleString();
-    if (currentDate === expiryDate) return true;
-};
-
 export const getPartnerTypeDescription = (partnerType, t) => {
     const partnerTypeMap = {
         "DEVICE_PROVIDER": 'partnerTypes.deviceProvider',
