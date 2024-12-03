@@ -171,7 +171,7 @@ function AdminApiKeysList () {
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
                     prevList.map(apiKey =>
-                        apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel ? { ...apiKey, status: "deactivated" } : apiKey
+                        (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId) ? { ...apiKey, status: "deactivated" } : apiKey
                     )
             );
         }

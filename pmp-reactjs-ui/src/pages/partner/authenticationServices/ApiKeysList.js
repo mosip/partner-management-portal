@@ -80,7 +80,7 @@ function ApiKeysList() {
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyLabel" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -157,7 +157,7 @@ function ApiKeysList() {
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
-                    apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel ? { ...apiKey, status: "INACTIVE" } : apiKey
+                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId) ? { ...apiKey, status: "INACTIVE" } : apiKey
                 )
             );
         }
