@@ -292,11 +292,11 @@ function PartnersList() {
                                 return (
                                   <tr id={"partner_list_item" + (index + 1)} key={index}
                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[4.5rem] pr-[0.8rem]' : 'pr-[5.8rem] pl-[0.8rem]'} break-all`}>{partner.partnerId}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5.5rem] pr-[0.8rem]' : 'pr-[4.5rem] pl-[0.8rem]'} break-all`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[5rem] pr-[0.8rem]' : 'pr-[2.1rem] pl-[0.8rem]'} break-all`}>{partner.orgName}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[3rem] pr-[0.8rem]' : 'pr-[4rem] pl-[0.8rem]'} break-all`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`${isLoginLanguageRTL ? 'pl-[1.8rem] pr-[0.8rem]' : 'pr-[3.8rem] pl-[0.8rem]'} break-all`}>{partner.emailAddress}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                    <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
                                     <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                       {getStatusCode(partner.certificateUploadStatus, t)}
                                     </td>
@@ -305,7 +305,7 @@ function PartnersList() {
                                         {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                       </div>
                                     </td>
-                                    <td className="text-center break-all">
+                                    <td className="text-center">
                                       <div ref={(el) => (submenuRef.current[index] = el)}>
                                         <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
                                           tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}

@@ -36,7 +36,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-all break-normal font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style}></Title>
                 </div>
@@ -87,7 +87,7 @@ function ViewPolicyDetails() {
                                 <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
-                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
@@ -95,7 +95,7 @@ function ViewPolicyDetails() {
                                 <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
-                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.policyName}
                                 </p>
                             </div>
@@ -103,7 +103,7 @@ function ViewPolicyDetails() {
                                 <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
-                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
@@ -111,7 +111,7 @@ function ViewPolicyDetails() {
                                 <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>
-                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-sm break-normal">
+                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-sm">
                                     {policyDetails.policyDescription}
                                 </p>
                             </div>
@@ -166,7 +166,7 @@ function ViewPolicyDetails() {
                                             <h4 className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-all break-normal break-words">
+                                            <span className="text-sm mt-3">
                                                 {policyDetails.partnerComments}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />

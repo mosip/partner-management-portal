@@ -328,17 +328,17 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                 return (
                                                                     <tr id={"policies_list_item" + (index + 1)} key={index}
                                                                         className={`border-t border-[#E5EBFA] ${policy.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[6.7rem] pr-[0.8rem]' : 'pr-[6.7rem] pl-[0.8rem]'} break-all`}>{policy.policyId}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[7.5rem] pr-[0.8rem]' : 'pr-[7.5rem] pl-[0.8rem]'} break-all`}>{policy.policyName}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[6.7rem] pr-[0.8rem]' : 'pr-[6rem] pl-[0.8rem]'} break-all`}>{policy.policyDescription}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`${isLoginLanguageRTL ? 'pl-[5.5rem] pr-[0.8rem]' : 'pr-[7.5rem] pl-[0.8rem]'} break-all`}>{policy.policyGroupName}</td>
-                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2 break-all">{formatDate(policy.createdDateTime, "date", true)}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyId}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyName}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyDescription}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyGroupName}</td>
+                                                                        <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className="px-2">{formatDate(policy.createdDateTime, "date", true)}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)}>
                                                                             <div className={`${bgOfStatus(policy.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                 {getStatusCode(policy.status, t)}
                                                                             </div>
                                                                         </td>
-                                                                        <td className="text-center break-all">
+                                                                        <td className="text-center">
                                                                             <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                                 <p id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                     tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
