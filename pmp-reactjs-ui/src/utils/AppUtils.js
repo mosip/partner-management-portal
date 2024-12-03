@@ -618,3 +618,12 @@ export const copyClientId = (data, textToCopied, setCopied) => {
         });
     }
 };
+
+export const getApproveRejectStatus = (status) => {
+    if (status === "approved") {
+      return "approved";
+    }
+    if (status === "rejected") {
+      return "rejected";
+    }
+};

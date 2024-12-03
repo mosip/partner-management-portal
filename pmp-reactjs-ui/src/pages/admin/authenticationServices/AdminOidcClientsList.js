@@ -200,7 +200,7 @@ function AdminOidcClientsList () {
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
                 )
-          );
+            );
         }
     };
 

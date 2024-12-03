@@ -14,7 +14,7 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus } from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
@@ -135,6 +135,29 @@ function AdminFtmList() {
         if (ftm.status === 'pending_approval') {
             setShowFtmApproveRejectPopup(true);
             document.body.style.overflow = "hidden";
+        }
+    };
+
+    const onClickApproveReject = (responseData, status, selectedFtm) => {
+        if (responseData !== "") {
+            setActionId(-1);
+            setShowFtmApproveRejectPopup(false);
+            // Update the specific row in the state with the new status
+            setFtmList((prevList) =>
+                prevList.map(ftm =>
+                    ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : ftm
+                )
+            );
+          document.body.style.overflow = "auto";
+        }
+    };
+
+    const updateActiveState = (status) => {
+        if (status === "approved") {
+          return true;
+        }
+        if (status === "rejected") {
+          return false;
         }
     };
 
@@ -289,6 +312,7 @@ function AdminFtmList() {
                                                                                         <ApproveRejectPopup
                                                                                             popupData={{ ...ftm, isFtmRequest: true }}
                                                                                             closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, ftm)}
                                                                                             title={`${ftm.make} | ${ftm.model}`}
                                                                                             header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
                                                                                             description={t('ftmRequestApproveRejectPopup.description')}

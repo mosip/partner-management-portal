@@ -9,7 +9,8 @@ import FocusTrap from 'focus-trap-react';
 
 function ApproveRejectPopup({ 
     popupData, 
-    closePopUp, 
+    closePopUp,
+    approveRejectResponse, 
     title, 
     subtitle, 
     header, 
@@ -58,7 +59,7 @@ function ApproveRejectPopup({
             }
             const responseData = response.data;
             if (responseData && responseData.response) {
-                window.location.reload();
+                approveRejectResponse(responseData.response, status);
             } else {
                 setDataLoaded(true);
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
