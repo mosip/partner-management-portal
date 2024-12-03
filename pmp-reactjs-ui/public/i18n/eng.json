@@ -680,6 +680,10 @@
         "header": "Error: Active Policies Detected!",
         "description": "There are {{noOfAssociatedPolicies}} active policies associated with this policy group. Please deactivate them before proceeding further"
     },
+    "draftPoliciesDetectedMsg": {
+        "header": "Error: Policies detected in Draft status!",
+        "description": "There are {{noOfAssociatedPolicies}} draft policies associated with this policy group."
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
         "listOfAuthenticationPolicies": "List of Authentication Policies",

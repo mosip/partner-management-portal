@@ -684,6 +684,10 @@
         "header": "Erreur : stratégies actives détectées !",
         "description": "Il existe {{noOfAssociatedPolicies}} stratégies actives associées à ce groupe de stratégies. Veuillez les désactiver avant de continuer."
     },
+    "draftPoliciesDetectedMsg": {
+        "header": "Erreur : Politiques détectées en statut brouillon !",
+        "description": "Il y a {{noOfAssociatedPolicies}} politiques brouillon associées à ce groupe de politiques."
+    },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
         "listOfAuthenticationPolicies": "Liste des politiques d'authentification",
