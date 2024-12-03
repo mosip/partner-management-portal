@@ -112,6 +112,8 @@ function AdminSbiList () {
     };
 
     const viewSbiDetails = (selectedSbi) => {
+        localStorage.setItem('selectedSbiAttributes',JSON.stringify(selectedSbi));
+        navigate("/partnermanagement/admin/device-provider-services/view-sbi-details");
     };
 
     const approveRejectSbi = (selectedSbi) => {

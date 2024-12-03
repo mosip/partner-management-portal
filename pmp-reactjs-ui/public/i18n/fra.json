@@ -837,6 +837,13 @@
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
     },
+    "viewSbiDetails": {
+        "addSbiDevice": "Ajouter SBI - Appareil",
+        "listOfSbisAndDevices": "Liste des SBI et des appareils",
+        "sbiVersion":"Version SBI",
+        "sbiCreatedDateTime": "Date et heure de création du SBI",
+        "sbiExpiryDateTime": "Date et heure d’expiration du SBI"
+    },
     "consentPopup": {
         "title": "Termes et conditions",
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",

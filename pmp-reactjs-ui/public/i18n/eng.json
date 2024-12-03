@@ -833,6 +833,13 @@
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
     },
+    "viewSbiDetails": {
+        "addSbiDevice": "Add SBI - Device",
+        "listOfSbisAndDevices": "List Of SBIs And Devices",
+        "sbiVersion":"SBI Version",
+        "sbiCreatedDateTime": "SBI Created Date & Time",
+        "sbiExpiryDateTime": "SBI Expiry Date & Time"
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
