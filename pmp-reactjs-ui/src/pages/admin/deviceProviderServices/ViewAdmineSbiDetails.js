@@ -118,7 +118,7 @@ function ViewAdmineSbiDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                            <button id="view_api_key_back_btn" onClick={moveToSbiList}
+                            <button id="view_admin_sbi_details_back_btn" onClick={moveToSbiList}
                                 className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyPress={(e) => onPressEnterKey(e, moveToSbiList)}>
                                 {t("commons.back")}
                             </button>
