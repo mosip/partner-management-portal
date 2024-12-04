@@ -20,6 +20,8 @@ function ViewAdminSbiDetails() {
             return;
         }
         const selectedSbi = JSON.parse(selectedSbiAttributes);
+        console.log(selectedSbi);
+        
         setSbiDetails(selectedSbi);
     }, []);
 
@@ -61,11 +63,11 @@ function ViewAdminSbiDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(sbiDetails.createdDateTime, "date", false)}
+                                        formatDate(sbiDetails.createdDateTime, "date", true)}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(sbiDetails.createdDateTime, "time", false)}
+                                        {formatDate(sbiDetails.createdDateTime, "time", true)}
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +103,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.createdDateTime, "dateTime", false)}
+                                    {formatDate(sbiDetails.sbicCreatedDateTime, "dateTime", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
