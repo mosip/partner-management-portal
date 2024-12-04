@@ -834,8 +834,8 @@
         "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
     },
     "viewSbiDetails": {
-        "addSbiDevice": "إضافة SBI - الجهاز",
-        "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
+        "viewSbiDetails": "عرض تفاصيل الهيئة الفرعية للتنفيذ",
+        "listOfSbisAndDevices": "قائمة الهيئة الفرعية للتنفيذ",
         "sbiVersion":"نسخة الهيئة الفرعية للتنفيذ",
         "sbiCreatedDateTime": "تاريخ ووقت إنشاء الهيئة الفرعية للتنفيذ",
         "sbiExpiryDateTime": "تاريخ ووقت انتهاء صلاحية الهيئة الفرعية للتنفيذ"

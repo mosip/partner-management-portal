@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import Title from '../../common/Title';
 
-function ViewAdmineSbiDetails() {
+function ViewAdminSbiDetails() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
@@ -29,9 +29,9 @@ function ViewAdmineSbiDetails() {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
-            <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+            <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewSbiDetails.addSbiDevice'} subTitle='viewSbiDetails.listOfSbisAndDevices' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
+                    <Title title={'viewSbiDetails.viewSbiDetails'} subTitle='viewSbiDetails.listOfSbisAndDevices' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
                 </div>
 
                 {unexpectedError && (
@@ -101,7 +101,7 @@ function ViewAdmineSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.sbiCreatedDateTime}
+                                    {formatDate(sbiDetails.createdDateTime, "dateTime", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -109,7 +109,7 @@ function ViewAdmineSbiDetails() {
                                         {t("viewSbiDetails.sbiExpiryDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.sbiExpiryDateTime}
+                                    {formatDate(sbiDetails.sbiExpiryDateTime, "dateTime", false)}
                                     </p>
                                 </div>
                             </div>
@@ -128,4 +128,4 @@ function ViewAdmineSbiDetails() {
     )
 }
 
-export default ViewAdmineSbiDetails;
+export default ViewAdminSbiDetails;

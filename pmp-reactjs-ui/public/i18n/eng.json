@@ -834,8 +834,8 @@
         "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
     },
     "viewSbiDetails": {
-        "addSbiDevice": "Add SBI - Device",
-        "listOfSbisAndDevices": "List Of SBIs And Devices",
+        "viewSbiDetails": "View SBI Details",
+        "listOfSbisAndDevices": "List Of SBI",
         "sbiVersion":"SBI Version",
         "sbiCreatedDateTime": "SBI Created Date & Time",
         "sbiExpiryDateTime": "SBI Expiry Date & Time"

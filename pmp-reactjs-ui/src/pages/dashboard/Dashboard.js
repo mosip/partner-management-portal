@@ -295,10 +295,6 @@ function Dashboard() {
     navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
   }
 
-  const viewSbiDetails = () => {
-    navigate('/partnermanagement/admin/device-provider-services/view-sbi-details');
-  }
-
   const adminftmChipProviderServices = () => {
     navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
   }

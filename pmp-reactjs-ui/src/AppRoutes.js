@@ -45,7 +45,7 @@ import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
 import AdminDevicesList from './pages/admin/deviceProviderServices/AdminDevicesList.js';
-import ViewAdmineSbiDetails from './pages/admin/deviceProviderServices/ViewAdmineSbiDetails.js';
+import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 
 function AppRoutes() {
 
@@ -248,7 +248,7 @@ function AppRoutes() {
         },
         {
           path: 'admin/device-provider-services/view-sbi-details',
-          element: <GuardedRoute><MainLayout><ViewAdmineSbiDetails /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewAdminSbiDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'runtimeError',

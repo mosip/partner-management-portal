@@ -838,8 +838,8 @@
         "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
     },
     "viewSbiDetails": {
-        "addSbiDevice": "Ajouter SBI - Appareil",
-        "listOfSbisAndDevices": "Liste des SBI et des appareils",
+        "viewSbiDetails": "Voir les détails du Sbi",
+        "listOfSbisAndDevices": "Liste des SBI",
         "sbiVersion":"Version SBI",
         "sbiCreatedDateTime": "Date et heure de création du SBI",
         "sbiExpiryDateTime": "Date et heure d’expiration du SBI"
