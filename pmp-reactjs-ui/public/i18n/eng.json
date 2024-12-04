@@ -835,7 +835,7 @@
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",
-        "listOfSbisAndDevices": "List Of SBI",
+        "listOfSbi": "List Of SBI",
         "sbiVersion":"SBI Version",
         "sbiCreatedDateTime": "SBI Created Date & Time",
         "sbiExpiryDateTime": "SBI Expiry Date & Time"

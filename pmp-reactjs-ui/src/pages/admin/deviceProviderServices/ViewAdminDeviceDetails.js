@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import Title from '../../common/Title';
+import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 
-function ViewAdminSbiDetails() {
+function ViewAdminDeviceDetails() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const navigate = useNavigate();
     const [unexpectedError, setUnexpectedError] = useState(false);
-    const [sbiDetails, setSbiDetails] = useState({});
+    const [deviceDetails, setDeviceDetails] = useState({});
 
     useEffect(() => {
-        const selectedSbiAttributes = localStorage.getItem('selectedSbiAttributes');
-        if (!selectedSbiAttributes) {
+        const selectedDeviceAttributes = localStorage.getItem('selectedDeviceAttributes');
+        if(!selectedDeviceAttributes) {
             setUnexpectedError(true);
             return;
         }
-        const selectedSbi = JSON.parse(selectedSbiAttributes);
-        setSbiDetails(selectedSbi);
+        const selectedDevice = JSON.parse(selectedDeviceAttributes);
+        setDeviceDetails(selectedDevice);
     }, []);
 
-    const moveToSbiList = () => {
-        navigate('/partnermanagement/admin/device-provider-services/sbi-list');
+    const moveToDevicesList = () => {
+        navigate('/partnermanagement/admin/device-provider-services/devices-list');
     };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewSbiDetails.viewSbiDetails'} subTitle='viewSbiDetails.listOfSbi' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
+                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' subTitle2='sbiList.listOfSbi' backLink='/partnermanagement/admin/device-provider-services/devices-list' backLink2='/partnermanagement/admin/device-provider-services/sbi-list'/>
                 </div>
 
                 {unexpectedError && (
@@ -40,7 +40,7 @@ function ViewAdminSbiDetails() {
                             <div className="flex flex-col justify-center items-center">
                                 <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                 <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={moveToSbiList} type="button"
+                                <button onClick={moveToDevicesList} type="button"
                                     className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                     {t('commons.goBack')}
                                 </button>
@@ -53,19 +53,19 @@ function ViewAdminSbiDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {sbiDetails.version}
+                                    {deviceDetails.make} - {deviceDetails.model}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`${bgOfStatus(sbiDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                        {getStatusCode(sbiDetails.status, t)}
+                                    <div className={`${bgOfStatus(deviceDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                        {getStatusCode(deviceDetails.status, t)}
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(sbiDetails.createdDateTime, "date", true)}
+                                            formatDate(deviceDetails.createdDateTime, "date", true)}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(sbiDetails.createdDateTime, "time", true)}
+                                        {formatDate(deviceDetails.createdDateTime, "time", true)}
                                     </div>
                                 </div>
                             </div>
@@ -74,50 +74,50 @@ function ViewAdminSbiDetails() {
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewPolicyRequest.partnerId")}
+                                        {t("devicesList.deviceType")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.partnerId}
+                                        {/* {deviceDetails.deviceType} */}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewPolicyRequest.partnerType")}
+                                        {t("devicesList.deviceSubType")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.partnerType}
+                                        {/* {deviceDetails.deviceSubType} */}
                                     </p>
                                 </div>
-                                <div className={`mb-5 w-[100%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
-                                        {t("viewSbiDetails.sbiVersion")}
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <p className="text-suva-gray text-sm">
+                                        {t("devicesList.make")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.version}
+                                        {/* {deviceDetails.make} */}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewSbiDetails.sbiCreatedDateTime")}
+                                        {t("devicesList.model")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbicCreatedDateTime, "dateTime", false)}
+                                        {/* {deviceDetails.model} */}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewSbiDetails.sbiExpiryDateTime")}
+                                        {t("devicesList.createdDate")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "dateTime", false)}
+                                        {formatDate(deviceDetails.createdDate, "dateTime", false)}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                            <button id="view_admin_sbi_details_back_btn" onClick={moveToSbiList}
-                                className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyPress={(e) => onPressEnterKey(e, moveToSbiList)}>
+                            <button id="view_admin_device_details_back_btn" onClick={moveToDevicesList}
+                                className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyPress={(e) => onPressEnterKey(e, moveToDevicesList)}>
                                 {t("commons.back")}
                             </button>
                         </div>
@@ -128,4 +128,4 @@ function ViewAdminSbiDetails() {
     )
 }
 
-export default ViewAdminSbiDetails;
+export default ViewAdminDeviceDetails;
