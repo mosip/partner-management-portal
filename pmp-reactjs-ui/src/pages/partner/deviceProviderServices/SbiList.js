@@ -261,11 +261,11 @@ function SbiList() {
                                                         </div>
                                                         <div className="flex flex-row justify-between font-semibold pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.createdDate')}</p>
+                                                                <p className="text-xs text-suva-gray">{t('sbiList.sbiCreatedDate')}</p>
                                                                 <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', false)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.expiryDate')}</p>
+                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.sbiExpiryDate')}</p>
                                                                 <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3"></div>

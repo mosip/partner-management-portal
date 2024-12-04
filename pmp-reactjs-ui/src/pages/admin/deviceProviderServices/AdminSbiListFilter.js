@@ -18,7 +18,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",
-      version: "",
+      sbiVersion: "",
       status: "",
     });
 
@@ -71,12 +71,12 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 id="org_name_filter"
             />
             <TextInputComponent
-                fieldName="version"
+                fieldName="sbiVersion"
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.version"
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
-                id="version_filter"
+                id="sbi_version_filter"
             />
             <DropdownComponent
                 fieldName="status"

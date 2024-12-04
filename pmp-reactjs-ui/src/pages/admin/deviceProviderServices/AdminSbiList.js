@@ -8,13 +8,16 @@ import EmptyList from '../../common/EmptyList';
 import Title from '../../common/Title.js';
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import viewIcon from "../../../svg/view_icon.svg";
+import activeLinkedDevices from "../../../svg/active_linked_devices_icon.svg";
+import deactiveLinkedDevices from "../../../svg/deactive_linked_devices_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getStatusCode, handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, setPageNumberAndPageSize } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
+import { HttpService } from '../../../services/HttpService.js';
 
 function AdminSbiList () {
     const navigate = useNavigate('');
@@ -43,7 +46,7 @@ function AdminSbiList () {
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
-        version: null,
+        sbiVersion: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -55,31 +58,59 @@ function AdminSbiList () {
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
         { id: "orgName", headerNameKey: 'sbiList.orgName' },
-        { id: "version", headerNameKey: "sbiList.version" },
-        { id: "sbiCreatedDateTime", headerNameKey: "sbiList.createdDate" },
-        { id: "sbiExpiryDateTime", headerNameKey: "sbiList.expiryDate" },
+        { id: "sbiVersion", headerNameKey: "sbiList.version" },
+        { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
+        { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
+        { id: "createdDateTime", headerNameKey: "sbiList.createdDate" },
         { id: "status", headerNameKey: "sbiList.status" },
-        { id: "linkedDevices", headerNameKey: "sbiList.linkedDevices" },
+        { id: "countOfAssociatedDevices", headerNameKey: "sbiList.linkedDevices" },
         { id: "action", headerNameKey: "sbiList.action" }
     ];
 
     useEffect(() => {
-        const tableValues = [	
-            {"sbiId":"10000","partnerId":"A10001","orgName":"ABC","status":"approved","sbiCreatedDateTime":"2024-09-17T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-17T10:25:46.000+00:00","createdDateTime":"2024-09-17T10:25:37.009826","version": "test1", "linkedDevices": 10},
-            {"sbiId":"20000","partnerId":"A10002","orgName":"BCD","status":"rejected","sbiCreatedDateTime":"2024-09-18T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-18T10:25:46.000+00:00","createdDateTime":"2024-09-18T10:25:37.009826","version": "test2", "linkedDevices": 5},
-            {"sbiId":"30000","partnerId":"A10003","orgName":"CDE","status":"pending_approval","sbiCreatedDateTime":"2024-09-19T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-19T10:25:46.000+00:00","createdDateTime":"2024-09-19T10:25:37.009826","version": "test3", "linkedDevices": 1},
-            {"sbiId":"40000","partnerId":"A10004","orgName":"DEF","status":"approved","sbiCreatedDateTime":"2024-09-19T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-19T10:25:46.000+00:00","createdDateTime":"2024-09-17T10:25:37.009826","version": "test4", "linkedDevices": 50},
-            {"sbiId":"50000","partnerId":"A10005","orgName":"EFG","status":"deactivated","sbiCreatedDateTime":"2024-09-20T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-20T10:25:46.000+00:00","createdDateTime":"2024-09-20T10:25:37.009826","version": "test5", "linkedDevices": 14},
-            {"sbiId":"60000","partnerId":"A10006","orgName":"FGH","status":"approved","sbiCreatedDateTime":"2023-10-21T10:25:46.000+00:00","sbiExpiryDateTime":"2024-10-21T10:25:46.000+00:00","createdDateTime":"2024-09-21T10:25:37.009826","version": "test6", "linkedDevices": 0},
-            {"sbiId":"70000","partnerId":"A10007","orgName":"GHI","status":"rejected","sbiCreatedDateTime":"2024-09-17T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-17T10:25:46.000+00:00","createdDateTime":"2024-09-17T10:25:37.009826","version": "test7", "linkedDevices": 5},
-            {"sbiId":"80000","partnerId":"A10008","orgName":"ABC","status":"pending_approval","sbiCreatedDateTime":"2023-09-22T10:25:46.000+00:00","sbiExpiryDateTime":"2024-09-22T10:25:46.000+00:00","createdDateTime":"2024-09-22T10:25:37.009826","version": "test8", "linkedDevices": 7},
-            {"sbiId":"90000","partnerId":"A10009","orgName":"ABCDEF","status":"approved","sbiCreatedDateTime":"2024-09-23T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-23T10:25:46.000+00:00","createdDateTime":"2024-09-23T10:25:37.009826","version": "test9", "linkedDevices": 22},
-            {"sbiId":"10001","partnerId":"A10010","orgName":"ABC","status":"deactivated","sbiCreatedDateTime":"2024-09-17T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-17T10:25:46.000+00:00","createdDateTime":"2024-09-17T10:25:37.009826","version": "test10", "linkedDevices": 17},
-            {"sbiId":"10002","partnerId":"A10011","orgName":"XXX","status":"rejected","sbiCreatedDateTime":"2024-09-17T10:25:46.000+00:00","sbiExpiryDateTime":"2025-09-17T10:25:46.000+00:00","createdDateTime":"2024-09-17T10:25:37.009826","version": "test11", "linkedDevices": 16}
-        ];
-        setSbiList(tableValues);
+        const fetch = async () => {
+            const queryParams = new URLSearchParams();
+            queryParams.append('sortFieldName', sortFieldName);
+            queryParams.append('sortType', sortType);
+            queryParams.append('pageSize', pageSize);
 
-    }, []);
+            //reset page number to 0 if filter applied or page number is out of bounds
+            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+            queryParams.append('pageNo', effectivePageNo);
+            setResetPageNo(false);
+
+            if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+            if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+            if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
+            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+
+            const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+            try {
+                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+                const response = await HttpService.get(url);
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response.data;
+                        setTotalRecords(responseData.response.totalResults);
+                        setSbiList(resData);
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('sbiList.errorInSbiList'));
+                }
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
+            } catch (err) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+        }
+        fetch();
+    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
 
     const onApplyFilter = (updatedfilters) => {
         onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
@@ -181,7 +212,7 @@ function AdminSbiList () {
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (
+                                                                            {(header.id !== "action") && (header.id !== "countOfAssociatedDevices") && (
                                                                                 <SortingIcon
                                                                                     headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
@@ -204,15 +235,21 @@ function AdminSbiList () {
                                                                     className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.partnerId}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.version}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date", true)}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date", true)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date", false)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date", false)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
                                                                         <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(sbi.status, t)}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="px-2">{sbi.linkedDevices}</td>
+                                                                    <td className={`px-2 text-center`}>
+                                                                        <div className="flex items-center justify-center">
+                                                                            <img src={sbi.status === 'deactivated' ? deactiveLinkedDevices : activeLinkedDevices} alt=''></img>
+                                                                            <p className={`${sbi.status === 'deactivated' ? 'text-[#969696]' : 'text-tory-blue'} px-2`}>{sbi.countOfAssociatedDevices}</p>
+                                                                        </div>
+                                                                    </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <p id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
