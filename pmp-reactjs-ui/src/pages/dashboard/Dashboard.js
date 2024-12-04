@@ -37,7 +37,7 @@ function Dashboard() {
   const [partnerPolicyMappingRequestCount, setPartnerPolicyMappingRequestCount] = useState();
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
-  const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();  
+  const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -342,7 +342,7 @@ function Dashboard() {
             {!isPartnerAdmin &&
               < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
-                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon'/>
+                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon' />
                 </div>
                 <div>
                   <h5 id='dashboard_partner_certificate_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -357,7 +357,7 @@ function Dashboard() {
             {!isPartnerAdmin && showPolicies && (
               <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
                 <div className="flex justify-center mb-5">
-                  <img src={policiesIcon} alt="" className="w-8 h-8" id='dashboard_policies_card_icon'/>
+                  <img src={policiesIcon} alt="" className="w-8 h-8" id='dashboard_policies_card_icon' />
                 </div>
                 <div>
                   <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
@@ -372,7 +372,7 @@ function Dashboard() {
             {!isPartnerAdmin && showAuthenticationServices && (
               <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
-                  <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon'/>
+                  <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon' />
                 </div>
                 <div>
                   <h5 id='dashboard_authentication_clients_list_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
@@ -387,7 +387,7 @@ function Dashboard() {
             {!isPartnerAdmin && showDeviceProviderServices && (
               <div id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" id='dashboard_device_provider_service_icon'/>
+                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" id='dashboard_device_provider_service_icon' />
                 </div>
                 <div>
                   <h5 id='dashboard_device_provider_service_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -402,7 +402,7 @@ function Dashboard() {
             {!isPartnerAdmin && showFtmServices && (
               <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" id='dashboard_ftm_chip_provider_icon'/>
+                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" id='dashboard_ftm_chip_provider_icon' />
                 </div>
                 <div>
                   <h5 id='dashboard_ftm_chip_provider_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -474,7 +474,7 @@ function Dashboard() {
                     count={partnerPolicyMappingRequestCount}
                     descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
                     descriptionParams={{ partnerPolicyMappingRequestCount }}
-                  /> 
+                  />
                 </div>
 
                 <div onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
