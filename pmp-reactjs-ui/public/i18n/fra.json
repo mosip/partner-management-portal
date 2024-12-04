@@ -681,8 +681,16 @@
         "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
     },
     "activePoliciesDetectedMsg": {
-        "header": "Erreur : stratégies actives détectées !",
-        "description": "Il existe {{noOfAssociatedPolicies}} stratégies actives associées à ce groupe de stratégies. Veuillez les désactiver avant de continuer."
+        "header": "Erreur : Politiques actives détectées !",
+        "description": "Il y a {{noOfActivePolicies}} politiques actives associées à ce groupe de politiques. Veuillez les désactiver avant de poursuivre."
+    },
+    "draftPoliciesDetectedMsg": {
+        "header": "Erreur : Politiques en brouillon détectées !",
+        "description": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre."
+    },
+    "activeAndDraftPoliciesDetectedMsg": {
+        "header": "Erreur : Politiques en statut activé et brouillon détectées !",
+        "description": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -1014,6 +1022,16 @@
         "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
         "PMS_POL_061": "Erreur lors de la récupération des politiques",
+        "PMS_POL_062": "La politique a déjà été désactivée.",
+        "PMS_POL_063": "Une demande de politique partenaire approuvée est associée à cette politique.",
+        "PMS_POL_064": "Une demande de politique partenaire en attente est associée à cette politique.",
+        "PMS_POL_065": "La politique spécifiée n'existe pas.",
+        "PMS_POL_066": "Erreur lors de la désactivation de la politique.",
+        "PMS_POL_067": "Le groupe de politiques a déjà été désactivé.",
+        "PMS_POL_068": "Le groupe de politiques spécifié n'existe pas.",
+        "PMS_POL_069": "Des politiques actives ou en brouillon sont associées au groupe de politiques.",
+        "PMS_POL_070": "Des politiques en brouillon existent dans le groupe de politiques.",
+        "PMS_POL_071": "Erreur lors de la désactivation du groupe de politiques.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
