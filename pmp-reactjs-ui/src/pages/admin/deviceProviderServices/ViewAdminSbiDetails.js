@@ -55,7 +55,7 @@ function ViewAdminSbiDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {sbiDetails.version}
+                                    {sbiDetails.sbiVersion}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(sbiDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -95,7 +95,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiVersion")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.version}
+                                        {sbiDetails.sbiVersion}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -103,7 +103,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbicCreatedDateTime, "dateTime", false)}
+                                    {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -111,7 +111,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiExpiryDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "dateTime", false)}
+                                    {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
                                     </p>
                                 </div>
                             </div>

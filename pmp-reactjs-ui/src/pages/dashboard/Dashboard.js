@@ -179,21 +179,22 @@ function Dashboard() {
     };
 
     const fetchPendingApprovalSbiCount = async () => {
-      const sbiSearchRequest = createRequest({
-        filters: [{ columnName: "approvalStatus", type: "equals", value: "pending_approval" }],
-        sort: [],
-        pagination: { pageStart: 0, pageFetch: 1 },
-      });
+      const queryParams = new URLSearchParams();
+      queryParams.append('status', 'pending_approval')
+      queryParams.append('pageSize', '1');
 
+      const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
-        const response = await HttpService.post(
-          getPartnerManagerUrl(`/securebiometricinterface/search`, process.env.NODE_ENV),
-          sbiSearchRequest
-        );
-        if (response?.data?.response) {
-          setSbiPendingApprovalRequestCount(response.data.response.totalRecord);
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setSbiPendingApprovalRequestCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
         } else {
-          handleServiceErrors(response.data, setErrorCode, setErrorMsg);
+          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
         setErrorMsg(t('dashboard.requestCountFetchError'));
