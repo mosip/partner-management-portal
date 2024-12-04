@@ -7,7 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 
-function DeactivatePolicyPopup({ header, description, popupData, request, headerKeyName, closePopUp, onClickConfirm }) {
+function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -45,10 +45,9 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
             let response;
             if (popupData.isDeactivatePolicyGroup) {
                 response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
-                    method: 'put',
+                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}/v2`, process.env.NODE_ENV),
+                    method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                    data: request
                 });
             } else if (popupData.isDeactivatePolicy) {
                 response = await HttpService({
@@ -64,8 +63,8 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
-                    if (popupData.isDeactivatePolicyGroup && errorCode === 'PMS_POL_056') {
-                        await getActiveAssociatedPolicies();
+                    if (popupData.isDeactivatePolicyGroup && (errorCode === 'PMS_POL_056' || errorCode === 'PMS_POL_069' || errorCode === 'PMS_POL_070')) {
+                        await getAssociatedPolicies(errorCode);
                         setShowAlertErrorMessage(true);
                     } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
                         setPolicyErrorMessage(errorCode);
@@ -83,18 +82,36 @@ function DeactivatePolicyPopup({ header, description, popupData, request, header
         setDataLoaded(true);
     };
 
-    const getActiveAssociatedPolicies = async () => {
+    const getAssociatedPolicies = async (errorCode) => {
         try {
             const response = await HttpService({
-                url: getPolicyManagerUrl(`/policies/active/group/${popupData.name}`, process.env.NODE_ENV),
+                url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
                 method: 'get',
                 baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
             });
             const responseData = response.data;
             if (responseData && responseData.response) {
-                const resData = responseData.response;
-                setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'))
-                setErrorDescriptionMsg(t('activePoliciesDetectedMsg.description', {noOfAssociatedPolicies: resData.length}));
+                const resData = responseData.response.policies || [];
+                let activePoliciesCount = 0;
+                let draftPoliciesCount = 0;
+    
+                if (errorCode === 'PMS_POL_069') {
+                    // Count active and draft policies
+                    activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
+                    draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
+                    setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
+                    setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }));
+                } else if (errorCode === 'PMS_POL_070') {
+                    // Count draft policies
+                    draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
+                    setErrorHeaderMsg(t('draftPoliciesDetectedMsg.header'));
+                    setErrorDescriptionMsg(t('draftPoliciesDetectedMsg.description', { noOfDraftPolicies: draftPoliciesCount }));
+                } else if (errorCode === 'PMS_POL_056') {
+                    // Count active policies
+                    activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
+                    setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'));
+                    setErrorDescriptionMsg(t('activePoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount }));
+                }
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }

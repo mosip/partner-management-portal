@@ -241,7 +241,7 @@ function ViewAdminOidcClientDetails() {
                                                         return (
                                                             <ul>
                                                                 <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                    <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1 px-2">
+                                                                    <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
                                                                         {uri}
                                                                     </p>
                                                                     {(oidcClientDetails.redirectUris).length > 1 &&

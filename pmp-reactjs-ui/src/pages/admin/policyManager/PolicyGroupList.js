@@ -51,7 +51,6 @@ function PolicyGroupList() {
         status: null,
     });
     const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
-    const [deactivatePolicyGroupRequest, setDeactivatePolicyGroupRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -214,12 +213,6 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
-            const request = createRequest({
-                name: policyGroup.name,
-                desc: policyGroup.desc,
-                isActive: false
-            });
-            setDeactivatePolicyGroupRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -354,7 +347,6 @@ function PolicyGroupList() {
                                                                                             header={'deactivatePolicyGroup.headerMsg'}
                                                                                             description={'deactivatePolicyGroup.description'}
                                                                                             popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
-                                                                                            request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
