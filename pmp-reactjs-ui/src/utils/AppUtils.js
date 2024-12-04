@@ -627,3 +627,12 @@ export const getApproveRejectStatus = (status) => {
       return "rejected";
     }
 };
+
+export const updateActiveState = (status) => {
+    if (status === "approved") {
+      return true;
+    }
+    if (status === "rejected") {
+      return false;
+    }
+};

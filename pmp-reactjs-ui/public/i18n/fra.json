@@ -852,6 +852,10 @@
         "sbiVersion":"Version SBI",
         "sbiCreatedDateTime": "Date et heure de création du SBI",
         "sbiExpiryDateTime": "Date et heure d’expiration du SBI"
+    },  
+    "sbiRequestApproveRejectPopup": {
+        "header": "Voulez-vous approuver/rejeter le SBI de la version - '{{sbiVersion}}' ?",
+        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre les mesures appropriées.."
     },
     "consentPopup": {
         "title": "Termes et conditions",

@@ -14,12 +14,13 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 
-function AdminSbiList () {
+function AdminSbiList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -40,6 +41,7 @@ function AdminSbiList () {
     const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
+    const [showSbiApproveRejectPopUp, setShowSbiApproveRejectPopUp] = useState(false);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
@@ -143,11 +145,34 @@ function AdminSbiList () {
     };
 
     const viewSbiDetails = (selectedSbi) => {
-        localStorage.setItem('selectedSbiAttributes',JSON.stringify(selectedSbi));
+        localStorage.setItem('selectedSbiAttributes', JSON.stringify(selectedSbi));
         navigate("/partnermanagement/admin/device-provider-services/view-sbi-details");
     };
 
     const approveRejectSbi = (selectedSbi) => {
+        if (selectedSbi.status === 'pending_approval') {
+            setShowSbiApproveRejectPopUp(true);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    const onClickApproveReject =  (responseData, status, selectedSbi) => {
+        if (responseData !== "") {
+            setActionId(-1);
+            setShowSbiApproveRejectPopUp(false);
+            // Update the specific row in the state with the new status
+            setSbiList((prevList) =>
+                prevList.map(sbi =>
+                    sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
+                )
+            );
+          document.body.style.overflow = "auto";
+        }
+    }
+
+    const closeApproveRejectPopup = () => {
+        setActionId(-1);
+        setShowSbiApproveRejectPopUp(false);
     };
 
     const deactivateSbi = (selectedSbi) => {
@@ -163,12 +188,12 @@ function AdminSbiList () {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
-            { !dataLoaded && (
+            {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
-            { dataLoaded && (
+            {dataLoaded && (
                 <>
-                    { errorMsg && (
+                    {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
@@ -179,9 +204,9 @@ function AdminSbiList () {
                             activeSbi={true}
                             sbiListPath='/partnermanagement/admin/device-provider-services/sbi-list'
                             activeDevice={false}
-                            devicesListPath='/partnermanagement/admin/device-provider-services/devices-list' 
+                            devicesListPath='/partnermanagement/admin/device-provider-services/devices-list'
                         />
-                        { !applyFilter && sbiList.length === 0 ? (
+                        {!applyFilter && sbiList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <EmptyList tableHeaders={tableHeaders} />
                             </div>
@@ -195,11 +220,11 @@ function AdminSbiList () {
                                     setFilter={setExpandFilter}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                { expandFilter && (
+                                {expandFilter && (
                                     <AdminSbiListFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                { !tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                { tableDataLoaded && applyFilter && sbiList.length === 0 ?
+                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
+                                {tableDataLoaded && applyFilter && sbiList.length === 0 ?
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
@@ -230,6 +255,8 @@ function AdminSbiList () {
                                                     </thead>
                                                     <tbody>
                                                         {sbiList.map((sbi, index) => {
+                                                            console.log(sbiList);
+                                                            
                                                             return (
                                                                 <tr id={"sbi_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
@@ -262,6 +289,17 @@ function AdminSbiList () {
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showSbiApproveRejectPopUp && (
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...sbi, isSbiRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, sbi)}
+                                                                                            title={sbi.partnerId}
+                                                                                            subtitle={sbi.orgName}
+                                                                                            header={t('sbiApproveRejectPopup.header', { sbiVersion: sbi.version })}
+                                                                                            description={t('sbiApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    )}
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div className="flex justify-between hover:bg-gray-100" onClick={() => viewSbiDetails(sbi)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewSbiDetails(sbi))}>
                                                                                         <p id="sbi_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
