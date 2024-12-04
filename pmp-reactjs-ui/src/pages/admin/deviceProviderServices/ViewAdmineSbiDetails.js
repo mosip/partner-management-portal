@@ -20,8 +20,6 @@ function ViewAdmineSbiDetails() {
             return;
         }
         const selectedSbi = JSON.parse(selectedSbiAttributes);
-        console.log(selectedSbi);
-        
         setSbiDetails(selectedSbi);
     }, []);
 
