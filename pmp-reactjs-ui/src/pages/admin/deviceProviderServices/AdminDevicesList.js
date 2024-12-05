@@ -30,6 +30,11 @@ function AdminDevicesList () {
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
 
+    const viewDeviceDetails = (selectedDevice) => {
+        localStorage.setItem('selectedDeviceAttributes',JSON.stringify(selectedDevice));
+        navigate("/partnermanagement/admin/device-provider-services/view-device-details");
+    };
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
