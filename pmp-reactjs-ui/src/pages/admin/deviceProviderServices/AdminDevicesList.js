@@ -148,16 +148,7 @@ function AdminDevicesList () {
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
-        if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
-            setShowDeactivatePopup(false);
-            // Update the specific row in the state with the new status
-            setDevicesList((prevList) =>
-                prevList.map(deviceDetails =>
-                    deviceDetails.deviceId === selectedDevice.deviceId ? { ...deviceDetails, status: "deactivated", isActive: false } : deviceDetails
-                )
-            );
-        }
+        
     };
 
     const closeDeactivatePopup = () => {
