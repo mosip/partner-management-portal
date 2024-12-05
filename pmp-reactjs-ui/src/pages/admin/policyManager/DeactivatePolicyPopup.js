@@ -45,7 +45,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
             let response;
             if (popupData.isDeactivatePolicyGroup) {
                 response = await HttpService({
-                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}/v2`, process.env.NODE_ENV),
+                    url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
                     method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
                 });
