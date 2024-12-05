@@ -140,7 +140,7 @@ function AdminFtmList() {
     };
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
-        if (responseData !== "") {
+        if (!responseData) {
             setActionId(-1);
             setShowFtmApproveRejectPopup(false);
             // Update the specific row in the state with the new status

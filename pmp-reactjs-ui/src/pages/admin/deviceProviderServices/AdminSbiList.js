@@ -157,7 +157,7 @@ function AdminSbiList() {
     };
 
     const onClickApproveReject =  (responseData, status, selectedSbi) => {
-        if (responseData !== "") {
+        if (!responseData) {
             setActionId(-1);
             setShowSbiApproveRejectPopUp(false);
             // Update the specific row in the state with the new status
