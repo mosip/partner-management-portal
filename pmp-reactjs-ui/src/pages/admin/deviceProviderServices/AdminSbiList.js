@@ -255,8 +255,6 @@ function AdminSbiList() {
                                                     </thead>
                                                     <tbody>
                                                         {sbiList.map((sbi, index) => {
-                                                            console.log(sbiList);
-                                                            
                                                             return (
                                                                 <tr id={"sbi_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
