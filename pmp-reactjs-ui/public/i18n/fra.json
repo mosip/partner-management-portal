@@ -430,6 +430,7 @@
         "listOfSbis": "Liste des SBI"
     },
     "devicesList": {
+        "deviceId": "Identifiant de l'appareil",
         "addDevices": "Ajouter des périphériques",
         "listOfDevices": "Liste des appareils",
         "deviceType": "Type d'appareil",

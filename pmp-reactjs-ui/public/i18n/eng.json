@@ -425,6 +425,7 @@
         "listOfSbis": "List of SBIs"
     },
     "devicesList": {
+        "deviceId": "Device Id",
         "addDevices": "Add Devices",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",

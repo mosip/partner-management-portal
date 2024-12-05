@@ -430,6 +430,7 @@
         "listOfSbis": "قائمة SBI"
     },
     "devicesList": {
+        "deviceId": "معرف الجهاز",
         "addDevices": "إضافة أجهزة",
         "listOfDevices": "قائمة الأجهزة",
         "deviceType": "نوع الجهاز",

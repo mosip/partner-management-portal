@@ -638,3 +638,72 @@ export const updateActiveState = (status) => {
       return false;
     }
 };
+
+export const fetchDeviceTypeDropdownData = async (setErrorCode, setErrorMsg, t) => {
+    const request = createRequest({
+        filters: [
+            {
+                columnName: "name",
+                type: "unique",
+                text: ""
+            }
+        ],
+        optionalFilters: [],
+        purpose: "REGISTRATION"
+    });
+
+    try {
+        const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                return responseData.response.filters;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return [];
+            }
+        } else {
+            setErrorMsg(t('addDevices.errorInDeviceType'));
+            return [];
+        }
+    } catch (err) {
+        setErrorMsg(err.message);
+        console.log("Error fetching data: ", err);
+        return [];
+    }
+}
+
+export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErrorMsg, t) => {
+    const request = createRequest({
+        filters: [
+            {
+                columnName: "deviceType",
+                type: "unique",
+                text: type
+            }
+        ],
+        optionalFilters: [],
+        purpose: "REGISTRATION"
+    });
+    try {
+        const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceSubType/filtervalues`, process.env.NODE_ENV), request);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                return responseData.response.filters;
+            } else {
+                if (responseData && responseData.errors && responseData.errors.length > 0) {
+                    setErrorCode(responseData.errors[0].errorCode);
+                    setErrorMsg(responseData.errors[0].message);
+                }
+                return [];
+            }
+        } else {
+            setErrorCode(t('addDevices.errorInDeviceSubType'));
+            return [];
+        }
+    } catch (err) {
+        console.log("Error fetching data: ", err);
+        return [];
+    }
+}

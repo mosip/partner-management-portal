@@ -4,7 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import { HttpService } from '../../../services/HttpService.js';
 import Title from '../../common/Title.js';
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, trimAndReplace } from '../../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, trimAndReplace } from '../../../utils/AppUtils.js';
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from '../../common/ErrorMessage.js';
 import SuccessMessage from "../../common/SuccessMessage";
@@ -97,7 +97,7 @@ function AddDevices() {
     useEffect(() => {
         async function initialize() {
             setDataLoaded(false);
-            const deviceTypeData = await fetchDeviceTypeDropdownData();
+            const deviceTypeData = await fetchDeviceTypeDropdownData(setErrorCode, setErrorMsg);
             setDeviceTypeDropdownData(deviceTypeData);
             const initialEntry = await createEmptyDeviceEntry(deviceTypeData);
             setDeviceEntries([initialEntry]);
@@ -106,82 +106,25 @@ function AddDevices() {
         initialize();
     }, []);
 
-    async function fetchDeviceTypeDropdownData() {
-        const request = createRequest({
-            filters: [
-                {
-                    columnName: "name",
-                    type: "unique",
-                    text: ""
-                }
-            ],
-            optionalFilters: [],
-            purpose: "REGISTRATION"
-        });
-
-        try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    return responseData.response.filters;
-                } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    return [];
-                }
-            } else {
-                setErrorMsg(t('addDevices.errorInDeviceType'));
-                return [];
-            }
-        } catch (err) {
-            setErrorMsg(err.message);
-            console.log("Error fetching data: ", err);
-            return [];
-        }
-    }
-
-    async function fetchDeviceSubTypeDropdownData(type, index) {
+    async function getDeviceSubTypeDropdownData(type, index) {
         const newEntries = [...deviceEntries];
-        const request = createRequest({
-            filters: [
-                {
-                    columnName: "deviceType",
-                    type: "unique",
-                    text: type
-                }
-            ],
-            optionalFilters: [],
-            purpose: "REGISTRATION"
-        });
         try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceSubType/filtervalues`, process.env.NODE_ENV), request);
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    return responseData.response.filters;
-                } else {
-                    if (responseData && responseData.errors && responseData.errors.length > 0) {
-                        const errorCode = responseData.errors[0].errorCode;
-                        const errorMessage = responseData.errors[0].message;
-                        newEntries[index].errorCode = errorCode;
-                        newEntries[index].errorMsg = errorMessage;
-                        setDeviceEntries(newEntries);
-                        console.error('Error:', errorMessage);
-                    }
-                    return [];
-                }
-            } else {
-                newEntries[index].errorMsg = t('addDevices.errorInDeviceSubType');
+            const deviceSubTypeData = await fetchDeviceSubTypeDropdownData(
+                type,
+                (errorCode) => { newEntries[index].errorCode = errorCode; },
+                (errorMsg) => { newEntries[index].errorMsg = errorMsg; },
+                t
+            );
+            console.log(deviceSubTypeData)
+            if (deviceSubTypeData.length === 0) {
                 setDeviceEntries(newEntries);
-                return [];
             }
+            return deviceSubTypeData;
         } catch (err) {
-            newEntries[index].errorMsg = err;
-            setDeviceEntries(newEntries);
-            console.log("Error fetching data: ", err);
+            console.error("Error fetching data:", err);
             return [];
         }
-    }
+    }   
 
     async function createEmptyDeviceEntry(deviceTypeData) {
         return {
@@ -203,7 +146,7 @@ function AddDevices() {
         newEntries[index][field] = value;
         if (field === 'deviceType') {
             newEntries[index].deviceSubType = '';
-            const subtypeData = await fetchDeviceSubTypeDropdownData(value, index);
+            const subtypeData = await getDeviceSubTypeDropdownData(value, index);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
         }
         setDeviceEntries(newEntries);
