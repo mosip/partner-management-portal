@@ -409,7 +409,7 @@
         "status": "Status",
         "action": "Action",
         "partnerId": "Partner ID",
-        "orgName":"Organisation",
+        "orgName": "Organisation",
         "partnerType": "Partner Type",
         "device": "device",
         "sbiCreatedDate": "SBI Creation Date",
@@ -848,6 +848,10 @@
         "sbiVersion":"SBI Version",
         "sbiCreatedDateTime": "SBI Created Date & Time",
         "sbiExpiryDateTime": "SBI Expiry Date & Time"
+    },
+    "sbiApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the SBI of version - '{{sbiVersion}}' ?",
+        "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
     },
     "consentPopup": {
         "title": "Terms and Conditions",

@@ -101,7 +101,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
+                                    {formatDate(sbiDetails.sbiCreatedDateTime, "dateTime", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -109,7 +109,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiExpiryDateTime")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                    {formatDate(sbiDetails.sbiExpiryDateTime, "dateTime", false)}
                                     </p>
                                 </div>
                             </div>

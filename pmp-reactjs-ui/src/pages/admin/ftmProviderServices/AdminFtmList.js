@@ -14,7 +14,7 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState } from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
@@ -140,7 +140,7 @@ function AdminFtmList() {
     };
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
-        if (responseData !== "") {
+        if (responseData) {
             setActionId(-1);
             setShowFtmApproveRejectPopup(false);
             // Update the specific row in the state with the new status
@@ -150,15 +150,6 @@ function AdminFtmList() {
                 )
             );
           document.body.style.overflow = "auto";
-        }
-    };
-
-    const updateActiveState = (status) => {
-        if (status === "approved") {
-          return true;
-        }
-        if (status === "rejected") {
-          return false;
         }
     };
 
