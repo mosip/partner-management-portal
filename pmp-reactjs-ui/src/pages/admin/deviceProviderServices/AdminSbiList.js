@@ -50,6 +50,7 @@ function AdminSbiList() {
         orgName: null,
         sbiVersion: null,
         status: null,
+        sbiExpiryStatus: null
     });
     const submenuRef = useRef([]);
 
@@ -60,9 +61,10 @@ function AdminSbiList() {
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
         { id: "orgName", headerNameKey: 'sbiList.orgName' },
-        { id: "sbiVersion", headerNameKey: "sbiList.version" },
+        { id: "sbiVersion", headerNameKey: "sbiList.sbiVersion" },
         { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
         { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
+        { id: "sbiExpiryStatus", headerNameKey: "sbiList.sbiExpiryStatus" },
         { id: "createdDateTime", headerNameKey: "sbiList.createdDate" },
         { id: "status", headerNameKey: "sbiList.status" },
         { id: "countOfAssociatedDevices", headerNameKey: "sbiList.linkedDevices" },
@@ -85,6 +87,7 @@ function AdminSbiList() {
             if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
             if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
             if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+            if (filterAttributes.sbiExpiryStatus) queryParams.append('sbiExpiryStatus', filterAttributes.sbiExpiryStatus);
 
             const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
             try {
@@ -198,7 +201,7 @@ function AdminSbiList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='deviceProviderServices.sbiDeviceDetails' backLink='/partnermanagement' ></Title>
+                            <Title title='sbiList.listOfSbis' backLink='/partnermanagement' ></Title>
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={true}
@@ -213,7 +216,7 @@ function AdminSbiList() {
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
-                                    listTitle='sbiList.listOfSbi'
+                                    listTitle='sbiList.listOfSbis'
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
@@ -237,7 +240,7 @@ function AdminSbiList() {
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (header.id !== "countOfAssociatedDevices") && (
+                                                                            {(header.id !== "action") && (
                                                                                 <SortingIcon
                                                                                     headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
@@ -263,6 +266,7 @@ function AdminSbiList() {
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date", false)}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date", false)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date", true)}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
                                                                         <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
@@ -270,7 +274,7 @@ function AdminSbiList() {
                                                                         </div>
                                                                     </td>
                                                                     <td className={`px-2 text-center`}>
-                                                                        <div className="flex items-center justify-center">
+                                                                        <div className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
                                                                             <img src={sbi.status === 'deactivated' ? deactiveLinkedDevices : activeLinkedDevices} alt=''></img>
                                                                             <p className={`${sbi.status === 'deactivated' ? 'text-[#969696]' : 'text-tory-blue'} px-2`}>{sbi.countOfAssociatedDevices}</p>
                                                                         </div>

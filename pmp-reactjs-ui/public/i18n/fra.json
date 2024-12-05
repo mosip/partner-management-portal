@@ -166,7 +166,8 @@
         "expired": "Expiré",
         "uploaded": "Téléchargé",
         "notUploaded": "Non téléchargé",
-        "draft": "Brouillon"
+        "draft": "Brouillon",
+        "valid": "Valide"
     },
     "policies": {
         "policies": "Stratégies",
@@ -408,7 +409,7 @@
         "devicesCountTxt": "sont associés à ce SBI",
         "addDevices": "Ajouter des périphériques",
         "viewDevices": "Afficher les périphériques",
-        "version": "Version",
+        "sbiVersion": "Version SBI",
         "searchVersion": "Rechercher la version SBI",
         "linkedDevices": "Appareils liés",
         "status":"Statut",
@@ -423,7 +424,10 @@
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
-        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
+        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré",
+        "sbiExpiryStatus": "Statut d'expiration du SBI",
+        "selectSbiExpiryStatus": "Sélectionnez le statut d'expiration du SBI",
+        "listOfSbis": "Liste des SBI"
     },
     "devicesList": {
         "addDevices": "Ajouter des périphériques",
