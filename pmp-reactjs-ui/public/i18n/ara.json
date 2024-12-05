@@ -853,7 +853,7 @@
         "sbiCreatedDateTime": "تاريخ ووقت إنشاء الهيئة الفرعية للتنفيذ",
         "sbiExpiryDateTime": "تاريخ ووقت انتهاء صلاحية الهيئة الفرعية للتنفيذ"
     },
-    "sbiRequestApproveRejectPopup": {
+    "sbiApproveRejectPopup": {
         "header": "هل تريد الموافقة/رفض SBI للإصدار - {{sbiVersion}} ?",
         "description": "يرجى مراجعة تفاصيل SBI والأجهزة المرتبطة بها بعناية قبل اتخاذ الإجراء المناسب"
     },
