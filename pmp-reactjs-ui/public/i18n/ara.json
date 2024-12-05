@@ -166,7 +166,8 @@
         "expired": "منتهي الصلاحية",
         "uploaded": "تم الرفع",
         "notUploaded": "لم يتم الرفع",
-        "draft": "مسودة"
+        "draft": "مسودة",
+        "valid": "صالح"
     },
     "policies": {
         "policies": "سياسات",
@@ -408,7 +409,7 @@
         "devicesCountTxt": "مرتبطة بجهاز SBI هذا",
         "addDevices": "إضافة أجهزة",
         "viewDevices": "عرض الأجهزة",
-        "version": "الإصدار",
+        "sbiVersion": "إصدار SBI",
         "searchVersion": "البحث عن إصدار SBI",
         "linkedDevices": "الأجهزة المرتبطة",
         "status":"حالة",
@@ -423,7 +424,10 @@
         "deactivate": "إلغاء تنشيط SBI",
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً.",
-        "guidence": "ملاحظة: 1. لا يمكن للمستخدم إضافة أجهزة إلا بعد موافقة مسؤول الشريك على SBI. 2. لا يمكن للمستخدم إضافة أجهزة بعد انتهاء صلاحية SBI"
+        "guidence": "ملاحظة: 1. لا يمكن للمستخدم إضافة أجهزة إلا بعد موافقة مسؤول الشريك على SBI. 2. لا يمكن للمستخدم إضافة أجهزة بعد انتهاء صلاحية SBI",
+        "sbiExpiryStatus": "حالة انتهاء صلاحية SBI",
+        "selectSbiExpiryStatus": "حدد حالة انتهاء صلاحية SBI",
+        "listOfSbis": "قائمة SBI"
     },
     "devicesList": {
         "addDevices": "إضافة أجهزة",

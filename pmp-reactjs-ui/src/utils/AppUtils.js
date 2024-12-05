@@ -69,6 +69,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.notUploaded');
         } else if (status === "draft") {
             return t('statusCodes.draft');
+        } else if (status === "valid") {
+            return t('statusCodes.valid');
         } else if (status === "-") {
             return "-"
         }
@@ -321,7 +323,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]

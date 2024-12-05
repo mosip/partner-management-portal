@@ -9,24 +9,29 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [status, setStatus] = useState([]);
+    const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
-      { status: 'approved' },
-      { status: 'rejected'},
-      { status: 'pending_approval'},
-      { status: 'deactivated'}
+        { status: 'approved' },
+        { status: 'rejected'},
+        { status: 'pending_approval'},
+        { status: 'deactivated'}
     ]);
+    const [sbiExpiryStatusDropdownData, setSbiExpiryStatusDropdownData] = useState([
+        { sbiExpiryStatus: 'expired' },
+        { sbiExpiryStatus: 'valid'}
+      ]);
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",
       sbiVersion: "",
       status: "",
+      sbiExpiryStatus: "",
     });
 
     useEffect(() => {
         const fetchData = async () => {
-          setStatus(
-            createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-          );
+            setStatus(createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus")));
+            setSbiExpiryStatus(createDropdownData("sbiExpiryStatus", "", true, sbiExpiryStatusDropdownData, t, t("sbiList.selectSbiExpiryStatus")));
         };
         fetchData();
     }, [t]);
@@ -73,10 +78,20 @@ function AdminSbiListFilter( {onApplyFilter} ) {
             <TextInputComponent
                 fieldName="sbiVersion"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="sbiList.version"
+                fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
                 id="sbi_version_filter"
+            />
+            <DropdownComponent
+                fieldName="sbiExpiryStatus"
+                dropdownDataList={sbiExpiryStatus}
+                onDropDownChangeEvent={onFilterChangeEvent}
+                fieldNameKey="sbiList.sbiExpiryStatus"
+                placeHolderKey="sbiList.selectSbiExpiryStatus"
+                styleSet={styles}
+                isPlaceHolderPresent={true}
+                id="sbi_expiry_status_filter"
             />
             <DropdownComponent
                 fieldName="status"

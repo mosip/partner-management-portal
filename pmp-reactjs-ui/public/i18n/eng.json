@@ -166,7 +166,8 @@
         "expired": "Expired",
         "uploaded": "Uploaded",
         "notUploaded": "Not Uploaded",
-        "draft": "Draft"
+        "draft": "Draft",
+        "valid": "Valid"
     },
     "policies": {
         "policies": "Policies",
@@ -403,7 +404,7 @@
         "pendingForApprovalContx": "pending for approval under this SBI",
         "addDevices": "Add Devices",
         "viewDevices": "View Devices",
-        "version": "Version",
+        "sbiVersion": "SBI Version",
         "searchVersion": "Search SBI Version",
         "linkedDevices": "Linked Devices",
         "status": "Status",
@@ -418,7 +419,10 @@
         "deactivate": "Deactivate SBI",
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error.",
-        "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired"
+        "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired",
+        "sbiExpiryStatus": "SBI Expiry Status",
+        "selectSbiExpiryStatus": "Select SBI Expiry Status",
+        "listOfSbis": "List of SBIs"
     },
     "devicesList": {
         "addDevices": "Add Devices",
