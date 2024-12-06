@@ -47,18 +47,23 @@ function AdminDevicesList() {
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
+        deviceId: null,
         partnerId: null,
         orgName: null,
         make: null,
         model: null,
         status: null,
         deviceType: null,
-        deviceSubType: null
+        deviceSubType: null,
+        sbiId: null,
+        sbiVersion: null
     });
     const submenuRef = useRef([]);
 
     const tableHeaders = [
         { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
+        { id: "sbiId", headerNameKey: 'sbiList.sbiId' },
+        { id: "sbiVersion", headerNameKey: 'sbiList.sbiVersion' },
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
         { id: "orgName", headerNameKey: 'sbiList.orgName' },
         { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
@@ -93,6 +98,9 @@ function AdminDevicesList() {
             if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
             if (filterAttributes.deviceType) queryParams.append('deviceType', filterAttributes.deviceType);
             if (filterAttributes.deviceSubType) queryParams.append('deviceSubType', filterAttributes.deviceSubType);
+            if (filterAttributes.deviceId) queryParams.append('deviceId', filterAttributes.deviceId);
+            if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
+            if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
 
             const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
             try {
@@ -293,6 +301,8 @@ function AdminDevicesList() {
                                                             return (
                                                                 <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>

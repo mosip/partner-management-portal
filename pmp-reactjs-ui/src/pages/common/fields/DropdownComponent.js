@@ -27,6 +27,13 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         setSelectedDropdownEntry(selectedDropdownValue || "");
     }, [selectedDropdownValue]);
 
+    useEffect(() => {
+        if (dropdownDataList.length === 0 && selectedDropdownEntry !== "") {
+            console.log("triggere")
+            setSelectedDropdownEntry("");
+        }
+    }, [dropdownDataList, selectedDropdownEntry]);
+
     const changeDropdownSelection = (selectedid) => {
         setSelectedDropdownEntry(selectedid);
         setIsDropdownOpen(false);
