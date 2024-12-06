@@ -85,7 +85,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.partnerType}
+                                        {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
                                 <div className={`mb-5 w-[100%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
