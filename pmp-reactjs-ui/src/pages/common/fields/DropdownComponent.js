@@ -29,7 +29,6 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
 
     useEffect(() => {
         if (dropdownDataList.length === 0 && selectedDropdownEntry !== "") {
-            console.log("triggere")
             setSelectedDropdownEntry("");
         }
     }, [dropdownDataList, selectedDropdownEntry]);

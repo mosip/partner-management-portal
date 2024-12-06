@@ -105,7 +105,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
                 fieldNameKey="devicesList.deviceId"
                 placeHolderKey="devicesList.searchDeviceId"
                 styleSet={styleSet}
-                id="org_name_filter"
+                id="device_id_filter"
             />
             <TextInputComponent
                 fieldName="sbiId"
@@ -113,7 +113,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
                 fieldNameKey="sbiList.sbiId"
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={styleSet}
-                id="org_name_filter"
+                id="sbi_id_filter"
             />
             <TextInputComponent
                 fieldName="sbiVersion"
@@ -121,7 +121,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
                 fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
-                id="org_name_filter"
+                id="sbi_version_filter"
             />
             <DropdownComponent
                 fieldName='deviceType'
