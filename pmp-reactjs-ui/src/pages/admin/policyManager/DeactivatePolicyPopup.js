@@ -110,7 +110,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     // Count active policies
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg(t('activePoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount }));
+                    setErrorDescriptionMsg((activePoliciesCount > 1) ? t('activePoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount }) : t('activePoliciesDetectedMsg.description2'));
                 }
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);

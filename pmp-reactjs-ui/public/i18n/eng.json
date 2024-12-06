@@ -684,7 +684,8 @@
     },
     "activePoliciesDetectedMsg": {
         "header": "Error: Active Policies Detected!",
-        "description": "There are {{noOfActivePolicies}} active policies associated with this policy group. Please deactivate them before proceeding further"
+        "description1": "There are {{noOfActivePolicies}} active policies associated with this policy group. Please deactivate them before proceeding further",
+        "description2": "There is one policy associated with this policy group. Please deactivate that before proceeding further."
     },
     "draftPoliciesDetectedMsg": {
         "header": "Error: Policies detected in Draft status!",
@@ -850,7 +851,7 @@
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",
         "listOfSbi": "List Of SBI",
-        "sbiVersion":"SBI Version",
+        "sbiVersion": "SBI Version",
         "sbiCreatedDateTime": "SBI Created Date & Time",
         "sbiExpiryDateTime": "SBI Expiry Date & Time"
     },
