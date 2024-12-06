@@ -61,6 +61,18 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                 }
                 );
             }
+            if (popupData.isDeviceRequest) {
+                const request = createRequest({
+                    id: popupData.deviceId,
+                    approvalStatus: status === "approved" ? 'Activate' : 'De-activate'
+                });
+                response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                );
+            }
             const responseData = response.data;
             if (responseData && responseData.response) {
                 approveRejectResponse(responseData.response, status);

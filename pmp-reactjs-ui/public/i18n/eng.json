@@ -858,6 +858,10 @@
         "header": "Do you want to Approve/Reject the SBI of version - '{{sbiVersion}}' ?",
         "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
     },
+    "deviceApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the device with {{make}} - {{model}} ?",
+        "description": "Please review the Device details carefully before taking appropriate action."
+    },
     "consentPopup": {
         "title": "Terms and Conditions",
         "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",

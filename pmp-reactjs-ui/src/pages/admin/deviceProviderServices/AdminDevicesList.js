@@ -19,7 +19,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
-function AdminDevicesList () {
+function AdminDevicesList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -130,12 +130,25 @@ function AdminDevicesList () {
         setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
     };
 
-    const approveRejectDeviceDetails = (devicedetails) => {
-
+    const approveRejectDeviceDetails = (device) => {
+        if (device.status === 'pending_approval') {
+            setShowDeviceDetailApproveRejectPopup(true);
+            document.body.style.overflow = "hidden";
+        }
     };
 
     const onClickApproveReject = (responseData, status, selectedDevice) => {
-        
+        if (responseData) {
+            setActionId(-1);
+            setShowDeviceDetailApproveRejectPopup(false);
+            // Update the specific row in the state with the new status
+            setDevicesList((prevList) =>
+                prevList.map( deviceItem =>
+                    deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
+                )
+            );
+            document.body.style.overflow = "auto";
+        }
     };
 
     const closeApproveRejectPopup = () => {
@@ -144,11 +157,11 @@ function AdminDevicesList () {
     };
 
     const deactivateDevice = (selectedDevice) => {
-        
+
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
-        
+
     };
 
     const closeDeactivatePopup = () => {
@@ -178,7 +191,7 @@ function AdminDevicesList () {
     };
 
     const viewDeviceDetails = (selectedDevice) => {
-        localStorage.setItem('selectedDeviceAttributes',JSON.stringify(selectedDevice));
+        localStorage.setItem('selectedDeviceAttributes', JSON.stringify(selectedDevice));
         navigate("/partnermanagement/admin/device-provider-services/view-device-details");
     };
 
@@ -192,12 +205,12 @@ function AdminDevicesList () {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
-            { !dataLoaded && (
+            {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
-            { dataLoaded && (
+            {dataLoaded && (
                 <>
-                    { errorMsg && (
+                    {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
@@ -208,7 +221,7 @@ function AdminDevicesList () {
                             activeSbi={false}
                             sbiListPath='/partnermanagement/admin/device-provider-services/sbi-list'
                             activeDevice={true}
-                            devicesListPath='/partnermanagement/admin/device-provider-services/devices-list' 
+                            devicesListPath='/partnermanagement/admin/device-provider-services/devices-list'
                         />
                         {!applyFilter && devicesList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -287,6 +300,16 @@ function AdminDevicesList () {
                                                                                         <p id="device_list_approve_reject_option" className={`py-1.5 px-4 ${device.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showDeviceDetailApproveRejectPopup && (
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...device, isDeviceRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, device)}
+                                                                                            title={`${device.make} | ${device.model}`}
+                                                                                            header={t('deviceApproveRejectPopup.header', { make: device.make, model: device.model })}
+                                                                                            description={t('deviceApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    )}
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                         <p id="device_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
