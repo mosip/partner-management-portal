@@ -864,7 +864,7 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Voulez-vous approuver/rejeter l'appareil avec {{make}} - {{model}} ?",
-        "description": "Veuillez examiner attentivement les détails de l'appareil et les types d'appareils associés avant de prendre les mesures appropriées."
+        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre les mesures appropriées."
     },
     "consentPopup": {
         "title": "Termes et conditions",

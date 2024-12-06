@@ -860,7 +860,7 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the device with {{make}} - {{model}} ?",
-        "description": "Please review the Device details and associated types of device carefully before taking appropriate action."
+        "description": "Please review the Device details carefully before taking appropriate action."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
