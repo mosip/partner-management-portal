@@ -154,6 +154,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
             }
             setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
         }
     };
 
