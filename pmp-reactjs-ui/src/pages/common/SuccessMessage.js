@@ -9,7 +9,7 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle}) {
     return (
         <div className={`${customStyle ? customStyle.outerDiv : `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>
             <div className={` bg-fruit-salad ${customStyle ? customStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-72 p-4'}`}>
-                <div className={`${isLoginLanguageRTL ? 'ml-6':'mr-6'}`}>
+                <div className={`${isLoginLanguageRTL ? 'ml-6':'mr-6'} w-[90%]`}>
                     <p className="text-sm/4 text-white break-normal font-inter">
                         {successMsg}
                     </p>

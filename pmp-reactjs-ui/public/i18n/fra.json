@@ -688,7 +688,8 @@
     },
     "activePoliciesDetectedMsg": {
         "header": "Erreur : Politiques actives détectées !",
-        "description": "Il y a {{noOfActivePolicies}} politiques actives associées à ce groupe de politiques. Veuillez les désactiver avant de poursuivre."
+        "description1": "Il y a {{noOfActivePolicies}} politiques actives associées à ce groupe de politiques. Veuillez les désactiver avant de poursuivre.",
+        "description2": "Il existe une stratégie associée à ce groupe de stratégies. Veuillez le désactiver avant de continuer."
     },
     "draftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en brouillon détectées !",
