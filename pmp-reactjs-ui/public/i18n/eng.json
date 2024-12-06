@@ -422,7 +422,9 @@
         "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired",
         "sbiExpiryStatus": "SBI Expiry Status",
         "selectSbiExpiryStatus": "Select SBI Expiry Status",
-        "listOfSbis": "List of SBIs"
+        "listOfSbis": "List of SBIs",
+        "sbiId": "SBI Id",
+        "searchSbiId": "Search SBI Id"
     },
     "devicesList": {
         "deviceId": "Device Id",
@@ -443,7 +445,8 @@
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
-        "unexpectedError": "We have encountered with an unexpected error. Please try again."
+        "unexpectedError": "We have encountered with an unexpected error. Please try again.",
+        "searchDeviceId": "Search Device Id"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",

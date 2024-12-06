@@ -427,7 +427,9 @@
         "guidence": "ملاحظة: 1. لا يمكن للمستخدم إضافة أجهزة إلا بعد موافقة مسؤول الشريك على SBI. 2. لا يمكن للمستخدم إضافة أجهزة بعد انتهاء صلاحية SBI",
         "sbiExpiryStatus": "حالة انتهاء صلاحية SBI",
         "selectSbiExpiryStatus": "حدد حالة انتهاء صلاحية SBI",
-        "listOfSbis": "قائمة SBI"
+        "listOfSbis": "قائمة SBI",
+        "sbiId": "معرف SBI",
+        "searchSbiId": "البحث عن معرف SBI"
     },
     "devicesList": {
         "deviceId": "معرف الجهاز",
@@ -448,7 +450,8 @@
         "selectMakeName": "حدد إنشاء اسم",
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة",
-        "unexpectedError": "لقد واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى."
+        "unexpectedError": "لقد واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+        "searchDeviceId": "البحث عن معرف الجهاز"
     },
     "deactivateDevicePopup": {
         "headerMsg": "هل تريد إلغاء تنشيط الجهاز",

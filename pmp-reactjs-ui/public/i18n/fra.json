@@ -427,7 +427,9 @@
         "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré",
         "sbiExpiryStatus": "Statut d'expiration du SBI",
         "selectSbiExpiryStatus": "Sélectionnez le statut d'expiration du SBI",
-        "listOfSbis": "Liste des SBI"
+        "listOfSbis": "Liste des SBI",
+        "sbiId": "ID SBI",
+        "searchSbiId": "Rechercher ID SBI"
     },
     "devicesList": {
         "deviceId": "Identifiant de l'appareil",
@@ -448,7 +450,8 @@
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
-        "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer."
+        "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
+        "searchDeviceId": "Rechercher l'ID de l'appareil"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",

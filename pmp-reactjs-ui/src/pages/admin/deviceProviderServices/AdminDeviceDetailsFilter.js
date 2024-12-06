@@ -19,13 +19,16 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
         { status: 'deactivated' }
     ]);
     const [filters, setFilters] = useState({
+        deviceId: "",
         partnerId: "",
         orgName: "",
         make: "",
         model: "",
         status: "",
         deviceType: "",
-        deviceSubType: ""
+        deviceSubType: "",
+        sbiId: "",
+        sbiVersion: ""
     });
 
     useEffect(() => {
@@ -45,7 +48,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
             [fieldName]: selectedFilter,
         }));
     
-        // Check if fieldName is 'deviceTypeCode'
+        // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
             if(selectedFilter === ""){
                 setDeviceSubTypeDropdownData([])
@@ -96,6 +99,30 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
                 styleSet={styleSet}
                 id="org_name_filter"
             />
+            <TextInputComponent
+                fieldName="deviceId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="devicesList.deviceId"
+                placeHolderKey="devicesList.searchDeviceId"
+                styleSet={styleSet}
+                id="device_id_filter"
+            />
+            <TextInputComponent
+                fieldName="sbiId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="sbiList.sbiId"
+                placeHolderKey="sbiList.searchSbiId"
+                styleSet={styleSet}
+                id="sbi_id_filter"
+            />
+            <TextInputComponent
+                fieldName="sbiVersion"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="sbiList.sbiVersion"
+                placeHolderKey="sbiList.searchVersion"
+                styleSet={styleSet}
+                id="sbi_version_filter"
+            />
             <DropdownComponent
                 fieldName='deviceType'
                 dropdownDataList={deviceTypeDropdownData}
@@ -113,6 +140,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
                 fieldNameKey='addDevices.deviceSubType'
                 placeHolderKey='addDevices.selectDeviceSubType'
                 styleSet={styles}
+                disabled={filters.deviceType === ""}
                 isPlaceHolderPresent={true}
                 id='device_sub_type_filter'>
             </DropdownComponent>
