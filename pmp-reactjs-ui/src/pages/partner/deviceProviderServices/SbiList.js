@@ -157,12 +157,12 @@ function SbiList() {
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} max-[500px]:overflow-x-scroll font-inter`}>
             {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
+                <LoadingIcon />
             )}
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7 !mb-4">
                         <div className="flex justify-between mb-5">
