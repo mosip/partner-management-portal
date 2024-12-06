@@ -14,11 +14,12 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminSbiList() {
     const navigate = useNavigate('');
@@ -45,6 +46,8 @@ function AdminSbiList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -179,6 +182,32 @@ function AdminSbiList() {
     };
 
     const deactivateSbi = (selectedSbi) => {
+        if (selectedSbi.status === "approved") {
+            const request = createRequest({
+                sbiId: selectedSbi.sbiId,
+            }, "mosip.pms.deactivate.sbi.post", true);
+            setDeactivateRequest(request);
+            setShowDeactivatePopup(true);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
+        if (deactivationResponse && !deactivationResponse.isActive) {
+            setActionId(-1);
+            setShowDeactivatePopup(false);
+            // Update the specific row in the state with the new status
+            setSbiList((prevList) =>
+                prevList.map(sbi =>
+                    sbi.sbiId === selectedSbiData.sbiId ? { ...sbi, status: "deactivated", isActive: false } : sbi
+                )
+            );
+        }
+    };
+
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
     };
 
     const cancelErrorMsg = () => {
@@ -312,6 +341,9 @@ function AdminSbiList() {
                                                                                         <p id="sbi_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${sbi.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup closePopUp={() => closeDeactivatePopup()} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
+                                                                                    )}
                                                                                 </div>
                                                                             )}
                                                                         </div>
