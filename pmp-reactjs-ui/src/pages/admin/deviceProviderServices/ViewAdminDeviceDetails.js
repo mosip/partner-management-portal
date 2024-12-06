@@ -77,7 +77,7 @@ function ViewAdminDeviceDetails() {
                                         {t("devicesList.deviceType")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {/* {deviceDetails.deviceType} */}
+                                        {deviceDetails.deviceType}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -85,7 +85,7 @@ function ViewAdminDeviceDetails() {
                                         {t("devicesList.deviceSubType")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {/* {deviceDetails.deviceSubType} */}
+                                        {deviceDetails.deviceSubType}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -93,7 +93,7 @@ function ViewAdminDeviceDetails() {
                                         {t("devicesList.make")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {/* {deviceDetails.make} */}
+                                        {deviceDetails.make}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -101,7 +101,7 @@ function ViewAdminDeviceDetails() {
                                         {t("devicesList.model")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {/* {deviceDetails.model} */}
+                                        {deviceDetails.model}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -109,7 +109,7 @@ function ViewAdminDeviceDetails() {
                                         {t("devicesList.createdDate")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {formatDate(deviceDetails.createdDate, "dateTime", false)}
+                                        {formatDate(deviceDetails.createdDateTime, "date", false)}
                                     </p>
                                 </div>
                             </div>
