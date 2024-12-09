@@ -857,19 +857,20 @@
         "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
     },
     "viewSbiDetails": {
-        "viewSbiDetails": "Voir les détails du Sbi",
-        "listOfSbi": "Liste des SBI",
-        "sbiVersion":"Version SBI",
-        "sbiCreatedDateTime": "Date et heure de création du SBI",
-        "sbiExpiryDateTime": "Date et heure d’expiration du SBI"
-    },  
+        "viewSbiDetails": "Voir les détails du SBI",
+        "listOfSbi": "Liste des SBIs",
+        "sbiVersion": "Version du SBI",
+        "sbiCreatedDate": "Date de création du SBI",
+        "sbiExpiryDate": "Date d'expiration du SBI",
+        "organisation": "Organisation"
+    },
     "sbiApproveRejectPopup": {
-        "header": "Voulez-vous approuver/rejeter le SBI de la version - '{{sbiVersion}}' ?",
-        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre les mesures appropriées.."
+        "header": "Voulez-vous approuver ou rejeter le SBI ?",
+        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre une décision appropriée."
     },
     "deviceApproveRejectPopup": {
-        "header": "Voulez-vous approuver/rejeter l'appareil avec {{make}} - {{model}} ?",
-        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre les mesures appropriées."
+        "header": "Voulez-vous approuver ou rejeter l'appareil ?",
+        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée."
     },
     "consentPopup": {
         "title": "Termes et conditions",

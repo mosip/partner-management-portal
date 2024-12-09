@@ -854,17 +854,18 @@
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",
-        "listOfSbi": "List Of SBI",
+        "listOfSbi": "List Of SBIs",
         "sbiVersion": "SBI Version",
-        "sbiCreatedDateTime": "SBI Created Date & Time",
-        "sbiExpiryDateTime": "SBI Expiry Date & Time"
+        "sbiCreatedDate": "SBI Created Date",
+        "sbiExpiryDate": "SBI Expiry Date",
+        "organisation": "Organisation"
     },
     "sbiApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the SBI of version - '{{sbiVersion}}' ?",
+        "header": "Do you want to Approve or Reject the SBI?",
         "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
     },
     "deviceApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the device with {{make}} - {{model}} ?",
+        "header": "Do you want to Approve or Reject the Device?",
         "description": "Please review the Device details carefully before taking appropriate action."
     },
     "consentPopup": {

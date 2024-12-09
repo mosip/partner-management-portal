@@ -325,9 +325,8 @@ function AdminSbiList() {
                                                                                             popupData={{ ...sbi, isSbiRequest: true }}
                                                                                             closePopUp={closeApproveRejectPopup}
                                                                                             approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, sbi)}
-                                                                                            title={sbi.partnerId}
-                                                                                            subtitle={sbi.orgName}
-                                                                                            header={t('sbiApproveRejectPopup.header', { sbiVersion: sbi.version })}
+                                                                                            title={sbi.sbiVersion}
+                                                                                            header={t('sbiApproveRejectPopup.header')}
                                                                                             description={t('sbiApproveRejectPopup.description')}
                                                                                         />
                                                                                     )}

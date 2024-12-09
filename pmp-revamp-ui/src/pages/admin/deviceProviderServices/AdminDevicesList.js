@@ -240,7 +240,7 @@ function AdminDevicesList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='deviceProviderServices.sbiDeviceDetails' backLink='/partnermanagement' ></Title>
+                            <Title title='devicesList.listOfDevices' backLink='/partnermanagement' ></Title>
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={false}
@@ -333,7 +333,7 @@ function AdminDevicesList() {
                                                                                             closePopUp={closeApproveRejectPopup}
                                                                                             approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, device)}
                                                                                             title={`${device.make} | ${device.model}`}
-                                                                                            header={t('deviceApproveRejectPopup.header', { make: device.make, model: device.model })}
+                                                                                            header={t('deviceApproveRejectPopup.header')}
                                                                                             description={t('deviceApproveRejectPopup.description')}
                                                                                         />
                                                                                     )}
