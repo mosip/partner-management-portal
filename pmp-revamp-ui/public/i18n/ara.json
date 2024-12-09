@@ -485,6 +485,7 @@
     "deactivateSbi": {
         "headerMsg": "هل تريد إلغاء تنشيط إصدار SBI ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل SBI الخاصة بك والأجهزة المعتمدة المعينة لها. سيتم رفض الأجهزة المعلقة للموافقة تلقائيًا.",
+        "descriptionForAdmin": "عند النقر فوق ، سيتم إلغاء تنشيط تفاصيل SBI والأجهزة المعتمدة المرتبطة بها. سيتم رفض الأجهزة المعلقة للموافقة تلقائيًا.",
         "deactivateApprovedDevicesPlural": " {{devicesCount}} سيتم إلغاء تنشيط الأجهزة المعتمدة المرتبطة بهذا SBI ",
         "deactivateApprovedDevicesSingular": "{{devicesCount}} سيتم إلغاء تنشيط الجهاز المعتمد المرتبط بهذا SBI ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} سيتم رفض الأجهزة التي تنتظر الموافقة تلقائيًا",

@@ -342,7 +342,7 @@ function AdminSbiList() {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={() => closeDeactivatePopup()} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
+                                                                                        <DeactivatePopup closePopUp={() => closeDeactivatePopup()} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.descriptionForAdmin' headerKeyName={sbi.sbiVersion} />
                                                                                     )}
                                                                                 </div>
                                                                             )}
