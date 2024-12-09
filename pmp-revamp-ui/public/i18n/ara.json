@@ -857,19 +857,20 @@
         "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
     },
     "viewSbiDetails": {
-        "viewSbiDetails": "عرض تفاصيل الهيئة الفرعية للتنفيذ",
-        "listOfSbi": "قائمة الهيئة الفرعية للتنفيذ",
-        "sbiVersion":"نسخة الهيئة الفرعية للتنفيذ",
-        "sbiCreatedDateTime": "تاريخ ووقت إنشاء الهيئة الفرعية للتنفيذ",
-        "sbiExpiryDateTime": "تاريخ ووقت انتهاء صلاحية الهيئة الفرعية للتنفيذ"
+        "viewSbiDetails": "عرض تفاصيل SBI",
+        "listOfSbi": "قائمة SBIs",
+        "sbiVersion": "إصدار SBI",
+        "sbiCreatedDate": "تاريخ إنشاء SBI",
+        "sbiExpiryDate": "تاريخ انتهاء SBI",
+        "organisation": "المنظمة"
     },
     "sbiApproveRejectPopup": {
-        "header": "هل تريد الموافقة/رفض SBI للإصدار - {{sbiVersion}} ?",
-        "description": "يرجى مراجعة تفاصيل SBI والأجهزة المرتبطة بها بعناية قبل اتخاذ الإجراء المناسب"
+        "header": "هل تريد الموافقة أو رفض SBI؟",
+        "description": "يرجى مراجعة تفاصيل SBI والأجهزة المرتبطة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "deviceApproveRejectPopup": {
-        "header": "هل تريد الموافقة/رفض الجهاز باستخدام {{make}} - {{model}}",
-        "description": "يرجى مراجعة تفاصيل الجهاز بعناية قبل اتخاذ الإجراء المناسب"
+        "header": "هل تريد الموافقة أو رفض الجهاز؟",
+        "description": "يرجى مراجعة تفاصيل الجهاز بعناية قبل اتخاذ الإجراء المناسب."
     },
     "consentPopup": {
         "title": "الأحكام والشروط",

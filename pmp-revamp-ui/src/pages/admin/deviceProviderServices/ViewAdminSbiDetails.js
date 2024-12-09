@@ -53,7 +53,7 @@ function ViewAdminSbiDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {sbiDetails.sbiVersion}
+                                    {`${sbiDetails.sbiId} | ${sbiDetails.sbiVersion}`}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(sbiDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -90,26 +90,26 @@ function ViewAdminSbiDetails() {
                                 </div>
                                 <div className={`mb-5 w-[100%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewSbiDetails.sbiVersion")}
+                                        {t("viewSbiDetails.organisation")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                        {sbiDetails.sbiVersion}
+                                        {sbiDetails.orgName}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
-                                        {t("viewSbiDetails.sbiCreatedDateTime")}
+                                        {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiCreatedDateTime, "dateTime", false)}
+                                    {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className={`text-sm ${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-suva-gray' }`}>
-                                        {t("viewSbiDetails.sbiExpiryDateTime")}
+                                        {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'font-bold text-black'}text-vulcan text-md`}>
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "dateTime", false)}
+                                    {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
                                     </p>
                                 </div>
                             </div>
