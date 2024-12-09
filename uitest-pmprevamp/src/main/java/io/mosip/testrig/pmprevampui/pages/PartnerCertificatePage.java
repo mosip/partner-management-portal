@@ -22,6 +22,9 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
 	private WebElement sucessMessage;
+	
+	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
+	private WebElement deviceProviderSuccessMessage;
 
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
@@ -85,6 +88,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partnerDomain_selector_dropdown_option3")
 	private WebElement partnerDomainSelectorDropdownOptionAuth;
 	
+	@FindBy(id = "partnerDomain_selector_dropdown_option2")
+	private WebElement deviceInPartnerDomainSelectorDropdown;
+	
 	@FindBy(id = "upload_admin_certificate_btn")
 	private WebElement SubmitButtonForAdmin;
 	
@@ -123,6 +129,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSucessMessageDisplayed() {
 		return isElementDisplayed(sucessMessage);
+	}
+	
+	public boolean isDeviceProviderSuccessMessage() {
+		return isElementDisplayed(deviceProviderSuccessMessage);
 	}
 
 	public void clickOnCloseButton() {
@@ -206,6 +216,9 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(partnerDomainSelectorDropdownOptionAuth);
 	}
 	
+	public void ClickOnDeviceInPartnerDomainSelectorDropdown() {
+		clickOnElement(deviceInPartnerDomainSelectorDropdown);
+	}
 	public void ClickonSubmitButtonForAdmin() {
 		clickOnElement(SubmitButtonForAdmin);
 	}

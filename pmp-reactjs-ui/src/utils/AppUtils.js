@@ -69,6 +69,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.notUploaded');
         } else if (status === "draft") {
             return t('statusCodes.draft');
+        } else if (status === "valid") {
+            return t('statusCodes.valid');
         } else if (status === "-") {
             return "-"
         }
@@ -321,7 +323,7 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
                     fieldCode: getPartnerTypeDescription(item[fieldName], t),
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus") {
+            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t),
                     fieldValue: item[fieldName]
@@ -627,3 +629,81 @@ export const getApproveRejectStatus = (status) => {
       return "rejected";
     }
 };
+
+export const updateActiveState = (status) => {
+    if (status === "approved") {
+      return true;
+    }
+    if (status === "rejected") {
+      return false;
+    }
+};
+
+export const fetchDeviceTypeDropdownData = async (setErrorCode, setErrorMsg, t) => {
+    const request = createRequest({
+        filters: [
+            {
+                columnName: "name",
+                type: "unique",
+                text: ""
+            }
+        ],
+        optionalFilters: [],
+        purpose: "REGISTRATION"
+    });
+
+    try {
+        const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceType/filtervalues`, process.env.NODE_ENV), request);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                return responseData.response.filters;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return [];
+            }
+        } else {
+            setErrorMsg(t('addDevices.errorInDeviceType'));
+            return [];
+        }
+    } catch (err) {
+        setErrorMsg(err.message);
+        console.log("Error fetching data: ", err);
+        return [];
+    }
+}
+
+export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErrorMsg, t) => {
+    const request = createRequest({
+        filters: [
+            {
+                columnName: "deviceType",
+                type: "unique",
+                text: type
+            }
+        ],
+        optionalFilters: [],
+        purpose: "REGISTRATION"
+    });
+    try {
+        const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deviceSubType/filtervalues`, process.env.NODE_ENV), request);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                return responseData.response.filters;
+            } else {
+                if (responseData && responseData.errors && responseData.errors.length > 0) {
+                    setErrorCode(responseData.errors[0].errorCode);
+                    setErrorMsg(responseData.errors[0].message);
+                }
+                return [];
+            }
+        } else {
+            setErrorCode(t('addDevices.errorInDeviceSubType'));
+            return [];
+        }
+    } catch (err) {
+        console.log("Error fetching data: ", err);
+        return [];
+    }
+}

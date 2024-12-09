@@ -261,6 +261,7 @@ function DevicesList() {
                                             customButtonName='devicesList.addDevices'
                                             buttonId='add_devices'
                                             onClickButton={addDevices}
+                                            disableBtn={!canAddDevices}
                                         />
                                     </div>
                                     :

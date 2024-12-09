@@ -44,7 +44,7 @@ function ViewDeviceDetails() {
 
                 <>
                     <div className="flex justify-between mb-3">
-                        <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='sbiList.listOfSbi' subTitle2='devicesList.listOfDevices' backLink='/partnermanagement/device-provider-services/sbi-list' backLink2='/partnermanagement/device-provider-services/devices-list' ></Title>
+                        <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='sbiList.listOfSbi' subTitle2='devicesList.listOfDevices' backLink='/partnermanagement/device-provider-services/sbi-list' backLink2='/partnermanagement/device-provider-services/devices-list' />
                     </div>
                     {unexpectedError && (
                         <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

@@ -166,7 +166,8 @@
         "expired": "Expiré",
         "uploaded": "Téléchargé",
         "notUploaded": "Non téléchargé",
-        "draft": "Brouillon"
+        "draft": "Brouillon",
+        "valid": "Valide"
     },
     "policies": {
         "policies": "Stratégies",
@@ -375,7 +376,10 @@
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
         "addSbiDevices": "Ajouter SBI - Appareil",
-        "listOfDevices": "Liste des appareils pour"
+        "listOfDevices": "Liste des appareils pour",
+        "sbiDetails": "Détails SBI",
+        "deviceDetails": "Détails de l'appareil",
+        "sbiDeviceDetails": "SBI - Détails de l'appareil"
     },
     "addSbis": {
         "addSbi": "Ajouter un SBI",
@@ -405,17 +409,30 @@
         "devicesCountTxt": "sont associés à ce SBI",
         "addDevices": "Ajouter des périphériques",
         "viewDevices": "Afficher les périphériques",
+        "sbiVersion": "Version SBI",
+        "searchVersion": "Rechercher la version SBI",
+        "linkedDevices": "Appareils liés",
+        "status":"Statut",
+        "action": "Action",
         "partnerId": "ID partenaire",
+        "orgName":"Organisation",
         "partnerType": "Type de partenaire",
         "device": "appareil",
-        "createdDate": "Date de création de SBI",
-        "expiryDate": "Date d'expiration du SBI",
+        "sbiCreatedDate": "Date de création de SBI",
+        "sbiExpiryDate": "Date d'expiration du SBI",
+        "createdDate": "Date de création",
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
-        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré"
+        "guidence": "Remarque : 1. L'utilisateur ne peut ajouter des appareils qu'une fois le SBI approuvé par l'administrateur partenaire. 2. L'utilisateur ne peut plus ajouter d'appareils une fois le SBI expiré",
+        "sbiExpiryStatus": "Statut d'expiration du SBI",
+        "selectSbiExpiryStatus": "Sélectionnez le statut d'expiration du SBI",
+        "listOfSbis": "Liste des SBI",
+        "sbiId": "ID SBI",
+        "searchSbiId": "Rechercher ID SBI"
     },
     "devicesList": {
+        "deviceId": "Identifiant de l'appareil",
         "addDevices": "Ajouter des périphériques",
         "listOfDevices": "Liste des appareils",
         "deviceType": "Type d'appareil",
@@ -433,7 +450,8 @@
         "selectMakeName": "Sélectionnez Créer un nom",
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
-        "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer."
+        "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
+        "searchDeviceId": "Rechercher l'ID de l'appareil"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
@@ -672,8 +690,17 @@
         "description": "En cliquant sur « Confirmer », le groupe de politiques sélectionné sera désactivé."
     },
     "activePoliciesDetectedMsg": {
-        "header": "Erreur : stratégies actives détectées !",
-        "description": "Il existe {{noOfAssociatedPolicies}} stratégies actives associées à ce groupe de stratégies. Veuillez les désactiver avant de continuer."
+        "header": "Erreur : Politiques actives détectées !",
+        "description1": "Il y a {{noOfActivePolicies}} politiques actives associées à ce groupe de politiques. Veuillez les désactiver avant de poursuivre.",
+        "description2": "Il existe une stratégie associée à ce groupe de stratégies. Veuillez le désactiver avant de continuer."
+    },
+    "draftPoliciesDetectedMsg": {
+        "header": "Erreur : Politiques en brouillon détectées !",
+        "description": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre."
+    },
+    "activeAndDraftPoliciesDetectedMsg": {
+        "header": "Erreur : Politiques en statut activé et brouillon détectées !",
+        "description": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -827,6 +854,21 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
+    },
+    "viewSbiDetails": {
+        "viewSbiDetails": "Voir les détails du Sbi",
+        "listOfSbi": "Liste des SBI",
+        "sbiVersion":"Version SBI",
+        "sbiCreatedDateTime": "Date et heure de création du SBI",
+        "sbiExpiryDateTime": "Date et heure d’expiration du SBI"
+    },  
+    "sbiApproveRejectPopup": {
+        "header": "Voulez-vous approuver/rejeter le SBI de la version - '{{sbiVersion}}' ?",
+        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre les mesures appropriées.."
+    },
+    "deviceApproveRejectPopup": {
+        "header": "Voulez-vous approuver/rejeter l'appareil avec {{make}} - {{model}} ?",
+        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre les mesures appropriées."
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -998,6 +1040,16 @@
         "PMS_POL_059": "Il n’existe aucun groupe de stratégies actif.",
         "PMS_POL_060": "Erreur lors de la récupération des groupes de stratégies.",
         "PMS_POL_061": "Erreur lors de la récupération des politiques",
+        "PMS_POL_062": "La politique a déjà été désactivée.",
+        "PMS_POL_063": "Une demande de politique partenaire approuvée est associée à cette politique.",
+        "PMS_POL_064": "Une demande de politique partenaire en attente est associée à cette politique.",
+        "PMS_POL_065": "La politique spécifiée n'existe pas.",
+        "PMS_POL_066": "Erreur lors de la désactivation de la politique.",
+        "PMS_POL_067": "Le groupe de politiques a déjà été désactivé.",
+        "PMS_POL_068": "Le groupe de politiques spécifié n'existe pas.",
+        "PMS_POL_069": "Des politiques actives ou en brouillon sont associées au groupe de politiques.",
+        "PMS_POL_070": "Des politiques en brouillon existent dans le groupe de politiques.",
+        "PMS_POL_071": "Erreur lors de la désactivation du groupe de politiques.",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",

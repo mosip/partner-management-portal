@@ -46,11 +46,11 @@ public class DBManager extends BaseClass {
 						// To Do --- Read the delete queries from a file and iterate
 						try {
 							;
-							statement.addBatch("delete from partner_policy_request where part_id ='auth_v4"+data+"'");
-							statement.addBatch("delete from partner_policy  where part_id ='auth_v4"+data+"'");
+							statement.addBatch("delete from partner_policy_request where part_id like 'auth_v4%'");
+							statement.addBatch("delete from partner_policy  where part_id like 'auth_v4%'");
 							statement.addBatch("delete from partner  where name ='AUTH_V4'");
-							statement.addBatch("delete from partner_policy_request where part_id ='credential_v1"+data+"'");
-							statement.addBatch("delete from partner_policy  where part_id ='credential_v1"+data+"'");
+							statement.addBatch("delete from partner_policy_request where part_id like 'credential_v1%'");
+							statement.addBatch("delete from partner_policy  where part_id like'credential_v1%'");
 							statement.addBatch("delete from partner  where name ='CREDENTIAL_V1'");
 							int[] result = statement.executeBatch();
 							logger.info("Success:: Executed PMS DB quiries successfully.");

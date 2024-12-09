@@ -51,7 +51,6 @@ function PolicyGroupList() {
         status: null,
     });
     const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
-    const [deactivatePolicyGroupRequest, setDeactivatePolicyGroupRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -214,12 +213,6 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
-            const request = createRequest({
-                name: policyGroup.name,
-                desc: policyGroup.desc,
-                isActive: false
-            });
-            setDeactivatePolicyGroupRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -323,16 +316,16 @@ function PolicyGroupList() {
                                                             return (
                                                                 <tr id={"policy_group_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${policyGroup.isActive ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`${isLoginLanguageRTL ? 'pl-[4.1rem] pr-[0.8rem]' : 'pr-[6.8rem] pl-[0.8rem]'} break-all`}>{policyGroup.id}</td>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`${isLoginLanguageRTL ? 'pl-[5rem] pr-[0.8rem]' : 'pr-[5.4rem] pl-[0.8rem]'} break-all`}>{policyGroup.name}</td>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`${isLoginLanguageRTL ? 'pl-[3.8rem] pr-[0.8rem]' : 'pr-[3.2rem] pl-[0.8rem]'} break-all`}>{policyGroup.desc}</td>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2 break-all">{formatDate(policyGroup.crDtimes, "date", true)}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.id}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.name}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.desc}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2">{formatDate(policyGroup.crDtimes, "date", true)}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
                                                                         <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-3 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center break-all">
+                                                                    <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <p id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                 tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
@@ -354,7 +347,6 @@ function PolicyGroupList() {
                                                                                             header={'deactivatePolicyGroup.headerMsg'}
                                                                                             description={'deactivatePolicyGroup.description'}
                                                                                             popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
-                                                                                            request={deactivatePolicyGroupRequest}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}

@@ -295,7 +295,7 @@ function EditPolicy() {
                                                     </label>
                                                     <button disabled className="flex items-center justify-between w-full min-h-11 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                         overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                        <span className="w-full break-all break-normal break-words text-wrap text-start">{policyDetails.policyGroupName}</span>
+                                                        <span className="w-full break-words text-wrap text-start">{policyDetails.policyGroupName}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                         </svg>

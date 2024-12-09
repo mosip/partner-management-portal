@@ -34,7 +34,7 @@ function ViewPolicyRequestDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewPolicyRequest.viewPolicyRequest' subTitle='viewPolicyRequest.listOfPolicyRequests' backLink='/partnermanagement/admin/policy-requests-list' />
                 </div>
@@ -91,7 +91,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md break-normal">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
@@ -99,7 +99,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md break-normal">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyGroupName}
                                 </p>
                             </div>
@@ -150,7 +150,7 @@ function ViewPolicyRequestDetails() {
                                             <h4 className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComments")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-all break-normal break-words">
+                                            <span className="text-sm mt-3 break-words">
                                                 {policyRequestDetails.requestDetail}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />

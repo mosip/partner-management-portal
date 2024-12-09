@@ -81,7 +81,7 @@ function ViewAdminOidcClientDetails() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-all break-normal max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/admin/authentication-services/oidc-clients-list' />
                         </div>
@@ -176,7 +176,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_group_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                            <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-sm">
                                                 {selectedClientData.policyGroupName}
                                             </p>
                                         </div>
@@ -184,7 +184,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_name_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.policyName")}
                                             </p>
-                                            <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                            <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-sm">
                                                 {selectedClientData.policyName ? selectedClientData.policyName : ' - '}
                                             </p>
                                         </div>
@@ -192,7 +192,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_group_description_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.policyGroupDescription")}
                                             </p>
-                                            <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-sm break-normal">
+                                            <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-sm">
                                                 {selectedClientData.policyGroupDescription}
                                             </p>
                                         </div>
@@ -200,7 +200,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_name_description_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.policyNameDescription")}
                                             </p>
-                                            <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-sm break-normal">
+                                            <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-sm">
                                                 {selectedClientData.policyDescription ? selectedClientData.policyDescription : ' - '}
                                             </p>
                                         </div>
@@ -211,7 +211,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_oidc_client_name_label' className="font-[600] text-suva-gray text-xs">
                                                 {t("authenticationServices.oidcClientName")}
                                             </p>
-                                            <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm break-normal">
+                                            <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm">
                                                 {selectedClientData.clientNameEng}
                                             </p>
                                         </div>
@@ -241,7 +241,7 @@ function ViewAdminOidcClientDetails() {
                                                         return (
                                                             <ul>
                                                                 <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                    <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1 px-2">
+                                                                    <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
                                                                         {uri}
                                                                     </p>
                                                                     {(oidcClientDetails.redirectUris).length > 1 &&

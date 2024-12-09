@@ -166,7 +166,8 @@
         "expired": "Expired",
         "uploaded": "Uploaded",
         "notUploaded": "Not Uploaded",
-        "draft": "Draft"
+        "draft": "Draft",
+        "valid": "Valid"
     },
     "policies": {
         "policies": "Policies",
@@ -373,7 +374,10 @@
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",
         "addSbiDevices": "Add SBI - Device",
-        "listOfDevices": "List Of Devices for"
+        "listOfDevices": "List Of Devices for",
+        "sbiDetails": "SBI Details",
+        "deviceDetails": "Device Details",
+        "sbiDeviceDetails": "SBI - Device Details"
     },
     "addSbis": {
         "addSbi": "Add SBI",
@@ -400,17 +404,30 @@
         "pendingForApprovalContx": "pending for approval under this SBI",
         "addDevices": "Add Devices",
         "viewDevices": "View Devices",
+        "sbiVersion": "SBI Version",
+        "searchVersion": "Search SBI Version",
+        "linkedDevices": "Linked Devices",
+        "status": "Status",
+        "action": "Action",
         "partnerId": "Partner ID",
+        "orgName": "Organisation",
         "partnerType": "Partner Type",
         "device": "device",
-        "createdDate": "SBI Created Date",
-        "expiryDate": "SBI Expiry Date",
+        "sbiCreatedDate": "SBI Creation Date",
+        "sbiExpiryDate": "SBI Expiration Date",
+        "createdDate": "Creation Date",
         "deactivate": "Deactivate SBI",
         "submittedOn": "Submitted On",
         "errorInSbiList": "While fetching SBI Lists, we have encountered with an error.",
-        "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired"
+        "guidence": "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired",
+        "sbiExpiryStatus": "SBI Expiry Status",
+        "selectSbiExpiryStatus": "Select SBI Expiry Status",
+        "listOfSbis": "List of SBIs",
+        "sbiId": "SBI Id",
+        "searchSbiId": "Search SBI Id"
     },
     "devicesList": {
+        "deviceId": "Device Id",
         "addDevices": "Add Devices",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",
@@ -428,7 +445,8 @@
         "selectMakeName": "Select Make Name",
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
-        "unexpectedError": "We have encountered with an unexpected error. Please try again."
+        "unexpectedError": "We have encountered with an unexpected error. Please try again.",
+        "searchDeviceId": "Search Device Id"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",
@@ -669,7 +687,16 @@
     },
     "activePoliciesDetectedMsg": {
         "header": "Error: Active Policies Detected!",
-        "description": "There are {{noOfAssociatedPolicies}} active policies associated with this policy group. Please deactivate them before proceeding further"
+        "description1": "There are {{noOfActivePolicies}} active policies associated with this policy group. Please deactivate them before proceeding further",
+        "description2": "There is one policy associated with this policy group. Please deactivate that before proceeding further."
+    },
+    "draftPoliciesDetectedMsg": {
+        "header": "Error: Policies detected in Draft status!",
+        "description": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed."
+    },
+    "activeAndDraftPoliciesDetectedMsg": {
+        "header": "Error: Policies in Activated and Draft Status Detected!",
+        "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policies.\n2. Publish and then deactivate the draft policies."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -823,6 +850,21 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
+    },
+    "viewSbiDetails": {
+        "viewSbiDetails": "View SBI Details",
+        "listOfSbi": "List Of SBI",
+        "sbiVersion": "SBI Version",
+        "sbiCreatedDateTime": "SBI Created Date & Time",
+        "sbiExpiryDateTime": "SBI Expiry Date & Time"
+    },
+    "sbiApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the SBI of version - '{{sbiVersion}}' ?",
+        "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
+    },
+    "deviceApproveRejectPopup": {
+        "header": "Do you want to Approve/Reject the device with {{make}} - {{model}} ?",
+        "description": "Please review the Device details carefully before taking appropriate action."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -994,6 +1036,16 @@
         "PMS_POL_059": "There are no active policy groups.",
         "PMS_POL_060": "Error while fetching policy groups.",
         "PMS_POL_061": "Error while fetching policies",
+        "PMS_POL_062": "The policy has already been deactivated.",
+        "PMS_POL_063": "An approved partner policy request is associated with this policy.",
+        "PMS_POL_064": "A pending partner policy request is associated with this policy.",
+        "PMS_POL_065": "The specified policy does not exist.",
+        "PMS_POL_066": "Error while deactivating policy",
+        "PMS_POL_067": "The policy group has already been deactivated",
+        "PMS_POL_068": "The specified policy group does not exist",
+        "PMS_POL_069": "Active or draft policies are associated with the policy group",
+        "PMS_POL_070": "Draft policies exist under the policy group.",
+        "PMS_POL_071": "Error while deactivating policy group",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
