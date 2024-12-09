@@ -51,7 +51,7 @@ service:
 
 image:
   registry: docker.io
-  repository: mosipqa/pmp-reactjs-ui
+  repository: mosipqa/pmp-revamp-ui
   tag: develop
 
   ## Specify a imagePullPolicy
