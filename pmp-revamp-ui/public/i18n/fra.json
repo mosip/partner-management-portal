@@ -377,8 +377,8 @@
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
         "addSbiDevices": "Ajouter SBI - Appareil",
         "listOfDevices": "Liste des appareils pour",
-        "sbiDetails": "Détails SBI",
-        "deviceDetails": "Détails de l'appareil",
+        "sbiDetails": "SBI",
+        "deviceDetails": "Appareil",
         "sbiDeviceDetails": "SBI - Détails de l'appareil"
     },
     "addSbis": {
@@ -522,7 +522,8 @@
         "searchMake": "Rechercher une marque",
         "searchModel": "Rechercher un modèle",
         "expired": "Expiré",
-        "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur."
+        "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
+        "ftmId": "Identifiant FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",

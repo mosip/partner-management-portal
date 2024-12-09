@@ -375,8 +375,8 @@
         "listOfSbisAndDevices": "List Of SBIs And Devices",
         "addSbiDevices": "Add SBI - Device",
         "listOfDevices": "List Of Devices for",
-        "sbiDetails": "SBI Details",
-        "deviceDetails": "Device Details",
+        "sbiDetails": "SBI",
+        "deviceDetails": "Device",
         "sbiDeviceDetails": "SBI - Device Details"
     },
     "addSbis": {
@@ -517,7 +517,8 @@
         "searchMake": "Search Make",
         "searchModel": "Search Model",
         "expired": "Expired",
-        "errorInFtmList": "While fetching FTM chip details, we have encountered with an error."
+        "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
+        "ftmId": "FTM ID"
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
