@@ -6,7 +6,7 @@ Helm chart for installing MOSIP pmp reactJS UI module
 
 ```console
 $ helm repo add mosip https://mosip.github.io
-$ helm install my-release mosip/pmp-reactjs-ui
+$ helm install my-release mosip/pmp-revamp-ui
 ```
 
 ## Prerequisites
@@ -18,10 +18,10 @@ $ helm install my-release mosip/pmp-reactjs-ui
 
 ## Installing the Chart
 
-To install the chart with the release name `pmp-reactjs-ui`.
+To install the chart with the release name `pmp-revamp-ui`.
 
 ```console
-helm install my-release mosip/pmp-reactjs-ui
+helm install my-release mosip/pmp-revamp-ui
 ```
 
 > **Tip**: List all releases using `helm list`

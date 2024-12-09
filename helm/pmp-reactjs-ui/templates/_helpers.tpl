@@ -1,28 +1,28 @@
 {{/*
 Return the proper  image name
 */}}
-{{- define "pmp-reactjs-ui.image" -}}
+{{- define "pmp-revamp-ui.image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper image name (for the init container volume-permissions image)
 */}}
-{{- define "pmp-reactjs-ui.volumePermissions.image" -}}
+{{- define "pmp-revamp-ui.volumePermissions.image" -}}
 {{- include "common.images.image" ( dict "imageRoot" .Values.volumePermissions.image "global" .Values.global ) -}}
 {{- end -}}
 
 {{/*
 Return the proper Docker Image Registry Secret Names
 */}}
-{{- define "pmp-reactjs-ui.imagePullSecrets" -}}
+{{- define "pmp-revamp-ui.imagePullSecrets" -}}
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.volumePermissions.image) "global" .Values.global) -}}
 {{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "pmp-reactjs-ui.serviceAccountName" -}}
+{{- define "pmp-revamp-ui.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
     {{ default (printf "%s-foo" (include "common.names.fullname" .)) .Values.serviceAccount.name }}
 {{- else -}}
@@ -33,10 +33,10 @@ Create the name of the service account to use
 {{/*
 Compile all warnings into a single message.
 */}}
-{{- define "pmp-reactjs-ui.validateValues" -}}
+{{- define "pmp-revamp-ui.validateValues" -}}
 {{- $messages := list -}}
-{{- $messages := append $messages (include "pmp-reactjs-ui.validateValues.foo" .) -}}
-{{- $messages := append $messages (include "pmp-reactjs-ui.validateValues.bar" .) -}}
+{{- $messages := append $messages (include "pmp-revamp-ui.validateValues.foo" .) -}}
+{{- $messages := append $messages (include "pmp-revamp-ui.validateValues.bar" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
 
@@ -48,7 +48,7 @@ Compile all warnings into a single message.
 {{/*
 Return podAnnotations
 */}}
-{{- define "pmp-reactjs-ui.podAnnotations" -}}
+{{- define "pmp-revamp-ui.podAnnotations" -}}
 {{- if .Values.podAnnotations }}
 {{ include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) }}
 {{- end }}
