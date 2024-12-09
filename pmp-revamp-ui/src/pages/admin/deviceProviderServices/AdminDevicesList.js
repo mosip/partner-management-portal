@@ -348,7 +348,7 @@ function AdminDevicesList() {
                                                                                         <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
                                                                                     )}
                                                                                 </div>
                                                                             )}

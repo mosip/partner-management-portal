@@ -31,7 +31,7 @@ function ViewAdminSbiDetails() {
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewSbiDetails.viewSbiDetails'} subTitle='viewSbiDetails.listOfSbi' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
+                    <Title title={'viewSbiDetails.viewSbiDetails'} subTitle='sbiList.listOfSbis' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
                 </div>
 
                 {unexpectedError && (

@@ -62,16 +62,30 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                 );
             }
             if (popupData.isDeviceRequest) {
-                const request = createRequest({
-                    id: popupData.deviceId,
-                    approvalStatus: status === "approved" ? 'Activate' : 'De-activate'
-                });
-                response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                if (status === "approved") {
+                    const request = createRequest({
+                        partnerId: popupData.partnerId,
+                        sbiId: popupData.sbiId,
+                        deviceDetailId: popupData.deviceId
+                    }, "mosip.pms.approve.mapping.device.to.sbi.post", true);
+                    response = await HttpService.post(getPartnerManagerUrl(`/admin/approve-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                } else {
+                    const request = createRequest({
+                        partnerId: popupData.partnerId,
+                        sbiId: popupData.sbiId,
+                        deviceDetailId: popupData.deviceId
+                    }, "mosip.pms.reject.mapping.device.to.sbi.post", true);
+                    response = await HttpService.post(getPartnerManagerUrl(`/admin/reject-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
                 }
-                );
             }
             const responseData = response.data;
             if (responseData && responseData.response) {

@@ -450,7 +450,8 @@
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",
-        "description": "On clicking Confirm, your device details will be deactivated."
+        "description": "On clicking Confirm, your device details will be deactivated.",
+        "descriptionForAdmin": "On clicking Confirm, the selected device will be deactivated."
     },
     "addDevices": {
         "addDevices": "Add Devices",
@@ -480,6 +481,7 @@
     "deactivateSbi": {
         "headerMsg": "Do you want to deactivate SBI Version ",
         "description": "On clicking Confirm, your SBI details and the approved devices mapped to it will be deactivated. Pending for approval devices will be auto- rejected.",
+        "descriptionForAdmin": "On clicking Confirm, the SBI details and the approved devices mapped to it will be deactivated. Pending for approval devices will be auto- rejected.",
         "deactivateApprovedDevicesPlural": " {{devicesCount}} approved devices associated to this SBI will be deactivated ",
         "deactivateApprovedDevicesSingular": "{{devicesCount}} approved device associated to this SBI will be deactivated ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} devices pending for approval will be auto-rejected",
@@ -1121,6 +1123,8 @@
         "PMS_DEVICE_ERROR_021": "SBI for which device is being added is expired",
         "PMS_DEVICE_ERROR_022": "The selected SBI is not in an approved status.",
         "PMS_DEVICE_ERROR_023": "The selected Device is not in an approved status.",
+        "PMS_DEVICE_ERROR_024": "This device cannot be approved as it does not have any SBI associated to it.",
+        "PMS_DEVICE_ERROR_025": "This device cannot be rejected as it does not have any SBI associated to it.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",

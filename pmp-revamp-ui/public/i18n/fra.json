@@ -455,7 +455,8 @@
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
-        "description": "En cliquant sur Confirmer, les détails de votre appareil seront désactivés."
+        "description": "En cliquant sur Confirmer, les détails de votre appareil seront désactivés.",
+        "descriptionForAdmin": "En cliquant sur Confirmer, l'appareil sélectionné sera désactivé."
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
@@ -485,6 +486,7 @@
     "deactivateSbi": {
         "headerMsg": "Voulez-vous désactiver la version SBI ",
         "description": "En cliquant sur Confirmer, vos informations SBI et les appareils approuvés qui y sont associés seront désactivés. Les appareils en attente d'approbation seront automatiquement rejetés.",
+        "descriptionForAdmin": "En cliquant sur Confirmer, les détails SBI et les appareils approuvés qui y sont mappés seront désactivés. Les appareils en attente d'approbation seront automatiquement rejetés.",
         "deactivateApprovedDevicesPlural": " {{devicesCount}} les appareils approuvés associés à ce SBI seront désactivés ",
         "deactivateApprovedDevicesSingular": "{{devicesCount}} l'appareil approuvé associé à ce SBI sera désactivé ",
         "deactivatePendingDevicesPlural": " {{devicesCount}} les appareils en attente d'approbation seront automatiquement rejetés",
@@ -1125,6 +1127,8 @@
         "PMS_DEVICE_ERROR_021": "Le SBI pour lequel l'appareil est ajouté a expiré",
         "PMS_DEVICE_ERROR_022": "Le SBI sélectionné n'est pas dans un statut approuvé",
         "PMS_DEVICE_ERROR_023": "L'appareil sélectionné n'est pas dans un statut approuvé.",
+        "PMS_DEVICE_ERROR_024": "Cet appareil ne peut pas être approuvé car il n'a aucun SBI qui lui est associé.",
+        "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
