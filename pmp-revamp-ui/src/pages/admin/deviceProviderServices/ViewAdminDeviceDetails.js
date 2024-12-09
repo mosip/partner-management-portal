@@ -31,7 +31,7 @@ function ViewAdminDeviceDetails() {
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' subTitle2='sbiList.listOfSbi' backLink='/partnermanagement/admin/device-provider-services/devices-list' backLink2='/partnermanagement/admin/device-provider-services/sbi-list'/>
+                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' backLink='/partnermanagement/admin/device-provider-services/devices-list'/>
                 </div>
 
                 {unexpectedError && (
@@ -72,6 +72,48 @@ function ViewAdminDeviceDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`w-[48%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="text-suva-gray text-sm">
+                                        {t("sbiList.partnerId")}
+                                    </p>
+                                    <p className="text-vulcan text-md">
+                                        {deviceDetails.partnerId}
+                                    </p>
+                                </div>
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="text-suva-gray text-sm">
+                                        {t("viewPolicyRequest.partnerType")}
+                                    </p>
+                                    <p className="text-vulcan text-md">
+                                        {t("partnerTypes.deviceProvider")}
+                                    </p>
+                                </div>
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="text-suva-gray text-sm">
+                                        {t("sbiList.orgName")}
+                                    </p>
+                                    <p className="text-vulcan text-md">
+                                        {deviceDetails.orgName}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="text-suva-gray text-sm">
+                                        {t("sbiList.sbiId")}
+                                    </p>
+                                    <p className="text-vulcan text-md">
+                                        {deviceDetails.sbiId}
+                                    </p>
+                                </div>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="text-suva-gray text-sm">
+                                        {t("devicesList.deviceId")}
+                                    </p>
+                                    <p className="text-vulcan text-md">
+                                        {deviceDetails.deviceId}
+                                    </p>
+                                </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="text-suva-gray text-sm">
                                         {t("devicesList.deviceType")}
@@ -102,14 +144,6 @@ function ViewAdminDeviceDetails() {
                                     </p>
                                     <p className="text-vulcan text-md">
                                         {deviceDetails.model}
-                                    </p>
-                                </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
-                                        {t("devicesList.createdDate")}
-                                    </p>
-                                    <p className="text-vulcan text-md">
-                                        {formatDate(deviceDetails.createdDateTime, "date", false)}
                                     </p>
                                 </div>
                             </div>

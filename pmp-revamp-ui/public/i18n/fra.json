@@ -455,7 +455,8 @@
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
-        "description": "En cliquant sur Confirmer, les détails de votre appareil seront désactivés."
+        "description": "En cliquant sur Confirmer, les détails de votre appareil seront désactivés.",
+        "descriptionForAdmin": "En cliquant sur Confirmer, l'appareil sélectionné sera désactivé."
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",

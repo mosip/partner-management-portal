@@ -450,7 +450,8 @@
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",
-        "description": "On clicking Confirm, your device details will be deactivated."
+        "description": "On clicking Confirm, your device details will be deactivated.",
+        "descriptionForAdmin": "On clicking Confirm, the selected device will be deactivated."
     },
     "addDevices": {
         "addDevices": "Add Devices",
