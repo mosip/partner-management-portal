@@ -1125,6 +1125,8 @@
         "PMS_DEVICE_ERROR_021": "Le SBI pour lequel l'appareil est ajouté a expiré",
         "PMS_DEVICE_ERROR_022": "Le SBI sélectionné n'est pas dans un statut approuvé",
         "PMS_DEVICE_ERROR_023": "L'appareil sélectionné n'est pas dans un statut approuvé.",
+        "PMS_DEVICE_ERROR_024": "Cet appareil ne peut pas être approuvé car il n'a aucun SBI qui lui est associé.",
+        "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
