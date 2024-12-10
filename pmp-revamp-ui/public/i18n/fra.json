@@ -561,7 +561,8 @@
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
     "rootTrustCertificate": {
-        "organisation": "Organisation",
+        "certificateTrustStore": "Magasin de certificats de confiance",
+        "certificateId": "Identifiant du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
@@ -585,9 +586,12 @@
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
     },
-    "viewRootOfTrustCertificate": {
-        "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
+    "listOfRootTrustCertificates": {
+        "rootOfTrustCertificates": "Certificats de confiance racine",
         "caCertificates": "Certificats CA"
+    },
+    "listOfIntermediateRootTrustCertificates": {
+        "intermediateRootTrustCertificates": "Certificats de confiance racine intermédiaires"
     },
     "partnerList":{
         "partnerTitle": "Partenaires",

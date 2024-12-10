@@ -556,7 +556,8 @@
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
     "rootTrustCertificate": {
-        "organisation": "Organisation",
+        "certificateTrustStore": "Certificate Trust Store",
+        "certificateId": "Certificate Id",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
         "issuedBy": "Issued By",
@@ -581,9 +582,12 @@
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
     },
-    "viewRootOfTrustCertificate": {
-        "viewRootOfTrustCertificate": "View Root of Trust Certificate",
+    "listOfRootTrustCertificates": {
+        "rootOfTrustCertificates": "Root Trust Certificates",
         "caCertificates": "Ca Certificates"
+    },
+    "listOfIntermediateRootTrustCertificates": {
+        "intermediateRootTrustCertificates": "Intermediate Root Trust Certificates"
     },
     "partnerList": {
         "partnerTitle": "Partners",

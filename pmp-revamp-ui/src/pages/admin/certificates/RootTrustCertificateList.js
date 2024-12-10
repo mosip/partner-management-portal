@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
-import { formatDate, getStatusCode, handleMouseClickForDropdown, toggleSortAscOrder, toggleSortDescOrder, bgOfStatus,} from "../../../utils/AppUtils";
+import { formatDate, getStatusCode, handleMouseClickForDropdown, toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
@@ -12,6 +12,7 @@ import FilterButtons from "../../common/FilterButtons";
 import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
+import RootTrustCertificateServicesTab from "./RootTrustCertificateServicesTab";
 
 function RootTrustCertificateList() {
   const { t } = useTranslation();
@@ -174,19 +175,23 @@ function RootTrustCertificateList() {
   return (
     <div
       className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
-      {!dataLoaded && <LoadingIcon></LoadingIcon>}
+      {!dataLoaded &&
+        <LoadingIcon />
+      }
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage
-              errorCode={errorCode}
-              errorMessage={errorMsg}
-              clickOnCancel={cancelErrorMsg}
-            />
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
-            <div className="flex justify-between mb-3">
-              <Title title="viewRootOfTrustCertificate.viewRootOfTrustCertificate" backLink="/partnermanagement" styleSet={style} />
+            <div className="flex justify-between mb-5 flex-col">
+              <Title title="rootTrustCertificate.certificateTrustStore" backLink="/partnermanagement" styleSet={style} />
+              <RootTrustCertificateServicesTab
+                activeRootOfTustCertificates={true}
+                rootOfTustCertificatesPath={'/partnermanagement/admin/certificates/root-trust-certificate'}
+                activeIntermediateRootOfTrustCertificates={false}
+                intermediateRootOfTrustCertificatesPath={''}
+              />
               {certificateData.length > 0 && (
                 <button
                   id="root_certificate_upload_btn"
@@ -204,7 +209,7 @@ function RootTrustCertificateList() {
                   <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full justify-between">
                       <h6 className="ml-5 mr-3">
-                        {t("rootTrustCertificate.organisation")}
+                        {t("rootTrustCertificate.certificateId")}
                       </h6>
                       <h6>{t("rootTrustCertificate.partnerDomain")}</h6>
                       <h6>{t("rootTrustCertificate.issuedTo")}</h6>
@@ -288,9 +293,9 @@ function RootTrustCertificateList() {
                                 id={"root_certificate_list_item" + (index + 1)}
                                 key={index}
                                 className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status.toLowerCase() ===
-                                    "deactivated"
-                                    ? "text-[#969696]"
-                                    : "text-[#191919]"
+                                  "deactivated"
+                                  ? "text-[#969696]"
+                                  : "text-[#191919]"
                                   }`}
                               >
                                 <td
@@ -410,8 +415,8 @@ function RootTrustCertificateList() {
                                     {viewCertificateId === index && (
                                       <div
                                         className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL
-                                            ? "left-9 text-right"
-                                            : "right-9 text-left"
+                                          ? "left-9 text-right"
+                                          : "right-9 text-left"
                                           }`}
                                       >
                                         <p
@@ -420,8 +425,8 @@ function RootTrustCertificateList() {
                                             showCertificateDetails(certificate)
                                           }
                                           className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL
-                                              ? "pl-10"
-                                              : "pr-10"
+                                            ? "pl-10"
+                                            : "pr-10"
                                             }`}
                                           tabIndex="0"
                                           onKeyPress={(e) =>
@@ -441,8 +446,8 @@ function RootTrustCertificateList() {
                                             showDeactivateCertificate(certificate)
                                           }
                                           className={`py-1.5 px-4 ${isLoginLanguageRTL
-                                              ? "pl-10"
-                                              : "pr-10"
+                                            ? "pl-10"
+                                            : "pr-10"
                                             } ${certificate.status === "approved"
                                               ? "text-crimson-red cursor-pointer"
                                               : "text-[#A5A5A5] cursor-auto"

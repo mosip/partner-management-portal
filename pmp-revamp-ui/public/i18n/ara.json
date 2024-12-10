@@ -412,10 +412,10 @@
         "sbiVersion": "إصدار SBI",
         "searchVersion": "البحث عن إصدار SBI",
         "linkedDevices": "الأجهزة المرتبطة",
-        "status":"حالة",
+        "status": "حالة",
         "action": "الإجراء",
         "partnerId": "معرف الشريك",
-        "orgName":"منظمة",
+        "orgName": "منظمة",
         "partnerType": "نوع الشريك",
         "device": "جهاز",
         "sbiCreatedDate": "تاريخ إنشاء SBI",
@@ -502,7 +502,7 @@
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "addFtmBtn": "إضافة شريحة FTM",
         "partnerId": "معرف الشريك",
-        "orgName":"منظمة",
+        "orgName": "منظمة",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
@@ -561,7 +561,8 @@
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
     "rootTrustCertificate": {
-        "organisation": "منظمة",
+        "certificateTrustStore": "مخزن الشهادات",
+        "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
         "issuedBy": "صادرة عن",
@@ -585,9 +586,12 @@
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
-    "viewRootOfTrustCertificate": {
-        "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
+    "listOfRootTrustCertificates": {
+        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
         "caCertificates": "شهادات كاليفورنيا"
+    },
+    "listOfIntermediateRootTrustCertificates": {
+        "intermediateRootTrustCertificates": "شهادات ثقة الجذر المتوسطة"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",
