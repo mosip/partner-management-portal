@@ -1146,6 +1146,7 @@
         "PMS_PV_001": "Failed to read schema.",
         "PMS_PV_002": "Policy object validation failed.",
         "PMS_PV_003": "Failed to parse or convert policy object.",
-        "PMS_PV_004": "Invalid policy schema."
+        "PMS_PV_004": "Invalid policy schema.",
+        "KER-PCM-017": "Expiry date of uploaded certificate is less than 1 year. Please upload valid certificate again"
     }
 }

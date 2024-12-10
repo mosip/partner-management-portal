@@ -1150,6 +1150,7 @@
         "PMS_PV_001": "Échec de la lecture du schéma",
         "PMS_PV_002": "Échec de la validation de l'objet de stratégie",
         "PMS_PV_003": "Échec de l'analyse ou de la conversion de l'objet de stratégie",
-        "PMS_PV_004": "Schéma de stratégie non valide"
+        "PMS_PV_004": "Schéma de stratégie non valide",
+        "KER-PCM-017": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide"
     }
 }
