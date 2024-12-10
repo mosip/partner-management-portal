@@ -11,7 +11,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
     const handleInputChange = (event) => {
         const newValue = event.target.value;
         setInputValue(newValue);
-        onTextChange(fieldName, newValue);
+        onTextChange(fieldName, newValue.trim());
     };
 
     const onTextClear = () => {
