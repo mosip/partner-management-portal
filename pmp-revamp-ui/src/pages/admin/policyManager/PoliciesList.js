@@ -48,6 +48,8 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
     const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
@@ -76,65 +78,71 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         { id: "action", headerNameKey: "policiesList.action" },
     ];
 
-    useEffect(() => {
-        localStorage.setItem('activeTab', policyType);
-        const fetch = async () => {
-            const queryParams = new URLSearchParams();
-            queryParams.append('sortFieldName', sortFieldName);
-            queryParams.append('sortType', sortType);
-            queryParams.append('pageSize', pageSize);
+    
+    const fetchPoliciesListData = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('sortFieldName', sortFieldName);
+        queryParams.append('sortType', sortType);
+        queryParams.append('pageSize', pageSize);
 
-            //reset page number to 0 if filter applied or page number is out of bounds
-            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-            queryParams.append('pageNo', effectivePageNo);
-            setResetPageNo(false);
+        //reset page number to 0 if filter applied or page number is out of bounds
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        queryParams.append('pageNo', effectivePageNo);
+        setResetPageNo(false);
 
-            queryParams.append('policyType', policyType);
-            if (filterAttributes.policyId) queryParams.append('policyId', filterAttributes.policyId);
-            if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-            if (filterAttributes.policyDescription) queryParams.append('policyDescription', filterAttributes.policyDescription);
-            if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
-            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+        queryParams.append('policyType', policyType);
+        if (filterAttributes.policyId) queryParams.append('policyId', filterAttributes.policyId);
+        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.policyDescription) queryParams.append('policyDescription', filterAttributes.policyDescription);
+        if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
+        if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-            const url = `${getPolicyManagerUrl('/policies/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
-            try {
-                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService({
-                    url: url,
-                    method: 'get',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response.data;
-                        setTotalRecords(responseData.response.totalResults);
-                        if (resData !== null) {
-                            setPoliciesList(resData)
-                        }
-                        else {
-                            setPoliciesList([]);
-                        }
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+        const url = `${getPolicyManagerUrl('/policies/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService({
+                url: url,
+                method: 'get',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
+            });
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setTotalRecords(responseData.response.totalResults);
+                    if (resData !== null) {
+                        setPoliciesList(resData)
+                    }
+                    else {
+                        setPoliciesList([]);
                     }
                 } else {
-                    setErrorMsg(t(fetchDataErrorMessage));
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-            } catch (err) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
+            } else {
+                setErrorMsg(t(fetchDataErrorMessage));
             }
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
         }
-        fetch();
-    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
+    }
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked || initialRender) {
+            fetchPoliciesListData();
+            setInitialRender(false);
+            setIsApplyFilterClicked(false);
+        }
+    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
-        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
+        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {

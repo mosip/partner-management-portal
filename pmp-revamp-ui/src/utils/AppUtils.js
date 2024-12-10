@@ -450,12 +450,12 @@ export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => 
     return effectivePageNo;
 };
 
-export const onClickApplyFilter = (updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilters) => {
-    // console.log(filters)
+export const onClickApplyFilter = (updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilters, setIsApplyFilterClicked) => {
     setApplyFilter(true);
     setResetPageNo(true);
     setFetchData(true);
     setFilters(updatedfilters);
+    setIsApplyFilterClicked(true);
 };
 
 export const setPageNumberAndPageSize = (recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData) => {
