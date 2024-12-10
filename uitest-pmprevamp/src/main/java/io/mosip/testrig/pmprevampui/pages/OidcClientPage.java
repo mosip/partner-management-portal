@@ -270,9 +270,9 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(RedirectUri2Delete);
 	}
 
-	public void selectPartnerIdDropdown() {
+	public void selectPartnerIdDropdown(String value) {
 		clickOnElement(SelectPartneridForOidc);
-		clickOnElement(createOidcPartnerIdOption1);
+		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[2]")));
 	}
 
 	public boolean isPartnerIdDropdownDisplayed() {
