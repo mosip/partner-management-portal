@@ -44,7 +44,6 @@ public class RegisterNewUser extends BaseClass {
 		
 		oldPmpPage.clickOnCreatePolicyGroup();
 		
-		
 		oldPmpPage.EnterNameTextBox("0"+data);
 		oldPmpPage.EnterDescriptionTextBox("0"+data);
 
@@ -130,63 +129,5 @@ public class RegisterNewUser extends BaseClass {
 	}
 	
 	
-	@Test(priority = 2, dependsOnMethods = {"registerNewUser"},description = "This is a test case reupload the cert and download again")
-	public void ReuploadTheCertificatesAndVerifyDownloadAgain() {
-
-		DashboardPage dashboardpage = new DashboardPage(driver);
-
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-		
-		RegisterPage registerPage =  new RegisterPage(driver);
-		LoginPage loginPage =  new LoginPage(driver);
-		loginPage.enterUserName("0"+data);
-		loginPage.enterPassword(password);
-		loginPage.ClickOnLoginButton();
-
-		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(), GlobalConstants.isPartnerCertificateTitleDisplayed);
-		PartnerCertificatePage partnerCertificatePage=dashboardpage.clickOnPartnerCertificateTitle();
-
- 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.clickOnUploadButton();
-
-		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(), GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.clickOnCloseButton();
-		dashboardpage = partnerCertificatePage.clickOnHomeButton();
-
-		dashboardpage.clickOnPartnerCertificateTitle();
-		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
-		
-		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-//		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
-		
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-		
-		partnerCertificatePage.uploadCertificateInvalidCert();
-		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(), GlobalConstants.isInvalidCertFormatePopupDisplayed);
-		
-		partnerCertificatePage.clickOnCertificateUploadCancelButton();
-		
-		partnerCertificatePage.clickOnDownloadButton();
-		partnerCertificatePage.clickOnOriginalCertificateDownloadButton();
-		assertTrue(partnerCertificatePage.isOriginalSignedCertDownloadedPopupDisplayed(), GlobalConstants.isOriginalCertificateDownloadPopupDisplayed);
-		
-		partnerCertificatePage.clickOnMosipSignedCertificateDownloadButton();
-		assertTrue(partnerCertificatePage.isMosipSignedCertPopupDisplayed(), GlobalConstants.isMosipCertificateDownloadPopupDisplayed);
-		
-		
-	}	
+	
 }

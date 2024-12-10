@@ -25,6 +25,7 @@ public class GlobalConstants {
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
+	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
@@ -89,4 +90,23 @@ public class GlobalConstants {
 	public static final String SERVICE_NOT_DEPLOYED = "Service not deployed";
 	public static final String SERVICE_NOT_DEPLOYED_MESSAGE = "Service not deployed. Hence skipping the testcase";
 	public static final String KNOWN_ISSUES = "known issue. Hence skipping the testcase";
+	public static final String isResetFiletrButtonDisplayed = "Verify if rest filter button displayed";
+	public static final String isFiletrButtonDisplayedOrEnabled = "Verify if filter button displayed";
+	public static final String isGoBackButtonDisplayed = "Verify if go back button displayed";
+	public static final String isApiListDisplayed = "Verify if api list is displayed";
+	public static final String isUserIdDoesNotExietDisplayed = "Verify if api list is displayed";
+	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
+	public static final String isHomeButtonInAuthenticationDisplayed = "Verify if home button in authentication page displayed";
+	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
+	public static final String isPolicyNameBoxTextDisplayed = "Select policy name";
+	
+	public static final String APPID = "appId";
+	public static final String PASSWORD = "password";
+	public static final String USER_NAME = "userName";
+	public static final String CLIENTID = "clientId";
+	public static final String CLIENTSECRET = "clientSecret";
+	public static final String REQUEST = "request";
+	public static final String TOKEN = "token";
+	public static final String EXCEPTION_STRING_2 = "Exception ";
+	
 }

@@ -27,6 +27,12 @@ import io.restassured.response.Response;
 public class BaseTestCaseFunc {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseTestCaseFunc.class);
 	private static String zoneMappingRequest = "/config/Authorization/zoneMappingRequest.json";
+	private static String partnerCreationRequest = "/config/Authorization/PartnerCreationRequest.json";
+	private static String definePolicyGroupRequest = "/config/Authorization/DefinePolicyGroupRequest.json";
+	private static String definePolicyRequest = "/config/Authorization/DefinePolicyRequet.json";
+	private static String uploadCaCert = "/ca_cert/caCertApi.json";
+	private static String uploadSubCaCert = "/ca_cert/caCertApi.json";
+	
 	
 	public static String environment;
 	public static List<String> languageList = new ArrayList<>();
@@ -183,4 +189,96 @@ public class BaseTestCaseFunc {
 				MediaType.APPLICATION_JSON, "Authorization", token);
 		logger.info(response.toString());
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static void DefinePolicyGroup() {
+		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String url = ApplnURI + propsKernel.getProperty("definePolicyGroupUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(definePolicyGroupRequest);
+		JSONObject request = new JSONObject();
+		request.put("desc", "desc automationui policy group");
+		request.put("name", "automationui policy group");		
+		actualrequest.put("request", request);
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void DefinePolicy() {
+		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String url = ApplnURI + propsKernel.getProperty("definePolicyUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(definePolicyRequest);
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void CreateAdminPartner() {
+		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String url = ApplnURI + propsKernel.getProperty("revampCreatePartnerUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(partnerCreationRequest);
+		JSONObject request = new JSONObject();
+		request.put("address", "Bangalore");
+		request.put("contactNumber", "8553967572");
+		request.put("emailId", "automationpmpui-revampui001317281@automationlabs.com");
+		request.put("organizationName","AABBCC");
+		request.put("partnerId","pmpui-revamp");
+		request.put("partnerType","Auth_Partner");
+		request.put("policyGroup","automationui policy group");
+		
+		actualrequest.put("request", request);
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+	public static void CreateAuthPartner() {
+		String token = kernelAuthLib.getTokenByRole("revampAuth");
+		String url = ApplnURI + propsKernel.getProperty("revampCreatePartnerUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(partnerCreationRequest);
+		JSONObject request = new JSONObject();
+		request.put("address", "Bangalore");
+		request.put("contactNumber", "8553967571");
+		request.put("emailId", "automationpmpui-auth001317281@automationlabs.com");
+		request.put("organizationName","AABBCC");
+		request.put("partnerId","pmpui-auth");
+		request.put("partnerType","Auth_Partner");
+		request.put("policyGroup","automationui policy group");
+		
+		actualrequest.put("request", request);
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+	public static void UploadCaCertPartner() {
+		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String url = ApplnURI + propsKernel.getProperty("uploadCaCertUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(uploadCaCert);
+		
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+	public static void UploadSubCaCertPartner() {
+		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String url = ApplnURI + propsKernel.getProperty("uploadCaCertUrl");
+		org.json.simple.JSONObject actualrequest = getRequestJson(uploadSubCaCert);
+		
+		logger.info(actualrequest.toJSONString());
+		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, "Authorization", token);
+		logger.info(response.toString());
+	}
+	
+
 }

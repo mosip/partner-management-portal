@@ -22,13 +22,21 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
 	private WebElement sucessMessage;
+	
+	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
+	private WebElement deviceProviderSuccessMessage;
 
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
 
 	@FindBy(xpath = "//*[text()='Close']")
 	private WebElement closeButton;
+	
+	@FindBy(id = "success_msg_close")
+	private WebElement successMsgCloseButton;
 
+	
+	
 	@FindBy(xpath = "//*[text()='Re-Upload Partner Certificate']")
 	private WebElement ReUploadPartnerCertificateText;
 
@@ -73,6 +81,21 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "certificate_upload_cancel_btn")
 	private WebElement certificateUploadCancelButton;
+	
+	@FindBy(id = "partnerDomain_selector_dropdown")
+	private WebElement partnerDomainSelectorDropdown;
+	
+	@FindBy(id = "partnerDomain_selector_dropdown_option3")
+	private WebElement partnerDomainSelectorDropdownOptionAuth;
+	
+	@FindBy(id = "partnerDomain_selector_dropdown_option2")
+	private WebElement deviceInPartnerDomainSelectorDropdown;
+	
+	@FindBy(id = "upload_admin_certificate_btn")
+	private WebElement SubmitButtonForAdmin;
+	
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement GoBackButton;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -90,6 +113,12 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
 	}
 
+	public void uploadCertificateRootCa() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\RootCA.cer");
+	}
+	public void uploadCertificateSubCa() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\IntermediateCA.cer");
+	}
 	public void uploadCertificate() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Client.cer");
 	}
@@ -100,6 +129,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSucessMessageDisplayed() {
 		return isElementDisplayed(sucessMessage);
+	}
+	
+	public boolean isDeviceProviderSuccessMessage() {
+		return isElementDisplayed(deviceProviderSuccessMessage);
 	}
 
 	public void clickOnCloseButton() {
@@ -174,5 +207,28 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateUploadCancelButton() {
 		clickOnElement(certificateUploadCancelButton);
 	}
-
+	
+	public void clickOnpartnerDomainSelectorDropdown() {
+		clickOnElement(partnerDomainSelectorDropdown);
+	}
+	
+	public void clickOnpartnerpartnerDomainSelectorDropdownOptionAuth() {
+		clickOnElement(partnerDomainSelectorDropdownOptionAuth);
+	}
+	
+	public void ClickOnDeviceInPartnerDomainSelectorDropdown() {
+		clickOnElement(deviceInPartnerDomainSelectorDropdown);
+	}
+	public void ClickonSubmitButtonForAdmin() {
+		clickOnElement(SubmitButtonForAdmin);
+	}
+	
+	public void ClickOnGoBackButton() {
+		clickOnElement(GoBackButton);
+	}
+	
+	public void ClickOnsuccessMsgCloseButton() {
+		clickOnElement(successMsgCloseButton);
+	}
+	
 }

@@ -37,8 +37,8 @@
 		<json.simple.version>1.1.1</json.simple.version>
 		<commons.collections4.version>4.4</commons.collections4.version>
 		<commons.lang.version>2.6</commons.lang.version>
-		<httpclient5.version>5.1.3</httpclient5.version>
-		<httpcore5.version>5.1.3</httpcore5.version>
+		<httpclient5.version>5.2.1</httpclient5.version>
+		<httpcore5.version>5.2.1</httpcore5.version>
 		<testng.version>7.10.1</testng.version>
 		<javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
@@ -46,7 +46,7 @@
 		<aws-java-sdk-s3.version>1.12.470</aws-java-sdk-s3.version>
 		<ngwebdriver.version>1.1.5</ngwebdriver.version>
 		<extentreports.version>5.0.9</extentreports.version>
-		<webdrivermanager.version>5.1.0</webdrivermanager.version>
+		<webdrivermanager.version>5.5.3</webdrivermanager.version>
 		<keycloak-admin-client.version>17.0.1</keycloak-admin-client.version>
 		<fileName>pmprevampui-1.2.1-SNAPSHOT-jar-with-dependencies</fileName>
 
@@ -158,7 +158,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.6.7.Final</version>
+			<version>5.2.17.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>

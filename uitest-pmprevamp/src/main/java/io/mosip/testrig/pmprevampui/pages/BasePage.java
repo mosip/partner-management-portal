@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -17,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.utility.JsonUtil;
 import io.mosip.testrig.pmprevampui.utility.Screenshot;
 
 public class BasePage {
@@ -58,6 +60,28 @@ public class BasePage {
 	}
 
 	public static void enter(WebElement element, String value) {
+
+		try {
+			Thread.sleep(3000);
+			element.clear();
+			element.sendKeys(value);
+		} catch (Exception e) {
+			try {
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].click();", element);
+			} catch (Exception exception) {
+				try {
+					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+							+ "' width='900' height='450'/></p>");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				throw exception;
+			}
+		}
+	}
+
+	public static void enter(WebElement element, CharSequence[] value) {
 
 		try {
 			Thread.sleep(3000);
@@ -159,6 +183,8 @@ public class BasePage {
 
 	protected boolean isElementDisplayed(WebElement element) {
 		try {
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			Thread.sleep(2000);
 			waitForElementToBeVisible(element);
 			return true;
 		} catch (Exception e) {
@@ -234,4 +260,19 @@ public class BasePage {
 		this.waitForElementToBeVisible(element);
 		return element.getText();
 	}
+
+	protected String getTextFromAttribute(WebElement element, String atrr) {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		this.waitForElementToBeVisible(element);
+		return element.getAttribute(atrr);
+	}
+
+	public static String getTestData() {
+		return JsonUtil.readJsonFileText("TestData.json");
+	}
+
 }

@@ -78,10 +78,13 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "create_oidc_submit_btn")
 	private WebElement submitButton;
-	
+
 	@FindBy(id = "create_oidc_clear_form")
 	private WebElement clearForm;
-	
+
+	@FindBy(id = "oidc_edit_submit_btn")
+	private WebElement oidcEditSubmitButton;
+
 	@FindBy(xpath = "(//*[contains(text(), 'Enter a valid URI')])[1]")
 	private WebElement enterValidUriForLogoUriText;
 
@@ -90,10 +93,19 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(xpath = "//*[contains(text(), 'Authorization Code')]")
 	private WebElement authorizationCode;
-
+	
+	@FindBy(xpath = "//*[contains(text(), 'User Id does not exists')]")
+	private WebElement userIdDoesNotExistsPopup;
+	
+	@FindBy(xpath = "//*[contains(text(), 'No Data Available.')]")
+	private WebElement NoDataAvailableText;
+	
 	@FindBy(id = "create_oidc_partner_id")
 	private WebElement SelectPartneridForOidc;
-
+	
+	@FindBy(id = "create_oidc_partner_id_option1")
+	private WebElement createOidcPartnerIdOption1;
+	
 	@FindBy(id = "create_oidc_policy_name")
 	private WebElement SelectPolicyNameForOidc;
 
@@ -211,6 +223,33 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "oidc_select_status_filter_option1")
 	private WebElement oidcSelectStatusFilterOption1;
 
+	@FindBy(id = "filter_reset_btn")
+	private WebElement filterResetButton;
+	
+	@FindBy(id = "add_new_redirect_url")
+	private WebElement addNewRedirectUrl;
+	
+	@FindBy(id = "create_oidc_redirect_url2")
+	private WebElement createOidcRedirectUrl2;
+	
+	@FindBy(id = "create_oidc_redirect_url3")
+	private WebElement createOidcRedirectUrl3;
+	
+	@FindBy(id = "create_oidc_redirect_url4")
+	private WebElement createOidcRedirectUrl4;
+	
+	@FindBy(id = "create_oidc_redirect_url5")
+	private WebElement createOidcRedirectUrl5;
+	
+	@FindBy(id = "create_oidc_clear_form")
+	private WebElement createOidcClearForm;
+	
+	@FindBy(id = "create_oidc_cancel_btn")
+	private WebElement createOidcCancelButton;
+	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement subTitleHomeButton;
+	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
@@ -231,9 +270,9 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(RedirectUri2Delete);
 	}
 
-	public void selectPartnerIdDropdown(String value) {
+	public void selectPartnerIdDropdown() {
 		clickOnElement(SelectPartneridForOidc);
-		clickOnElement(driver.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[2]")));
+		clickOnElement(createOidcPartnerIdOption1);
 	}
 
 	public boolean isPartnerIdDropdownDisplayed() {
@@ -456,8 +495,89 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(filterButton);
 	}
 
-	public void clickOnOidcPartnerIdFilter(String value) {
+	public void clickOnOidcPartnerIdFilter() {
 		clickOnElement(oidcSelectPartnerIdFilter);
 		clickOnElement(oidcSelectPartnerIdFilterOption1);
 	}
+
+	public void clickOnOidcSelectPolicyGroupFilter() {
+		clickOnElement(oidcSelectPolicyGroupFilter);
+		clickOnElement(oidcSelectPolicyGroupFilterOption1);
+	}
+
+	public void clickOnOidcSelectPolicyNameFilter() {
+		clickOnElement(oidcSelectPolicyNameFilter);
+		clickOnElement(oidcSelectPolicyNameFilterOption1);
+	}
+
+	public void clickOnOidcSelectClientNameFilter() {
+		clickOnElement(oidcSelectClientNameFilter);
+		clickOnElement(oidcSelectClientNameFilterOption1);
+	}
+
+	public void clickOnOidcSelectStatusFilter() {
+		clickOnElement(oidcSelectStatusFilter);
+		clickOnElement(oidcSelectStatusFilterOption1);
+	}
+
+	public boolean isfilterResetButtonDisplayed() {
+		return isElementDisplayed(filterResetButton);
+	}
+
+	public void clickOnFilterResetButton() {
+		clickOnElement(filterResetButton);
+	}
+
+	public void clickOnOidcEditSubmitButton() {
+		clickOnElement(oidcEditSubmitButton);
+	}
+	
+	public boolean isUserIdDoesNotExistsPopupDisplayed() {
+		return isElementDisplayed(userIdDoesNotExistsPopup);
+	}
+	
+	public boolean isNoDataAvailableTextDisplayed() {
+		return isElementDisplayed(NoDataAvailableText);
+	}
+	
+	public void clickOnPartnerIdDropdown() {
+		clickOnElement(SelectPartneridForOidc);
+	}
+	
+	public void clickOnAddNewRedirectUrlButton() {
+		clickOnElement(addNewRedirectUrl);
+	}
+	
+	public void EntercreateOidcRedirectUrl2(String value) {
+		enter(createOidcRedirectUrl2,value);
+	}
+	
+	public void EntercreateOidcRedirectUrl3(String value) {
+		enter(createOidcRedirectUrl3,value);
+	}
+	
+	public void EntercreateOidcRedirectUrl4(String value) {
+		enter(createOidcRedirectUrl4,value);
+	}
+	
+	public void EntercreateOidcRedirectUrl5(String value) {
+		enter(createOidcRedirectUrl5,value);
+	}
+	
+	public void clickOnCreateOidcClearForm() {
+		clickOnElement(createOidcClearForm);
+	}
+	
+	public boolean isCreateOidcRedirectUrl5Displayed() {
+		return isElementDisplayed(createOidcRedirectUrl5);
+	}
+	
+	public boolean isCreateOidcCancelButtonDisplayed() {
+		return isElementDisplayed(createOidcCancelButton);
+	}
+	
+	public boolean isSubTitleHomeButtonDisplayed() {
+		return isElementDisplayed(subTitleHomeButton);
+	}
+	
 }
