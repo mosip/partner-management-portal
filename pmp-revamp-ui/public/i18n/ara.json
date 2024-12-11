@@ -588,11 +588,12 @@
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
-    "listOfRootTrustCertificates": {
-        "listOfRootTrustCertificates": "قائمة جذر شهادات الثقة",
+    "rootTrustCertificateList": {
+        "rootTrustCertificateList": "قائمة جذر شهادات الثقة",
+        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
         "caCertificates": "شهادات كاليفورنيا"
     },
-    "listOfIntermediateRootTrustCertificates": {
+    "intermediateTrustCertificateList": {
         "intermediateRootTrustCertificates": "شهادات ثقة الجذر المتوسطة"
     },
     "partnerList": {

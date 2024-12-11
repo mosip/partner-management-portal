@@ -584,12 +584,12 @@
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
     },
-    "listOfRootTrustCertificates": {
-        "listOfRootTrustCertificates": "List of Root of Trust Certificates",
+    "rootTrustCertificateList": {
+        "rootTrustCertificateList": "List of Root of Trust Certificates",
         "rootOfTrustCertificates": "Root Trust Certificates",
         "caCertificates": "Ca Certificates"
     },
-    "listOfIntermediateRootTrustCertificates": {
+    "intermediateTrustCertificateList": {
         "intermediateRootTrustCertificates": "Intermediate Root Trust Certificates"
     },
     "partnerList": {

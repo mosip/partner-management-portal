@@ -562,7 +562,7 @@
     },
     "rootTrustCertificate": {
         "rootOfTrustCertificates": "Certificats racine de confiance",
-        "certificateId": "Identifiant du certificat",
+        "certificateId": "Id du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
@@ -588,11 +588,12 @@
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
     },
-    "listOfRootTrustCertificates": {
-        "listOfRootTrustCertificates": "Liste des certificats racine de confiance",
+    "rootTrustCertificateList": {
+        "rootTrustCertificateList": "Liste des certificats racine de confiance",
+        "rootOfTrustCertificates": "Certificats de confiance racine",
         "caCertificates": "Certificats CA"
     },
-    "listOfIntermediateRootTrustCertificates": {
+    "intermediateTrustCertificateList": {
         "intermediateRootTrustCertificates": "Certificats de confiance racine intermédiaires"
     },
     "partnerList":{

@@ -12,7 +12,7 @@ import FilterButtons from "../../common/FilterButtons";
 import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
-import RootTrustCertificateServicesTab from "./RootTrustCertificateServicesTab";
+import RootTrustCertificateTab from "./RootTrustCertificateTab";
 import EmptyList from "../../common/EmptyList";
 
 function RootTrustCertificateList() {
@@ -124,7 +124,7 @@ function RootTrustCertificateList() {
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
                 <Title title="rootTrustCertificate.rootOfTrustCertificates" backLink="/partnermanagement" styleSet={style} />
-                {certificateData.length !== 0 ?
+                {certificateData.length === 0 ?
                   <button onClick={showUploadCertificate} id='create_policy_group_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
                     {t('rootTrustCertificate.UploadCertBtn')}
                   </button>
@@ -132,13 +132,13 @@ function RootTrustCertificateList() {
                 }
               </div>
 
-              <RootTrustCertificateServicesTab
-                activeRootOfTustCertificates={true}
-                rootOfTustCertificatesPath={'/partnermanagement/admin/certificates/root-trust-certificate'}
-                activeIntermediateRootOfTrustCertificates={false}
-                intermediateRootOfTrustCertificatesPath={''}
+              <RootTrustCertificateTab
+                activeRootTustCertificates={true}
+                rootTustCertificatesPath={'/partnermanagement/admin/certificates/root-trust-certificate'}
+                activeIntermediateTrustCertificates={false}
+                intermediateTrustCertificatesPath={''}
               />
-              {certificateData.length === 0 ? (
+              {certificateData.length !== 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <EmptyList
                     tableHeaders={tableHeaders}
@@ -152,7 +152,7 @@ function RootTrustCertificateList() {
                 <>
                   <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
-                      listTitle="listOfRootTrustCertificates.listOfRootTrustCertificates"
+                      listTitle="rootTrustCertificateList.rootTrustCertificateList"
                       dataListLength={filteredCertificateData.length}
                       filter={filter}
                       onResetFilter={onResetFilter}
@@ -165,7 +165,7 @@ function RootTrustCertificateList() {
                       />
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles} />}
-                    {tableDataLoaded && certificateData.length === 0 ?
+                    {tableDataLoaded && certificateData.length !== 0 ?
                       <EmptyList
                         tableHeaders={tableHeaders}
                       />
