@@ -125,7 +125,7 @@ function RootTrustCertificateList() {
               <div className="flex justify-between">
                 <Title title="rootTrustCertificate.rootOfTrustCertificates" backLink="/partnermanagement" styleSet={style} />
                 {certificateData.length === 0 ?
-                  <button onClick={showUploadCertificate} id='create_policy_group_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
+                  <button onClick={showUploadCertificate} id='upload_root_trust_certificate_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
                     {t('rootTrustCertificate.UploadCertBtn')}
                   </button>
                   : null
