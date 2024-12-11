@@ -412,10 +412,10 @@
         "sbiVersion": "إصدار SBI",
         "searchVersion": "البحث عن إصدار SBI",
         "linkedDevices": "الأجهزة المرتبطة",
-        "status":"حالة",
+        "status": "حالة",
         "action": "الإجراء",
         "partnerId": "معرف الشريك",
-        "orgName":"منظمة",
+        "orgName": "منظمة",
         "partnerType": "نوع الشريك",
         "device": "جهاز",
         "sbiCreatedDate": "تاريخ إنشاء SBI",
@@ -502,7 +502,7 @@
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "addFtmBtn": "إضافة شريحة FTM",
         "partnerId": "معرف الشريك",
-        "orgName":"منظمة",
+        "orgName": "منظمة",
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
@@ -561,7 +561,8 @@
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
     "rootTrustCertificate": {
-        "organisation": "منظمة",
+        "rootOfTrustCertificates": "جذر شهادات الثقة",
+        "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
         "issuedBy": "صادرة عن",
@@ -572,8 +573,10 @@
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
         "listOfCertificates": "قائمة شهادات جذر الثقة",
-        "selectOrganisation": "حدد المنظمة",
+        "selectCertificateId": "حدد معرف الشهادة",
         "selectPartnerDomain": "حدد مجال الشريك",
+        "selectIssuedTo": "حدد صدر إلى",
+        "selectIssuedBy": "اختر جهة الإصدار",
         "selectStatus": "حدد الحالة",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر"
@@ -585,9 +588,13 @@
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
-    "viewRootOfTrustCertificate": {
-        "viewRootOfTrustCertificate": "عرض شهادة جذر الثقة",
+    "rootTrustCertificateList": {
+        "rootTrustCertificateList": "قائمة جذر شهادات الثقة",
+        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
         "caCertificates": "شهادات كاليفورنيا"
+    },
+    "intermediateTrustCertificateList": {
+        "intermediateRootTrustCertificates": "شهادات ثقة الجذر المتوسطة"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",

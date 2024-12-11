@@ -561,7 +561,8 @@
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
     "rootTrustCertificate": {
-        "organisation": "Organisation",
+        "rootOfTrustCertificates": "Certificats racine de confiance",
+        "certificateId": "Id du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
@@ -572,8 +573,10 @@
         "action": "Action",
         "UploadCertBtn": "Télécharger le certificat",
         "listOfCertificates": "Liste des certificats Root of Trust",
-        "selectOrganisation": "Sélectionnez une organisation",
+        "selectCertificateId": "Sélectionnez l'identifiant du certificat",
         "selectPartnerDomain": "Sélectionnez un domaine partenaire",
+        "selectIssuedTo": "Sélectionnez Délivré à",
+        "selectIssuedBy": "Sélectionnez Publié par",
         "selectStatus": "Sélectionnez le statut",
         "deActivate": "Désactiver",
         "view": "Voir"
@@ -585,9 +588,13 @@
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
     },
-    "viewRootOfTrustCertificate": {
-        "viewRootOfTrustCertificate": "Afficher le certificat racine de confiance",
+    "rootTrustCertificateList": {
+        "rootTrustCertificateList": "Liste des certificats racine de confiance",
+        "rootOfTrustCertificates": "Certificats de confiance racine",
         "caCertificates": "Certificats CA"
+    },
+    "intermediateTrustCertificateList": {
+        "intermediateRootTrustCertificates": "Certificats de confiance racine intermédiaires"
     },
     "partnerList":{
         "partnerTitle": "Partenaires",
