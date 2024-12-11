@@ -561,7 +561,7 @@
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
     "rootTrustCertificate": {
-        "certificateTrustStore": "مخزن الشهادات",
+        "rootOfTrustCertificates": "جذر شهادات الثقة",
         "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -573,8 +573,10 @@
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
         "listOfCertificates": "قائمة شهادات جذر الثقة",
-        "selectOrganisation": "حدد المنظمة",
+        "selectCertificateId": "حدد معرف الشهادة",
         "selectPartnerDomain": "حدد مجال الشريك",
+        "selectIssuedTo": "حدد صدر إلى",
+        "selectIssuedBy": "اختر جهة الإصدار",
         "selectStatus": "حدد الحالة",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر"
@@ -587,7 +589,7 @@
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
     "listOfRootTrustCertificates": {
-        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
+        "listOfRootTrustCertificates": "قائمة جذر شهادات الثقة",
         "caCertificates": "شهادات كاليفورنيا"
     },
     "listOfIntermediateRootTrustCertificates": {

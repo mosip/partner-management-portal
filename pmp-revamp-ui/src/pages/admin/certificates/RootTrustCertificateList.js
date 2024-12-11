@@ -13,6 +13,7 @@ import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
 import RootTrustCertificateServicesTab from "./RootTrustCertificateServicesTab";
+import EmptyList from "../../common/EmptyList";
 
 function RootTrustCertificateList() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ function RootTrustCertificateList() {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(true);
   const [certificateData, setCertificateData] = useState([]);
   const [filteredCertificateData, setFilteredCertificateData] = useState([]);
   const [order, setOrder] = useState("ASC");
@@ -31,6 +32,7 @@ function RootTrustCertificateList() {
   const [isDescending, setIsDescending] = useState(false);
   const [viewCertificateId, setViewCertificateId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+  const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const defaultFilterQuery = {
     orgName: "",
     partnerDomain: "",
@@ -43,11 +45,8 @@ function RootTrustCertificateList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "orgName", headerNameKey: "rootTrustCertificate.organisation" },
-    {
-      id: "partnerDomain",
-      headerNameKey: "rootTrustCertificate.partnerDomain",
-    },
+    { id: "certificateId", headerNameKey: "rootTrustCertificate.certificateId" },
+    { id: "partnerDomain", headerNameKey: "rootTrustCertificate.partnerDomain", },
     { id: "issuedTo", headerNameKey: "rootTrustCertificate.issuedTo" },
     { id: "issuedBy", headerNameKey: "rootTrustCertificate.issuedBy" },
     { id: "validFrom", headerNameKey: "rootTrustCertificate.validFrom" },
@@ -57,36 +56,30 @@ function RootTrustCertificateList() {
     { id: "action", headerNameKey: "rootTrustCertificate.action" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setDataLoaded(false);
-
-        const trustCertDummyData = [];
-
-        const sortedData = trustCertDummyData.sort(
-          (a, b) => new Date(b.timeOfUpload) - new Date(a.timeOfUpload)
-        );
-        setCertificateData(sortedData);
-        setFilteredCertificateData(sortedData);
-        setDataLoaded(true);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setErrorMsg(err);
-      }
-    };
-    fetchData();
-  }, []);
+ const rootTrustCertificatesList = [
+  {certId: "10081", partnerDomain: "AUTH", issuedTo: "client_auth1", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:01.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-09T19:35:01.085+00:00", status: "active"}, 
+  {certId: "10082", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-11-21T19:35:01.085+00:00", validTill: "2025-12-21T19:35:01.085+00:00", timeOfUpload: "2024-12-20T19:35:01.085+00:00", status: "deactivated"}, 
+  {certId: "10083", partnerDomain: "DEVICE", issuedTo: "device_client3", issuedBy: "mosip_device1", validFrom: "2024-09-11T19:35:01.085+00:00", validTill: "2025-12-09T19:35:01.085+00:00", timeOfUpload: "2024-12-11T19:35:01.085+00:00", status: "active"}, 
+  {certId: "10084", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:31.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-09T19:35:01.085+00:00", status: "deactivated"}, 
+  {certId: "10085", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-08T19:35:01.085+00:00", validTill: "2025-12-08T19:35:01.085+00:00", timeOfUpload: "2024-12-05T19:35:01.085+00:00", status: "deactivated"}, 
+  {certId: "10086", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:01.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-07T19:35:01.085+00:00", status: "active"}, 
+  {certId: "10087", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-19T19:35:01.085+00:00", validTill: "2025-12-19T19:35:01.085+00:00", timeOfUpload: "2024-12-08T19:35:01.085+00:00", status: "active"}, 
+  {certId: "10088", partnerDomain: "FTM", issuedTo: "client_ftm3", issuedBy: "mosip_auth1", validFrom: "2024-12-27T19:35:01.085+00:00", validTill: "2025-12-27T19:35:01.085+00:00", timeOfUpload: "2024-12-24T19:35:01.085+00:00", status: "deactivated"}, 
+  {certId: "10089", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-12-14T19:35:01.085+00:00", validTill: "2025-12-14T19:35:01.085+00:00", timeOfUpload: "2024-12-13T19:35:01.085+00:00", status: "active"}, 
+  {certId: "100810", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-03T19:35:01.085+00:00", validTill: "2025-12-03T19:35:01.085+00:00", timeOfUpload: "2024-12-03T19:35:01.085+00:00", status: "active"}, 
+  {certId: "100811", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-06T19:35:01.085+00:00", validTill: "2025-12-06T19:35:01.085+00:00", timeOfUpload: "2024-12-11T19:35:01.085+00:00", status: "deactivated"}, 
+  {certId: "100812", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-01T19:35:01.085+00:00", validTill: "2025-12-01T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active"}, 
+  {certId: "100813", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-22T19:35:01.085+00:00", validTill: "2025-12-22T19:35:01.085+00:00", timeOfUpload: "2024-12-20T19:35:01.085+00:00", status: "active"}, 
+  {certId: "100814", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-05T19:35:01.085+00:00", validTill: "2025-12-15T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active"}, 
+  {certId: "100815", partnerDomain: "FTM", issuedTo: "client_ftm1", issuedBy: "mosip_auth1", validFrom: "2024-12-18T19:35:01.085+00:00", validTill: "2025-12-18T19:35:01.085+00:00", timeOfUpload: "2024-12-15T19:35:01.085+00:00", status: "deactivated"}, 
+];
 
   const showUploadCertificate = () => {
     navigate('/partnermanagement/admin/certificates/upload-root-trust-certificate')
   };
 
   const showCertificateDetails = (selectedCertificateData) => {
-    localStorage.setItem(
-      "selectedCertificateData",
-      JSON.stringify(selectedCertificateData)
-    );
+
   };
 
   const cancelErrorMsg = () => {
@@ -94,58 +87,10 @@ function RootTrustCertificateList() {
   };
 
   //This part is related to Sorting
-  const sortAscOrder = (header) => {
-    const isDateCol = header === "timeOfUpload" ? true : false;
-    toggleSortAscOrder(
-      header,
-      isDateCol,
-      filteredCertificateData,
-      setFilteredCertificateData,
-      order,
-      setOrder,
-      isDescending,
-      setIsDescending,
-      activeSortAsc,
-      setActiveSortAsc,
-      activeSortDesc,
-      setActiveSortDesc
-    );
-  };
-
-  const sortDescOrder = (header) => {
-    const isDateCol = header === "timeOfUpload" ? true : false;
-    toggleSortDescOrder(
-      header,
-      isDateCol,
-      filteredCertificateData,
-      setFilteredCertificateData,
-      order,
-      setOrder,
-      isDescending,
-      setIsDescending,
-      activeSortAsc,
-      setActiveSortAsc,
-      activeSortDesc,
-      setActiveSortDesc
-    );
-  };
 
   const style = {
     backArrowIcon: "!mt-[9%]",
   };
-
-  useEffect(() => {
-    let filteredRows = certificateData;
-    Object.keys(filterQuery).forEach((key) => {
-      if (filterQuery[key] !== "") {
-        filteredRows = filteredRows.filter(
-          (item) => item[key] === filterQuery[key]
-        );
-      }
-    });
-    setFilteredCertificateData(filteredRows);
-    setFirstIndex(0);
-  }, [filterQuery, certificateData]);
 
   const onResetFilter = () => {
     window.location.reload();
@@ -157,24 +102,16 @@ function RootTrustCertificateList() {
     firstIndex + selectedRecordsPerPage
   );
 
-  //This part is related to Filter
-  const onFilterChange = (fieldName, selectedFilter) => {
-    setFilterQuery((oldFilterQuery) => ({
-      ...oldFilterQuery,
-      [fieldName]: selectedFilter,
-    }));
-    //useEffect will be triggered which will do the filter
+  const showDeactivateCertificate = (selectedClientdata) => {
+
   };
 
-  const showDeactivateCertificate = (selectedClientdata) => {
-    if (selectedClientdata.status === "ACTIVE") {
-      document.body.style.overflow = "hidden";
-    }
+  const styles = {
+    loadingDiv: "!py-[20%]"
   };
 
   return (
-    <div
-      className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded &&
         <LoadingIcon />
       }
@@ -184,302 +121,138 @@ function RootTrustCertificateList() {
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-7">
-            <div className="flex justify-between mb-5 flex-col">
-              <Title title="rootTrustCertificate.certificateTrustStore" backLink="/partnermanagement" styleSet={style} />
+            <div className="justify-between mb-5 flex-col">
+              <div className="flex justify-between">
+                <Title title="rootTrustCertificate.rootOfTrustCertificates" backLink="/partnermanagement" styleSet={style} />
+                {certificateData.length !== 0 ?
+                  <button onClick={showUploadCertificate} id='create_policy_group_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
+                    {t('rootTrustCertificate.UploadCertBtn')}
+                  </button>
+                  : null
+                }
+              </div>
+
               <RootTrustCertificateServicesTab
                 activeRootOfTustCertificates={true}
                 rootOfTustCertificatesPath={'/partnermanagement/admin/certificates/root-trust-certificate'}
                 activeIntermediateRootOfTrustCertificates={false}
                 intermediateRootOfTrustCertificatesPath={''}
               />
-              {certificateData.length > 0 && (
-                <button
-                  id="root_certificate_upload_btn"
-                  onClick={() => showUploadCertificate()}
-                  type="button"
-                  className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}
-                >
-                  {t("rootTrustCertificate.UploadCertBtn")}
-                </button>
-              )}
-            </div>
-            <div className="flex-col justify-center ml-3 h-full">
               {certificateData.length === 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                  <div className="flex justify-between py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
-                    <div className="flex w-full justify-between">
-                      <h6 className="ml-5 mr-3">
-                        {t("rootTrustCertificate.certificateId")}
-                      </h6>
-                      <h6>{t("rootTrustCertificate.partnerDomain")}</h6>
-                      <h6>{t("rootTrustCertificate.issuedTo")}</h6>
-                      <h6>{t("rootTrustCertificate.issuedBy")}</h6>
-                      <h6>{t("rootTrustCertificate.validFrom")}</h6>
-                      <h6>{t("rootTrustCertificate.validTill")}</h6>
-                      <h6>{t("rootTrustCertificate.timeOfUpload")}</h6>
-                      <h6>{t("rootTrustCertificate.status")}</h6>
-                      <h6 className="mx-4">
-                        {t("rootTrustCertificate.action")}
-                      </h6>
-                    </div>
-                  </div>
-
-                  <hr className="h-px mx-3 bg-gray-200 border-0" />
-
-                  <div className="flex items-center justify-center p-24">
-                    <div className="flex flex-col items-center">
-                      <img src={rectangleGrid} alt="" />
-                      <button
-                        id="root_certificate_upload_btn"
-                        onClick={() => showUploadCertificate()}
-                        type="button"
-                        className="text-white font-semibold mt-8 bg-tory-blue rounded-md text-sm h-11 px-5 py-3"
-                      >
-                        {t("rootTrustCertificate.UploadCertBtn")}
-                      </button>
-                    </div>
-                  </div>
+                  <EmptyList
+                    tableHeaders={tableHeaders}
+                    showCustomButton={true}
+                    customButtonName='rootTrustCertificate.UploadCertBtn'
+                    buttonId='upload_root_trust_certificate_btn'
+                    onClickButton={showUploadCertificate}
+                  />
                 </div>
               ) : (
                 <>
-                  <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
+                  <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
-                      listTitle="rootTrustCertificate.listOfCertificates"
+                      listTitle="listOfRootTrustCertificates.listOfRootTrustCertificates"
                       dataListLength={filteredCertificateData.length}
                       filter={filter}
                       onResetFilter={onResetFilter}
                       setFilter={setFilter}
-                    ></FilterButtons>
+                    />
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {filter && (
                       <RootTrustCertificatesFilter
-                        filteredCertificateData={filteredCertificateData}
-                        onFilterChange={onFilterChange}
-                      ></RootTrustCertificatesFilter>
+                      // onFilterChange={onFilterChange}
+                      />
                     )}
-
-                    <div className="mx-[2%] overflow-x-scroll">
-                      <table className="table-fixed">
-                        <thead>
-                          <tr>
-                            {tableHeaders.map((header, index) => {
-                              return (
-                                <th
-                                  key={index}
-                                  className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]"
-                                >
-                                  <div className="mx-2 flex gap-x-0 items-center">
-                                    {t(header.headerNameKey)}
-                                    {header.id !== "action" && (
-                                      <SortingIcon
-                                        headerId={header.id}
-                                        sortDescOrder={sortDescOrder}
-                                        sortAscOrder={sortAscOrder}
-                                        order={order}
-                                        activeSortDesc={activeSortDesc}
-                                        activeSortAsc={activeSortAsc}
-                                      ></SortingIcon>
-                                    )}
-                                  </div>
-                                </th>
-                              );
-                            })}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {tableRows.map((certificate, index) => {
-                            return (
-                              <tr
-                                id={"root_certificate_list_item" + (index + 1)}
-                                key={index}
-                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status.toLowerCase() ===
-                                  "deactivated"
-                                  ? "text-[#969696]"
-                                  : "text-[#191919]"
-                                  }`}
-                              >
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {certificate.orgName}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {certificate.partnerDomain}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {certificate.issuedTo}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {certificate.issuedBy}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {formatDate(
-                                    certificate.validFrom,
-                                    "date",
-                                    false
-                                  )}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {formatDate(
-                                    certificate.validTill,
-                                    "date",
-                                    false
-                                  )}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className="px-2"
-                                >
-                                  {formatDate(
-                                    certificate.timeOfUpload,
-                                    "date",
-                                    false
-                                  )}
-                                </td>
-                                <td
-                                  onClick={() =>
-                                    showCertificateDetails(certificate)
-                                  }
-                                  className=""
-                                >
-                                  <div
-                                    className={`${bgOfStatus(
-                                      certificate.status
-                                    )} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}
-                                  >
-                                    {getStatusCode(certificate.status, t)}
-                                  </div>
-                                </td>
-                                <td className="text-center">
-                                  <div
-                                    ref={(el) =>
-                                      (submenuRef.current[index] = el)
-                                    }
-                                  >
-                                    <p
-                                      id={
-                                        "root_certificate_list_view" +
-                                        (index + 1)
-                                      }
-                                      onClick={() =>
-                                        setViewCertificateId(
-                                          index === viewCertificateId
-                                            ? null
-                                            : index
-                                        )
-                                      }
-                                      className={`font-semibold mb-0.5 cursor-pointer text-center`}
-                                      tabIndex="0"
-                                      onKeyPress={(e) =>
-                                        onPressEnterKey(e, () =>
-                                          setViewCertificateId(
-                                            index === viewCertificateId
-                                              ? null
-                                              : index
-                                          )
-                                        )
-                                      }
-                                    >
-                                      ...
-                                    </p>
-                                    {viewCertificateId === index && (
-                                      <div
-                                        className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL
-                                          ? "left-9 text-right"
-                                          : "right-9 text-left"
-                                          }`}
-                                      >
-                                        <p
-                                          id="root_certificate_details_view_btn"
-                                          onClick={() =>
-                                            showCertificateDetails(certificate)
-                                          }
-                                          className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL
-                                            ? "pl-10"
-                                            : "pr-10"
-                                            }`}
-                                          tabIndex="0"
-                                          onKeyPress={(e) =>
-                                            onPressEnterKey(e, () =>
-                                              showCertificateDetails(
-                                                certificate
-                                              )
-                                            )
-                                          }
-                                        >
-                                          {t("rootTrustCertificate.view")}
-                                        </p>
-                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                        <p
-                                          id="root_certificate_deactive_btn"
-                                          onClick={() =>
-                                            showDeactivateCertificate(certificate)
-                                          }
-                                          className={`py-1.5 px-4 ${isLoginLanguageRTL
-                                            ? "pl-10"
-                                            : "pr-10"
-                                            } ${certificate.status === "approved"
-                                              ? "text-crimson-red cursor-pointer"
-                                              : "text-[#A5A5A5] cursor-auto"
-                                            } hover:bg-gray-100`}
-                                          tabIndex="0"
-                                          onKeyPress={(e) =>
-                                            onPressEnterKey(e, () =>
-                                              showDeactivateCertificate(
-                                                certificate
-                                              )
-                                            )
-                                          }
-                                        >
-                                          {t("rootTrustCertificate.deActivate")}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
+                    {!tableDataLoaded && <LoadingIcon styleSet={styles} />}
+                    {tableDataLoaded && certificateData.length === 0 ?
+                      <EmptyList
+                        tableHeaders={tableHeaders}
+                      />
+                      : (
+                        <>
+                          <div className="mx-[2%] overflow-x-scroll">
+                            <table className="table-fixed">
+                              <thead>
+                                <tr>
+                                  {tableHeaders.map((header, index) => {
+                                    return (
+                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
+                                        <div className="flex gap-x-0 items-center">
+                                          {t(header.headerNameKey)}
+                                          {header.id !== "action" && (
+                                            <SortingIcon
+                                              headerId={header.id}
+                                              // sortDescOrder={sortDescOrder}
+                                              // sortAscOrder={sortAscOrder}
+                                              order={order}
+                                              activeSortDesc={activeSortDesc}
+                                              activeSortAsc={activeSortAsc}
+                                            />
+                                          )}
+                                        </div>
+                                      </th>
+                                    );
+                                  })}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {rootTrustCertificatesList.map((certificate, index) => {
+                                  return (
+                                    <tr id={"root_certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.2rem]' : 'pl-[0.2rem]'}`}>{certificate.certId}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.2rem]' : 'pl-[0.2rem]'}`}>{certificate.partnerDomain}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)}>{certificate.issuedTo}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)}>{certificate.issuedBy}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className="px-1">{formatDate(certificate.validFrom, "date", false)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.2rem]' : 'pl-[0.2rem]'}`}>{formatDate(certificate.validTill, "date", false)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)}>{formatDate(certificate.timeOfUpload, "dateTime", false)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)}>
+                                        <div className={`${bgOfStatus(certificate.status)} flex w-fit py-1.5 px-2 my-2 text-xs font-semibold rounded-md`}>
+                                          {getStatusCode(certificate.status, t)}
+                                        </div>
+                                      </td>
+                                      <td className="text-center">
+                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                          <p id={"root_certificate_list_view" + (index + 1)} onClick={() => setViewCertificateId(index === viewCertificateId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewCertificateId(index === viewCertificateId ? null : index))}
+                                          >
+                                            ...
+                                          </p>
+                                          {viewCertificateId === index && (
+                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                              <p id="root_certificate_details_view_btn" onClick={() => showCertificateDetails(certificate)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}
+                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCertificateDetails(certificate))}
+                                              >
+                                                {t("rootTrustCertificate.view")}
+                                              </p>
+                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                              <p id="root_certificate_deactive_btn" onClick={() => showDeactivateCertificate(certificate)}
+                                                className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${certificate.status === "approved" ? "text-crimson-red cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
+                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateCertificate(certificate))}
+                                              >
+                                                {t("rootTrustCertificate.deActivate")}
+                                              </p>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                          <Pagination
+                            dataListLength={filteredCertificateData.length}
+                            selectedRecordsPerPage={selectedRecordsPerPage}
+                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                            setFirstIndex={setFirstIndex}
+                          />
+                        </>
+                      )
+                    }
                   </div>
-                  <Pagination
-                    dataListLength={filteredCertificateData.length}
-                    selectedRecordsPerPage={selectedRecordsPerPage}
-                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                    setFirstIndex={setFirstIndex}
-                  ></Pagination>
                 </>
               )}
             </div>
@@ -487,7 +260,7 @@ function RootTrustCertificateList() {
         </>
       )}
     </div>
-  );
+  )
 }
 
 export default RootTrustCertificateList;
