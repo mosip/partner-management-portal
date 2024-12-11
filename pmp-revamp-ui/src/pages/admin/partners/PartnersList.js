@@ -48,7 +48,6 @@ function PartnersList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
-  const [initialRender, setInitialRender] = useState(true);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied ] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
@@ -128,13 +127,16 @@ function PartnersList() {
   }
 
   useEffect(() => {
-        
-    if (isApplyFilterClicked || initialRender) {
-        fetchPartnersData();
-        setInitialRender(false);
-        setIsApplyFilterClicked(false);
+    fetchPartnersData();
+  }, [sortFieldName, sortType, pageNo, pageSize]);
+
+  useEffect(() => {
+
+    if (isApplyFilterClicked) {
+      fetchPartnersData();
+      setIsApplyFilterClicked(false);
     }
-}, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+  }, [isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
     onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);

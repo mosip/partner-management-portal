@@ -42,7 +42,6 @@ function AdminFtmList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [initialRender, setInitialRender] = useState(true);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
@@ -115,13 +114,16 @@ function AdminFtmList() {
     }
 
     useEffect(() => {
+        fetchFtmListData();
+    }, [sortFieldName, sortType, pageNo, pageSize]);
 
-        if (isApplyFilterClicked || initialRender) {
+    useEffect(() => {
+
+        if (isApplyFilterClicked) {
             fetchFtmListData();
-            setInitialRender(false);
             setIsApplyFilterClicked(false);
         }
-    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+    }, [isApplyFilterClicked]);
 
     const onApplyFilter = (filters) => {
         onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);

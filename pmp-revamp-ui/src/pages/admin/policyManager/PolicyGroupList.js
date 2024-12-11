@@ -44,7 +44,6 @@ function PolicyGroupList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [initialRender, setInitialRender] = useState(true);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         id: null,
@@ -116,13 +115,16 @@ function PolicyGroupList() {
     }
 
     useEffect(() => {
+        fetchPolicyGroupListData();
+    }, [sortFieldName, sortType, pageNo, pageSize]);
 
-        if (isApplyFilterClicked || initialRender) {
+    useEffect(() => {
+
+        if (isApplyFilterClicked) {
             fetchPolicyGroupListData();
-            setInitialRender(false);
             setIsApplyFilterClicked(false);
         }
-    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+    }, [isApplyFilterClicked]);
 
     const getFiltersRequest = () => {
         let filtersArr = [];
