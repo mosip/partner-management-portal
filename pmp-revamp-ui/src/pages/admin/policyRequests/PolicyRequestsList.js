@@ -51,7 +51,6 @@ function PolicyRequestsList() {
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
-  const [initialRender, setInitialRender] = useState(true);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -128,13 +127,16 @@ function PolicyRequestsList() {
   }
 
   useEffect(() => {
+    fetchPolicyRequestsListData();
+}, [sortFieldName, sortType, pageNo, pageSize]);
 
-    if (isApplyFilterClicked || initialRender) {
+useEffect(() => {
+
+    if (isApplyFilterClicked) {
         fetchPolicyRequestsListData();
-        setInitialRender(false);
         setIsApplyFilterClicked(false);
     }
-}, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+}, [isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
     onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);

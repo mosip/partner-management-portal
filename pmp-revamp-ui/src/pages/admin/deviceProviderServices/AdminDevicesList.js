@@ -43,7 +43,6 @@ function AdminDevicesList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [initialRender, setInitialRender] = useState(true);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
@@ -130,13 +129,16 @@ function AdminDevicesList() {
     }
 
     useEffect(() => {
-        
-        if (isApplyFilterClicked || initialRender) {
+        fetchDeviceDetails();
+    }, [sortFieldName, sortType, pageNo, pageSize]);
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked) {
             fetchDeviceDetails();
-            setInitialRender(false);
             setIsApplyFilterClicked(false);
         }
-    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+    }, [isApplyFilterClicked]);
 
     const onApplyFilter = (filters) => {
         onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);

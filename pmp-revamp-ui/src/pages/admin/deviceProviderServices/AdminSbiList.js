@@ -46,7 +46,6 @@ function AdminSbiList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [initialRender, setInitialRender] = useState(true);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
@@ -120,13 +119,16 @@ function AdminSbiList() {
     }
 
     useEffect(() => {
-        
-        if (isApplyFilterClicked || initialRender) {
+        fetchSbiListData();
+    }, [sortFieldName, sortType, pageNo, pageSize]);
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked) {
             fetchSbiListData();
-            setInitialRender(false);
             setIsApplyFilterClicked(false);
         }
-    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+    }, [isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
         onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);

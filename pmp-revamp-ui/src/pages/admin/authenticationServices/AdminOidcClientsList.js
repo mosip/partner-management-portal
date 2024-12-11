@@ -48,7 +48,6 @@ function AdminOidcClientsList () {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [initialRender, setInitialRender] = useState(true);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
@@ -126,13 +125,16 @@ function AdminOidcClientsList () {
     }
 
     useEffect(() => {
+        fetchOidcClientsListData();
+    }, [sortFieldName, sortType, pageNo, pageSize]);
 
-        if (isApplyFilterClicked || initialRender) {
+    useEffect(() => {
+
+        if (isApplyFilterClicked) {
             fetchOidcClientsListData();
-            setInitialRender(false);
             setIsApplyFilterClicked(false);
         }
-    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
+    }, [isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
         onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
