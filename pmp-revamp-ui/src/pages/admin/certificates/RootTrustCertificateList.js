@@ -228,7 +228,7 @@ function RootTrustCertificateList() {
                                               </p>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <p id="root_certificate_deactive_btn" onClick={() => showDeactivateCertificate(certificate)}
-                                                className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${certificate.status === "approved" ? "text-crimson-red cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
+                                                className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${certificate.status === "active" ? "cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
                                                 tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateCertificate(certificate))}
                                               >
                                                 {t("rootTrustCertificate.deActivate")}
