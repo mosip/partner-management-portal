@@ -152,7 +152,7 @@ function ViewOidcClientDetails() {
                                     {oidcClientDetails.clientNameEng}
                                 </p>
                             </div>
-                            <div className="my-3 space-y-2">
+                            <div className="my-3 space-y-2 break-all">
                                 <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.publicKey")}
                                 </p>
