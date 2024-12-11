@@ -51,6 +51,8 @@ function PolicyRequestsList() {
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
+  const [initialRender, setInitialRender] = useState(true);
+  const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
@@ -81,55 +83,61 @@ function PolicyRequestsList() {
     { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const queryParams = new URLSearchParams();
-      queryParams.append('sortFieldName', sortFieldName);
-      queryParams.append('sortType', sortType);
-      queryParams.append('pageSize', pageSize);
+  const fetchPolicyRequestsListData = async () => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('sortFieldName', sortFieldName);
+    queryParams.append('sortType', sortType);
+    queryParams.append('pageSize', pageSize);
 
-      //reset page number to 0 if filter applied or page number is out of bounds
-      const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-      queryParams.append('pageNo', effectivePageNo);
-      setResetPageNo(false);
+    //reset page number to 0 if filter applied or page number is out of bounds
+    const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+    queryParams.append('pageNo', effectivePageNo);
+    setResetPageNo(false);
 
-      if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
-      if (filters.partnerType) queryParams.append('partnerTypeCode', filters.partnerType);
-      if (filters.orgName) queryParams.append('orgName', filters.orgName);
-      if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
-      if (filters.policyId) queryParams.append('policyId', filters.policyId);
-      if (filters.policyName) queryParams.append('policyName', filters.policyName);
-      if (filters.status) queryParams.append('status', filters.status);
+    if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
+    if (filters.partnerType) queryParams.append('partnerTypeCode', filters.partnerType);
+    if (filters.orgName) queryParams.append('orgName', filters.orgName);
+    if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
+    if (filters.policyId) queryParams.append('policyId', filters.policyId);
+    if (filters.policyName) queryParams.append('policyName', filters.policyName);
+    if (filters.status) queryParams.append('status', filters.status);
 
-      const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
-      try {
-        triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
-        const response = await HttpService.get(url);
-        if (response) {
-          const responseData = response.data;
-          if (responseData && responseData.response) {
-            const resData = responseData.response.data;
-            setTotalRecords(responseData.response.totalResults);
-            setPolicyRequestsData(resData);
-          } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          }
+    const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    try {
+      triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
+      const response = await HttpService.get(url);
+      if (response) {
+        const responseData = response.data;
+        if (responseData && responseData.response) {
+          const resData = responseData.response.data;
+          setTotalRecords(responseData.response.totalResults);
+          setPolicyRequestsData(resData);
         } else {
-          setErrorMsg(t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
-        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
-        setTriggerServerMethod(false);
-      } catch (err) {
-        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
-        console.error('Error fetching data:', err);
-        setErrorMsg(err);
+      } else {
+        setErrorMsg(t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
       }
+      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+      setTriggerServerMethod(false);
+    } catch (err) {
+      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+      console.error('Error fetching data:', err);
+      setErrorMsg(err);
     }
-    fetchData();
-  }, [sortFieldName, sortType, pageNo, pageSize, filters]);
+  }
+
+  useEffect(() => {
+
+    if (isApplyFilterClicked || initialRender) {
+        fetchPolicyRequestsListData();
+        setInitialRender(false);
+        setIsApplyFilterClicked(false);
+    }
+}, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
-    onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters);
+    onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {

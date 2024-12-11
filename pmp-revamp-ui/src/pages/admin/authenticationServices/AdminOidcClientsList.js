@@ -48,6 +48,8 @@ function AdminOidcClientsList () {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -78,56 +80,62 @@ function AdminOidcClientsList () {
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
-    useEffect(() => {
-        const fetch = async () => {
-            const queryParams = new URLSearchParams();
-            queryParams.append('sortFieldName', sortFieldName);
-            queryParams.append('sortType', sortType);
-            queryParams.append('pageSize', pageSize);
+    const fetchOidcClientsListData = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('sortFieldName', sortFieldName);
+        queryParams.append('sortType', sortType);
+        queryParams.append('pageSize', pageSize);
 
-            //reset page number to 0 if filter applied or page number is out of bounds
-            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-            queryParams.append('pageNo', effectivePageNo);
-            setResetPageNo(false);
+        //reset page number to 0 if filter applied or page number is out of bounds
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        queryParams.append('pageNo', effectivePageNo);
+        setResetPageNo(false);
 
-            if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
-            if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
-            if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
-            if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-            if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
-            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+        if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
+        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
+        if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-            const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
-            try {
-                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService.get(url);
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response.data;
-                        const populatedData = populateClientNames(resData);
-                        setTotalRecords(responseData.response.totalResults);
-                        setOidcClientsList(populatedData);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+        const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    const populatedData = populateClientNames(resData);
+                    setTotalRecords(responseData.response.totalResults);
+                    setOidcClientsList(populatedData);
                 } else {
-                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'));
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-            } catch (err) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
+            } else {
+                setErrorMsg(t('oidcClientsList.errorInOidcClientsList'));
             }
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
         }
-        fetch();
-    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
+    }
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked || initialRender) {
+            fetchOidcClientsListData();
+            setInitialRender(false);
+            setIsApplyFilterClicked(false);
+        }
+    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
-        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
+        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {

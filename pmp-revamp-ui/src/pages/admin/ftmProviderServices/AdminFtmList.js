@@ -42,6 +42,8 @@ function AdminFtmList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -69,54 +71,60 @@ function AdminFtmList() {
         { id: "action", headerNameKey: 'ftmList.action' }
     ];
 
-    useEffect(() => {
-        const fetch = async () => {
-            const queryParams = new URLSearchParams();
-            queryParams.append('sortFieldName', sortFieldName);
-            queryParams.append('sortType', sortType);
-            queryParams.append('pageSize', pageSize);
+    const fetchFtmListData = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('sortFieldName', sortFieldName);
+        queryParams.append('sortType', sortType);
+        queryParams.append('pageSize', pageSize);
 
-            //reset page number to 0 if filter applied or page number is out of bounds
-            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-            queryParams.append('pageNo', effectivePageNo);
-            setResetPageNo(false);
+        //reset page number to 0 if filter applied or page number is out of bounds
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        queryParams.append('pageNo', effectivePageNo);
+        setResetPageNo(false);
 
-            if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
-            if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
-            if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
-            if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
-            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+        if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
+        if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
+        if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-            const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
-            try {
-                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService.get(url);
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response.data;
-                        setTotalRecords(responseData.response.totalResults);
-                        setFtmList(resData);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+        const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setTotalRecords(responseData.response.totalResults);
+                    setFtmList(resData);
                 } else {
-                    setErrorMsg(t('ftmList.errorInFtmList'));
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-            } catch (err) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
+            } else {
+                setErrorMsg(t('ftmList.errorInFtmList'));
             }
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
         }
-        fetch();
-    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
+    }
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked || initialRender) {
+            fetchFtmListData();
+            setInitialRender(false);
+            setIsApplyFilterClicked(false);
+        }
+    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
     const onApplyFilter = (filters) => {
-        onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
+        onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {

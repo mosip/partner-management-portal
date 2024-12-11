@@ -43,6 +43,8 @@ function AdminApiKeysList () {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -70,55 +72,61 @@ function AdminApiKeysList () {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
 
-    useEffect(() => {
-        const fetch = async () => {
-            const queryParams = new URLSearchParams();
-            queryParams.append('sortFieldName', sortFieldName);
-            queryParams.append('sortType', sortType);
-            queryParams.append('pageSize', pageSize);
+    const fetchApiKeysListData = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('sortFieldName', sortFieldName);
+        queryParams.append('sortType', sortType);
+        queryParams.append('pageSize', pageSize);
 
-            //reset page number to 0 if filter applied or page number is out of bounds
-            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-            queryParams.append('pageNo', effectivePageNo);
-            setResetPageNo(false);
+        //reset page number to 0 if filter applied or page number is out of bounds
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        queryParams.append('pageNo', effectivePageNo);
+        setResetPageNo(false);
 
-            if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
-            if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
-            if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
-            if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-            if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
-            if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+        if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
+        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
+        if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-            const url = `${getPartnerManagerUrl('/partners/apikey/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
-            try {
-                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService.get(url);
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response.data;
-                        setTotalRecords(responseData.response.totalResults);
-                        setApiKeysList(resData);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+        const url = `${getPartnerManagerUrl('/partners/apikey/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setTotalRecords(responseData.response.totalResults);
+                    setApiKeysList(resData);
                 } else {
-                    setErrorMsg(t('apiKeysList.errorInApiKeysList'));
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-            } catch (err) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
+            } else {
+                setErrorMsg(t('apiKeysList.errorInApiKeysList'));
             }
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
         }
-        fetch();
-    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
+    }
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked || initialRender) {
+            fetchApiKeysListData();
+            setInitialRender(false);
+            setIsApplyFilterClicked(false);
+        }
+    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
-        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
+        onClickApplyFilter(updatedfilters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {

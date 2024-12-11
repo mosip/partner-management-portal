@@ -44,6 +44,8 @@ function PolicyGroupList() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         id: null,
         name: null,
@@ -66,56 +68,61 @@ function PolicyGroupList() {
         { id: "action", headerNameKey: "policyGroupList.action" },
     ];
 
-    useEffect(() => {
-        localStorage.setItem('activeTab', 'policyGroup');
-        const fetch = async () => {
-            //reset page number to 0 if filter applied or page number is out of bounds
-            const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-            setResetPageNo(false);
+    const fetchPolicyGroupListData = async () => {
+        //reset page number to 0 if filter applied or page number is out of bounds
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        setResetPageNo(false);
 
-            // filter
-            let filterRequest = getFiltersRequest();
+        // filter
+        let filterRequest = getFiltersRequest();
 
-            const request = createRequest({
-                filters: filterRequest,
-                sort: [{ sortField: sortFieldName, sortType: sortType }],
-                pagination: {
-                    pageStart: effectivePageNo,
-                    pageFetch: pageSize
-                }
-            });
-            try {
-                fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-                const response = await HttpService({
-                    url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
-                    method: 'post',
-                    baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
-                    data: request
-                });
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response.data;
-                        setTotalRecords(responseData.response.totalRecord);
-                        if (resData !== null) setPolicyGroupList(resData);
-                        else setPolicyGroupList([]);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('policyGroupList.errorInPolicyGroupList'));
-                }
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-            } catch (err) {
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-                setFetchData(false);
-                console.error('Error fetching data:', err);
-                setErrorMsg(err);
+        const request = createRequest({
+            filters: filterRequest,
+            sort: [{ sortField: sortFieldName, sortType: sortType }],
+            pagination: {
+                pageStart: effectivePageNo,
+                pageFetch: pageSize
             }
+        });
+        try {
+            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService({
+                url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
+                method: 'post',
+                baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                data: request
+            });
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setTotalRecords(responseData.response.totalRecord);
+                    if (resData !== null) setPolicyGroupList(resData);
+                    else setPolicyGroupList([]);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('policyGroupList.errorInPolicyGroupList'));
+            }
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+            console.error('Error fetching data:', err);
+            setErrorMsg(err);
         }
-        fetch();
-    }, [sortFieldName, sortType, pageNo, pageSize, filterAttributes]);
+    }
+
+    useEffect(() => {
+
+        if (isApplyFilterClicked || initialRender) {
+            fetchPolicyGroupListData();
+            setInitialRender(false);
+            setIsApplyFilterClicked(false);
+        }
+    }, [sortFieldName, sortType, pageNo, pageSize, isApplyFilterClicked]);
 
     const getFiltersRequest = () => {
         let filtersArr = [];
@@ -164,7 +171,7 @@ function PolicyGroupList() {
     };
 
     const onApplyFilter = (filters) => {
-        onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes);
+        onClickApplyFilter(filters, setApplyFilter, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {
