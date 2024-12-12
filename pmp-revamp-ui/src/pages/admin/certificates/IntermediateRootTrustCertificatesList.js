@@ -1,8 +1,8 @@
-import RootCertificateList from './RootCertificateList';
+import CertificatesList from './CertificatesList';
 
 function IntermediateRootTrustCertificatesList() {
   return (
-    <RootCertificateList
+    <CertificatesList
       certificateType='intermediate'
     />
   )

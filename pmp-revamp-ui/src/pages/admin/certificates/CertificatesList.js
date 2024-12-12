@@ -16,7 +16,7 @@ import Pagination from "../../common/Pagination";
 import RootTrustCertificateTab from "./RootTrustCertificateTab";
 import EmptyList from "../../common/EmptyList";
 
-function RootCertificateList({certificateType}) {
+function CertificatesList({certificateType}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -322,4 +322,4 @@ function RootCertificateList({certificateType}) {
   )
 }
 
-export default RootCertificateList;
+export default CertificatesList;

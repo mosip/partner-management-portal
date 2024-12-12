@@ -1,9 +1,9 @@
-import RootCertificateList from "./RootCertificateList";
+import CertificatesList from "./CertificatesList";
 
 function RootTrustCertificatesList() {
 
     return (
-        <RootCertificateList
+        <CertificatesList
             certificateType = 'root'
         />
     )
