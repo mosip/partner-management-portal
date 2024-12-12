@@ -562,6 +562,7 @@
     },
     "rootTrustCertificate": {
         "rootOfTrustCertificates": "Certificats racine de confiance",
+        "intermediateRootTrustCertificates":"Certificats de confiance racine intermédiaires",
         "certificateId": "Id du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",

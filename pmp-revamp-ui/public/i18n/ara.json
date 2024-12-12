@@ -562,6 +562,7 @@
     },
     "rootTrustCertificate": {
         "rootOfTrustCertificates": "جذر شهادات الثقة",
+        "intermediateRootTrustCertificates":"شهادات ثقة الجذر المتوسطة",
         "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
