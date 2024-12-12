@@ -44,7 +44,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     className={`rounded-[4px] h-9 w-full p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && (
-                    <p onClick={onTextClear} className={`bg-white font-bold rounded-md px-2 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:outline-none items-center hover:cursor-pointer`}>
+                    <p onClick={onTextClear} className={`bg-white font-bold rounded-md px-2 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:outline-none items-center hover:cursor-pointer`} tabIndex={0}>
                         x
                     </p>
                 )}
