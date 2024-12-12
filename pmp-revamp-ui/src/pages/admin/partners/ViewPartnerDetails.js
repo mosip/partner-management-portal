@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage } from '../../../utils/AppUtils';
+     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
 
@@ -182,7 +182,7 @@ function ViewPartnerDetails() {
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.partnerType)}
+                                                {getPartnerTypeDescription(partnerDetails.partnerType, t)}
                                             </p>
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
@@ -214,7 +214,7 @@ function ViewPartnerDetails() {
                                                 {t("userProfile.phoneNumber")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.contactNumber ? partnerDetails.contactNumber : '-')}
+                                                {partnerDetails.contactNumber ? partnerDetails.contactNumber : '-'}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
@@ -222,7 +222,7 @@ function ViewPartnerDetails() {
                                                 {t("userProfile.emailAddress")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.emailId)}
+                                                {partnerDetails.emailId}
                                             </p>
                                         </div>
                                         <div className="mb-3 w-[100%]">
@@ -230,7 +230,7 @@ function ViewPartnerDetails() {
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
                                             <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-')}
+                                                {partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-'}
                                             </p>
                                         </div>
                                     </div>
