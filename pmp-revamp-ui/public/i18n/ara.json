@@ -628,6 +628,8 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
         "listOfPartners": "قائمة الشركاء",
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
         "organisationName": "اسم المنظمة",
         "createdOn": "تم الإنشاء بتاريخ",
         "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
