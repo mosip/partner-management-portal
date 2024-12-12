@@ -278,7 +278,7 @@ function Dashboard() {
   };
 
   const rootTrustCertificateList = () => {
-    navigate('/partnermanagement/admin/certificates/root-trust-certificate-list')
+    navigate('/partnermanagement/admin/certificates/root-ca-certificate-list')
   }
 
   const partnersList = () => {

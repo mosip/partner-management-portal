@@ -555,27 +555,30 @@
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
-    "rootTrustCertificate": {
+    "certificatesList": {
+        "rootCA": "Root CA",
+        "intermediateCA": "Intermediate CA",
+        "certificateTrustStore": "Certificate Trust Store",
         "rootOfTrustCertificates": "Root of Trust Certificates",
-        "intermediateRootTrustCertificates": "Intermediate Root Trust Certificates",
-        "certificateId": "Certificate Id",
+        "certificateId": "Certificate ID",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
         "issuedBy": "Issued By",
         "validFrom": "Valid From",
         "validTill": "Valid Till",
-        "timeOfUpload": "Time of Upload",
+        "timeOfUpload": "Upload Date & Time",
         "status": "Status",
         "action": "Action",
         "UploadCertBtn": "Upload Certificate",
         "listOfCertificates": "List of Root of Trust certificates",
-        "selectCertificateId": "Select Certificate Id",
+        "searchCertificateId": "Search Certificate ID",
         "selectPartnerDomain": "Select Partner Domain",
-        "selectIssuedTo": "Select Issued To",
-        "selectIssuedBy": "Select Issued By",
+        "searchIssuedTo": "Search Issued To",
+        "searchIssuedBy": "Search Issued By",
         "selectStatus": "Select Status",
         "deActivate": "Deactivate",
-        "view": "View"
+        "view": "View",
+        "errorInCertificateList": "While fetching certificates, we have encountered with an error."
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
@@ -585,14 +588,13 @@
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
     },
-    "rootTrustCertificateList": {
-        "rootTrustCertificateList": "List of Root of Trust Certificates",
-        "rootOfTrustCertificates": "Root Trust Certificates",
-        "caCertificates": "Ca Certificates"
+    "rootCertificateList": {
+        "uploadRootCaCertificate": "Upload Root CA Certificate",
+        "subTitle": "List of Root CA Certificates"
     },
-    "intermediateTrustCertificateList": {
-        "intermediateRootTrustCertificates": "Intermediate Root Trust Certificates",
-        "intermediateRootTrustCertificateList": "List of Root of Trust Certificates"
+    "intermediateCertificateList": {
+        "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
+        "subTitle": "List of Intermediate CA Certificates"
     },
     "partnerList": {
         "partnerTitle": "Partners",

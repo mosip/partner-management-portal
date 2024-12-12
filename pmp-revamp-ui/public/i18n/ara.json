@@ -560,27 +560,30 @@
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
-    "rootTrustCertificate": {
+    "certificatesList": {
+        "rootCA": "CA جذر",
+        "intermediateCA": "CA متوسط",
+        "certificateTrustStore": "مخزن شهادات الثقة",
         "rootOfTrustCertificates": "جذر شهادات الثقة",
-        "intermediateRootTrustCertificates":"شهادات ثقة الجذر المتوسطة",
         "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
         "issuedBy": "صادرة عن",
         "validFrom": "صالح من",
         "validTill": "صالح حتى",
-        "timeOfUpload": "وقت التحميل",
+        "timeOfUpload": "تاريخ ووقت التحميل",
         "status": "حالة",
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
         "listOfCertificates": "قائمة شهادات جذر الثقة",
-        "selectCertificateId": "حدد معرف الشهادة",
-        "selectPartnerDomain": "حدد مجال الشريك",
-        "selectIssuedTo": "حدد صدر إلى",
-        "selectIssuedBy": "اختر جهة الإصدار",
+        "searchCertificateId": "معرف شهادة البحث",
+        "selectPartnerDomain": "تحديد نطاق الشريك",
+        "searchIssuedTo": "البحث عن الجهة الصادرة",
+        "searchIssuedBy": "البحث عن الجهة الصادرة",
         "selectStatus": "حدد الحالة",
         "deActivate": "إلغاء التنشيط",
-        "view": "منظر"
+        "view": "منظر",
+        "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
@@ -589,13 +592,13 @@
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
     },
-    "rootTrustCertificateList": {
-        "rootTrustCertificateList": "قائمة جذر شهادات الثقة",
-        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
-        "caCertificates": "شهادات كاليفورنيا"
+    "rootCertificateList": {
+        "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
+        "subTitle": "قائمة شهادات CA الجذرية"
     },
-    "intermediateTrustCertificateList": {
-        "intermediateRootTrustCertificates": "شهادات ثقة الجذر المتوسطة"
+    "intermediateCertificateList": {
+        "uploadIntermediateCaCertificate": "تحميل شهادة CA الوسيطة",
+        "subTitle": "قائمة شهادات CA الوسيطة"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",
