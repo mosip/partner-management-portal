@@ -4,7 +4,6 @@ function IntermediateRootTrustCertificatesList() {
   return (
     <RootCertificateList
       certificateType='intermediate'
-      uploadCertificateButtonName='rootTrustCertificate.UploadCertBtn'
     />
   )
 }

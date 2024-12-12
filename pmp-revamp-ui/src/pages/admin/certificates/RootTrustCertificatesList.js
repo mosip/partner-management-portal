@@ -5,7 +5,6 @@ function RootTrustCertificatesList() {
     return (
         <RootCertificateList
             certificateType = 'root'
-            uploadCertificateButtonName='rootTrustCertificate.UploadCertBtn'
         />
     )
 }

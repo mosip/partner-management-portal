@@ -16,7 +16,7 @@ import Pagination from "../../common/Pagination";
 import RootTrustCertificateTab from "./RootTrustCertificateTab";
 import EmptyList from "../../common/EmptyList";
 
-function RootCertificateList({certificateType, uploadCertificateButtonName}) {
+function RootCertificateList({certificateType}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -185,7 +185,7 @@ function RootCertificateList({certificateType, uploadCertificateButtonName}) {
                 <Title title="rootTrustCertificate.rootOfTrustCertificates" backLink="/partnermanagement" />
                 {rootTrustCertificates.length !== 0 ?
                   <button onClick={showUploadCertificate} id='upload_root_trust_certificate_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
-                    {t(uploadCertificateButtonName)}
+                    {t('rootTrustCertificate.UploadCertBtn')}
                   </button>
                   : null
                 }
