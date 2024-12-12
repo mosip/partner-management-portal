@@ -95,7 +95,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     };
     const showRootOfTrustCertificate = () => {
-        navigate('/partnermanagement/admin/certificates/root-trust-certificate-list');
+        navigate('/partnermanagement/admin/certificates/root-ca-certificate-list');
     };
     const showPartner = () => {
         navigate('/partnermanagement/admin/partners-list');

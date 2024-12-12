@@ -3,20 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import {
-  formatDate, getStatusCode, isLangRTL, onClickApplyFilter, onPressEnterKey, bgOfStatus,
-  resetPageNumber, handleMouseClickForDropdown, setPageNumberAndPageSize
+  formatDate, isLangRTL, onClickApplyFilter, onPressEnterKey,
+  handleMouseClickForDropdown, setPageNumberAndPageSize,
+  onResetFilter,
+  resetPageNumber,
+  getPartnerManagerUrl,
+  handleServiceErrors
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
 import FilterButtons from "../../common/FilterButtons";
-import RootTrustCertificatesFilter from "./RootTrustCertificatesFilter";
+import CertificatesFilter from "./CertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
-import RootTrustCertificateTab from "./RootTrustCertificateTab";
+import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
+import { HttpService } from "../../../services/HttpService";
+import viewIcon from "../../../svg/view_icon.svg";
 
-function CertificatesList({certificateType}) {
+function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -25,12 +31,12 @@ function CertificatesList({certificateType}) {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
-  const [rootTrustCertificatesList, setRootTrustCertificatesList] = useState([]);
+  const [certificatesList, setCertificatesList] = useState([]);
   const [order, setOrder] = useState("ASC");
   const [activeAscIcon, setActiveAscIcon] = useState("");
-  const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
+  const [activeDescIcon, setActiveDescIcon] = useState("uploadedDateTime");
   const [actionId, setActionId] = useState(-1);
-  const [sortFieldName, setSortFieldName] = useState("createdDateTime");
+  const [sortFieldName, setSortFieldName] = useState("uploadedDateTime");
   const [sortType, setSortType] = useState("desc");
 
   const [firstIndex, setFirstIndex] = useState(0);
@@ -59,58 +65,72 @@ function CertificatesList({certificateType}) {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "certificateId", headerNameKey: "rootTrustCertificate.certificateId" },
-    { id: "partnerDomain", headerNameKey: "rootTrustCertificate.partnerDomain", },
-    { id: "issuedTo", headerNameKey: "rootTrustCertificate.issuedTo" },
-    { id: "issuedBy", headerNameKey: "rootTrustCertificate.issuedBy" },
-    { id: "validFrom", headerNameKey: "rootTrustCertificate.validFrom" },
-    { id: "validTill", headerNameKey: "rootTrustCertificate.validTill" },
-    { id: "timeOfUpload", headerNameKey: "rootTrustCertificate.timeOfUpload" },
-    { id: "status", headerNameKey: "rootTrustCertificate.status" },
-    { id: "action", headerNameKey: "rootTrustCertificate.action" },
+    { id: "certificateId", headerNameKey: "certificatesList.certificateId" },
+    { id: "partnerDomain", headerNameKey: "certificatesList.partnerDomain", },
+    { id: "issuedTo", headerNameKey: "certificatesList.issuedTo" },
+    { id: "issuedBy", headerNameKey: "certificatesList.issuedBy" },
+    { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
+    { id: "validTill", headerNameKey: "certificatesList.validTill" },
+    { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
+    { id: "status", headerNameKey: "certificatesList.status" },
+    { id: "action", headerNameKey: "certificatesList.action" },
   ];
 
-  const rootTrustCertificates = [
-    { certId: "10081", partnerDomain: "AUTH", issuedTo: "client_auth1", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:01.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-09T19:35:01.085+00:00", status: "active" },
-    { certId: "10082", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-11-21T19:35:01.085+00:00", validTill: "2025-12-21T19:35:01.085+00:00", timeOfUpload: "2024-12-20T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10083", partnerDomain: "DEVICE", issuedTo: "device_client3", issuedBy: "mosip_device1", validFrom: "2024-09-11T19:35:01.085+00:00", validTill: "2025-12-09T19:35:01.085+00:00", timeOfUpload: "2024-12-11T19:35:01.085+00:00", status: "active" },
-    { certId: "10084", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:31.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-09T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10085", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-08T19:35:01.085+00:00", validTill: "2025-12-08T19:35:01.085+00:00", timeOfUpload: "2024-12-05T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10086", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-10T19:35:01.085+00:00", validTill: "2025-12-10T19:35:01.085+00:00", timeOfUpload: "2024-12-07T19:35:01.085+00:00", status: "active" },
-    { certId: "10087", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-19T19:35:01.085+00:00", validTill: "2025-12-19T19:35:01.085+00:00", timeOfUpload: "2024-12-08T19:35:01.085+00:00", status: "active" },
-    { certId: "10088", partnerDomain: "FTM", issuedTo: "client_ftm3", issuedBy: "mosip_auth1", validFrom: "2024-12-27T19:35:01.085+00:00", validTill: "2025-12-27T19:35:01.085+00:00", timeOfUpload: "2024-12-24T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10089", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-12-14T19:35:01.085+00:00", validTill: "2025-12-14T19:35:01.085+00:00", timeOfUpload: "2024-12-13T19:35:01.085+00:00", status: "active" },
-    { certId: "100810", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-03T19:35:01.085+00:00", validTill: "2025-12-03T19:35:01.085+00:00", timeOfUpload: "2024-12-03T19:35:01.085+00:00", status: "active" },
-    { certId: "100811", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-06T19:35:01.085+00:00", validTill: "2025-12-06T19:35:01.085+00:00", timeOfUpload: "2024-12-11T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "100812", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-01T19:35:01.085+00:00", validTill: "2025-12-01T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active" },
-    { certId: "100813", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-22T19:35:01.085+00:00", validTill: "2025-12-22T19:35:01.085+00:00", timeOfUpload: "2024-12-20T19:35:01.085+00:00", status: "active" },
-    { certId: "100814", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-05T19:35:01.085+00:00", validTill: "2025-12-15T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active" },
-    { certId: "100815", partnerDomain: "FTM", issuedTo: "client_ftm1", issuedBy: "mosip_auth1", validFrom: "2024-12-18T19:35:01.085+00:00", validTill: "2025-12-18T19:35:01.085+00:00", timeOfUpload: "2024-12-15T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "100816", partnerDomain: "FTM", issuedTo: "client_ftm3", issuedBy: "mosip_auth1", validFrom: "2024-12-27T19:35:01.085+00:00", validTill: "2025-12-27T19:35:01.085+00:00", timeOfUpload: "2024-12-24T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10089", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-12-14T19:35:01.085+00:00", validTill: "2025-12-14T19:35:01.085+00:00", timeOfUpload: "2024-12-13T19:35:01.085+00:00", status: "active" },
-    { certId: "100810", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-03T19:35:01.085+00:00", validTill: "2025-12-03T19:35:01.085+00:00", timeOfUpload: "2024-12-03T19:35:01.085+00:00", status: "active" },
-    { certId: "100811", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-06T19:35:01.085+00:00", validTill: "2025-12-06T19:35:01.085+00:00", timeOfUpload: "2024-12-11T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "100812", partnerDomain: "DEVICE", issuedTo: "device_client1", issuedBy: "mosip_device1", validFrom: "2024-12-01T19:35:01.085+00:00", validTill: "2025-12-01T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active" },
-    { certId: "100813", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-22T19:35:01.085+00:00", validTill: "2025-12-22T19:35:01.085+00:00", timeOfUpload: "2024-12-20T19:35:01.085+00:00", status: "active" },
-    { certId: "100814", partnerDomain: "AUTH", issuedTo: "client_auth3", issuedBy: "mosip_auth1", validFrom: "2024-12-05T19:35:01.085+00:00", validTill: "2025-12-15T19:35:01.085+00:00", timeOfUpload: "2024-12-04T19:35:01.085+00:00", status: "active" },
-    { certId: "100815", partnerDomain: "FTM", issuedTo: "client_ftm1", issuedBy: "mosip_auth1", validFrom: "2024-12-18T19:35:01.085+00:00", validTill: "2025-12-18T19:35:01.085+00:00", timeOfUpload: "2024-12-15T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "100816", partnerDomain: "FTM", issuedTo: "client_ftm3", issuedBy: "mosip_auth1", validFrom: "2024-12-27T19:35:01.085+00:00", validTill: "2025-12-27T19:35:01.085+00:00", timeOfUpload: "2024-12-24T19:35:01.085+00:00", status: "deactivated" },
-    { certId: "10089", partnerDomain: "AUTH", issuedTo: "client_auth2", issuedBy: "mosip_auth1", validFrom: "2024-12-14T19:35:01.085+00:00", validTill: "2025-12-14T19:35:01.085+00:00", timeOfUpload: "2024-12-13T19:35:01.085+00:00", status: "active" },
-    { certId: "100810", partnerDomain: "FTM", issuedTo: "client_ftm2", issuedBy: "mosip_auth1", validFrom: "2024-12-03T19:35:01.085+00:00", validTill: "2025-12-03T19:35:01.085+00:00", timeOfUpload: "2024-12-03T19:35:01.085+00:00", status: "active" },
-  ];
+  const fetchCertificatesList = async () => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('caCertificateType', certificateType)
+    queryParams.append('sortFieldName', sortFieldName);
+    queryParams.append('sortType', sortType);
+    queryParams.append('pageSize', pageSize);
 
-  const fetchRootTrustCertificatesData = async () => {
-    setTotalRecords(40);
-    setRootTrustCertificatesList(rootTrustCertificates);
+    //reset page number to 0 if filter applied or page number is out of bounds
+    const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+    queryParams.append('pageNo', effectivePageNo);
+    setResetPageNo(false);
+
+    if (filterAttributes.certificateId) queryParams.append('certificateId', filterAttributes.certificateId);
+    if (filterAttributes.partnerDomain) queryParams.append('partnerDomain', filterAttributes.partnerDomain);
+    if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
+    if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
+    // Check filters.status
+    if (filterAttributes.status !== null) {
+      if (filterAttributes.status === 'active') queryParams.append('status', true);
+      else if (filterAttributes.status === 'deactivated') queryParams.append('status', false);
+    }
+
+    const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    try {
+        fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+        const response = await HttpService.get(url);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response.data;
+                setTotalRecords(responseData.response.totalResults);
+                setCertificatesList(resData);
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('certificatesList.errorInCertificateList'));
+        }
+        fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+        setFetchData(false);
+    } catch (err) {
+        setFetchData(false);
+        fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+        console.error('Error fetching data:', err);
+        setErrorMsg(err);
+    }
   }
 
   useEffect(() => {
-    fetchRootTrustCertificatesData();
+    fetchCertificatesList();
   }, [sortFieldName, sortType, pageNo, pageSize]);
 
   useEffect(() => {
     if (isApplyFilterClicked) {
-      fetchRootTrustCertificatesData();
+      fetchCertificatesList();
       setIsApplyFilterClicked(false);
     }
   }, [isApplyFilterClicked]);
@@ -161,14 +181,6 @@ function CertificatesList({certificateType}) {
     loadingDiv: "!py-[20%]",
   };
 
-  const onResetFilter = () => {
-    window.location.reload();
-  };
-
-  const showDeactivateCertificate = (selectedClientdata) => {
-
-  };
-
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded &&
@@ -182,28 +194,28 @@ function CertificatesList({certificateType}) {
           <div className="flex-col mt-7">
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
-                <Title title="rootTrustCertificate.rootOfTrustCertificates" backLink="/partnermanagement" />
-                {rootTrustCertificates.length !== 0 ?
-                  <button onClick={showUploadCertificate} id='upload_root_trust_certificate_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
-                    {t('rootTrustCertificate.UploadCertBtn')}
+                <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
+                {certificatesList.length !== 0 ?
+                  <button onClick={showUploadCertificate} id='upload_certificate_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
+                    {t(uploadCertificateBtnName)}
                   </button>
                   : null
                 }
               </div>
 
-              <RootTrustCertificateTab
-                activeRootTustCertificates={certificateType === 'root' ? true : false}
-                rootTustCertificatesPath={'/partnermanagement/admin/certificates/root-trust-certificate-list'}
-                activeIntermediateTrustCertificates={certificateType === 'intermediate' ? true : false}
-                intermediateTrustCertificatesPath={'/partnermanagement/admin/certificates/intermediate-root-trust-certificate-list'}
+              <CertificateTab
+                activeRootCA={certificateType === 'root' ? true : false}
+                rootCertificatesPath={'/partnermanagement/admin/certificates/root-ca-certificate-list'}
+                activeIntermediateCA={certificateType === 'intermediate' ? true : false}
+                intermediateCertificatesPath={'/partnermanagement/admin/certificates/intermediate-ca-certificate-list'}
               />
-              {!applyFilter && rootTrustCertificates.length === 0 ? (
+              {!applyFilter && certificatesList.length === 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <EmptyList
                     tableHeaders={tableHeaders}
                     showCustomButton={!applyFilter}
-                    customButtonName='rootTrustCertificate.UploadCertBtn'
-                    buttonId='upload_root_trust_certificate_btn'
+                    customButtonName={uploadCertificateBtnName}
+                    buttonId='upload_certificate_btn'
                     onClickButton={showUploadCertificate}
                   />
                 </div>
@@ -211,7 +223,7 @@ function CertificatesList({certificateType}) {
                 <>
                   <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
-                      listTitle="rootTrustCertificateList.rootTrustCertificateList"
+                      listTitle={subTitle}
                       dataListLength={totalRecords}
                       filter={expandFilter}
                       onResetFilter={onResetFilter}
@@ -219,10 +231,10 @@ function CertificatesList({certificateType}) {
                     />
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {expandFilter && (
-                      <RootTrustCertificatesFilter onApplyFilter={onApplyFilter} />
+                      <CertificatesFilter onApplyFilter={onApplyFilter} />
                     )}
                     {!tableDataLoaded && <LoadingIcon styleSet={styles} />}
-                    {tableDataLoaded && applyFilter && rootTrustCertificates.length === 0 ?
+                    {tableDataLoaded && applyFilter && certificatesList.length === 0 ?
                       <EmptyList
                         tableHeaders={tableHeaders}
                       />
@@ -254,42 +266,34 @@ function CertificatesList({certificateType}) {
                                 </tr>
                               </thead>
                               <tbody>
-                                {rootTrustCertificatesList.map((certificate, index) => {
+                                {certificatesList.map((certificate, index) => {
                                   return (
-                                    <tr id={"root_certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.8rem]' : 'pl-[0.8rem]'}`}>{certificate.certId}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.8rem]' : 'pl-[0.8rem]'}`}>{certificate.partnerDomain}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.6rem]' : 'pl-[0.6rem]'}`}>{certificate.issuedTo}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.8rem]' : 'pl-[0.8rem]'}`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.7rem]' : 'pl-[0.7rem]'}`}>{formatDate(certificate.validFrom, "date", false)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.6rem]' : 'pl-[0.6rem]'}`}>{formatDate(certificate.validTill, "date", false)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`${isLoginLanguageRTL ? 'pr-[0.8rem]' : 'pl-[0.8rem]'}`}>{formatDate(certificate.timeOfUpload, "dateTime", false)}</td>
+                                    <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", false)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", false)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", false)}</td>
                                       <td onClick={() => showCertificateDetails(certificate)}>
-                                        <div className={`${bgOfStatus(certificate.status)} flex w-fit py-1.5 px-2 my-2 text-xs font-semibold rounded-md`}>
-                                          {getStatusCode(certificate.status, t)}
+                                        <div className={`${certificate.status === true ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 my-2 text-xs font-semibold rounded-md`}>
+                                          {certificate.status === true ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                         </div>
                                       </td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                          <p id={"root_certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
+                                          <p id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
                                             tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}
                                           >
                                             ...
                                           </p>
                                           {actionId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <p id="root_certificate_details_view_btn" onClick={() => showCertificateDetails(certificate)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}
-                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCertificateDetails(certificate))}
-                                              >
-                                                {t("rootTrustCertificate.view")}
-                                              </p>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <p id="root_certificate_deactive_btn" onClick={() => showDeactivateCertificate(certificate)}
-                                                className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${certificate.status === "active" ? "cursor-pointer" : "text-[#A5A5A5] cursor-auto"} hover:bg-gray-100`}
-                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateCertificate(certificate))}
-                                              >
-                                                {t("rootTrustCertificate.deActivate")}
-                                              </p>
+                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" onClick={() => showCertificateDetails(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCertificateDetails(certificate))}>
+                                                  <p id="certificate_list_view_btn" className={`cursor-pointer text-[#3E3E3E]`}>{t("partnerList.view")}</p>
+                                                  <img src={viewIcon} alt="" className={``}></img>
+                                              </div>
                                             </div>
                                           )}
                                         </div>

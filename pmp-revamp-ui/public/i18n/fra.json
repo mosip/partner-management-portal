@@ -560,27 +560,30 @@
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
-    "rootTrustCertificate": {
+    "certificatesList": {
+        "rootCA": "CA racine",
+        "intermediateCA": "CA intermédiaire",
+        "certificateTrustStore": "Magasin de certificats de confiance",
         "rootOfTrustCertificates": "Certificats racine de confiance",
-        "intermediateRootTrustCertificates":"Certificats de confiance racine intermédiaires",
         "certificateId": "Id du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
         "validTill": "Valable jusqu'à",
-        "timeOfUpload": "Heure de téléchargement",
+        "timeOfUpload": "Date et heure de téléchargement",
         "status": "Statut",
         "action": "Action",
         "UploadCertBtn": "Télécharger le certificat",
         "listOfCertificates": "Liste des certificats Root of Trust",
-        "selectCertificateId": "Sélectionnez l'identifiant du certificat",
-        "selectPartnerDomain": "Sélectionnez un domaine partenaire",
-        "selectIssuedTo": "Sélectionnez Délivré à",
-        "selectIssuedBy": "Sélectionnez Publié par",
+        "searchCertificateId": "Rechercher l'ID du certificat",
+        "selectPartnerDomain": "Sélectionner le domaine du partenaire",
+        "searchIssuedTo": "Rechercher émis à",
+        "searchIssuedBy": "Rechercher émis par",
         "selectStatus": "Sélectionnez le statut",
         "deActivate": "Désactiver",
-        "view": "Voir"
+        "view": "Voir",
+        "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
     },
     "uploadRootofTrustCertificate": {
         "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
@@ -589,13 +592,13 @@
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
     },
-    "rootTrustCertificateList": {
-        "rootTrustCertificateList": "Liste des certificats racine de confiance",
-        "rootOfTrustCertificates": "Certificats de confiance racine",
-        "caCertificates": "Certificats CA"
+    "rootCertificateList": {
+        "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
+        "subTitle": "Liste des certificats d'autorité de certification racine"
     },
-    "intermediateTrustCertificateList": {
-        "intermediateRootTrustCertificates": "Certificats de confiance racine intermédiaires"
+    "intermediateCertificateList": {
+        "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
+        "subTitle": "Liste des certificats d'autorité de certification intermédiaire"
     },
     "partnerList":{
         "partnerTitle": "Partenaires",
