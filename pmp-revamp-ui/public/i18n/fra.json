@@ -625,11 +625,13 @@
         "searchEmailAddress": "Rechercher une adresse e-mail",
         "searchPolicyGroup": "Groupe de stratégies de recherche"
      },
-     "viewPartnerDetails": {
+    "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",
         "listOfPartners": "Liste des partenaires",
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
         "organisationName": "Nom de l'Organisation",
-        "createdOn":"Créé le",
+        "createdOn": "Créé le",
         "expiryDate": "Date et heure d'expiration",
         "emailId": "Identifiant de courrier électronique",
         "partnerCertificate": "Certificat de partenaire",

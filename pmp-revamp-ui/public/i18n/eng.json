@@ -625,6 +625,8 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
         "listOfPartners": "List of Partners",
+        "firstName": "First Name",
+        "lastName": "Last Name",
         "organisationName": "Organisation Name",
         "createdOn": "Created On",
         "expiryDate": "Expiry date & time",

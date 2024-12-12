@@ -193,6 +193,22 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
+                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                            <p className="font-[600] text-suva-gray text-xs">
+                                                {t("viewPartnerDetails.firstName")}
+                                            </p>
+                                            <p className="font-[600] text-vulcan text-sm">
+                                                {partnerDetails.firstName ?? "-"}
+                                            </p>
+                                        </div>
+                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                            <p className="font-[600] text-suva-gray text-xs">
+                                                {t("viewPartnerDetails.lastName")}
+                                            </p>
+                                            <p className="font-[600] text-vulcan text-sm">
+                                                {partnerDetails.lastName ?? "-"}
+                                            </p>
+                                        </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
                                             <p className="font-[600] text-suva-gray text-xs">
                                                 {t("userProfile.phoneNumber")}
