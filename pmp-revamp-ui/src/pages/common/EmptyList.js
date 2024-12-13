@@ -24,7 +24,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, o
                     <img src={rectangleGrid} alt="No data available icon" />
                     { showCustomButton ?
                         <button id={buttonId} type="button" onClick={onClickButton} disabled={disableBtn}
-                            className={`font-semibold mt-8 px-2 ${disableBtn ? "bg-gray-400 opacity-55" : "bg-tory-blue text-white"} rounded-md text-sm mx-8 py-3`}>
+                            className={`font-semibold mt-8 w-[75%] ${disableBtn ? "bg-gray-400 opacity-55" : "bg-tory-blue text-white"} rounded-md text-sm mx-8 py-3`}>
                             {t(customButtonName)}
                         </button>
                         :
