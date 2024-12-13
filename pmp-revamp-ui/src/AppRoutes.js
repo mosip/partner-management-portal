@@ -48,6 +48,7 @@ import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminS
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
 import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
 import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
+import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
 
 function AppRoutes() {
 
@@ -151,10 +152,18 @@ function AppRoutes() {
         {
           path: 'admin/certificates/root-ca-certificate-list',
           element: <GuardedRoute><MainLayout><RootCertificatesList /></MainLayout></GuardedRoute>
+        },  
+        {
+          path: 'admin/certificates/view-root-ca-certificate-details',
+          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/intermediate-ca-certificate-list',
           element: <GuardedRoute><MainLayout><IntermediateCertificatesList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/certificates/view-intermediate-ca-certificate-details',
+          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/upload-root-trust-certificate',
