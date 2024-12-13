@@ -1,6 +1,6 @@
 apiVersion: v2
 name: pmp-revamp-ui
-description: A Helm chart for MOSIP pmp reactJS UI module
+description: A Helm chart for MOSIP pmp revamp UI module
 type: application
 version: 0.0.1-develop
 appVersion: ""
