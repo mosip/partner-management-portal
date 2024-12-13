@@ -117,7 +117,7 @@ function ViewAdminFtmChipDetails() {
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                         {getStatusCode(ftmDetails.status, t)}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
                                             formatDate(ftmDetails.createdDateTime, "date", true)}
                                     </div>

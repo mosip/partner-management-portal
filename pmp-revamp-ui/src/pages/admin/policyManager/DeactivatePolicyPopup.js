@@ -164,7 +164,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                 <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                     {!isLoginLanguageRTL ?
                                         <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
-                                            {t(header)} {' - ' + headerKeyName + ' ?'}
+                                            {`'${t(header)} -  ${headerKeyName} ?'`}
                                         </p>
                                         : <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
                                             {t(header)} '{ ' - ' + headerKeyName}'

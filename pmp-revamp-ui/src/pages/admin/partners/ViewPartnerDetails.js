@@ -164,7 +164,7 @@ function ViewPartnerDetails() {
                                             <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                                 {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
                                                     formatDate(partnerDetails.createdDateTime, "date", true)}
                                             </div>
