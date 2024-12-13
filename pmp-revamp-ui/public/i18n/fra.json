@@ -572,7 +572,7 @@
         "validFrom": "Valable à partir de",
         "validTill": "Valable jusqu'à",
         "timeOfUpload": "Date et heure de téléchargement",
-        "status": "Statut",
+        "validityStatus": "Statut de validité",
         "action": "Action",
         "UploadCertBtn": "Télécharger le certificat",
         "listOfCertificates": "Liste des certificats Root of Trust",
@@ -580,7 +580,7 @@
         "selectPartnerDomain": "Sélectionner le domaine du partenaire",
         "searchIssuedTo": "Rechercher émis à",
         "searchIssuedBy": "Rechercher émis par",
-        "selectStatus": "Sélectionnez le statut",
+        "selectValidityStatus": "Sélectionnez le statut de validité",
         "deActivate": "Désactiver",
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
@@ -594,11 +594,13 @@
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
-        "subTitle": "Liste des certificats d'autorité de certification racine"
+        "subTitle": "Liste des certificats d'autorité de certification racine",
+        "downloadCertificate": "Télécharger"
     },
     "intermediateCertificateList": {
         "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
-        "subTitle": "Liste des certificats d'autorité de certification intermédiaire"
+        "subTitle": "Liste des certificats d'autorité de certification intermédiaire",
+        "downloadCertificate": "Télécharger la chaîne de certificats"
     },
     "partnerList":{
         "partnerTitle": "Partenaires",

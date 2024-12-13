@@ -7,6 +7,7 @@ function RootCertificatesList() {
             certificateType = 'root'
             uploadCertificateBtnName='rootCertificateList.uploadRootCaCertificate'
             subTitle='rootCertificateList.subTitle'
+            downloadBtnName='rootCertificateList.downloadCertificate'
         />
     )
 }
