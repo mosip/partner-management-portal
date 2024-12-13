@@ -8,9 +8,7 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  handleServiceErrors,
-  bgOfStatus,
-  getStatusCode
+  handleServiceErrors
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -19,7 +17,6 @@ import FilterButtons from "../../common/FilterButtons";
 import CertificatesFilter from "./CertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
 import viewIcon from "../../../svg/view_icon.svg";
-import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import Pagination from "../../common/Pagination";
 import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
