@@ -565,6 +565,7 @@
         "intermediateCA": "CA متوسط",
         "certificateTrustStore": "مخزن شهادات الثقة",
         "rootOfTrustCertificates": "جذر شهادات الثقة",
+        "intermediateRootTrustCertificates": "شهادات الثقة الجذرية المتوسطة",
         "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
@@ -598,9 +599,16 @@
         "downloadCertificate": "تحميل"
     },
     "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "تحميل شهادة CA الوسيطة",
-        "subTitle": "قائمة شهادات CA الوسيطة",
+        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
+        "subTitle": "قائمة شهادات CA المتوسطة",
         "downloadCertificate": "تنزيل سلسلة الشهادات"
+    },
+    "viewCertificateDetails": {
+        "viewRootCaCertificateDetails": "عرض تفاصيل شهادة CA الجذر",
+        "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
+        "uploadedOn": "تم الرفع على",
+        "rootCaCertificate": "شهادة المرجع المصدق الجذر",
+        "intermediateCaCertificate": "شهادة CA المتوسطة"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",

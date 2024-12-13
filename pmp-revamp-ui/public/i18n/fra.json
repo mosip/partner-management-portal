@@ -29,7 +29,7 @@
         "filterBtn": "Filtre",
         "resetFilter": "Réinitialiser le filtre",
         "itemsPerPage": "Objets par page",
-        "close":"Fermer",
+        "close": "Fermer",
         "unexpectedError": "Nous avons rencontré une erreur inattendue"
     },
     "dashboard": {
@@ -412,10 +412,10 @@
         "sbiVersion": "Version SBI",
         "searchVersion": "Rechercher la version SBI",
         "linkedDevices": "Appareils liés",
-        "status":"Statut",
+        "status": "Statut",
         "action": "Action",
         "partnerId": "ID partenaire",
-        "orgName":"Organisation",
+        "orgName": "Organisation",
         "partnerType": "Type de partenaire",
         "device": "appareil",
         "sbiCreatedDate": "Date de création de SBI",
@@ -502,7 +502,7 @@
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "addFtmBtn": "Ajouter la puce FTM",
         "partnerId": "ID partenaire",
-        "orgName":"Organisation",
+        "orgName": "Organisation",
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
         "model": "Modèle",
@@ -565,6 +565,7 @@
         "intermediateCA": "CA intermédiaire",
         "certificateTrustStore": "Magasin de certificats de confiance",
         "rootOfTrustCertificates": "Certificats racine de confiance",
+        "intermediateRootTrustCertificates": "Certificats de confiance racine intermédiaires",
         "certificateId": "Id du certificat",
         "partnerDomain": "Domaine partenaire",
         "issuedTo": "Délivré à",
@@ -598,11 +599,18 @@
         "downloadCertificate": "Télécharger"
     },
     "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
-        "subTitle": "Liste des certificats d'autorité de certification intermédiaire",
+        "uploadIntermediateCaCertificate": "Télécharger le CA certification intermédiaire",
+        "subTitle": "Liste des certificats CA intermédiaires",
         "downloadCertificate": "Télécharger la chaîne de certificats"
     },
-    "partnerList":{
+    "viewCertificateDetails": {
+        "viewRootCaCertificateDetails": "Afficher les détails du CA certification racine",
+        "viewIntermediateCaCertificateDetails": "Afficher les détails du CA certification intermédiaire",
+        "uploadedOn": "Téléchargé le",
+        "rootCaCertificate": "CA certification racine",
+        "intermediateCaCertificate": "Certificat CA intermédiaire"
+    },
+    "partnerList": {
         "partnerTitle": "Partenaires",
         "listOfPartnerTitle": "Liste des partenaires",
         "partnerId": "ID partenairePartenaires",
@@ -617,11 +625,11 @@
         "deActivate": "Désactiver",
         "view": "Voir",
         "selectPartnerId": "Sélectionnez l'ID du partenaire",
-        "selectOrganisation":"Sélectionnez une organisation",
-        "selectPartnerType":"Sélectionnez le type de partenaire",
+        "selectOrganisation": "Sélectionnez une organisation",
+        "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectEmailAddress": "Sélectionnez l'adresse e-mail",
-        "selectPolicyGroup":"Sélectionnez un groupe de stratégies",
-        "selectStatus":"Sélectionnez le statut",
+        "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
+        "selectStatus": "Sélectionnez le statut",
         "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
         "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
         "applyFilter": "Postulez maintenant",
@@ -629,7 +637,7 @@
         "searchOrganisation": "Rechercher une organisation",
         "searchEmailAddress": "Rechercher une adresse e-mail",
         "searchPolicyGroup": "Groupe de stratégies de recherche"
-     },
+    },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",
         "listOfPartners": "Liste des partenaires",
@@ -642,39 +650,39 @@
         "partnerCertificate": "Certificat de partenaire",
         "errorInPartnerList": "Lors de la récupération des détails du partenaire, nous avons rencontré une erreur.",
         "originalCertificateSuccessMsg": "Certificat original téléchargé avec succès."
-     },
-     "deactivatePartner": {
-         "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
-         "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
-     },
-     "createPolicyGroup": {
-        "listOfPolicyGroups":"Liste des groupes de politiques",
+    },
+    "deactivatePartner": {
+        "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
+        "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+    },
+    "createPolicyGroup": {
+        "listOfPolicyGroups": "Liste des groupes de politiques",
         "createPolicyGroup": "Créer un groupe de stratégies",
         "policyGroupName": "Nom du groupe de stratégies",
         "enterNameforPolicyGroup": "Entrez le nom du groupe de stratégies",
-        "policyGroupDescription":"Description du groupe de stratégies",
+        "policyGroupDescription": "Description du groupe de stratégies",
         "enterPolicyGroupDescription": "Entrez la description du groupe de stratégies",
         "errorInCreatePolicyGroup": "Lors de la création de la stratégie, nous avons rencontré une erreur",
         "creatPolicyGroupSuccessHeader": "Groupe de stratégies créé avec succès!"
     },
     "viewPolicyGroupDetails": {
         "viewPolicyGroup": "Afficher le groupe de stratégies",
-        "listOfPolicyGroups":"Liste des groupes de stratégies",
-        "policyGroupId":"ID du groupe de stratégies",
+        "listOfPolicyGroups": "Liste des groupes de stratégies",
+        "policyGroupId": "ID du groupe de stratégies",
         "policyGroupDesc": "Description du groupe de stratégies"
     },
     "policyGroupList": {
         "policies": "Politiques",
-        "policyGroup":"Groupes de politiques",
+        "policyGroup": "Groupes de politiques",
         "authPolicy": "Politique d'authentification",
         "dataSharePolicy": "Politique de partage des données",
         "createPolicyGroup": "Créer un groupe de politiques",
         "policyGroupId": "ID du groupe de politiques",
-        "policyGroupName":"Nom du groupe de politiques",
-        "policyGroupDescription":"Description du groupe de politiques",
-        "createdDate":"Date de création",
-        "status":"Statut",
-        "action":"Action",
+        "policyGroupName": "Nom du groupe de politiques",
+        "policyGroupDescription": "Description du groupe de politiques",
+        "createdDate": "Date de création",
+        "status": "Statut",
+        "action": "Action",
         "listOfPolicyGroups": "Liste des groupes de politiques",
         "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur.",
         "searchPolicyGroupId": "ID de groupe de politiques de recherche",
@@ -683,14 +691,14 @@
     },
     "policiesList": {
         "createAuthPolicy": "Créer une politique d'authentification",
-		"createDataSharePolicy": "Créer une politique de partage de données",
-        "policyId":"ID de la politique",
-        "policyName":"Nom de la politique",
+        "createDataSharePolicy": "Créer une politique de partage de données",
+        "policyId": "ID de la politique",
+        "policyName": "Nom de la politique",
         "policyDescription": "Description de la politique",
-        "policyGroup":"Groupe de politiques",
-        "createdDate":"Date de création",
-        "status":"Statut",
-        "action":"Action",
+        "policyGroup": "Groupe de politiques",
+        "createdDate": "Date de création",
+        "status": "Statut",
+        "action": "Action",
         "listOfAuthPolicies": "Liste des politiques d'authentification",
         "listOfDataSharePolicies": "Liste des politiques de partage de données",
         "errorInAuthPolicies": "Lors de la récupération des politiques d’authentification, nous avons rencontré une erreur.",
@@ -775,7 +783,7 @@
     "clonePolicyPopup": {
         "title": "Politique de clonage",
         "description1": "Sélectionnez le groupe de politiques dans lequel vous souhaitez imbriquer la politique clonée",
-        "description2" :"ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
+        "description2": "ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
         "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
@@ -845,9 +853,9 @@
         "description": "Les demandes de stratégie en attente sont associées à cette stratégie. Veuillez prendre les mesures appropriées dans l'écran Liste des liens vers les politiques des partenaires."
     },
     "approveRejectPopup": {
-        "approveReject":"Approuver / Rejeter",
+        "approveReject": "Approuver / Rejeter",
         "deActivate": "Désactiver",
-        "approve":"Approuver",
+        "approve": "Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici"
@@ -866,8 +874,8 @@
         "errorWhileGettingGroupDetails": "Lors de la récupération des détails du groupe de stratégies, nous avons rencontré une erreur."
     },
     "deactivateOidc": {
-        "header":"Etes-vous sûr de vouloir désactiver le client OIDC",
-        "description":"En cliquant sur ' Confirmer ', l’ID client OIDC sera désactivé et ne pourra plus être utilisé pour l’authentification.",
+        "header": "Etes-vous sûr de vouloir désactiver le client OIDC",
+        "description": "En cliquant sur ' Confirmer ', l’ID client OIDC sera désactivé et ne pourra plus être utilisé pour l’authentification.",
         "errorInOidcDetails": "Lors de la récupération des détails du client OIDC, nous avons rencontré une erreur."
     },
     "viewAdminFtmDetails": {
@@ -1073,7 +1081,7 @@
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "La date du certificat n'est pas valide.",
-        "KER-PCM-005": "Certificat d'autorité de certification racine introuvable.",
+        "KER-PCM-005": "CA certification racine introuvable.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",

@@ -560,6 +560,7 @@
         "intermediateCA": "Intermediate CA",
         "certificateTrustStore": "Certificate Trust Store",
         "rootOfTrustCertificates": "Root of Trust Certificates",
+        "intermediateRootTrustCertificates": "Intermediate root trust certificates",
         "certificateId": "Certificate ID",
         "partnerDomain": "Partner Domain",
         "issuedTo": "Issued To",
@@ -597,6 +598,13 @@
         "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
         "subTitle": "List of Intermediate CA Certificates",
         "downloadCertificate": "Download Certificate Chain"
+    },
+    "viewCertificateDetails": {
+        "viewRootCaCertificateDetails": "View Root CA Certificate Details",
+        "viewIntermediateCaCertificateDetails": "View Intermediate CA Certificate Details",
+        "uploadedOn": "Uploaded On",
+        "rootCaCertificate": "Root CA Certificate",
+        "intermediateCaCertificate": "Intermediate CA Certificate"
     },
     "partnerList": {
         "partnerTitle": "Partners",

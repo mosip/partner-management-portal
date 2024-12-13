@@ -8,7 +8,9 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  handleServiceErrors
+  handleServiceErrors,
+  bgOfStatus,
+  getStatusCode
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -16,14 +18,15 @@ import Title from "../../common/Title";
 import FilterButtons from "../../common/FilterButtons";
 import CertificatesFilter from "./CertificatesFilter";
 import SortingIcon from "../../common/SortingIcon";
+import viewIcon from "../../../svg/view_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import Pagination from "../../common/Pagination";
 import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
-import viewIcon from "../../../svg/view_icon.svg";
 import downloadIcon from "../../../svg/download.svg";
 
-function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle, downloadBtnName}) {
+function CertificatesList({  certificateType, viewCertificateDetails , uploadCertificateBtnName, subTitle, downloadBtnName}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -170,7 +173,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
     navigate('/partnermanagement/admin/certificates/upload-root-trust-certificate')
   };
 
-  const showCertificateDetails = (selectedCertificateData) => {
+  const showDeactivateCertificate = () => {
 
   };
 
@@ -270,14 +273,14 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
                                 {certificatesList.map((certificate, index) => {
                                   return (
                                     <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", true)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", true)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", true)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", true)}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", true)}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", true)}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                           <p id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
@@ -287,9 +290,14 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
                                           </p>
                                           {actionId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" onClick={() => showCertificateDetails(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCertificateDetails(certificate))}>
-                                                  <p id="certificate_list_view_btn" className={`cursor-pointer text-[#3E3E3E]`}>{t("partnerList.view")}</p>
-                                                  <img src={viewIcon} alt="" className={``}></img>
+                                              <div className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
+                                                <p id="root_certificate_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("certificatesList.view")}</p>
+                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}/>
+                                              </div>
+                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" tabIndex="0">
+                                                  <p id="certificate_list_view_btn" className={`max-w-28 cursor-pointer text-[#3E3E3E]`}>{t(downloadBtnName)}</p>
+                                                  <img src={downloadIcon} alt="" className={``}></img>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <div className="flex justify-between hover:bg-gray-100 px-2 py-2" tabIndex="0">
