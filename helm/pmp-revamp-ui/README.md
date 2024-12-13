@@ -1,6 +1,6 @@
 # Authmanager
 
-Helm chart for installing MOSIP pmp reactJS UI module
+Helm chart for installing MOSIP pmp revamp UI module
 
 ## TL;DR
 
