@@ -439,5 +439,5 @@ istio:
       portName: http
       port: 80
   hosts:
-    - pmp-new.sandbox.xyz.net
+    - pmp-revamp.sandbox.xyz.net
   prefix: /
