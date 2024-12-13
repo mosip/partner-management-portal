@@ -15,26 +15,17 @@ function CertificatesFilter({ onApplyFilter }) {
         { partnerDomain: 'DEVICE' },
         { partnerDomain: 'AUTH' }
     ]);
-    const [validityStatusData, setValidityStatusData] = useState([]);
-    const [validityStatusDropdownData, setValidityStatusDropdownData] = useState([
-        { validityStatus: 'expired' },
-        { validityStatus: 'valid' }
-    ]);
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",
         issuedTo: "",
         issuedBy: "",
-        validityStatus: "",
     });
 
     useEffect(() => {
         const fetchData = async () => {
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("certificatesList.selectPartnerDomain"))
-            );
-            setValidityStatusData(
-                createDropdownData("validityStatus", "", true, validityStatusDropdownData, t, t("certificatesList.selectValidityStatus"))
             );
         };
         fetchData();
@@ -97,16 +88,6 @@ function CertificatesFilter({ onApplyFilter }) {
                     placeHolderKey='certificatesList.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
-                />
-                <DropdownComponent
-                    fieldName='validityStatus'
-                    dropdownDataList={validityStatusData}
-                    onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='certificatesList.validityStatus'
-                    placeHolderKey='certificatesList.selectValidityStatus'
-                    styleSet={styles}
-                    isPlaceHolderPresent={true}
-                    id='cert_validity_status_filter'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button

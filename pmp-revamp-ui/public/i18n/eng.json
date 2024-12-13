@@ -566,7 +566,7 @@
         "issuedBy": "Issued By",
         "validFrom": "Valid From",
         "validTill": "Valid Till",
-        "timeOfUpload": "Upload Date & Time",
+        "timeOfUpload": "Uploaded On",
         "validityStatus": "Validity Status",
         "action": "Action",
         "UploadCertBtn": "Upload Certificate",

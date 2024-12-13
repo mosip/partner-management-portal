@@ -55,8 +55,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
     certificateId: null,
     partnerDomain: null,
     issuedTo: null,
-    issuedBy: null,
-    validityStatus: null
+    issuedBy: null
   });
 
   const submenuRef = useRef([]);
@@ -93,11 +92,6 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
     if (filterAttributes.partnerDomain) queryParams.append('partnerDomain', filterAttributes.partnerDomain);
     if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
     if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
-    // Check filters.status
-    if (filterAttributes.validityStatus !== null) {
-      if (filterAttributes.validityStatus === 'valid') queryParams.append('validityStatus', true);
-      else if (filterAttributes.validityStatus === 'expired') queryParams.append('validityStatus', false);
-    }
 
     const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
@@ -250,7 +244,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
                                       <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                           {t(header.headerNameKey)}
-                                          {header.id !== "action" && (
+                                          {header.id !== "action" && header.id !== "validityStatus" && (
                                             <SortingIcon
                                               headerId={header.id}
                                               sortDescOrder={sortDescOrder}
@@ -292,8 +286,8 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle,
                                                   <img src={viewIcon} alt="" className={``}></img>
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" tabIndex="0">
-                                                  <p id="certificate_list_view_btn" className={`max-w-28 cursor-pointer text-[#3E3E3E]`}>{t(downloadBtnName)}</p>
+                                              <div className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0">
+                                                  <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
                                                   <img src={downloadIcon} alt="" className={``}></img>
                                               </div>
                                             </div>

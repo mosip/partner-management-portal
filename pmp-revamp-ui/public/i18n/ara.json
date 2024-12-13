@@ -571,7 +571,7 @@
         "issuedBy": "صادرة عن",
         "validFrom": "صالح من",
         "validTill": "صالح حتى",
-        "timeOfUpload": "تاريخ ووقت التحميل",
+        "timeOfUpload": "تم التحميل على",
         "validityStatus": "حالة الصلاحية",
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
