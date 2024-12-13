@@ -85,8 +85,8 @@ function ViewCertificateDetails() {
                                     {viewCertDetails.certId}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`${viewCertDetails.status === true ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                        {viewCertDetails.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}
+                                    <div className={`flex w-fit py-1.5 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                        {/* {viewCertDetails.status === true ? t('statusCodes.valid') : t('statusCodes.expired')} */}
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewCertificateDetails.uploadedOn") + ' ' +
@@ -95,7 +95,7 @@ function ViewCertificateDetails() {
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate('2024-12-10T19:35:01.085+00:00', "time", true)}
+                                        {formatDate(viewCertDetails.uploadTime, "time", true)}
                                     </div>
                                 </div>
                             </div>
@@ -129,24 +129,6 @@ function ViewCertificateDetails() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-wrap py-2 max-[450px]:flex-col">
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-1 ${isLoginLanguageRTL ? "" : ""}`}>
-                                    <p className="font-[600] text-suva-gray text-xs">
-                                        {t("certificatesList.validFrom")}
-                                    </p>
-                                    <p className="font-[600] text-vulcan text-sm break-all">
-                                        {formatDate(viewCertDetails.validFromDate, "date", false)}
-                                    </p>
-                                </div>
-                                <div className="w-[48%] max-[600px]:w-[100%] mb-2">
-                                    <p className="font-[600] text-suva-gray text-xs">
-                                        {t("certificatesList.validTill")}
-                                    </p>
-                                    <p className="font-[600] text-vulcan text-sm break-all">
-                                        {formatDate(viewCertDetails.validTillDate, "date", false)}
-                                    </p>
-                                </div>
-                            </div>
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[2.5%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
@@ -159,7 +141,7 @@ function ViewCertificateDetails() {
                                             }
                                             <div className="flex-col p-3 items-center">
                                                 <h6 id="root_trust_details_certificate_label" className={`text-sm ${(viewCertDetails.status === true) ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                    {viewCertPageHeaders.certType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.intermediateCaCertificate')}
+                                                    {viewCertPageHeaders.certType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.certificateChainOfTrust')}
                                                 </h6>
                                             </div>
                                         </div>
@@ -168,7 +150,7 @@ function ViewCertificateDetails() {
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
                                                 <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => getOriginalCertificate()}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
-                                                    {t('commons.download')}
+                                                    {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadAll')}
                                                 </button>
                                             </div>
                                         </div>
@@ -180,15 +162,15 @@ function ViewCertificateDetails() {
                                             <p id="trust_certificate_partner_type_context" className="font-semibold text-sm text-charcoal-gray">{viewCertDetails.partnerDomain}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                            <p id="trust_certificate_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                            <p id="trust_certificate_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('certificatesList.validFrom')}</p>
                                             <p id="trust_certificate_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(viewCertDetails.uploadTime, 'dateTime', false)}
+                                                {formatDate(viewCertDetails.validFromDate, 'dateTime', true)}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="trust_certificate_label_expiry_date_time" className={`text-xs font-semibold ${!viewCertDetails.status ? 'text-red-700' : 'text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
+                                            <p id="trust_certificate_label_expiry_date_time" className={`text-xs font-semibold ${!viewCertDetails.status ? 'text-crimson-red' : 'text-dim-gray font-semibold'}`}>{t('viewCertificateDetails.validTo')}</p>
                                             <p id="trust_certificate_context_expiry_date_time" className={`text-sm ${!viewCertDetails.status ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(viewCertDetails.validTillDate, 'dateTime', false)}
+                                                {formatDate(viewCertDetails.validTillDate, 'dateTime', true)}
                                             </p>
                                         </div>
                                     </div>

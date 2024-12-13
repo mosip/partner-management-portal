@@ -608,7 +608,9 @@
         "viewIntermediateCaCertificateDetails": "Afficher les détails du CA certification intermédiaire",
         "uploadedOn": "Téléchargé le",
         "rootCaCertificate": "CA certification racine",
-        "intermediateCaCertificate": "Certificat CA intermédiaire"
+        "certificateChainOfTrust": "Chaîne de confiance du certificat",
+        "downloadAll": "Télécharger tout",
+        "validTo": "Valable jusqu'aue"
     },
     "partnerList": {
         "partnerTitle": "Partenaires",

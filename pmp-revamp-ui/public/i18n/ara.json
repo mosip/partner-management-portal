@@ -608,7 +608,9 @@
         "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
-        "intermediateCaCertificate": "شهادة CA المتوسطة"
+        "certificateChainOfTrust": "سلسلة شهادات الثقة",
+        "downloadAll": "تحميل الكل",
+        "validTo": "صالح ل"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",

@@ -604,7 +604,9 @@
         "viewIntermediateCaCertificateDetails": "View Intermediate CA Certificate Details",
         "uploadedOn": "Uploaded On",
         "rootCaCertificate": "Root CA Certificate",
-        "intermediateCaCertificate": "Intermediate CA Certificate"
+        "certificateChainOfTrust": "Certificate Chain of Trust",
+        "downloadAll": "Download All",
+        "validTo": "Valid To"
     },
     "partnerList": {
         "partnerTitle": "Partners",
