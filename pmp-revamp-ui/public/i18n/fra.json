@@ -571,7 +571,7 @@
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
         "validTill": "Valable jusqu'à",
-        "timeOfUpload": "Date et heure de téléchargement",
+        "timeOfUpload": "Téléchargé le",
         "validityStatus": "Statut de validité",
         "action": "Action",
         "UploadCertBtn": "Télécharger le certificat",
