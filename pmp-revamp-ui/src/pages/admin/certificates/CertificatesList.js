@@ -21,8 +21,9 @@ import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
 import viewIcon from "../../../svg/view_icon.svg";
+import downloadIcon from "../../../svg/download.svg";
 
-function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}) {
+function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle, downloadBtnName}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [certificatesList, setCertificatesList] = useState([]);
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [activeAscIcon, setActiveAscIcon] = useState("");
   const [activeDescIcon, setActiveDescIcon] = useState("uploadedDateTime");
   const [actionId, setActionId] = useState(-1);
@@ -55,7 +56,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
     partnerDomain: null,
     issuedTo: null,
     issuedBy: null,
-    status: null
+    validityStatus: null
   });
 
   const submenuRef = useRef([]);
@@ -72,7 +73,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
     { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
     { id: "validTill", headerNameKey: "certificatesList.validTill" },
     { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
-    { id: "status", headerNameKey: "certificatesList.status" },
+    { id: "validityStatus", headerNameKey: "certificatesList.validityStatus" },
     { id: "action", headerNameKey: "certificatesList.action" },
   ];
 
@@ -93,9 +94,9 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
     if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
     if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
     // Check filters.status
-    if (filterAttributes.status !== null) {
-      if (filterAttributes.status === 'active') queryParams.append('status', true);
-      else if (filterAttributes.status === 'deactivated') queryParams.append('status', false);
+    if (filterAttributes.validityStatus !== null) {
+      if (filterAttributes.validityStatus === 'valid') queryParams.append('validityStatus', true);
+      else if (filterAttributes.validityStatus === 'expired') queryParams.append('validityStatus', false);
     }
 
     const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -196,7 +197,7 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
               <div className="flex justify-between">
                 <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
                 {certificatesList.length !== 0 ?
-                  <button onClick={showUploadCertificate} id='upload_certificate_btn' type="button" className="h-10 text-sm px-3 font-semibold text-white bg-tory-blue rounded-md max-330:h-fit">
+                  <button onClick={showUploadCertificate} id='upload_certificate_btn' type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t(uploadCertificateBtnName)}
                   </button>
                   : null
@@ -268,19 +269,15 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
                               <tbody>
                                 {certificatesList.map((certificate, index) => {
                                   return (
-                                    <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${certificate.status === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                    <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
                                       <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
                                       <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
                                       <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
                                       <td onClick={() => showCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", false)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", false)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", false)}</td>
-                                      <td onClick={() => showCertificateDetails(certificate)}>
-                                        <div className={`${certificate.status === true ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 my-2 text-xs font-semibold rounded-md`}>
-                                          {certificate.status === true ? t('statusCodes.activated') : t('statusCodes.deactivated')}
-                                        </div>
-                                      </td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", true)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", true)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", true)}</td>
+                                      <td onClick={() => showCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                           <p id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
@@ -293,6 +290,11 @@ function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle}
                                               <div className="flex justify-between hover:bg-gray-100 px-2 py-2" onClick={() => showCertificateDetails(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showCertificateDetails(certificate))}>
                                                   <p id="certificate_list_view_btn" className={`cursor-pointer text-[#3E3E3E]`}>{t("partnerList.view")}</p>
                                                   <img src={viewIcon} alt="" className={``}></img>
+                                              </div>
+                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" tabIndex="0">
+                                                  <p id="certificate_list_view_btn" className={`max-w-28 cursor-pointer text-[#3E3E3E]`}>{t(downloadBtnName)}</p>
+                                                  <img src={downloadIcon} alt="" className={``}></img>
                                               </div>
                                             </div>
                                           )}

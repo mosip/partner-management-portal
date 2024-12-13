@@ -6,6 +6,7 @@ function IntermediateCertificatesList() {
       certificateType='intermediate'
       uploadCertificateBtnName='intermediateCertificateList.uploadIntermediateCaCertificate'
       subTitle='intermediateCertificateList.subTitle'
+      downloadBtnName='intermediateCertificateList.downloadCertificate'
     />
   )
 }

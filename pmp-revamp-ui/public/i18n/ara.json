@@ -572,7 +572,7 @@
         "validFrom": "صالح من",
         "validTill": "صالح حتى",
         "timeOfUpload": "تاريخ ووقت التحميل",
-        "status": "حالة",
+        "validityStatus": "حالة الصلاحية",
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
         "listOfCertificates": "قائمة شهادات جذر الثقة",
@@ -580,7 +580,7 @@
         "selectPartnerDomain": "تحديد نطاق الشريك",
         "searchIssuedTo": "البحث عن الجهة الصادرة",
         "searchIssuedBy": "البحث عن الجهة الصادرة",
-        "selectStatus": "حدد الحالة",
+        "selectValidityStatus": "حدد حالة الصلاحية",
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
@@ -594,11 +594,13 @@
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
-        "subTitle": "قائمة شهادات CA الجذرية"
+        "subTitle": "قائمة شهادات CA الجذرية",
+        "downloadCertificate": "تحميل"
     },
     "intermediateCertificateList": {
         "uploadIntermediateCaCertificate": "تحميل شهادة CA الوسيطة",
-        "subTitle": "قائمة شهادات CA الوسيطة"
+        "subTitle": "قائمة شهادات CA الوسيطة",
+        "downloadCertificate": "تنزيل سلسلة الشهادات"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",

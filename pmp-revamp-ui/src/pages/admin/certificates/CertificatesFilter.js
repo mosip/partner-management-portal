@@ -15,17 +15,17 @@ function CertificatesFilter({ onApplyFilter }) {
         { partnerDomain: 'DEVICE' },
         { partnerDomain: 'AUTH' }
     ]);
-    const [statusData, setStatusData] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
-        { status: 'active' },
-        { status: 'deactivated' }
+    const [validityStatusData, setValidityStatusData] = useState([]);
+    const [validityStatusDropdownData, setValidityStatusDropdownData] = useState([
+        { validityStatus: 'expired' },
+        { validityStatus: 'valid' }
     ]);
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",
         issuedTo: "",
         issuedBy: "",
-        status: "",
+        validityStatus: "",
     });
 
     useEffect(() => {
@@ -33,8 +33,8 @@ function CertificatesFilter({ onApplyFilter }) {
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("certificatesList.selectPartnerDomain"))
             );
-            setStatusData(
-                createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
+            setValidityStatusData(
+                createDropdownData("validityStatus", "", true, validityStatusDropdownData, t, t("certificatesList.selectValidityStatus"))
             );
         };
         fetchData();
@@ -99,14 +99,14 @@ function CertificatesFilter({ onApplyFilter }) {
                     id='cert_issued_by_domain_filter'
                 />
                 <DropdownComponent
-                    fieldName='status'
-                    dropdownDataList={statusData}
+                    fieldName='validityStatus'
+                    dropdownDataList={validityStatusData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey='certificatesList.status'
-                    placeHolderKey='certificatesList.selectStatus'
+                    fieldNameKey='certificatesList.validityStatus'
+                    placeHolderKey='certificatesList.selectValidityStatus'
                     styleSet={styles}
                     isPlaceHolderPresent={true}
-                    id='cert_status_filter'
+                    id='cert_validity_status_filter'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button
