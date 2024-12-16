@@ -610,7 +610,8 @@
         "rootCaCertificate": "CA certification racine",
         "certificateChainOfTrust": "Chaîne de confiance du certificat",
         "downloadAll": "Télécharger tout",
-        "validTo": "Valable jusqu'aue"
+        "validTo": "Valable jusqu'aue",
+        "certThumbprint": "Empreinte digitale du certificat"
     },
     "partnerList": {
         "partnerTitle": "Partenaires",
@@ -1098,6 +1099,10 @@
         "PMS_CERTIFICATE_ERROR_006": "Impossible de décoder les données du certificat",
         "PMS_CERTIFICATE_ERROR_007": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les certificats de partenaire d'origine",
         "PMS_CERTIFICATE_ERROR_008": "Erreur lors de la récupération du certificat.",
+        "PMS_CERTIFICATE_ERROR_009": "Impossible de télécharger le certificat pour un partenaire désactivé",
+        "PMS_CERTIFICATE_ERROR_010": "Erreur lors de la récupération des certificats CA.",
+        "PMS_CERTIFICATE_ERROR_011": "Erreur lors du téléchargement du certificat CA.",
+        "PMS_CERTIFICATE_ERROR_012": "L'ID du certificat est nul ou vide",
         "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
         "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
         "PMS_POLICY_ERROR_003": "Erreur lors de la récupération de tous les identifiants de partenaires approuvés avec les groupes de stratégies.",

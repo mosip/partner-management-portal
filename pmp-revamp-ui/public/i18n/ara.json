@@ -610,7 +610,8 @@
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
         "certificateChainOfTrust": "سلسلة شهادات الثقة",
         "downloadAll": "تحميل الكل",
-        "validTo": "صالح ل"
+        "validTo": "صالح ل",
+        "certThumbprint": "شهادة بصمة الابهام"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",
@@ -1098,6 +1099,10 @@
         "PMS_CERTIFICATE_ERROR_006": "غير قادر على فك تشفير بيانات الشهادة",
         "PMS_CERTIFICATE_ERROR_007": "معرف الشريك المحدد لا ينتمي إلى المستخدم. لذلك غير قادر على الحصول على شهادات الشريك الأصلية",
         "PMS_CERTIFICATE_ERROR_008": "حدث خطأ أثناء جلب الشهادة.",
+        "PMS_CERTIFICATE_ERROR_009": "تعذر تنزيل الشهادة لشريك تم إلغاء تنشيطه",
+        "PMS_CERTIFICATE_ERROR_010": "خطأ أثناء جلب شهادات CA",
+        "PMS_CERTIFICATE_ERROR_011": "خطأ أثناء تنزيل شهادة CA",
+        "PMS_CERTIFICATE_ERROR_012": "معرف الشهادة فارغ أو فارغ",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
         "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",
