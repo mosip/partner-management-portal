@@ -139,7 +139,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-2 px-6">
-                                <p className="text-sm font-normal text-[#414141] break-normal">{t('clonePolicyPopup.description1')} 
+                                <p className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span>, {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>

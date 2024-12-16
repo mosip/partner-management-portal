@@ -118,8 +118,8 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
                                 <div>
-                                    <div className="flex justify-between px-[1.5rem] my-4">
-                                        <div className="flex-col space-y-2">
+                                    <div className="flex justify-between px-[1.5rem] my-4 w-full">
+                                        <div className="flex-col space-y-2 break-words w-[96%]">
                                             <p className="text-sm font-bold">{title}</p>
                                             {subtitle && (
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
