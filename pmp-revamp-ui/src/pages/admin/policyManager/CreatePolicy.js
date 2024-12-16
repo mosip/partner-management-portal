@@ -159,7 +159,7 @@ function CreatePolicy() {
         let request = createRequest({
             name: trimAndReplace(policyName),
             policyGroupName: policyGroup,
-            policyType: policyType === "auth" ? 'Auth': 'DataShare',
+            policyType: getPolicyType(policyType),
             desc: trimAndReplace(policyDescription),
             policies: parsedPolicyData,
             version: "1.1"
@@ -193,6 +193,16 @@ function CreatePolicy() {
         }
         setDataLoaded(true);
         setIsSubmitClicked(false);
+    }
+
+    const getPolicyType = (policyType) => {
+        if(policyType === "auth") {
+            return "Auth";
+        } else if (policyType === "dataShare") {
+            return "DataShare";
+        } else {
+            return policyType;
+        }
     }
 
     const isFormValid = () => {
