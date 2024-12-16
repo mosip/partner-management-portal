@@ -59,7 +59,7 @@ function ViewAdminDeviceDetails() {
                                     <div className={`${bgOfStatus(deviceDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                         {getStatusCode(deviceDetails.status, t)}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
                                             formatDate(deviceDetails.createdDateTime, "date", true)}
                                     </div>

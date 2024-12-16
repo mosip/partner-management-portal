@@ -88,7 +88,7 @@ function ViewCertificateDetails() {
                                     <div className={`flex w-fit py-1.5 px-5 text-xs rounded-md my-2 font-semibold`}>
                                         {/* {viewCertDetails.status === true ? t('statusCodes.valid') : t('statusCodes.expired')} */}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewCertificateDetails.uploadedOn") + ' ' +
                                             formatDate(viewCertDetails.uploadTime, "date", true)
                                         }

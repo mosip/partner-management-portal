@@ -124,7 +124,7 @@ function ViewPolicy() {
                                             <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(getPolicyStatus(viewDetails), t)}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
                                                     formatDate(viewDetails.cr_dtimes, "date", true)
                                                 }
