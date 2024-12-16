@@ -606,7 +606,8 @@
         "rootCaCertificate": "Root CA Certificate",
         "certificateChainOfTrust": "Certificate Chain of Trust",
         "downloadAll": "Download All",
-        "validTo": "Valid To"
+        "validTo": "Valid To",
+        "certThumbprint": "Certificate Thumbprint"
     },
     "partnerList": {
         "partnerTitle": "Partners",
@@ -1094,6 +1095,10 @@
         "PMS_CERTIFICATE_ERROR_006": "Unable to decode the certificate data",
         "PMS_CERTIFICATE_ERROR_007": "The given partner ID does not belong to the user.So unable to get the original partner certificates",
         "PMS_CERTIFICATE_ERROR_008": "Error while fetching certificate.",
+        "PMS_CERTIFICATE_ERROR_009": "Unable to download the certificate for a deactivated partner",
+        "PMS_CERTIFICATE_ERROR_010": "Error while fetching CA certificates.",
+        "PMS_CERTIFICATE_ERROR_011": "Error while downloading CA certificate.",
+        "PMS_CERTIFICATE_ERROR_012": "Certificate id is null or empty",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
         "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",
