@@ -587,8 +587,12 @@
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
-        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner le domaine partenaire et télécharger le certificat racine /racine intermédiaire",
+        "uploadRootOfTrustCertificate": "Télécharger le certificat racine de confiance",
+        "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
+        "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
+        "rootDesc": "Pour télécharger le certificat Root CA, veuillez vous assurer que le certificat racine correspondant a déjà été téléchargé.",
+        "intermediateDesc": "Pour télécharger le certificat CA intermédiaire, veuillez vous assurer que le certificat racine correspondant a déjà été téléchargé.",
+        "uploadingCertMessage": "Nous téléchargeons votre certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"

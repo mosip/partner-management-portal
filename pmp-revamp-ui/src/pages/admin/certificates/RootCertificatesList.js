@@ -4,6 +4,16 @@ import CertificatesList from "./CertificatesList";
 function RootCertificatesList() {
     const navigate = useNavigate('');
 
+    const uploadCertRequiredData = () => {
+        const requiredData = {
+            title: 'uploadRootofTrustCertificate.uploadRootCaCertificate',
+            description: 'uploadRootofTrustCertificate.rootDesc',
+            breadCrub: 'rootCertificateList.subTitle',
+            backLink: '/partnermanagement/admin/certificates/root-ca-certificate-list'
+        }
+        localStorage.setItem('uploadCertificateAttributes', JSON.stringify(requiredData));
+    };
+
     const viewRootCertificateDetails = (selectedCertificateData) => {
         const requiredData = {
             certificateData: selectedCertificateData,
@@ -23,6 +33,7 @@ function RootCertificatesList() {
             subTitle='rootCertificateList.subTitle'
             viewCertificateDetails={viewRootCertificateDetails}
             downloadBtnName='rootCertificateList.downloadCertificate'
+            uploadCertRequiredData={uploadCertRequiredData}
         />
     )
 }

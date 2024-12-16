@@ -582,9 +582,12 @@
         "errorInCertificateList": "While fetching certificates, we have encountered with an error."
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
-        "rootTrustCertificate": "Root of Trust Certificate",
-        "uploadRootofTrustCertificateDesc": "Please select the partner domain and upload root/ intermediate root certificate",
+        "uploadRootOfTrustCertificate": "Upload Root of Trust Certificate",
+        "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
+        "uploadRootCaCertificate": "Upload Root CA Certificate",
+        "rootDesc": "To upload the Root CA Certificate, please ensure the corresponding Root Certificate has already been uploaded..",
+        "intermediateDesc": "To upload the Intermediate CA Certificate, please ensure the corresponding Root Certificate has already been uploaded..",
+        "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
