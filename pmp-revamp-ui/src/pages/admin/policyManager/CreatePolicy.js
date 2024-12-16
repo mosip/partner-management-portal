@@ -159,7 +159,7 @@ function CreatePolicy() {
         let request = createRequest({
             name: trimAndReplace(policyName),
             policyGroupName: policyGroup,
-            policyType: policyType,
+            policyType: policyType === "auth" ? 'Auth': 'DataShare',
             desc: trimAndReplace(policyDescription),
             policies: parsedPolicyData,
             version: "1.1"
