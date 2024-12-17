@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { bgOfStatus, formatDate, getErrorMessage, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
+import { downloadCaCertificate, formatDate, getErrorMessage, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
@@ -9,6 +9,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
+import { HttpService } from '../../../services/HttpService';
 
 
 function ViewCertificateDetails() {
@@ -34,8 +35,8 @@ function ViewCertificateDetails() {
         setViewCertPageHeaders(viewData);
     }, []);
 
-    const getOriginalCertificate = async () => {
-
+    const onClickDownload = (certificateId) => {
+        downloadCaCertificate(HttpService, certificateId, viewCertPageHeaders.certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t );
     };
 
     const moveBackToList = () => {
@@ -85,10 +86,7 @@ function ViewCertificateDetails() {
                                     {viewCertDetails.certId}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`flex w-fit py-1.5 px-5 text-xs rounded-md my-2 font-semibold`}>
-                                        {/* {viewCertDetails.status === true ? t('statusCodes.valid') : t('statusCodes.expired')} */}
-                                    </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold text-sm text-dark-blue`}>
                                         {t("viewCertificateDetails.uploadedOn") + ' ' +
                                             formatDate(viewCertDetails.uploadTime, "date", true)
                                         }
@@ -156,7 +154,7 @@ function ViewCertificateDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => getOriginalCertificate()}
+                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDownload(viewCertDetails.certId))}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadAll')}
                                                 </button>

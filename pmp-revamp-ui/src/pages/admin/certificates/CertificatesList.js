@@ -8,7 +8,8 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  handleServiceErrors
+  handleServiceErrors,
+  downloadCaCertificate
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -22,8 +23,9 @@ import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
+import SuccessMessage from "../../common/SuccessMessage";
 
-function CertificatesList({  certificateType, viewCertificateDetails , uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName}) {
+function CertificatesList({ certificateType, viewCertificateDetails, uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [certificatesList, setCertificatesList] = useState([]);
   const [order, setOrder] = useState("DESC");
@@ -95,27 +98,27 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
 
     const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
-        fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
-        const response = await HttpService.get(url);
-        if (response) {
-            const responseData = response.data;
-            if (responseData && responseData.response) {
-                const resData = responseData.response.data;
-                setTotalRecords(responseData.response.totalResults);
-                setCertificatesList(resData);
-            } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-            }
+      fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+      const response = await HttpService.get(url);
+      if (response) {
+        const responseData = response.data;
+        if (responseData && responseData.response) {
+          const resData = responseData.response.data;
+          setTotalRecords(responseData.response.totalResults);
+          setCertificatesList(resData);
         } else {
-            setErrorMsg(t('certificatesList.errorInCertificateList'));
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
         }
-        fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-        setFetchData(false);
+      } else {
+        setErrorMsg(t('certificatesList.errorInCertificateList'));
+      }
+      fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+      setFetchData(false);
     } catch (err) {
-        setFetchData(false);
-        fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-        console.error('Error fetching data:', err);
-        setErrorMsg(err);
+      setFetchData(false);
+      fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+      console.error('Error fetching data:', err);
+      setErrorMsg(err);
     }
   }
 
@@ -169,8 +172,16 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
 
   };
 
+  const onClickDownload = (certificate) => {
+    downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+  };
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
+  };
+
+  const cancelSuccessMsg = () => {
+    setSuccessMsg("");
   };
 
   const styles = {
@@ -186,6 +197,9 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
         <>
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+          )}
+          {successMsg && (
+            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
           )}
           <div className="flex-col mt-7">
             <div className="justify-between mb-5 flex-col">
@@ -284,17 +298,13 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
                                                 <p id="root_certificate_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("certificatesList.view")}</p>
-                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}/>
+                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div className="flex justify-between hover:bg-gray-100 px-2 py-2" tabIndex="0">
-                                                  <p id="certificate_list_view_btn" className={`max-w-28 cursor-pointer text-[#3E3E3E]`}>{t(downloadBtnName)}</p>
-                                                  <img src={downloadIcon} alt="" className={``}></img>
-                                              </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0">
-                                                  <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                  <img src={downloadIcon} alt="" className={``}></img>
+                                              <div className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
+                                                onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
+                                                <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
+                                                <img src={downloadIcon} alt="" className={``}></img>
                                               </div>
                                             </div>
                                           )}
