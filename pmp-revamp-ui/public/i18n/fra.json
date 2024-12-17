@@ -793,7 +793,7 @@
         "description2": "ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
-        "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
+        "successMsg": "&quot;{{policyName}}&quot; a été cloné et associé à &quot;{{policyGroupName}}&quot; avec succès !",
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "publishPolicyPopup": {
