@@ -23,7 +23,7 @@ import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
 
-function CertificatesList({  certificateType, viewCertificateDetails , uploadCertificateBtnName, subTitle, downloadBtnName}) {
+function CertificatesList({  certificateType, viewCertificateDetails , uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName}) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -161,6 +161,7 @@ function CertificatesList({  certificateType, viewCertificateDetails , uploadCer
   };
 
   const showUploadCertificate = () => {
+    uploadCertRequiredData();
     navigate('/partnermanagement/admin/certificates/upload-root-trust-certificate')
   };
 

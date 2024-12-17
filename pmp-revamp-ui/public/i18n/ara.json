@@ -587,8 +587,11 @@
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadRootofTrustCertificateDesc": "يرجى تحديد نطاق الشريك وتحميل شهادة الجذر/ الجذر المتوسطة",
+        "uploadRootOfTrustCertificate": "تحميل شهادة جذر الثقة",
+        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
+        "uploadRootCaCertificate": "تحميل شهادة CA الجذر",
+        "intermediateDesc": "لتحميل شهادة CA المتوسطة، يرجى التأكد من تحميل شهادة الجذر المقابلة بالفعل..",
+        "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
@@ -609,6 +612,7 @@
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
         "certificateChainOfTrust": "سلسلة شهادات الثقة",
+        "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
         "downloadAll": "تحميل الكل",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
