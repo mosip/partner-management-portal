@@ -13,7 +13,7 @@ COPY_UTIL=../copy_cm_func.sh
 echo Create $NS namespace
 kubectl create ns $NS
 
-function installing_pmp_ui() {
+function installing_pmp_revamp_ui() {
   echo Istio label
   kubectl label ns $NS istio-injection=enabled --overwrite
   helm repo update
@@ -24,16 +24,23 @@ function installing_pmp_ui() {
   $COPY_UTIL configmap config-server-share config-server $NS
 
   INTERNAL_API_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-api-internal-host})
-  PMP_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-pmp-host})
+  PMP_REVAMP_UI_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-pmp-revamp-ui-host})
 
-  echo Installing pmp-ui
-  helm -n $NS install pmp-ui mosip/pmp-ui  --set pmp.apiUrl=https://$INTERNAL_API_HOST/ --set istio.hosts=["$PMP_HOST"] --version $CHART_VERSION
+  PARTNER_MANAGER_SERVICE_NAME="pms-partner"
+  POLICY_MANAGER_SERVICE_NAME="pms-policy"
+
+  echo Installing pmp-revamp-ui
+  helm -n $NS install pmp-revamp-ui mosip/pmp-revamp-ui \
+  --set pmp_revamp.react_app_partner_manager_api_base_url="https://$INTERNAL_API_HOST/v1/partnermanager" \
+  --set pmp_revamp.react_app_policy_manager_api_base_url="https://$INTERNAL_API_HOST/v1/policymanager" \
+  --set pmp_revamp.pms_partner_manager_internal_service_url="http://$PARTNER_MANAGER_SERVICE_NAME.$NS/v1/partnermanager" \
+  --set pmp_revamp.pms_policy_manager_internal_service_url="http://$POLICY_MANAGER_SERVICE_NAME.$NS/v1/policymanager" \
+  --set istio.hosts=["$PMP_REVAMP_UI_HOST"] --version $CHART_VERSION
 
   kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status
 
-  echo Installed pmp ui services
+  echo Installed pmp-revamp-ui services
 
-  echo "Partner management portal URL: https://$PMP_HOST/pmp-ui/"
   return 0
 }
 
