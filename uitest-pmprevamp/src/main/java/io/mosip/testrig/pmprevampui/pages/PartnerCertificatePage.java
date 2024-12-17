@@ -85,10 +85,10 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partnerDomain_selector_dropdown")
 	private WebElement partnerDomainSelectorDropdown;
 	
-	@FindBy(id = "partnerDomain_selector_dropdown_option3")
+	@FindBy(id = "partnerDomain_selector_dropdown_option1")
 	private WebElement partnerDomainSelectorDropdownOptionAuth;
 	
-	@FindBy(id = "partnerDomain_selector_dropdown_option2")
+	@FindBy(id = "partnerDomain_selector_dropdown_option3")
 	private WebElement deviceInPartnerDomainSelectorDropdown;
 	
 	@FindBy(id = "upload_admin_certificate_btn")

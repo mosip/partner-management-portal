@@ -6,9 +6,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
@@ -31,6 +34,11 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String propsHealthCheckURL = TestRunner.getResourcePath() + "/"
 			+ "config/healthCheckEndpoint.properties";
 	public static boolean initialized = false;
+	
+	public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	public static String todayDate = LocalDate.now().format(dateFormatter);
+	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
+	public static int todayDay = LocalDate.parse(todayDate, dateFormatter).getDayOfMonth();
 
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())
@@ -125,5 +133,25 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			initialized = true;
 		}
 	}
+	
+	public static String formatDateWithSuffix(LocalDate date) {
+        DateTimeFormatter monthDayFormatter = DateTimeFormatter.ofPattern("MMMM d");
+        String dayWithSuffix = addOrdinalSuffix(date.getDayOfMonth());
+        String year = String.valueOf(date.getYear());
+        return monthDayFormatter.format(date).replaceFirst("\\d+", dayWithSuffix) + ", " + year;
+    }
+
+    public static String addOrdinalSuffix(int day) {
+        if (day >= 11 && day <= 13) {
+            return day + "th"; // Special case for 11th, 12th, 13th
+        }
+        switch (day % 10) {
+            case 1: return day + "st";
+            case 2: return day + "nd";
+            case 3: return day + "rd";
+            default: return day + "th";
+        }
+    }
+	
 
 }
