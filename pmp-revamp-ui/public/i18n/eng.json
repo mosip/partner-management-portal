@@ -862,7 +862,7 @@
         "commentPlaceholder": "Write your comment here"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the Policy",
+        "header": "Do you want to Approve/Reject the Policy?",
         "description": "Please review the policy details carefully before taking appropriate action."
     },
     "ftmRequestApproveRejectPopup": {

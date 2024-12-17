@@ -868,7 +868,7 @@
         "commentPlaceholder": "Écrivez votre commentaire ici"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Voulez-vous Approuver/Rejeter la politique",
+        "header": "Voulez-vous Approuver/Rejeter la politique?",
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
     },
     "ftmRequestApproveRejectPopup": {
