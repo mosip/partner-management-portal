@@ -26,7 +26,7 @@ function AuthPoliciesList() {
 
     return (
         <PoliciesList
-            policyType='auth'
+            policyType='Auth'
             createPolicyButtonName='policiesList.createAuthPolicy'
             createPolicy={createAuthPolicy}
             subTitle='policiesList.listOfAuthPolicies'

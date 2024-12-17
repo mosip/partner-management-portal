@@ -26,7 +26,7 @@ function DataSharePoliciesList() {
 
     return (
         <PoliciesList
-            policyType = 'dataShare'
+            policyType = 'DataShare'
             createPolicyButtonName = 'policiesList.createDataSharePolicy'
             createPolicy = {createDataSharePolicy}
             subTitle = 'policiesList.listOfDataSharePolicies'

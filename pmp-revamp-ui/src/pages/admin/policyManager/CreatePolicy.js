@@ -111,14 +111,14 @@ function CreatePolicy() {
                 }
                 setPolicyType(storedPolicyType);
                 setConfirmationHeader('createPolicy.policyConfirmationHeader');
-                if (storedPolicyType === 'dataShare') {
+                if (storedPolicyType === 'DataShare') {
                     setTitle('createPolicy.createDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'auth') {
+                } else if (storedPolicyType === 'Auth') {
                     setTitle('createPolicy.createAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
@@ -159,7 +159,7 @@ function CreatePolicy() {
         let request = createRequest({
             name: trimAndReplace(policyName),
             policyGroupName: policyGroup,
-            policyType: getPolicyType(policyType),
+            policyType: policyType,
             desc: trimAndReplace(policyDescription),
             policies: parsedPolicyData,
             version: "1.1"
@@ -193,16 +193,6 @@ function CreatePolicy() {
         }
         setDataLoaded(true);
         setIsSubmitClicked(false);
-    }
-
-    const getPolicyType = (policyType) => {
-        if(policyType === "auth") {
-            return "Auth";
-        } else if (policyType === "dataShare") {
-            return "DataShare";
-        } else {
-            return policyType;
-        }
     }
 
     const isFormValid = () => {
