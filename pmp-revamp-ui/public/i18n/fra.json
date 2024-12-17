@@ -1089,7 +1089,7 @@
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
-        "KER-PCM-004": "La date du certificat n'est pas valide.",
+        "KER-PCM-004": "Les dates du certificat ne sont pas valides.",
         "KER-PCM-005": "CA certification racine introuvable.",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
@@ -1187,6 +1187,12 @@
         "PMS_PV_002": "Échec de la validation de l'objet de stratégie",
         "PMS_PV_003": "Échec de l'analyse ou de la conversion de l'objet de stratégie",
         "PMS_PV_004": "Schéma de stratégie non valide",
-        "KER-PCM-017": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide"
+        "KER-PCM-017": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide",
+        "KER-PCM-012": "Certificat de partenaire non trouvé pour l'ID donné.",
+        "KER-PCM-007": "Seuls les certificats de la version 3 sont autorisés à être téléchargés",
+        "KER-PCM-011": "Domaine partenaire non valide",
+        "KER-PCM-018": "Type de certificat non valide",
+        "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
+        "KER-PMS-020": "Il n'est pas autorisé de télécharger un certificat daté ultérieurement."
     }
 }
