@@ -145,7 +145,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                         {showAlertErrorMessage
                             ? (
                                 <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
-                                    <img src={errorIcon} alt="" className='h-[5.5rem] place-self-center' />
+                                    <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
                                     <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                         {errorHeaderMsg}
                                     </p>

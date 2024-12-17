@@ -69,7 +69,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.partnerType}
                                 </p>
                             </div>
-                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                            <div className="w-[50%] max-[600px]:w-[100%] mb-3 px-2">
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.organisation")}
                                 </p>
@@ -79,7 +79,7 @@ function ViewPolicyRequestDetails() {
                             </div>
                         </div>
                         <div className={`flex flex-wrap pt-3`}>
-                            <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
@@ -87,7 +87,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
-                            <div className={`w-[48%] max-[600px]:w-[100%]`}>
+                            <div className={`w-[50%] max-[600px]:w-[100%] px-2`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
