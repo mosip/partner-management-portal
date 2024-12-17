@@ -1081,7 +1081,7 @@
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
-        "KER-PCM-004": "Certificate Date is not valid.",
+        "KER-PCM-004": "Certificate Dates are not valid.",
         "KER-PCM-005": "Root CA Certificate not found.",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
@@ -1179,6 +1179,12 @@
         "PMS_PV_002": "Policy object validation failed.",
         "PMS_PV_003": "Failed to parse or convert policy object.",
         "PMS_PV_004": "Invalid policy schema.",
-        "KER-PCM-017": "Expiry date of uploaded certificate is less than 1 year. Please upload valid certificate again"
+        "KER-PCM-017": "Expiry date of uploaded certificate is less than 1 year. Please upload valid certificate again",
+        "KER-PCM-012": "Partner Certificate not found for the given ID.",
+        "KER-PCM-007": "Only Version 3 certificates allowed for upload",
+        "KER-PCM-011": "Invalid Partner Domain",
+        "KER-PCM-018": "Invalid Certificate Type",
+        "KER-PMS-019": "CA Certificate not found for the given ID.",
+        "KER-PMS-020": "Future Dated Certificate not allowed to upload."
     }
 }
