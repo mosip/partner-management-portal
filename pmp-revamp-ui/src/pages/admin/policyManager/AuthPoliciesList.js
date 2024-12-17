@@ -33,7 +33,7 @@ function AuthPoliciesList() {
             fetchDataErrorMessage='policiesList.errorInAuthPolicies'
             viewPolicy={viewAuthPolicy}
             editPolicy={editAuthPolicy}
-            />
+        />
             
     );
 }
