@@ -134,24 +134,4 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 		}
 	}
 	
-	public static String formatDateWithSuffix(LocalDate date) {
-        DateTimeFormatter monthDayFormatter = DateTimeFormatter.ofPattern("MMMM d");
-        String dayWithSuffix = addOrdinalSuffix(date.getDayOfMonth());
-        String year = String.valueOf(date.getYear());
-        return monthDayFormatter.format(date).replaceFirst("\\d+", dayWithSuffix) + ", " + year;
-    }
-
-    public static String addOrdinalSuffix(int day) {
-        if (day >= 11 && day <= 13) {
-            return day + "th"; // Special case for 11th, 12th, 13th
-        }
-        switch (day % 10) {
-            case 1: return day + "st";
-            case 2: return day + "nd";
-            case 3: return day + "rd";
-            default: return day + "th";
-        }
-    }
-	
-
 }
