@@ -8,7 +8,7 @@ function RootCertificatesList() {
         const requiredData = {
             title: 'uploadRootofTrustCertificate.uploadRootCaCertificate',
             description: 'uploadRootofTrustCertificate.rootDesc',
-            breadCrub: 'rootCertificateList.subTitle',
+            breadcrumb: 'rootCertificateList.subTitle',
             backLink: '/partnermanagement/admin/certificates/root-ca-certificate-list'
         }
         localStorage.setItem('uploadCertificateAttributes', JSON.stringify(requiredData));

@@ -156,7 +156,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootOfTrustCertificate" subTitle={t(uploadCertificateData.breadCrub)} backLink={uploadCertificateData.backLink} />
+                            <Title title="uploadRootofTrustCertificate.uploadRootOfTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
                         </div>
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

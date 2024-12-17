@@ -9,7 +9,7 @@ function IntermediateCertificatesList() {
     const requiredData = {
       title: 'uploadRootofTrustCertificate.uploadIntermediateCaCertificate',
       description: 'uploadRootofTrustCertificate.intermediateDesc',
-      breadCrub: 'intermediateCertificateList.subTitle',
+      breadcrumb: 'intermediateCertificateList.subTitle',
       backLink: '/partnermanagement/admin/certificates/intermediate-ca-certificate-list'
     }
     localStorage.setItem('uploadCertificateAttributes', JSON.stringify(requiredData));
