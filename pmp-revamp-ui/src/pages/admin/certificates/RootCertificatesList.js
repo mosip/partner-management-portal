@@ -6,7 +6,7 @@ function RootCertificatesList() {
 
     const uploadCertRequiredData = () => {
         const requiredData = {
-            title: 'uploadRootofTrustCertificate.uploadRootCaCertificate',
+            title: 'rootCertificateList.uploadRootCaCertificate',
             breadcrumb: 'rootCertificateList.subTitle',
             backLink: '/partnermanagement/admin/certificates/root-ca-certificate-list'
         }
