@@ -36,8 +36,8 @@ public class GlobalConstants {
 	public static final String isAuthenticationServicesDisplayed = "Verify if authentication services title is displayed";
 	
 	public static final String isRedirectUri2TextBoxDisplayed = "Verify if authentication services title is displayed";
-	public static final String isLogoUriempty = "verify if Enter Logo URI is precent";
-	public static final String isInvalidLogoUriErrorVissible = "verify if Invalid Logo Uri Error message is issiblet";
+	public static final String isLogoUriempty = "Verify if Enter Logo URI is precent";
+	public static final String isInvalidLogoUriErrorVissible = "Verify if Invalid Logo Uri Error message is issiblet";
 
 	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";
 	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
