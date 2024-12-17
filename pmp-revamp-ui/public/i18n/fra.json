@@ -590,7 +590,6 @@
         "uploadRootOfTrustCertificate": "Télécharger le certificat racine de confiance",
         "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
         "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
-        "rootDesc": "Pour télécharger le certificat Root CA, veuillez vous assurer que le certificat racine correspondant a déjà été téléchargé.",
         "intermediateDesc": "Pour télécharger le certificat CA intermédiaire, veuillez vous assurer que le certificat racine correspondant a déjà été téléchargé.",
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
         "partnerDomain": "Domaine partenaire",
@@ -613,6 +612,7 @@
         "uploadedOn": "Téléchargé le",
         "rootCaCertificate": "CA certification racine",
         "certificateChainOfTrust": "Chaîne de confiance du certificat",
+        "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
         "downloadAll": "Télécharger tout",
         "validTo": "Valable jusqu'aue",
         "certThumbprint": "Empreinte digitale du certificat"

@@ -590,7 +590,6 @@
         "uploadRootOfTrustCertificate": "تحميل شهادة جذر الثقة",
         "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
         "uploadRootCaCertificate": "تحميل شهادة CA الجذر",
-        "rootDesc": "لتحميل شهادة الجذر CA، يرجى التأكد من تحميل شهادة الجذر المقابلة بالفعل..",
         "intermediateDesc": "لتحميل شهادة CA المتوسطة، يرجى التأكد من تحميل شهادة الجذر المقابلة بالفعل..",
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
@@ -613,6 +612,7 @@
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
         "certificateChainOfTrust": "سلسلة شهادات الثقة",
+        "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
         "downloadAll": "تحميل الكل",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"

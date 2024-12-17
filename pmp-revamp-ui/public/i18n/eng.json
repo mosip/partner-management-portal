@@ -582,10 +582,8 @@
         "errorInCertificateList": "While fetching certificates, we have encountered with an error."
     },
     "uploadRootofTrustCertificate": {
-        "uploadRootOfTrustCertificate": "Upload Root of Trust Certificate",
         "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
         "uploadRootCaCertificate": "Upload Root CA Certificate",
-        "rootDesc": "To upload the Root CA Certificate, please ensure the corresponding Root Certificate has already been uploaded..",
         "intermediateDesc": "To upload the Intermediate CA Certificate, please ensure the corresponding Root Certificate has already been uploaded..",
         "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
@@ -608,6 +606,7 @@
         "uploadedOn": "Uploaded On",
         "rootCaCertificate": "Root CA Certificate",
         "certificateChainOfTrust": "Certificate Chain of Trust",
+        "errorWhileGettingRootCertDetails": "While fetching Certificate details, we have encountered with an error",
         "downloadAll": "Download All",
         "validTo": "Valid To",
         "certThumbprint": "Certificate Thumbprint"
