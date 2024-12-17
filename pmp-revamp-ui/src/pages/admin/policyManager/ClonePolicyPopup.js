@@ -7,6 +7,7 @@ import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
 import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleServiceErrors } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
+import closeIcon from "../../../svg/close_icon.svg";
 
 function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState('');
@@ -128,9 +129,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     )}
                     {dataLoaded && (
                         <div className="relative">
-                            <div className="px-6 py-3">
+                            <div className="px-6 py-3 flex justify-between">
                                 <h3 className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
-                            </div>
+                                <button onClick={cancelPopUp}><img className='h-[25px] w-[25px]' src={closeIcon} alt='closeIcon'/></button>
+                            </div> 
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
