@@ -589,7 +589,7 @@
         "dropdownPlaceholder": "Select partner domain",
         "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully",
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
-        "downloadIntermediateCertSuccessMsg": "Intermediate Chain of Certificates are downloaded successfully"
+        "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Upload Root CA Certificate",

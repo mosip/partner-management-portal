@@ -708,7 +708,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
     }
 }
 
-export const downloadCaCertificate = async (HttpService, certificateId, certificateType, setErrorCode, setErrorMsg, setSuccessMsg, t) => {
+export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl(`/partners/download-root-certificate/${certificateId}`, process.env.NODE_ENV));
         if (response) {
@@ -719,21 +719,23 @@ export const downloadCaCertificate = async (HttpService, certificateId, certific
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement("a");
                 link.href = url;
-                link.download = "certificate.p7b";
+                link.download = (certType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
 
                 document.body.appendChild(link);
                 link.click();
+                setSuccessMsg(certType === 'root' ? t('uploadRootofTrustCertificate.downloadRootCertSuccessMsg') : t('uploadRootofTrustCertificate.downloadIntermediateCertSuccessMsg'));
 
                 // CleanUP Code
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(link);
-                setSuccessMsg(certificateType==='root' ? t('uploadRootofTrustCertificate.downloadRootCertSuccessMsg') : t('uploadRootofTrustCertificate.downloadIntermediateCertSuccessMsg'));
             }
             else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } else {
-            setErrorMsg(t('viewCertificateDetails.errorWhileGettingRootCertDetails'));
+            setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
+            console.log(errorMsg);
+
         }
     } catch (err) {
         console.error('Error fetching certificate Details:', err);

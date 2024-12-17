@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { bgOfStatus, downloadCaCertificate, formatDate, getErrorMessage, isLangRTL } from '../../../utils/AppUtils';
+import { downloadCaCertificate, formatDate, getErrorMessage, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
@@ -36,7 +36,7 @@ function ViewCertificateDetails() {
     }, []);
 
     const onClickDownload = (certificateId) => {
-        downloadCaCertificate(HttpService, certificateId, viewCertPageHeaders.certType, setErrorCode, setErrorMsg, setSuccessMsg, t );
+        downloadCaCertificate(HttpService, certificateId, viewCertPageHeaders.certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t );
     };
 
     const moveBackToList = () => {
@@ -154,7 +154,7 @@ function ViewCertificateDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)}
+                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDownload(viewCertDetails.certId))}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadAll')}
                                                 </button>
