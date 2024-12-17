@@ -788,7 +788,7 @@
         "description2": "along with its specified details. Ensure the required policy group has been created beforehand, as only existing policy groups will appear in the dropdown for selection.",
         "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
         "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
-        "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
+        "successMsg": "&quot;{{policyName}}&quot; has been cloned and associated to &quot;{{policyGroupName}}&quot; successfully!",
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
     },
     "publishPolicyPopup": {
@@ -863,7 +863,7 @@
         "commentPlaceholder": "Write your comment here"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the Policy",
+        "header": "Do you want to Approve/Reject the Policy?",
         "description": "Please review the policy details carefully before taking appropriate action."
     },
     "ftmRequestApproveRejectPopup": {

@@ -795,7 +795,7 @@
         "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
-        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "successMsg": "تم استنساخ &quot;{{policyName}}&quot; وربطه بـ &quot;{{policyGroupName}}&quot; بنجاح!",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "publishPolicyPopup": {
@@ -870,7 +870,7 @@
         "commentPlaceholder": "اكتب تعليقك هنا"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "header": "هل ترغب في الموافقة على/رفض السياسة؟",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "ftmRequestApproveRejectPopup": {
