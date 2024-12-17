@@ -8,7 +8,6 @@ import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
 import { HttpService } from '../../../services/HttpService';
-import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import ViewPolicyPopup from './ViewPolicyPopup';
 

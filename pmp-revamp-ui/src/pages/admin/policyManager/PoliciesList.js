@@ -132,6 +132,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }
 
     useEffect(() => {
+        localStorage.setItem('activeTab', policyType);
         fetchPoliciesListData();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
@@ -158,9 +159,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const showDeactivatePolicy = (policy) => {
         if (policy.status === 'activated') {
             setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
-            if (policyType === 'auth') {
+            if (policyType === 'Auth') {
                 setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
-            } else if (policyType === 'dataShare') {
+            } else if (policyType === 'DataShare') {
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
             }
             setShowDeactivatePopup(true);

@@ -5,7 +5,7 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import DropdownWithSearchComponent from '../../common/fields/DropdownWithSearchComponent.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleServiceErrors } from '../../../utils/AppUtils.js';
+import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 
 function ClonePolicyPopup ({policyDetails, closePopUp}) {

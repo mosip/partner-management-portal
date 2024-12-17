@@ -115,6 +115,7 @@ function PolicyGroupList() {
     }
 
     useEffect(() => {
+        localStorage.setItem('activeTab', 'policyGroup');
         fetchPolicyGroupListData();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
