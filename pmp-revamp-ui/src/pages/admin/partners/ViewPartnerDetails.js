@@ -5,6 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
      handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
+import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
 
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -115,6 +116,10 @@ function ViewPartnerDetails() {
         }
     }
 
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+    };
+
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
@@ -132,6 +137,9 @@ function ViewPartnerDetails() {
                 <>
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                    )}
+                    {errorMsg && !unexpectedError && (
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
