@@ -11,9 +11,9 @@ function CertificatesFilter({ onApplyFilter }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
-        { partnerDomain: 'FTM' },
+        { partnerDomain: 'AUTH' },
         { partnerDomain: 'DEVICE' },
-        { partnerDomain: 'AUTH' }
+        { partnerDomain: 'FTM' }
     ]);
     const [filters, setFilters] = useState({
         certificateId: "",

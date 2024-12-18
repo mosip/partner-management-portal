@@ -586,12 +586,16 @@
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "Télécharger le certificat racine de confiance",
-        "uploadRootofTrustCertificateDesc": "Veuillez sélectionner le domaine partenaire et télécharger le certificat racine /racine intermédiaire",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "Télécharger le certificat de confiance",
+        "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
+        "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
+        "uploadingCertMessage": "Nous téléchargeons votre certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
-        "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès"
+        "successMsg": "Le certificat de confiance pour {{partnerdomain}} a été téléchargé avec succès !",
+        "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
+        "downloadIntermediateCertSuccessMsg": "La chaîne de confiance du certificat pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
@@ -608,8 +612,9 @@
         "viewIntermediateCaCertificateDetails": "Afficher les détails du CA certification intermédiaire",
         "uploadedOn": "Téléchargé le",
         "rootCaCertificate": "CA certification racine",
-        "certificateChainOfTrust": "Chaîne de confiance du certificat",
-        "downloadAll": "Télécharger tout",
+        "intermediateCaCertificate": "Certificat CA intermédiaire",
+        "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
+        "downloadCertificateChain": "Télécharger la chaîne de certificats",
         "validTo": "Valable jusqu'aue",
         "certThumbprint": "Empreinte digitale du certificat"
     },
@@ -789,7 +794,7 @@
         "description2": "ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
-        "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
+        "successMsg": "&quot;{{policyName}}&quot; a été cloné et associé à &quot;{{policyGroupName}}&quot; avec succès !",
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "publishPolicyPopup": {
@@ -864,7 +869,7 @@
         "commentPlaceholder": "Écrivez votre commentaire ici"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Voulez-vous Approuver/Rejeter la politique",
+        "header": "Voulez-vous Approuver/Rejeter la politique?",
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
     },
     "ftmRequestApproveRejectPopup": {
@@ -1083,8 +1088,8 @@
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
-        "KER-PCM-004": "La date du certificat n'est pas valide.",
-        "KER-PCM-005": "CA certification racine introuvable.",
+        "KER-PCM-004": "Les dates du certificat ne sont pas valides.",
+        "KER-PCM-005": "Veuillez télécharger le certificat racine correspondant pour continuer",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
@@ -1181,6 +1186,12 @@
         "PMS_PV_002": "Échec de la validation de l'objet de stratégie",
         "PMS_PV_003": "Échec de l'analyse ou de la conversion de l'objet de stratégie",
         "PMS_PV_004": "Schéma de stratégie non valide",
-        "KER-PCM-017": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide"
+        "KER-PCM-017": "La date d'expiration du certificat téléchargé est inférieure à 1 an. Veuillez télécharger à nouveau un certificat valide",
+        "KER-PCM-012": "Certificat de partenaire non trouvé pour l'ID donné.",
+        "KER-PCM-007": "Seuls les certificats de la version 3 sont autorisés à être téléchargés",
+        "KER-PCM-011": "Domaine partenaire non valide",
+        "KER-PCM-018": "Type de certificat non valide",
+        "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
+        "KER-PMS-020": "Il n'est pas autorisé de télécharger un certificat daté ultérieurement."
     }
 }

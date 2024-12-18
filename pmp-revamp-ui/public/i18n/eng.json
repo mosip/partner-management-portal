@@ -581,13 +581,16 @@
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "Upload Root of Trust Certificate",
-        "rootTrustCertificate": "Root of Trust Certificate",
-        "uploadRootofTrustCertificateDesc": "Please select the partner domain and upload root/ intermediate root certificate",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "Upload Trust Certificate",
+        "description": "Please select the partner domain and upload Root CA / Intermediate CA Certificate.",
+        "uploadSectionDescription": "Please tap to select the Root CA / Intermediate CA Certificate",
+        "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
-        "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully"
+        "successMsg": "Trust Certificate for {{partnerdomain}} is uploaded successfully!",
+        "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
+        "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Upload Root CA Certificate",
@@ -604,8 +607,9 @@
         "viewIntermediateCaCertificateDetails": "View Intermediate CA Certificate Details",
         "uploadedOn": "Uploaded On",
         "rootCaCertificate": "Root CA Certificate",
-        "certificateChainOfTrust": "Certificate Chain of Trust",
-        "downloadAll": "Download All",
+        "intermediateCaCertificate": "Intermediate CA Certificate",
+        "errorWhileGettingRootCertDetails": "While fetching Certificate details, we have encountered with an error",
+        "downloadCertificateChain": "Download Certificate Chain",
         "validTo": "Valid To",
         "certThumbprint": "Certificate Thumbprint"
     },
@@ -785,7 +789,7 @@
         "description2": "along with its specified details. Ensure the required policy group has been created beforehand, as only existing policy groups will appear in the dropdown for selection.",
         "errorInClonePolicy": "While cloning policy, we have encountered with an error.",
         "errorInPolicyDetails": "While fetching policy details, we have encountered with an error.",
-        "successMsg": "{{policyName}} has been cloned and associated to {{policyGroupName}} successfully!",
+        "successMsg": "&quot;{{policyName}}&quot; has been cloned and associated to &quot;{{policyGroupName}}&quot; successfully!",
         "policyExistError": "This policy already exists within the selected policy group. Please choose a different policy group to proceed further."
     },
     "publishPolicyPopup": {
@@ -860,7 +864,7 @@
         "commentPlaceholder": "Write your comment here"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the Policy",
+        "header": "Do you want to Approve/Reject the Policy?",
         "description": "Please review the policy details carefully before taking appropriate action."
     },
     "ftmRequestApproveRejectPopup": {
@@ -1079,8 +1083,8 @@
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
-        "KER-PCM-004": "Certificate Date is not valid.",
-        "KER-PCM-005": "Root CA Certificate not found.",
+        "KER-PCM-004": "Certificate Dates are not valid.",
+        "KER-PCM-005": "Please upload corresponding Root Certificate to proceed further",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
@@ -1177,6 +1181,12 @@
         "PMS_PV_002": "Policy object validation failed.",
         "PMS_PV_003": "Failed to parse or convert policy object.",
         "PMS_PV_004": "Invalid policy schema.",
-        "KER-PCM-017": "Expiry date of uploaded certificate is less than 1 year. Please upload valid certificate again"
+        "KER-PCM-017": "Expiry date of uploaded certificate is less than 1 year. Please upload valid certificate again",
+        "KER-PCM-012": "Partner Certificate not found for the given ID.",
+        "KER-PCM-007": "Only Version 3 certificates allowed for upload",
+        "KER-PCM-011": "Invalid Partner Domain",
+        "KER-PCM-018": "Invalid Certificate Type",
+        "KER-PMS-019": "CA Certificate not found for the given ID.",
+        "KER-PMS-020": "Future Dated Certificate not allowed to upload."
     }
 }

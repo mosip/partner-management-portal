@@ -68,7 +68,7 @@ function EditPolicy() {
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
-                if (storedPolicyType === 'dataShare') {
+                if (storedPolicyType === 'DataShare') {
                     setTitle('editPolicy.editDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
@@ -76,7 +76,7 @@ function EditPolicy() {
                     setConfirmationHeader('editPolicy.dataSharePolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'auth') {
+                } else if (storedPolicyType === 'Auth') {
                     setTitle('editPolicy.editAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');

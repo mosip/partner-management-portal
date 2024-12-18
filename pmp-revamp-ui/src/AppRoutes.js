@@ -23,7 +23,7 @@ import DevicesList from './pages/partner/deviceProviderServices/DevicesList.js';
 import FtmList from './pages/partner/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/partner/ftmProviderServices/AddFtm.js';
 import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipDetails.js';
-import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
+import UploadTrustCertificate from './pages/admin/certificates/UploadTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
@@ -166,8 +166,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/upload-root-trust-certificate',
-          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate /></MainLayout></GuardedRoute>
+          path: 'admin/certificates/upload-trust-certificate',
+          element: <GuardedRoute><MainLayout><UploadTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/partners-list',

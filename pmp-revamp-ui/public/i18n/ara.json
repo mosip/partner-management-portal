@@ -586,12 +586,16 @@
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadRootofTrustCertificateDesc": "يرجى تحديد نطاق الشريك وتحميل شهادة الجذر/ الجذر المتوسطة",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "تحميل شهادة الثقة",
+        "description": "الرجاء تحديد نطاق الشريك وتحميل شهادة CA الجذرية / CA المتوسطة.",
+        "uploadSectionDescription": "الرجاء النقر لتحديد شهادة CA الجذرية / CA المتوسطة",
+        "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
+        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerdomain}} بنجاح!",
+        "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
+        "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
@@ -608,8 +612,9 @@
         "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
-        "certificateChainOfTrust": "سلسلة شهادات الثقة",
-        "downloadAll": "تحميل الكل",
+        "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
+        "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
+       "downloadCertificateChain": "تنزيل سلسلة الشهادات",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
     },
@@ -789,7 +794,7 @@
         "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
-        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "successMsg": "تم استنساخ &quot;{{policyName}}&quot; وربطه بـ &quot;{{policyGroupName}}&quot; بنجاح!",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "publishPolicyPopup": {
@@ -864,7 +869,7 @@
         "commentPlaceholder": "اكتب تعليقك هنا"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "header": "هل ترغب في الموافقة على/رفض السياسة؟",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "ftmRequestApproveRejectPopup": {
@@ -1083,8 +1088,8 @@
         "KER-PCM-008": "اسم المنظمة الشريكة غير متطابق",
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
         "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
-        "KER-PCM-004": "تاريخ الشهادة غير صالح.",
-        "KER-PCM-005": "لم يتم العثور على شهادة CA الجذر",
+        "KER-PCM-004": "تواريخ الشهادة غير صالحة.",
+        "KER-PCM-005": "يرجى تحميل شهادة الجذر المقابلة للمتابعة",
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",
@@ -1181,6 +1186,12 @@
         "PMS_PV_002": "فشل التحقق من صحة كائن السياسة",
         "PMS_PV_003": "فشل تحليل كائن السياسة أو تحويله.",
         "PMS_PV_004": "مخطط السياسة غير صالح",
-        "KER-PCM-017": "تاريخ انتهاء صلاحية الشهادة التي تم تحميلها أقل من عام واحد. يرجى تحميل شهادة صالحة مرة أخرى"
+        "KER-PCM-017": "تاريخ انتهاء صلاحية الشهادة التي تم تحميلها أقل من عام واحد. يرجى تحميل شهادة صالحة مرة أخرى",
+        "KER-PCM-012": "لم يتم العثور على شهادة الشريك للمعرف المحدد.",
+        "KER-PCM-007": "يُسمح فقط بتحميل شهادات الإصدار 3",
+        "KER-PCM-011": "مجال الشريك غير صالح",
+        "KER-PCM-018": "نوع الشهادة غير صالح",
+        "KER-PMS-019": "لم يتم العثور على شهادة CA للمعرف المحدد.",
+        "KER-PMS-020": "لا يُسمح بتحميل الشهادة المؤرخة في المستقبل."
     }
 }

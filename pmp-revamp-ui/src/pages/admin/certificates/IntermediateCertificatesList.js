@@ -5,6 +5,14 @@ function IntermediateCertificatesList() {
 
   const navigate = useNavigate('');
 
+  const uploadCertRequiredData = () => {
+    const requiredData = {
+      breadcrumb: 'intermediateCertificateList.subTitle',
+      backLink: '/partnermanagement/admin/certificates/intermediate-ca-certificate-list'
+    }
+    localStorage.setItem('uploadCertificateAttributes', JSON.stringify(requiredData));
+  };
+
   const viewIntermediateCertificateDetails = (selectedCertificateData) => {
     const requiredData = {
       certificateData: selectedCertificateData,
@@ -24,6 +32,7 @@ function IntermediateCertificatesList() {
       subTitle='intermediateCertificateList.subTitle'
       viewCertificateDetails={viewIntermediateCertificateDetails}
       downloadBtnName='intermediateCertificateList.downloadCertificate'
+      uploadCertRequiredData={uploadCertRequiredData}
     />
   )
 }

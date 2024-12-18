@@ -145,7 +145,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                         {showAlertErrorMessage
                             ? (
                                 <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
-                                    <img src={errorIcon} alt="" className='h-[5.5rem] place-self-center' />
+                                    <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
                                     <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                         {errorHeaderMsg}
                                     </p>
@@ -163,14 +163,14 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                 )}
                                 <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                     {!isLoginLanguageRTL ?
-                                        <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
+                                        <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
                                             {`'${t(header)} -  ${headerKeyName} ?'`}
                                         </p>
-                                        : <p className="text-base leading-snug font-semibold text-black break-normal px-[1%]">
+                                        : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
                                             {t(header)} '{ ' - ' + headerKeyName}'
                                         </p>
                                     }
-                                    <p className="text-sm text-[#666666] break-normal py-[5%]">
+                                    <p className="text-sm text-[#666666] break-words py-[5%]">
                                         {t(description)}
                                     </p>
                                     <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">

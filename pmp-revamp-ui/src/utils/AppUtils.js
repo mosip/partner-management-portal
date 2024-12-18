@@ -541,14 +541,14 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
         setErrorMsg(t('createPolicy.uploadFileError'));
     }
     event.target.value = '';
-};  
+};
 
 export const getClientNameEng = (clientName) => {
     try {
         const jsonObj = JSON.parse(clientName);
         if (jsonObj['eng']) {
             return jsonObj['eng'];
-        } 
+        }
         if (jsonObj['@none']) {
             return jsonObj['@none'];
         }
@@ -563,10 +563,10 @@ export const getClientNameEng = (clientName) => {
 export const populateClientNames = (data) => {
     // Updating the status based on the condition
     const extractedList = data.map(item => {
-        return { 
-            ...item, 
+        return {
+            ...item,
             clientNameJson: item.clientName,
-            clientNameEng: getClientNameEng(item.clientName) 
+            clientNameEng: getClientNameEng(item.clientName)
         };
     });
     return extractedList;
@@ -584,7 +584,7 @@ export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
         return newJsonObject;
     } catch {
         const newJsonObject = {
-            eng : clientNameEng
+            eng: clientNameEng
         }
         return newJsonObject;
     }
@@ -623,19 +623,19 @@ export const copyClientId = (data, textToCopied, setCopied) => {
 
 export const getApproveRejectStatus = (status) => {
     if (status === "approved") {
-      return "approved";
+        return "approved";
     }
     if (status === "rejected") {
-      return "rejected";
+        return "rejected";
     }
 };
 
 export const updateActiveState = (status) => {
     if (status === "approved") {
-      return true;
+        return true;
     }
     if (status === "rejected") {
-      return false;
+        return false;
     }
 };
 
@@ -707,3 +707,38 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
         return [];
     }
 }
+
+export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/download-root-certificate/${certificateId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                const blob = new Blob([resData.p7bFile], { type: "application/x-pkcs7-certificates" });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = (certType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
+
+                document.body.appendChild(link);
+                link.click();
+                setSuccessMsg(certType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
+
+                // CleanUP Code
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(link);
+            }
+            else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
+            console.log(errorMsg);
+
+        }
+    } catch (err) {
+        console.error('Error fetching certificate Details:', err);
+        setErrorMsg(err);
+    }
+};

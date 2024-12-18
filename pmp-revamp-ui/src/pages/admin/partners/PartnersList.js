@@ -22,6 +22,7 @@ import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import EmptyList from "../../common/EmptyList";
 
 function PartnersList() {
@@ -331,7 +332,7 @@ function PartnersList() {
                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                             <div className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
                                               <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                              <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                              <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                             </div>
                                             {showDeactivatePopup && (
                                               < DeactivatePopup
