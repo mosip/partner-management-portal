@@ -23,6 +23,7 @@ import CertificateTab from "./CertificateTab";
 import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
+import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 
 function CertificatesList({ certificateType, viewCertificateDetails, uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName }) {
@@ -208,7 +209,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
               <div className="flex justify-between">
                 <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
                 {certificatesList.length !== 0 ?
-                  <button onClick={showUploadCertificate} id='upload_certificate_btn' type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
+                  <button onClick={showUploadCertificate} id={uploadCertificateBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
                   : null
@@ -306,7 +307,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                               <div className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
                                                 onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
                                                 <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                <img src={downloadIcon} alt="" className={``}></img>
+                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={``}/>
                                               </div>
                                             </div>
                                           )}

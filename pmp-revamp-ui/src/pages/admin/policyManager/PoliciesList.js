@@ -14,14 +14,18 @@ import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import replicateIcon from "../../../svg/replicate_icon.svg";
+import disableReplicateIcon from "../../../svg/disable_replicate_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import Pagination from '../../common/Pagination.js';
 import { HttpService } from '../../../services/HttpService.js';
 import PoliciesListFilter from './PoliciesListFilter.js';
 import EmptyList from '../../common/EmptyList.js';
 import ClonePolicyPopup from './ClonePolicyPopup.js';
 import editPolicyIcon from "../../../svg/edit_policy_icon.svg";
+import disableEditPolicyIcon from "../../../svg/disable_edit_policy_icon.svg";
 import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
+import disablePublishPolicyIcon from "../../../svg/disable_publish_policy_icon.svg";
 import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
 import PublishPolicyPopup from './PublishPolicyPopup.js';
 
@@ -379,7 +383,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                     <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickPublish(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickPublish(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.publish")}</p>
-                                                                                            <img src={publishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={policy.status === 'draft' ? publishPolicyIcon : disablePublishPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         {showPublishPolicyPopup && (
                                                                                             <PublishPolicyPopup
@@ -391,17 +395,17 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPolicy(policy))}>
                                                                                             <p id="policy_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                            <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between ${policy.status === 'draft' ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-default'}`} onClick={() => onClickEdit(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickEdit(policy))}>
                                                                                             <p id="policy_publish_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.edit")}</p>
-                                                                                            <img src={editPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={policy.status === 'draft' ? editPolicyIcon : disableEditPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickClone(policy))}>
                                                                                             <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status !== 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
-                                                                                            <img src={replicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={policy.status !== 'draft' ? replicateIcon : disableReplicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         {showClonePopup && (
                                                                                             <ClonePolicyPopup
@@ -412,7 +416,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                         <div className={`flex justify-between hover:bg-gray-100 ${policy.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicy(policy)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicy(policy))}>
                                                                                             <p id="policy_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                            <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                            <img src={policy.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         {showDeactivatePopup && (
                                                                                             <DeactivatePolicyPopup
