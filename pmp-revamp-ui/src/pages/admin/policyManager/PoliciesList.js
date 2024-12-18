@@ -212,6 +212,25 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         document.body.style.overflow = 'auto';
     };
 
+    useEffect(() => {
+        // Define the handler for the Escape key
+        const handleEscape = (e) => {
+          if (e.key === 'Escape') {
+            closeClonePolicyPopup();
+          }
+        };
+    
+        // Add event listener when the popup is open
+        if (showClonePopup) {
+          window.addEventListener('keydown', handleEscape);
+        }
+    
+        // Cleanup the event listener when the component unmounts or isOpen changes
+        return () => {
+          window.removeEventListener('keydown', handleEscape);
+        };
+    }, [showClonePopup]);
+
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setActionId(-1);
