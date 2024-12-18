@@ -351,7 +351,7 @@ function PolicyGroupList() {
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
                                                                                         <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={policyGroup.isActive === false ? disableDeactivateIcon : deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={policyGroup.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePolicyGroupPopup && (
                                                                                         <DeactivatePolicyPopup

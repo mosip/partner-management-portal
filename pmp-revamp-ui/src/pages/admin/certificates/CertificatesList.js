@@ -307,7 +307,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                               <div className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
                                                 onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
                                                 <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                <img src={certificate.status === false? disableDownloadIcon :downloadIcon} alt="" className={``}></img>
+                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={``}/>
                                               </div>
                                             </div>
                                           )}

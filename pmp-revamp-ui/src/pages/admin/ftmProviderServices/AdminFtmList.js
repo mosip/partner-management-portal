@@ -311,7 +311,7 @@ function AdminFtmList() {
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                     <div onClick={() => approveRejectFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => approveRejectFtmDetails(ftm))}>
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                                                        <img src={ftm.status !== 'pending_approval' ? disabledApproveRejectIcon : approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={ftm.status !== 'pending_approval' ? disabledApproveRejectIcon : approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showFtmApproveRejectPopup &&
                                                                                         <ApproveRejectPopup
@@ -326,12 +326,12 @@ function AdminFtmList() {
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div className="flex justify-between hover:bg-gray-100" onClick={() => viewFtmChipDetails(ftm)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmChipDetails(ftm))}>
                                                                                         <p id="ftm_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div onClick={() => deactivateFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateFtmDetails(ftm))}>
                                                                                         <p id="ftm_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={ftm.status !== 'pending_approval' ? disableDeactivateIcon : deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={ftm.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
                                                                                         <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
