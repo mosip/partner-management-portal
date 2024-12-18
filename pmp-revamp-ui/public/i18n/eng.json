@@ -581,13 +581,14 @@
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootOfTrustCertificate": "Upload Root of Trust Certificate",
-        "intermediateDesc": "To upload the Intermediate CA Certificate, please ensure the corresponding Root Certificate has already been uploaded..",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "Upload Trust Certificate",
+        "description": "Please select the partner domain and upload Root CA / Intermediate CA Certificate.",
+        "uploadSectionDescription": "Please tap to select the Root CA / Intermediate CA Certificate",
         "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
-        "successMsg": "Root of Trust Certificate for {{partnerDomain}} is uploaded successfully",
+        "successMsg": "Trust Certificate for {{partnerdomain}} is uploaded successfully!",
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
         "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
@@ -606,9 +607,9 @@
         "viewIntermediateCaCertificateDetails": "View Intermediate CA Certificate Details",
         "uploadedOn": "Uploaded On",
         "rootCaCertificate": "Root CA Certificate",
-        "certificateChainOfTrust": "Certificate Chain of Trust",
+        "intermediateCaCertificate": "Intermediate CA Certificate",
         "errorWhileGettingRootCertDetails": "While fetching Certificate details, we have encountered with an error",
-        "downloadAll": "Download All",
+        "downloadCertificateChain": "Download Certificate Chain",
         "validTo": "Valid To",
         "certThumbprint": "Certificate Thumbprint"
     },
@@ -1083,7 +1084,7 @@
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Dates are not valid.",
-        "KER-PCM-005": "Root CA Certificate not found.",
+        "KER-PCM-005": "Please upload corresponding Root Certificate to proceed further",
         "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",

@@ -586,15 +586,14 @@
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootOfTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
-        "uploadRootCaCertificate": "تحميل شهادة CA الجذر",
-        "intermediateDesc": "لتحميل شهادة CA المتوسطة، يرجى التأكد من تحميل شهادة الجذر المقابلة بالفعل..",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "تحميل شهادة الثقة",
+        "description": "الرجاء تحديد نطاق الشريك وتحميل شهادة CA الجذرية / CA المتوسطة.",
+        "uploadSectionDescription": "الرجاء النقر لتحديد شهادة CA الجذرية / CA المتوسطة",
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح",
+        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerdomain}} بنجاح!",
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
     },
@@ -613,9 +612,9 @@
         "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
-        "certificateChainOfTrust": "سلسلة شهادات الثقة",
+        "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
         "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
-        "downloadAll": "تحميل الكل",
+       "downloadCertificateChain": "تنزيل سلسلة الشهادات",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
     },
@@ -1090,7 +1089,7 @@
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
         "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
         "KER-PCM-004": "تواريخ الشهادة غير صالحة.",
-        "KER-PCM-005": "لم يتم العثور على شهادة CA الجذر",
+        "KER-PCM-005": "يرجى تحميل شهادة الجذر المقابلة للمتابعة",
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",

@@ -723,7 +723,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
 
                 document.body.appendChild(link);
                 link.click();
-                setSuccessMsg(certType === 'root' ? t('uploadRootofTrustCertificate.downloadRootCertSuccessMsg') : t('uploadRootofTrustCertificate.downloadIntermediateCertSuccessMsg'));
+                setSuccessMsg(certType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
 
                 // CleanUP Code
                 window.URL.revokeObjectURL(url);
