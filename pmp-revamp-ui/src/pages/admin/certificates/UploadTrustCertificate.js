@@ -12,7 +12,7 @@ import { HttpService } from '../../../services/HttpService';
 import Confirmation from "../../common/Confirmation";
 import { useNavigate } from 'react-router-dom';
 
-function UploadRootTrustCertificate() {
+function UploadTrustCertificate() {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -84,7 +84,7 @@ function UploadRootTrustCertificate() {
                 console.log(responseData)
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    const successMessage = t('uploadRootofTrustCertificate.successMsg', { partnerDomain: selectedDomain });
+                    const successMessage = t('uploadTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
                         backUrl: "/partnermanagement/admin/certificates/root-ca-certificate-list",
                         header: successMessage,
@@ -156,7 +156,7 @@ function UploadRootTrustCertificate() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between">
-                            <Title title="uploadRootofTrustCertificate.uploadRootOfTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
+                            <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
                         </div>
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
@@ -178,8 +178,8 @@ function UploadRootTrustCertificate() {
                                 {!uploadSuccess ?
                                     <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-1">
                                         <div className={`flex-col text-center text-base my-5`}>
-                                            <h1 className='font-semibold text-dark-blue'>{t(uploadCertificateData.title)}</h1>
-                                            <p className='text-light-gray py-1'>{t(uploadCertificateData.description)}</p>
+                                            <h1 className='font-semibold text-dark-blue'>{t('uploadTrustCertificate.uploadTrustCertificate')}</h1>
+                                            <p className='text-light-gray py-1'>{t('uploadTrustCertificate.description')}</p>
                                         </div>
                                         <div className='flex-col w-full'>
                                             <div className='flex justify-center'>
@@ -187,14 +187,14 @@ function UploadRootTrustCertificate() {
                                                     <div className={`flex-col p-6 border-2 bg-[#f9fafb] my-5 mx-4 rounded-xl justify-center items-center`}>
                                                         <DropdownComponent
                                                             fieldName='partnerDomain'
-                                                            fieldNameKey='uploadRootofTrustCertificate.partnerDomain*'
+                                                            fieldNameKey='uploadTrustCertificate.partnerDomain*'
                                                             onDropDownChangeEvent={onDomainChangeEvent}
                                                             dropdownDataList={[
                                                                 { fieldValue: 'AUTH', fieldCode: 'AUTH' },
                                                                 { fieldValue: 'FTM', fieldCode: 'FTM' },
                                                                 { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
                                                             ]}
-                                                            placeHolderKey={'uploadRootofTrustCertificate.dropdownPlaceholder'}
+                                                            placeHolderKey={'uploadTrustCertificate.dropdownPlaceholder'}
                                                             selectedDropdownValue={selectedDomain}
                                                             isPlaceHolderPresent={false}
                                                             styleSet={uploadCertificateDropdownStyle}
@@ -208,7 +208,7 @@ function UploadRootTrustCertificate() {
                                                                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                                                                     </svg>
                                                                     <h5 className="text-charcoal-gray text-sm font-semibold">
-                                                                        {t('uploadRootofTrustCertificate.uploadingCertMessage')}
+                                                                        {t('uploadTrustCertificate.uploadingCertMessage')}
                                                                     </h5>
                                                                     <button
                                                                         id="remove_certificate_btn"
@@ -231,7 +231,7 @@ function UploadRootTrustCertificate() {
                                                                     >
                                                                         <img src={fileUploadImg} alt="" className="mb-3 w-10 h-10" />
                                                                         <h5 className="text-charcoal-gray text-sm font-medium">
-                                                                            {t('uploadCertificate.selectCertificate')}
+                                                                            {t('uploadTrustCertificate.uploadSectionDescription')}
                                                                         </h5>
                                                                         <p className="text-xs text-light-gray">
                                                                             {t('uploadCertificate.certificateFormat')}
@@ -292,4 +292,4 @@ function UploadRootTrustCertificate() {
     )
 }
 
-export default UploadRootTrustCertificate;
+export default UploadTrustCertificate;

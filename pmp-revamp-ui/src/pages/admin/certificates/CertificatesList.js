@@ -165,7 +165,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
 
   const showUploadCertificate = () => {
     uploadCertRequiredData();
-    navigate('/partnermanagement/admin/certificates/upload-root-trust-certificate')
+    navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
   };
 
   const showDeactivateCertificate = () => {
@@ -173,7 +173,9 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   };
 
   const onClickDownload = (certificate) => {
-    downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+    if (certificate.status === true) {
+      downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+    }
   };
 
   const cancelErrorMsg = () => {
@@ -207,7 +209,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                 <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
                 {certificatesList.length !== 0 ?
                   <button onClick={showUploadCertificate} id='upload_certificate_btn' type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
-                    {t(uploadCertificateBtnName)}
+                    {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
                   : null
                 }
@@ -224,7 +226,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                   <EmptyList
                     tableHeaders={tableHeaders}
                     showCustomButton={!applyFilter}
-                    customButtonName={uploadCertificateBtnName}
+                    customButtonName='uploadTrustCertificate.uploadTrustCertificate'
                     buttonId='upload_certificate_btn'
                     onClickButton={showUploadCertificate}
                   />
