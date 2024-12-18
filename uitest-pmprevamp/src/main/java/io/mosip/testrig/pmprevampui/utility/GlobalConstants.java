@@ -25,7 +25,6 @@ public class GlobalConstants {
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
-	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
@@ -103,5 +102,44 @@ public class GlobalConstants {
 	public static final String REQUEST = "request";
 	public static final String TOKEN = "token";
 	public static final String EXCEPTION_STRING_2 = "Exception ";
+	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
+	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
+	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
+	public static final String isClearButtonDisplayed = "Verify if clear button displayed";
+	public static final String isCancelButtonDisplayed = "Verify if cancel button displayed";
+	public static final String isApiKeyDetailsPartnerIdLabelDisplayed = "Verify if api key details partner ID label displayed";
+	public static final String isApiKeyDetailsPartnerIdContextDisplayed = "Verify if api key details partner ID context displayed";
+	public static final String isApiKeyDetailsPolicyGroupLabelDisplayed = "Verify if api key details policy group label displayed";
+	public static final String isApiKeyDetailsPolicyGroupNameContextDisplayed = "Verify if api key details policy group name context displayed";
+	public static final String isApiKeyDetailsPolicyNameLabelDisplayed = "Verify if api key details policy name label displayed";
+	public static final String isApiKeyDetailsPolicyNameContextDisplayed = "Verify if api key details policy name context displayed";
+	public static final String isApiKeyDetailsPolicyGoupDescriptionLabelDisplayed = "Verify if api key details policy group description label displayed";
+	public static final String isApiKeyDetailsPolicyGroupDescriptionContextDisplayed = "Verify if api key details policy group description context displayed";
+	public static final String isApiKeyDetailsPolicyNameDescriptionLabelDisplayed = "Verify if api key details policy name description label displayed";
+	public static final String isApiKeyDetailsPolicyDescriptionContextDisplayed = "Verify if api key details policy description context displayed";
+	public static final String isApiKeyDetailsApiKeyNameLabelDisplayed = "Verify if api key details api key name label displayed";
+	public static final String isApiKeyDetailsApiKeyLabelContextDisplayed = "Verify if api key details api key label context displayed";
+	public static final String isViewApiKeyBackButtonDisplayed = "Verify if view api key button displayed";
+	public static final String isBackiconDisplayed = "Verify if back icon displayed";
+	public static final String isConfirmationPopupDisplayed = "Verify if confirmation popup displayed";
+	public static final String isConfirmationPopupDetailedMessageDisplayed = "Verify if confirmation popup detailed message displayed";
+	public static final String isApproveRejectButtonDisplayed = "Verify if approve reject button displayed";
+	public static final String isApproveSubmitButtonDisplayed = "Verify if approve submit button displayed";
+	public static final String isPolicyDetailsPartnerIdLabelDisplayed = "Verify if policy details partner id label displayed";
+	public static final String isPolicyDetailsPolicyGroupNameLabelDisplayed = "Verify if policy details policy group name label displayed";
+	public static final String isPolicyDetailsPolicyGroupNameContextDisplayed = "Verify if policy details policy group name context displayed";
+	public static final String isPolicyDetailsPartnerTypeLabelDisplayed = "Verify if policy details partner type label displayed";
+	public static final String isPolicyDetailsPartnerTypeContextDisplayed = "Verify if policy details partner type context displayed";
+	public static final String isPolicyDetailsPolicyNameLabelDisplayed = "Verify if policy details policy name label displayed";
+	public static final String isPolicyDetailsPolicyNameContextDisplayed = "Verify if policy details policy name context displayed";
+	public static final String isPolicyDetailsPolicyGroupDescriptionLabelDisplayed = "Verify if policy details policy group description label displayed";
+	public static final String isPolicyDetailsPolicyGroupDescriptionContextDisplayed = "Verify if policy details policy group description context displayed";
+	public static final String isPolicyDetailsPolicyNameDescriptionLabelDisplayed = "Verify if policy details policy name description label displayed";
+	public static final String isPolicyDetailsPolicyNameDescriptionContextDisplayed = "Verify if policy details policy name description context displayed";
+	public static final String isPolicyDetailsCommentsDisplayed = "Verify if policy details comments displayed";
+	public static final String isDuplicateApiKeyNameErrorMessageDisplayed = "Verify if duplicate api key name error message displayed";
+	public static final String isDeviceProviderSuccessMessageDisplayed = "Verify if device provider success message displayed";
 	
 }
+
+

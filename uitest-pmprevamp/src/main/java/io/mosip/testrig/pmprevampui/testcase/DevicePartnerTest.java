@@ -1,3 +1,4 @@
+
 package io.mosip.testrig.pmprevampui.testcase;
 
 import static org.testng.Assert.assertTrue;
@@ -28,13 +29,13 @@ public class DevicePartnerTest extends BaseClass {
 		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardpage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.ClickOnDeviceInPartnerDomainSelectorDropdown();
+		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionDevice();
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
 		partnerCertificatePage.ClickOnGoBackButton();
 		dashboardpage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.ClickOnDeviceInPartnerDomainSelectorDropdown();
+		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionDevice();
 		partnerCertificatePage.uploadCertificateSubCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
 		partnerCertificatePage.ClickOnGoBackButton();
@@ -98,7 +99,7 @@ public class DevicePartnerTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isDeviceProviderSuccessMessage(), GlobalConstants.isDeviceProviderSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isDeviceProviderSuccessMessageDisplayed(), GlobalConstants.isDeviceProviderSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -113,7 +114,7 @@ public class DevicePartnerTest extends BaseClass {
 		
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isDeviceProviderSuccessMessage(), GlobalConstants.isDeviceProviderSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isDeviceProviderSuccessMessageDisplayed(), GlobalConstants.isDeviceProviderSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
 		partnerCertificatePage.uploadCertificateInvalidCert();

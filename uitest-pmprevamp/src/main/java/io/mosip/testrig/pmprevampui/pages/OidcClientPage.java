@@ -145,10 +145,10 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "partnerId_asc_icon")
 	private WebElement partnerId_asc_icon;
 
-	@FindBy(id = "oidcClientName_desc_icon")
+	@FindBy(id = "clientNameEng_desc_icon")
 	private WebElement oidcClientName_desc_icon;
 
-	@FindBy(id = "oidcClientName_asc_icon")
+	@FindBy(id = "clientNameEng_asc_icon")
 	private WebElement oidcClientName_asc_icon;
 
 	@FindBy(id = "policyGroupName_desc_icon")

@@ -79,6 +79,7 @@ public class RegisterPage extends BasePage {
 	public void selectDeviceProviderInPartnerTypeDropdown() {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}
+	
 
 	public boolean isAddressTextBoxDisplayed() {
 		return isElementDisplayed(addressTextbox);

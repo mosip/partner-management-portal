@@ -96,8 +96,8 @@ public class BaseClass {
 		BasePage.enter(driver.findElement(By.id("username")), userid);
 		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
-
 	}
+	
 
 	@AfterMethod
     public void tearDown(ITestResult result) {
