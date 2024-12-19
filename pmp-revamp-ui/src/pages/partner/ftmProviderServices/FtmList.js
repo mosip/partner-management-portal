@@ -36,7 +36,6 @@ function FtmList() {
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
-  const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     partnerId: "",
     make: ""
@@ -52,7 +51,7 @@ function FtmList() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/ftm-chip-details', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV));
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
@@ -168,10 +167,6 @@ function FtmList() {
 
   const showDeactivateFtm = (selectedFtmData) => {
     if (selectedFtmData.status === "approved") {
-      const request = createRequest({
-        ftmId: selectedFtmData.ftmId,
-      }, "mosip.pms.deactivate.ftm.post", true);
-      setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
     }
@@ -309,7 +304,7 @@ function FtmList() {
                                           {t('ftmList.deActivate')}
                                         </p>
                                         {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                         )}
                                       </div>
                                     )}

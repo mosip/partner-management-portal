@@ -201,7 +201,7 @@
         "policyNameDescription": "Nom de la stratégie Description",
         "comments": "commentaires",
         "adminComments": "Commentaires de l'administrateur",
-        "partnerComments": "Commentaires du partenaire",
+        "partnerComment": "Commentaires du partenaire",
         "back": "Dos",
         "createdOn": "Créé sur"
     },

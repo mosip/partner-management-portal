@@ -412,7 +412,7 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
 
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {

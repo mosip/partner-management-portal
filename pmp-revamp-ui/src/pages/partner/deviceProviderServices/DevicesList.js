@@ -38,7 +38,6 @@ function DevicesList() {
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [canAddDevices, setCanAddDevices] = useState(true);
@@ -73,7 +72,7 @@ function DevicesList() {
                 setDataLoaded(false);
 
                 let sbiId = sbiData.sbiId;
-                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/sbi-devices/${sbiId}`, process.env.NODE_ENV), {
+                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/${sbiId}/devices`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -175,10 +174,6 @@ function DevicesList() {
 
     const showDeactivateDevice = (selectedDevice) => {
         if (selectedDevice.status === "approved") {
-            const request = createRequest({
-                deviceId: selectedDevice.id,
-            }, "mosip.pms.deactivate.device.post", true);
-            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -191,7 +186,7 @@ function DevicesList() {
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(device =>
-                    device.id === selectedDevice.id ? { ...device, status: "deactivated", isActive: false } : device
+                    device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
                 )
             );
         }
@@ -330,7 +325,7 @@ function DevicesList() {
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }}  headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}
