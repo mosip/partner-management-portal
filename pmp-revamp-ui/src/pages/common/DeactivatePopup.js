@@ -52,19 +52,19 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     }
                 });
             } else if (popupData.isDeactivateDevice) {
-                response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deactivate-device`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.isDeactivateSbi) {
-                response = await HttpService.post(getPartnerManagerUrl(`/securebiometricinterface/deactivate-sbi`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/securebiometricinterface/${popupData.sbiId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.isDeactivateFtm) {
-                response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail/deactivate-ftm`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/ftpchipdetail/${popupData.ftmId}`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }

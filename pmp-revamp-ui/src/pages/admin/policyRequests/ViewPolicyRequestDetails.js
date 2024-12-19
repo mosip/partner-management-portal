@@ -148,7 +148,7 @@ function ViewPolicyRequestDetails() {
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
                                             <h4 className="text-sm text-[#031640]">
-                                                {t("viewPolicyDetails.partnerComments")}
+                                                {t("viewPolicyDetails.partnerComment")}
                                             </h4>
                                             <span className="text-sm mt-3 break-words">
                                                 {policyRequestDetails.requestDetail}

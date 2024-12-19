@@ -108,7 +108,7 @@ function PartnerCertificatesList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/partner-certificates', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/partner-certificates-details', process.env.NODE_ENV));
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {

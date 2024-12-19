@@ -201,7 +201,7 @@
         "policyNameDescription": "وصف اسم السياسة",
         "comments": "تعليقات",
         "adminComments": "تعليقات المشرف",
-        "partnerComments": "تعليقات الشريك",
+        "partnerComment": "تعليقات الشريك",
         "back": "خلف",
         "createdOn": "تم إنشاؤها على"
     },

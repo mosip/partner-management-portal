@@ -200,7 +200,7 @@
         "policyNameDescription": "Policy Name Description",
         "comments": "Comments",
         "adminComments": "Admin Comments",
-        "partnerComments": "Partner's Comments",
+        "partnerComment": "Partner's Comments",
         "back": "Back",
         "createdOn": "Created On"
     },

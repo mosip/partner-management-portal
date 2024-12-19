@@ -47,7 +47,6 @@ function AdminDevicesList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [filterAttributes, setFilterAttributes] = useState({
         deviceId: null,
@@ -178,10 +177,6 @@ function AdminDevicesList() {
 
     const deactivateDevice = (selectedDevice) => {
         if (selectedDevice.status === "approved") {
-            const request = createRequest({
-                deviceId: selectedDevice.deviceId,
-            }, "mosip.pms.deactivate.device.post", true);
-            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -360,7 +355,7 @@ function AdminDevicesList() {
                                                                                         <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
                                                                                     )}
                                                                                 </div>
                                                                             )}
