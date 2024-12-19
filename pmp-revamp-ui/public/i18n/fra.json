@@ -593,7 +593,7 @@
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
-        "successMsg": "Le certificat de confiance pour {{partnerdomain}} a été téléchargé avec succès !",
+        "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
         "downloadIntermediateCertSuccessMsg": "La chaîne de confiance du certificat pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },

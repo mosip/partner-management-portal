@@ -593,7 +593,7 @@
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerdomain}} بنجاح!",
+        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerDomain}} بنجاح!",
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
     },
