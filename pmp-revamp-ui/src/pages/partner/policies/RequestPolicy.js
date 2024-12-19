@@ -80,7 +80,7 @@ function RequestPolicy() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/approved-partner-ids-with-policy-groups', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/v4?status=approved&policyGroupAvailable=true', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
