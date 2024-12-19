@@ -34,6 +34,17 @@ public class GlobalConstants {
 	public static final String isNoDataTextDisplaed = "Verify if Policy dropdown no policy data text displayed";
 	public static final String isPolicyEmptyTableIsDisplayed = "Verify if policies empty table displayed";
 	public static final String isAuthenticationServicesDisplayed = "Verify if authentication services title is displayed";
+	public static final String isWelcomeMessageDisplayed = "Verify if welcome message is displayed";
+	public static final String isAddSbiDetailsSubTitleDisplayed = "Verify if add sbi details sub title is displayed";
+	public static final String isAddSbiDetailsTitleDisplayed = "Verify if add sbi details title is displayed";
+	public static final String isHomeButtonDisplayed = "Verify if home button is displayed";
+	public static final String isListOfSbiButtonDisplayed = "Verify if list of sbi button is displayed";
+	public static final String isAddSbiDetailsInfoMessageDisplayed = "Verify if add sbi details info message is displayed";
+	public static final String isSameDateErrorMessageDisplayed = "Verify if error message is displayed for same date in created and expiry";
+	public static final String isFutureDateErrorMessageDisplayed = "Verify if error message is displayed for future date in created";
+	public static final String isSbiExistsErrorMessageDisplayed = "Verify if error message is displayed for SBI already exists";
+	public static final String isNavigationAlertMessageDisplayed = "Verify if alert message for browser navigation is displayed";
+	public static final String isPastDateErrorMessageDisplayed = "Verify if error message is displayed for past date in expiry date";
 	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";
 	public static final String isEnterValidLogoUriTextDisplayed = "Verify if enter valid logo uri text displayed";
 	public static final String isEnterRedirectUriTextDisplayed = "Verify if enter valid redirect uri text displayed";
@@ -69,6 +80,8 @@ public class GlobalConstants {
 	public static final String iReUploadPartnerCertificateTextDisplayed = "Verify if Re-Upload partner certificate title displayed";
 	public static final String isReUploadPartnerCertificateSubTextDisplayed = "Verify if please select all fields and upload the certificate text displayed";
 	public static final String isInvalidCertFormatePopupDisplayed = "Verify if The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload text displayed";
+	public static final String ADD_SBI_PARTNER_ID_INFO_MESSAGE = "Only those partner IDs of Device Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first";
+	public static final String ADD_SBI_EXPIRY_DATE_INFO_MESSAGE = "SBI Expiry date should be atleast one year greater than the SBI created date. Enter date in MM/DD/YYYY";
 	public static final String TABLE = "</table>";
 	public static final String TR = "</tr>";
 	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
@@ -92,16 +105,36 @@ public class GlobalConstants {
 	public static final String isUserIdDoesNotExietDisplayed = "Verify if api list is displayed";
 	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
 	public static final String isHomeButtonInAuthenticationDisplayed = "Verify if home button in authentication page displayed";
+	public static final String isSubmitButtonEnabled = "Verify if submit button is enabled";
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
 	public static final String isPolicyNameBoxTextDisplayed = "Select policy name";
+	public static final String isListOfSbiTitleDisplayed = "Verify if List SBI title is displayed";
+	public static final String isCreatedSbiDisplayed = "Verify if created SBI is displayed";
+	public static final String isStatusDisplayed = "Verify if correct status is displayed";
+	public static final String isLabelsDisplayed = "Verify if labels are displayed";
+	public static final String INITIAL_PARTNER_ID = "Select Partner ID";
+	public static final String INITIAL_PARTNER_TYPE = "Auto-populated based on Partner ID selected";
+	public static final String DEVICE_PROVIDER = "Device Provider";
+	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
+	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
+	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
+	public static final String INITIAL_SBI_BINARY_HASH = "Enter binary hash of SBI";
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
 	public static final String CLIENTID = "clientId";
+	public static final String PLACEHOLDER = "placeholder";
 	public static final String CLIENTSECRET = "clientSecret";
 	public static final String REQUEST = "request";
 	public static final String TOKEN = "token";
+	public static final String VALUE = "value";
 	public static final String EXCEPTION_STRING_2 = "Exception ";
+	public static final String AUTOMATION = "Automation";
+	public static final String ALPHANUMERIC = "Automation123";
+	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
+	public static final String NUMERIC = "123456789";
+	public static final String SPACE = "       ";
+
 	
 }
