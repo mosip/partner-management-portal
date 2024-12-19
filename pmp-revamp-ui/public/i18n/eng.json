@@ -588,7 +588,7 @@
         "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
-        "successMsg": "Trust Certificate for {{partnerdomain}} is uploaded successfully!",
+        "successMsg": "Trust Certificate for {{partnerDomain}} is uploaded successfully!",
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
         "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
