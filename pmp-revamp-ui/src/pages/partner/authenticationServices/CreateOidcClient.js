@@ -5,7 +5,7 @@ import DropdownComponent from '../../common/fields/DropdownComponent';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
-  moveToOidcClientsList, getGrantTypes,
+  moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
   onPressEnterKey, trimAndReplace
 } from '../../../utils/AppUtils';
@@ -36,6 +36,7 @@ function CreateOidcClient() {
   const [partnerType, setPartnerType] = useState("");
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
+  const [policiesData, setPoliciesData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
   const [grantTypes, setGrantTypes] = useState("authorization_code");
   const [grantTypesList, setGrantTypesList] = useState(['']);
@@ -147,7 +148,7 @@ function CreateOidcClient() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const resData = await getAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+        const resData = await getApprovedAuthPartners(HttpService, setErrorCode, setErrorMsg, t);
         if (resData) {
           setPartnerData(resData);
           setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
@@ -166,24 +167,29 @@ function CreateOidcClient() {
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
     setPolicyName("");
+    setPolicyGroupName("");
+    setPoliciesDropdownData([]);
+    setPoliciesData([]);
+    setPartnerType("");
     // Find the selected partner data
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
-      setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
-      setPolicyGroupName(selectedPartner.policyGroupName);
-      setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
+      const resData = await getAuthPartnerPolicies(selectedValue, HttpService, setErrorCode, setErrorMsg, t);
+      if (resData) {
+        setPoliciesData(resData);
+        setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
+        setPolicyGroupName(selectedPartner.policyGroupName);
+        setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, resData, t));
+      }
     }
   };
 
   const onChangePolicyName = (fieldName, selectedValue) => {
-    const selectedPartner = partnerData.find(item => item.partnerId === partnerId);
-    if (selectedPartner) {
-      const selectedPolicy = selectedPartner.activePolicies.find(item => item.policyName === selectedValue);
+      const selectedPolicy = policiesData.find(item => item.policyName === selectedValue);
       if (selectedPolicy) {
         setPolicyName(selectedValue);
         setPolicyId(selectedPolicy.policyId);
       }
-    }
   };
 
   const onChangeOidcClientName = (value) => {
