@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import {
-  getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus
+  formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
+  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -60,17 +60,11 @@ function PoliciesList() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/policy-requests', process.env.NODE_ENV));
+        const response = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
         if (response) {
-          const responseData = response.data;
-          if (responseData && responseData.response) {
-            const resData = responseData.response;
-            const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+            const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
             setPoliciesList(sortedData);
             setFilteredPoliciesList(sortedData);
-          } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          }
         } else {
           setErrorMsg(t('policies.errorInPoliciesList'));
         }

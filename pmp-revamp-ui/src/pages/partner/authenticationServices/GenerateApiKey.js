@@ -7,7 +7,7 @@ import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAuthPartnerPolicies, createDropdownData, trimAndReplace, getApprovedAuthPartners
+    createRequest, getPartnerPolicyRequests, createDropdownData, trimAndReplace, getApprovedAuthPartners
 } from "../../../utils/AppUtils";
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -23,6 +23,7 @@ function GenerateApiKey() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerData, setPartnerData] = useState([]);
+    const [policyRequestsData, setPolicyRequestsData] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
@@ -88,12 +89,12 @@ function GenerateApiKey() {
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-          const resData = await getAuthPartnerPolicies(selectedValue, HttpService, setErrorCode, setErrorMsg, t);
-          if (resData) {
-            setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
-            setPolicyGroupName(selectedPartner.policyGroupName);
-            setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, resData, t));
-          }
+          const activePolicies = policyRequestsData.filter(
+            item => item.partnerId === selectedValue && item.status === 'approved'
+          );
+          setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
+          setPolicyGroupName(selectedPartner.policyGroupName);
+          setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
         }
       };
 
@@ -122,6 +123,23 @@ function GenerateApiKey() {
                 setDataLoaded(true);
             }
         };
+        const fetchPolicyRequestsData = async () => {
+            try {
+                setDataLoaded(false);
+                const resData = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPolicyRequestsData(resData);
+                } else {
+                    setErrorMsg(t('commons.errorInResponse'));
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            } finally {
+                setDataLoaded(true);
+            }
+        };
+
+        fetchPolicyRequestsData();
         fetchData();
     }, []);
 
