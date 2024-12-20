@@ -379,7 +379,7 @@ function CreatePolicy() {
                                         <button id="create_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()}
                                             className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}
-                                            tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => clickOnSubmit())}
+                                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnSubmit())}
                                         >
                                             {t('createPolicy.saveAsDraft')}
                                         </button>
