@@ -36,6 +36,7 @@ function FtmList() {
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     partnerId: "",
     make: ""
@@ -167,6 +168,10 @@ function FtmList() {
 
   const showDeactivateFtm = (selectedFtmData) => {
     if (selectedFtmData.status === "approved") {
+      const request = createRequest({
+        status: "De-Activate",
+      }, "mosip.pms.deactivate.ftm.patch", true);
+      setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
     }
@@ -304,7 +309,7 @@ function FtmList() {
                                           {t('ftmList.deActivate')}
                                         </p>
                                         {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                         )}
                                       </div>
                                     )}

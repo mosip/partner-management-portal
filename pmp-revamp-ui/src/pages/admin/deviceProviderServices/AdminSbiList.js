@@ -196,8 +196,8 @@ function AdminSbiList() {
     const deactivateSbi = (selectedSbi) => {
         if (selectedSbi.status === "approved") {
             const request = createRequest({
-                sbiId: selectedSbi.sbiId,
-            }, "mosip.pms.deactivate.sbi.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.sbi.patch", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
