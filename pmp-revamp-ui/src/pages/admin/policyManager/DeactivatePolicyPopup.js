@@ -6,6 +6,7 @@ import errorIcon from '../../../svg/error_icon.svg';
 import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
+import FocusTrap from 'focus-trap-react';
 
 function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm }) {
     const { t } = useTranslation();
@@ -136,54 +137,56 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
-            <div className={`bg-white md:w-[390px]  ${showAlertErrorMessage ? 'w-[22rem] h-[30rem]' : 'w-[55%]'} mx-auto rounded-lg shadow-lg h-fit`}>
-                {!dataLoaded && (
-                    <LoadingIcon styleSet={styles} />
-                )}
-                {dataLoaded && (
-                    <div className="relative">
-                        {showAlertErrorMessage
-                            ? (
-                                <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
-                                    <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
-                                    <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
-                                        {errorHeaderMsg}
-                                    </p>
-                                    <p className="text-sm text-center text-[#666666] break-normal p-2">
-                                        {errorDescriptionMsg}
-                                    </p>
-                                    <button id="alert_error_popup_okay_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
-                                        {t('commons.okay')}
-                                    </button>
-                                </div>
-                            )
-                            : (<>
-                                {errorMsg && (
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
-                                )}
-                                <div className={`p-[8%] flex-col text-center justify-center items-center`}>
-                                    {!isLoginLanguageRTL ?
-                                        <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
-                                            {`'${t(header)} -  ${headerKeyName} ?'`}
+            <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
+                <div className={`bg-white md:w-[390px]  ${showAlertErrorMessage ? 'w-[22rem] h-[30rem]' : 'w-[55%]'} mx-auto rounded-lg shadow-lg h-fit`}>
+                    {!dataLoaded && (
+                        <LoadingIcon styleSet={styles} />
+                    )}
+                    {dataLoaded && (
+                        <div className="relative">
+                            {showAlertErrorMessage
+                                ? (
+                                    <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
+                                        <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
+                                        <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
+                                            {errorHeaderMsg}
                                         </p>
-                                        : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
-                                            {t(header)} { ' - ' + headerKeyName}
+                                        <p className="text-sm text-center text-[#666666] break-normal p-2">
+                                            {errorDescriptionMsg}
                                         </p>
-                                    }
-                                    <p className="text-sm text-[#666666] break-words py-[5%]">
-                                        {t(description)}
-                                    </p>
-                                    <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
-                                        <button id="deactivate_policy_group_cancel_btn" onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
-                                        <button id="deactivate_policy_group__confirm_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
+                                        <button id="alert_error_popup_okay_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
+                                            {t('commons.okay')}
+                                        </button>
                                     </div>
-                                </div>
-                            </>
+                                )
+                                : (<>
+                                    {errorMsg && (
+                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                    )}
+                                    <div className={`p-[8%] flex-col text-center justify-center items-center`}>
+                                        {!isLoginLanguageRTL ?
+                                            <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
+                                                {`'${t(header)} -  ${headerKeyName} ?'`}
+                                            </p>
+                                            : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
+                                                {t(header)} { ' - ' + headerKeyName}
+                                            </p>
+                                        }
+                                        <p className="text-sm text-[#666666] break-words py-[5%]">
+                                            {t(description)}
+                                        </p>
+                                        <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
+                                            <button id="deactivate_policy_group_cancel_btn" onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                                            <button id="deactivate_policy_group__confirm_btn" onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
+                                        </div>
+                                    </div>
+                                </>
 
-                            )}
-                    </div>
-                )}
-            </div>
+                                )}
+                        </div>
+                    )}
+                </div>
+            </FocusTrap>
         </div>
     )
 }

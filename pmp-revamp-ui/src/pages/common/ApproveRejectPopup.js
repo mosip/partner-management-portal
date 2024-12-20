@@ -6,6 +6,7 @@ import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
+import { onPressEnterKey } from '../../utils/AppUtils.js';
 
 function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
     const { t } = useTranslation();
@@ -115,7 +116,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <img src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex={0} />
+                                        <img src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => closingPopUp())}/>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="px-[1.5rem] py-3 text-center">

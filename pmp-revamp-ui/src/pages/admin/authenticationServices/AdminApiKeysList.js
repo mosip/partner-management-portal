@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest,
+    escapeKeyHandler
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -161,6 +162,7 @@ function AdminApiKeysList () {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateApiKey = (selectedApiKeyData) => {
@@ -196,6 +198,10 @@ function AdminApiKeysList () {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    useEffect(() => {
+        escapeKeyHandler(closeDeactivatePopup)
+    }, [showDeactivatePopup]);
 
     const styles = {
         loadingDiv: "!py-[20%]",
