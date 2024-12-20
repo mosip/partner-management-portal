@@ -85,7 +85,7 @@ function ViewFtmChipDetails() {
         setErrorCode("");
         setErrorMsg("");
         try {
-            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+            const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + ftmId + '/certificate-data', process.env.NODE_ENV));
             if (response) {
                 const responseData = response.data;
                 if (responseData.errors && responseData.errors.length > 0) {

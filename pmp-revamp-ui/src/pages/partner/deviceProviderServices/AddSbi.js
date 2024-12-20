@@ -78,7 +78,7 @@ function AddSbi() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/approved-device-provider-ids', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/v4?status=approved&partnerType=Device_Provider', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {

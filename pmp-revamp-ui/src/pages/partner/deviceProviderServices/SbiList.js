@@ -45,7 +45,7 @@ function SbiList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/sbi-details', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/securebiometricinterface', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -115,8 +115,8 @@ function SbiList() {
     const onClickDeactivate = (sbi) => {
         if (sbi.status === "approved") {
             const request = createRequest({
-                sbiId: sbi.sbiId,
-            }, "mosip.pms.deactivate.sbi.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.sbi.patch", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";

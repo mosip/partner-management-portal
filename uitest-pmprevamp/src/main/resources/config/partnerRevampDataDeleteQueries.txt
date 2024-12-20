@@ -19,4 +19,4 @@ delete from pms.auth_policy where cr_by='pmpui-revamp';
 delete from pms.policy_group where cr_by='pmpui-revamp';
 delete FROM pms.secure_biometric_interface where cr_by='pmpui-revamp';
 delete from pms.oidc_client where cr_by='pmpui-auth';
-
+delete FROM pms.secure_biometric_interface where cr_by='pmpui-device';

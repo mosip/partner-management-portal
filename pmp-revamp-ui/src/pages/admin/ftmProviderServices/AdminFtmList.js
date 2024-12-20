@@ -16,7 +16,7 @@ import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
 import EmptyList from '../../common/EmptyList';
 import AdminFtmListFilter from './AdminFtmListFilter.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler } from '../../../utils/AppUtils';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
@@ -46,8 +46,8 @@ function AdminFtmList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -168,13 +168,14 @@ function AdminFtmList() {
     const closeApproveRejectPopup = () => {
         setActionId(-1);
         setShowFtmApproveRejectPopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateFtmDetails = (ftm) => {
         if (ftm.status === "approved") {
             const request = createRequest({
-                ftmId: ftm.ftmId,
-            }, "mosip.pms.deactivate.ftm.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.ftm.patch", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -197,6 +198,7 @@ function AdminFtmList() {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {
@@ -223,6 +225,14 @@ function AdminFtmList() {
     const styles = {
         loadingDiv: "!py-[20%]"
     };
+
+    useEffect(() => {
+        if(showFtmApproveRejectPopup){
+            escapeKeyHandler(closeApproveRejectPopup);
+        }else if(showDeactivatePopup){
+            escapeKeyHandler(closeDeactivatePopup);
+        }
+    }, [showFtmApproveRejectPopup, showDeactivatePopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>

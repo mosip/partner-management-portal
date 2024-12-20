@@ -7,7 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
 import Title from '../../common/Title.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService.js';
 import AdminDeviceDetailsFilter from './AdminDeviceDetailsFilter.js';
 import FilterButtons from '../../common/FilterButtons.js';
@@ -47,8 +47,8 @@ function AdminDevicesList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         deviceId: null,
         partnerId: null,
@@ -174,13 +174,14 @@ function AdminDevicesList() {
     const closeApproveRejectPopup = () => {
         setActionId(-1);
         setShowDeviceDetailApproveRejectPopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateDevice = (selectedDevice) => {
         if (selectedDevice.status === "approved") {
             const request = createRequest({
-                deviceId: selectedDevice.deviceId,
-            }, "mosip.pms.deactivate.device.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.device.patch", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -204,6 +205,7 @@ function AdminDevicesList() {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {
@@ -239,6 +241,14 @@ function AdminDevicesList() {
     const styles = {
         loadingDiv: "!py-[20%]"
     };
+
+    useEffect(() => {
+        if(showDeviceDetailApproveRejectPopup){
+            escapeKeyHandler(closeApproveRejectPopup);
+        }else if(showDeactivatePopup){
+            escapeKeyHandler(closeDeactivatePopup);
+        }
+    }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
