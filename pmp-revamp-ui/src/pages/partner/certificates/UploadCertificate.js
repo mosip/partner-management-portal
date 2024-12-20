@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -264,7 +264,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => removeUpload())}>
                                                     {t('uploadCertificate.remove')}
                                                 </p>
                                             </div>

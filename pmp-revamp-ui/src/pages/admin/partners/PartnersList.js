@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { createRequest, escapeKeyHandler, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
   getPartnerManagerUrl,
   handleServiceErrors,
@@ -197,6 +197,7 @@ function PartnersList() {
   const closeDeactivatePopup = () => {
     setViewPartnersId(-1);
     setShowDeactivatePopup(false);
+    document.body.style.overflow = "auto";
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
@@ -211,6 +212,10 @@ function PartnersList() {
       );
     }
   };
+
+  useEffect(() => {
+    escapeKeyHandler(closeDeactivatePopup);
+  }, [showDeactivatePopup]);
 
   const styles = {
     loadingDiv: "!py-[20%]"

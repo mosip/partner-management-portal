@@ -7,7 +7,8 @@ import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFi
     getOidcClientDetails,
     createRequest,
     populateClientNames,
-    getClientNameLangMap
+    getClientNameLangMap,
+    escapeKeyHandler
  } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -218,6 +219,7 @@ function AdminOidcClientsList () {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const cancelErrorMsg = () => {
@@ -228,6 +230,14 @@ function AdminOidcClientsList () {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-[16%]"
     }
+
+    useEffect(() => {
+        if(showDeactivatePopup){
+            escapeKeyHandler(closeDeactivatePopup);
+        }else if(showClientIdPopup){
+            escapeKeyHandler(() => setShowClientIdPopup(false));
+        }
+    }, [showDeactivatePopup, showClientIdPopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>

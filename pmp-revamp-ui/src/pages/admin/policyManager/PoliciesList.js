@@ -4,7 +4,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, getPolicyManagerUrl,
     handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter,
-    getStatusCode, bgOfStatus
+    getStatusCode, bgOfStatus, escapeKeyHandler
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -217,23 +217,14 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     useEffect(() => {
-        // Define the handler for the Escape key
-        const handleEscape = (e) => {
-          if (e.key === 'Escape') {
-            closeClonePolicyPopup();
-          }
-        };
-    
-        // Add event listener when the popup is open
-        if (showClonePopup) {
-          window.addEventListener('keydown', handleEscape);
+        if(showClonePopup){
+            escapeKeyHandler(closeClonePolicyPopup);
+        }else if(showDeactivatePopup){
+            escapeKeyHandler(closeDeactivatePopup);
+        }else if(showPublishPolicyPopup){
+            escapeKeyHandler(closePublishPolicyPopup);
         }
-    
-        // Cleanup the event listener when the component unmounts or isOpen changes
-        return () => {
-          window.removeEventListener('keydown', handleEscape);
-        };
-    }, [showClonePopup]);
+    }, [showClonePopup, showDeactivatePopup, showPublishPolicyPopup]);
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
         if (deactivationResponse && !deactivationResponse.isActive) {

@@ -16,7 +16,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
@@ -191,6 +191,7 @@ function AdminSbiList() {
     const closeApproveRejectPopup = () => {
         setActionId(-1);
         setShowSbiApproveRejectPopUp(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateSbi = (selectedSbi) => {
@@ -220,6 +221,7 @@ function AdminSbiList() {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const cancelErrorMsg = () => {
@@ -229,6 +231,14 @@ function AdminSbiList() {
     const styles = {
         loadingDiv: "!py-[20%]",
     }
+
+    useEffect(() => {
+        if(showSbiApproveRejectPopUp){
+            escapeKeyHandler(closeApproveRejectPopup);
+        }else if(showDeactivatePopup){
+            escapeKeyHandler(closeDeactivatePopup);
+        }
+    }, [showSbiApproveRejectPopUp, showDeactivatePopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>

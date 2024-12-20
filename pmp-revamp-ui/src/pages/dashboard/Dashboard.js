@@ -342,7 +342,7 @@ function Dashboard() {
           </div>
           <div className="flex mt-2 ml-[3%] flex-wrap break-words">
             {!isPartnerAdmin &&
-              < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, partnerCertificatesList())}>
+              < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon' />
                 </div>
@@ -357,7 +357,7 @@ function Dashboard() {
               </div>
             }
             {!isPartnerAdmin && showPolicies && (
-              <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, policies())}>
+              <div id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => policies())}>
                 <div className="flex justify-center mb-5">
                   <img src={policiesIcon} alt="" className="w-8 h-8" id='dashboard_policies_card_icon' />
                 </div>
@@ -372,7 +372,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && showAuthenticationServices && (
-              <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, moveToOidcClientsList(navigate))}>
+              <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon' />
                 </div>

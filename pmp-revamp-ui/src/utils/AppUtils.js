@@ -742,3 +742,19 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
         setErrorMsg(err);
     }
 };
+
+
+
+export const escapeKeyHandler = (closePopup) => {
+    // Define the Escape key handler
+    const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+        closePopup()
+        // Cleanup the event listener
+        return window.removeEventListener('keydown', handleEscape)
+    }
+    };
+    
+    // Add event listener when any handler condition is true
+    window.addEventListener('keydown', handleEscape);
+};
