@@ -160,7 +160,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 </DropdownWithSearchComponent>
                             </div>
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
-                            <div className="px-6 py-3 flex justify-end relative">
+                            <div className="px-6 py-3 flex justify-between relative">
                                 <button disabled={cloneSuccess} className={`w-36 h-10 m-1 ${cloneSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed' : 'border-[#1447B2] text-tory-blue bg-white'}  border rounded-lg  text-sm font-semibold relative z-60`}
                                     onClick={cancelPopUp}
                                     id="clone_policy_cancel">
@@ -179,8 +179,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                         id="clone_policy_close_button">
                                         {t('commons.close')}
                                     </button>
-                                }
-                                
+                                }  
                             </div>
                         </div>
                     )}
