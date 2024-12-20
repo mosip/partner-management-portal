@@ -413,7 +413,7 @@ metrics:
     #       severity: error
     rules: []
 
-pmp_new:
+pmp_revamp:
   react_app_partner_manager_api_base_url: 'https://api-internal.sandbox.xyz.net/v1/partnermanager'
   react_app_policy_manager_api_base_url: 'https://api-internal.sandbox.xyz.net/v1/policymanager'
   pms_partner_manager_internal_service_url: 'http://pms-partner.pms/v1/partnermanager'
