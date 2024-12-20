@@ -1165,6 +1165,7 @@
         "PMS_DEVICE_ERROR_024": "Cet appareil ne peut pas être approuvé car il n'a aucun SBI qui lui est associé.",
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
+        "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",

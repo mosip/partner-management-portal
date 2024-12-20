@@ -66,8 +66,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                 const request = createRequest({
                     partnerId: popupData.partnerId,
                     sbiId: popupData.sbiId,
-                    deviceDetailId: popupData.deviceId,
-                    status: status === "approved" ? 'Activate' : 'De-activate'
+                    status: status
                 }, "mosip.pms.approval.mapping.device.to.sbi.post", true);
             
                 const url = getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}/approval`, process.env.NODE_ENV);

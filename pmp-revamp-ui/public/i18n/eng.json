@@ -1160,6 +1160,7 @@
         "PMS_DEVICE_ERROR_024": "This device cannot be approved as it does not have any SBI associated to it.",
         "PMS_DEVICE_ERROR_025": "This device cannot be rejected as it does not have any SBI associated to it.",
         "PMS_DEVICE_ERROR_026": "Request status should be De-Activate",
+        "PMS_DEVICE_ERROR_027": "Request status should be either approved or rejected",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",
