@@ -47,6 +47,7 @@ function AdminFtmList() {
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -171,6 +172,10 @@ function AdminFtmList() {
 
     const deactivateFtmDetails = (ftm) => {
         if (ftm.status === "approved") {
+            const request = createRequest({
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.ftm.patch", true);
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -329,7 +334,7 @@ function AdminFtmList() {
                                                                                         <img src={ftm.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                                                                     )}
                                                                                 </div>
                                                                             )}
