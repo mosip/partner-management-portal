@@ -182,93 +182,13 @@ function AddDevices() {
             deviceSubTypeCode: entry.deviceSubType,
             make: trimAndReplace(entry.make),
             model: trimAndReplace(entry.model)
-        });
+        }, "mosip.pms.add.device.to.sbi.id.post", true);
         try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail`, process.env.NODE_ENV), request);
-
-            if (response?.data?.response?.id) {
-                inactiveMappingDeviceToSbi(response.data.response.id, index, false);
-            } else {
-                const errorCode = response.data.errors[0].errorCode;
-                if (errorCode === "PMS_AUT_003") {
-                    const deviceDetails = await searchDeviceDetails(entry, index);
-                    if (deviceDetails && deviceDetails.id) {
-                        inactiveMappingDeviceToSbi(deviceDetails.id, index, true);
-                    } else {
-                        newEntries[index].errorMsg = t('addDevices.errorInAddDevice');
-                        setDeviceEntries(newEntries);
-                    }
-                } else {
-                    handleError(response.data, index, newEntries);
-                }
-            }
-        } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
-            setDeviceEntries(newEntries);
-            console.error("Error fetching data: ", err);
-        }
-        setDataLoaded(true);
-        setIsSubmitClicked(false);
-    };
-
-    const searchDeviceDetails = async(entry, index) => {
-        const newEntries = [...deviceEntries];
-        setDataLoaded(false);
-        const searchRequest = createRequest({
-            filters: [
-                {"columnName": "deviceProviderId", "type": "equals", "value": selectedSbidata.partnerId},
-                {"columnName": "partnerOrganizationName", "type": "equals", "value": getUserProfile().orgName},
-                {"columnName": "deviceTypeCode", "type": "equals", "value": entry.deviceType},
-                {"columnName": "deviceSubTypeCode", "type": "equals", "value": entry.deviceSubType},
-                {"columnName": "make", "type": "equals", "value": trimAndReplace(entry.make)},
-                {"columnName": "model", "type": "equals", "value": trimAndReplace(entry.model)},
-                {"columnName": "approvalStatus", "type": "equals", "value": "pending_approval"}
-            ],
-            sort: [],
-            pagination: {pageStart: 0, pageFetch: 100},
-            languageCode: "eng",
-            purpose: "REGISTRATION",
-            deviceProviderId: selectedSbidata.partnerId
-        });
-        try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/search`, process.env.NODE_ENV), searchRequest);
-            if (response?.data?.response) {
-                const searchDetails = response.data.response.data;
-                let filteredItem = {};
-                if (searchDetails !== null) {
-                    filteredItem = searchDetails.find(item => item.make === entry.make && item.model === entry.model);
-                }
-                return filteredItem;
-            } else {
-                handleError(response.data, index, newEntries);
-            }
-        } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
-            setDeviceEntries(newEntries);
-            console.error("Error fetching data: ", err);
-        }
-        setDataLoaded(true);
-    };
-
-    const inactiveMappingDeviceToSbi = async (deviceDetailId, index, isDeviceAlreadyMapped) => {
-        const newEntries = [...deviceEntries];
-        setDataLoaded(false);
-        try {
-            const request = createRequest({
-                deviceDetailId: deviceDetailId,
-                sbiId: selectedSbidata.sbiId,
-                partnerId: selectedSbidata.partnerId
-            }, "mosip.pms.add.inactive.mapping.device.to.sbi.id.post", true);
-
-            const response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/inactive-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await HttpService.post(getPartnerManagerUrl(`/securebiometricinterface/${selectedSbidata.sbiId}/devices`, process.env.NODE_ENV), request);
 
             if (response?.data?.response) {
                 newEntries[index].isSubmitted = true;
-                newEntries[index].successMsg = isDeviceAlreadyMapped ? t('addDevices.successMsgForExistingDeviceMapping') : t('addDevices.successMsgForNewDeviceMapping');
+                newEntries[index].successMsg = t('addDevices.successMsgForNewDeviceMapping');
                 setDeviceEntries(newEntries);
                 updateButtonStates();
             } else {
@@ -277,9 +197,10 @@ function AddDevices() {
         } catch (err) {
             newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
             setDeviceEntries(newEntries);
-            console.error('Error fetching data:', err);
+            console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);
+        setIsSubmitClicked(false);
     };
 
     const handleError = (responseData, index, newEntries) => {
