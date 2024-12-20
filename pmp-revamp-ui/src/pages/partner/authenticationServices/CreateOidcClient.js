@@ -6,7 +6,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
-  isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
+  isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
   onPressEnterKey, trimAndReplace
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
@@ -36,7 +36,8 @@ function CreateOidcClient() {
   const [partnerType, setPartnerType] = useState("");
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
-  const [policiesData, setPoliciesData] = useState([]);
+  const [activePoliciesData, setActivePoliciesData] = useState([]);
+  const [policyRequestsData, setPolicyRequestsData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
   const [grantTypes, setGrantTypes] = useState("authorization_code");
   const [grantTypesList, setGrantTypesList] = useState(['']);
@@ -161,6 +162,23 @@ function CreateOidcClient() {
         setDataLoaded(true);
       }
     };
+    const fetchPolicyRequestsData = async () => {
+      try {
+        setDataLoaded(false);
+        const resData = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
+        if (resData) {
+          setPolicyRequestsData(resData);
+        } else {
+          setErrorMsg(t('commons.errorInResponse'));
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setDataLoaded(true);
+      }
+    };
+
+    fetchPolicyRequestsData();
     fetchData();
   }, []);
 
@@ -169,23 +187,22 @@ function CreateOidcClient() {
     setPolicyName("");
     setPolicyGroupName("");
     setPoliciesDropdownData([]);
-    setPoliciesData([]);
     setPartnerType("");
     // Find the selected partner data
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
-      const resData = await getAuthPartnerPolicies(selectedValue, HttpService, setErrorCode, setErrorMsg, t);
-      if (resData) {
-        setPoliciesData(resData);
-        setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
-        setPolicyGroupName(selectedPartner.policyGroupName);
-        setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, resData, t));
-      }
+      const activePolicies = policyRequestsData.filter(
+        item => item.partnerId === selectedValue && item.status === 'approved'
+      );
+      setActivePoliciesData(activePolicies);
+      setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
+      setPolicyGroupName(selectedPartner.policyGroupName);
+      setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
     }
   };
 
   const onChangePolicyName = (fieldName, selectedValue) => {
-      const selectedPolicy = policiesData.find(item => item.policyName === selectedValue);
+      const selectedPolicy = activePoliciesData.find(item => item.policyName === selectedValue);
       if (selectedPolicy) {
         setPolicyName(selectedValue);
         setPolicyId(selectedPolicy.policyId);
