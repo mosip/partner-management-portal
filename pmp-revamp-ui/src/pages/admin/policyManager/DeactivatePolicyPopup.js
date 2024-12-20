@@ -167,7 +167,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                             {`'${t(header)} -  ${headerKeyName} ?'`}
                                         </p>
                                         : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
-                                            {t(header)} '{ ' - ' + headerKeyName}'
+                                            {t(header)} { ' - ' + headerKeyName}
                                         </p>
                                     }
                                     <p className="text-sm text-[#666666] break-words py-[5%]">

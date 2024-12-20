@@ -116,7 +116,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
-                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
+                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}
                                     </p>
                                 }
                                 <p className="text-sm text-[#666666] break-normal py-[5%]">
