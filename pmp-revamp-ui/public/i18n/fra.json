@@ -773,6 +773,7 @@
         "upload": "Télécharger",
         "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
         "jsonParseError": "Veuillez fournir des données JSON valides",
+        "policyDatalengthExceedError": "Les données de politique ne doivent pas dépasser 5120 caractères.",
         "uploadPolicyDataFile": "Télécharger les données de la politique",
         "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement",
         "fileUploadSuccessMsg": "Les données de la politique ont été téléchargées avec succès",

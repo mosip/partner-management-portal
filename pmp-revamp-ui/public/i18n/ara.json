@@ -773,6 +773,7 @@
         "upload": "تحميل",
         "uploadFileError": "يرجى اختيار ملف JSON صالح",
         "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
+        "policyDatalengthExceedError": "لا ينبغي أن تتجاوز بيانات السياسة أكثر من 5120 حرفًا.",
         "uploadPolicyDataFile": "تحميل بيانات السياسة",
         "uploadPolicyDataFileDesc": "يُسمح بتحميل ملفات بتنسيق .json فقط",
         "fileUploadSuccessMsg": "تم تحميل بيانات السياسة بنجاح",

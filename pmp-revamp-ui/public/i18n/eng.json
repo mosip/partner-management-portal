@@ -768,6 +768,7 @@
         "upload": "Upload",
         "uploadFileError": "Please select a valid JSON file",
         "jsonParseError": "Please provide valid JSON data",
+        "policyDatalengthExceedError": "Policy data should not exceed more than 5120 characters.",
         "uploadPolicyDataFile": "Upload Policy Data",
         "uploadPolicyDataFileDesc": "Only .json file format is allowed for upload",
         "fileUploadSuccessMsg": "Policy data has been uploaded successfully",
