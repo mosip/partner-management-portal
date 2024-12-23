@@ -1086,6 +1086,7 @@
         "PMS_POL_069": "Des politiques actives ou en brouillon sont associées au groupe de politiques.",
         "PMS_POL_070": "Des politiques en brouillon existent dans le groupe de politiques.",
         "PMS_POL_071": "Erreur lors de la désactivation du groupe de politiques.",
+        "PMS_POL_072": "La politique sélectionnée n'est pas en statut activé",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
