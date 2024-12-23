@@ -96,7 +96,7 @@ function PolicyRequestsList() {
     setResetPageNo(false);
 
     if (filters.partnerId) queryParams.append('partnerId', filters.partnerId);
-    if (filters.partnerType) queryParams.append('partnerTypeCode', filters.partnerType);
+    if (filters.partnerType) queryParams.append('partnerType', filters.partnerType);
     if (filters.orgName) queryParams.append('orgName', filters.orgName);
     if (filters.policyGroupName) queryParams.append('policyGroupName', filters.policyGroupName);
     if (filters.policyId) queryParams.append('policyId', filters.policyId);
