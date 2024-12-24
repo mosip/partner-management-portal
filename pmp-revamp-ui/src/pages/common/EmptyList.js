@@ -9,7 +9,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, o
             <div className="flex justify-between mt-5">
                 <div className="flex w-full justify-between text-sm font-semibold text-[#6F6E6E] px-2 m-auto overflow-x-auto no-scrollbar">
                     { tableHeaders.map((header, index) => (
-                        <h6 key={index} className="mx-[0.7rem]">
+                        <h6 id='columnheaderName' key={index} className="mx-[0.7rem]">
                             {t(header.headerNameKey)}
                         </h6>
                     ))}
@@ -21,7 +21,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, o
             <div className="flex items-center justify-center p-24">
                 <div className="flex flex-col items-center">
                     {/* Ensure rectangleGrid has a valid import path and alt text for accessibility */}
-                    <img src={rectangleGrid} alt="No data available icon" />
+                    <img id='rectangleGrid' src={rectangleGrid} alt="No data available icon" />
                     { showCustomButton ?
                         <button id={buttonId} type="button" onClick={onClickButton} disabled={disableBtn}
                             className={`font-semibold mt-8 w-[75%] ${disableBtn ? "bg-gray-400 opacity-55" : "bg-tory-blue text-white"} rounded-md text-sm mx-8 py-3`}>

@@ -275,7 +275,7 @@ function CreatePolicy() {
                     )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title={title} subTitle={subTitle} backLink={backLink}></Title>
+                            <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">

@@ -30,7 +30,7 @@ function PoliciesTab () {
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_policy_group_tab' onClick={changeToPolicyGroup}
                     className={`${activeTab === "policyGroup" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}
-                    tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, changeToPolicyGroup)}>
+                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, changeToPolicyGroup)}>
                     {t('policyGroupList.policyGroup')}
                 </h6>
                 <div className={`h-1 w-full ${activeTab === "policyGroup" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
@@ -38,7 +38,7 @@ function PoliciesTab () {
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_auth_policy_tab' onClick={changeToAuthPolicy}
                     className={`${activeTab === "Auth" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm ${isLoginLanguageRTL && 'mr-10'}`}
-                    tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, changeToAuthPolicy)}>
+                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, changeToAuthPolicy)}>
                     {t('policyGroupList.authPolicy')}
                 </h6>
                 <div className={`h-1 w-full ${isLoginLanguageRTL && 'mr-6'} ${activeTab === "Auth" ? "bg-tory-blue" : "bg-transparent" } rounded-t-md`}></div>
@@ -46,7 +46,7 @@ function PoliciesTab () {
             <div className={`flex-col justify-center`}>
                 <h6 id='policies_data_share_policy_tab' onClick={changeToDataSharePolicy}
                     className={`${activeTab === "DataShare" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}
-                    tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, changeToDataSharePolicy)}>
+                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, changeToDataSharePolicy)}>
                     {t('policyGroupList.dataSharePolicy')}
                 </h6>
                 <div className={`h-1 w-full ${activeTab === "DataShare" ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>

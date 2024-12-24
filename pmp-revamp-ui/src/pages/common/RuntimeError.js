@@ -42,7 +42,7 @@ function RuntimeError() {
                 <p className="text-base text-vulcan font-semibold">{message.description}</p>
                 <div className="p-1 flex flex-wrap justify-center relative items-center my-1">
                     <button
-                        className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md text-white text-sm font-semibold
+                     id='something_went_wrong_home_btn' className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md text-white text-sm font-semibold
                                bg-tory-blue cursor-pointer"
                         onClick={() => moveToHome(navigate)}
                     >

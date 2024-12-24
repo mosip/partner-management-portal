@@ -273,7 +273,7 @@ function EditPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
