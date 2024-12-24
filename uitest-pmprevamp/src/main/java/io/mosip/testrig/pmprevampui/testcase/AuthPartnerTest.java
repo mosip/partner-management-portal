@@ -117,7 +117,7 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -132,7 +132,7 @@ public class AuthPartnerTest extends BaseClass {
 		
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
 		partnerCertificatePage.uploadCertificateInvalidCert();

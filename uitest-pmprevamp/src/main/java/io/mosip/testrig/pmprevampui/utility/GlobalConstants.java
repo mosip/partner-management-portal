@@ -24,7 +24,7 @@ public class GlobalConstants {
 	public static final String isPartnerCertificateTitleDisplayed = "Verify if partner certificate title is displayed";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
-	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
+	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
@@ -38,7 +38,12 @@ public class GlobalConstants {
 	public static final String isAddSbiDetailsSubTitleDisplayed = "Verify if add sbi details sub title is displayed";
 	public static final String isAddSbiDetailsTitleDisplayed = "Verify if add sbi details title is displayed";
 	public static final String isHomeButtonDisplayed = "Verify if home button is displayed";
-	public static final String isListOfSbiButtonDisplayed = "Verify if list of sbi button is displayed";
+	public static final String isDeviceTypeOptionsDisplayed = "Verify if device type option is displayed";
+	public static final String isDeviceSubTypeOptionsDisplayed = "Verify if device sub type option is displayed";
+	public static final String isDeviceSubTypeEnabled = "Verify if Device sub type dropdown is enabled";
+	public static final String isAddDeviceButtonEnabled = "Verify if Add Device button is enabled";
+	public static final String isDeleteButtonEnabled = "Verify if Delete button is enabled";
+	public static final String isSbiVersionDisplayed = "Verify if sbi version is displayed";
 	public static final String isAddSbiDetailsInfoMessageDisplayed = "Verify if add sbi details info message is displayed";
 	public static final String isSameDateErrorMessageDisplayed = "Verify if error message is displayed for same date in created and expiry";
 	public static final String isFutureDateErrorMessageDisplayed = "Verify if error message is displayed for future date in created";
@@ -73,6 +78,12 @@ public class GlobalConstants {
 	public static final String isSubTitleDisplayed  = "Verify if subtitle displayed";
 	public static final String isBackArrow = "Verify if back arrow icon displayed";
 	public static final String isViewPolicyTitle = "Verify if view policy title displayed";
+	public static final String isDeviceApprovedCountDisplayed = "Verify if device approved count is displayed";
+	public static final String isSbiDetailsAreDisplayed = "Verify if sbi details are displayed";
+	public static final String isDeactivateSbiEnabled = "Verify if deactivate sbi is enabled";
+	public static final String isDeactivateSbiPopupDisplayed = "Verify if deactivate sbi popup is displayed";
+	public static final String isAddDeviceTitleDisplayed = "Verify if add device title is displayed";
+	public static final String isDevicePendingForApprovalCountDisplayed = "Verify if device pending for approval count is displayed";
 	public static final String isSelectPolicyGroupViewMoreAndLess = "Verify if select policy group view more and less is displayed";
 	public static final String isSelectPolicyGroupSubmitDisabled = "Verify if select policy group submit disabled";
 	public static final String isOriginalCertificateDownloadPopupDisplayed = "Verify if Originally uploaded CA signed certificate downloaded successfully displayed";
@@ -82,6 +93,7 @@ public class GlobalConstants {
 	public static final String isInvalidCertFormatePopupDisplayed = "Verify if The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload text displayed";
 	public static final String ADD_SBI_PARTNER_ID_INFO_MESSAGE = "Only those partner IDs of Device Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first";
 	public static final String ADD_SBI_EXPIRY_DATE_INFO_MESSAGE = "SBI Expiry date should be atleast one year greater than the SBI created date. Enter date in MM/DD/YYYY";
+	public static final String LIST_OF_SBI_PAGE_MESSAGE = "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired";
 	public static final String TABLE = "</table>";
 	public static final String TR = "</tr>";
 	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
@@ -109,9 +121,14 @@ public class GlobalConstants {
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
 	public static final String isPolicyNameBoxTextDisplayed = "Select policy name";
 	public static final String isListOfSbiTitleDisplayed = "Verify if List SBI title is displayed";
+	public static final String isUserProfileIconDisplayed = "Verify if user profile icon is displayed";
 	public static final String isCreatedSbiDisplayed = "Verify if created SBI is displayed";
 	public static final String isStatusDisplayed = "Verify if correct status is displayed";
+	public static final String isMandatoryMessageDisplayed = "Verify if mandatory message is displayed";
+	public static final String isCopyrightsMessageDisplayed = "Verify if copyrights message is displayed";
 	public static final String isLabelsDisplayed = "Verify if labels are displayed";
+	public static final String isDocumentationLinkDisplayed = "Verify if documentation link is displayed";
+	public static final String isContactLinkDisplayed = "Verify if contact link is displayed";
 	public static final String INITIAL_PARTNER_ID = "Select Partner ID";
 	public static final String INITIAL_PARTNER_TYPE = "Auto-populated based on Partner ID selected";
 	public static final String DEVICE_PROVIDER = "Device Provider";
@@ -119,6 +136,14 @@ public class GlobalConstants {
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
 	public static final String INITIAL_SBI_BINARY_HASH = "Enter binary hash of SBI";
+	public static final String SBI_DETAIL_ARROW_VALUE = "cursor-pointer px-3 min-w-fit rotate-180 duration-300";
+	public static final String LIST_OF_SBI = "/ List of SBI";
+	public static final String LIST_OF_DEVICES = "/ List of Devices";
+	public static final String ADD_DEVICE_MESSAGE = "On clicking of ‘Submit’ button, each device creation request will be sent to admin for approval. You can add more devices associated to this SBI by clicking on ‘Add Device’ button. Once done, you can go back to ‘List of SBIs & Devices’ screen.";
+	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
+	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
+	public static final String INITIAL_MAKE = "Enter Make";
+	public static final String INITIAL_MODEL = "Enter Model";
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -131,10 +156,25 @@ public class GlobalConstants {
 	public static final String VALUE = "value";
 	public static final String EXCEPTION_STRING_2 = "Exception ";
 	public static final String AUTOMATION = "Automation";
+	public static final String AUTOMATION_UPPERCASE = "AUTOMATION";
+	public static final String AUTOMATION_LOWERCASE = "automation";
+	public static final String CHARACTERS_36 = "Automationnnnnnnnnnnnnnnnnnnnnnnnnnn";
+	public static final String CHARACTERS_1 = "A";
 	public static final String ALPHANUMERIC = "Automation123";
+	public static final String ALPHANUMERIC_AND_SYMBOLS = "$Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
 	public static final String NUMERIC = "123456789";
+	public static final String SINGLE_NUMERIC = "1";
 	public static final String SPACE = "       ";
-
+	public static final String CLASS = "class";
+	public static final String FACE = "Face";
+	public static final String FULL_FACE = "Full face";
+	public static final String FINGER = "Finger";
+	public static final String SINGLE = "Single";
+	public static final String SLAP = "Slap";
+	public static final String TOUCHLESS = "Touchless";
+	public static final String IRIS = "Iris";
+	public static final String DOUBLE = "Double";
+	
 	
 }

@@ -84,8 +84,7 @@ public class DashboardPage extends BasePage {
 	private WebElement RootOFTrustCertText;
 	
 	//@FindBy(id = "root_certificate_upload_btn")
-	//@FindBy(id = "upload_root_trust_certificate_btn")
-	@FindBy(id = "upload_certificate_btn")
+	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")
 	private WebElement rootCertificateUploadButton;
 
 	@FindBy(xpath = "//*[text()='Policies']")
@@ -93,6 +92,9 @@ public class DashboardPage extends BasePage {
 	
 	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
+	
+	@FindBy(xpath = "//*[text()='SBI - Device']")
+	private WebElement sbiDevicesButton;
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -253,6 +255,10 @@ public class DashboardPage extends BasePage {
 	
 	public String getSideNavDeviceProviderTitle() {
 		return getTextFromLocator(sideNavDeviceProvider);
+	}
+	
+	public void clickOnSbiDevices() {
+		clickOnElement(sbiDevicesButton);
 	}
 	
 }

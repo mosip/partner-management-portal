@@ -248,16 +248,6 @@ public class DeviceProviderPage extends BasePage{
 		return isElementDisplayed(sbiList);
 	}
 	
-	public boolean isCreatedSbiDisplayed(String sbiVersion) {
-		WebElement createdSbi = driver.findElement(By.xpath("//*[text()='"+ sbiVersion +"']"));
-		return isElementDisplayed(createdSbi);
-	}
-	
-	public boolean isPendingForApprovalDisplayed(String sbiVersion) {
-		WebElement status = driver.findElement(By.xpath("//p[text()='"+ sbiVersion +"']/..//*[text()='Pending For Approval']"));
-		return isElementDisplayed(status);
-	}
-	
 	public void clickOnHome() {
 		clickOnElement(homeButton);
 	}

@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.JsonUtil;
 import io.mosip.testrig.pmprevampui.utility.Screenshot;
 
@@ -284,17 +286,17 @@ public class BasePage {
 		driver.navigate().back();
 	}
 	
-	public String acceptAlert() {
-		Alert alert = driver.switchTo().alert();
-		String alertText = alert.getText();
-		alert.accept();
-		return alertText;
+	public void acceptAlert() {
+		driver.switchTo().alert().accept();
 	}
 	
-	public String cancelAlert() {
+	public void cancelAlert() {
+		driver.switchTo().alert().dismiss();
+	}
+	
+	public String getAlertText() {
 		Alert alert = driver.switchTo().alert();
 		String alertText = alert.getText();
-		alert.dismiss();
 		return alertText;
 	}
 

@@ -21,3 +21,5 @@ delete from pms.auth_policy where cr_by='pmpui-revamp';
 delete from pms.policy_group where cr_by='pmpui-revamp';
 delete FROM pms.secure_biometric_interface where cr_by='pmpui-revamp';
 delete FROM pms.secure_biometric_interface where cr_by='pmpui-device';
+delete FROM pms.device_detail where cr_by = 'pmpui-device';
+delete FROM pms.device_detail_sbi where cr_by = 'pmpui-device';

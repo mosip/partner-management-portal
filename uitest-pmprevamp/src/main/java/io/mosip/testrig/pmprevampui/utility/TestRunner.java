@@ -40,6 +40,7 @@ public class TestRunner {
 			suite.setName("MySuite");
 			suite.addListener("io.mosip.testrig.pmprevampui.utility.EmailableReport");
 			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmprevampui.testcase.AuthPartnerTest");
+			XmlClass devicePartnerTest = new XmlClass("io.mosip.testrig.pmprevampui.testcase.DevicePartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] Scenarioname = ConfigManager.gettestcases().split(",");
@@ -47,6 +48,8 @@ public class TestRunner {
 
 				if (test.equals("AuthPartnerTest")) {
 					classes.add(AuthPartnerTest);
+				}else if (test.equals("devicePartnerTest")) {
+					classes.add(devicePartnerTest);
 				}
 
 			}
