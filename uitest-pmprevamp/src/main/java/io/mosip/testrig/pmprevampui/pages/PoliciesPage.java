@@ -236,6 +236,9 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_details_policy_group_name_label")
 	private WebElement policyDetailsPolicyGroupNameLabel;
 	
+	@FindBy(id = "policy_details_policy_name_label")
+	private WebElement policyDetailsPolicyNameLabel;
+	
 	@FindBy(id = "policy_details_policy_name_context")
 	private WebElement policyDetailsPolicyNameContext;
 	
@@ -559,6 +562,10 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policyDetailsPartnerIdLabel);
 	}
 	
+	public boolean isPolicyDetailsPolicyGroupNameLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyGroupNameLabel);
+	}
+	
 	public boolean isPolicyDetailsPolicyGroupNameContextDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyGroupNameContext);
 	}
@@ -571,8 +578,8 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policyDetailsPartnerTypeContext);
 	}
 	
-	public boolean isPolicyDetailsPolicyGroupNameLabelDisplayed() {
-		return isElementDisplayed(policyDetailsPolicyGroupNameLabel);
+	public boolean isPolicyDetailsPolicyNameLabelDisplayed() {
+		return isElementDisplayed(policyDetailsPolicyNameLabel);
 	}
 	
 	public boolean isPolicyDetailsPolicyNameContextDisplayed() {

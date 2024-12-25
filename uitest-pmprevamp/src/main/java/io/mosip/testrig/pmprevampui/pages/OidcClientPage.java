@@ -145,10 +145,10 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "partnerId_asc_icon")
 	private WebElement partnerId_asc_icon;
 
-	@FindBy(id = "oidcClientName_desc_icon")
+	@FindBy(id = "clientNameEng_desc_icon")
 	private WebElement oidcClientName_desc_icon;
 
-	@FindBy(id = "oidcClientName_asc_icon")
+	@FindBy(id = "clientNameEng_asc_icon")
 	private WebElement oidcClientName_asc_icon;
 
 	@FindBy(id = "policyGroupName_desc_icon")
@@ -231,6 +231,9 @@ public class OidcClientPage extends BasePage {
 	
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement subTitleHomeButton;
+	
+	@FindBy(id = "create_oidc_btn")
+	private WebElement oidcClientListPageCreateOidcClientBtn;
 	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -535,5 +538,7 @@ public class OidcClientPage extends BasePage {
 	public boolean isSubTitleHomeButtonDisplayed() {
 		return isElementDisplayed(subTitleHomeButton);
 	}
-	
+	public void clickOnOidcClientListPageCreateOidcClientBtn() {
+		clickOnElement(oidcClientListPageCreateOidcClientBtn);
+	}
 }
