@@ -324,18 +324,18 @@ function PartnersList() {
                                     <td className="text-center">
                                       <div ref={(el) => (submenuRef.current[index] = el)}>
                                         <p id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
-                                          tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
+                                          tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
                                         >
                                           ...
                                         </p>
                                         {viewPartnerId === index && (
                                           <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                            <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
+                                            <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
                                               <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                              <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                              <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                             </div>
                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                            <div className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
+                                            <div className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
                                               <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                               <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                             </div>

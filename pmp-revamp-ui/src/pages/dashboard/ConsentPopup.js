@@ -76,7 +76,7 @@ function ConsentPopup() {
                                 <div className="p-4"> <p>{consentText}</p></div>
                                 <div className="flex items-start mt-3 bg-alice-green w-full px-4 py-3">
                                     <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded mt-[3px]" tabIndex="0"
-                                        onKeyPress={(e) => onPressEnterKey(e, handleCheckboxChange)} />
+                                        onKeyDown={(e) => onPressEnterKey(e, handleCheckboxChange)} />
                                     <label className="ms-2 text-sm font-semibold">{t('consentPopup.checkBoxDesc')}</label>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@ function ConsentPopup() {
                             <div className="p-4 flex justify-between relative items-center">
                                 <p className="text-[#333333] text-sm font-semibold">{t('consentPopup.logoutMsg')}
                                     <span id='consent_logout_btn' className="text-tory-blue font-semibold cursor-pointer underline underline-offset-2 px-[0.1rem] px" onClick={logout} tabIndex="0"
-                                        onKeyPress={(e) => onPressEnterKey(e, logout)}> {t('commons.logout')}</span>
+                                        onKeyDown={(e) => onPressEnterKey(e, logout)}> {t('commons.logout')}</span>
                                 </p>
                                 <button
                                     className={`w-40 h-10 mx-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 

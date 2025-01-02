@@ -398,7 +398,7 @@ function CreateOidcClient() {
           )}
           <div className="flex-col mt-8">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list'  />
             </div>
             {!createOidcClientSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -504,7 +504,7 @@ function CreateOidcClient() {
                                 className="w-[85%] focus:outline-none"
                                 id={"create_oidc_redirect_url" + (index + 1)}
                               />
-                              <div id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
+                              <div id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                   stroke={redirectUrls.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${redirectUrls.length > 1 ? 'cursor-pointer' : ''}`}>
                                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -518,7 +518,7 @@ function CreateOidcClient() {
                           ))}
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
-                            <p id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                            <p id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
                               <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
                               <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                             </p>

@@ -21,8 +21,8 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                     {t('commons.download')}
                     {!disableBtn &&
                         (showDropDown ?
-                            <img src={dropdown_down_icon} className={`rotate-180 duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
-                            : <img src={dropdown_up_icon} className={`duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
+                            <img id='dropdown_down_icon' src={dropdown_down_icon} className={`rotate-180 duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
+                            : <img id='dropdown_up_icon' src={dropdown_up_icon} className={`duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
                         )
                     }
                     {disableBtn && disabledBtnHoverMsg && (

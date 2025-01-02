@@ -37,7 +37,7 @@ function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCa
           <Information infoKey={infoKey} infoKey1={infoKey1} id={id + '_info'}/>
         )}
       </label>
-      <div className="w-full">
+      <div id="datePicker" className="w-full">
         <DatePicker
           id={id}
           selected={selectedDateStr === "" ? new Date() : new Date(selectedDateStr)}

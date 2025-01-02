@@ -47,7 +47,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     <button
                     onClick={onTextClear}
                     className={`flex items-center bg-white font-bold rounded-md px-2 min-h-9 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:ring-2 focus:ring-blue-500 items-center hover:cursor-pointer`}
-                    tabIndex={0}
+                    tabIndex="0"
                     type="button"
                 >
                     x

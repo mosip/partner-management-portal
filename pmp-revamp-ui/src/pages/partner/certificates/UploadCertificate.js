@@ -244,7 +244,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         )}
                                         {!uploading && fileName === '' && (
                                             <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
-                                                <label htmlFor="fileInput" tabIndex={0} onKeyPress={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()} className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
+                                                <label htmlFor="fileInput" tabIndex="0" onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()} className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
                                                     <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10"/>
                                                     <h5 className="text-charcoal-gray text-base font-normal px-2">
                                                         {t('uploadCertificate.selectCertificate')}
@@ -264,7 +264,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => removeUpload())}>
+                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => removeUpload())}>
                                                     {t('uploadCertificate.remove')}
                                                 </p>
                                             </div>
