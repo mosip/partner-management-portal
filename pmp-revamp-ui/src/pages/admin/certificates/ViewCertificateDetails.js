@@ -137,7 +137,7 @@ function ViewCertificateDetails() {
                                                 :
                                                 <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                             }
-                                            <div id="root_trust_details_certificate_label" className="flex-col p-3 items-center">
+                                            <div className="flex-col p-3 items-center">
                                                 <h6 className={`text-sm ${(viewCertDetails.status === true) ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                     {viewCertPageHeaders.certType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.intermediateCaCertificate')}
                                                 </h6>

@@ -13,7 +13,7 @@ import SelectPolicyPopup from './SelectPolicyPopup.js';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
-import deviceProviderServices_icon from '../../svg/deviceProviderServices_icon.svg';
+import deviceProviderServicesIcon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
@@ -344,7 +344,7 @@ function Dashboard() {
             {!isPartnerAdmin &&
               < div id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
-                  <img src={partnerCertificateIcon} alt="" className="w-8 h-8" id='dashboard_partner_certificated_list_icon' />
+                  <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <h5 id='dashboard_partner_certificate_list_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -374,7 +374,7 @@ function Dashboard() {
             {!isPartnerAdmin && showAuthenticationServices && (
               <div id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
-                  <img src={authServiceIcon} alt="" className="w-8 h-8" id='dashboard_authentication_clients_list_icon' />
+                  <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <h5 id='dashboard_authentication_clients_list_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
@@ -389,7 +389,7 @@ function Dashboard() {
             {!isPartnerAdmin && showDeviceProviderServices && (
               <div id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={deviceProviderServices_icon} alt="" className="w-8 h-8" id='dashboard_device_provider_service_icon' />
+                  <img id='dashboard_device_provider_service_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <h5 id='dashboard_device_provider_service_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -404,7 +404,7 @@ function Dashboard() {
             {!isPartnerAdmin && showFtmServices && (
               <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
-                  <img src={ftmServicesIcon} alt="" className="w-8 h-8" id='dashboard_ftm_chip_provider_icon' />
+                  <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <h5 id='dashboard_ftm_chip_provider_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -420,7 +420,7 @@ function Dashboard() {
               <>
                 <div onClick={rootTrustCertificateList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
-                    <img src={partnerCertificateIcon} alt="" className="w-8 h-8" />
+                    <img id='admin_partner_certificate_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -481,7 +481,7 @@ function Dashboard() {
 
                 <div onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
                   <div className="flex justify-center mb-5">
-                    <img id='deviceProviderServices_icon' src={deviceProviderServices_icon} alt="" className="w-8 h-8" />
+                    <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -522,7 +522,7 @@ function Dashboard() {
 
                 <div onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
                   <div className="flex justify-center mb-5">
-                    <img src={authServiceIcon} alt="" className="w-8 h-8" />
+                    <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">

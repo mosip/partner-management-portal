@@ -112,10 +112,10 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                             )}
                             <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
-                                    <p id='deActive_popup_headerMsg' className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                    <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
-                                    : <p id='deActive_popup_headerMsg' className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                    : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}
                                     </p>
                                 }
