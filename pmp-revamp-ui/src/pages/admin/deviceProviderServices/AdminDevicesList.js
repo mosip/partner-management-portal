@@ -64,18 +64,18 @@ function AdminDevicesList() {
     const submenuRef = useRef([]);
 
     const tableHeaders = [
-        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
-        { id: "sbiId", headerNameKey: 'sbiList.sbiId' },
-        { id: "sbiVersion", headerNameKey: 'sbiList.sbiVersion' },
-        { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
-        { id: "orgName", headerNameKey: 'sbiList.orgName' },
-        { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
-        { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
-        { id: "make", headerNameKey: "devicesList.make" },
-        { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
-        { id: "status", headerNameKey: "devicesList.status" },
-        { id: "action", headerNameKey: 'devicesList.action' }
+        { id: 1, headerNameKey: 'devicesList.deviceId' },
+        { id: 2, headerNameKey: 'sbiList.sbiId' },
+        { id: 3, headerNameKey: 'sbiList.sbiVersion' },
+        { id: 4, headerNameKey: 'sbiList.partnerId' },
+        { id: 5, headerNameKey: 'sbiList.orgName' },
+        { id: 6, headerNameKey: 'devicesList.deviceType' },
+        { id: 7, headerNameKey: "devicesList.deviceSubType" },
+        { id: 8, headerNameKey: "devicesList.make" },
+        { id: 9, headerNameKey: "devicesList.model" },
+        { id: 10, headerNameKey: "devicesList.createdDate" },
+        { id: 11, headerNameKey: "devicesList.status" },
+        { id: 12, headerNameKey: 'devicesList.action' }
     ];
 
     useEffect(() => {
@@ -297,9 +297,9 @@ function AdminDevicesList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {tableHeaders.map((header) => {
                                                                 return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
+                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
@@ -321,7 +321,7 @@ function AdminDevicesList() {
                                                     <tbody>
                                                         {devicesList.map((device, index) => {
                                                             return (
-                                                                <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <tr id={'device_list_item' + (index + 1)} key={device.deviceId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>

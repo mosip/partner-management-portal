@@ -90,15 +90,15 @@ function FtmList() {
   };
 
   const tableHeaders = [
-    { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
-    { id: "make", headerNameKey: "ftmList.make" },
-    { id: "model", headerNameKey: "ftmList.model" },
-    { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
-    { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
-    { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
-    { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
-    { id: "status", headerNameKey: "ftmList.status" },
-    { id: "action", headerNameKey: 'ftmList.action' }
+    { id: 1, headerNameKey: 'ftmList.partnerId' },
+    { id: 2, headerNameKey: "ftmList.make" },
+    { id: 3, headerNameKey: "ftmList.model" },
+    { id: 4, headerNameKey: "ftmList.createdDate" },
+    { id: 5, headerNameKey: "ftmList.certificateUploadDate" },
+    { id: 6, headerNameKey: "ftmList.certificateExpiryDate" },
+    { id: 7, headerNameKey: "ftmList.certExpiryStatus" },
+    { id: 8, headerNameKey: "ftmList.status" },
+    { id: 9, headerNameKey: 'ftmList.action' }
   ];
 
   const cancelErrorMsg = () => {
@@ -251,9 +251,9 @@ function FtmList() {
                     <table className="table-fixed">
                       <thead>
                         <tr>
-                          {tableHeaders.map((header, index) => {
+                          {tableHeaders.map((header) => {
                             return (
-                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
+                              <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
                                 <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
@@ -277,7 +277,7 @@ function FtmList() {
                         {
                           tableRows.map((ftm, index, currentArray) => {
                             return (
-                              <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                              <tr id={'ftm_list_item' + (index + 1)} key={ftm.ftmId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>

@@ -61,12 +61,12 @@ function PolicyGroupList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: "id", headerNameKey: "policyGroupList.policyGroupId" },
-        { id: "name", headerNameKey: "policyGroupList.policyGroupName" },
-        { id: "desc", headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: "crDtimes", headerNameKey: "policyGroupList.createdDate" },
-        { id: "status", headerNameKey: "policyGroupList.status" },
-        { id: "action", headerNameKey: "policyGroupList.action" },
+        { id: 1, headerNameKey: "policyGroupList.policyGroupId" },
+        { id: 2, headerNameKey: "policyGroupList.policyGroupName" },
+        { id: 3, headerNameKey: "policyGroupList.policyGroupDescription" },
+        { id: 4, headerNameKey: "policyGroupList.createdDate" },
+        { id: 5, headerNameKey: "policyGroupList.status" },
+        { id: 6, headerNameKey: "policyGroupList.action" },
     ];
 
     const fetchPolicyGroupListData = async () => {
@@ -306,9 +306,9 @@ function PolicyGroupList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {tableHeaders.map((header) => {
                                                                 return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {header.id !== "action" && (
@@ -330,7 +330,7 @@ function PolicyGroupList() {
                                                     <tbody>
                                                         {policyGroupList.map((policyGroup, index) => {
                                                             return (
-                                                                <tr id={"policy_group_list_item" + (index + 1)} key={index}
+                                                                <tr id={"policy_group_list_item" + (index + 1)} key={policyGroup.id}
                                                                     className={`border-t border-[#E5EBFA] ${policyGroup.isActive ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.id}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.name}</td>

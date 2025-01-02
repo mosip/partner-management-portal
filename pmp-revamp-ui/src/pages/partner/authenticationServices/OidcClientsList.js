@@ -84,14 +84,14 @@ function OidcClientsList() {
     }, []);
 
     const tableHeaders = [
-        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
-        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
-        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
-        { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
-        { id: "action", headerNameKey: 'oidcClientsList.action' }
+        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 3, headerNameKey: "oidcClientsList.policyName" },
+        { id: 4, headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: 5, headerNameKey: "oidcClientsList.createdDate" },
+        { id: 6, headerNameKey: "oidcClientsList.status" },
+        { id: 7, headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: 8, headerNameKey: 'oidcClientsList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -283,7 +283,7 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index, currentArray) => {
                                                         return (
-                                                            <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'oidc_client_list_item' + (index + 1)} key={client.clientId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>

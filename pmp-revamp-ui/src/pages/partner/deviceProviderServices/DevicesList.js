@@ -103,13 +103,13 @@ function DevicesList() {
     }, []);
 
     const tableHeaders = [
-        { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
-        { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
-        { id: "make", headerNameKey: "devicesList.make" },
-        { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
-        { id: "status", headerNameKey: "devicesList.status" },
-        { id: "action", headerNameKey: 'devicesList.action' }
+        { id: 1, headerNameKey: 'devicesList.deviceType' },
+        { id: 2, headerNameKey: "devicesList.deviceSubType" },
+        { id: 3, headerNameKey: "devicesList.make" },
+        { id: 4, headerNameKey: "devicesList.model" },
+        { id: 5, headerNameKey: "devicesList.createdDate" },
+        { id: 6, headerNameKey: "devicesList.status" },
+        { id: 7, headerNameKey: 'devicesList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -279,9 +279,9 @@ function DevicesList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {tableHeaders.map((header) => {
                                                                 return (
-                                                                    <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
+                                                                    <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
                                                                         <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
@@ -304,7 +304,7 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr id={'device_list_device_item' + (index + 1)} key={device.deviceId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>

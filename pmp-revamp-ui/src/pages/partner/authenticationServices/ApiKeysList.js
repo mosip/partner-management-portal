@@ -77,13 +77,13 @@ function ApiKeysList() {
     }, []);
 
     const tableHeaders = [
-        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
-        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
-        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
-        { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "action", headerNameKey: 'oidcClientsList.action' }
+        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 3, headerNameKey: "oidcClientsList.policyName" },
+        { id: 4, headerNameKey: "apiKeysList.apiKeyName" },
+        { id: 5, headerNameKey: "oidcClientsList.createdDate" },
+        { id: 6, headerNameKey: "oidcClientsList.status" },
+        { id: 7, headerNameKey: 'oidcClientsList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -227,9 +227,9 @@ function ApiKeysList() {
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>
-                                                    {tableHeaders.map((header, index) => {
+                                                    {tableHeaders.map((header) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
+                                                            <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
                                                                 <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -253,7 +253,7 @@ function ApiKeysList() {
                                                 {
                                                     tableRows.map((apiKey, index, currentArray) => {
                                                         return (
-                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'api_list_item' + (index + 1)} key={apiKey.partnerId + apiKey.apiKeyLabel} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>

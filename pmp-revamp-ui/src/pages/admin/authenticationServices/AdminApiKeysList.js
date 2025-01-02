@@ -59,14 +59,14 @@ function AdminApiKeysList () {
     const submenuRef = useRef([]);
 
     const tableHeaders = [
-        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
-        { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
-        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
-        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
-        { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "action", headerNameKey: 'oidcClientsList.action' }
+        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, headerNameKey: 'oidcClientsList.orgName' },
+        { id: 3, headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 4, headerNameKey: "oidcClientsList.policyName" },
+        { id: 5, headerNameKey: "apiKeysList.apiKeyName" },
+        { id: 6, headerNameKey: "oidcClientsList.createdDate" },
+        { id: 7, headerNameKey: "oidcClientsList.status" },
+        { id: 8, headerNameKey: 'oidcClientsList.action' }
     ];
 
     useEffect(() => {
@@ -84,12 +84,16 @@ function AdminApiKeysList () {
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
 
-        if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
-        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
-        if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
-        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-        if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
-        if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
+        const filterAttributesKeys = [
+            'partnerId', 'orgName', 'policyGroupName', 
+            'policyName', 'apiKeyLabel', 'status'
+          ];
+          
+          filterAttributesKeys.forEach(key => {
+            if (filterAttributes[key]) {
+              queryParams.append(key, filterAttributes[key]);
+            }
+          });
 
         const url = `${getPartnerManagerUrl('/partners/apikey/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -97,7 +101,7 @@ function AdminApiKeysList () {
             const response = await HttpService.get(url);
             if (response) {
                 const responseData = response.data;
-                if (responseData && responseData.response) {
+                if (responseData?.response) {
                     const resData = responseData.response.data;
                     setTotalRecords(responseData.response.totalResults);
                     setApiKeysList(resData);
@@ -254,9 +258,9 @@ function AdminApiKeysList () {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {tableHeaders.map((header) => {
                                                                 return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
@@ -278,7 +282,7 @@ function AdminApiKeysList () {
                                                     <tbody>
                                                         {apiKeysList.map((apiKey, index) => {
                                                             return (
-                                                                <tr id={"api_key_list_item" + (index + 1)} key={index}
+                                                                <tr id={"api_key_list_item" + (index + 1)} key={apiKey.partnerId + apiKey.apiKeyLabel}
                                                                     className={`border-t border-[#E5EBFA] ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerId}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>

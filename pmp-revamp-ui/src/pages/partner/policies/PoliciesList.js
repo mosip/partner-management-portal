@@ -47,13 +47,13 @@ function PoliciesList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "partnerId", headerNameKey: 'policies.partnerId' },
-    { id: "partnerType", headerNameKey: "policies.partnerType" },
-    { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
-    { id: "policyName", headerNameKey: "policies.policyName" },
-    { id: "createdDateTime", headerNameKey: "policies.createdDate" },
-    { id: "status", headerNameKey: "policies.status" },
-    { id: "action", headerNameKey: 'policies.action' }
+    { id: 1, headerNameKey: 'policies.partnerId' },
+    { id: 2, headerNameKey: "policies.partnerType" },
+    { id: 3, headerNameKey: "policies.policyGroupName" },
+    { id: 4, headerNameKey: "policies.policyName" },
+    { id: 5, headerNameKey: "policies.createdDate" },
+    { id: 6, headerNameKey: "policies.status" },
+    { id: 7, headerNameKey: 'policies.action' }
   ];
 
   useEffect(() => {
@@ -181,9 +181,9 @@ function PoliciesList() {
                       <table className="table-fixed">
                         <thead>
                           <tr>
-                            {tableHeaders.map((header, index) => {
+                            {tableHeaders.map((header) => {
                               return (
-                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
+                                <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
                                   <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
@@ -206,7 +206,7 @@ function PoliciesList() {
                         <tbody>
                           {tableRows.map((partner, index) => {
                             return (
-                              <tr id={'policy_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                              <tr id={'policy_list_item' + (index + 1)} key={partner.policyId} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>

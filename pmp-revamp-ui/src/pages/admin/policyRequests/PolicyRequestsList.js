@@ -73,15 +73,15 @@ function PolicyRequestsList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "partnerId", headerNameKey: "partnerPolicyMappingRequestList.partnerId" },
-    { id: "partnerType", headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
-    { id: "orgName", headerNameKey: "partnerPolicyMappingRequestList.organisation" },
-    { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
-    { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
-    { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
-    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
-    { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
-    { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
+    { id: 1, headerNameKey: "partnerPolicyMappingRequestList.partnerId" },
+    { id: 2, headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
+    { id: 3, headerNameKey: "partnerPolicyMappingRequestList.organisation" },
+    { id: 4, headerNameKey: "partnerPolicyMappingRequestList.policyId" },
+    { id: 5, headerNameKey: "partnerPolicyMappingRequestList.policyName" },
+    { id: 6, headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
+    { id: 7, headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
+    { id: 8, headerNameKey: "partnerPolicyMappingRequestList.status" },
+    { id: 9, headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];
 
   const fetchPolicyRequestsListData = async () => {
@@ -277,9 +277,9 @@ useEffect(() => {
                             <table className="table-fixed">
                               <thead>
                                 <tr>
-                                  {tableHeaders.map((header, index) => {
+                                  {tableHeaders.map((header) => {
                                     return (
-                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                      <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                           {t(header.headerNameKey)}
                                           {header.id !== "action" && (
@@ -300,7 +300,7 @@ useEffect(() => {
                               <tbody>
                                 {policyRequestsData.map((policyRequest, index) => {
                                   return (
-                                    <tr id={"partner_list_item" + (index + 1)} key={index}
+                                    <tr id={"partner_list_item" + (index + 1)} key={policyRequest.id}
                                       className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.partnerId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>

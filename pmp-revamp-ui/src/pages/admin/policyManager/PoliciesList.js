@@ -72,13 +72,13 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: "policyId", headerNameKey: "policiesList.policyId" },
-        { id: "policyName", headerNameKey: "policiesList.policyName" },
-        { id: "policyDescription", headerNameKey: "policiesList.policyDescription" },
-        { id: "policyGroupName", headerNameKey: "policiesList.policyGroup" },
-        { id: "createdDateTime", headerNameKey: "policiesList.createdDate" },
-        { id: "status", headerNameKey: "policiesList.status" },
-        { id: "action", headerNameKey: "policiesList.action" },
+        { id: 1, headerNameKey: "policiesList.policyId" },
+        { id: 2, headerNameKey: "policiesList.policyName" },
+        { id: 3, headerNameKey: "policiesList.policyDescription" },
+        { id: 4, headerNameKey: "policiesList.policyGroup" },
+        { id: 5, headerNameKey: "policiesList.createdDate" },
+        { id: 6, headerNameKey: "policiesList.status" },
+        { id: 7, headerNameKey: "policiesList.action" },
     ];
 
     
@@ -328,9 +328,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                     <table className="table-fixed">
                                                         <thead>
                                                             <tr>
-                                                                {tableHeaders.map((header, index) => {
+                                                                {tableHeaders.map((header) => {
                                                                     return (
-                                                                        <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                        <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
                                                                             <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                 {t(header.headerNameKey)}
                                                                                 {header.id !== "action" && (
@@ -352,7 +352,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                         <tbody>
                                                             {policiesList.map((policy, index) => {
                                                                 return (
-                                                                    <tr id={"policies_list_item" + (index + 1)} key={index}
+                                                                    <tr id={"policies_list_item" + (index + 1)} key={policy.policyId}
                                                                         className={`border-t border-[#E5EBFA] ${policy.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyId}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyName}</td>

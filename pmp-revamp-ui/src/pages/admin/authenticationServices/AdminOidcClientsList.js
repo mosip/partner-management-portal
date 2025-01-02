@@ -70,15 +70,15 @@ function AdminOidcClientsList () {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
-        { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
-        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
-        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
-        { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "clientId", headerNameKey: "oidcClientsList.oidcClientId" },
-        { id: "action", headerNameKey: 'oidcClientsList.action' }
+        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, headerNameKey: 'oidcClientsList.orgName' },
+        { id: 3, headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 4, headerNameKey: "oidcClientsList.policyName" },
+        { id: 5, headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: 6, headerNameKey: "oidcClientsList.createdDate" },
+        { id: 7, headerNameKey: "oidcClientsList.status" },
+        { id: 8, headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: 9, headerNameKey: 'oidcClientsList.action' }
     ];
 
     const fetchOidcClientsListData = async () => {
@@ -285,9 +285,9 @@ function AdminOidcClientsList () {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {tableHeaders.map((header) => {
                                                                 return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (header.id !== "clientId") && (header.id !== "clientNameEng") && (
@@ -309,7 +309,7 @@ function AdminOidcClientsList () {
                                                     <tbody>
                                                         {oidcClientsList.map((client, index) => {
                                                             return (
-                                                                <tr id={"oidc_client_list_item" + (index + 1)} key={index}
+                                                                <tr id={"oidc_client_list_item" + (index + 1)} key={client.clientId}
                                                                     className={`border-t border-[#E5EBFA] ${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === 'INACTIVE' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.orgName ? client.orgName : '-'}</td>

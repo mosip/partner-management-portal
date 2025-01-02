@@ -68,14 +68,14 @@ function PartnersList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "partnerId", headerNameKey: "partnerList.partnerId" },
-    { id: "partnerType", headerNameKey: "partnerList.partnerType" },
-    { id: "orgName", headerNameKey: "partnerList.organisation" },
-    { id: "policyGroupName", headerNameKey: "partnerList.policyGroup" },
-    { id: "emailAddress", headerNameKey: "partnerList.email" },
-    { id: "certificateUploadStatus", headerNameKey: "partnerList.certUploadStatus" },
-    { id: "status", headerNameKey: "partnerList.status" },
-    { id: "action", headerNameKey: "partnerList.action" },
+    { id: 1, headerNameKey: "partnerList.partnerId" },
+    { id: 2, headerNameKey: "partnerList.partnerType" },
+    { id: 3, headerNameKey: "partnerList.organisation" },
+    { id: 4, headerNameKey: "partnerList.policyGroup" },
+    { id: 5, headerNameKey: "partnerList.email" },
+    { id: 6, headerNameKey: "partnerList.certUploadStatus" },
+    { id: 7, headerNameKey: "partnerList.status" },
+    { id: 8, headerNameKey: "partnerList.action" },
   ];
 
   const fetchPartnersData = async () => {
@@ -283,9 +283,9 @@ function PartnersList() {
                           <table className="table-fixed">
                             <thead>
                               <tr>
-                                {tableHeaders.map((header, index) => {
+                                {tableHeaders.map((header) => {
                                   return (
-                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                       <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                         {t(header.headerNameKey)}
                                         {header.id !== "action" && (
@@ -306,7 +306,7 @@ function PartnersList() {
                             <tbody>
                               {partnersData.map((partner, index) => {
                                 return (
-                                  <tr id={"partner_list_item" + (index + 1)} key={index}
+                                  <tr id={"partner_list_item" + (index + 1)} key={partner.partnerId}
                                     className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
                                     <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
                                     <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
