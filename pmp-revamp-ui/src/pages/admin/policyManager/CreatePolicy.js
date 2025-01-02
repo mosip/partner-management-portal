@@ -147,6 +147,12 @@ function CreatePolicy() {
         let parsedPolicyData;
         try {
             parsedPolicyData = JSON.parse(policyData);
+            if (JSON.stringify(parsedPolicyData).length > 5120) {
+                setErrorMsg(t('createPolicy.policyDatalengthExceedError'));
+                setIsSubmitClicked(false);
+                setDataLoaded(true);
+                return;
+            };
             if (Array.isArray(parsedPolicyData) || parsedPolicyData === null) {
                 throw new Error("Parsed data is not a valid JSON object");
             }
@@ -269,7 +275,7 @@ function CreatePolicy() {
                     )}
                     <div className="flex-col mt-7 w-full">
                         <div className="w-fit">
-                            <Title title={title} subTitle={subTitle} backLink={backLink}></Title>
+                            <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">

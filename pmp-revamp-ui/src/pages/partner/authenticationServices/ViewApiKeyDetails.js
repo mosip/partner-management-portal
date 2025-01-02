@@ -35,7 +35,7 @@ function ViewApiKeyDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list' ></Title>
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list'  />
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">

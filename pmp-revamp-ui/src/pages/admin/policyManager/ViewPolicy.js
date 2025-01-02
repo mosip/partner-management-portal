@@ -181,7 +181,7 @@ function ViewPolicy() {
                                                 <img src={fileUploadBlue} className="h-7" alt="" />
                                                 <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                             </div>
-                                            <div onClick={showUploadedJsonData} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer' tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, showUploadedJsonData)}>
+                                            <div onClick={showUploadedJsonData} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer' tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, showUploadedJsonData)}>
                                                 <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
                                                 <img src={previewIcon} alt="" />
                                             </div>

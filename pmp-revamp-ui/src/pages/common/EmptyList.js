@@ -9,7 +9,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, o
             <div className="flex justify-between mt-5">
                 <div className="flex w-full justify-between text-sm font-semibold text-[#6F6E6E] px-2 m-auto overflow-x-auto no-scrollbar">
                     { tableHeaders.map((header, index) => (
-                        <h6 key={index} className="mx-[0.7rem]">
+                        <h6 id='columnheaderName' key={index} className="mx-[0.7rem]">
                             {t(header.headerNameKey)}
                         </h6>
                     ))}

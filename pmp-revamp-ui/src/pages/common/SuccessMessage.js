@@ -13,7 +13,7 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle}) {
                     <p className="text-sm/4 text-white break-words font-inter" dangerouslySetInnerHTML={{ __html: successMsg }}/>
                 </div>
                 <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute ${(customStyle && customStyle.cancelIcon) ? customStyle.cancelIcon : 'top-4  mt-1'}`}>
-                    <img id='success_msg_close' src={cancelIcon} alt="close" className="cursor-pointer" onClick={clickOnCancel} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => clickOnCancel())} />
+                    <img id='success_msg_close_icon' src={cancelIcon} alt="close" className="cursor-pointer" onClick={clickOnCancel} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnCancel())} />
                 </div>
             </div>
         </div>

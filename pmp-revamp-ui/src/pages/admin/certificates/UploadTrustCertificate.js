@@ -214,7 +214,7 @@ function UploadTrustCertificate() {
                                                                         id="remove_certificate_btn"
                                                                         className="text-sm font-semibold text-tory-blue"
                                                                         onClick={removeUpload}
-                                                                        onKeyPress={(e) => {
+                                                                        onKeyDown={(e) => {
                                                                             if (e.key === 'Enter' || e.key === ' ') removeUpload();
                                                                         }}
                                                                     >
@@ -262,7 +262,7 @@ function UploadTrustCertificate() {
                                                                         id="remove_certificate_btn"
                                                                         className="text-sm font-semibold text-tory-blue"
                                                                         onClick={removeUpload}
-                                                                        onKeyPress={(e) => {
+                                                                        onKeyDown={(e) => {
                                                                             if (e.key === 'Enter' || e.key === ' ') removeUpload();
                                                                         }}
                                                                     >
