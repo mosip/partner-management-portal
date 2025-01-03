@@ -69,15 +69,15 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: 1, keyName: 'certificateId', headerNameKey: "certificatesList.certificateId" },
-    { id: 2, keyName: 'partnerDomain', headerNameKey: "certificatesList.partnerDomain", },
-    { id: 3, keyName: 'issuedTo', headerNameKey: "certificatesList.issuedTo" },
-    { id: 4, keyName: 'issuedBy', headerNameKey: "certificatesList.issuedBy" },
-    { id: 5, keyName: 'validFrom', headerNameKey: "certificatesList.validFrom" },
-    { id: 6, keyName: 'validTill', headerNameKey: "certificatesList.validTill" },
-    { id: 7, keyName: 'uploadedDateTime', headerNameKey: "certificatesList.timeOfUpload" },
-    { id: 8, keyName: 'validityStatus', headerNameKey: "certificatesList.validityStatus" },
-    { id: 9, keyName: 'action', headerNameKey: "certificatesList.action" },
+    { id: "certificateId", headerNameKey: "certificatesList.certificateId" },
+    { id: "partnerDomain", headerNameKey: "certificatesList.partnerDomain", },
+    { id: "issuedTo", headerNameKey: "certificatesList.issuedTo" },
+    { id: "issuedBy", headerNameKey: "certificatesList.issuedBy" },
+    { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
+    { id: "validTill", headerNameKey: "certificatesList.validTill" },
+    { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
+    { id: "validityStatus", headerNameKey: "certificatesList.validityStatus" },
+    { id: "action", headerNameKey: "certificatesList.action" },
   ];
 
   const fetchCertificatesList = async () => {
@@ -257,14 +257,14 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                             <table className="table-fixed">
                               <thead>
                                 <tr>
-                                  {tableHeaders.map((header) => {
+                                  {tableHeaders.map((header, index) => {
                                     return (
-                                      <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
+                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                           {t(header.headerNameKey)}
-                                          {header.keyName !== "action" && header.keyName !== "validityStatus" && (
+                                          {header.id !== "action" && header.id !== "validityStatus" && (
                                             <SortingIcon
-                                              headerId={header.keyName}
+                                              headerId={header.id}
                                               sortDescOrder={sortDescOrder}
                                               sortAscOrder={sortAscOrder}
                                               order={order}
@@ -281,7 +281,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                               <tbody>
                                 {certificatesList.map((certificate, index) => {
                                   return (
-                                    <tr id={"certificate_list_item" + (index + 1)} key={certificate.certId} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
+                                    <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>

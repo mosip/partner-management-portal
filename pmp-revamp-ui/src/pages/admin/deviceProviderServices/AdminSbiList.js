@@ -65,16 +65,16 @@ function AdminSbiList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: 1, keyName:'partnerId', headerNameKey: 'sbiList.partnerId' },
-        { id: 2, keyName:'orgName', headerNameKey: 'sbiList.orgName' },
-        { id: 3, keyName:'sbiVersion', headerNameKey: "sbiList.sbiVersion" },
-        { id: 4, keyName:'sbiCreatedDateTime', headerNameKey: "sbiList.sbiCreatedDate" },
-        { id: 5, keyName:'sbiExpiryDateTime', headerNameKey: "sbiList.sbiExpiryDate" },
-        { id: 6, keyName:'sbiExpiryStatus', headerNameKey: "sbiList.sbiExpiryStatus" },
-        { id: 7, keyName:'createdDateTime', headerNameKey: "sbiList.createdDate" },
-        { id: 8, keyName:'status', headerNameKey: "sbiList.status" },
-        { id: 9, keyName:'countOfAssociatedDevices', headerNameKey: "sbiList.linkedDevices" },
-        { id: 10, keyName:'action', headerNameKey: "sbiList.action" }
+        { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
+        { id: "orgName", headerNameKey: 'sbiList.orgName' },
+        { id: "sbiVersion", headerNameKey: "sbiList.sbiVersion" },
+        { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
+        { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
+        { id: "sbiExpiryStatus", headerNameKey: "sbiList.sbiExpiryStatus" },
+        { id: "createdDateTime", headerNameKey: "sbiList.createdDate" },
+        { id: "status", headerNameKey: "sbiList.status" },
+        { id: "countOfAssociatedDevices", headerNameKey: "sbiList.linkedDevices" },
+        { id: "action", headerNameKey: "sbiList.action" }
     ];
 
     const fetchSbiListData = async () => {
@@ -286,14 +286,14 @@ function AdminSbiList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header) => {
+                                                            {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.keyName !== "action") && (
+                                                                            {(header.id !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.keyName}
+                                                                                    headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -310,7 +310,7 @@ function AdminSbiList() {
                                                     <tbody>
                                                         {sbiList.map((sbi, index) => {
                                                             return (
-                                                                <tr id={"sbi_list_item" + (index + 1)} key={sbi.sbiId}
+                                                                <tr id={"sbi_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.partnerId}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>

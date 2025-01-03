@@ -47,13 +47,13 @@ function PoliciesList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: 1, keyName: 'partnerId', headerNameKey: 'policies.partnerId' },
-    { id: 2, keyName: 'partnerType', headerNameKey: "policies.partnerType" },
-    { id: 3, keyName: 'policyGroupName', headerNameKey: "policies.policyGroupName" },
-    { id: 4, keyName: 'policyName', headerNameKey: "policies.policyName" },
-    { id: 5, keyName: 'createdDateTime', headerNameKey: "policies.createdDate" },
-    { id: 6, keyName: 'status', headerNameKey: "policies.status" },
-    { id: 7, keyName: 'action', headerNameKey: 'policies.action' }
+    { id: "partnerId", headerNameKey: 'policies.partnerId' },
+    { id: "partnerType", headerNameKey: "policies.partnerType" },
+    { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
+    { id: "policyName", headerNameKey: "policies.policyName" },
+    { id: "createdDateTime", headerNameKey: "policies.createdDate" },
+    { id: "status", headerNameKey: "policies.status" },
+    { id: "action", headerNameKey: 'policies.action' }
   ];
 
   useEffect(() => {
@@ -62,9 +62,9 @@ function PoliciesList() {
         setDataLoaded(false);
         const response = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
         if (response) {
-            const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
-            setPoliciesList(sortedData);
-            setFilteredPoliciesList(sortedData);
+          const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+          setPoliciesList(sortedData);
+          setFilteredPoliciesList(sortedData);
         } else {
           setErrorMsg(t('policies.errorInPoliciesList'));
         }
@@ -144,7 +144,7 @@ function PoliciesList() {
           )}
           <div className="flex-col mt-7">
             <div className="flex justify-between mb-3">
-              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}/>
+              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style} />
 
               {policiesList.length > 0 ?
                 <button id='policies_request_btn' onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
@@ -181,15 +181,15 @@ function PoliciesList() {
                       <table className="table-fixed">
                         <thead>
                           <tr>
-                            {tableHeaders.map((header) => {
+                            {tableHeaders.map((header, index) => {
                               return (
-                                <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
+                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
                                   <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
-                                    {header.keyName !== "action" && (
+                                    {header.id !== "action" && (
                                       <SortingIcon
                                         id={`${header.headerNameKey}_sorting_icon`}
-                                        headerId={header.keyName}
+                                        headerId={header.id}
                                         sortDescOrder={sortDescOrder}
                                         sortAscOrder={sortAscOrder}
                                         order={order}
@@ -206,7 +206,7 @@ function PoliciesList() {
                         <tbody>
                           {tableRows.map((partner, index) => {
                             return (
-                              <tr id={'policy_list_item' + (index + 1)} key={partner.policyId} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
+                              <tr id={'policy_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status.toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>

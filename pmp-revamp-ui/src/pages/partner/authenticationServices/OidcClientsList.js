@@ -50,7 +50,7 @@ function OidcClientsList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
-    
+
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
@@ -84,14 +84,14 @@ function OidcClientsList() {
     }, []);
 
     const tableHeaders = [
-        { id: 1, keyName: 'partnerId', headerNameKey: 'oidcClientsList.partnerId' },
-        { id: 2, keyName: 'policyGroupName', headerNameKey: "oidcClientsList.policyGroup" },
-        { id: 3, keyName: 'policyName', headerNameKey: "oidcClientsList.policyName" },
-        { id: 4, keyName: 'clientNameEng', headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: 5, keyName: 'createdDateTime', headerNameKey: "oidcClientsList.createdDate" },
-        { id: 6, keyName: 'status', headerNameKey: "oidcClientsList.status" },
-        { id: 7, keyName: 'oidcClientId', headerNameKey: "oidcClientsList.oidcClientId" },
-        { id: 8, keyName: 'action', headerNameKey: 'oidcClientsList.action' }
+        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
+        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
+        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
+        { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "status", headerNameKey: "oidcClientsList.status" },
+        { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -195,7 +195,7 @@ function OidcClientsList() {
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
                 )
-          );
+            );
         }
     };
 
@@ -216,7 +216,7 @@ function OidcClientsList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement'  />
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                             {oidcClientsList.length > 0 ?
                                 <button id='create_oidc_btn' onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('createOidcClient.createOidcClient')}
@@ -238,7 +238,7 @@ function OidcClientsList() {
                                     tableHeaders={tableHeaders}
                                     showCustomButton={true}
                                     customButtonName='createOidcClient.createOidcClient'
-                                    buttonId= 'create_oid_client'
+                                    buttonId='create_oid_client'
                                     onClickButton={createOidcClient}
                                 />
                             </div>
@@ -259,13 +259,13 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.keyName === "status" && 'w-[10%]'} ${(header.keyName === 'policyName' || header.keyName === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
-                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.keyName === "oidcClientId" && 'justify-center'} ${header.keyName === "action" && 'justify-center'}`}>
+                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
-                                                                    {(header.keyName !== "action") && (header.keyName !== "oidcClientId") && (
+                                                                    {(header.id !== "action") && (header.id !== "oidcClientId") && (
                                                                         <SortingIcon
                                                                             id={`${header.headerNameKey}_sorting_icon`}
-                                                                            headerId={header.keyName}
+                                                                            headerId={header.id}
                                                                             sortDescOrder={sortDescOrder}
                                                                             sortAscOrder={sortAscOrder}
                                                                             order={order}
@@ -283,7 +283,7 @@ function OidcClientsList() {
                                                 {
                                                     tableRows.map((client, index, currentArray) => {
                                                         return (
-                                                            <tr id={'oidc_client_list_item' + (index + 1)} key={client.clientId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
                                                                 <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>

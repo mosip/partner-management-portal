@@ -64,20 +64,19 @@ function AdminDevicesList() {
     const submenuRef = useRef([]);
 
     const tableHeaders = [
-        { id: 1, keyName: 'deviceId', headerNameKey: 'devicesList.deviceId' },
-        { id: 2, keyName: 'sbiId', headerNameKey: 'sbiList.sbiId' },
-        { id: 3, keyName: 'sbiVersion', headerNameKey: 'sbiList.sbiVersion' },
-        { id: 4, keyName: 'partnerId', headerNameKey: 'sbiList.partnerId' },
-        { id: 5, keyName: 'orgName', headerNameKey: 'sbiList.orgName' },
-        { id: 6, keyName: 'deviceType', headerNameKey: 'devicesList.deviceType' },
-        { id: 7, keyName: 'deviceSubType', headerNameKey: "devicesList.deviceSubType" },
-        { id: 8, keyName: 'make', headerNameKey: "devicesList.make" },
-        { id: 9, keyName: 'model', headerNameKey: "devicesList.model" },
-        { id: 10, keyName: 'createdDateTime', headerNameKey: "devicesList.createdDate" },
-        { id: 11, keyName: 'status', headerNameKey: "devicesList.status" },
-        { id: 12, keyName: 'action', headerNameKey: 'devicesList.action' }
+        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
+        { id: "sbiId", headerNameKey: 'sbiList.sbiId' },
+        { id: "sbiVersion", headerNameKey: 'sbiList.sbiVersion' },
+        { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
+        { id: "orgName", headerNameKey: 'sbiList.orgName' },
+        { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
+        { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
+        { id: "make", headerNameKey: "devicesList.make" },
+        { id: "model", headerNameKey: "devicesList.model" },
+        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "status", headerNameKey: "devicesList.status" },
+        { id: "action", headerNameKey: 'devicesList.action' }
     ];
-
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
@@ -163,7 +162,7 @@ function AdminDevicesList() {
             setShowDeviceDetailApproveRejectPopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
-                prevList.map( deviceItem =>
+                prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
                 )
             );
@@ -243,9 +242,9 @@ function AdminDevicesList() {
     };
 
     useEffect(() => {
-        if(showDeviceDetailApproveRejectPopup){
+        if (showDeviceDetailApproveRejectPopup) {
             escapeKeyHandler(closeApproveRejectPopup);
-        }else if(showDeactivatePopup){
+        } else if (showDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
         }
     }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
@@ -262,7 +261,7 @@ function AdminDevicesList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='devicesList.listOfDevices' backLink='/partnermanagement'  />
+                            <Title title='devicesList.listOfDevices' backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={false}
@@ -297,14 +296,14 @@ function AdminDevicesList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header) => {
+                                                            {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.keyName !== "action") && (
+                                                                            {(header.id !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.keyName}
+                                                                                    headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -321,7 +320,7 @@ function AdminDevicesList() {
                                                     <tbody>
                                                         {devicesList.map((device, index) => {
                                                             return (
-                                                                <tr id={'device_list_item' + (index + 1)} key={device.deviceId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>

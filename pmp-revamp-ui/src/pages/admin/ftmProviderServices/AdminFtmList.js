@@ -62,14 +62,14 @@ function AdminFtmList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: 1, keyName:'ftmId', headerNameKey: 'ftmList.ftmId' },
-        { id: 2, keyName:'partnerId', headerNameKey: 'ftmList.partnerId' },
-        { id: 3, keyName:'orgName', headerNameKey: 'ftmList.orgName' },
-        { id: 4, keyName:'make', headerNameKey: "ftmList.make" },
-        { id: 5, keyName:'model', headerNameKey: "ftmList.model" },
-        { id: 6, keyName:'createdDateTime', headerNameKey: "ftmList.createdDate" },
-        { id: 7, keyName:'status', headerNameKey: "ftmList.status" },
-        { id: 8, keyName:'action', headerNameKey: 'ftmList.action' }
+        { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
+        { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
+        { id: "orgName", headerNameKey: 'ftmList.orgName' },
+        { id: "make", headerNameKey: "ftmList.make" },
+        { id: "model", headerNameKey: "ftmList.model" },
+        { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+        { id: "status", headerNameKey: "ftmList.status" },
+        { id: "action", headerNameKey: 'ftmList.action' }
     ];
 
     const fetchFtmListData = async () => {
@@ -161,7 +161,7 @@ function AdminFtmList() {
                     ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : ftm
                 )
             );
-          document.body.style.overflow = "auto";
+            document.body.style.overflow = "auto";
         }
     };
 
@@ -227,9 +227,9 @@ function AdminFtmList() {
     };
 
     useEffect(() => {
-        if(showFtmApproveRejectPopup){
+        if (showFtmApproveRejectPopup) {
             escapeKeyHandler(closeApproveRejectPopup);
-        }else if(showDeactivatePopup){
+        } else if (showDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
         }
     }, [showFtmApproveRejectPopup, showDeactivatePopup]);
@@ -275,14 +275,14 @@ function AdminFtmList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header) => {
+                                                            {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.keyName !== "action") && (
+                                                                            {(header.id !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.keyName}
+                                                                                    headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -299,7 +299,7 @@ function AdminFtmList() {
                                                     <tbody>
                                                         {ftmList.map((ftm, index) => {
                                                             return (
-                                                                <tr id={'ftm_list_item' + (index + 1)} key={ftm.ftmId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.ftmId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.partnerId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.orgName}</td>

@@ -72,16 +72,16 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: 1, keyName:'policyId', headerNameKey: "policiesList.policyId" },
-        { id: 2, keyName:'policyName', headerNameKey: "policiesList.policyName" },
-        { id: 3, keyName:'policyDescription', headerNameKey: "policiesList.policyDescription" },
-        { id: 4, keyName:'policyGroupName', headerNameKey: "policiesList.policyGroup" },
-        { id: 5, keyName:'createdDateTime', headerNameKey: "policiesList.createdDate" },
-        { id: 6, keyName:'status', headerNameKey: "policiesList.status" },
-        { id: 7, keyName:'action', headerNameKey: "policiesList.action" },
+        { id: "policyId", headerNameKey: "policiesList.policyId" },
+        { id: "policyName", headerNameKey: "policiesList.policyName" },
+        { id: "policyDescription", headerNameKey: "policiesList.policyDescription" },
+        { id: "policyGroupName", headerNameKey: "policiesList.policyGroup" },
+        { id: "createdDateTime", headerNameKey: "policiesList.createdDate" },
+        { id: "status", headerNameKey: "policiesList.status" },
+        { id: "action", headerNameKey: "policiesList.action" },
     ];
 
-    
+
     const fetchPoliciesListData = async () => {
         const queryParams = new URLSearchParams();
         queryParams.append('sortFieldName', sortFieldName);
@@ -217,11 +217,11 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     useEffect(() => {
-        if(showClonePopup){
+        if (showClonePopup) {
             escapeKeyHandler(closeClonePolicyPopup);
-        }else if(showDeactivatePopup){
+        } else if (showDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
-        }else if(showPublishPolicyPopup){
+        } else if (showPublishPolicyPopup) {
             escapeKeyHandler(closePublishPolicyPopup);
         }
     }, [showClonePopup, showDeactivatePopup, showPublishPolicyPopup]);
@@ -233,7 +233,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             // Update the specific row in the state with the new status
             setPoliciesList((prevList) =>
                 prevList.map(policy =>
-                policy.policyId === selectedPolicy.policyId ? { ...policy, status: "deactivated" } : policy
+                    policy.policyId === selectedPolicy.policyId ? { ...policy, status: "deactivated" } : policy
                 )
             );
         }
@@ -282,7 +282,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='policyGroupList.policies' backLink='/partnermanagement'  />
+                            <Title title='policyGroupList.policies' backLink='/partnermanagement' />
                             <>
                                 {applyFilter || policiesList.length > 0 ?
                                     <button onClick={createPolicy} id='create_auth_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
@@ -328,14 +328,14 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                     <table className="table-fixed">
                                                         <thead>
                                                             <tr>
-                                                                {tableHeaders.map((header) => {
+                                                                {tableHeaders.map((header, index) => {
                                                                     return (
-                                                                        <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                        <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
                                                                             <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                 {t(header.headerNameKey)}
-                                                                                {header.keyName !== "action" && (
+                                                                                {header.id !== "action" && (
                                                                                     <SortingIcon
-                                                                                        headerId={header.keyName}
+                                                                                        headerId={header.id}
                                                                                         sortDescOrder={sortDescOrder}
                                                                                         sortAscOrder={sortAscOrder}
                                                                                         order={order}
@@ -352,7 +352,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                         <tbody>
                                                             {policiesList.map((policy, index) => {
                                                                 return (
-                                                                    <tr id={"policies_list_item" + (index + 1)} key={policy.policyId}
+                                                                    <tr id={"policies_list_item" + (index + 1)} key={index}
                                                                         className={`border-t border-[#E5EBFA] ${policy.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policy.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyId}</td>
                                                                         <td onClick={() => policy.status !== 'deactivated' && viewPolicy(policy)} className={`px-2`}>{policy.policyName}</td>

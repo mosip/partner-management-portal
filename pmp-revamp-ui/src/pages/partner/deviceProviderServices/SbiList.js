@@ -195,7 +195,7 @@ function SbiList() {
                             </div> :
                             sbiList.map((sbi, index) => {
                                 return (
-                                    <div key={sbi.sbiId} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
+                                    <div key={index} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                                         <div className={`p-4 ${getbgOfStatus(sbi)}`}>
                                             <div className="flex flex-row max-[720px]:flex-col justify-between items-center max-[720px]:items-start">
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">

@@ -103,13 +103,13 @@ function DevicesList() {
     }, []);
 
     const tableHeaders = [
-        { id: 1, keyName: 'deviceTypeCode', headerNameKey: 'devicesList.deviceType' },
-        { id: 2, keyName: 'deviceSubTypeCode', headerNameKey: "devicesList.deviceSubType" },
-        { id: 3, keyName: 'make', headerNameKey: "devicesList.make" },
-        { id: 4, keyName: 'model', headerNameKey: "devicesList.model" },
-        { id: 5, keyName: 'createdDateTime', headerNameKey: "devicesList.createdDate" },
-        { id: 6, keyName: 'status', headerNameKey: "devicesList.status" },
-        { id: 7, keyName: 'action', headerNameKey: 'devicesList.action' }
+        { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
+        { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
+        { id: "make", headerNameKey: "devicesList.make" },
+        { id: "model", headerNameKey: "devicesList.model" },
+        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "status", headerNameKey: "devicesList.status" },
+        { id: "action", headerNameKey: 'devicesList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -279,14 +279,14 @@ function DevicesList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header) => {
+                                                            {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.keyName === "action" && 'justify-center'}`}>
+                                                                    <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
+                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.keyName !== "action") && (
+                                                                            {(header.id !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.keyName}
+                                                                                    headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -304,7 +304,7 @@ function DevicesList() {
                                                         {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
-                                                                    <tr id={'device_list_device_item' + (index + 1)} key={device.deviceId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
@@ -330,7 +330,7 @@ function DevicesList() {
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest}  headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                         )}
                                                                                     </div>
                                                                                 )}

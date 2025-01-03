@@ -90,15 +90,15 @@ function FtmList() {
   };
 
   const tableHeaders = [
-    { id: 1, keyName: 'partnerId', headerNameKey: 'ftmList.partnerId' },
-    { id: 2, keyName: 'make', headerNameKey: "ftmList.make" },
-    { id: 3, keyName: 'model', headerNameKey: "ftmList.model" },
-    { id: 4, keyName: 'createdDateTime', headerNameKey: "ftmList.createdDate" },
-    { id: 5, keyName: 'certificateUploadDateTime', headerNameKey: "ftmList.certificateUploadDate" },
-    { id: 6, keyName: 'certificateExpiryDateTime', headerNameKey: "ftmList.certificateExpiryDate" },
-    { id: 7, keyName: 'certificateExpiryStatus', headerNameKey: "ftmList.certExpiryStatus" },
-    { id: 8, keyName: 'status', headerNameKey: "ftmList.status" },
-    { id: 9, keyName: 'action', headerNameKey: 'ftmList.action' }
+    { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
+    { id: "make", headerNameKey: "ftmList.make" },
+    { id: "model", headerNameKey: "ftmList.model" },
+    { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+    { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
+    { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
+    { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
+    { id: "status", headerNameKey: "ftmList.status" },
+    { id: "action", headerNameKey: 'ftmList.action' }
   ];
 
   const cancelErrorMsg = () => {
@@ -191,14 +191,14 @@ function FtmList() {
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
-        setViewFtmId(-1);
-        setShowDeactivatePopup(false);
-        // Update the specific row in the state with the new status
-        setFtmList((prevList) =>
-            prevList.map(ftm =>
-                ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
-            )
-        );
+      setViewFtmId(-1);
+      setShowDeactivatePopup(false);
+      // Update the specific row in the state with the new status
+      setFtmList((prevList) =>
+        prevList.map(ftm =>
+          ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
+        )
+      );
     }
   };
 
@@ -251,15 +251,15 @@ function FtmList() {
                     <table className="table-fixed">
                       <thead>
                         <tr>
-                          {tableHeaders.map((header) => {
+                          {tableHeaders.map((header, index) => {
                             return (
-                              <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
-                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.keyName === "action" && 'justify-center'}`}>
+                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
-                                  {(header.keyName !== "action") && (
+                                  {(header.id !== "action") && (
                                     <SortingIcon
                                       id={`${header.headerNameKey}_sorting_icon`}
-                                      headerId={header.keyName}
+                                      headerId={header.id}
                                       sortDescOrder={sortDescOrder}
                                       sortAscOrder={sortAscOrder}
                                       order={order}
@@ -277,7 +277,7 @@ function FtmList() {
                         {
                           tableRows.map((ftm, index, currentArray) => {
                             return (
-                              <tr id={'ftm_list_item' + (index + 1)} key={ftm.ftmId} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                              <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>

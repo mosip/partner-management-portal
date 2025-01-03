@@ -73,15 +73,15 @@ function PolicyRequestsList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: 1, keyName: 'partnerId', headerNameKey: "partnerPolicyMappingRequestList.partnerId" },
-    { id: 2, keyName: 'partnerType', headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
-    { id: 3, keyName: 'orgName', headerNameKey: "partnerPolicyMappingRequestList.organisation" },
-    { id: 4, keyName: 'policyId', headerNameKey: "partnerPolicyMappingRequestList.policyId" },
-    { id: 5, keyName: 'policyName', headerNameKey: "partnerPolicyMappingRequestList.policyName" },
-    { id: 6, keyName: 'policyGroupName', headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
-    { id: 7, keyName: 'createdDateTime', headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
-    { id: 8, keyName: 'status', headerNameKey: "partnerPolicyMappingRequestList.status" },
-    { id: 9, keyName: 'action', headerNameKey: "partnerPolicyMappingRequestList.action" },
+    { id: "partnerId", headerNameKey: "partnerPolicyMappingRequestList.partnerId" },
+    { id: "partnerType", headerNameKey: "partnerPolicyMappingRequestList.partnerType" },
+    { id: "orgName", headerNameKey: "partnerPolicyMappingRequestList.organisation" },
+    { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
+    { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
+    { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
+    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
+    { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
+    { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];
 
   const fetchPolicyRequestsListData = async () => {
@@ -277,14 +277,14 @@ useEffect(() => {
                             <table className="table-fixed">
                               <thead>
                                 <tr>
-                                  {tableHeaders.map((header) => {
+                                  {tableHeaders.map((header, index) => {
                                     return (
-                                      <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                           {t(header.headerNameKey)}
-                                          {header.keyName !== "action" && (
+                                          {header.id !== "action" && (
                                             <SortingIcon
-                                              headerId={header.keyName}
+                                              headerId={header.id}
                                               sortDescOrder={sortDescOrder}
                                               sortAscOrder={sortAscOrder}
                                               order={order}
@@ -300,7 +300,7 @@ useEffect(() => {
                               <tbody>
                                 {policyRequestsData.map((policyRequest, index) => {
                                   return (
-                                    <tr id={"partner_list_item" + (index + 1)} key={policyRequest.id}
+                                    <tr id={"partner_list_item" + (index + 1)} key={index}
                                       className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.partnerId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>

@@ -77,13 +77,13 @@ function ApiKeysList() {
     }, []);
 
     const tableHeaders = [
-        { id: 1, keyName: 'partnerId', headerNameKey: 'oidcClientsList.partnerId' },
-        { id: 2, keyName: 'policyGroupName', headerNameKey: "oidcClientsList.policyGroup" },
-        { id: 3, keyName: 'policyName', headerNameKey: "oidcClientsList.policyName" },
-        { id: 4, keyName: 'apiKeyLabel', headerNameKey: "apiKeysList.apiKeyName" },
-        { id: 5, keyName: 'createdDateTime', headerNameKey: "oidcClientsList.createdDate" },
-        { id: 6, keyName: 'status', headerNameKey: "oidcClientsList.status" },
-        { id: 7, keyName: 'action', headerNameKey: 'oidcClientsList.action' }
+        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
+        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
+        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "status", headerNameKey: "oidcClientsList.status" },
+        { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -185,7 +185,7 @@ function ApiKeysList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement'  />
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                             {apiKeysList.length > 0 ?
                                 <button id='generate_api_key_btn' type="button" onClick={generateApiKey} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, generateApiKey)}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
@@ -227,15 +227,15 @@ function ApiKeysList() {
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>
-                                                    {tableHeaders.map((header) => {
+                                                    {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.keyName === "action" && 'justify-center'}`}>
+                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
-                                                                    {(header.keyName !== "action") && (header.keyName !== "apiKeyReqID") && (
+                                                                    {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
                                                                         <SortingIcon
                                                                             id={`${header.headerNameKey}_sorting_icon`}
-                                                                            headerId={header.keyName}
+                                                                            headerId={header.id}
                                                                             sortDescOrder={sortDescOrder}
                                                                             sortAscOrder={sortAscOrder}
                                                                             order={order}
@@ -253,7 +253,7 @@ function ApiKeysList() {
                                                 {
                                                     tableRows.map((apiKey, index, currentArray) => {
                                                         return (
-                                                            <tr id={'api_list_item' + (index + 1)} key={apiKey.partnerId + apiKey.apiKeyLabel} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>

@@ -61,12 +61,12 @@ function PolicyGroupList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: 1, keyName: 'id', headerNameKey: "policyGroupList.policyGroupId" },
-        { id: 2, keyName: 'name', headerNameKey: "policyGroupList.policyGroupName" },
-        { id: 3, keyName: 'desc', headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: 4, keyName: 'crDtimes', headerNameKey: "policyGroupList.createdDate" },
-        { id: 5, keyName: 'status', headerNameKey: "policyGroupList.status" },
-        { id: 6, keyName: 'action', headerNameKey: "policyGroupList.action" },
+        { id: "id", headerNameKey: "policyGroupList.policyGroupId" },
+        { id: "name", headerNameKey: "policyGroupList.policyGroupName" },
+        { id: "desc", headerNameKey: "policyGroupList.policyGroupDescription" },
+        { id: "crDtimes", headerNameKey: "policyGroupList.createdDate" },
+        { id: "status", headerNameKey: "policyGroupList.status" },
+        { id: "action", headerNameKey: "policyGroupList.action" },
     ];
 
     const fetchPolicyGroupListData = async () => {
@@ -263,7 +263,7 @@ function PolicyGroupList() {
                     )}
                     <div className="flex-col mt-7">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='policyGroupList.policies' backLink='/partnermanagement'  />
+                            <Title title='policyGroupList.policies' backLink='/partnermanagement' />
                             {applyFilter || policyGroupList.length > 0 ?
                                 <button onClick={createPolicyGroup} id='create_policy_group_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
                                     {t('policyGroupList.createPolicyGroup')}
@@ -278,7 +278,7 @@ function PolicyGroupList() {
                                     tableHeaders={tableHeaders}
                                     showCustomButton={!applyFilter}
                                     customButtonName='policyGroupList.createPolicyGroup'
-                                    buttonId= 'create_policy_group'
+                                    buttonId='create_policy_group'
                                     onClickButton={createPolicyGroup}
                                 />
                             </div>
@@ -306,14 +306,14 @@ function PolicyGroupList() {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header) => {
+                                                            {tableHeaders.map((header, index) => {
                                                                 return (
-                                                                    <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {header.keyName !== "action" && (
+                                                                            {header.id !== "action" && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.keyName}
+                                                                                    headerId={header.id}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -330,7 +330,7 @@ function PolicyGroupList() {
                                                     <tbody>
                                                         {policyGroupList.map((policyGroup, index) => {
                                                             return (
-                                                                <tr id={"policy_group_list_item" + (index + 1)} key={policyGroup.id}
+                                                                <tr id={"policy_group_list_item" + (index + 1)} key={index}
                                                                     className={`border-t border-[#E5EBFA] ${policyGroup.isActive ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${policyGroup.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.id}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.name}</td>
@@ -362,7 +362,7 @@ function PolicyGroupList() {
                                                                                         <DeactivatePolicyPopup
                                                                                             header={'deactivatePolicyGroup.headerMsg'}
                                                                                             description={'deactivatePolicyGroup.description'}
-                                                                                            popupData={{...policyGroup, isDeactivatePolicyGroup: true}}
+                                                                                            popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
