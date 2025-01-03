@@ -90,15 +90,15 @@ function FtmList() {
   };
 
   const tableHeaders = [
-    { id: 1, headerNameKey: 'ftmList.partnerId' },
-    { id: 2, headerNameKey: "ftmList.make" },
-    { id: 3, headerNameKey: "ftmList.model" },
-    { id: 4, headerNameKey: "ftmList.createdDate" },
-    { id: 5, headerNameKey: "ftmList.certificateUploadDate" },
-    { id: 6, headerNameKey: "ftmList.certificateExpiryDate" },
-    { id: 7, headerNameKey: "ftmList.certExpiryStatus" },
-    { id: 8, headerNameKey: "ftmList.status" },
-    { id: 9, headerNameKey: 'ftmList.action' }
+    { id: 1, keyName: 'partnerId', headerNameKey: 'ftmList.partnerId' },
+    { id: 2, keyName: 'make', headerNameKey: "ftmList.make" },
+    { id: 3, keyName: 'model', headerNameKey: "ftmList.model" },
+    { id: 4, keyName: 'createdDateTime', headerNameKey: "ftmList.createdDate" },
+    { id: 5, keyName: 'certificateUploadDateTime', headerNameKey: "ftmList.certificateUploadDate" },
+    { id: 6, keyName: 'certificateExpiryDateTime', headerNameKey: "ftmList.certificateExpiryDate" },
+    { id: 7, keyName: 'certificateExpiryStatus', headerNameKey: "ftmList.certExpiryStatus" },
+    { id: 8, keyName: 'status', headerNameKey: "ftmList.status" },
+    { id: 9, keyName: 'action', headerNameKey: 'ftmList.action' }
   ];
 
   const cancelErrorMsg = () => {
@@ -254,12 +254,12 @@ function FtmList() {
                           {tableHeaders.map((header) => {
                             return (
                               <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
-                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.keyName === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
-                                  {(header.id !== "action") && (
+                                  {(header.keyName !== "action") && (
                                     <SortingIcon
                                       id={`${header.headerNameKey}_sorting_icon`}
-                                      headerId={header.id}
+                                      headerId={header.keyName}
                                       sortDescOrder={sortDescOrder}
                                       sortAscOrder={sortAscOrder}
                                       order={order}
@@ -292,20 +292,20 @@ function FtmList() {
                                 </td>
                                 <td className="px-2 mx-2">
                                   <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                    <p id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
+                                    <p role='button' id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                       tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewFtmId(index === viewFtmId ? null : index))}>
                                       ...</p>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                        <p id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
+                                        <p role='button' id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
                                           {t('ftmList.view')}
                                         </p>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
+                                        <p role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
                                           {t('ftmList.manageCertificate')}
                                         </p>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
+                                        <p role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
                                           {t('ftmList.deActivate')}
                                         </p>
                                         {showDeactivatePopup && (

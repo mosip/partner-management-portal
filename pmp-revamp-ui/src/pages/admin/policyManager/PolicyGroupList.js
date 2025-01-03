@@ -61,12 +61,12 @@ function PolicyGroupList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: 1, headerNameKey: "policyGroupList.policyGroupId" },
-        { id: 2, headerNameKey: "policyGroupList.policyGroupName" },
-        { id: 3, headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: 4, headerNameKey: "policyGroupList.createdDate" },
-        { id: 5, headerNameKey: "policyGroupList.status" },
-        { id: 6, headerNameKey: "policyGroupList.action" },
+        { id: 1, keyName: 'id', headerNameKey: "policyGroupList.policyGroupId" },
+        { id: 2, keyName: 'name', headerNameKey: "policyGroupList.policyGroupName" },
+        { id: 3, keyName: 'desc', headerNameKey: "policyGroupList.policyGroupDescription" },
+        { id: 4, keyName: 'crDtimes', headerNameKey: "policyGroupList.createdDate" },
+        { id: 5, keyName: 'status', headerNameKey: "policyGroupList.status" },
+        { id: 6, keyName: 'action', headerNameKey: "policyGroupList.action" },
     ];
 
     const fetchPolicyGroupListData = async () => {
@@ -311,9 +311,9 @@ function PolicyGroupList() {
                                                                     <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {header.id !== "action" && (
+                                                                            {header.keyName !== "action" && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.id}
+                                                                                    headerId={header.keyName}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -343,18 +343,18 @@ function PolicyGroupList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                            <p role='button' id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                 tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                 ...
                                                                             </p>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
+                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
                                                                                         <p id="policy_group_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
                                                                                         <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={policyGroup.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>

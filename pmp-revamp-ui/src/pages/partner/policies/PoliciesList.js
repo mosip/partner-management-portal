@@ -47,13 +47,13 @@ function PoliciesList() {
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: 1, headerNameKey: 'policies.partnerId' },
-    { id: 2, headerNameKey: "policies.partnerType" },
-    { id: 3, headerNameKey: "policies.policyGroupName" },
-    { id: 4, headerNameKey: "policies.policyName" },
-    { id: 5, headerNameKey: "policies.createdDate" },
-    { id: 6, headerNameKey: "policies.status" },
-    { id: 7, headerNameKey: 'policies.action' }
+    { id: 1, keyName: 'partnerId', headerNameKey: 'policies.partnerId' },
+    { id: 2, keyName: 'partnerType', headerNameKey: "policies.partnerType" },
+    { id: 3, keyName: 'policyGroupName', headerNameKey: "policies.policyGroupName" },
+    { id: 4, keyName: 'policyName', headerNameKey: "policies.policyName" },
+    { id: 5, keyName: 'createdDateTime', headerNameKey: "policies.createdDate" },
+    { id: 6, keyName: 'status', headerNameKey: "policies.status" },
+    { id: 7, keyName: 'action', headerNameKey: 'policies.action' }
   ];
 
   useEffect(() => {
@@ -186,10 +186,10 @@ function PoliciesList() {
                                 <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
                                   <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
-                                    {header.id !== "action" && (
+                                    {header.keyName !== "action" && (
                                       <SortingIcon
                                         id={`${header.headerNameKey}_sorting_icon`}
-                                        headerId={header.id}
+                                        headerId={header.keyName}
                                         sortDescOrder={sortDescOrder}
                                         sortAscOrder={sortAscOrder}
                                         order={order}
@@ -219,11 +219,11 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
+                                    <p role='button' id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
                                       ...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
+                                        <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}

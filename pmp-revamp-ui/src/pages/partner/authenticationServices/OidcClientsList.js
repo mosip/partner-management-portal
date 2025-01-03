@@ -84,14 +84,14 @@ function OidcClientsList() {
     }, []);
 
     const tableHeaders = [
-        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
-        { id: 2, headerNameKey: "oidcClientsList.policyGroup" },
-        { id: 3, headerNameKey: "oidcClientsList.policyName" },
-        { id: 4, headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: 5, headerNameKey: "oidcClientsList.createdDate" },
-        { id: 6, headerNameKey: "oidcClientsList.status" },
-        { id: 7, headerNameKey: "oidcClientsList.oidcClientId" },
-        { id: 8, headerNameKey: 'oidcClientsList.action' }
+        { id: 1, keyName: 'partnerId', headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, keyName: 'policyGroupName', headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 3, keyName: 'policyName', headerNameKey: "oidcClientsList.policyName" },
+        { id: 4, keyName: 'clientNameEng', headerNameKey: "oidcClientsList.oidcClientName" },
+        { id: 5, keyName: 'createdDateTime', headerNameKey: "oidcClientsList.createdDate" },
+        { id: 6, keyName: 'status', headerNameKey: "oidcClientsList.status" },
+        { id: 7, keyName: 'oidcClientId', headerNameKey: "oidcClientsList.oidcClientId" },
+        { id: 8, keyName: 'action', headerNameKey: 'oidcClientsList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -259,13 +259,13 @@ function OidcClientsList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
-                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
+                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.keyName === "status" && 'w-[10%]'} ${(header.keyName === 'policyName' || header.keyName === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.keyName === "oidcClientId" && 'justify-center'} ${header.keyName === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
-                                                                    {(header.id !== "action") && (header.id !== "oidcClientId") && (
+                                                                    {(header.keyName !== "action") && (header.keyName !== "oidcClientId") && (
                                                                         <SortingIcon
                                                                             id={`${header.headerNameKey}_sorting_icon`}
-                                                                            headerId={header.id}
+                                                                            headerId={header.keyName}
                                                                             sortDescOrder={sortDescOrder}
                                                                             sortAscOrder={sortAscOrder}
                                                                             order={order}
@@ -309,20 +309,20 @@ function OidcClientsList() {
                                                                 </td>
                                                                 <td className="px-2 mx-2">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <p id={'oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
+                                                                        <p role='button' id={'oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                             tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewClientId(index === viewClientId ? null : index))}>
                                                                             ...</p>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                                                                <p id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickView(client))}>
+                                                                                <p role='button' id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickView(client))}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showEditOidcClient(client))}>
+                                                                                <p role='button' id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showEditOidcClient(client))}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </p>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateOidcClient(client))}>
+                                                                                <p role='button' id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateOidcClient(client))}>
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </p>
                                                                                 {showDeactivatePopup && (

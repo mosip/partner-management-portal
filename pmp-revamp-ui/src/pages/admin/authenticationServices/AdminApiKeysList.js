@@ -59,14 +59,14 @@ function AdminApiKeysList () {
     const submenuRef = useRef([]);
 
     const tableHeaders = [
-        { id: 1, headerNameKey: 'oidcClientsList.partnerId' },
-        { id: 2, headerNameKey: 'oidcClientsList.orgName' },
-        { id: 3, headerNameKey: "oidcClientsList.policyGroup" },
-        { id: 4, headerNameKey: "oidcClientsList.policyName" },
-        { id: 5, headerNameKey: "apiKeysList.apiKeyName" },
-        { id: 6, headerNameKey: "oidcClientsList.createdDate" },
-        { id: 7, headerNameKey: "oidcClientsList.status" },
-        { id: 8, headerNameKey: 'oidcClientsList.action' }
+        { id: 1, keyName: 'partnerId', headerNameKey: 'oidcClientsList.partnerId' },
+        { id: 2, keyName: 'orgName', headerNameKey: 'oidcClientsList.orgName' },
+        { id: 3, keyName: 'policyGroupName', headerNameKey: "oidcClientsList.policyGroup" },
+        { id: 4, keyName: 'policyName',  headerNameKey: "oidcClientsList.policyName" },
+        { id: 5, keyName: 'apiKeyLabel', headerNameKey: "apiKeysList.apiKeyName" },
+        { id: 6, keyName: 'createdDateTime', headerNameKey: "oidcClientsList.createdDate" },
+        { id: 7, keyName: 'status', headerNameKey: "oidcClientsList.status" },
+        { id: 8, keyName: 'action', headerNameKey: 'oidcClientsList.action' }
     ];
 
     useEffect(() => {
@@ -84,10 +84,7 @@ function AdminApiKeysList () {
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
 
-        const filterAttributesKeys = [
-            'partnerId', 'orgName', 'policyGroupName', 
-            'policyName', 'apiKeyLabel', 'status'
-          ];
+        const filterAttributesKeys = ['partnerId', 'orgName', 'policyGroupName', 'policyName', 'apiKeyLabel', 'status'];
           
           filterAttributesKeys.forEach(key => {
             if (filterAttributes[key]) {
@@ -263,9 +260,9 @@ function AdminApiKeysList () {
                                                                     <th key={header.id} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (
+                                                                            {(header.keyName !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.id}
+                                                                                    headerId={header.keyName}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -297,18 +294,18 @@ function AdminApiKeysList () {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                            <p role='button' id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                 tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                 ...
                                                                             </p>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
                                                                                         <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey))}>
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>

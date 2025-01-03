@@ -103,13 +103,13 @@ function DevicesList() {
     }, []);
 
     const tableHeaders = [
-        { id: 1, headerNameKey: 'devicesList.deviceType' },
-        { id: 2, headerNameKey: "devicesList.deviceSubType" },
-        { id: 3, headerNameKey: "devicesList.make" },
-        { id: 4, headerNameKey: "devicesList.model" },
-        { id: 5, headerNameKey: "devicesList.createdDate" },
-        { id: 6, headerNameKey: "devicesList.status" },
-        { id: 7, headerNameKey: 'devicesList.action' }
+        { id: 1, keyName: 'deviceTypeCode', headerNameKey: 'devicesList.deviceType' },
+        { id: 2, keyName: 'deviceSubTypeCode', headerNameKey: "devicesList.deviceSubType" },
+        { id: 3, keyName: 'make', headerNameKey: "devicesList.make" },
+        { id: 4, keyName: 'model', headerNameKey: "devicesList.model" },
+        { id: 5, keyName: 'createdDateTime', headerNameKey: "devicesList.createdDate" },
+        { id: 6, keyName: 'status', headerNameKey: "devicesList.status" },
+        { id: 7, keyName: 'action', headerNameKey: 'devicesList.action' }
     ];
 
     const cancelErrorMsg = () => {
@@ -282,11 +282,11 @@ function DevicesList() {
                                                             {tableHeaders.map((header) => {
                                                                 return (
                                                                     <th key={header.id} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
-                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.keyName === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (
+                                                                            {(header.keyName !== "action") && (
                                                                                 <SortingIcon
-                                                                                    headerId={header.id}
+                                                                                    headerId={header.keyName}
                                                                                     sortDescOrder={sortDescOrder}
                                                                                     sortAscOrder={sortAscOrder}
                                                                                     order={order}
@@ -317,16 +317,16 @@ function DevicesList() {
                                                                         </td>
                                                                         <td className="px-2 mx-2">
                                                                             <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                                <p id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
+                                                                                <p role='button' id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
                                                                                     tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
                                                                                     ...</p>
                                                                                 {viewDeviceId === index && (
                                                                                     <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                                                                        <p id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
+                                                                                        <p role='button' id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             {t('devicesList.view')}
                                                                                         </p>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <p id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
+                                                                                        <p role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
                                                                                             {t('devicesList.deActivate')}
                                                                                         </p>
                                                                                         {showDeactivatePopup && (

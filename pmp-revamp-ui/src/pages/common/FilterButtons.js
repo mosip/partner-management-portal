@@ -12,7 +12,7 @@ function FilterButtons({titleId, listTitle, dataListLength, filter, onResetFilte
             {t(listTitle) + ' (' + dataListLength + ")"}
             </div>
             <div className="w-full flex justify-end relative items-center">
-            {filter && <p id='filter_reset_btn' onClick={onResetFilter} type="button" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e,onResetFilter)}
+            {filter && <p role='button' id='filter_reset_btn' onClick={onResetFilter} type="button" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e,onResetFilter)}
                 className={`flex ${isLoginLanguageRTL ? "ml-[8%]" : "mr-[8%]"} mt-1.5 justify-center items-center text-sm font-semibold text-center text-tory-blue cursor-pointer`}>
                 {t('commons.resetFilter')}
             </p>}
