@@ -27,6 +27,12 @@ function ViewAdminSbiDetails() {
         navigate('/partnermanagement/admin/device-provider-services/sbi-list');
     };
 
+    const showLinkedDevices = () => {
+        if (sbiDetails.countOfAssociatedDevices > 0) {
+            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${sbiDetails.sbiId}&sbiVersion=${sbiDetails.sbiVersion}`);
+        }
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
@@ -100,7 +106,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'cursor-pointer'}`} onClick={() => showLinkedDevices()}>
                                         {sbiDetails.countOfAssociatedDevices}
                                     </p>
                                 </div>
