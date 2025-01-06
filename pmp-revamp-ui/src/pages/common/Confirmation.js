@@ -15,7 +15,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
     return (
         <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
             <div className="flex flex-col justify-center items-center w-[50%]">
-                <img src={successIcon} alt="" className={`${isLoginLanguageRTL ? (style && style.imgIconRtl ? style.imgIconRtl : "") : (style && style.imgIconLtr ? style.imgIconLtr : "")} h-40`} />
+                <img id="confirmation_success_icon" src={successIcon} alt="" className={`${isLoginLanguageRTL ? (style && style.imgIconRtl ? style.imgIconRtl : "") : (style && style.imgIconLtr ? style.imgIconLtr : "")} h-40`} />
                 <div className={`text-center space-y-2`}>
                     <h1 className="font-bold text-black text-lg max-[450px]:text-sm">
                         {t(confirmationData.header)}

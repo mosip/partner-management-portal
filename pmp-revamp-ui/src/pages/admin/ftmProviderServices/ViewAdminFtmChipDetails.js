@@ -87,7 +87,7 @@ function ViewAdminFtmChipDetails() {
             {successMsg && (
                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
-            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+            <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
                     <Title title={'viewFtmChipDetails.viewFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
                 </div>
@@ -130,27 +130,27 @@ function ViewAdminFtmChipDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                    <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-xs">
+                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                    <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-sm">
                                         {t("viewOidcClientDetails.partnerId")}
                                     </p>
-                                    <p id="ftm_chip_details_context_partner_id" className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_partner_id" className="font-[600] text-vulcan text-md">
                                         {ftmDetails.partnerId}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%]`}>
-                                    <p id="ftm_chip_details_label_partner_type" className="font-[600] text-suva-gray text-xs">
+                                    <p id="ftm_chip_details_label_partner_type" className="font-[600] text-suva-gray text-sm">
                                         {t("viewOidcClientDetails.partnerType")}
                                     </p>
-                                    <p id="ftm_chip_details_context_ftm_chip_provider" className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_ftm_chip_provider" className="font-[600] text-vulcan text-md">
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                    <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-xs">
+                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5`}>
+                                    <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-sm">
                                         {t("viewAdminOidcClientDetails.organisation")}
                                     </p>
-                                    <p id="ftm_chip_details_context_make" className="font-[600] text-vulcan text-sm">
+                                    <p id="ftm_chip_details_context_make" className="font-[600] text-vulcan text-md">
                                         {ftmDetails.orgName}
                                     </p>
                                 </div>
@@ -184,18 +184,18 @@ function ViewAdminFtmChipDetails() {
                                     <hr className="border bg-medium-gray h-px" />
                                     <div className="flex items-center p-5 bg-white rounded-lg">
                                         <div className="flex-col space-y-1">
-                                            <p id="ftm_chip_details_partner_type_label" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                            <p id="ftm_chip_details_partner_type_context" className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
+                                            <p id="ftm_chip_details_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                            <p id="ftm_chip_details_partner_type_context" className="font-bold text-md text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                            <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
+                                            <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
                                                 {formatDate(certificateDetails.caSignedCertUploadDateTime, 'dateTime', false)}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="ftm_chip_details_label_expiry_date_time" className={`text-xs font-semibold ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-sm ${certificateDetails.isCaSignedCertificateExpired ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>

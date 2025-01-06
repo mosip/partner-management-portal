@@ -19,8 +19,8 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
 
     return (
         <div className="flex-col items-start">
-            <div className='flex gap-x-2'>
-                <img src={backArrow} alt="" id='title_back_icon' onClick={goBack} className={`mt-1 cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, goBack)} />
+            <div className={`flex gap-x-2 ${isLoginLanguageRTL ? 'pr-[0.1rem]' : 'pl-[0.1rem]'}`}>
+                <img role='button' id='title_back_icon' src={backArrow} alt="" onClick={goBack} className={`mt-1 cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, goBack)} />
                 <h1 className="font-semibold text-lg text-dark-blue">{t(title)}</h1>
             </div>
 
@@ -34,16 +34,16 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
                     </div>
                 )}
                 <div className="flex space-x-1">
-                    <p id='sub_title_home_btn' onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => moveToHome(navigate))}>
+                    <p role='button' id='sub_title_home_btn' onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToHome(navigate))}>
                         {t('commons.home')}
                     </p>
                     {subTitle && (
-                        <p id='sub_title_btn' onClick={() => navigate(backLink)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => navigate(backLink))}>
+                        <p role='button' id='sub_title_btn' onClick={() => navigate(backLink)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink))}>
                             / {t(subTitle)}
                         </p>
                     )}
                     {subTitle2 && (
-                        <p id='sub_title_two_btn' onClick={() => navigate(backLink2)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => navigate(backLink))}>
+                        <p role='button' id='sub_title_two_btn' onClick={() => navigate(backLink2)} className="font-semibold text-tory-blue text-xs cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink))}>
                             / {t(subTitle2)}
                         </p>
                     )}

@@ -89,7 +89,7 @@ function SelectPolicyPopup() {
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
-                        <LoadingIcon styleSet={styles}></LoadingIcon>
+                        <LoadingIcon styleSet={styles} />
                     )}
                     {dataLoaded && (
                         <>
@@ -115,7 +115,7 @@ function SelectPolicyPopup() {
                                             <label className="block text-dark-blue text-sm font-semibold mb-2">
                                                 {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                             </label>
-                                            <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
+                                            <button id='select_policyPopup_partner_type' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
                                                 <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
                                             </button>
                                         </div>
@@ -138,7 +138,7 @@ function SelectPolicyPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-3 flex justify-between relative">
                                 <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                    <span id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                                    <span role='button' id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
                                 </p>
                                 <button
                                     className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 

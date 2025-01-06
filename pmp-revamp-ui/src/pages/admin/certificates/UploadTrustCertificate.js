@@ -154,7 +154,7 @@ function UploadTrustCertificate() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
                             <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
                         </div>
@@ -214,7 +214,7 @@ function UploadTrustCertificate() {
                                                                         id="remove_certificate_btn"
                                                                         className="text-sm font-semibold text-tory-blue"
                                                                         onClick={removeUpload}
-                                                                        onKeyPress={(e) => {
+                                                                        onKeyDown={(e) => {
                                                                             if (e.key === 'Enter' || e.key === ' ') removeUpload();
                                                                         }}
                                                                     >
@@ -262,7 +262,7 @@ function UploadTrustCertificate() {
                                                                         id="remove_certificate_btn"
                                                                         className="text-sm font-semibold text-tory-blue"
                                                                         onClick={removeUpload}
-                                                                        onKeyPress={(e) => {
+                                                                        onKeyDown={(e) => {
                                                                             if (e.key === 'Enter' || e.key === ' ') removeUpload();
                                                                         }}
                                                                     >

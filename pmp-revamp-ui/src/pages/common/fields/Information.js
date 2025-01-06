@@ -17,7 +17,7 @@ function Information({ infoKey, infoKey1, id }) {
     return (
         <div>
             <div ref={tooltipRef} className="absolute flex items-center">
-                <img id={id} src={infoIcon} onClick={() => setShowTooltip(!showTooltip)} alt="" className={`cursor-pointer h-[13px] w-[13px] ml-1 -mt-1.5`} />
+                <img role='button' id={id} src={infoIcon} onClick={() => setShowTooltip(!showTooltip)} alt="" className={`cursor-pointer h-[13px] w-[13px] ml-1 -mt-1.5`} />
                 {showTooltip && (
                     <div className={`absolute z-20 p-4 w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto max-[800px]:h-32 max-[800px]:w-32 shadow-lg bg-white border border-gray-300 rounded ${isLoginLanguageRTL ? 'right-6' : 'left-6'} mt-2`}>
                         <p className="text-black text-sm">{t(infoKey)}</p>

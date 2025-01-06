@@ -24,7 +24,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
                         </p>
                     </div>
                     <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute ${(customStyle && customStyle.cancelIcon) ? customStyle.cancelIcon : 'top-4  mt-1'}`}>
-                        <img id="error_close_btn" src={cancelIcon} alt="close" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => clickOnCancel())}/>
+                        <img role='button' id="error_close_btn" src={cancelIcon} alt="close" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnCancel())}/>
                     </div>
                 </div>
             </div>

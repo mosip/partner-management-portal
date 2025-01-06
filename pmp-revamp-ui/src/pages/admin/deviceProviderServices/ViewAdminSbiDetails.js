@@ -27,6 +27,12 @@ function ViewAdminSbiDetails() {
         navigate('/partnermanagement/admin/device-provider-services/sbi-list');
     };
 
+    const showLinkedDevices = () => {
+        if (sbiDetails.countOfAssociatedDevices > 0) {
+            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${sbiDetails.sbiId}&sbiVersion=${sbiDetails.sbiVersion}`);
+        }
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
@@ -73,50 +79,50 @@ function ViewAdminSbiDetails() {
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerId")}
                                     </p>
-                                    <p className="text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {sbiDetails.partnerId}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p className="text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.organisation")}
                                     </p>
-                                    <p className="text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {sbiDetails.orgName}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
-                                    <p className="text-vulcan text-md">
+                                    <p className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'cursor-pointer'}`} onClick={() => showLinkedDevices()}>
                                         {sbiDetails.countOfAssociatedDevices}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
-                                    <p className="text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                     {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className={`text-sm ${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-suva-gray' }`}>
+                                    <p className={`font-[600] text-sm ${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-suva-gray' }`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
-                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'font-bold text-black'}text-vulcan text-md`}>
+                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'text-black'} font-[600] text-vulcan text-md`}>
                                     {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
                                     </p>
                                 </div>
@@ -125,7 +131,7 @@ function ViewAdminSbiDetails() {
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
                             <button id="view_admin_sbi_details_back_btn" onClick={moveToSbiList}
-                                className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyPress={(e) => onPressEnterKey(e, moveToSbiList)}>
+                                className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, moveToSbiList)}>
                                 {t("commons.back")}
                             </button>
                         </div>

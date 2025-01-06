@@ -6,7 +6,7 @@ import { createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDrop
 import { isLangRTL } from '../../../utils/AppUtils.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 
-function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
+function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, preFilledFilters}) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -32,6 +32,11 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
     });
 
     useEffect(() => {
+        if (preFilledFilters) {
+            const newFilters = { ...filters, ...preFilledFilters };
+            setFilters(newFilters);
+            onApplyFilter(newFilters);
+        }
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();
             setDeviceTypeDropdownData(createDropdownData("fieldCode", "", true, deviceTypeData, t, t("addDevices.selectDeviceType")));
@@ -54,6 +59,10 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
             setDeviceSubTypeDropdownData([])
             // return if no deviceType is selected
             if(selectedFilter === ""){
+                setFilters((prevFilters) => ({
+                    ...prevFilters,
+                    ['deviceSubType']: "",
+                }));
                 return;
             }
             try {
@@ -111,6 +120,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
             />
             <TextInputComponent
                 fieldName="sbiId"
+                textBoxValue={preFilledFilters.sbiId}
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiId"
                 placeHolderKey="sbiList.searchSbiId"
@@ -119,6 +129,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg}) {
             />
             <TextInputComponent
                 fieldName="sbiVersion"
+                textBoxValue={preFilledFilters.sbiVersion}
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
