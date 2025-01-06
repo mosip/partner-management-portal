@@ -164,7 +164,7 @@ function SbiList() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7 !mb-4">
+                    <div className="flex-col mt-5 !mb-4">
                         <div className="flex justify-between mb-5">
                             <Title title='sbiList.listOfSbi' backLink='/partnermanagement' />
                             {sbiList.length > 0 ?
@@ -226,10 +226,10 @@ function SbiList() {
                                                     <button id={'sbi_list_add_Devices' + (index +1)} disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && !sbi.sbiExpired ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button id={'sbi_list_view_Devices' + (index +1)} onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                     <button id={'sbi_list_hamburger' + (index +1)} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
-                                                    <img id={'sbi_list_arrow' + (index +1)} src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
+                                                    <img role='button' id={'sbi_list_arrow' + (index +1)} src={upArrow} alt="" className={`cursor-pointer px-3 min-w-fit ${open === index ? "rotate-0" : "rotate-180"} duration-300`} onClick={() => setOpen(index === open ? null : index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setOpen(index === open ? null : index))} />
                                                     {deactivateBtnId === index && (
                                                         <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
-                                                            <p id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
+                                                            <p role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi))}>
                                                                 {t('sbiList.deactivate')}
                                                             </p>
                                                             {showDeactivatePopup && (

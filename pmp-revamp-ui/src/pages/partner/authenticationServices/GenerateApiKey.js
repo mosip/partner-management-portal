@@ -243,7 +243,7 @@ function GenerateApiKey() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
                             <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list'  />
                         </div>

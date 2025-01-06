@@ -446,7 +446,8 @@
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
         "unexpectedError": "We have encountered with an unexpected error. Please try again.",
-        "searchDeviceId": "Search Device Id"
+        "searchDeviceId": "Search Device Id",
+        "selectDeviceId": "Select Device ID"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",
@@ -520,7 +521,8 @@
         "searchModel": "Search Model",
         "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
-        "ftmId": "FTM ID"
+        "ftmId": "FTM ID",
+        "selectFtmId": "Select FTM ID"
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -841,7 +843,8 @@
         "policyId": "Policy ID",
         "policyName": "Policy Name",
         "organisation": "Organisation Name",
-        "policyGroup": "Policy Group"
+        "policyGroup": "Policy Group",
+        "partnerStatus": "Partner Status"
     },
     "deactivatePolicyPopup": {
         "headerMsg": "Do you want to deactivate Policy",

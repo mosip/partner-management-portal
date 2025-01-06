@@ -273,7 +273,7 @@ function CreatePolicy() {
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                     )}
-                    <div className="flex-col mt-7 w-full">
+                    <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
                             <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>
@@ -339,7 +339,7 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label
+                                                            <label role='button' 
                                                                 htmlFor="fileInput"
                                                                 className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
                                                                 tabIndex="0"

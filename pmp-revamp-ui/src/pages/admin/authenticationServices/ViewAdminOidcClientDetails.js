@@ -81,7 +81,7 @@ function ViewAdminOidcClientDetails() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/admin/authentication-services/oidc-clients-list' />
                         </div>
@@ -120,7 +120,7 @@ function ViewAdminOidcClientDetails() {
                                         </div>
                                     </div>
 
-                                    <div id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
+                                    <div  role='button' id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
                                         tabIndex={oidcClientDetails.status === "ACTIVE" && "0"} onKeyDown={(e) => onPressEnterKey(e, () => copyClientId(selectedClientData, selectedClientData.clientId, setCopied))}>
                                         <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
@@ -128,7 +128,7 @@ function ViewAdminOidcClientDetails() {
                                                 {selectedClientData.clientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
-                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} />
+                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)}  role='button'/>
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
                                             )}
@@ -145,7 +145,7 @@ function ViewAdminOidcClientDetails() {
 
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                        <div className="w-[49%] max-[600px]:w-[100%] mb-3">
+                                        <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                             <p id='oidc_client_details_partner_id_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
@@ -232,7 +232,7 @@ function ViewAdminOidcClientDetails() {
                                             </p>
                                         </div>
                                         <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
-                                            <div className="flex-col space-y-1 w-[50%]">
+                                            <div className={`flex-col space-y-1 w-[50%]  ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                                 <p id='oidc_client_details_redirect_uris' className="font-[600] text-suva-gray text-sm">
                                                     {t("viewOidcClientDetails.redirectUri")}
                                                 </p>

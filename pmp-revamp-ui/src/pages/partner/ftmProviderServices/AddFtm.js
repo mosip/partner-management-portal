@@ -229,7 +229,7 @@ function AddFtm() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-8">
+          <div className="flex-col mt-5">
             <div className="flex justify-between">
               <Title title='addFtm.addFtmChipDetails' subTitle='addFtm.listOfFtmChipDetails' backLink='/partnermanagement/ftm-chip-provider-services/ftm-list' />
             </div>

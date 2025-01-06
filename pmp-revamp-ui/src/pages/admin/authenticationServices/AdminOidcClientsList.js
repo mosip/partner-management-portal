@@ -249,7 +249,7 @@ function AdminOidcClientsList () {
                     { errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement'  />
                         </div>
@@ -337,20 +337,20 @@ function AdminOidcClientsList () {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                            <p role='button' id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                                                                 tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                 ...
                                                                             </p>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewOidcClientDetails(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewOidcClientDetails(client))}>
+                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewOidcClientDetails(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewOidcClientDetails(client))}>
                                                                                         <p id="oidc_clients_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client))}>
                                                                                         <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={client.status === 'ACTIVE' ?deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                        <img src={client.status === 'ACTIVE' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
                                                                                         <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />

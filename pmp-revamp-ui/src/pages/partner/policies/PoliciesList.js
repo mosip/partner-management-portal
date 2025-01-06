@@ -62,9 +62,9 @@ function PoliciesList() {
         setDataLoaded(false);
         const response = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
         if (response) {
-            const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
-            setPoliciesList(sortedData);
-            setFilteredPoliciesList(sortedData);
+          const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+          setPoliciesList(sortedData);
+          setFilteredPoliciesList(sortedData);
         } else {
           setErrorMsg(t('policies.errorInPoliciesList'));
         }
@@ -142,9 +142,9 @@ function PoliciesList() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
-              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}/>
+              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style} />
 
               {policiesList.length > 0 ?
                 <button id='policies_request_btn' onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
@@ -219,11 +219,11 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
+                                    <p role='button' id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
                                       ...</p>
                                     {
                                       viewPolicyId === index && (
-                                        <div id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
+                                        <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
                                           className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
                                           <p className="cursor-pointer">
                                             {t('policies.view')}

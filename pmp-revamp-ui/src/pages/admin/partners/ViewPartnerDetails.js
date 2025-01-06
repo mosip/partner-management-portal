@@ -141,7 +141,7 @@ function ViewPartnerDetails() {
                     {errorMsg && !unexpectedError && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
@@ -185,7 +185,7 @@ function ViewPartnerDetails() {
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
@@ -201,7 +201,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
-                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                        <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.firstName")}
                                             </p>
@@ -217,7 +217,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.lastName ?? "-"}
                                             </p>
                                         </div>
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.phoneNumber")}
                                             </p>
