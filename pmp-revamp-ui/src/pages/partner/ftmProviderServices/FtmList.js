@@ -217,7 +217,7 @@ function FtmList() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="flex justify-between mb-5">
               <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
               {ftmList.length > 0 && (

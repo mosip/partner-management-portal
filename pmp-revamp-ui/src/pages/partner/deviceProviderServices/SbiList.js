@@ -164,7 +164,7 @@ function SbiList() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7 !mb-4">
+                    <div className="flex-col mt-5 !mb-4">
                         <div className="flex justify-between mb-5">
                             <Title title='sbiList.listOfSbi' backLink='/partnermanagement' />
                             {sbiList.length > 0 ?

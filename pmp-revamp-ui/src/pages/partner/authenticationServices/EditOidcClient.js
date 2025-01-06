@@ -310,7 +310,7 @@ function EditOidcClient() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list'  />
                         </div>

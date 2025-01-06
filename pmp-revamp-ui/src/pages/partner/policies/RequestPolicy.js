@@ -244,7 +244,7 @@ function RequestPolicy() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8">
+                    <div className="flex-col mt-5">
                         <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list' />
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
