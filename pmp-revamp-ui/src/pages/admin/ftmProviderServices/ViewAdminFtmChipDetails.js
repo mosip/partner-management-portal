@@ -87,7 +87,7 @@ function ViewAdminFtmChipDetails() {
             {successMsg && (
                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
-            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+            <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
                     <Title title={'viewFtmChipDetails.viewFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
                 </div>
@@ -130,7 +130,7 @@ function ViewAdminFtmChipDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                     <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-sm">
                                         {t("viewOidcClientDetails.partnerId")}
                                     </p>
@@ -146,7 +146,7 @@ function ViewAdminFtmChipDetails() {
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5`}>
                                     <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-sm">
                                         {t("viewAdminOidcClientDetails.organisation")}
                                     </p>

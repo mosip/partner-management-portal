@@ -209,7 +209,7 @@ function AddSbi() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8 font-inter">
+                    <div className="flex-col mt-5 font-inter">
                         <div className="flex justify-between">
                             <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/device-provider-services/sbi-list' />
                         </div>

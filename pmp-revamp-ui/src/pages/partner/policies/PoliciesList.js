@@ -142,7 +142,7 @@ function PoliciesList() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
               <Title title='policies.policies' backLink='/partnermanagement' styleSet={style} />
 

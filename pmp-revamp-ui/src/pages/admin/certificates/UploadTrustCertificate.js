@@ -154,7 +154,7 @@ function UploadTrustCertificate() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
                             <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
                         </div>

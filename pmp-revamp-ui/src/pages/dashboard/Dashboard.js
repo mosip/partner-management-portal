@@ -340,7 +340,7 @@ function Dashboard() {
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
-          <div className="flex mt-2 ml-[3%] flex-wrap break-words">
+          <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
             {!isPartnerAdmin &&
               < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
