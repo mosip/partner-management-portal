@@ -451,7 +451,8 @@
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
         "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
-        "searchDeviceId": "Rechercher l'ID de l'appareil"
+        "searchDeviceId": "Rechercher l'ID de l'appareil",
+        "selectDeviceId": "Sélectionner l'ID de l'appareil"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
@@ -525,7 +526,8 @@
         "searchModel": "Rechercher un modèle",
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
-        "ftmId": "Identifiant FTM"
+        "ftmId": "Identifiant FTM",
+        "selectFtmId": "Sélectionnez l'ID FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -846,7 +848,8 @@
         "policyId": "ID de stratégie",
         "policyName": "Nom de la Politique",
         "organisation": "Nom de l'organisation",
-        "policyGroup": "Groupe de politiques"
+        "policyGroup": "Groupe de politiques",
+        "partnerStatus": "Statut de partenaire"
     },
     "deactivatePolicyPopup": {
         "headerMsg": "Voulez-vous désactiver la politique",
