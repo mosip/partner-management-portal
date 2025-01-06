@@ -24,7 +24,11 @@ function ViewAdminDeviceDetails() {
     }, []);
 
     const moveToDevicesList = () => {
-        navigate('/partnermanagement/admin/device-provider-services/devices-list');
+        if(deviceDetails.isViewLinkedDevices) {
+            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`);
+        } else {
+            navigate('/partnermanagement/admin/device-provider-services/devices-list');
+        }
     };
 
     return (
