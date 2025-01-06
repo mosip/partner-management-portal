@@ -167,6 +167,12 @@ function AdminSbiList() {
         navigate("/partnermanagement/admin/device-provider-services/view-sbi-details");
     };
 
+    const showLinkedDevices = (selectedSbi) => {
+        if (selectedSbi.countOfAssociatedDevices > 0) {
+            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${selectedSbi.sbiId}&sbiVersion=${selectedSbi.sbiVersion}`);
+        }
+    };
+
     const approveRejectSbi = (selectedSbi) => {
         if (selectedSbi.status === 'pending_approval') {
             setShowSbiApproveRejectPopUp(true);
@@ -325,7 +331,7 @@ function AdminSbiList() {
                                                                         </div>
                                                                     </td>
                                                                     <td className={`px-2 text-center`}>
-                                                                        <div className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
+                                                                        <div onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showLinkedDevices(sbi))}>
                                                                             <img src={sbi.status === 'deactivated' ? deactiveLinkedDevices : activeLinkedDevices} alt='' />
                                                                             <p className={`${sbi.status === 'deactivated' ? 'text-[#969696]' : 'text-tory-blue'} px-2`}>{sbi.countOfAssociatedDevices}</p>
                                                                         </div>

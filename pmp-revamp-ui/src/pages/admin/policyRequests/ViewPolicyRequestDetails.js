@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
+import dotImg from "../../../svg/dot.svg";
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -80,6 +81,7 @@ function ViewPolicyRequestDetails() {
                         </div>
                         <div className={`flex flex-wrap pt-3`}>
                             <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
@@ -87,7 +89,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
-                            <div className={`w-[50%] max-[600px]:w-[100%] px-2`}>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
@@ -95,12 +97,23 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
-                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                        </div>
+                        <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                            <div className={`mb-3 w-[50%] max-[600px]:w-[100%]`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyGroupName}
+                                </p>
+                            </div>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
+                                <p className="font-[600] text-suva-gray text-sm">
+                                    {t("viewPolicyRequest.partnerStatus")}
+                                </p>
+                                <p className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-md`}>
+                                    <img src={dotImg} alt="" /> 
+                                    <span className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{getStatusCode(policyRequestDetails.partnerStatus, t)}</span>
                                 </p>
                             </div>
                         </div>

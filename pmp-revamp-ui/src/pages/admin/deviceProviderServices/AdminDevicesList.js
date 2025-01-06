@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -22,6 +22,7 @@ import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
 function AdminDevicesList() {
+    const location = useLocation();
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -61,6 +62,11 @@ function AdminDevicesList() {
         sbiId: null,
         sbiVersion: null
     });
+    const [preFilledFilters, setPreFilledFilters] = useState({
+        sbiId: "",
+        sbiVersion: ""
+    });
+    const [isViewLinkedDevices, setIsViewLinkedDevices] = useState(false);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -127,9 +133,23 @@ function AdminDevicesList() {
             console.error('Error fetching data:', err);
             setErrorMsg(err);
         }
-    }
+    };
 
     useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const sbiId = params.get('sbiId');
+        const sbiVersion = params.get('sbiVersion');
+    
+        if (sbiId || sbiVersion) {
+            setExpandFilter(true);
+            setPreFilledFilters((prev) => ({
+                ...prev,
+                sbiId: sbiId,
+                sbiVersion: sbiVersion,
+            }));
+            setApplyFilter(true);
+            setIsViewLinkedDevices(true);
+        }
         fetchDeviceDetails();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
@@ -229,7 +249,11 @@ function AdminDevicesList() {
     };
 
     const viewDeviceDetails = (selectedDevice) => {
-        localStorage.setItem('selectedDeviceAttributes', JSON.stringify(selectedDevice));
+        const requiredData = {
+            ...selectedDevice,
+            isViewLinkedDevices: isViewLinkedDevices
+        }
+        localStorage.setItem('selectedDeviceAttributes', JSON.stringify(requiredData));
         navigate("/partnermanagement/admin/device-provider-services/view-device-details");
     };
 
@@ -285,7 +309,12 @@ function AdminDevicesList() {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
-                                    <AdminDeviceDetailsFilter onApplyFilter={onApplyFilter} />
+                                    <AdminDeviceDetailsFilter 
+                                        onApplyFilter={onApplyFilter}
+                                        setErrorCode={setErrorCode} 
+                                        setErrorMsg={setErrorMsg}
+                                        preFilledFilters={preFilledFilters}
+                                    />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                                 {tableDataLoaded && applyFilter && devicesList.length === 0 ?
