@@ -1,13 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService';
-import { isLangRTL, moveToHome, getPartnerTypeDescription } from '../utils/AppUtils';
-import backArrow from '.././svg/back_arrow.svg';
+import { isLangRTL, getPartnerTypeDescription } from '../utils/AppUtils';
 import Title from '../pages/common/Title';
 
 function UserProfile() {
-    const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const userData = getUserProfile();

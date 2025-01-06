@@ -413,7 +413,7 @@ function EditOidcClient() {
                                                                 placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                                                                 className="w-[85%] focus:outline-none"
                                                             />
-                                                            <div id={'oidc_edit_delete_redirect_url' + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
+                                                            <div role='button' id={'oidc_edit_delete_redirect_url' + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                                                     stroke={oidcClientDetails.redirectUris.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${oidcClientDetails.redirectUris.length > 1 ? 'cursor-pointer' : ''}`}>
                                                                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -427,9 +427,9 @@ function EditOidcClient() {
                                                     ))}
                                                     {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                     {oidcClientDetails.redirectUris.length < 5 && (
-                                                        <p id="oidc_edit_add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                                                            <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
-                                                            <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
+                                                        <p role='button' id="oidc_edit_add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                                                            <span role='button' onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
+                                                            <span role='button' onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                                                         </p>
                                                     )}
                                                 </div>

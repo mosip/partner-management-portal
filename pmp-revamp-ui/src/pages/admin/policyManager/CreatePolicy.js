@@ -339,7 +339,7 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label
+                                                            <label role='button' 
                                                                 htmlFor="fileInput"
                                                                 className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
                                                                 tabIndex="0"

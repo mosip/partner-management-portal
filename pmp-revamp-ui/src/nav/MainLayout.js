@@ -5,10 +5,9 @@ import '../index.css';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useRef } from 'react';
-import { logout } from '../utils/AppUtils.js';
+import { logout, getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 import { getAppConfig } from '../services/ConfigService.js';
 import { HttpService } from "../services/HttpService";
-import { getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 
 function MainLayout({ children }) {
     const { i18n } = useTranslation();
@@ -122,7 +121,7 @@ function MainLayout({ children }) {
                 });
                 const response = await HttpService.put(
                     getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV), verifyEmailRequest);
-                if (response && response.data && response.data.response) {
+                if (response?.data?.response) {
                     const resData = response.data.response;
                     setPolicyRequiredPartnerTypes(resData.policyRequiredPartnerTypes);
                     setPartnerType(userProfile.partnerType);

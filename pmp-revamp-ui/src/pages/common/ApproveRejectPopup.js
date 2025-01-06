@@ -115,7 +115,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <img id="approve_reject_popup_close_icon" src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => closingPopUp())}/>
+                                        <img role='button' id="approve_reject_popup_close_icon" src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => closingPopUp())}/>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="px-[1.5rem] py-3 text-center">
