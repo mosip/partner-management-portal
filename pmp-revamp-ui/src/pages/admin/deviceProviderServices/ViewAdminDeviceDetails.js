@@ -23,19 +23,23 @@ function ViewAdminDeviceDetails() {
         setDeviceDetails(selectedDevice);
     }, []);
 
-    const moveToDevicesList = () => {
+    const  backToDevicesList = () => {
         if(deviceDetails.isViewLinkedDevices) {
-            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`);
+            return `/partnermanagement/admin/device-provider-services/devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`;
         } else {
-            navigate('/partnermanagement/admin/device-provider-services/devices-list');
+            return '/partnermanagement/admin/device-provider-services/devices-list';
         }
+    }
+
+    const moveToDevicesList = () => {
+        navigate(backToDevicesList());
     };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' backLink='/partnermanagement/admin/device-provider-services/devices-list'/>
+                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' backLink={backToDevicesList()}/>
                 </div>
 
                 {unexpectedError && (
