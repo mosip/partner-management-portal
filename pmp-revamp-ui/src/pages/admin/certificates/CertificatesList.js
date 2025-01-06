@@ -204,7 +204,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           {successMsg && (
             <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
                 <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />

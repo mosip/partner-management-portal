@@ -93,7 +93,7 @@ function ViewPolicy() {
                 <LoadingIcon />
             )}
             {dataLoaded && (
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
                             <Title title={viewPolicyPageHeaders.header} subTitle={viewPolicyPageHeaders.subTitle} backLink={viewPolicyPageHeaders.backLink} />
                         </div>

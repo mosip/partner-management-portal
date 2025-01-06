@@ -10,7 +10,7 @@ function UserProfile() {
     const userData = getUserProfile();
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
+        <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <Title title='userProfile.myProfile' backLink='/partnermanagement' />
             <div className="bg-snow-white h-fit my-0.5 rounded-t-lg shadow-sm font-inter">
                 <div className="flex justify-between px-7 py-2 border-b max-[450px]:flex-col">

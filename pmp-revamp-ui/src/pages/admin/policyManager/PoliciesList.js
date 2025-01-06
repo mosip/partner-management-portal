@@ -280,7 +280,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='policyGroupList.policies' backLink='/partnermanagement' />
                             <>
