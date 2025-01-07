@@ -452,7 +452,8 @@
         "selectStatus": "حدد الحالة",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
         "searchDeviceId": "البحث عن معرف الجهاز",
-        "selectDeviceId": "حدد معرف الجهاز"
+        "selectDeviceId": "حدد معرف الجهاز",
+        "linkedDevicesList": "قائمة الأجهزة المرتبطة"
     },
     "deactivateDevicePopup": {
         "headerMsg": "هل تريد إلغاء تنشيط الجهاز",
