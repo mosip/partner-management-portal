@@ -292,22 +292,22 @@ function FtmList() {
                                 </td>
                                 <td className="px-2 mx-2">
                                   <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                    <p role='button' id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
-                                      tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewFtmId(index === viewFtmId ? null : index))}>
-                                      ...</p>
+                                    <button id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
+                                      ...
+                                    </button>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                        <p role='button' id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
-                                          {t('ftmList.view')}
-                                        </p>
+                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                          <p>{t('ftmList.view')}</p>
+                                        </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
-                                          {t('ftmList.manageCertificate')}
-                                        </p>
+                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                          <p> {t('ftmList.manageCertificate')} </p>
+                                        </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
-                                          {t('ftmList.deActivate')}
-                                        </p>
+                                        <button id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                          <p> {t('ftmList.deActivate')}</p>
+                                        </button>
                                         {showDeactivatePopup && (
                                           <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                         )}

@@ -94,7 +94,7 @@ function SelectPolicyPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="px-4 py-2">
                                 <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
@@ -138,7 +138,9 @@ function SelectPolicyPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-3 flex justify-between relative">
                                 <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                    <span role='button' id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                                    <button id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}>
+                                        <span> {t('commons.logout')}</span>
+                                    </button>
                                 </p>
                                 <button
                                     className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 

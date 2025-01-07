@@ -202,11 +202,11 @@ function CreateOidcClient() {
   };
 
   const onChangePolicyName = (fieldName, selectedValue) => {
-      const selectedPolicy = activePoliciesData.find(item => item.policyName === selectedValue);
-      if (selectedPolicy) {
-        setPolicyName(selectedValue);
-        setPolicyId(selectedPolicy.policyId);
-      }
+    const selectedPolicy = activePoliciesData.find(item => item.policyName === selectedValue);
+    if (selectedPolicy) {
+      setPolicyName(selectedValue);
+      setPolicyId(selectedPolicy.policyId);
+    }
   };
 
   const onChangeOidcClientName = (value) => {
@@ -394,11 +394,11 @@ function CreateOidcClient() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
+            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list'  />
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
             </div>
             {!createOidcClientSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -455,8 +455,8 @@ function CreateOidcClient() {
                             styleSet={styles}
                             addInfoIcon={true}
                             disabled={!partnerId}
-                            infoKey={t('createOidcClient.policyNameToolTip')} 
-                            id='create_oidc_policy_name'/>
+                            infoKey={t('createOidcClient.policyNameToolTip')}
+                            id='create_oidc_policy_name' />
                         </div>
                       </div>
                       <div className="flex my-2">
@@ -464,14 +464,14 @@ function CreateOidcClient() {
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                            placeholder={t('createOidcClient.enterNameForOidcClient')} id="create_oidc_client_name"/>
+                            placeholder={t('createOidcClient.enterNameForOidcClient')} id="create_oidc_client_name" />
                         </div>
                       </div>
                       <div className="flex my-[1%]">
                         <div className="flex flex-col w-full">
                           <label className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                             <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                            <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info'/>
+                            <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                           </label>
                           <textarea id="create_oidc_public_key" value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                             className="px-2 py-4 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
@@ -518,10 +518,10 @@ function CreateOidcClient() {
                           ))}
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
-                            <p role='button' id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                              <span role='button' onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
-                              <span role='button' onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
-                            </p>
+                            <button id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                              <button onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</button>
+                              <button onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</button>
+                            </button>
                           )}
                         </div>
 

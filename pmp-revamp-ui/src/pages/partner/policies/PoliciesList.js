@@ -219,8 +219,9 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p role='button' id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
-                                      ...</p>
+                                    <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>
+                                      ...
+                                    </button>
                                     {
                                       viewPolicyId === index && (
                                         <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
