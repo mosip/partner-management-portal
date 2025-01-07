@@ -30,9 +30,17 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
         sbiId: "",
         sbiVersion: ""
     });
+    const [disableSbiId, setDisableSbiId] = useState(false);
+    const [disableSbiVersion, setDisableSbiVersion] = useState(false);
 
     useEffect(() => {
         if (preFilledFilters) {
+            if(preFilledFilters.sbiId) {
+                setDisableSbiId(true);
+            }
+            if(preFilledFilters.sbiVersion) {
+                setDisableSbiVersion(true);
+            }
             const newFilters = { ...filters, ...preFilledFilters };
             setFilters(newFilters);
             onApplyFilter(newFilters);
@@ -125,6 +133,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 fieldNameKey="sbiList.sbiId"
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={styleSet}
+                disableField={disableSbiId}
                 id="sbi_id_filter"
             />
             <TextInputComponent
@@ -134,6 +143,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
+                disableField={disableSbiVersion}
                 id="sbi_version_filter"
             />
             <DropdownComponent

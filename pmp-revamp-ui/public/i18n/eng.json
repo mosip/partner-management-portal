@@ -447,7 +447,8 @@
         "selectStatus": "Select Status",
         "unexpectedError": "We have encountered with an unexpected error. Please try again.",
         "searchDeviceId": "Search Device Id",
-        "selectDeviceId": "Select Device ID"
+        "selectDeviceId": "Select Device ID",
+        "linkedDevicesList": "List of Linked Devices"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",

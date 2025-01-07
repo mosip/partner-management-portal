@@ -63,8 +63,8 @@ function AdminDevicesList() {
         sbiVersion: null
     });
     const [preFilledFilters, setPreFilledFilters] = useState({
-        sbiId: "",
-        sbiVersion: ""
+        sbiId: null,
+        sbiVersion: null
     });
     const [isViewLinkedDevices, setIsViewLinkedDevices] = useState(false);
     const submenuRef = useRef([]);
@@ -123,7 +123,7 @@ function AdminDevicesList() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('adminDeviceDetailsList.errorInAdminDeviceDetailsList'));
+                setErrorMsg(t('devicesList.errorInViewDevices'));
             }
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
@@ -285,7 +285,10 @@ function AdminDevicesList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='devicesList.listOfDevices' backLink='/partnermanagement' />
+                            <Title 
+                                title={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
+                                backLink='/partnermanagement' 
+                            />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={false}
@@ -301,7 +304,7 @@ function AdminDevicesList() {
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
                                     titleId='list_of_device_details'
-                                    listTitle='devicesList.listOfDevices'
+                                    listTitle={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
