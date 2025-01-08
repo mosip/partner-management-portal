@@ -80,8 +80,8 @@ function SelectPolicyPopup() {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end !absolute !items-center !items-center !w-1/3",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3 !m-0.5"
+        outerDiv: "!flex !justify-end !absolute !items-center !w-full",
+        innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !p-3"
     }
 
     return (
@@ -93,12 +93,12 @@ function SelectPolicyPopup() {
                     )}
                     {dataLoaded && (
                         <>
-                            {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
-                            )}
                             <div className="px-4 py-2">
                                 <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                             </div>
+                            {errorMsg && (
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                            )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
                                 <p>

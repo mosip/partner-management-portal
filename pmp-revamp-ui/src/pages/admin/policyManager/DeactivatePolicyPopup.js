@@ -103,7 +103,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg((activePoliciesCount > 1 && draftPoliciesCount > 1) ? t('activeAndDraftPoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }) : t('activeAndDraftPoliciesDetectedMsg.description2'));
+                    setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }));
                 } else if (errorCode === 'PMS_POL_070') {
                     // Count draft policies
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;

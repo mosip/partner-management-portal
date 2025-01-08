@@ -733,8 +733,7 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description1": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policies.\n2. Publish and then deactivate the draft policies.",
-        "description2": "There is one active policy and one draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policy.\n2. Publish and then deactivate the draft policy."
+        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following: 1. Deactivate all active policies. 2. Publish and then deactivate all draft policies."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",

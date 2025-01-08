@@ -738,8 +738,7 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description1": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon.",
-        "description2": "Il existe une stratégie active et un projet de stratégie associé à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez la stratégie activée.\n2. Publier puis désactiver le projet de politique."
+        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
