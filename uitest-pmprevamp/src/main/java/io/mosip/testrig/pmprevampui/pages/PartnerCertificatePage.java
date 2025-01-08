@@ -48,7 +48,6 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Only .cer or .pem certificate formats are allowed for upload']")
 	private WebElement CertFormatesText;
 	
-	
 	@FindBy(xpath = "//*[contains(text(), \"Last certificate was uploaded on\")]")
 	private WebElement lastUploadTimeAndDate;
 
@@ -126,11 +125,13 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Self Signed Certificate not allowed as partner.']")
 	private WebElement errorCodeForSelfSignedCer;
 	
-	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
-
+	public boolean isDeviceProviderSuccessMessage() {
+		return isElementDisplayed(deviceProviderSuccessMessage);
+	}
+	
 	public boolean isPartnerCertificatePageDisplayed() {
 		return isElementDisplayed(partnerCertificateTitle);
 	}
@@ -139,10 +140,6 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(uploadButton);
 	}
 	
-	public boolean isDeviceProviderSuccessMessage() {
-		return isElementDisplayed(deviceProviderSuccessMessage);
-	}
-
 	public boolean isUploadPartnerCertificatePopUpDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
 	}
@@ -297,14 +294,7 @@ public class PartnerCertificatePage extends BasePage {
 		 WebElement first= driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
 		 return isElementDisplayed(first);
 		}	
-	
-
-	
-//	public boolean getTheAddFtmMake() {
-//		return getTextFromAttribute(addFtmMake,"placeholder");
-//	}
-	
-
+		
 	public void clickOnErrorCloseButton() {
 		 clickOnElement(errorCloseButton);
 	}
@@ -317,8 +307,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(errorCodeForSelfSignedCer);
 	}
 	
-	
-	
 	public boolean isPleaseTabToSelectTextDisplayed() {
 		return isElementDisplayed(PleaseTabToSelectText);
 	}
@@ -330,6 +318,5 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isLastUploadTimeAndDateTextDisplayed() {
 		return isElementDisplayed(lastUploadTimeAndDate);
 	}
-	
 	
 }
