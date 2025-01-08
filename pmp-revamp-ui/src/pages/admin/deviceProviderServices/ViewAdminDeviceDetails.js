@@ -61,7 +61,7 @@ function ViewAdminDeviceDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {deviceDetails.make} - {deviceDetails.model}
+                                    {t('devicesList.deviceId')}: {deviceDetails.deviceId}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(deviceDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -104,8 +104,6 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.orgName}
                                     </p>
                                 </div>
-                            </div>
-                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiId")}
@@ -114,14 +112,8 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.sbiId}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
-                                        {t("devicesList.deviceId")}
-                                    </p>
-                                    <p className="font-[600] text-vulcan text-md">
-                                        {deviceDetails.deviceId}
-                                    </p>
-                                </div>
+                            </div>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceType")}

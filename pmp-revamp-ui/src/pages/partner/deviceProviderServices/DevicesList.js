@@ -103,6 +103,7 @@ function DevicesList() {
     }, []);
 
     const tableHeaders = [
+        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
         { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
         { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
@@ -305,6 +306,7 @@ function DevicesList() {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
                                                                     <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceId}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>

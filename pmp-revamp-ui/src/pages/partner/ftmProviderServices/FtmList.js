@@ -90,6 +90,7 @@ function FtmList() {
   };
 
   const tableHeaders = [
+    { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
     { id: "model", headerNameKey: "ftmList.model" },
@@ -278,6 +279,7 @@ function FtmList() {
                           tableRows.map((ftm, index, currentArray) => {
                             return (
                               <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.ftmId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>

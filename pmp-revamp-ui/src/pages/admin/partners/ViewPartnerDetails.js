@@ -166,7 +166,7 @@ function ViewPartnerDetails() {
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
                                         <p className="font-semibold text-lg text-dark-blue mb-2">
-                                            {partnerDetails.partnerId}
+                                            {t('partnerList.partnerId')}: {partnerDetails.partnerId}
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>

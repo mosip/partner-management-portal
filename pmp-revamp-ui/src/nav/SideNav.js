@@ -40,9 +40,9 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('admin/certificates')) {
             setActiveIcon("rootOfTrustCertificate");
-        } else if (selectedPath.includes('partners-list')) {
+        } else if (selectedPath.includes('partners-list') || selectedPath.includes('view-partner-details')) {
             setActiveIcon("partner");
-        } else if (selectedPath.includes('policy-requests-list')) {
+        } else if (selectedPath.includes('policy-requests-list') || selectedPath.includes('view-policy-request')) {
             setActiveIcon("partnerPolicyMapping");
         }
         else {

@@ -423,11 +423,11 @@
         "sbiExpiryStatus": "SBI Expiry Status",
         "selectSbiExpiryStatus": "Select SBI Expiry Status",
         "listOfSbis": "List of SBIs",
-        "sbiId": "SBI Id",
-        "searchSbiId": "Search SBI Id"
+        "sbiId": "SBI ID",
+        "searchSbiId": "Search SBI ID"
     },
     "devicesList": {
-        "deviceId": "Device Id",
+        "deviceId": "Device ID",
         "addDevices": "Add Devices",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",
@@ -446,7 +446,7 @@
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
         "unexpectedError": "We have encountered with an unexpected error. Please try again.",
-        "searchDeviceId": "Search Device Id",
+        "searchDeviceId": "Search Device ID",
         "selectDeviceId": "Select Device ID",
         "linkedDevicesList": "List of Linked Devices"
     },
@@ -523,7 +523,8 @@
         "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
         "ftmId": "FTM ID",
-        "selectFtmId": "Select FTM ID"
+        "selectFtmId": "Select FTM ID",
+        "searchFtmId": "Search FTM ID"
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -1153,7 +1154,7 @@
         "PMS_DEVICE_ERROR_010": "Given device details are not in pending for approval status.",
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
-        "PMS_DEVICE_ERROR_013": "Device Id is invalid",
+        "PMS_DEVICE_ERROR_013": "Device ID is invalid",
         "PMS_DEVICE_ERROR_014": "The selected device has been already deactivated",
         "PMS_DEVICE_ERROR_015": "Error while deactivating the device",
         "PMS_DEVICE_ERROR_016": "Device is not associated with user.",

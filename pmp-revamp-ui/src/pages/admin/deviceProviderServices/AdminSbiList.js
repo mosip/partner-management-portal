@@ -54,6 +54,7 @@ function AdminSbiList() {
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
+        sbiId: null,
         sbiVersion: null,
         status: null,
         sbiExpiryStatus: null
@@ -67,6 +68,7 @@ function AdminSbiList() {
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
         { id: "orgName", headerNameKey: 'sbiList.orgName' },
+        { id: "sbiId", headerNameKey: "sbiList.sbiId" },
         { id: "sbiVersion", headerNameKey: "sbiList.sbiVersion" },
         { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
         { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
@@ -90,6 +92,7 @@ function AdminSbiList() {
 
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
         if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
         if (filterAttributes.sbiExpiryStatus) queryParams.append('sbiExpiryStatus', filterAttributes.sbiExpiryStatus);
@@ -320,6 +323,7 @@ function AdminSbiList() {
                                                                     className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.partnerId}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiId}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date", false)}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date", false)}</td>

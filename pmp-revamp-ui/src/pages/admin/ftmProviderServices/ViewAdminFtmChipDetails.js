@@ -12,6 +12,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import { HttpService } from '../../../services/HttpService';
+import FtmList from '../../partner/ftmProviderServices/FtmList';
 
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
@@ -111,7 +112,7 @@ function ViewAdminFtmChipDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {ftmDetails.make} - {ftmDetails.model}
+                                    {t('ftmList.ftmId')}: {ftmDetails.ftmId}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -130,28 +131,46 @@ function ViewAdminFtmChipDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                    <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-sm">
-                                        {t("viewOidcClientDetails.partnerId")}
+                                <div className={`w-[48%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("sbiList.partnerId")}
                                     </p>
-                                    <p id="ftm_chip_details_context_partner_id" className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {ftmDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%]`}>
-                                    <p id="ftm_chip_details_label_partner_type" className="font-[600] text-suva-gray text-sm">
-                                        {t("viewOidcClientDetails.partnerType")}
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p id="ftm_chip_details_context_ftm_chip_provider" className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5`}>
-                                    <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-sm">
-                                        {t("viewAdminOidcClientDetails.organisation")}
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("sbiList.orgName")}
                                     </p>
-                                    <p id="ftm_chip_details_context_make" className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {ftmDetails.orgName}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("ftmList.make")}
+                                    </p>
+                                    <p className="font-[600] text-vulcan text-md">
+                                        {ftmDetails.make}
+                                    </p>
+                                </div>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("ftmList.model")}
+                                    </p>
+                                    <p className="font-[600] text-vulcan text-md">
+                                        {ftmDetails.model}
                                     </p>
                                 </div>
                             </div>

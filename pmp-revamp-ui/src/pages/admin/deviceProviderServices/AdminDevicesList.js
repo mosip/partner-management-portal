@@ -70,11 +70,11 @@ function AdminDevicesList() {
     const submenuRef = useRef([]);
 
     const tableHeaders = [
-        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
-        { id: "sbiId", headerNameKey: 'sbiList.sbiId' },
-        { id: "sbiVersion", headerNameKey: 'sbiList.sbiVersion' },
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
         { id: "orgName", headerNameKey: 'sbiList.orgName' },
+        { id: "sbiId", headerNameKey: 'sbiList.sbiId' },
+        { id: "sbiVersion", headerNameKey: 'sbiList.sbiVersion' },
+        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
         { id: "deviceType", headerNameKey: 'devicesList.deviceType' },
         { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
@@ -353,11 +353,11 @@ function AdminDevicesList() {
                                                         {devicesList.map((device, index) => {
                                                             return (
                                                                 <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.make}</td>

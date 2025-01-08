@@ -161,7 +161,7 @@ function ViewFtmChipDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {ftmDetails.make} - {ftmDetails.model}
+                                    {t('ftmList.ftmId')}: {ftmDetails.ftmId}
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
