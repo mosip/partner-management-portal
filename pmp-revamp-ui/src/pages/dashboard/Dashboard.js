@@ -536,7 +536,7 @@ function Dashboard() {
               </>
             )}
           </div>
-          {showPopup && (
+          {true && (
             <SelectPolicyPopup />
           )}
           {showConsentPopup && (

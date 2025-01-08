@@ -80,12 +80,12 @@ function SelectPolicyPopup() {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end !absolute !items-center !w-full",
-        innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !p-3"
+        outerDiv: "!flex !justify-end !relative !items-center !w-full",
+        innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !px-3 !py-2"
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter -mt-[2rem]">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
