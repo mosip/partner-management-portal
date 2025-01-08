@@ -679,4 +679,54 @@ public class AuthPartnerTest extends BaseClass {
 		
 	}
 	
+    @Test (priority = 10)
+    public void deletingSecondRedirectUri() { 
+    DashboardPage dashboardpage = new DashboardPage(driver); 
+    RegisterPage registerPage = new RegisterPage(driver); 
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton(); 
+	  oidcClientPage.clickOnRedirectUriAddNew(); 
+	  assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	  oidcClientPage.clickOnRedirectUri2Delete();
+	  assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	
+    }
+    
+    @Test (priority = 11)
+      public void addingSecondRedirectUri() { 
+	  DashboardPage dashboardpage = new DashboardPage(driver); 
+	  RegisterPage registerPage = new RegisterPage(driver); 
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),
+	  GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(),GlobalConstants.
+	  isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton();
+	  oidcClientPage.clickOnRedirectUriAddNew(); 
+	  assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	  }
+    
+	  @Test (priority = 12)
+	  public void ClearFormOidecClient() {
+	  DashboardPage dashboardpage = new DashboardPage(driver);
+	  RegisterPage registerPage = new
+	  RegisterPage(driver);
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(),
+	  GlobalConstants.isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton(); 
+	  oidcClientPage.enterNameOidcTextBox(data);
+	  String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
+	  oidcClientPage.enterPublicKeyTextBox(publicKey); 
+	  oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri()); 
+	  oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri()); 
+	  oidcClientPage.clickOnClearFormButton(); 
+	  assertTrue(oidcClientPage.isLogoUriempty(), GlobalConstants.isLogoUriempty);
+	  }
+	  
+
+	
 }

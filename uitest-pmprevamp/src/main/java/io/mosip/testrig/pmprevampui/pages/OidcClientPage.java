@@ -235,6 +235,21 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oidc_btn")
 	private WebElement oidcClientListPageCreateOidcClientBtn;
 	
+	@FindBy(id = "add_new_redirect_url")
+	private WebElement redirectUriAddNew;
+	
+	@FindBy(id = "delete_redirect_url2")
+	private WebElement RedirectUri2Delete;
+	
+	@FindBy(id = "create_oidc_redirect_url2")
+	private WebElement RedirectUri2;
+	
+	@FindBy(id = "create_oidc_clear_form")
+	private WebElement clearForm;
+	
+	@FindBy(xpath = "//*[@placeholder='Enter Logo URI']")  
+	private WebElement enterLogoUriTextBoxEmpty;
+	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
@@ -540,5 +555,25 @@ public class OidcClientPage extends BasePage {
 	}
 	public void clickOnOidcClientListPageCreateOidcClientBtn() {
 		clickOnElement(oidcClientListPageCreateOidcClientBtn);
+	}
+	
+	public void clickOnRedirectUriAddNew() {
+		clickOnElement(redirectUriAddNew);
+	}
+
+	public void clickOnRedirectUri2Delete() {
+		clickOnElement(RedirectUri2Delete);
+	}
+	
+	public boolean isRedirectUri2TextBoxDisplayed() {
+		return isElementDisplayed(RedirectUri2);
+	}
+	
+	public void clickOnClearFormButton() {
+		clickOnElement(clearForm);
+	}
+	
+	public boolean isLogoUriempty() {
+		return isElementDisplayed(enterLogoUriTextBoxEmpty);
 	}
 }
