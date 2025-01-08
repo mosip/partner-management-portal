@@ -24,11 +24,12 @@ public class GlobalConstants {
 	public static final String isPartnerCertificateTitleDisplayed = "Verify if partner certificate title is displayed";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
-	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
+	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
+	public static final String isPartnerIdLableDisplayed = "Verify if partner id dropdown is displayed.";
 	public static final String isPolicyNameDropdownDisplayed = "Verify if policy name dropdown displayed";
 	public static final String isPolicySubmittedSuccessfullyDisplayed = "Verify if Policy Submitted Successfully displayed";
 	public static final String isNoDataTextDisplaed = "Verify if Policy dropdown no policy data text displayed";
@@ -67,6 +68,9 @@ public class GlobalConstants {
 	public static final String isOriginalCertificateDownloadPopupDisplayed = "Verify if Originally uploaded CA signed certificate downloaded successfully displayed";
 	public static final String isMosipCertificateDownloadPopupDisplayed = "Verify if mosip signed certificate downloaded successfully displayed";
 	public static final String iReUploadPartnerCertificateTextDisplayed = "Verify if Re-Upload partner certificate title displayed";
+	public static final String isLastUploadTimeAndDateDisplayed = "Verify last upload time and date displayed";
+	public static final String isCertFormateDisplayed = "Verify cert formates displayed";
+	public static final String isPleaseTabTextDisplayed = "Verify please tab to select text displayed";
 	public static final String isReUploadPartnerCertificateSubTextDisplayed = "Verify if please select all fields and upload the certificate text displayed";
 	public static final String isInvalidCertFormatePopupDisplayed = "Verify if The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload text displayed";
 	public static final String TABLE = "</table>";
@@ -86,6 +90,9 @@ public class GlobalConstants {
 	public static final String SERVICE_NOT_DEPLOYED_MESSAGE = "Service not deployed. Hence skipping the testcase";
 	public static final String KNOWN_ISSUES = "known issue. Hence skipping the testcase";
 	public static final String isResetFiletrButtonDisplayed = "Verify if rest filter button displayed";
+	public static final String isApproveRejectPopupHeaderDisplayed = "Verify if approve reject popup header displayed";
+	public static final String isApproveRejectPopupSubHeaderDisplayed = "Verify if approve reject popup subheader displayed";
+	public static final String isMakeAndModelTitleDisplayed = "Verify if make and model title for popup displayed";
 	public static final String isFiletrButtonDisplayedOrEnabled = "Verify if filter button displayed";
 	public static final String isGoBackButtonDisplayed = "Verify if go back button displayed";
 	public static final String isApiListDisplayed = "Verify if api list is displayed";
@@ -93,7 +100,37 @@ public class GlobalConstants {
 	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
 	public static final String isHomeButtonInAuthenticationDisplayed = "Verify if home button in authentication page displayed";
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
+	public static final String isFtmChipMakeLableDisplayed = "Verify if ftm chipe make lable displayed";
+	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chipe make value displayed";
+	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chipe partner type lable displayed";
+	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chipe partner type value displayed";
+	
+	public static final String isFtmModelLableDisplayed = "Verify if ftm chipe model lable displayed";
+	public static final String isFtmModelValueDisplayed = "Verify if ftm chipe model value displayed";
+	public static final String isFtmModelCertifiateLableDisplayed = "Verify if ftm chipe certificate lable displayed";
+	
+	public static final String isTimeOfUploadLableDisplayed = "Verify if ftm chipe certificate time of upload lable displayed";
+	public static final String isTimeOfUploadValueDisplayed = "Verify if ftm chipe certificate time of upload value displayed";
+	public static final String isExpiryDateLableDisplayed = "Verify if ftm chipe certificate time of upload value displayed";
+	public static final String isExpiryDateValueDisplayed = "Verify if ftm chipe certificate time of upload value displayed";
+	public static final String isDownlaodButtonDisplayed = "Verify if ftm chipe certificate download buttton displayed";
+	public static final String isBackButton = "Verify if back button displayed";
+	public static final String isPendingForApprovalTextDisplayed = "Verify if pending for approval text displayed";
+
+	public static final String isPendingForUploadCertTextDisplayed = "Verify if pending for upload cert text displayed";
+	public static final String isApproveTextDisplayed = "Verify if approve text displayed";
+	public static final String isRejectedTextDisplayed = "Verify if rejected text displayed";
+	public static final String isDeactivatedTextDisplayed = "Verify if deactivated text displayed";
+	public static final String isDublicateFTMErrorMessageDisplayed = "Verify if dublicate ftm error message displayed";
+	public static final String isErrorCrossButtonDisplayed = "Verify if cross of error message displayed";
+	public static final String isElementIsDisabled = "Verify if element is disabled displayed";
+	
 	public static final String isPolicyNameBoxTextDisplayed = "Select policy name";
+	public static final String isInfoMessageDisplayed = "Verify if info message is displayed";
+	public static final String isAutoPopulatedTextDisplaed = "Verify if auto-populated for partner type text displayed";
+	public static final String isManageFtmChipCertDisplaed = "Verify if manage ftm chip cert text displayed";
+	public static final String isFtmTablHeadersDisplaed = "Verify if ftm table header displayed";
+	
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

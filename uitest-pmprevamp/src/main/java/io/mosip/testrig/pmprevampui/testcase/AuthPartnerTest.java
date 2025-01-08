@@ -64,7 +64,7 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterOrganizationName("AABBCC");
 
 		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
-		registerPage.selectPartnerTypeDropdown();
+		registerPage.selectPartnerTypeDropdown(2);
 
 		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
 		registerPage.enterAddress("0"+ data);
@@ -508,7 +508,7 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterOrganizationName("AABBCC");
 
 		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
-		registerPage.selectPartnerTypeDropdown();
+		registerPage.selectPartnerTypeDropdown(2);
 
 		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
 		registerPage.enterAddress("0"+ data);

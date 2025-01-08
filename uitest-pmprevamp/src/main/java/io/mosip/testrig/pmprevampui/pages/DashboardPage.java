@@ -68,16 +68,25 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
 	private WebElement RootOFTrustCertText;
 	
-	@FindBy(id = "root_certificate_upload_btn")
+	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")
 	private WebElement rootCertificateUploadButton;
 	
-
 	@FindBy(xpath = "//*[text()='Policies']")
 	private WebElement policyButton;
 	
 	
 	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
+	
+	@FindBy(id = "dashboard_partner_certificate_list_header")
+	private WebElement dashboardPartnerCertificateListHeader;
+	
+	@FindBy(xpath = "//*[text()='FTM Chip']")
+	private WebElement FTMChipTab;
+	
+	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
+	private WebElement dashboardFtmChipproviderCardHeader;
+		
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -208,6 +217,18 @@ public class DashboardPage extends BasePage {
 	
 	public void clickOnPartnerPolicyMappingTab() {
 		clickOnElement(PartnerPolicyMappingTab);
+	}
+	
+	public void clickOnDashboardPartnerCertificateListHeader() {
+		clickOnElement(dashboardPartnerCertificateListHeader);
+	}
+	
+	public void clickOnFTMChipTab() {
+		clickOnElement(FTMChipTab);
+	}
+	
+	public void clickOnDashboardFtmChipproviderCardHeader() {
+		clickOnElement(dashboardFtmChipproviderCardHeader);
 	}
 	
 }

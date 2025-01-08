@@ -47,6 +47,9 @@ public class RegisterPage extends BasePage {
 
 	@FindBy(xpath = "//input[@type='submit']")
 	private WebElement submitButton;
+	
+	@FindBy(xpath = "//*[@value='FTM_PROVIDER']")
+	private WebElement FtmProvider;
 
 	public RegisterPage(WebDriver driver) {
 		super(driver);
@@ -72,8 +75,8 @@ public class RegisterPage extends BasePage {
 		return isElementDisplayed(partnerTypeDropdown);
 	}
 
-	public void selectPartnerTypeDropdown() {
-		dropdownByIndex(partnerTypeDropdown, 2);
+	public void selectPartnerTypeDropdown(int val) {
+		dropdownByIndex(partnerTypeDropdown, val);
 	}
 	
 	public void selectDeviceProviderInPartnerTypeDropdown() {
@@ -193,6 +196,7 @@ public class RegisterPage extends BasePage {
 	public void refreshThePage() {
 		driver.navigate().refresh();
 	}
+
 
 	public void CloseTheTab() {
 		driver.close();
