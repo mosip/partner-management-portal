@@ -139,7 +139,7 @@ function AdminDevicesList() {
         const params = new URLSearchParams(location.search);
         const sbiId = params.get('sbiId');
         const sbiVersion = params.get('sbiVersion');
-    
+
         if (sbiId || sbiVersion) {
             setExpandFilter(true);
             setPreFilledFilters((prev) => ({
@@ -312,9 +312,9 @@ function AdminDevicesList() {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
-                                    <AdminDeviceDetailsFilter 
+                                    <AdminDeviceDetailsFilter
                                         onApplyFilter={onApplyFilter}
-                                        setErrorCode={setErrorCode} 
+                                        setErrorCode={setErrorCode}
                                         setErrorMsg={setErrorMsg}
                                         preFilledFilters={preFilledFilters}
                                     />
@@ -370,10 +370,9 @@ function AdminDevicesList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p role='button' id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <button id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
-                                                                            </p>
+                                                                            </button>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                     <div role='button' onClick={() => approveRejectDeviceDetails(device)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectDeviceDetails(device))}>

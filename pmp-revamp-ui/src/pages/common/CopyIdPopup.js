@@ -38,7 +38,9 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
                             <h1 className={`font-bold text-base text-[#333333] break-normal break-words`}>{policyName}</h1>
                             <p className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
-                        <img role='button' id='copy_id_close_btn' src={close_icon} alt="" onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, dismiss)} />
+                        <button id='copy_id_close_btn' onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`}>
+                            <img src={close_icon} alt="" />
+                        </button>
                     </header>
                     <hr className={`py-[3.5%]`} />
                     <div className={`px-5 pt-1 pb-6 flex-col text-center justify-center items-center`}>

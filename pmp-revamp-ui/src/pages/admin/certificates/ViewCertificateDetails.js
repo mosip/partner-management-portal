@@ -146,7 +146,7 @@ function ViewCertificateDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(viewCertDetails.certId))}
+                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadCertificateChain')}
                                                 </button>

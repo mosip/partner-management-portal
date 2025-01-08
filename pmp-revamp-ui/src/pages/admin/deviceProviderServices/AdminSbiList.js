@@ -180,7 +180,7 @@ function AdminSbiList() {
         }
     };
 
-    const onClickApproveReject =  (responseData, status, selectedSbi) => {
+    const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
             setActionId(-1);
             setShowSbiApproveRejectPopUp(false);
@@ -190,7 +190,7 @@ function AdminSbiList() {
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
                 )
             );
-          document.body.style.overflow = "auto";
+            document.body.style.overflow = "auto";
         }
     }
 
@@ -239,9 +239,9 @@ function AdminSbiList() {
     }
 
     useEffect(() => {
-        if(showSbiApproveRejectPopUp){
+        if (showSbiApproveRejectPopUp) {
             escapeKeyHandler(closeApproveRejectPopup);
-        }else if(showDeactivatePopup){
+        } else if (showDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
         }
     }, [showSbiApproveRejectPopUp, showDeactivatePopup]);
@@ -258,7 +258,7 @@ function AdminSbiList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='sbiList.listOfSbis' backLink='/partnermanagement'  />
+                            <Title title='sbiList.listOfSbis' backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={true}
@@ -338,13 +338,13 @@ function AdminSbiList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p role='button' id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
-                                                                            </p>
+                                                                            </button>
+
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div role='button'  onClick={() => approveRejectSbi(sbi)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi))}>
+                                                                                    <div role='button' onClick={() => approveRejectSbi(sbi)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi))}>
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={sbi.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
