@@ -528,7 +528,8 @@
         "expired": "منتهي الصلاحية",
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً.",
         "ftmId": "معرف FTM",
-        "selectFtmId": "حدد معرف FTM"
+        "selectFtmId": "حدد معرف FTM",
+        "searchFtmId": "البحث عن معرف FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",

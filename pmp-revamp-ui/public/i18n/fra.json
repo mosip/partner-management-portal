@@ -528,7 +528,8 @@
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
         "ftmId": "Identifiant FTM",
-        "selectFtmId": "Sélectionnez l'ID FTM"
+        "selectFtmId": "Sélectionnez l'ID FTM",
+        "searchFtmId": "Rechercher l'identifiant FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",

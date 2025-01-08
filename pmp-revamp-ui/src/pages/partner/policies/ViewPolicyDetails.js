@@ -42,7 +42,7 @@ function ViewPolicyDetails() {
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>
-                        <p className="font-bold text-sm text-dark-blue mb-3">{policyDetails.policyName}</p>
+                        <p className="font-semibold text-lg text-dark-blue mb-3">{t('viewPolicyDetails.policyName')}: {policyDetails.policyName}</p>
                         <div className="flex items-center justify-start">
                             <div
                                 className={`${bgOfStatus(

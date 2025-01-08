@@ -51,6 +51,7 @@ function AdminFtmList() {
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
+        ftmId: null,
         make: null,
         model: null,
         status: null,
@@ -62,9 +63,9 @@ function AdminFtmList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
         { id: "orgName", headerNameKey: 'ftmList.orgName' },
+        { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "make", headerNameKey: "ftmList.make" },
         { id: "model", headerNameKey: "ftmList.model" },
         { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
@@ -85,6 +86,7 @@ function AdminFtmList() {
 
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
         if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
@@ -300,9 +302,9 @@ function AdminFtmList() {
                                                         {ftmList.map((ftm, index) => {
                                                             return (
                                                                 <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.ftmId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.partnerId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.orgName}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.ftmId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.make}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.model}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{formatDate(ftm.createdDateTime, 'date', true)}</td>
