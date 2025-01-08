@@ -728,11 +728,13 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "Error: Policies detected in Draft status!",
-        "description": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed."
+        "description1": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed.",
+        "description2": "There is one draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policies.\n2. Publish and then deactivate the draft policies."
+        "description1": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policies.\n2. Publish and then deactivate the draft policies.",
+        "description2": "There is one active policy and one draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policy.\n2. Publish and then deactivate the draft policy."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",

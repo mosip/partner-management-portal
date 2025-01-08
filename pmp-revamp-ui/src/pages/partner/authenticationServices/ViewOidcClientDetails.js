@@ -73,7 +73,7 @@ function ViewOidcClientDetails() {
                                     {oidcClientDetails.clientId}
                                 </p>
                                 {oidcClientDetails.status === "ACTIVE" ? (
-                                    <img src={content_copy_icon} alt="" />
+                                    <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt=""/>
                                 ) : (
                                     <img src={disabled_copy_icon} alt="" />
                                 )}

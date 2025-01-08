@@ -80,8 +80,8 @@ function SelectPolicyPopup() {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end !absolute !items-center !w-1/3",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3"
+        outerDiv: "!flex !justify-end !absolute !items-center !items-center !w-1/3",
+        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3 !m-0.5"
     }
 
     return (
