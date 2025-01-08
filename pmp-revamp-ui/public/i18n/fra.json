@@ -733,11 +733,12 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en brouillon détectées !",
-        "description": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre."
+        "description1": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre.",
+        "description2": "Il existe un projet de stratégie associé à ce groupe de stratégies. Le groupe de stratégies ne peut pas être désactivé tant que le projet de stratégie associé n’est pas publié, puis désactivé. Veuillez consulter le projet de politique pour continuer."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon."
+        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",

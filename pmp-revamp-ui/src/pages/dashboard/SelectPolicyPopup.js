@@ -80,12 +80,12 @@ function SelectPolicyPopup() {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end !absolute !items-center !w-1/3",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3"
+        outerDiv: "!flex !justify-end !relative !items-center !w-full",
+        innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !px-3 !py-2"
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter -mt-[2rem]">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
@@ -93,12 +93,12 @@ function SelectPolicyPopup() {
                     )}
                     {dataLoaded && (
                         <>
-                            {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
-                            )}
                             <div className="px-4 py-2">
                                 <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                             </div>
+                            {errorMsg && (
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                            )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
                                 <p>
