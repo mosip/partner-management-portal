@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest
- } from '../../../utils/AppUtils';
+import {
+    isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest,
+    escapeKeyHandler
+} from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
@@ -16,10 +18,11 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
-function AdminApiKeysList () {
+function AdminApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -95,7 +98,7 @@ function AdminApiKeysList () {
             const response = await HttpService.get(url);
             if (response) {
                 const responseData = response.data;
-                if (responseData && responseData.response) {
+                if (responseData?.response) {
                     const resData = responseData.response.data;
                     setTotalRecords(responseData.response.totalResults);
                     setApiKeysList(resData);
@@ -160,6 +163,7 @@ function AdminApiKeysList () {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateApiKey = (selectedApiKeyData) => {
@@ -180,9 +184,9 @@ function AdminApiKeysList () {
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
-                    prevList.map(apiKey =>
-                        (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
-                    )
+                prevList.map(apiKey =>
+                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
+                )
             );
         }
     };
@@ -196,11 +200,15 @@ function AdminApiKeysList () {
         setErrorMsg("");
     };
 
+    useEffect(() => {
+        escapeKeyHandler(closeDeactivatePopup)
+    }, [showDeactivatePopup]);
+
     const styles = {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-[16%]"
     }
-    
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -211,17 +219,17 @@ function AdminApiKeysList () {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' ></Title>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                         </div>
                         <AuthenticationServicesTab
                             activeOidcClient={false}
                             oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
                             activeApiKey={true}
-                            apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list' 
+                            apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
                         />
-                        { !applyFilter && apiKeysList.length === 0 ? (
+                        {!applyFilter && apiKeysList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <EmptyList tableHeaders={tableHeaders} />
                             </div>
@@ -235,11 +243,11 @@ function AdminApiKeysList () {
                                     setFilter={setExpandFilter}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                { expandFilter && (
+                                {expandFilter && (
                                     <AdminApiKeysListFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                { !tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                { tableDataLoaded && applyFilter && apiKeysList.length === 0 ?
+                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
+                                {tableDataLoaded && applyFilter && apiKeysList.length === 0 ?
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
@@ -286,20 +294,20 @@ function AdminApiKeysList () {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <p role='button' id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                 ...
                                                                             </p>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
                                                                                         <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey))}>
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
                                                                                         <DeactivatePopup

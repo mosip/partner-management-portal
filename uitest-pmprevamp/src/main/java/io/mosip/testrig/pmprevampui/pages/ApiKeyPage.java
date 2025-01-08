@@ -196,6 +196,27 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//*[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 	
+	@FindBy(id = "generate_api_key_btn")
+	private WebElement apiKeyListPageGenerateApiKeyBtn;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Select Partner ID')]")
+	private WebElement partnerIdHelpText;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Select policy for which API Key is required')]")
+	private WebElement policyNameHelpText;
+
+	@FindBy(id = "generate_clear_form")
+	private WebElement clearButton;
+	
+	@FindBy(id = "generate_cancel_btn")
+	private WebElement cancelButton;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Entered API Key name already exists. Provide a unique API Key name and submit.')]")
+	private WebElement duplicateApiKeyNameErrorMessage;
+	
+	@FindBy(id = "error_close_btn")
+	private WebElement duplicateApiKeyNameErrorMessageCancelButton;
+	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -231,11 +252,11 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(generateAPIKey);
 	}
 
-	public void ClickOnAPIKeyDisplayed() {
+	public void clickOnAPIKeyDisplayed() {
 		clickOnElement(generateAPIKey);
 	}
 
-	public void ClickOnSubmitButton() {
+	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
 	}
 
@@ -452,4 +473,51 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(noDataAvailableText);
 	}
 	
+	public boolean isApiKeyListPageGenerateApiKeyBtnDisplayed() {
+		return isElementDisplayed(apiKeyListPageGenerateApiKeyBtn);
+	}
+	
+	public void clickOnApiKeyListPageGenerateApiKeyBtnDisplayed() {
+		clickOnElement(apiKeyListPageGenerateApiKeyBtn);
+	}
+	
+	public boolean isPartnerIdHelpTextDisplayed() {
+		return isElementDisplayed(partnerIdHelpText);
+	}
+	
+	public boolean isPolicyNameHelpTextDisplayed() {
+		return isElementDisplayed(policyNameHelpText);
+	}
+	
+	public boolean isClearButtonDisplayed() {
+		return isElementDisplayed(clearButton);
+	}
+	
+	public void clickOnClearButton() {
+		clickOnElement(clearButton);
+	}
+	
+	public boolean isCancelButtonDisplayed() {
+		return isElementDisplayed(cancelButton);
+	}
+	
+	public void clickOnCancelButton() {
+		clickOnElement(cancelButton);
+	}
+	
+	public void navigateBackDefaultButton() {
+		driver.navigate().back();
+	}
+	
+	public void navigateRefreshDefaultButton() {
+		driver.navigate().refresh();
+	}
+	
+	public boolean isDuplicateApiKeyNameErrorMessageDisplayed() {
+		return isElementDisplayed(duplicateApiKeyNameErrorMessage);
+	}
+	
+	public void clickOnDuplicateApiKeyNameErrorMessageCancelButton() {
+		clickOnElement(duplicateApiKeyNameErrorMessageCancelButton);
+	}
 }

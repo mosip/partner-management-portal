@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 
-function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength }) {
+function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, disableField }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -41,12 +41,18 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     onChange={handleInputChange}
                     placeholder={t(placeHolderKey)}
                     {...(maxLength && { maxLength })}
-                    className={`rounded-[4px] h-9 w-full p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    readOnly={disableField}
+                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} rounded-[4px] h-9 w-full p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
-                {inputValue && (
-                    <p onClick={onTextClear} className={`bg-white font-bold rounded-md px-2 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:outline-none items-center hover:cursor-pointer`}>
-                        x
-                    </p>
+                {inputValue && !disableField && (
+                    <button
+                    onClick={onTextClear}
+                    className={`flex items-center bg-white font-bold rounded-md px-2 min-h-9 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:ring-2 focus:ring-blue-500 items-center hover:cursor-pointer`}
+                    tabIndex="0"
+                    type="button"
+                >
+                    x
+                </button>
                 )}
             </div>
         </div>

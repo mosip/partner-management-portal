@@ -53,18 +53,18 @@
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
         "rootOfTrustCertificate": "جذر شهادة الثقة",
-        "rootOfTrustCertificateDesc": "تحميل شهادات الجذر/CA",
-        "partner": "شريك",
-        "partnerDesc": "عرض، إلغاء تنشيط تفاصيل الشريك",
-        "policy": "سياسة",
-        "policiesadminDesc": "إنشاء مجموعة السياسات والمصادقة وسياسة مشاركة البيانات",
-        "partnerPolicyMapping": "شريك - ربط السياسات",
-        "partnerPolicyMappingDesc": "عرض طلبات السياسة وإلغاء تنشيطها والموافقة عليها/رفضها من الشركاء",
-        "sbiDevice": "الهيئة الفرعية للتنفيذ - الجهاز",
-        "sbiDeviceDesc": "عرض أو إلغاء تنشيط أو الموافقة على/رفض تفاصيل الجهاز أو SBI",
-        "ftmChip": "تفاصيل اف تي ام",
-        "ftmChipDesc": "عرض تفاصيل شريحة FTM وإلغاء تنشيطها والموافقة عليها/رفضها",
-        "adminAuthenticationServicesDesc": "عرض وإلغاء تنشيط عميل OIDC أو تفاصيل واجهة برمجة التطبيقاتs",
+        "rootOfTrustCertificateDesc": "تحميل، تنزيل أو عرض قائمة شهادات الجذر والشهادات الوسيطة",
+        "partner": "الشريك",
+        "partnerDesc": "عرض أو تعطيل تفاصيل الشريك",
+        "policy": "السياسة",
+        "policiesadminDesc": "إنشاء وإدارة مجموعات السياسات، سياسات المصادقة والسياسات المتعلقة بمشاركة البيانات",
+        "partnerPolicyMapping": "ربط الشريك بالسياسة",
+        "partnerPolicyMappingDesc": "عرض أو الموافقة أو رفض طلبات ربط السياسات من الشركاء",
+        "sbiDevice": "جهاز SBI",
+        "sbiDeviceDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل جهاز SBI والأجهزة المرتبطة",
+        "ftmChip": "شريحة FTM",
+        "ftmChipDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل شريحة FTM",
+        "adminAuthenticationServicesDesc": "عرض أو تعطيل تفاصيل عميل OIDC ومفاتيح API",
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
@@ -201,7 +201,7 @@
         "policyNameDescription": "وصف اسم السياسة",
         "comments": "تعليقات",
         "adminComments": "تعليقات المشرف",
-        "partnerComments": "تعليقات الشريك",
+        "partnerComment": "تعليقات الشريك",
         "back": "خلف",
         "createdOn": "تم إنشاؤها على"
     },
@@ -451,7 +451,9 @@
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
-        "searchDeviceId": "البحث عن معرف الجهاز"
+        "searchDeviceId": "البحث عن معرف الجهاز",
+        "selectDeviceId": "حدد معرف الجهاز",
+        "linkedDevicesList": "قائمة الأجهزة المرتبطة"
     },
     "deactivateDevicePopup": {
         "headerMsg": "هل تريد إلغاء تنشيط الجهاز",
@@ -525,7 +527,8 @@
         "searchModel": "نموذج البحث",
         "expired": "منتهي الصلاحية",
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً.",
-        "ftmId": "معرف FTM"
+        "ftmId": "معرف FTM",
+        "selectFtmId": "حدد معرف FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -560,41 +563,63 @@
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟ ",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
-    "rootTrustCertificate": {
+    "certificatesList": {
+        "rootCA": "CA جذر",
+        "intermediateCA": "CA متوسط",
+        "certificateTrustStore": "مخزن شهادات الثقة",
         "rootOfTrustCertificates": "جذر شهادات الثقة",
+        "intermediateRootTrustCertificates": "شهادات الثقة الجذرية المتوسطة",
         "certificateId": "معرف الشهادة",
         "partnerDomain": "مجال الشريك",
         "issuedTo": "صدر ل",
         "issuedBy": "صادرة عن",
         "validFrom": "صالح من",
         "validTill": "صالح حتى",
-        "timeOfUpload": "وقت التحميل",
-        "status": "حالة",
+        "timeOfUpload": "تم التحميل على",
+        "validityStatus": "حالة الصلاحية",
         "action": "فعل",
         "UploadCertBtn": "تحميل الشهادة",
         "listOfCertificates": "قائمة شهادات جذر الثقة",
-        "selectCertificateId": "حدد معرف الشهادة",
-        "selectPartnerDomain": "حدد مجال الشريك",
-        "selectIssuedTo": "حدد صدر إلى",
-        "selectIssuedBy": "اختر جهة الإصدار",
-        "selectStatus": "حدد الحالة",
+        "searchCertificateId": "معرف شهادة البحث",
+        "selectPartnerDomain": "تحديد نطاق الشريك",
+        "searchIssuedTo": "البحث عن الجهة الصادرة",
+        "searchIssuedBy": "البحث عن الجهة الصادرة",
+        "selectValidityStatus": "حدد حالة الصلاحية",
         "deActivate": "إلغاء التنشيط",
-        "view": "منظر"
+        "view": "منظر",
+        "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootofTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadRootofTrustCertificateDesc": "يرجى تحديد نطاق الشريك وتحميل شهادة الجذر/ الجذر المتوسطة",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "تحميل شهادة الثقة",
+        "description": "الرجاء تحديد نطاق الشريك وتحميل شهادة CA الجذرية / CA المتوسطة.",
+        "uploadSectionDescription": "الرجاء النقر لتحديد شهادة CA الجذرية / CA المتوسطة",
+        "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح"
+        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerDomain}} بنجاح!",
+        "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
+        "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
     },
-    "rootTrustCertificateList": {
-        "rootTrustCertificateList": "قائمة جذر شهادات الثقة",
-        "rootOfTrustCertificates": "شهادات الثقة الجذرية",
-        "caCertificates": "شهادات كاليفورنيا"
+    "rootCertificateList": {
+        "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
+        "subTitle": "قائمة شهادات CA الجذرية",
+        "downloadCertificate": "تحميل"
     },
-    "intermediateTrustCertificateList": {
-        "intermediateRootTrustCertificates": "شهادات ثقة الجذر المتوسطة"
+    "intermediateCertificateList": {
+        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
+        "subTitle": "قائمة شهادات CA المتوسطة",
+        "downloadCertificate": "تنزيل سلسلة الشهادات"
+    },
+    "viewCertificateDetails": {
+        "viewRootCaCertificateDetails": "عرض تفاصيل شهادة CA الجذر",
+        "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
+        "uploadedOn": "تم الرفع على",
+        "rootCaCertificate": "شهادة المرجع المصدق الجذر",
+        "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
+        "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
+       "downloadCertificateChain": "تنزيل سلسلة الشهادات",
+        "validTo": "صالح ل",
+        "certThumbprint": "شهادة بصمة الابهام"
     },
     "partnerList": {
         "partnerTitle": "الشركاء",
@@ -627,6 +652,8 @@
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
         "listOfPartners": "قائمة الشركاء",
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
         "organisationName": "اسم المنظمة",
         "createdOn": "تم الإنشاء بتاريخ",
         "expiryDate": "تاريخ ووقت انتهاء الصلاحية",
@@ -749,6 +776,7 @@
         "upload": "تحميل",
         "uploadFileError": "يرجى اختيار ملف JSON صالح",
         "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
+        "policyDatalengthExceedError": "لا ينبغي أن تتجاوز بيانات السياسة أكثر من 5120 حرفًا.",
         "uploadPolicyDataFile": "تحميل بيانات السياسة",
         "uploadPolicyDataFileDesc": "يُسمح بتحميل ملفات بتنسيق .json فقط",
         "fileUploadSuccessMsg": "تم تحميل بيانات السياسة بنجاح",
@@ -770,7 +798,7 @@
         "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
-        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "successMsg": "تم استنساخ &quot;{{policyName}}&quot; وربطه بـ &quot;{{policyGroupName}}&quot; بنجاح!",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "publishPolicyPopup": {
@@ -821,7 +849,8 @@
         "policyId": "معرف السياسة",
         "policyName": "اسم السياسة",
         "organisation": "اسم المنظمة",
-        "policyGroup": "مجموعة السياسات"
+        "policyGroup": "مجموعة السياسات",
+        "partnerStatus": "حالة الشريك"
     },
     "deactivatePolicyPopup": {
         "headerMsg": "هل تريد تعطيل السياسة",
@@ -829,8 +858,8 @@
         "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
     },
     "activePolicyRequestsDetectedMsg": {
-        "header": "خطأ: تم اكتشاف اقتران نهج الشريك النشط",
-        "description": "الشركاء النشطون مرتبطون حاليًا بهذه السياسة. يرجى إلغاء تنشيط جميع الشركاء النشطين المرتبطين بهذه السياسة قبل محاولة إلغاء تنشيطها"
+        "header": "خطأ: تم اكتشاف ربط نهج الشريك النشط",
+        "description": "يرتبط واحد أو أكثر من الشركاء المعتمدين بهذه السياسة. ولذلك، لا يسمح بإلغاء تنشيط السياسة"
     },
     "pendingPolicyRequestsDetectedMsg": {
         "header": "خطأ: الشريك - تم اكتشاف طلب السياسة!",
@@ -845,7 +874,7 @@
         "commentPlaceholder": "اكتب تعليقك هنا"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "header": "هل ترغب في الموافقة على/رفض السياسة؟",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "ftmRequestApproveRejectPopup": {
@@ -940,7 +969,7 @@
         "PMS_ATH_401": "المصادقة فشلت",
         "PMS_PRT_106": "حالة APIKeyReqID قيد التقدم",
         "PMS_KKS_001": " API لا يمكن الوصول إليها",
-        "PMS_PRT_107": "الردود من API لاغي",
+        "PMS_PRT_107": "الرد من واجهة برمجة التطبيقات هو لا شيء",
         "PMS_PRT_500": "غير قادر على معالجة الطلب",
         "PMS_PMP_016": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع شريك معين بواسطة المسؤول، ونتيجة لذلك لن تتمكن بعد الآن من أداء هذا النشاط",
         "PMS_PRT_098": "السياسة المقدمة بموجب مجموعة سياسة الشريك غير موجودة.",
@@ -1060,12 +1089,13 @@
         "PMS_POL_069": "تم ربط سياسات نشطة أو مسودة بمجموعة السياسات.",
         "PMS_POL_070": "توجد سياسات مسودة ضمن مجموعة السياسات.",
         "PMS_POL_071": "خطأ أثناء إلغاء تفعيل مجموعة السياسات.",
+        "PMS_POL_072": "السياسة المحددة ليست في حالة التنشيط",
         "KER-PCM-006": "لم يتم العثور على شهادات CA الجذر/CA المتوسطة.",
         "KER-PCM-008": "اسم المنظمة الشريكة غير متطابق",
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
         "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
-        "KER-PCM-004": "تاريخ الشهادة غير صالح.",
-        "KER-PCM-005": "لم يتم العثور على شهادة CA الجذر",
+        "KER-PCM-004": "تواريخ الشهادة غير صالحة.",
+        "KER-PCM-005": "يرجى تحميل شهادة الجذر المقابلة للمتابعة",
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",
@@ -1080,6 +1110,10 @@
         "PMS_CERTIFICATE_ERROR_006": "غير قادر على فك تشفير بيانات الشهادة",
         "PMS_CERTIFICATE_ERROR_007": "معرف الشريك المحدد لا ينتمي إلى المستخدم. لذلك غير قادر على الحصول على شهادات الشريك الأصلية",
         "PMS_CERTIFICATE_ERROR_008": "حدث خطأ أثناء جلب الشهادة.",
+        "PMS_CERTIFICATE_ERROR_009": "تعذر تنزيل الشهادة لشريك تم إلغاء تنشيطه",
+        "PMS_CERTIFICATE_ERROR_010": "خطأ أثناء جلب شهادات CA",
+        "PMS_CERTIFICATE_ERROR_011": "خطأ أثناء تنزيل شهادة CA",
+        "PMS_CERTIFICATE_ERROR_012": "معرف الشهادة فارغ أو فارغ",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
         "PMS_POLICY_ERROR_003": "حدث خطأ أثناء جلب جميع معرفات الشركاء المعتمدين مع مجموعات السياسات.",
@@ -1118,7 +1152,7 @@
         "PMS_DEVICE_ERROR_005": "الهيئة الفرعية للتنفيذ غير موجودة.",
         "PMS_DEVICE_ERROR_006": "الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_007": "الجهاز غير مرتبط بمعرف الشريك.",
-        "PMS_DEVICE_ERROR_008": "حدث خطأ أثناء إضافة تعيين جهاز غير نشط لـ sbi.",
+        "PMS_DEVICE_ERROR_008": "خطأ أثناء إضافة الجهاز إلى sbi.",
         "PMS_DEVICE_ERROR_009": "نظرًا لأن SBI إما معطل أو لم تتم الموافقة عليه بعد.",
         "PMS_DEVICE_ERROR_010": "تفاصيل الجهاز المحددة ليست في انتظار حالة الموافقة.",
         "PMS_DEVICE_ERROR_011": "حدث خطأ أثناء الموافقة على الجهاز أو رفضه لرسم خرائط Sbi.",
@@ -1136,6 +1170,8 @@
         "PMS_DEVICE_ERROR_023": "الجهاز المحدد ليس في حالة معتمدة.",
         "PMS_DEVICE_ERROR_024": "لا يمكن الموافقة على هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
         "PMS_DEVICE_ERROR_025": "لا يمكن رفض هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
+        "PMS_DEVICE_ERROR_026": "يجب أن تكون حالة الطلب إلغاء التنشيط",
+        "PMS_DEVICE_ERROR_027": "يجب أن تكون حالة الطلب إما معتمدة أو مرفوضة",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
         "PMS_REQUEST_ERROR_001": "طلب غير صالح.",
@@ -1158,6 +1194,12 @@
         "PMS_PV_002": "فشل التحقق من صحة كائن السياسة",
         "PMS_PV_003": "فشل تحليل كائن السياسة أو تحويله.",
         "PMS_PV_004": "مخطط السياسة غير صالح",
-        "KER-PCM-017": "تاريخ انتهاء صلاحية الشهادة التي تم تحميلها أقل من عام واحد. يرجى تحميل شهادة صالحة مرة أخرى"
+        "KER-PCM-017": "تاريخ انتهاء صلاحية الشهادة التي تم تحميلها أقل من عام واحد. يرجى تحميل شهادة صالحة مرة أخرى",
+        "KER-PCM-012": "لم يتم العثور على شهادة الشريك للمعرف المحدد.",
+        "KER-PCM-007": "يُسمح فقط بتحميل شهادات الإصدار 3",
+        "KER-PCM-011": "مجال الشريك غير صالح",
+        "KER-PCM-018": "نوع الشهادة غير صالح",
+        "KER-PMS-019": "لم يتم العثور على شهادة CA للمعرف المحدد.",
+        "KER-PMS-020": "لا يُسمح بتحميل الشهادة المؤرخة في المستقبل."
     }
 }

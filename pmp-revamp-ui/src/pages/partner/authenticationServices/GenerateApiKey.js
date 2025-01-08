@@ -7,7 +7,7 @@ import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getAuthPartnerPolicies, createDropdownData, trimAndReplace
+    createRequest, getPartnerPolicyRequests, createDropdownData, trimAndReplace, getApprovedAuthPartners
 } from "../../../utils/AppUtils";
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -23,6 +23,7 @@ function GenerateApiKey() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerData, setPartnerData] = useState([]);
+    const [policyRequestsData, setPolicyRequestsData] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
@@ -82,14 +83,20 @@ function GenerateApiKey() {
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
         setPolicyName("");
+        setPolicyGroupName("");
+        setPoliciesDropdownData([]);
+        setPartnerType("");
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         if (selectedPartner) {
-            setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
-            setPolicyGroupName(selectedPartner.policyGroupName);
-            setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
+          const activePolicies = policyRequestsData.filter(
+            item => item.partnerId === selectedValue && item.status === 'approved'
+          );
+          setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
+          setPolicyGroupName(selectedPartner.policyGroupName);
+          setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
         }
-    };
+      };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
         setPolicyName(selectedValue);
@@ -103,7 +110,7 @@ function GenerateApiKey() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const resData = await getAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+                const resData = await getApprovedAuthPartners(HttpService, setErrorCode, setErrorMsg, t);
                 if (resData) {
                     setPartnerData(resData);
                     setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
@@ -116,6 +123,23 @@ function GenerateApiKey() {
                 setDataLoaded(true);
             }
         };
+        const fetchPolicyRequestsData = async () => {
+            try {
+                setDataLoaded(false);
+                const resData = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPolicyRequestsData(resData);
+                } else {
+                    setErrorMsg(t('commons.errorInResponse'));
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            } finally {
+                setDataLoaded(true);
+            }
+        };
+
+        fetchPolicyRequestsData();
         fetchData();
     }, []);
 
@@ -219,9 +243,9 @@ function GenerateApiKey() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
-                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list' ></Title>
+                            <Title title='generateApiKey.generateApiKey' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/api-keys-list'  />
                         </div>
                         {!generateApiKeySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

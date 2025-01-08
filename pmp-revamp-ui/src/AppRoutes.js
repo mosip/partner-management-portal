@@ -23,8 +23,7 @@ import DevicesList from './pages/partner/deviceProviderServices/DevicesList.js';
 import FtmList from './pages/partner/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/partner/ftmProviderServices/AddFtm.js';
 import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipDetails.js';
-import RootTrustCertificateList from './pages/admin/certificates/RootTrustCertificateList.js';
-import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
+import UploadTrustCertificate from './pages/admin/certificates/UploadTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
@@ -47,6 +46,9 @@ import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
 import AdminDevicesList from './pages/admin/deviceProviderServices/AdminDevicesList.js';
 import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
+import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
+import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
+import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
 
 function AppRoutes() {
 
@@ -148,12 +150,24 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewFtmChipDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/root-trust-certificate-list',
-          element: <GuardedRoute><MainLayout><RootTrustCertificateList /></MainLayout></GuardedRoute>
+          path: 'admin/certificates/root-ca-certificate-list',
+          element: <GuardedRoute><MainLayout><RootCertificatesList /></MainLayout></GuardedRoute>
+        },  
+        {
+          path: 'admin/certificates/view-root-ca-certificate-details',
+          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/upload-root-trust-certificate',
-          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate /></MainLayout></GuardedRoute>
+          path: 'admin/certificates/intermediate-ca-certificate-list',
+          element: <GuardedRoute><MainLayout><IntermediateCertificatesList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/certificates/view-intermediate-ca-certificate-details',
+          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/certificates/upload-trust-certificate',
+          element: <GuardedRoute><MainLayout><UploadTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/partners-list',

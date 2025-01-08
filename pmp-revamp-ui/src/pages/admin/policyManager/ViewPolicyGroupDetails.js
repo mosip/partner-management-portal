@@ -29,7 +29,7 @@ function ViewPolicyGroupDetails() {
 
     return (
         <>
-            <div className={`w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter mt-7 overflow-x-scroll`}>
+            <div className={`w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter mt-5 overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewPolicyGroupDetails.viewPolicyGroup' subTitle='viewPolicyGroupDetails.listOfPolicyGroups' backLink='/partnermanagement/admin/policy-manager/policy-group-list' />
                 </div>
@@ -58,7 +58,7 @@ function ViewPolicyGroupDetails() {
                                     <div className={`${bgOfStatus(policyGroupDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                         {getStatusCode(policyGroupDetails.isActive ? 'active' : 'inactive', t)}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
                                             formatDate(policyGroupDetails.crDtimes, "date", true)
                                         }

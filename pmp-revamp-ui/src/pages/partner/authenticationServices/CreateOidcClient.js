@@ -5,8 +5,8 @@ import DropdownComponent from '../../common/fields/DropdownComponent';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
-  moveToOidcClientsList, getGrantTypes,
-  isLangRTL, createDropdownData, validateUrl, getAuthPartnerPolicies,
+  moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
+  isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
   onPressEnterKey, trimAndReplace
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
@@ -36,6 +36,8 @@ function CreateOidcClient() {
   const [partnerType, setPartnerType] = useState("");
   const [policyGroupName, setPolicyGroupName] = useState("");
   const [partnerData, setPartnerData] = useState([]);
+  const [activePoliciesData, setActivePoliciesData] = useState([]);
+  const [policyRequestsData, setPolicyRequestsData] = useState([]);
   const [redirectUrls, setRedirectUrls] = useState(['']);
   const [grantTypes, setGrantTypes] = useState("authorization_code");
   const [grantTypesList, setGrantTypesList] = useState(['']);
@@ -147,7 +149,7 @@ function CreateOidcClient() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const resData = await getAuthPartnerPolicies(HttpService, setErrorCode, setErrorMsg, t);
+        const resData = await getApprovedAuthPartners(HttpService, setErrorCode, setErrorMsg, t);
         if (resData) {
           setPartnerData(resData);
           setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
@@ -160,30 +162,51 @@ function CreateOidcClient() {
         setDataLoaded(true);
       }
     };
+    const fetchPolicyRequestsData = async () => {
+      try {
+        setDataLoaded(false);
+        const resData = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
+        if (resData) {
+          setPolicyRequestsData(resData);
+        } else {
+          setErrorMsg(t('commons.errorInResponse'));
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setDataLoaded(true);
+      }
+    };
+
+    fetchPolicyRequestsData();
     fetchData();
   }, []);
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
     setPolicyName("");
+    setPolicyGroupName("");
+    setPoliciesDropdownData([]);
+    setPartnerType("");
     // Find the selected partner data
     const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
     if (selectedPartner) {
+      const activePolicies = policyRequestsData.filter(
+        item => item.partnerId === selectedValue && item.status === 'approved'
+      );
+      setActivePoliciesData(activePolicies);
       setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
       setPolicyGroupName(selectedPartner.policyGroupName);
-      setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, selectedPartner.activePolicies, t));
+      setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
     }
   };
 
   const onChangePolicyName = (fieldName, selectedValue) => {
-    const selectedPartner = partnerData.find(item => item.partnerId === partnerId);
-    if (selectedPartner) {
-      const selectedPolicy = selectedPartner.activePolicies.find(item => item.policyName === selectedValue);
+      const selectedPolicy = activePoliciesData.find(item => item.policyName === selectedValue);
       if (selectedPolicy) {
         setPolicyName(selectedValue);
         setPolicyId(selectedPolicy.policyId);
       }
-    }
   };
 
   const onChangeOidcClientName = (value) => {
@@ -373,9 +396,9 @@ function CreateOidcClient() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}/>
           )}
-          <div className="flex-col mt-8">
+          <div className="flex-col mt-5">
             <div className="flex justify-between">
-              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
+              <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list'  />
             </div>
             {!createOidcClientSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -481,7 +504,7 @@ function CreateOidcClient() {
                                 className="w-[85%] focus:outline-none"
                                 id={"create_oidc_redirect_url" + (index + 1)}
                               />
-                              <div id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
+                              <div role='button' id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                   stroke={redirectUrls.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${redirectUrls.length > 1 ? 'cursor-pointer' : ''}`}>
                                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -495,9 +518,9 @@ function CreateOidcClient() {
                           ))}
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
-                            <p id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                              <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
-                              <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
+                            <p role='button' id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                              <span role='button' onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
+                              <span role='button' onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
                             </p>
                           )}
                         </div>

@@ -68,7 +68,7 @@ function EditPolicy() {
                     navigate('/partnermanagement/admin/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
-                if (storedPolicyType === 'dataShare') {
+                if (storedPolicyType === 'DataShare') {
                     setTitle('editPolicy.editDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
@@ -76,7 +76,7 @@ function EditPolicy() {
                     setConfirmationHeader('editPolicy.dataSharePolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'auth') {
+                } else if (storedPolicyType === 'Auth') {
                     setTitle('editPolicy.editAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
@@ -273,12 +273,12 @@ function EditPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
                     )}
-                    <div className="flex-col mt-7 w-full">
+                    <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
                             <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>

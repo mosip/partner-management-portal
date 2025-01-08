@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey } from '../utils/AppUtils.js';
-import { handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -43,8 +42,8 @@ function HeaderNav({ open, setOpen }) {
                 {!open && (
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
                         <img src={process.env.PUBLIC_URL + '/mosip_icon.svg'} alt="Mosip Icon" className="w-8 h-8" />
-                        <div id='header_hamburger_open_sidenav' className="p-9 cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5 w-5 h-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, ()=>setOpen(!open))} />
+                        <div id='header_hamburger_open_sidenav' className="p-9 cursor-pointer">
+                            <img role='button' id=' hamburger_icon' src={hamburgerIcon} className="min-w-5 w-5 h-5" alt="" onClick={() => setOpen(!open)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setOpen(!open))} />
                         </div>
                     </div>
                 )}
@@ -54,8 +53,8 @@ function HeaderNav({ open, setOpen }) {
                         <div className={`duration-700`}>
                             <img src={side_menu_title} alt="" className="w-32 h-10" />
                         </div>
-                        <div id='header_hamburger_close_sidenav' className="cursor-pointer" onClick={() => setOpen(!open)}>
-                            <img className="min-w-5" src={hamburgerIcon} alt="" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e,()=>setOpen(!open))}/>
+                        <div id='header_hamburger_close_sidenav' className="cursor-pointer" >
+                            <img role='button' id=' hamburger_icon' src={hamburgerIcon} className="min-w-5" alt="" onClick={() => setOpen(!open)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setOpen(!open))} />
                         </div>
                     </div>
                 )}
@@ -65,28 +64,28 @@ function HeaderNav({ open, setOpen }) {
                     &nbsp;
                 </div>
             </div>
-            <div className={`flex items-center relative justify-between gap-x-12 ${isLoginLanguageRTL ?"left-3":"right-3"}`}>
+            <div className={`flex items-center relative justify-between gap-x-12 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
                 <div className="flex items-center">
                     <div className="p-2 m-1 bg-blue-50">
-                        <img src={orgIcon} alt="" className="w-5 h-5"></img>
+                        <img id='orgIcon' src={orgIcon} alt="" className="w-5 h-5" />
                     </div>
 
                     <h2 className={`text-xs font-bold text-gray-600 ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{getUserProfile().orgName}</h2>
                 </div>
-                <div onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,openDropdown)}>
+                <div role='button' onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyDown={(e)=>onPressEnterKey(e,openDropdown)}>
                     <button id='header_user_profile_icon_btn' className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent">
-                        <img className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
+                        <img id='orgIcon' className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
                     </button>
                     <h2 id='header_user_profile_title' className={`text-xs font-bold text-gray-600 cursor-pointer ${isLoginLanguageRTL ? "mr-1": "ml-1"}`}>{getUserProfile().userName}</h2>
-                    <img src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`}/>
+                    <img id="profileDropDown" src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`}/>
 
                     {isDropdownOpen && (
                         <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 w-dynamic rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
-                            <button id='header_user_profile_info_btn' onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e)=>onPressEnterKey(e,moveToMyProfile)}>
+                            <button id='header_user_profile_info_btn' onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, moveToMyProfile)}>
                                 {t('header.userProfile')}
                             </button>
                             <div className="border-gray-100 border-t mx-2"></div>
-                            <button id='header_user_profile_logout_btn' className={`block w-full px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} onClick={logout} onKeyPress={(e)=>onPressEnterKey(e,logout)}>{t('commons.logout')}</button>
+                            <button id='header_user_profile_logout_btn' className={`block w-full px-4 py-2 text-xs text-red-700 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} onClick={logout} onKeyDown={(e) => onPressEnterKey(e, logout)}>{t('commons.logout')}</button>
                         </div>
                     )}
                 </div>

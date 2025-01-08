@@ -8,7 +8,6 @@ import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import previewIcon from "../../../svg/preview_icon.svg";
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg'
 import { HttpService } from '../../../services/HttpService';
-import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import ViewPolicyPopup from './ViewPolicyPopup';
 
@@ -94,7 +93,7 @@ function ViewPolicy() {
                 <LoadingIcon />
             )}
             {dataLoaded && (
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
                             <Title title={viewPolicyPageHeaders.header} subTitle={viewPolicyPageHeaders.subTitle} backLink={viewPolicyPageHeaders.backLink} />
                         </div>
@@ -105,7 +104,7 @@ function ViewPolicy() {
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                         <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
                                         <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={() => navigate(viewPolicyPageHeaders.backLink)} type="button"
+                                        <button role='button' onClick={() => navigate(viewPolicyPageHeaders.backLink)} type="button"
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -124,7 +123,7 @@ function ViewPolicy() {
                                             <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(getPolicyStatus(viewDetails), t)}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
                                                     formatDate(viewDetails.cr_dtimes, "date", true)
                                                 }
@@ -182,7 +181,7 @@ function ViewPolicy() {
                                                 <img src={fileUploadBlue} className="h-7" alt="" />
                                                 <p className='font-semibold text-sm mx-2'>{t('viewAuthPoliciesList.policyData')}</p>
                                             </div>
-                                            <div onClick={showUploadedJsonData} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer' tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, showUploadedJsonData)}>
+                                            <div role='button' onClick={showUploadedJsonData} className='flex justify-between px-2 py-1.5 w-[6rem] bg-white border-2 border-blue-800 rounded-md hover:cursor-pointer' tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, showUploadedJsonData)}>
                                                 <p className='text-xs font-semibold text-blue-800'>{t('viewAuthPoliciesList.preview')}</p>
                                                 <img src={previewIcon} alt="" />
                                             </div>

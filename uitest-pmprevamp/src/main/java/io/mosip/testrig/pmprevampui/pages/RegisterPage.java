@@ -182,7 +182,7 @@ public class RegisterPage extends BasePage {
 	}
 
 	public void openRevampInNewTab() {
-		((JavascriptExecutor) driver).executeScript("window.open('https://pmp-new.dev1.mosip.net/ ')");
+		((JavascriptExecutor) driver).executeScript("window.open('https://pmp-revamp.dev1.mosip.net/ ')");
 		Set<String> allWindowHandles = driver.getWindowHandles();
 		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {

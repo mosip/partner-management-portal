@@ -23,11 +23,20 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "partner_list_view1")
 	private WebElement partnerListViewElipsisButton;
 	
+	@FindBy(xpath = "//*[contains(text(), 'Approve / Reject')]")
+	private WebElement approveOrRejectButton;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Do you want to Approve/Reject the Policy')]")
+	private WebElement confirmationPopup;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Please review the policy details carefully before taking appropriate action.')]")
+	private WebElement confirmationPopupDetailedMessage;
+	
 	@FindBy(xpath = "(//*[@id='partner_details_view_btn'])[1]")
 	private WebElement approveRejectButton;
 	
-	@FindBy(id = "approve_reject_request_submit_btn")
-	private WebElement approveSubmitButton;
+	@FindBy(xpath = "(//*[contains(text(), 'Approve')])[3]")
+	private WebElement approveButton;
 	
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
@@ -57,12 +66,32 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(partnerListViewElipsisButton);
 	}
 	
+	public void clickOnApproveOrRejectButton() {
+		clickOnElement(approveOrRejectButton);
+	}
+	
+	public boolean isConfirmationPopupDisplayed() {
+		return isElementEnabled(confirmationPopup);
+	}
+	
+	public boolean isConfirmationPopupDetailedMessageDisplayed() {
+		return isElementEnabled(confirmationPopupDetailedMessage);
+	}
+	
+	public boolean isApproveRejectButtonDisplayed() {
+		return isElementEnabled(approveRejectButton);
+	}
+	
+	public boolean isApproveSubmitButtonDisplayed() {
+		return isElementEnabled(approveButton);
+	}
+	
 	public void clickOnApproveRejectButton() {
 		clickOnElement(approveRejectButton);
 	}
 	
 	public void clickOnApproveSubmitButton() {
-		clickOnElement(approveSubmitButton);
+		clickOnElement(approveButton);
 	}
 	
 }

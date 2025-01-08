@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
+import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -111,14 +111,14 @@ function CreatePolicy() {
                 }
                 setPolicyType(storedPolicyType);
                 setConfirmationHeader('createPolicy.policyConfirmationHeader');
-                if (storedPolicyType === 'dataShare') {
+                if (storedPolicyType === 'DataShare') {
                     setTitle('createPolicy.createDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
                     setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
-                } else if (storedPolicyType === 'auth') {
+                } else if (storedPolicyType === 'Auth') {
                     setTitle('createPolicy.createAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
@@ -147,6 +147,12 @@ function CreatePolicy() {
         let parsedPolicyData;
         try {
             parsedPolicyData = JSON.parse(policyData);
+            if (JSON.stringify(parsedPolicyData).length > 5120) {
+                setErrorMsg(t('createPolicy.policyDatalengthExceedError'));
+                setIsSubmitClicked(false);
+                setDataLoaded(true);
+                return;
+            };
             if (Array.isArray(parsedPolicyData) || parsedPolicyData === null) {
                 throw new Error("Parsed data is not a valid JSON object");
             }
@@ -248,7 +254,7 @@ function CreatePolicy() {
     const successcustomStyle = {
         outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
         innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
-    }  
+    }
 
     const onFileChangeEvent = (event) => {
         handleFileChange(event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t);
@@ -262,14 +268,14 @@ function CreatePolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                     )}
-                    <div className="flex-col mt-7 w-full">
+                    <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
-                            <Title title={title} subTitle={subTitle} backLink={backLink}></Title>
+                            <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
@@ -333,7 +339,7 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label
+                                                            <label role='button' 
                                                                 htmlFor="fileInput"
                                                                 className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
                                                                 tabIndex="0"
@@ -377,7 +383,12 @@ function CreatePolicy() {
                                     <button id="create_policy_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="create_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('createPolicy.saveAsDraft')}</button>
+                                        <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()}
+                                            className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}
+                                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnSubmit())}
+                                        >
+                                            {t('createPolicy.saveAsDraft')}
+                                        </button>
                                     </div>
                                 </div>
                             </div>

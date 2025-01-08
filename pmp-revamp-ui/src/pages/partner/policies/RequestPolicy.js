@@ -24,7 +24,7 @@ function RequestPolicy() {
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
-    const [partnerComments, setPartnerComments] = useState("");
+    const [partnerComment, setPartnerComment] = useState("");
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerData, setPartnerData] = useState([]);
@@ -49,7 +49,7 @@ function RequestPolicy() {
 
             return (
                 (partnerId !== "" || policyName !== "" ||
-                    partnerComments !== "") &&
+                    partnerComment !== "") &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
@@ -58,7 +58,7 @@ function RequestPolicy() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
-                partnerComments !== "" ||
+                partnerComment !== "" ||
                 policyName !== "";
         };
 
@@ -74,13 +74,13 @@ function RequestPolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, partnerComments, policyName, isSubmitClicked]);
+    }, [partnerId, partnerComment, policyName, isSubmitClicked]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/approved-partner-ids-with-policy-groups', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/v4?status=approved&policyGroupAvailable=true', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -153,7 +153,7 @@ function RequestPolicy() {
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
-        setPartnerComments("");
+        setPartnerComment("");
         setPoliciesDropdownData([]);
     };
 
@@ -168,7 +168,7 @@ function RequestPolicy() {
         setDataLoaded(false);
         let request = createRequest({
             policyName: policyName,
-            useCaseDescription: partnerComments
+            useCaseDescription: partnerComment
         });
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policy/map`, process.env.NODE_ENV), request);
@@ -201,12 +201,12 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComments.trim();
+        return partnerId && policyName && partnerComment.trim();
     };
 
     const handleCommentChange = (e) => {
         const { value } = e.target;
-        setPartnerComments(value);
+        setPartnerComment(value);
     };
 
     const adjustTextareaHeight = () => {
@@ -218,7 +218,7 @@ function RequestPolicy() {
 
     useEffect(() => {
         adjustTextareaHeight();
-    }, [partnerComments]);
+    }, [partnerComment]);
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",
@@ -242,10 +242,10 @@ function RequestPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8">
-                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list'></Title>
+                    <div className="flex-col mt-5">
+                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list' />
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
@@ -308,7 +308,7 @@ function RequestPolicy() {
                                                     <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
                                                     </label>
-                                                    <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComments} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
+                                                    <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                     </textarea>
                                                 </div>

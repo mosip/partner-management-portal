@@ -1,25 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
 import Title from '../../common/Title.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService.js';
 import AdminDeviceDetailsFilter from './AdminDeviceDetailsFilter.js';
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import ApproveRejectPopup from '../../common/ApproveRejectPopup.js';
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
+import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
 import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
 function AdminDevicesList() {
+    const location = useLocation();
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -45,8 +48,8 @@ function AdminDevicesList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         deviceId: null,
         partnerId: null,
@@ -59,6 +62,11 @@ function AdminDevicesList() {
         sbiId: null,
         sbiVersion: null
     });
+    const [preFilledFilters, setPreFilledFilters] = useState({
+        sbiId: null,
+        sbiVersion: null
+    });
+    const [isViewLinkedDevices, setIsViewLinkedDevices] = useState(false);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -75,7 +83,6 @@ function AdminDevicesList() {
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
-
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
@@ -116,7 +123,7 @@ function AdminDevicesList() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('adminDeviceDetailsList.errorInAdminDeviceDetailsList'));
+                setErrorMsg(t('devicesList.errorInViewDevices'));
             }
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
@@ -126,9 +133,23 @@ function AdminDevicesList() {
             console.error('Error fetching data:', err);
             setErrorMsg(err);
         }
-    }
+    };
 
     useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const sbiId = params.get('sbiId');
+        const sbiVersion = params.get('sbiVersion');
+    
+        if (sbiId || sbiVersion) {
+            setExpandFilter(true);
+            setPreFilledFilters((prev) => ({
+                ...prev,
+                sbiId: sbiId,
+                sbiVersion: sbiVersion,
+            }));
+            setApplyFilter(true);
+            setIsViewLinkedDevices(true);
+        }
         fetchDeviceDetails();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
@@ -161,7 +182,7 @@ function AdminDevicesList() {
             setShowDeviceDetailApproveRejectPopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
-                prevList.map( deviceItem =>
+                prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
                 )
             );
@@ -172,13 +193,14 @@ function AdminDevicesList() {
     const closeApproveRejectPopup = () => {
         setActionId(-1);
         setShowDeviceDetailApproveRejectPopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const deactivateDevice = (selectedDevice) => {
         if (selectedDevice.status === "approved") {
             const request = createRequest({
-                deviceId: selectedDevice.deviceId,
-            }, "mosip.pms.deactivate.device.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.device.patch", true);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -202,6 +224,7 @@ function AdminDevicesList() {
     const closeDeactivatePopup = () => {
         setActionId(-1);
         setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {
@@ -226,7 +249,11 @@ function AdminDevicesList() {
     };
 
     const viewDeviceDetails = (selectedDevice) => {
-        localStorage.setItem('selectedDeviceAttributes', JSON.stringify(selectedDevice));
+        const requiredData = {
+            ...selectedDevice,
+            isViewLinkedDevices: isViewLinkedDevices
+        }
+        localStorage.setItem('selectedDeviceAttributes', JSON.stringify(requiredData));
         navigate("/partnermanagement/admin/device-provider-services/view-device-details");
     };
 
@@ -238,6 +265,14 @@ function AdminDevicesList() {
         loadingDiv: "!py-[20%]"
     };
 
+    useEffect(() => {
+        if (showDeviceDetailApproveRejectPopup) {
+            escapeKeyHandler(closeApproveRejectPopup);
+        } else if (showDeactivatePopup) {
+            escapeKeyHandler(closeDeactivatePopup);
+        }
+    }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -248,9 +283,12 @@ function AdminDevicesList() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='devicesList.listOfDevices' backLink='/partnermanagement' ></Title>
+                            <Title 
+                                title={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
+                                backLink='/partnermanagement' 
+                            />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={false}
@@ -266,7 +304,7 @@ function AdminDevicesList() {
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
                                     titleId='list_of_device_details'
-                                    listTitle='devicesList.listOfDevices'
+                                    listTitle={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
@@ -274,7 +312,12 @@ function AdminDevicesList() {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
-                                    <AdminDeviceDetailsFilter onApplyFilter={onApplyFilter} />
+                                    <AdminDeviceDetailsFilter 
+                                        onApplyFilter={onApplyFilter}
+                                        setErrorCode={setErrorCode} 
+                                        setErrorMsg={setErrorMsg}
+                                        preFilledFilters={preFilledFilters}
+                                    />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
                                 {tableDataLoaded && applyFilter && devicesList.length === 0 ?
@@ -327,15 +370,15 @@ function AdminDevicesList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <p role='button' id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
                                                                                 ...
                                                                             </p>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div onClick={() => approveRejectDeviceDetails(device)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => approveRejectDeviceDetails(device))}>
+                                                                                    <div role='button' onClick={() => approveRejectDeviceDetails(device)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectDeviceDetails(device))}>
                                                                                         <p id="device_list_approve_reject_option" className={`py-1.5 px-4 ${device.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                                                        <img src={approveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={device.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeviceDetailApproveRejectPopup && (
                                                                                         <ApproveRejectPopup
@@ -348,14 +391,14 @@ function AdminDevicesList() {
                                                                                         />
                                                                                     )}
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
+                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                         <p id="device_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div onClick={() => deactivateDevice(device)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => deactivateDevice(device))}>
+                                                                                    <div role='button' onClick={() => deactivateDevice(device)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateDevice(device))}>
                                                                                         <p id="device_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={deactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}></img>
+                                                                                        <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     {showDeactivatePopup && (
                                                                                         <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />

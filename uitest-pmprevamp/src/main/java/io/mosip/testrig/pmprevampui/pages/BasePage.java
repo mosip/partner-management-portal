@@ -7,8 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Random;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -218,8 +220,7 @@ public class BasePage {
 	protected boolean isElementEnabled(WebElement element) {
 		try {
 			waitForElementToBeVisible(element);
-			element.isEnabled();
-			return true;
+			return element.isEnabled();
 		} catch (Exception e) {
 			try {
 				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
@@ -231,8 +232,6 @@ public class BasePage {
 		}
 	}
 	
-	
-
 	private void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -299,6 +298,7 @@ public class BasePage {
 		return JsonUtil.readJsonFileText("TestData.json");
 	}
 	
+
 	public void refreshThePage() {
 		driver.navigate().refresh();
 	}
@@ -309,6 +309,29 @@ public class BasePage {
 	
 	public static void NavigateForword() {
 		driver.navigate().forward();
+	}
+
+	public void reload() {
+		driver.navigate().refresh();
+	}
+	
+	public void back() {
+		driver.navigate().back();
+	}
+	
+	public String acceptAlert() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		alert.accept();
+		return alertText;
+	}
+	
+	public String cancelAlert() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		alert.dismiss();
+		return alertText;
+
 	}
 
 }

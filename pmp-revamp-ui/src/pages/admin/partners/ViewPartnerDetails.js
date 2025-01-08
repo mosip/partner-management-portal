@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage } from '../../../utils/AppUtils';
+     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
+import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
 
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -115,6 +116,10 @@ function ViewPartnerDetails() {
         }
     }
 
+    const cancelErrorMsg = () => {
+        setErrorMsg("");
+    };
+
     const cancelSuccessMsg = () => {
         setSuccessMsg("");
     };
@@ -133,7 +138,10 @@ function ViewPartnerDetails() {
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
-                    <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+                    {errorMsg && !unexpectedError && (
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                    )}
+                    <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
                         </div>
@@ -164,7 +172,7 @@ function ViewPartnerDetails() {
                                             <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
                                                 {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
                                                     formatDate(partnerDetails.createdDateTime, "date", true)}
                                             </div>
@@ -177,44 +185,60 @@ function ViewPartnerDetails() {
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                            <p className="font-[600] text-suva-gray text-xs">
+                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                            <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.partnerType)}
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {getPartnerTypeDescription(partnerDetails.partnerType, t)}
                                             </p>
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                            <p className="font-[600] text-suva-gray text-xs">
+                                            <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.organisationName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-sm">
+                                            <p className="font-[600] text-vulcan text-md">
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                            <p className="font-[600] text-suva-gray text-xs">
+                                        <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                            <p className="font-[600] text-suva-gray text-sm">
+                                                {t("viewPartnerDetails.firstName")}
+                                            </p>
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {partnerDetails.firstName ?? "-"}
+                                            </p>
+                                        </div>
+                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                            <p className="font-[600] text-suva-gray text-sm">
+                                                {t("viewPartnerDetails.lastName")}
+                                            </p>
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {partnerDetails.lastName ?? "-"}
+                                            </p>
+                                        </div>
+                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                            <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.phoneNumber")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.contactNumber ? partnerDetails.contactNumber : '-')}
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {partnerDetails.contactNumber ? partnerDetails.contactNumber : '-'}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                            <p className="font-[600] text-suva-gray text-xs">
+                                            <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.emailId)}
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {partnerDetails.emailId}
                                             </p>
                                         </div>
                                         <div className="mb-3 w-[100%]">
-                                            <p className="font-[600] text-suva-gray text-xs">
+                                            <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-sm">
-                                                {t(partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-')}
+                                            <p className="font-[600] text-vulcan text-md">
+                                                {partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-'}
                                             </p>
                                         </div>
                                     </div>
@@ -248,16 +272,16 @@ function ViewPartnerDetails() {
                                             <hr className="border bg-medium-gray h-px" />
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col space-y-1">
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-sm text-charcoal-gray">{partnerDetails.partnerType}</p>
+                                                    <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p className="font-bold text-md text-charcoal-gray">{partnerDetails.partnerType}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
+                                                    <p className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
+                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime", false)}</p>
+                                                    <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime", false)}</p>
                                                 </div>
                                             </div>
                                         </div>

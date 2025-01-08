@@ -78,7 +78,7 @@ function AddSbi() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/approved-device-provider-ids', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/v4?status=approved&partnerType=Device_Provider', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -209,7 +209,7 @@ function AddSbi() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8 font-inter">
+                    <div className="flex-col mt-5 font-inter">
                         <div className="flex justify-between">
                             <Title title='addSbis.addSbiDetails' subTitle='sbiList.listOfSbi' backLink='/partnermanagement/device-provider-services/sbi-list' />
                         </div>

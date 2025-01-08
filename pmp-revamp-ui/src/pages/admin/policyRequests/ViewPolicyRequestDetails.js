@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
+import dotImg from "../../../svg/dot.svg";
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -48,7 +49,7 @@ function ViewPolicyRequestDetails() {
                                 <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(policyRequestDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(policyRequestDetails.createdDateTime, "date", false)}
                                 </div>
@@ -61,7 +62,7 @@ function ViewPolicyRequestDetails() {
                     </div>
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                            <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                            <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
@@ -69,7 +70,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.partnerType}
                                 </p>
                             </div>
-                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                            <div className="w-[50%] max-[600px]:w-[100%] mb-3 px-2">
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.organisation")}
                                 </p>
@@ -79,7 +80,8 @@ function ViewPolicyRequestDetails() {
                             </div>
                         </div>
                         <div className={`flex flex-wrap pt-3`}>
-                            <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
@@ -87,7 +89,7 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
-                            <div className={`w-[48%] max-[600px]:w-[100%]`}>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
@@ -95,12 +97,23 @@ function ViewPolicyRequestDetails() {
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
-                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                        </div>
+                        <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                            <div className={`mb-3 w-[50%] max-[600px]:w-[100%]`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
                                 <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyGroupName}
+                                </p>
+                            </div>
+                            <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
+                                <p className="font-[600] text-suva-gray text-sm">
+                                    {t("viewPolicyRequest.partnerStatus")}
+                                </p>
+                                <p className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-md`}>
+                                    <img src={dotImg} alt="" /> 
+                                    <span className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{getStatusCode(policyRequestDetails.partnerStatus, t)}</span>
                                 </p>
                             </div>
                         </div>
@@ -148,7 +161,7 @@ function ViewPolicyRequestDetails() {
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
                                             <h4 className="text-sm text-[#031640]">
-                                                {t("viewPolicyDetails.partnerComments")}
+                                                {t("viewPolicyDetails.partnerComment")}
                                             </h4>
                                             <span className="text-sm mt-3 break-words">
                                                 {policyRequestDetails.requestDetail}
@@ -173,7 +186,7 @@ function ViewPolicyRequestDetails() {
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
                         <button id="view_api_key_back_btn" onClick={moveToPolicyRequestsList}
-                            className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyPress={(e) => onPressEnterKey(e, moveToPolicyRequestsList)}>
+                            className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, moveToPolicyRequestsList)}>
                             {t("commons.back")}
                         </button>
                     </div>
