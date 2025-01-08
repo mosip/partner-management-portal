@@ -272,9 +272,9 @@ function ApiKeysList() {
                                                                         </button>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
-                                                                                <p role='button' id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickView(apiKey))}>
-                                                                                    {t('oidcClientsList.view')}
-                                                                                </p>
+                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                                    <p> {t('oidcClientsList.view')} </p>
+                                                                                </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                 <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
