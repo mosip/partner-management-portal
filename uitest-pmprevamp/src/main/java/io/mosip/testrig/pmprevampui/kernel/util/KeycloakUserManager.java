@@ -36,6 +36,7 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;
 	public static String passwordCred;
+	public static String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 

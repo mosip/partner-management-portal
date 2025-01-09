@@ -719,8 +719,8 @@ public class AuthPartnerTest extends BaseClass {
 	  GlobalConstants.isCreateOIDCClientDisplayed); 
 	  oidcClientPage.clickOnCreateOidcClientButton(); 
 	  oidcClientPage.enterNameOidcTextBox(data);
-	  String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
-	  oidcClientPage.enterPublicKeyTextBox(publicKey); 
+//	  String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
+	  oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKey); 
 	  oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri()); 
 	  oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri()); 
 	  oidcClientPage.clickOnClearFormButton(); 
