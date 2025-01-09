@@ -950,7 +950,7 @@
         "PMS_PRT_360": "Page non valide n°",
         "PMS_PRT_361": "Taille de page non valide",
         "KER_PRT_390": "Valeur de filtre non valide",
-        "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
+        "KER-PCM-008": "Le nom de l'organisation dans le certificat téléchargé ne correspond pas au nom fourni lors de l'inscription du partenaire.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
         "PMS_PRT_051": " Un partenaire est déjà enregistré avec le même identifiant",
         "PMS_PRT_052": "La longueur maximale du PartnerId doit être 36",
