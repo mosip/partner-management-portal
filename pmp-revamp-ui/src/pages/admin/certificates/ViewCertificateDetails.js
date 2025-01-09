@@ -82,8 +82,8 @@ function ViewCertificateDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2 break-all">
-                                    {t('certificatesList.certificateId')}: {viewCertDetails.certId}
+                                <p className="text-lg text-dark-blue mb-2 break-all">
+                                    {t('certificatesList.certificateId')}: <span className="font-semibold">{viewCertDetails.certId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`font-semibold text-sm text-dark-blue`}>

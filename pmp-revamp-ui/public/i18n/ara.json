@@ -176,6 +176,7 @@
         "partnerType": "نوع الشريك",
         "partnerId": "معرف الشريك",
         "policyGroupName": "مجموعة السياسات",
+        "policyId":"معرف السياسة",
         "policyName": "اسم السياسة",
         "createdDate": "تاريخ الإنشاء",
         "status": "حالة",
@@ -187,6 +188,7 @@
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
+        "selectPolicyId": "حدد معرف السياسة",
         "errorInPoliciesList": "هناك بعض الخطأ في جلب السياسات. حاول مرة أخرى في وقت لاحق!"
     },
     "viewPolicyDetails": {

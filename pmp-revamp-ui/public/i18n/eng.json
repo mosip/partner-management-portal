@@ -176,6 +176,7 @@
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroupName": "Policy Group",
+        "policyId":"Policy ID",
         "policyName": "Policy Name",
         "createdDate": "Created Date",
         "status": "Status",
@@ -186,6 +187,7 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
+        "selectPolicyId": "Select Policy ID",
         "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
     "viewPolicyDetails": {

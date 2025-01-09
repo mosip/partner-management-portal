@@ -12,7 +12,6 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import { HttpService } from '../../../services/HttpService';
-import FtmList from '../../partner/ftmProviderServices/FtmList';
 
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
@@ -111,8 +110,8 @@ function ViewAdminFtmChipDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {t('ftmList.ftmId')}: {ftmDetails.ftmId}
+                                <p className="text-lg text-dark-blue mb-2">
+                                    {t('ftmList.ftmId')}: <span className="font-semibold">{ftmDetails.ftmId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
