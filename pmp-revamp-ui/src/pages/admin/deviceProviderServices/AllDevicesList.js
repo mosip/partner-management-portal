@@ -5,6 +5,7 @@ function AllDevicesList () {
     return (
         <AdminDevicesList
             title='devicesList.listOfDevices'
+            subTitle='devicesList.listOfDevices'
             isLinkedDevicesList={false} 
         />
     );

@@ -450,7 +450,8 @@
         "unexpectedError": "We have encountered with an unexpected error. Please try again.",
         "searchDeviceId": "Search Device ID",
         "selectDeviceId": "Select Device ID",
-        "linkedDevicesList": "List of Linked Devices"
+        "linkedDevicesList": "List of Linked Devices",
+        "backToSbi": "Back to List of SBI"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Do you want to deactivate Device ",

@@ -21,7 +21,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
-function AdminDevicesList({ title, isLinkedDevicesList }) {
+function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const location = useLocation();
     const navigate = useNavigate('');
     const { t } = useTranslation();
@@ -291,11 +291,6 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                                 title={title}
                                 backLink='/partnermanagement' 
                             />
-                            {isLinkedDevicesList && (
-                                <button onClick={backToSbi} className="h-10 w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center">
-                                    Back to SBI List
-                                </button>
-                            )}
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={isLinkedDevicesList ? true: false}
@@ -311,11 +306,14 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
                                     titleId='list_of_device_details'
-                                    listTitle={title}
+                                    listTitle={subTitle}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
                                     setFilter={setExpandFilter}
+                                    addBackArrow={isLinkedDevicesList ? true : false}
+                                    goBack={isLinkedDevicesList && backToSbi}
+                                    backArrowTitle={isLinkedDevicesList && 'devicesList.backToSbi'}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (

@@ -4,7 +4,8 @@ function LinkedDevicesList () {
 
     return (
         <AdminDevicesList
-            title='devicesList.linkedDevicesList'
+            title='sbiList.listOfSbis'
+            subTitle='devicesList.linkedDevicesList'
             isLinkedDevicesList={true}
         />
     );
