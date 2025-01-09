@@ -43,7 +43,6 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
             }
             const newFilters = { ...filters, ...preFilledFilters };
             setFilters(newFilters);
-            onApplyFilter(newFilters);
         }
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();
@@ -87,7 +86,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
     };
     
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "" || value === null || value === undefined);
     };
 
     const styles = {
@@ -119,14 +118,6 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 id="org_name_filter"
             />
             <TextInputComponent
-                fieldName="deviceId"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="devicesList.deviceId"
-                placeHolderKey="devicesList.searchDeviceId"
-                styleSet={styleSet}
-                id="device_id_filter"
-            />
-            <TextInputComponent
                 fieldName="sbiId"
                 textBoxValue={preFilledFilters.sbiId}
                 onTextChange={onFilterChangeEvent}
@@ -145,6 +136,14 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 styleSet={styleSet}
                 disableField={disableSbiVersion}
                 id="sbi_version_filter"
+            />
+            <TextInputComponent
+                fieldName="deviceId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="devicesList.deviceId"
+                placeHolderKey="devicesList.searchDeviceId"
+                styleSet={styleSet}
+                id="device_id_filter"
             />
             <DropdownComponent
                 fieldName='deviceType'

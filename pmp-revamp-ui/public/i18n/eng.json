@@ -176,6 +176,7 @@
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroupName": "Policy Group",
+        "policyId":"Policy ID",
         "policyName": "Policy Name",
         "createdDate": "Created Date",
         "status": "Status",
@@ -186,6 +187,7 @@
         "selectPolicyGroup": "Select Policy Group",
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
+        "selectPolicyId": "Select Policy ID",
         "errorInPoliciesList": "There is some error in fetching the policies. Try again later!"
     },
     "viewPolicyDetails": {
@@ -423,11 +425,11 @@
         "sbiExpiryStatus": "SBI Expiry Status",
         "selectSbiExpiryStatus": "Select SBI Expiry Status",
         "listOfSbis": "List of SBIs",
-        "sbiId": "SBI Id",
-        "searchSbiId": "Search SBI Id"
+        "sbiId": "SBI ID",
+        "searchSbiId": "Search SBI ID"
     },
     "devicesList": {
-        "deviceId": "Device Id",
+        "deviceId": "Device ID",
         "addDevices": "Add Devices",
         "listOfDevices": "List of Devices",
         "deviceType": "Device Type",
@@ -446,7 +448,7 @@
         "selectModelName": "Select Model Name",
         "selectStatus": "Select Status",
         "unexpectedError": "We have encountered with an unexpected error. Please try again.",
-        "searchDeviceId": "Search Device Id",
+        "searchDeviceId": "Search Device ID",
         "selectDeviceId": "Select Device ID",
         "linkedDevicesList": "List of Linked Devices"
     },
@@ -523,7 +525,8 @@
         "expired": "Expired",
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
         "ftmId": "FTM ID",
-        "selectFtmId": "Select FTM ID"
+        "selectFtmId": "Select FTM ID",
+        "searchFtmId": "Search FTM ID"
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -728,11 +731,12 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "Error: Policies detected in Draft status!",
-        "description": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed."
+        "description1": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed.",
+        "description2": "There is one draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following conditions are met:\n\n1. Deactivate the activated policies.\n2. Publish and then deactivate the draft policies."
+        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following: 1. Deactivate all active policies. 2. Publish and then deactivate all draft policies."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -1152,7 +1156,7 @@
         "PMS_DEVICE_ERROR_010": "Given device details are not in pending for approval status.",
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
-        "PMS_DEVICE_ERROR_013": "Device Id is invalid",
+        "PMS_DEVICE_ERROR_013": "Device ID is invalid",
         "PMS_DEVICE_ERROR_014": "The selected device has been already deactivated",
         "PMS_DEVICE_ERROR_015": "Error while deactivating the device",
         "PMS_DEVICE_ERROR_016": "Device is not associated with user.",

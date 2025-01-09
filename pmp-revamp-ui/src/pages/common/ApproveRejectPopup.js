@@ -68,9 +68,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                     sbiId: popupData.sbiId,
                     status: status
                 }, "mosip.pms.approval.mapping.device.to.sbi.post", true);
-            
+
                 const url = getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}/approval`, process.env.NODE_ENV);
-            
+
                 response = await HttpService.post(url, request, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -115,7 +115,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <img role='button' id="approve_reject_popup_close_icon" src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => closingPopUp())}/>
+                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer mx-1">
+                                            <img src={close_icon} alt="close" />
+                                        </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="px-[1.5rem] py-3 text-center">

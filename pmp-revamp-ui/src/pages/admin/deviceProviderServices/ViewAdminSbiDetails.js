@@ -29,7 +29,7 @@ function ViewAdminSbiDetails() {
 
     const showLinkedDevices = () => {
         if (sbiDetails.countOfAssociatedDevices > 0) {
-            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${sbiDetails.sbiId}&sbiVersion=${sbiDetails.sbiVersion}`);
+            navigate(`/partnermanagement/admin/device-provider-services/linked-devices-list?sbiId=${sbiDetails.sbiId}&sbiVersion=${sbiDetails.sbiVersion}`);
         }
     };
 
@@ -58,8 +58,8 @@ function ViewAdminSbiDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {`${sbiDetails.sbiId} | ${sbiDetails.sbiVersion}`}
+                                <p className="text-lg text-dark-blue mb-2">
+                                    {t('sbiList.sbiId')}: <span className="font-semibold">{sbiDetails.sbiId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(sbiDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -106,9 +106,9 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
-                                    <p className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'cursor-pointer'}`} onClick={() => showLinkedDevices()}>
+                                    <button className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'text-tory-blue cursor-pointer'}`} onClick={() => showLinkedDevices()}>
                                         {sbiDetails.countOfAssociatedDevices}
-                                    </p>
+                                    </button>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
@@ -124,6 +124,14 @@ function ViewAdminSbiDetails() {
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'text-black'} font-[600] text-vulcan text-md`}>
                                     {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                    </p>
+                                </div>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("sbiList.sbiVersion")}
+                                    </p>
+                                    <p className="font-[600] text-vulcan text-md">
+                                        {sbiDetails.sbiVersion}
                                     </p>
                                 </div>
                             </div>

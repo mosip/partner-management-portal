@@ -110,12 +110,12 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
-                            <div className={`p-[8%] flex-col text-center justify-center items-center`}>
+                            <div className={`p-[2rem] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
-                                    <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                    <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
-                                    : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                    : <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}
                                     </p>
                                 }
