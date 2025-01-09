@@ -43,7 +43,6 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
             }
             const newFilters = { ...filters, ...preFilledFilters };
             setFilters(newFilters);
-            onApplyFilter(newFilters);
         }
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();

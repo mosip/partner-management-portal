@@ -8,11 +8,15 @@ function DeviceProviderServiceTab({ activeSbi, sbiListPath, activeDevice, device
     const navigate = useNavigate();
 
     const changeToSbi = () => {
-        navigate(sbiListPath)
+        if(!activeSbi) {
+            navigate(sbiListPath)
+        }
     };
 
     const changeToDevice = () => {
-        navigate(devicesListPath)
+        if(!activeDevice) {
+            navigate(devicesListPath)
+        }
     };
 
     return (

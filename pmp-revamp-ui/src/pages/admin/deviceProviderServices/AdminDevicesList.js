@@ -21,7 +21,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
-function AdminDevicesList() {
+function AdminDevicesList({ title, isLinkedDevicesList }) {
     const location = useLocation();
     const navigate = useNavigate('');
     const { t } = useTranslation();
@@ -66,7 +66,6 @@ function AdminDevicesList() {
         sbiId: null,
         sbiVersion: null
     });
-    const [isViewLinkedDevices, setIsViewLinkedDevices] = useState(false);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -87,7 +86,7 @@ function AdminDevicesList() {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
 
-    const fetchDeviceDetails = async () => {
+    const fetchDeviceDetails = async (sbiId, sbiVersion) => {
         const queryParams = new URLSearchParams();
         queryParams.append('sortFieldName', sortFieldName);
         queryParams.append('sortType', sortType);
@@ -106,8 +105,8 @@ function AdminDevicesList() {
         if (filterAttributes.deviceType) queryParams.append('deviceType', filterAttributes.deviceType);
         if (filterAttributes.deviceSubType) queryParams.append('deviceSubType', filterAttributes.deviceSubType);
         if (filterAttributes.deviceId) queryParams.append('deviceId', filterAttributes.deviceId);
-        if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
-        if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
+        if (filterAttributes.sbiId || sbiId) queryParams.append('sbiId', filterAttributes.sbiId || sbiId);
+        if (filterAttributes.sbiVersion || sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion || sbiVersion);
 
         const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -148,15 +147,14 @@ function AdminDevicesList() {
                 sbiVersion: sbiVersion,
             }));
             setApplyFilter(true);
-            setIsViewLinkedDevices(true);
         }
-        fetchDeviceDetails();
+        fetchDeviceDetails(sbiId, sbiVersion);
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
     useEffect(() => {
 
         if (isApplyFilterClicked) {
-            fetchDeviceDetails();
+            fetchDeviceDetails(null, null);
             setIsApplyFilterClicked(false);
         }
     }, [isApplyFilterClicked]);
@@ -251,7 +249,7 @@ function AdminDevicesList() {
     const viewDeviceDetails = (selectedDevice) => {
         const requiredData = {
             ...selectedDevice,
-            isViewLinkedDevices: isViewLinkedDevices
+            isViewLinkedDevices: isLinkedDevicesList
         }
         localStorage.setItem('selectedDeviceAttributes', JSON.stringify(requiredData));
         navigate("/partnermanagement/admin/device-provider-services/view-device-details");
@@ -264,6 +262,10 @@ function AdminDevicesList() {
     const styles = {
         loadingDiv: "!py-[20%]"
     };
+
+    const backToSbi = () => {
+        navigate('/partnermanagement/admin/device-provider-services/sbi-list')
+    }
 
     useEffect(() => {
         if (showDeviceDetailApproveRejectPopup) {
@@ -286,14 +288,19 @@ function AdminDevicesList() {
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title 
-                                title={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
+                                title={title}
                                 backLink='/partnermanagement' 
                             />
+                            {isLinkedDevicesList && (
+                                <button onClick={backToSbi} className="h-10 w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center">
+                                    Back to SBI List
+                                </button>
+                            )}
                         </div>
                         <DeviceProviderServicesTab
-                            activeSbi={false}
+                            activeSbi={isLinkedDevicesList ? true: false}
                             sbiListPath='/partnermanagement/admin/device-provider-services/sbi-list'
-                            activeDevice={true}
+                            activeDevice={isLinkedDevicesList ? false : true}
                             devicesListPath='/partnermanagement/admin/device-provider-services/devices-list'
                         />
                         {!applyFilter && devicesList.length === 0 ? (
@@ -304,7 +311,7 @@ function AdminDevicesList() {
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
                                     titleId='list_of_device_details'
-                                    listTitle={isViewLinkedDevices ? 'devicesList.linkedDevicesList' : 'devicesList.listOfDevices'}
+                                    listTitle={title}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
