@@ -455,7 +455,8 @@
         "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
         "searchDeviceId": "Rechercher l'ID de l'appareil",
         "selectDeviceId": "Sélectionner l'ID de l'appareil",
-        "linkedDevicesList": "Liste des appareils liés"
+        "linkedDevicesList": "Liste des appareils liés",
+        "backToSbi": "Retour à la liste des SBI"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
