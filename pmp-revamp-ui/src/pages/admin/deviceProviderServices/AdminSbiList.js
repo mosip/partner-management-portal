@@ -172,7 +172,7 @@ function AdminSbiList() {
 
     const showLinkedDevices = (selectedSbi) => {
         if (selectedSbi.countOfAssociatedDevices > 0) {
-            navigate(`/partnermanagement/admin/device-provider-services/devices-list?sbiId=${selectedSbi.sbiId}&sbiVersion=${selectedSbi.sbiVersion}`);
+            navigate(`/partnermanagement/admin/device-provider-services/linked-devices-list?sbiId=${selectedSbi.sbiId}&sbiVersion=${selectedSbi.sbiVersion}`);
         }
     };
 

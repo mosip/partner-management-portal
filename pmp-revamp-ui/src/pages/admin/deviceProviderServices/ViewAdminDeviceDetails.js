@@ -25,7 +25,7 @@ function ViewAdminDeviceDetails() {
 
     const  backToDevicesList = () => {
         if(deviceDetails.isViewLinkedDevices) {
-            return `/partnermanagement/admin/device-provider-services/devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`;
+            return `/partnermanagement/admin/device-provider-services/linked-devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`;
         } else {
             return '/partnermanagement/admin/device-provider-services/devices-list';
         }
