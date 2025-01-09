@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL } from '../../../utils/AppUtils';
 import {
   formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
   toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests
