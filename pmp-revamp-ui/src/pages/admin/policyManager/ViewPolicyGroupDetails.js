@@ -51,8 +51,8 @@ function ViewPolicyGroupDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2 break-all">
-                                    {policyGroupDetails.name}
+                                <p className="text-lg text-dark-blue mb-2 break-all">
+                                    {t('policyGroupList.policyGroupId')}: <span className="font-semibold">{policyGroupDetails.id}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(policyGroupDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
@@ -74,10 +74,10 @@ function ViewPolicyGroupDetails() {
                             <div className="flex flex-wrap py-3 max-[450px]:flex-col">
                                 <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                     <p className="font-[600] text-suva-gray text-sm">
-                                        {t("viewPolicyGroupDetails.policyGroupId")}
+                                        {t("policyGroupList.policyGroupName")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md break-all">
-                                        {policyGroupDetails.id}
+                                        {policyGroupDetails.name}
                                     </p>
                                 </div>
                             </div>

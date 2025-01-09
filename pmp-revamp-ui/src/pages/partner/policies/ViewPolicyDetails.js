@@ -42,7 +42,7 @@ function ViewPolicyDetails() {
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>
-                        <p className="font-bold text-sm text-dark-blue mb-3">{policyDetails.policyName}</p>
+                        <p className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
                         <div className="flex items-center justify-start">
                             <div
                                 className={`${bgOfStatus(
@@ -64,7 +64,7 @@ function ViewPolicyDetails() {
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
-                            <div className={`w-[50%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                            <div className={`w-[49%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                 <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>

@@ -6,6 +6,7 @@ import { createDropdownData } from "../../../utils/AppUtils.js";
 
 function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
     const { t } = useTranslation();
+    const [deviceIdData, setDeviceIdData] = useState([]);
     const [deviceTypeData, setDeviceTypeData] = useState([]);
     const [deviceSubTypeData, setDeviceSubTypeData] = useState([]);
     const [makeData, setMakeData] = useState([]);
@@ -14,6 +15,7 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            setDeviceIdData(createDropdownData('deviceId', '', true, filteredDevicesList, t, t('devicesList.selectDeviceId')));
             setDeviceTypeData(createDropdownData('deviceTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceType')));
             setDeviceSubTypeData(createDropdownData('deviceSubTypeCode', '', true, filteredDevicesList, t, t('devicesList.selectDeviceSubType')));
             setMakeData(createDropdownData('make', '', true, filteredDevicesList, t, t('devicesList.selectMakeName')));
@@ -34,6 +36,16 @@ function DevicesListFilter({ filteredDevicesList, onFilterChange }) {
     return (
         <>
             <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+                <DropdownComponent
+                    fieldName='deviceId'
+                    dropdownDataList={deviceIdData}
+                    onDropDownChangeEvent={onFilterChangeEvent}
+                    fieldNameKey='devicesList.deviceId'
+                    placeHolderKey='devicesList.selectDeviceId'
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}
+                    id='device_list_filter_device_id'>
+                </DropdownComponent>
                 <DropdownComponent
                     fieldName='deviceTypeCode'
                     dropdownDataList={deviceTypeData}

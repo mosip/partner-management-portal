@@ -366,10 +366,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                         </td>
                                                                         <td className="text-center">
                                                                             <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                                <p role='button' id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                                <button id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                     ...
-                                                                                </p>
+                                                                                </button>
                                                                                 {actionId === index && (
                                                                                     <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                         <div role='button' className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickPublish(policy)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickPublish(policy))}>

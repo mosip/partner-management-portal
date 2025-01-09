@@ -176,6 +176,7 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
+        "policyId":"ID de la politique",
         "policyName": "Nom de la politique",
         "createdDate": "Date de création",
         "status": "Statut",
@@ -186,6 +187,7 @@
         "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectPolicyId": "Sélectionner l'ID de la politique",
         "selectStatus": "Sélectionnez le statut",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
     },
@@ -452,7 +454,9 @@
         "selectStatus": "Sélectionnez le statut",
         "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
         "searchDeviceId": "Rechercher l'ID de l'appareil",
-        "selectDeviceId": "Sélectionner l'ID de l'appareil"
+        "selectDeviceId": "Sélectionner l'ID de l'appareil",
+        "linkedDevicesList": "Liste des appareils liés",
+        "backToSbi": "Retour à la liste des SBI"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
@@ -527,7 +531,8 @@
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
         "ftmId": "Identifiant FTM",
-        "selectFtmId": "Sélectionnez l'ID FTM"
+        "selectFtmId": "Sélectionnez l'ID FTM",
+        "searchFtmId": "Rechercher l'identifiant FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -732,11 +737,12 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en brouillon détectées !",
-        "description": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre."
+        "description1": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre.",
+        "description2": "Il existe un projet de stratégie associé à ce groupe de stratégies. Le groupe de stratégies ne peut pas être désactivé tant que le projet de stratégie associé n’est pas publié, puis désactivé. Veuillez consulter le projet de politique pour continuer."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon."
+        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
