@@ -43,12 +43,13 @@ import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdm
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
-import AdminDevicesList from './pages/admin/deviceProviderServices/AdminDevicesList.js';
+import LinkedDevicesList from './pages/admin/deviceProviderServices/LinkedDevicesList.js';
 import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
 import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
 import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
 import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
+import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.js';
 
 function AppRoutes() {
 
@@ -258,8 +259,12 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><AdminSbiList /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/device-provider-services/linked-devices-list',
+          element: <GuardedRoute><MainLayout><LinkedDevicesList /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/device-provider-services/devices-list',
-          element: <GuardedRoute><MainLayout><AdminDevicesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AllDevicesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/device-provider-services/view-sbi-details',

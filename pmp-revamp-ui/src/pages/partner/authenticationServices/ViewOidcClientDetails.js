@@ -44,12 +44,12 @@ function ViewOidcClientDetails() {
         <>
             <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list'  />
+                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-bold text-sm text-dark-blue mb-2">{oidcClientDetails.clientNameEng}</p>
+                            <p className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.clientNameEng}</span></p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -65,15 +65,15 @@ function ViewOidcClientDetails() {
                             </div>
                         </div>
 
-                        <div role='button' id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => copyClientId(oidcClientDetails, oidcClientDetails.clientId, setCopied))}>
+                        <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
+                            onClick={() => copyClientId(oidcClientDetails, oidcClientDetails.clientId, setCopied)}>
                             <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
-                            <div className="flex space-x-1 items-center">
+                            <div id="oidc_client_details_copy_id_icon" className="flex space-x-1 items-center">
                                 <p className={`text-md font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                     {oidcClientDetails.clientId}
                                 </p>
                                 {oidcClientDetails.status === "ACTIVE" ? (
-                                    <img role='button' id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" onClick={() => copyClientId(oidcClientDetails, oidcClientDetails.clientId, setCopied)} />
+                                    <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" />
                                 ) : (
                                     <img src={disabled_copy_icon} alt="" />
                                 )}
@@ -85,7 +85,7 @@ function ViewOidcClientDetails() {
                                     )
                                 }
                             </div>
-                        </div>
+                        </button>
                     </div>
 
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
@@ -144,14 +144,6 @@ function ViewOidcClientDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="space-y-6">
-                            <div className="my-4">
-                                <p id='oidc_client_details_oidc_client_name_label' className="font-[600] text-suva-gray text-xs">
-                                    {t("authenticationServices.oidcClientName")}
-                                </p>
-                                <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm">
-                                    {oidcClientDetails.clientNameEng}
-                                </p>
-                            </div>
                             <div className="my-3 space-y-2 break-all">
                                 <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.publicKey")}

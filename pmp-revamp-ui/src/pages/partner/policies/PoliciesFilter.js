@@ -9,6 +9,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [partnerTypeData, setPartnerTypeData] = useState([]);
     const [policyGroupNameData, setPolicyGroupNameData] = useState([]);
+    const [policyIdData, setPolicyIdData] = useState([]);
     const [policyNameData, setPolicyNameData] = useState([]);
     const [statusData, setStatusData] = useState([]);
 
@@ -17,6 +18,7 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredPoliciesList, t, t('policies.selectPartnerId')));
             setPartnerTypeData(createDropdownData('partnerType', '', true, filteredPoliciesList, t, t('policies.selectPartnerType')));
             setPolicyGroupNameData(createDropdownData('policyGroupName', '', true, filteredPoliciesList, t, t('policies.selectPolicyGroup')));
+            setPolicyIdData(createDropdownData('policyId', '', true, filteredPoliciesList, t, t('policies.selectPolicyId')));
             setPolicyNameData(createDropdownData('policyName', '', true, filteredPoliciesList, t, t('policies.selectPolicyName')));
             setStatusData(createDropdownData('status', '', true, filteredPoliciesList, t, t('policies.selectStatus')));
         };
@@ -66,6 +68,17 @@ function PoliciesFilter({ filteredPoliciesList, onFilterChange }) {
                     styleSet={styles}
                     isPlaceHolderPresent={true}
                     id='policy_group_filter'
+                    >
+                </DropdownComponent>
+                <DropdownComponent 
+                    fieldName='policyId' 
+                    dropdownDataList={policyIdData} 
+                    onDropDownChangeEvent={onFilterChangeEvent} 
+                    fieldNameKey='policies.policyId' 
+                    placeHolderKey='policies.selectPolicyId'
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}
+                    id='policy_id_filter'
                     >
                 </DropdownComponent>
                 <DropdownComponent 

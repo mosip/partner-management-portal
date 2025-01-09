@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
+import {
+    isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
     getOidcClientDetails,
     createRequest,
     populateClientNames,
     getClientNameLangMap,
     escapeKeyHandler
- } from '../../../utils/AppUtils';
+} from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
@@ -26,7 +27,7 @@ import { HttpService } from '../../../services/HttpService.js';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
-function AdminOidcClientsList () {
+function AdminOidcClientsList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -232,34 +233,34 @@ function AdminOidcClientsList () {
     }
 
     useEffect(() => {
-        if(showDeactivatePopup){
+        if (showDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
-        }else if(showClientIdPopup){
+        } else if (showClientIdPopup) {
             escapeKeyHandler(() => setShowClientIdPopup(false));
         }
     }, [showDeactivatePopup, showClientIdPopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
-            { !dataLoaded && (
+            {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
-            { dataLoaded && (
+            {dataLoaded && (
                 <>
-                    { errorMsg && (
+                    {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement'  />
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                         </div>
                         <AuthenticationServicesTab
                             activeOidcClient={true}
                             oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
                             activeApiKey={false}
-                            apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list' 
+                            apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
                         />
-                        { !applyFilter && oidcClientsList.length === 0 ? (
+                        {!applyFilter && oidcClientsList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <EmptyList tableHeaders={tableHeaders} />
                             </div>
@@ -273,11 +274,11 @@ function AdminOidcClientsList () {
                                     setFilter={setExpandFilter}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                { expandFilter && (
+                                {expandFilter && (
                                     <AdminOidcClientsFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                { !tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                { tableDataLoaded && applyFilter && oidcClientsList.length === 0 ?
+                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
+                                {tableDataLoaded && applyFilter && oidcClientsList.length === 0 ?
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
@@ -337,10 +338,9 @@ function AdminOidcClientsList () {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p role='button' id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <button id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
-                                                                            </p>
+                                                                            </button>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                     <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewOidcClientDetails(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewOidcClientDetails(client))}>

@@ -199,6 +199,23 @@ public class BasePage {
 			return false;
 		}
 	}
+	
+	protected boolean isElementDisabled(WebElement element) {
+		try {
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			Thread.sleep(2000);
+			waitForElementToBeDisabled(element);
+			return true;
+		} catch (Exception e) {
+			try {
+				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+						+ "' width='900' height='450'/></p>");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
 
 	protected boolean isElementEnabled(WebElement element) {
 		try {
@@ -218,6 +235,11 @@ public class BasePage {
 	private void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	
+	private void waitForElementToBeDisabled(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 
 	public static void wait(int wait) {
@@ -276,6 +298,19 @@ public class BasePage {
 		return JsonUtil.readJsonFileText("TestData.json");
 	}
 	
+
+	public void refreshThePage() {
+		driver.navigate().refresh();
+	}
+	
+	public static void NavigateBack() {
+		driver.navigate().back();
+	}
+	
+	public static void NavigateForword() {
+		driver.navigate().forward();
+	}
+
 	public void reload() {
 		driver.navigate().refresh();
 	}
@@ -296,6 +331,7 @@ public class BasePage {
 		String alertText = alert.getText();
 		alert.dismiss();
 		return alertText;
+
 	}
 
 }

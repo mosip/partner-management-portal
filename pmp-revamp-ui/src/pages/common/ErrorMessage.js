@@ -15,16 +15,18 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
     }, [t, errorCode, errorMessage]);
 
     return (
-        <div className={`${customStyle ? customStyle.outerDiv : `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>
+        <div className={`${customStyle ? customStyle.outerDiv : `flex justify-end max-w-7xl my-3 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>
             <div className={`bg-[#C61818] ${customStyle ? customStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 max-h-[3.8rem] min-w-72 p-4'}`}>
                 <div className="flex items-center">
-                    <div className={`h-full ${isLoginLanguageRTL ? 'ml-8': 'mr-8'}`}>
+                    <div className={`h-full ${isLoginLanguageRTL ? 'ml-8' : 'mr-8'}`}>
                         <p className="text-white text-sm max-[450px]:text-xs/4 break-normal font-inter">
                             {errorMsg}
                         </p>
                     </div>
                     <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute ${(customStyle && customStyle.cancelIcon) ? customStyle.cancelIcon : 'top-4  mt-1'}`}>
-                        <img role='button' id="error_close_btn" src={cancelIcon} alt="close" className="cursor-pointer max-[450px]:h-3" onClick={clickOnCancel} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnCancel())}/>
+                        <button onClick={clickOnCancel} id="error_close_btn" className="cursor-pointer max-[450px]:h-3">
+                            <img src={cancelIcon} alt="close" />
+                        </button>
                     </div>
                 </div>
             </div>

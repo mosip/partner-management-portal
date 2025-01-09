@@ -323,11 +323,9 @@ function PartnersList() {
                                       </td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                          <p role='button' id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
-                                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
-                                          >
+                                          <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...
-                                          </p>
+                                          </button>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>

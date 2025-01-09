@@ -80,12 +80,12 @@ function SelectPolicyPopup() {
     }
 
     const customStyle = {
-        outerDiv: "!flex !justify-end !absolute !items-center !w-1/3",
-        innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-14 !p-3"
+        outerDiv: "!flex !justify-end !relative !items-center !w-full",
+        innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !px-3 !py-2"
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter -mt-[2rem]">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
@@ -93,12 +93,12 @@ function SelectPolicyPopup() {
                     )}
                     {dataLoaded && (
                         <>
-                            {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
-                            )}
                             <div className="px-4 py-2">
                                 <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                             </div>
+                            {errorMsg && (
+                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                            )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
                                 <p>
@@ -138,7 +138,9 @@ function SelectPolicyPopup() {
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="p-3 flex justify-between relative">
                                 <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                    <span role='button' id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}> {t('commons.logout')}</span>
+                                    <button id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}>
+                                        <span> {t('commons.logout')}</span>
+                                    </button>
                                 </p>
                                 <button
                                     className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 

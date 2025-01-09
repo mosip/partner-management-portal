@@ -30,12 +30,19 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
         sbiId: "",
         sbiVersion: ""
     });
+    const [disableSbiId, setDisableSbiId] = useState(false);
+    const [disableSbiVersion, setDisableSbiVersion] = useState(false);
 
     useEffect(() => {
         if (preFilledFilters) {
+            if(preFilledFilters.sbiId) {
+                setDisableSbiId(true);
+            }
+            if(preFilledFilters.sbiVersion) {
+                setDisableSbiVersion(true);
+            }
             const newFilters = { ...filters, ...preFilledFilters };
             setFilters(newFilters);
-            onApplyFilter(newFilters);
         }
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();
@@ -79,7 +86,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
     };
     
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "" || value === null || value === undefined);
     };
 
     const styles = {
@@ -111,20 +118,13 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 id="org_name_filter"
             />
             <TextInputComponent
-                fieldName="deviceId"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="devicesList.deviceId"
-                placeHolderKey="devicesList.searchDeviceId"
-                styleSet={styleSet}
-                id="device_id_filter"
-            />
-            <TextInputComponent
                 fieldName="sbiId"
                 textBoxValue={preFilledFilters.sbiId}
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiId"
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={styleSet}
+                disableField={disableSbiId}
                 id="sbi_id_filter"
             />
             <TextInputComponent
@@ -134,7 +134,16 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
+                disableField={disableSbiVersion}
                 id="sbi_version_filter"
+            />
+            <TextInputComponent
+                fieldName="deviceId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="devicesList.deviceId"
+                placeHolderKey="devicesList.searchDeviceId"
+                styleSet={styleSet}
+                id="device_id_filter"
             />
             <DropdownComponent
                 fieldName='deviceType'

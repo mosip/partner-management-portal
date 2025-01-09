@@ -121,6 +121,14 @@ function ViewFtmChipDetails() {
         setSuccessMsg("");
     };
 
+    const showHoverMsg = () => {
+        return (
+            <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+                {t('partnerCertificatesList.disabledBtnHoverMsg')}
+            </div>
+        );
+    }
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {errorMsg && (
@@ -152,8 +160,8 @@ function ViewFtmChipDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {ftmDetails.make} - {ftmDetails.model}
+                                <p className="text-lg text-dark-blue mb-2">
+                                    {t('ftmList.ftmId')}: <span className="font-semibold">{ftmDetails.ftmId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -228,20 +236,35 @@ function ViewFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
-                                                <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                    className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
-                                                    {t('commons.download')}
-                                                </button>
+                                                <div className="relative group">
+                                                    <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                        className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                        {t('commons.download')}
+                                                    </button>
+                                                    {ftmDetails.partnerStatus === 'deactivated' && (
+                                                        showHoverMsg()
+                                                    )}
+                                                </div>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
                                                 <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                    <button id='download_btn' disabled={!ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                        className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${!ftmDetails.isCertificateAvailable ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
-                                                        {t('commons.download')}
-                                                    </button>
-                                                    <button id="certificate_reupload_btn" onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
-                                                        {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
-                                                    </button>
+                                                    <div className="relative group">
+                                                        <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                            className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                            {t('commons.download')}
+                                                        </button>
+                                                        {ftmDetails.partnerStatus === 'deactivated' && (
+                                                            showHoverMsg()
+                                                        )}
+                                                    </div>
+                                                    <div className="relative group">
+                                                        <button id="certificate_reupload_btn" disabled={ftmDetails.partnerStatus === 'deactivated'} onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.partnerStatus === 'deactivated' ? 'text-[#6f7070] border-gray-300 bg-white': ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
+                                                            {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
+                                                        </button>
+                                                        {ftmDetails.partnerStatus === 'deactivated' && (
+                                                            showHoverMsg()
+                                                        )}
+                                                    </div>
                                                     {showPopup && (
                                                         <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
                                                     )}

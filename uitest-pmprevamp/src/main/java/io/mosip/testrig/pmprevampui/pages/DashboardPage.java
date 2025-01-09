@@ -92,6 +92,16 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 	
+	@FindBy(id = "dashboard_partner_certificate_list_header")
+	private WebElement dashboardPartnerCertificateListHeader;
+	
+	@FindBy(xpath = "//*[text()='FTM Chip']")
+	private WebElement FTMChipTab;
+	
+	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
+	private WebElement dashboardFtmChipproviderCardHeader;
+		
+	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -236,6 +246,18 @@ public class DashboardPage extends BasePage {
 		clickOnElement(PartnerPolicyMappingTab);
 	}
 	
+	public void clickOnDashboardPartnerCertificateListHeader() {
+		clickOnElement(dashboardPartnerCertificateListHeader);
+	}
+	
+	public void clickOnFTMChipTab() {
+		clickOnElement(FTMChipTab);
+	}
+	
+	public void clickOnDashboardFtmChipproviderCardHeader() {
+		clickOnElement(dashboardFtmChipproviderCardHeader);
+	}
+
 	public void clickOnHamburgerOpen() {
 		clickOnElement(hamburgerOpen);
 	}
