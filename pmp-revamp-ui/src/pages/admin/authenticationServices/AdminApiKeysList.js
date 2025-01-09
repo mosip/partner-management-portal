@@ -160,11 +160,6 @@ function AdminApiKeysList() {
         }
     };
 
-    const closeDeactivatePopup = () => {
-        setActionId(-1);
-        setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
-    };
 
     const deactivateApiKey = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "activated") {
@@ -173,10 +168,16 @@ function AdminApiKeysList() {
                 status: "De-Active"
             });
             setDeactivateRequest(request);
+            setActionId(-1);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
-    }
+    };
+
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
+    };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
@@ -308,18 +309,18 @@ function AdminApiKeysList() {
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeactivatePopup && (
-                                                                                        <DeactivatePopup
-                                                                                            closePopUp={closeDeactivatePopup}
-                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)}
-                                                                                            popupData={apiKey}
-                                                                                            request={deactivateRequest}
-                                                                                            headerMsg="adminDeactivateApiKey.title"
-                                                                                            descriptionMsg="adminDeactivateApiKey.description"
-                                                                                            headerKeyName={apiKey.apiKeyLabel}
-                                                                                        />
-                                                                                    )}
                                                                                 </div>
+                                                                            )}
+                                                                            {showDeactivatePopup && (
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)}
+                                                                                    popupData={apiKey}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg="adminDeactivateApiKey.title"
+                                                                                    descriptionMsg="adminDeactivateApiKey.description"
+                                                                                    headerKeyName={apiKey.apiKeyLabel}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>

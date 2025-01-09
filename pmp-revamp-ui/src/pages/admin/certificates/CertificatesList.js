@@ -169,10 +169,6 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
   };
 
-  const showDeactivateCertificate = () => {
-
-  };
-
   const onClickDownload = (certificate) => {
     if (certificate.status === true) {
       downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);

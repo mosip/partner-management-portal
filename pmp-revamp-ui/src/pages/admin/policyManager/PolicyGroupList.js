@@ -219,7 +219,6 @@ function PolicyGroupList() {
 
     const closePopup = () => {
         setShowDeactivatePolicyGroupPopup(false);
-        setActionId(-1);
         document.body.style.overflow = 'auto';
     };
 
@@ -229,6 +228,7 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
+            setActionId(-1);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -236,7 +236,6 @@ function PolicyGroupList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePolicyGroupPopup(false);
             // Update the specific row in the state with the new status
             setPolicyGroupList((prevList) =>
@@ -357,17 +356,17 @@ function PolicyGroupList() {
                                                                                         <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={policyGroup.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeactivatePolicyGroupPopup && (
-                                                                                        <DeactivatePolicyPopup
-                                                                                            header={'deactivatePolicyGroup.headerMsg'}
-                                                                                            description={'deactivatePolicyGroup.description'}
-                                                                                            popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
-                                                                                            headerKeyName={policyGroup.name}
-                                                                                            closePopUp={closePopup}
-                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
-                                                                                        />
-                                                                                    )}
                                                                                 </div>
+                                                                            )}
+                                                                            {showDeactivatePolicyGroupPopup && (
+                                                                                <DeactivatePolicyPopup
+                                                                                    header={'deactivatePolicyGroup.headerMsg'}
+                                                                                    description={'deactivatePolicyGroup.description'}
+                                                                                    popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
+                                                                                    headerKeyName={policyGroup.name}
+                                                                                    closePopUp={closePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>
