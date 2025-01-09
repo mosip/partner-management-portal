@@ -119,63 +119,74 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         <div className="flex font-inter bg-white h-screen z-40">
             <div className={`h-full ${open ? "absolute inset-y-14 min-w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
             flex-col duration-500`}>
-                <ul className={`pt-3 h-full space-y-5 bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]`}>
-                    <li role="listItem" id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()} onKeyDown={(e) => { e.key === 'Enter' && showHome() }}>
+                <div className={` flex flex-col pt-3 h-full space-y-[0.7rem] bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]`}>
+                    <button id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
-                    </li>
+                    </button>
                     {!enablePartnerAdminMenu &&
-                        <li role="listItem" id='side_nav_partner_certificate_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()} onKeyDown={(e) => { e.key === 'Enter' && showPartnerCertificatesList() }}>
+                        <button id='side_nav_partner_certificate_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()}>
                             <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
-                        </li>
+                        </button>
                     }
                     {!enablePartnerAdminMenu && enablePoliciesMenu &&
-                        <li role="listItem" id='side_nav_policies_icon' className="duration-700 cursor-pointer" onClick={() => showPolicies()} onKeyDown={(e) => { e.key === 'Enter' && showPolicies() }}>
+                        <button id='side_nav_policies_icon' className="duration-700 cursor-pointer" onClick={() => showPolicies()}>
                             <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
-                        </li>
+                        </button>
                     }
                     {!enablePartnerAdminMenu && enableAuthenticationServicesMenu &&
-                        <li role="listItem" id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()} onKeyDown={(e) => { e.key === 'Enter' && showAuthenticationServices() }}>
+                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
                             <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
-                        </li>
+                        </button>
                     }
                     {!enablePartnerAdminMenu && enableDeviceProviderServicesMenu &&
-                        <li role="listItem" id='side_nav_device_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showDeviceProviderServices()} onKeyDown={(e) => { e.key === 'Enter' && showDeviceProviderServices() }}>
+                        <button id='side_nav_device_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showDeviceProviderServices()}>
                             <SideNavMenuItem title={t('dashboard.deviceProviderServices')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
-                        </li>
+                        </button>
                     }
                     {!enablePartnerAdminMenu && enableFtmServicesMenu &&
-                        <li role="listItem" id='side_nav_ftmchip_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showFtmServices()} onKeyDown={(e) => { e.key === 'Enter' && showFtmServices() }}>
+                        <button id='side_nav_ftmchip_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showFtmServices()}>
                             <SideNavMenuItem title={t('dashboard.ftmChipProviderServices')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
-                        </li>
+                        </button>
                     }
                     {enablePartnerAdminMenu && (
                         <>
-                            <li role="listItem" id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()} onKeyDown={(e) => { e.key === 'Enter' && showRootOfTrustCertificate() }}>
+                            <button id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()}>
                                 <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
-                            <li role="listItem" id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()} onKeyDown={(e) => { e.key === 'Enter' && showPartner() }}>
+                            </button>
+
+                            <button id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
                                 <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
+                            </button>
+
                             {enablePolicyManagerMenu && (
-                                <li role="listItem" id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()} onKeyDown={(e) => { e.key === 'Enter' && showAdminPolicies() }}>
+
+                                <button id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
                                     <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
-                                </li>
+                                </button>
+
                             )}
-                            <li role="listItem" id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()} onKeyDown={(e) => { e.key === 'Enter' && showPartnerPolicyMapping() }}>
+                            <button id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
-                            <li role="listItem" id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()} onKeyDown={(e) => { e.key === 'Enter' && showSbiDeviceDetails() }}>
+                            </button>
+
+
+                            <button id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
                                 <SideNavMenuItem title={t('dashboard.sbiDevice')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
-                            <li role="listItem" id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()} onKeyDown={(e) => { e.key === 'Enter' && showAdminFtmDetails() }}>
+                            </button>
+
+
+                            <button id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>
                                 <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
-                            <li role="listItem" id='side_nav_authenticationServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()} onKeyDown={(e) => { e.key === 'Enter' && showAdminAuthenticationServices() }}>
+                            </button>
+
+
+                            <button id='side_nav_authenticationServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
-                            </li>
+                            </button>
+
                         </>
                     )}
-                </ul>
+                </div>
             </div>
         </div>
     );

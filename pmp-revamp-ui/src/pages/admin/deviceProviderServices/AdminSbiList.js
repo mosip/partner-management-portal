@@ -334,11 +334,11 @@ function AdminSbiList() {
                                                                             {getStatusCode(sbi.status, t)}
                                                                         </div>
                                                                     </td>
-                                                                    <td className={`px-2 text-center`}>
-                                                                        <div onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showLinkedDevices(sbi))}>
+                                                                    <td className={`text-center px-5`}>
+                                                                        <button onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
                                                                             <img src={sbi.status === 'deactivated' ? deactiveLinkedDevices : activeLinkedDevices} alt='' />
                                                                             <p className={`${sbi.status === 'deactivated' ? 'text-[#969696]' : 'text-tory-blue'} px-2`}>{sbi.countOfAssociatedDevices}</p>
-                                                                        </div>
+                                                                        </button>
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>

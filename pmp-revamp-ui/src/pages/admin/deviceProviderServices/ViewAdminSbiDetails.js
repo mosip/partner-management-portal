@@ -106,9 +106,9 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
-                                    <p className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'cursor-pointer'}`} onClick={() => showLinkedDevices()}>
+                                    <button className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'text-tory-blue cursor-pointer'}`} onClick={() => showLinkedDevices()}>
                                         {sbiDetails.countOfAssociatedDevices}
-                                    </p>
+                                    </button>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
