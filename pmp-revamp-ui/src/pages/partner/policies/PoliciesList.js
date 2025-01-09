@@ -50,6 +50,7 @@ function PoliciesList() {
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
     { id: "partnerType", headerNameKey: "policies.partnerType" },
     { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
+    { id: "policyId", headerNameKey: "policies.policyId" },
     { id: "policyName", headerNameKey: "policies.policyName" },
     { id: "createdDateTime", headerNameKey: "policies.createdDate" },
     { id: "status", headerNameKey: "policies.status" },
@@ -210,6 +211,7 @@ function PoliciesList() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">

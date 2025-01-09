@@ -49,7 +49,7 @@ function ViewOidcClientDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="font-semibold text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: {oidcClientDetails.clientNameEng}</p>
+                            <p className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.clientNameEng}</span></p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                 <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -144,14 +144,6 @@ function ViewOidcClientDetails() {
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="space-y-6">
-                            <div className="my-4">
-                                <p id='oidc_client_details_oidc_client_name_label' className="font-[600] text-suva-gray text-xs">
-                                    {t("authenticationServices.oidcClientName")}
-                                </p>
-                                <p id='oidc_client_details_client_name_context' className="font-[600] text-vulcan text-sm">
-                                    {oidcClientDetails.clientNameEng}
-                                </p>
-                            </div>
                             <div className="my-3 space-y-2 break-all">
                                 <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.publicKey")}

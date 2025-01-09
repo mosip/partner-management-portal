@@ -176,6 +176,7 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
+        "policyId":"ID de la politique",
         "policyName": "Nom de la politique",
         "createdDate": "Date de création",
         "status": "Statut",
@@ -186,6 +187,7 @@
         "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectPolicyId": "Sélectionner l'ID de la politique",
         "selectStatus": "Sélectionnez le statut",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
     },
