@@ -76,7 +76,7 @@ function AdminOidcClientsList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "clientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }

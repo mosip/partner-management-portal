@@ -78,7 +78,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "devicesList.creationDate" },
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];

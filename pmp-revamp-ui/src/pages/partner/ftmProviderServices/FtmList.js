@@ -94,7 +94,7 @@ function FtmList() {
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
     { id: "model", headerNameKey: "ftmList.model" },
-    { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
     { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
     { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
     { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },

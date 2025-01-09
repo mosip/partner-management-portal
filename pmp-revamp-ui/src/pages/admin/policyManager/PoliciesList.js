@@ -76,7 +76,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         { id: "policyName", headerNameKey: "policiesList.policyName" },
         { id: "policyDescription", headerNameKey: "policiesList.policyDescription" },
         { id: "policyGroupName", headerNameKey: "policiesList.policyGroup" },
-        { id: "createdDateTime", headerNameKey: "policiesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "policiesList.creationDate" },
         { id: "status", headerNameKey: "policiesList.status" },
         { id: "action", headerNameKey: "policiesList.action" },
     ];

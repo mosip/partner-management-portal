@@ -79,7 +79,7 @@ function PolicyRequestsList() {
     { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
     { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
     { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
-    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.creationDate" },
     { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
     { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];

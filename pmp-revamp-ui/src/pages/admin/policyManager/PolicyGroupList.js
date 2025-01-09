@@ -64,7 +64,7 @@ function PolicyGroupList() {
         { id: "id", headerNameKey: "policyGroupList.policyGroupId" },
         { id: "name", headerNameKey: "policyGroupList.policyGroupName" },
         { id: "desc", headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: "crDtimes", headerNameKey: "policyGroupList.createdDate" },
+        { id: "crDtimes", headerNameKey: "policyGroupList.creationDate" },
         { id: "status", headerNameKey: "policyGroupList.status" },
         { id: "action", headerNameKey: "policyGroupList.action" },
     ];

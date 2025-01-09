@@ -52,7 +52,7 @@ function PoliciesList() {
     { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
     { id: "policyId", headerNameKey: "policies.policyId" },
     { id: "policyName", headerNameKey: "policies.policyName" },
-    { id: "createdDateTime", headerNameKey: "policies.createdDate" },
+    { id: "createdDateTime", headerNameKey: "policies.creationDate" },
     { id: "status", headerNameKey: "policies.status" },
     { id: "action", headerNameKey: 'policies.action' }
   ];

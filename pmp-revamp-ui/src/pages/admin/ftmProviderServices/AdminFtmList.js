@@ -68,7 +68,7 @@ function AdminFtmList() {
         { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "make", headerNameKey: "ftmList.make" },
         { id: "model", headerNameKey: "ftmList.model" },
-        { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
         { id: "status", headerNameKey: "ftmList.status" },
         { id: "action", headerNameKey: 'ftmList.action' }
     ];

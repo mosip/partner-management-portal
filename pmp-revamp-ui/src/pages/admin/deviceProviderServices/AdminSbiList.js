@@ -73,7 +73,7 @@ function AdminSbiList() {
         { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
         { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
         { id: "sbiExpiryStatus", headerNameKey: "sbiList.sbiExpiryStatus" },
-        { id: "createdDateTime", headerNameKey: "sbiList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "sbiList.creationDate" },
         { id: "status", headerNameKey: "sbiList.status" },
         { id: "countOfAssociatedDevices", headerNameKey: "sbiList.linkedDevices" },
         { id: "action", headerNameKey: "sbiList.action" }
