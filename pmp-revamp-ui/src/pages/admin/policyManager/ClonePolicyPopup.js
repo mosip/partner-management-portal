@@ -121,9 +121,9 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[10%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-sm`}>
+                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles}></LoadingIcon>
                     )}
@@ -142,7 +142,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                             )}
                             <div className="py-2 px-6">
                                 <p className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
-                                    <span className="font-bold"> {policyDetails.policyName}</span>, {t('clonePolicyPopup.description2')}
+                                    <span className="font-bold"> {policyDetails.policyName}</span> {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>
                             <div className="w-full flex flex-col px-6 pb-6">
