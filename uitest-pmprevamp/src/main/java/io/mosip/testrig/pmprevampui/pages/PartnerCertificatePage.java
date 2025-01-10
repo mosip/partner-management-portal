@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,7 +26,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
-
+	
+	@FindBy(xpath = "//*[contains(text(), 'successfully')]")
+	private WebElement successMessageForFtmCert;
+	
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
 
@@ -37,6 +41,15 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Re-Upload Partner Certificate']")
 	private WebElement ReUploadPartnerCertificateText;
+	
+	@FindBy(xpath = "//*[text()='Please tap to select the certificate']")
+	private WebElement PleaseTabToSelectText;
+	
+	@FindBy(xpath = "//*[text()='Only .cer or .pem certificate formats are allowed for upload']")
+	private WebElement CertFormatesText;
+	
+	@FindBy(xpath = "//*[contains(text(), \"Last certificate was uploaded on\")]")
+	private WebElement lastUploadTimeAndDate;
 
 	@FindBy(xpath = "//*[text()='Please select all fields and upload the certificate")
 	private WebElement ReUploadPartnerCertificateSubText;
@@ -83,22 +96,42 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partnerDomain_selector_dropdown")
 	private WebElement partnerDomainSelectorDropdown;
 
-	@FindBy(id = "partnerDomain_selector_dropdown_option1")
-	private WebElement partnerDomainSelectorDropdownOptionAuth;
-
 	@FindBy(id = "partnerDomain_selector_dropdown_option3")
 	private WebElement deviceInPartnerDomainSelectorDropdown;
 
+	@FindBy(id = "partnerDomain_selector_dropdown_option1")
+	private WebElement partnerDomainSelectorDropdownOptionAuth;
+	
+	@FindBy(id = "partnerDomain_selector_dropdown_option2")
+	private WebElement partnerDomainSelectorDropdownOptionFtm;
+	
 	@FindBy(id = "upload_admin_certificate_btn")
 	private WebElement SubmitButtonForAdmin;
 
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement GoBackButton;
-
+	
+	@FindBy(id = "dashboard_ftm_chip_provider_card")
+	private WebElement dashboardFtmChipProviderCard;
+	
+	@FindBy(id = "error_close_btn")
+	private WebElement errorCloseButton;
+	
+	
+	@FindBy(xpath = "//*[text()='Root CA/Intermediate CA Certificates not found.']")
+	private WebElement noRootCert;
+	
+	@FindBy(xpath = "//*[text()='Self Signed Certificate not allowed as partner.']")
+	private WebElement errorCodeForSelfSignedCer;
+	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
-
+	
+	public boolean isDeviceProviderSuccessMessage() {
+		return isElementDisplayed(deviceProviderSuccessMessage);
+	}
+	
 	public boolean isPartnerCertificatePageDisplayed() {
 		return isElementDisplayed(partnerCertificateTitle);
 	}
@@ -106,7 +139,7 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}
-
+	
 	public boolean isUploadPartnerCertificatePopUpDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
 	}
@@ -122,6 +155,11 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificate() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Client.cer");
 	}
+	
+	public void uploadCertificateForAnotherOrg() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\FTM_ca.cer");
+	}
+
 
 	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
@@ -129,10 +167,6 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSucessMessageDisplayed() {
 		return isElementDisplayed(sucessMessage);
-	}
-
-	public boolean isDeviceProviderSuccessMessage() {
-		return isElementDisplayed(deviceProviderSuccessMessage);
 	}
 
 	public void clickOnCloseButton() {
@@ -231,5 +265,61 @@ public class PartnerCertificatePage extends BasePage {
 	public void ClickOnsuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}
-
+	
+	public void clickOnPartnerDomainSelectorDropdownOptionFtm() {
+		clickOnElement(partnerDomainSelectorDropdownOptionFtm);
+	}
+	
+	public boolean isDashboardFtmChipProviderCardDisplayed() {
+		return isElementDisplayed(dashboardFtmChipProviderCard);
+	}
+	
+	public boolean isSuccessMessageForFtmCertDisplayed() {
+		return isElementDisplayed(successMessageForFtmCert);
+	}
+	
+	public void clickOnFtmChipProviderCard() {
+		 clickOnElement(dashboardFtmChipProviderCard);
+	}
+	
+	public void certifiCateUploadCancelButton() {
+		if(isElementDisplayed(certificateUploadCloseButton)) {
+		 clickOnElement(certificateUploadCloseButton);
+		}
+		}
+	
+	public boolean VerifyTheStatusWithAsendingOrder() {
+	 WebElement first= driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Approved')]"));
+	 return isElementDisplayed(first);
+	}
+	
+	public boolean VerifyTheStatusWithDesendingOrder() {
+		 WebElement first= driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
+		 return isElementDisplayed(first);
+		}	
+		
+	public void clickOnErrorCloseButton() {
+		 clickOnElement(errorCloseButton);
+	}
+	
+	public boolean isNoRootCertDisplayed() {
+		return isElementDisplayed(noRootCert);
+	}
+	
+	public boolean isErrorCodeForSelfSignedCerDisplayed() {
+		return isElementDisplayed(errorCodeForSelfSignedCer);
+	}
+	
+	public boolean isPleaseTabToSelectTextDisplayed() {
+		return isElementDisplayed(PleaseTabToSelectText);
+	}
+	
+	public boolean isCertFormatesTextDisplayed() {
+		return isElementDisplayed(CertFormatesText);
+	}
+	
+	public boolean isLastUploadTimeAndDateTextDisplayed() {
+		return isElementDisplayed(lastUploadTimeAndDate);
+	}
+	
 }

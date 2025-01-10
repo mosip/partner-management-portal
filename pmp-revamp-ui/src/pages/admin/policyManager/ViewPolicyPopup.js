@@ -17,7 +17,9 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
                             <button onClick={() => downloadJsonFile(previewData)} className='text-xs px-[1.3rem] py-[0.8%] border-2 font-semibold rounded-md h-9 w-fix text-tory-blue bg-white border-blue-800 cursor-pointer'>
                                 {t('commons.download')}
                             </button>
-                            <p onClick={closePopUp} className='bg-gray-100 text-center h-6 w-5 text-sm font-semibold rounded-[9rem] cursor-pointer' tabIndex={0} onKeyPress={(e) => onPressEnterKey(e, closePopUp)}>X</p>
+                            <button onClick={closePopUp} className='bg-gray-100 text-center h-6 w-5 text-sm font-semibold rounded-[9rem] cursor-pointer'>
+                                <p>X</p>
+                            </button>
                         </div>
                     </div>
                     <hr className={`h-px w-full bg-gray-200 border-0`} />

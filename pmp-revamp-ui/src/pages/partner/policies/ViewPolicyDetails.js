@@ -38,11 +38,11 @@ function ViewPolicyDetails() {
         <>
             <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
-                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style}></Title>
+                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL?"pr-8": "pl-8"} pt-6 pb-5`}>
-                        <p className="font-bold text-sm text-dark-blue mb-3">{policyDetails.policyName}</p>
+                        <p className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
                         <div className="flex items-center justify-start">
                             <div
                                 className={`${bgOfStatus(
@@ -64,7 +64,7 @@ function ViewPolicyDetails() {
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
-                            <div className="w-[50%] mb-4">
+                            <div className={`w-[49%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                 <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>
@@ -164,10 +164,10 @@ function ViewPolicyDetails() {
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
                                             <h4 className="text-sm text-[#031640]">
-                                                {t("viewPolicyDetails.partnerComments")}
+                                                {t("viewPolicyDetails.partnerComment")}
                                             </h4>
                                             <span className="text-sm mt-3">
-                                                {policyDetails.partnerComments}
+                                                {policyDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">

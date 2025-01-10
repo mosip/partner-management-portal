@@ -273,12 +273,12 @@ function EditPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg}></ErrorMessage>
+                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
                         <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
                     )}
-                    <div className="flex-col mt-7 w-full">
+                    <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
                             <Title title={title} subTitle={subTitle} backLink={backLink} />
                         </div>

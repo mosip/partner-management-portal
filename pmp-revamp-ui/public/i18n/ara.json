@@ -53,18 +53,18 @@
         "userRegistrationError": "غير قادر على تسجيل المستخدم. حاول تسجيل الدخول مرة أخرى",
         "verifyEmailError": "حدث خطأ أثناء التحقق من البريد الإلكتروني للمستخدم. حاول تسجيل الدخول مرة أخرى",
         "rootOfTrustCertificate": "جذر شهادة الثقة",
-        "rootOfTrustCertificateDesc": "تحميل أو تنزيل أو عرض قائمة شهادات الجذر والشهادات الوسيطة",
-        "partner": "شريك",
+        "rootOfTrustCertificateDesc": "تحميل، تنزيل أو عرض قائمة شهادات الجذر والشهادات الوسيطة",
+        "partner": "الشريك",
         "partnerDesc": "عرض أو تعطيل تفاصيل الشريك",
-        "policy": "سياسة",
-        "policiesadminDesc": "إنشاء وإدارة مجموعات السياسات، سياسات المصادقة، وسياسات تبادل البيانات",
-        "partnerPolicyMapping": "شريك - ربط السياسات",
+        "policy": "السياسة",
+        "policiesadminDesc": "إنشاء وإدارة مجموعات السياسات، سياسات المصادقة والسياسات المتعلقة بمشاركة البيانات",
+        "partnerPolicyMapping": "ربط الشريك بالسياسة",
         "partnerPolicyMappingDesc": "عرض أو الموافقة أو رفض طلبات ربط السياسات من الشركاء",
-        "sbiDevice": "SBI - جهاز",
-        "sbiDeviceDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل جهاز SBI المرتبط",
+        "sbiDevice": "جهاز SBI",
+        "sbiDeviceDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل جهاز SBI والأجهزة المرتبطة",
         "ftmChip": "شريحة FTM",
         "ftmChipDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل شريحة FTM",
-        "adminAuthenticationServicesDesc": "عرض أو تعطيل تفاصيل عميل OIDC و API Key",
+        "adminAuthenticationServicesDesc": "عرض أو تعطيل تفاصيل عميل OIDC ومفاتيح API",
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
@@ -176,8 +176,9 @@
         "partnerType": "نوع الشريك",
         "partnerId": "معرف الشريك",
         "policyGroupName": "مجموعة السياسات",
+        "policyId":"معرف السياسة",
         "policyName": "اسم السياسة",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "status": "حالة",
         "action": "فعل",
         "view": "منظر",
@@ -187,6 +188,7 @@
         "selectPolicyGroup": "حدد مجموعة السياسات",
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
+        "selectPolicyId": "حدد معرف السياسة",
         "errorInPoliciesList": "هناك بعض الخطأ في جلب السياسات. حاول مرة أخرى في وقت لاحق!"
     },
     "viewPolicyDetails": {
@@ -201,7 +203,7 @@
         "policyNameDescription": "وصف اسم السياسة",
         "comments": "تعليقات",
         "adminComments": "تعليقات المشرف",
-        "partnerComments": "تعليقات الشريك",
+        "partnerComment": "تعليقات الشريك",
         "back": "خلف",
         "createdOn": "تم إنشاؤها على"
     },
@@ -236,7 +238,7 @@
         "policyName": "اسم السياسة",
         "policyGroup": "مجموعة السياسات",
         "oidcClientName": "اسم عميل OIDC",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "expiryDate": "تاريخ الانتهاء",
         "status": "حالة",
         "oidcClientId": "معرف عميل OIDC",
@@ -284,7 +286,7 @@
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "oidcClientName": "اسم عميل OIDC",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "status": "حالة",
         "oidcClientId": "معرف عميل OIDC",
         "action": "فعل",
@@ -420,7 +422,7 @@
         "device": "جهاز",
         "sbiCreatedDate": "تاريخ إنشاء SBI",
         "sbiExpiryDate": "تاريخ انتهاء صلاحية SBI",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "deactivate": "إلغاء تنشيط SBI",
         "submittedOn": "تم إرساله",
         "errorInSbiList": "أثناء جلب قوائم SBI، واجهنا خطأً.",
@@ -439,7 +441,7 @@
         "deviceSubType": "نوع الجهاز الفرعي",
         "make": "يصنع",
         "model": "نموذج",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "status": "حالة",
         "action": "فعل",
         "errorInViewDevices": "أثناء استرداد قائمة الأجهزة، واجهنا خطأ",
@@ -451,7 +453,10 @@
         "selectModelName": "حدد اسم النموذج",
         "selectStatus": "حدد الحالة",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
-        "searchDeviceId": "البحث عن معرف الجهاز"
+        "searchDeviceId": "البحث عن معرف الجهاز",
+        "selectDeviceId": "حدد معرف الجهاز",
+        "linkedDevicesList": "قائمة الأجهزة المرتبطة",
+        "backToSbi": "العودة إلى قائمة SBI"
     },
     "deactivateDevicePopup": {
         "headerMsg": "هل تريد إلغاء تنشيط الجهاز",
@@ -506,7 +511,7 @@
         "listOfFtm": "قائمة تفاصيل شريحة FTM",
         "make": "يصنع",
         "model": "نموذج",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "certificateExpiryDate": "تاريخ انتهاء صلاحية الشهادة",
         "certificateUploadDate": "وقت تحميل الشهادة",
         "certExpiryStatus": "حالة انتهاء صلاحية الشهادة",
@@ -525,7 +530,9 @@
         "searchModel": "نموذج البحث",
         "expired": "منتهي الصلاحية",
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً.",
-        "ftmId": "معرف FTM"
+        "ftmId": "معرف FTM",
+        "selectFtmId": "حدد معرف FTM",
+        "searchFtmId": "البحث عن معرف FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -586,15 +593,14 @@
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootOfTrustCertificate": "تحميل شهادة جذر الثقة",
-        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
-        "uploadRootCaCertificate": "تحميل شهادة CA الجذر",
-        "intermediateDesc": "لتحميل شهادة CA المتوسطة، يرجى التأكد من تحميل شهادة الجذر المقابلة بالفعل..",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "تحميل شهادة الثقة",
+        "description": "الرجاء تحديد نطاق الشريك وتحميل شهادة CA الجذرية / CA المتوسطة.",
+        "uploadSectionDescription": "الرجاء النقر لتحديد شهادة CA الجذرية / CA المتوسطة",
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح",
+        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerDomain}} بنجاح!",
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
     },
@@ -613,9 +619,9 @@
         "viewIntermediateCaCertificateDetails": "عرض تفاصيل شهادة CA المتوسطة",
         "uploadedOn": "تم الرفع على",
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
-        "certificateChainOfTrust": "سلسلة شهادات الثقة",
+        "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
         "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
-        "downloadAll": "تحميل الكل",
+        "downloadCertificateChain": "تنزيل سلسلة الشهادات",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
     },
@@ -689,7 +695,7 @@
         "policyGroupId": "معرف مجموعة السياسات",
         "policyGroupName": "اسم مجموعة السياسات",
         "policyGroupDescription": "وصف مجموعة السياسات",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "status": "حالة",
         "action": "فعل",
         "listOfPolicyGroups": "قائمة مجموعات السياسات",
@@ -705,7 +711,7 @@
         "policyName": "اسم السياسة",
         "policyDescription": "وصف السياسة",
         "policyGroup": "مجموعة السياسات",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "status": "حالة",
         "action": "فعل",
         "listOfAuthPolicies": "قائمة سياسة السياسات",
@@ -731,11 +737,12 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "خطأ: تم اكتشاف سياسات في حالة مسودة!",
-        "description": "هناك {{noOfDraftPolicies}} سياسات مسودة مرتبطة بمجموعة السياسات هذه. لا يمكن إلغاء تفعيل مجموعة السياسات حتى يتم نشر وإلغاء تفعيل جميع السياسات المسودة المرتبطة بها. يرجى معالجة السياسات المسودة للمتابعة."
+        "description1": "هناك {{noOfDraftPolicies}} سياسات مسودة مرتبطة بمجموعة السياسات هذه. لا يمكن إلغاء تفعيل مجموعة السياسات حتى يتم نشر وإلغاء تفعيل جميع السياسات المسودة المرتبطة بها. يرجى معالجة السياسات المسودة للمتابعة.",
+        "description2": "توجد مسودة سياسة واحدة مقترنة بمجموعة السياسات هذه. لا يمكن إلغاء تنشيط مجموعة السياسات حتى يتم نشر مسودة السياسة المرتبطة ثم إلغاء تنشيطها. يرجى معالجة مسودة السياسة للمتابعة"
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "خطأ: تم اكتشاف سياسات في حالة مفعلة ومسودة!",
-        "description": "هناك {{noOfActivePolicies}} سياسات مفعلة و{{noOfDraftPolicies}} سياسات مسودة مرتبطة بهذه المجموعة. للمتابعة في إلغاء تفعيل مجموعة السياسات، يرجى التأكد من استيفاء الشروط التالية:\n\n1. إلغاء تفعيل السياسات المفعلة.\n2. نشر ثم إلغاء تفعيل السياسات المسودة."
+        "description": "توجد {{noOfActivePolicies}} مسودة سياسات نشطة و{{noOfDraftPolicies}} مرتبطة بمجموعة السياسات هذه. لمتابعة إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي: 1. قم بإلغاء تنشيط كافة السياسات النشطة. 2. قم بنشر كافة مسودات السياسات ثم قم بإلغاء تنشيطها." 
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "عرض سياسة المصادقة",
@@ -774,6 +781,7 @@
         "upload": "تحميل",
         "uploadFileError": "يرجى اختيار ملف JSON صالح",
         "jsonParseError": "يرجى تقديم بيانات JSON صالحة",
+        "policyDatalengthExceedError": "لا ينبغي أن تتجاوز بيانات السياسة أكثر من 5120 حرفًا.",
         "uploadPolicyDataFile": "تحميل بيانات السياسة",
         "uploadPolicyDataFileDesc": "يُسمح بتحميل ملفات بتنسيق .json فقط",
         "fileUploadSuccessMsg": "تم تحميل بيانات السياسة بنجاح",
@@ -791,11 +799,11 @@
     },
     "clonePolicyPopup": {
         "title": "سياسة الاستنساخ",
-        "description1": "حدد مجموعة السياسات التي ترغب في تعشيش السياسة المستنسخة فيها",
-        "description2": "إلى جانب تفاصيلها المحددة. تأكد من إنشاء مجموعة السياسات المطلوبة مسبقًا، حيث ستظهر فقط مجموعات السياسات الموجودة في القائمة المنسدلة للاختيار.",
+        "description1": "حدد مجموعة السياسات لتداخل السياسة المستنسخة",
+        "description2": "بما في ذلك تفاصيله المحددة. يمكنك أيضًا تعديل تفاصيل السياسة المستنسخة قبل نشرها.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
-        "successMsg": "تم استنساخ {{policyName}} وربطه بـ {{policyGroupName}} بنجاح!",
+        "successMsg": "تم استنساخ &quot;{{policyName}}&quot; وربطه بـ &quot;{{policyGroupName}}&quot; بنجاح!",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "publishPolicyPopup": {
@@ -814,7 +822,7 @@
         "policyGroupName": "مجموعة السياسات",
         "policyId": "معرف السياسة",
         "policyName": "اسم السياسة",
-        "createdDate": "تاريخ الإنشاء",
+        "creationDate": "تاريخ الإنشاء",
         "partnerType": "نوع الشريك",
         "status": "الحالة",
         "action": "الإجراء",
@@ -846,7 +854,8 @@
         "policyId": "معرف السياسة",
         "policyName": "اسم السياسة",
         "organisation": "اسم المنظمة",
-        "policyGroup": "مجموعة السياسات"
+        "policyGroup": "مجموعة السياسات",
+        "partnerStatus": "حالة الشريك"
     },
     "deactivatePolicyPopup": {
         "headerMsg": "هل تريد تعطيل السياسة",
@@ -854,8 +863,8 @@
         "dataSharePolicyDescriptionMsg": "عند النقر على 'تأكيد'، سيتم تعطيل سياسة مشاركة البيانات المحددة."
     },
     "activePolicyRequestsDetectedMsg": {
-        "header": "خطأ: تم اكتشاف اقتران نهج الشريك النشط",
-        "description": "الشركاء النشطون مرتبطون حاليًا بهذه السياسة. يرجى إلغاء تنشيط جميع الشركاء النشطين المرتبطين بهذه السياسة قبل محاولة إلغاء تنشيطها"
+        "header": "خطأ: تم اكتشاف ربط نهج الشريك النشط",
+        "description": "يرتبط واحد أو أكثر من الشركاء المعتمدين بهذه السياسة. ولذلك، لا يسمح بإلغاء تنشيط السياسة"
     },
     "pendingPolicyRequestsDetectedMsg": {
         "header": "خطأ: الشريك - تم اكتشاف طلب السياسة!",
@@ -870,7 +879,7 @@
         "commentPlaceholder": "اكتب تعليقك هنا"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "هل تريد الموافقة/الرفض على السياسة",
+        "header": "هل ترغب في الموافقة على/رفض السياسة؟",
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "ftmRequestApproveRejectPopup": {
@@ -911,7 +920,7 @@
         "description": "سيتم استخدام البيانات المقدمة أثناء التسجيل، بما في ذلك اسمك ورقم هاتفك وعنوان بريدك الإلكتروني واسم المنظمة والعنوان، بواسطة بوابة إدارة الشركاء (PMP). سيتم أيضًا استخدام عنوان بريدك الإلكتروني لإعادة تعيين كلمة المرور والتحقق من البريد الإلكتروني والإشعارات في حالة انتهاء صلاحية شهادة الشريك أو المواقف المماثلة. سيتم استخدام هذه المعلومات فقط لإنشاء بيانات الاعتماد الخاصة بك، وتسهيل استخدامك لـ MOSIP. من خلال تحديد المربع أدناه، فإنك توافق على إرسال بياناتك ليتم تخزينها ومعالجتها للغرض المذكور أعلاه.",
         "checkBoxDesc": "لقد قرأت الشروط والأحكام وأوافق على تقديم بياناتي ليتم تخزينها ومعالجتها للغرض المذكور.",
         "proceed": "يتابع",
-        "logoutMsg": "إذا كنت لا ترغب في المضي قدمًا، فيمكنك ذلك",
+        "logoutMsg": "إذا كنت لا ترغب في المتابعة، يمكنك النقر على",
         "consentFetchError": "حدث خطأ أثناء جلب موافقة المستخدم",
         "consentSaveError": "حدث خطأ أثناء حفظ موافقة المستخدم"
     },
@@ -965,7 +974,7 @@
         "PMS_ATH_401": "المصادقة فشلت",
         "PMS_PRT_106": "حالة APIKeyReqID قيد التقدم",
         "PMS_KKS_001": " API لا يمكن الوصول إليها",
-        "PMS_PRT_107": "الردود من API لاغي",
+        "PMS_PRT_107": "الرد من واجهة برمجة التطبيقات هو لا شيء",
         "PMS_PRT_500": "غير قادر على معالجة الطلب",
         "PMS_PMP_016": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع شريك معين بواسطة المسؤول، ونتيجة لذلك لن تتمكن بعد الآن من أداء هذا النشاط",
         "PMS_PRT_098": "السياسة المقدمة بموجب مجموعة سياسة الشريك غير موجودة.",
@@ -1085,12 +1094,13 @@
         "PMS_POL_069": "تم ربط سياسات نشطة أو مسودة بمجموعة السياسات.",
         "PMS_POL_070": "توجد سياسات مسودة ضمن مجموعة السياسات.",
         "PMS_POL_071": "خطأ أثناء إلغاء تفعيل مجموعة السياسات.",
+        "PMS_POL_072": "السياسة المحددة ليست في حالة التنشيط",
         "KER-PCM-006": "لم يتم العثور على شهادات CA الجذر/CA المتوسطة.",
-        "KER-PCM-008": "اسم المنظمة الشريكة غير متطابق",
+        "KER-PCM-008": "اسم المؤسسة الموجود في الشهادة التي تم تحميلها لا يتطابق مع الاسم المقدم أثناء تسجيل الشريك",
         "KER-PCM-015": "الشهادة الموقعة ذاتيًا غير مسموح بها كشريك.",
         "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
         "KER-PCM-004": "تواريخ الشهادة غير صالحة.",
-        "KER-PCM-005": "لم يتم العثور على شهادة CA الجذر",
+        "KER-PCM-005": "يرجى تحميل شهادة الجذر المقابلة للمتابعة",
         "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",
@@ -1106,8 +1116,8 @@
         "PMS_CERTIFICATE_ERROR_007": "معرف الشريك المحدد لا ينتمي إلى المستخدم. لذلك غير قادر على الحصول على شهادات الشريك الأصلية",
         "PMS_CERTIFICATE_ERROR_008": "حدث خطأ أثناء جلب الشهادة.",
         "PMS_CERTIFICATE_ERROR_009": "تعذر تنزيل الشهادة لشريك تم إلغاء تنشيطه",
-        "PMS_CERTIFICATE_ERROR_010": "خطأ أثناء جلب شهادات CA",
-        "PMS_CERTIFICATE_ERROR_011": "خطأ أثناء تنزيل شهادة CA",
+        "PMS_CERTIFICATE_ERROR_010": "خطأ أثناء جلب شهادات الثقة.",
+        "PMS_CERTIFICATE_ERROR_011": "خطأ أثناء تنزيل شهادة الثقة.",
         "PMS_CERTIFICATE_ERROR_012": "معرف الشهادة فارغ أو فارغ",
         "PMS_POLICY_ERROR_001": "مجموعة السياسات غير موجودة.",
         "PMS_POLICY_ERROR_002": "حدث خطأ أثناء جلب سياسات الشركاء.",
@@ -1147,7 +1157,7 @@
         "PMS_DEVICE_ERROR_005": "الهيئة الفرعية للتنفيذ غير موجودة.",
         "PMS_DEVICE_ERROR_006": "الجهاز غير موجود.",
         "PMS_DEVICE_ERROR_007": "الجهاز غير مرتبط بمعرف الشريك.",
-        "PMS_DEVICE_ERROR_008": "حدث خطأ أثناء إضافة تعيين جهاز غير نشط لـ sbi.",
+        "PMS_DEVICE_ERROR_008": "خطأ أثناء إضافة الجهاز إلى sbi.",
         "PMS_DEVICE_ERROR_009": "نظرًا لأن SBI إما معطل أو لم تتم الموافقة عليه بعد.",
         "PMS_DEVICE_ERROR_010": "تفاصيل الجهاز المحددة ليست في انتظار حالة الموافقة.",
         "PMS_DEVICE_ERROR_011": "حدث خطأ أثناء الموافقة على الجهاز أو رفضه لرسم خرائط Sbi.",
@@ -1165,6 +1175,8 @@
         "PMS_DEVICE_ERROR_023": "الجهاز المحدد ليس في حالة معتمدة.",
         "PMS_DEVICE_ERROR_024": "لا يمكن الموافقة على هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
         "PMS_DEVICE_ERROR_025": "لا يمكن رفض هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
+        "PMS_DEVICE_ERROR_026": "يجب أن تكون حالة الطلب إلغاء التنشيط",
+        "PMS_DEVICE_ERROR_027": "يجب أن تكون حالة الطلب إما معتمدة أو مرفوضة",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
         "PMS_REQUEST_ERROR_001": "طلب غير صالح.",

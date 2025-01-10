@@ -5,7 +5,6 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-    onPressEnterKey,
     moveToSbisList, populateDeactivatedStatus,
     createRequest
 } from '../../../utils/AppUtils.js';
@@ -36,9 +35,9 @@ function DevicesList() {
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
-    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [canAddDevices, setCanAddDevices] = useState(true);
@@ -73,7 +72,7 @@ function DevicesList() {
                 setDataLoaded(false);
 
                 let sbiId = sbiData.sbiId;
-                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/sbi-devices/${sbiId}`, process.env.NODE_ENV), {
+                const response = await HttpService.get(getPartnerManagerUrl(`/securebiometricinterface/${sbiId}/devices`, process.env.NODE_ENV), {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -103,11 +102,12 @@ function DevicesList() {
     }, []);
 
     const tableHeaders = [
+        { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
         { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
         { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "devicesList.creationDate" },
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
@@ -176,31 +176,31 @@ function DevicesList() {
     const showDeactivateDevice = (selectedDevice) => {
         if (selectedDevice.status === "approved") {
             const request = createRequest({
-                deviceId: selectedDevice.id,
-            }, "mosip.pms.deactivate.device.post", true);
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.device.patch", true);
+            setViewDeviceId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
     };
 
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+    };
+
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setViewDeviceId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(device =>
-                    device.id === selectedDevice.id ? { ...device, status: "deactivated", isActive: false } : device
+                    device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
                 )
             );
         }
     };
 
-    const closeDeactivatePopup = () => {
-        setViewDeviceId(-1);
-        setShowDeactivatePopup(false);
-    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -305,6 +305,7 @@ function DevicesList() {
                                                             tableRows.map((device, index, currentArray) => {
                                                                 return (
                                                                     <tr id={'device_list_device_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceId}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
@@ -317,22 +318,22 @@ function DevicesList() {
                                                                         </td>
                                                                         <td className="px-2 mx-2">
                                                                             <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                                <p id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
-                                                                                    tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewDeviceId(index === viewDeviceId ? null : index))}>
-                                                                                    ...</p>
+                                                                                <button id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
+                                                                                    ...
+                                                                                </button>
                                                                                 {viewDeviceId === index && (
                                                                                     <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                                                                        <p id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
-                                                                                            {t('devicesList.view')}
-                                                                                        </p>
+                                                                                        <button id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                            <p> {t('devicesList.view')} </p>
+                                                                                        </button>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <p id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateDevice(device))}>
-                                                                                            {t('devicesList.deActivate')}
-                                                                                        </p>
-                                                                                        {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
-                                                                                        )}
+                                                                                        <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                            <p> {t('devicesList.deActivate')}</p>
+                                                                                        </button>
                                                                                     </div>
+                                                                                )}
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                 )}
                                                                             </div>
                                                                         </td>

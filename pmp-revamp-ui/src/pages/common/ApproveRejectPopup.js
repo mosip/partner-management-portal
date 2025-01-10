@@ -6,6 +6,7 @@ import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
+import { onPressEnterKey } from '../../utils/AppUtils.js';
 
 function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
     const { t } = useTranslation();
@@ -62,30 +63,19 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                 );
             }
             if (popupData.isDeviceRequest) {
-                if (status === "approved") {
-                    const request = createRequest({
-                        partnerId: popupData.partnerId,
-                        sbiId: popupData.sbiId,
-                        deviceDetailId: popupData.deviceId
-                    }, "mosip.pms.approve.mapping.device.to.sbi.post", true);
-                    response = await HttpService.post(getPartnerManagerUrl(`/admin/approve-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
+                const request = createRequest({
+                    partnerId: popupData.partnerId,
+                    sbiId: popupData.sbiId,
+                    status: status
+                }, "mosip.pms.approval.mapping.device.to.sbi.post", true);
 
-                } else {
-                    const request = createRequest({
-                        partnerId: popupData.partnerId,
-                        sbiId: popupData.sbiId,
-                        deviceDetailId: popupData.deviceId
-                    }, "mosip.pms.reject.mapping.device.to.sbi.post", true);
-                    response = await HttpService.post(getPartnerManagerUrl(`/admin/reject-mapping-device-to-sbi`, process.env.NODE_ENV), request, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                }
+                const url = getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}/approval`, process.env.NODE_ENV);
+
+                response = await HttpService.post(url, request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             }
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -106,9 +96,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default mx-1 break-normal">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[10%] z-50 font-inter cursor-default mx-1 break-normal">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-lg h-fit">
+                <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-sm h-fit">
                     {!dataLoaded ? (
                         <LoadingIcon styleSet={{ loadingDiv: '!py-[35%]' }} />
                     ) : (
@@ -125,7 +115,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <img src={close_icon} alt="close" className="h-6 hover:cursor-pointer mx-1" onClick={closingPopUp} tabIndex={0} />
+                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer mx-1">
+                                            <img src={close_icon} alt="close" />
+                                        </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="px-[1.5rem] py-3 text-center">
@@ -134,10 +126,10 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="flex items-center justify-between space-x-3 p-[6%]">
-                                        <button onClick={() => handleStatusChange('rejected')} type="button" className="w-36 h-10 border-[#1447B2] border rounded-md text-tory-blue">
+                                        <button id="reject_btn" onClick={() => handleStatusChange('rejected')} type="button" className="w-36 h-10 border-[#1447B2] border rounded-md text-tory-blue">
                                             {t('approveRejectPopup.reject')}
                                         </button>
-                                        <button onClick={() => handleStatusChange('approved')} type="button" className="w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white">
+                                        <button id="approve_btn" onClick={() => handleStatusChange('approved')} type="button" className="w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white">
                                             {t('approveRejectPopup.approve')}
                                         </button>
                                     </div>

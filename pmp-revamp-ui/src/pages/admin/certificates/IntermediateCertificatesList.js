@@ -7,8 +7,6 @@ function IntermediateCertificatesList() {
 
   const uploadCertRequiredData = () => {
     const requiredData = {
-      title: 'intermediateCertificateList.uploadIntermediateCaCertificate',
-      description: 'uploadRootofTrustCertificate.intermediateDesc',
       breadcrumb: 'intermediateCertificateList.subTitle',
       backLink: '/partnermanagement/admin/certificates/intermediate-ca-certificate-list'
     }

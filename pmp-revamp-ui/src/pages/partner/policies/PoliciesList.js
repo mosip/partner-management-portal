@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL } from '../../../utils/AppUtils';
 import {
-  getPartnerManagerUrl, formatDate, handleServiceErrors, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus
+  formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
+  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -50,8 +50,9 @@ function PoliciesList() {
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
     { id: "partnerType", headerNameKey: "policies.partnerType" },
     { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
+    { id: "policyId", headerNameKey: "policies.policyId" },
     { id: "policyName", headerNameKey: "policies.policyName" },
-    { id: "createdDateTime", headerNameKey: "policies.createdDate" },
+    { id: "createdDateTime", headerNameKey: "policies.creationDate" },
     { id: "status", headerNameKey: "policies.status" },
     { id: "action", headerNameKey: 'policies.action' }
   ];
@@ -60,17 +61,11 @@ function PoliciesList() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/policy-requests', process.env.NODE_ENV));
+        const response = await getPartnerPolicyRequests(HttpService, setErrorCode, setErrorMsg, t);
         if (response) {
-          const responseData = response.data;
-          if (responseData && responseData.response) {
-            const resData = responseData.response;
-            const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
-            setPoliciesList(sortedData);
-            setFilteredPoliciesList(sortedData);
-          } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          }
+          const sortedData = response.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
+          setPoliciesList(sortedData);
+          setFilteredPoliciesList(sortedData);
         } else {
           setErrorMsg(t('policies.errorInPoliciesList'));
         }
@@ -148,9 +143,9 @@ function PoliciesList() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
-              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style}/>
+              <Title title='policies.policies' backLink='/partnermanagement' styleSet={style} />
 
               {policiesList.length > 0 ?
                 <button id='policies_request_btn' onClick={() => showRequestPolicy()} type="button" className={`h-12 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md`}>
@@ -216,6 +211,7 @@ function PoliciesList() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.partnerId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
@@ -225,16 +221,15 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <p id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewPolicyId(index === viewPolicyId ? null : index))}>
-                                      ...</p>
+                                    <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>
+                                      ...
+                                    </button>
                                     {
                                       viewPolicyId === index && (
-                                        <div id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
-                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
-                                          <p className="cursor-pointer">
-                                            {t('policies.view')}
-                                          </p>
-                                        </div>
+                                        <button id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)}
+                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center cursor-pointer mt-5 ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                          <p> {t('policies.view')} </p>
+                                        </button>
                                       )
                                     }
                                   </div>

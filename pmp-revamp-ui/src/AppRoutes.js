@@ -23,7 +23,7 @@ import DevicesList from './pages/partner/deviceProviderServices/DevicesList.js';
 import FtmList from './pages/partner/ftmProviderServices/FtmList.js';
 import AddFtm from './pages/partner/ftmProviderServices/AddFtm.js';
 import ViewFtmChipDetails from './pages/partner/ftmProviderServices/ViewFtmChipDetails.js';
-import UploadRootTrustCertificate from './pages/admin/certificates/UploadRootTrustCertificate.js';
+import UploadTrustCertificate from './pages/admin/certificates/UploadTrustCertificate.js';
 import PartnersList from './pages/admin/partners/PartnersList.js';
 import ViewPartnerDetails from './pages/admin/partners/ViewPartnerDetails.js';
 import CreatePolicyGroup from './pages/admin/policyManager/CreatePolicyGroup.js';
@@ -43,12 +43,13 @@ import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdm
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
-import AdminDevicesList from './pages/admin/deviceProviderServices/AdminDevicesList.js';
+import LinkedDevicesList from './pages/admin/deviceProviderServices/LinkedDevicesList.js';
 import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
 import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
 import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
 import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
+import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.js';
 
 function AppRoutes() {
 
@@ -166,8 +167,8 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/certificates/upload-root-trust-certificate',
-          element: <GuardedRoute><MainLayout><UploadRootTrustCertificate /></MainLayout></GuardedRoute>
+          path: 'admin/certificates/upload-trust-certificate',
+          element: <GuardedRoute><MainLayout><UploadTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/partners-list',
@@ -258,8 +259,12 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><AdminSbiList /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/device-provider-services/linked-devices-list',
+          element: <GuardedRoute><MainLayout><LinkedDevicesList /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/device-provider-services/devices-list',
-          element: <GuardedRoute><MainLayout><AdminDevicesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><AllDevicesList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/device-provider-services/view-sbi-details',

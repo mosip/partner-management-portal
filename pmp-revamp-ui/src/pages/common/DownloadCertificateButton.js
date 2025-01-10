@@ -9,7 +9,7 @@ import disabled_download_icon from '../../svg/disabled_download_icon.svg';
 import downloadIcon from '../../svg/download_icon.svg';
 
 function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirstOption, onClickSecondOption, requiredData, downloadDropdownRef, disableBtn, disabledBtnHoverMsg, styleSet, id }) {
-    
+
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
@@ -21,8 +21,8 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                     {t('commons.download')}
                     {!disableBtn &&
                         (showDropDown ?
-                            <img src={dropdown_down_icon} className={`rotate-180 duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
-                            : <img src={dropdown_up_icon} className={`duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
+                            <img id='dropdown_down_icon' src={dropdown_down_icon} className={`rotate-180 duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
+                            : <img id='dropdown_up_icon' src={dropdown_up_icon} className={`duration-500 text-white ${isLoginLanguageRTL ? "mr-2" : "ml-2"}`} alt={''} />
                         )
                     }
                     {disableBtn && disabledBtnHoverMsg && (
@@ -35,14 +35,14 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
             {showDropDown && (
                 <div className={styleSet && styleSet.outerDiv}>
-                    <div id={'original_certificate_' + id} onClick={() => onClickFirstOption(requiredData)} className="flex items-center border-b justify-between cursor-pointer hover:bg-gray-100">
-                        <button className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('commons.originalCertificate')}</button>
+                    <button id={'original_certificate_' + id} onClick={() => onClickFirstOption(requiredData)} className="flex items-center border-b w-full justify-between cursor-pointer hover:bg-gray-100">
+                        <p className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('commons.originalCertificate')}</p>
                         <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
-                    </div>
-                    <div id={'mosip_signed_certificate_' + id} onClick={() => onClickSecondOption(requiredData)} className={`flex items-center justify-between ${requiredData.disableSecondOption ? 'hover:bg-none':'hover:bg-gray-100 cursor-pointer'}`}>
-                        <button disabled={requiredData.disableSecondOption} className={`block px-4 py-2 text-xs font-semibold ${requiredData.disableSecondOption ? 'text-[#828385e0]':'text-dark-blue'}`}>{t('commons.mosipSignedCertificate')}</button>
+                    </button>
+                    <button id={'mosip_signed_certificate_' + id} onClick={() => onClickSecondOption(requiredData)} className={`flex items-center border-b w-full justify-between ${requiredData.disableSecondOption ? 'hover:bg-none' : 'hover:bg-gray-100 cursor-pointer'}`}>
+                        <p disabled={requiredData.disableSecondOption} className={`block px-4 py-2 text-xs font-semibold ${requiredData.disableSecondOption ? 'text-[#828385e0]' : 'text-dark-blue'}`}>{t('commons.mosipSignedCertificate')}</p>
                         <img src={requiredData.disableSecondOption ? disabled_download_icon : downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
-                    </div>
+                    </button>
                 </div>)}
         </div>
 

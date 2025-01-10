@@ -53,7 +53,7 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/api-keys-for-auth-partners', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/auth-partner-api-keys', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -81,7 +81,7 @@ function ApiKeysList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -112,10 +112,15 @@ function ApiKeysList() {
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
+            setViewApiKeyId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
+    };
+
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
     };
 
     //This part is related to Filter
@@ -152,7 +157,6 @@ function ApiKeysList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setViewApiKeyId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
@@ -161,11 +165,6 @@ function ApiKeysList() {
                 )
             );
         }
-    };
-
-    const closeDeactivatePopup = () => {
-        setViewApiKeyId(-1);
-        setShowDeactivatePopup(false);
     };
 
     //This part related to Pagination Logic
@@ -183,11 +182,11 @@ function ApiKeysList() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-7">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' ></Title>
+                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                             {apiKeysList.length > 0 ?
-                                <button id='generate_api_key_btn' type="button" onClick={generateApiKey} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, generateApiKey)}
+                                <button id='generate_api_key_btn' type="button" onClick={generateApiKey} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, generateApiKey)}
                                     className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
                                     {t('apiKeysList.generateApiKey')}
                                 </button>
@@ -267,21 +266,22 @@ function ApiKeysList() {
 
                                                                 <td className="px-2 mx-2">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <p id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewApiKeyId(index === viewApiKeyId ? null : index))}>
-                                                                            ...</p>
+                                                                        <button id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>
+                                                                            <p> ... </p>
+                                                                        </button>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
-                                                                                <p id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickView(apiKey))}>
-                                                                                    {t('oidcClientsList.view')}
-                                                                                </p>
+                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                                    <p> {t('oidcClientsList.view')} </p>
+                                                                                </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <p id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onClickDeactivate(apiKey))}>
-                                                                                    {t('oidcClientsList.deActivate')}
-                                                                                </p>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
-                                                                                )}
+                                                                                <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                    <p> {t('oidcClientsList.deActivate')} </p>
+                                                                                </button>
                                                                             </div>
+                                                                        )}
+                                                                        {showDeactivatePopup && (
+                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel} />
                                                                         )}
                                                                     </div>
                                                                 </td>

@@ -4,9 +4,10 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
-import { moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
+import {
+    moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
     getClientNameLangMap
- } from "../../../utils/AppUtils";
+} from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import DropdownComponent from "../../common/fields/DropdownComponent";
@@ -61,15 +62,15 @@ function EditOidcClient() {
             }
             return (
                 (checkIfRedirectUrisIsUpdated() ||
-                (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
-                (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
-                (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng)) && currentLocation.pathname !== nextLocation.pathname
+                    (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
+                    (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
+                    (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng)) && currentLocation.pathname !== nextLocation.pathname
             );
         }
     );
 
     useEffect(() => {
-        const shouldWarnBeforeUnload = () => 
+        const shouldWarnBeforeUnload = () =>
             checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
@@ -310,9 +311,9 @@ function EditOidcClient() {
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className="flex-col mt-8">
+                    <div className="flex-col mt-5">
                         <div className="flex justify-between">
-                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' ></Title>
+                            <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                         </div>
                         {!editOidcClientSuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -324,7 +325,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-[48%]">
                                                     <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('requestPolicy.partnerId')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.partnerIdTooltip')} id='partner_id_info'/>
+                                                        <Information infoKey={t('createOidcClient.partnerIdTooltip')} id='partner_id_info' />
                                                     </label>
                                                     <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -361,7 +362,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-[48%]">
                                                     <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('requestPolicy.policyName')}<span className={`text-crimson-red mx-1`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.policyNameToolTip')} id='policy_name_info'/>
+                                                        <Information infoKey={t('createOidcClient.policyNameToolTip')} id='policy_name_info' />
                                                     </label>
                                                     <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -384,7 +385,7 @@ function EditOidcClient() {
                                                 <div className="flex flex-col w-full">
                                                     <label className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>*</span></p>
-                                                        <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info'/>
+                                                        <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                                                     </label>
                                                     <textarea value={oidcClientDetails.publicKey} readOnly
                                                         className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar">
@@ -407,13 +408,13 @@ function EditOidcClient() {
                                                     {(oidcClientDetails.redirectUris).map((url, index) => (
                                                         <div key={index} className="flex w-full justify-between items-center h-10 px-2 py-2 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar focus:shadow-outline mb-2">
                                                             <input
-                                                                id={"oidc_edit_enter_redirect_url" + (index +1)}
+                                                                id={"oidc_edit_enter_redirect_url" + (index + 1)}
                                                                 value={url}
                                                                 onChange={(e) => onChangeRedirectUrl(index, e.target.value)}
                                                                 placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                                                                 className="w-[85%] focus:outline-none"
                                                             />
-                                                            <div id={'oidc_edit_delete_redirect_url' + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
+                                                            <div role='button' id={'oidc_edit_delete_redirect_url' + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                                                                     stroke={oidcClientDetails.redirectUris.length > 1 ? '#1447b2' : '#969696'} className={`w-[18px] h-5 mr-1 ${oidcClientDetails.redirectUris.length > 1 ? 'cursor-pointer' : ''}`}>
                                                                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -427,10 +428,10 @@ function EditOidcClient() {
                                                     ))}
                                                     {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                     {oidcClientDetails.redirectUris.length < 5 && (
-                                                        <p id="oidc_edit_add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                                                            <span onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</span>
-                                                            <span onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</span>
-                                                        </p>
+                                                        <button id="oidc_edit_add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
+                                                            <button onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</button>
+                                                            <button onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</button>
+                                                        </button>
                                                     )}
                                                 </div>
                                                 <div className="flex flex-col w-[48%]">

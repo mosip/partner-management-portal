@@ -52,7 +52,7 @@ function FtmList() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/ftm-chip-details', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV));
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
@@ -90,10 +90,11 @@ function FtmList() {
   };
 
   const tableHeaders = [
+    { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
     { id: "model", headerNameKey: "ftmList.model" },
-    { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
     { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
     { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
     { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
@@ -169,12 +170,17 @@ function FtmList() {
   const showDeactivateFtm = (selectedFtmData) => {
     if (selectedFtmData.status === "approved") {
       const request = createRequest({
-        ftmId: selectedFtmData.ftmId,
-      }, "mosip.pms.deactivate.ftm.post", true);
+        status: "De-Activate",
+      }, "mosip.pms.deactivate.ftm.patch", true);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
+      setViewFtmId(-1);
       document.body.style.overflow = "hidden";
     }
+  };
+
+  const closeDeactivatePopup = () => {
+    setShowDeactivatePopup(false);
   };
 
   const showManageCertificate = (selectedFtmData) => {
@@ -191,21 +197,16 @@ function FtmList() {
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
-        setViewFtmId(-1);
-        setShowDeactivatePopup(false);
-        // Update the specific row in the state with the new status
-        setFtmList((prevList) =>
-            prevList.map(ftm =>
-                ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
-            )
-        );
+      setShowDeactivatePopup(false);
+      // Update the specific row in the state with the new status
+      setFtmList((prevList) =>
+        prevList.map(ftm =>
+          ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
+        )
+      );
     }
   };
 
-  const closeDeactivatePopup = () => {
-    setViewFtmId(-1);
-    setShowDeactivatePopup(false);
-  };
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -217,7 +218,7 @@ function FtmList() {
           {errorMsg && (
             <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
-          <div className="flex-col mt-7">
+          <div className="flex-col mt-5">
             <div className="flex justify-between mb-5">
               <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
               {ftmList.length > 0 && (
@@ -278,13 +279,14 @@ function FtmList() {
                           tableRows.map((ftm, index, currentArray) => {
                             return (
                               <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.ftmId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
@@ -292,26 +294,26 @@ function FtmList() {
                                 </td>
                                 <td className="px-2 mx-2">
                                   <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                    <p id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]"
-                                      tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => setViewFtmId(index === viewFtmId ? null : index))}>
-                                      ...</p>
+                                    <button id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
+                                      ...
+                                    </button>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                        <p id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
-                                          {t('ftmList.view')}
-                                        </p>
+                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                          <p>{t('ftmList.view')}</p>
+                                        </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
-                                          {t('ftmList.manageCertificate')}
-                                        </p>
+                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                          <p> {t('ftmList.manageCertificate')} </p>
+                                        </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <p id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyPress={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm))}>
-                                          {t('ftmList.deActivate')}
-                                        </p>
-                                        {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
-                                        )}
+                                        <button id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                          <p> {t('ftmList.deActivate')}</p>
+                                        </button>
                                       </div>
+                                    )}
+                                    {showDeactivatePopup && (
+                                      <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                     )}
                                   </div>
                                 </td>

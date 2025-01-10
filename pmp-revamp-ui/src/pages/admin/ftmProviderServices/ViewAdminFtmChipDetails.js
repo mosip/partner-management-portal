@@ -37,7 +37,7 @@ function ViewAdminFtmChipDetails() {
             setErrorCode("");
             setErrorMsg("");
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + selectedFtmDetails.ftmId + '/original-ftm-certificate', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail/' + selectedFtmDetails.ftmId + '/certificate-data', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -87,7 +87,7 @@ function ViewAdminFtmChipDetails() {
             {successMsg && (
                 <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
-            <div className={`flex-col mt-8 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+            <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
                     <Title title={'viewFtmChipDetails.viewFtmChipDetails'} subTitle='viewFtmChipDetails.listOfFtmChipDetails' backLink='/partnermanagement/admin/ftm-chip-provider-services/ftm-list' />
                 </div>
@@ -110,8 +110,8 @@ function ViewAdminFtmChipDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-semibold text-lg text-dark-blue mb-2">
-                                    {ftmDetails.make} - {ftmDetails.model}
+                                <p className="text-lg text-dark-blue mb-2">
+                                    {t('ftmList.ftmId')}: <span className="font-semibold">{ftmDetails.ftmId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -130,28 +130,46 @@ function ViewAdminFtmChipDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                <div className={`w-[49%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                    <p id="ftm_chip_details_label_partner_id" className="font-[600] text-suva-gray text-xs">
-                                        {t("viewOidcClientDetails.partnerId")}
+                                <div className={`w-[48%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("sbiList.partnerId")}
                                     </p>
-                                    <p id="ftm_chip_details_context_partner_id" className="font-[600] text-vulcan text-sm">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {ftmDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%]`}>
-                                    <p id="ftm_chip_details_label_partner_type" className="font-[600] text-suva-gray text-xs">
-                                        {t("viewOidcClientDetails.partnerType")}
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p id="ftm_chip_details_context_ftm_chip_provider" className="font-[600] text-vulcan text-sm">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-5 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                    <p id="ftm_chip_details_label_make" className="font-[600] text-suva-gray text-xs">
-                                        {t("viewAdminOidcClientDetails.organisation")}
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("sbiList.orgName")}
                                     </p>
-                                    <p id="ftm_chip_details_context_make" className="font-[600] text-vulcan text-sm">
+                                    <p className="font-[600] text-vulcan text-md">
                                         {ftmDetails.orgName}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("ftmList.make")}
+                                    </p>
+                                    <p className="font-[600] text-vulcan text-md">
+                                        {ftmDetails.make}
+                                    </p>
+                                </div>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                    <p className="font-[600] text-suva-gray text-sm">
+                                        {t("ftmList.model")}
+                                    </p>
+                                    <p className="font-[600] text-vulcan text-md">
+                                        {ftmDetails.model}
                                     </p>
                                 </div>
                             </div>
@@ -184,18 +202,18 @@ function ViewAdminFtmChipDetails() {
                                     <hr className="border bg-medium-gray h-px" />
                                     <div className="flex items-center p-5 bg-white rounded-lg">
                                         <div className="flex-col space-y-1">
-                                            <p id="ftm_chip_details_partner_type_label" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                            <p id="ftm_chip_details_partner_type_context" className="font-bold text-sm text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
+                                            <p id="ftm_chip_details_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                            <p id="ftm_chip_details_partner_type_context" className="font-bold text-md text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                            <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
+                                            <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                            <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
                                                 {formatDate(certificateDetails.caSignedCertUploadDateTime, 'dateTime', false)}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="ftm_chip_details_label_expiry_date_time" className={`text-xs font-semibold ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700' : 'text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-sm ${certificateDetails.isCaSignedCertificateExpired ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>

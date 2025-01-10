@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
+import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -45,13 +45,13 @@ function UploadCertificate({ closePopup, popupData, request }) {
             let uploadRequest = {};
             if (popupData.isUploadPartnerCertificate) {
                 uploadRequest = createRequest({
-                    ...request, 
+                    ...request,
                     certificateData: certificateData,
                 });
             }
             if (popupData.isUploadFtmCertificate) {
                 uploadRequest = createRequest({
-                    ...request, 
+                    ...request,
                     certificateData: certificateData,
                     organizationName: getOrganization(certificateData,)
                 });
@@ -94,17 +94,17 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
     const decodeCertificate = (certificateData) => {
         const certBase64 = certificateData
-          .replace("-----BEGIN CERTIFICATE-----", "")
-          .replace("-----END CERTIFICATE-----", "")
-          .replace(/\s+/g, "");
-      
+            .replace("-----BEGIN CERTIFICATE-----", "")
+            .replace("-----END CERTIFICATE-----", "")
+            .replace(/\s+/g, "");
+
         // Convert the base64 string to a Uint8Array
         const certBinary = Uint8Array.from(atob(certBase64), (c) => c.charCodeAt(0));
-      
+
         // Parse the certificate using asn1js and pkijs
         const asn1 = fromBER(certBinary.buffer);
         if (asn1.offset === -1) {
-          setErrorMsg(t('uploadCertificate.errorWhileGettingCertOrgName'));
+            setErrorMsg(t('uploadCertificate.errorWhileGettingCertOrgName'));
         }
         const cert = new Certificate({ schema: asn1.result });
         return cert;
@@ -115,10 +115,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
         // Iterate over typesAndValues in the subject to find O (Organization)
         const organizationAttr = decodedCert.subject.typesAndValues.find(
-          (attr) => attr.type === "2.5.4.10"
+            (attr) => attr.type === "2.5.4.10"
         );
         return organizationAttr.value.valueBlock.value;
-        
+
     };
 
     const getPartnerType = useCallback((popupData) => {
@@ -237,36 +237,43 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {t('uploadCertificate.selectingFile')}
                                                 </h5>
-                                                <p className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
-                                                    {t('uploadCertificate.cancel')}
-                                                </p>
+                                                <button className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
+                                                    <p> {t('uploadCertificate.cancel')} </p>
+                                                </button>
                                             </div>
                                         )}
                                         {!uploading && fileName === '' && (
                                             <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
-                                                <label htmlFor="fileInput" tabIndex={0} onKeyPress={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()} className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer">
-                                                    <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10"/>
-                                                    <h5 className="text-charcoal-gray text-base font-normal px-2">
-                                                        {t('uploadCertificate.selectCertificate')}
-                                                    </h5>
-                                                    <p className="text-xs text-light-gray px-2">
-                                                        {t('uploadCertificate.certificateFormat')}
-                                                    </p>
-                                                </label>
+                                                <button onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()}>
+                                                    <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer" >
+                                                        <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
+                                                        <h5 className="text-charcoal-gray text-base font-normal px-2">
+                                                            {t('uploadCertificate.selectCertificate')}
+                                                        </h5>
+                                                        <p className="text-xs text-light-gray px-2">
+                                                            {t('uploadCertificate.certificateFormat')}
+                                                        </p>
+                                                    </label>
+                                                </button>
+
                                                 <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
                                             </div>
                                         )}
                                         {!uploading && fileName && (
                                             <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
-                                                <label htmlFor="fileInput" className="flex flex-col items-center justify-center cursor-pointer">
+                                                <label
+                                                    type="input"
+                                                    htmlFor="fileInput"
+                                                    className="flex flex-col items-center justify-center cursor-pointer"
+                                                >
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
-                                                    {t('uploadCertificate.remove')}
-                                                </p>
+                                                <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                    <p> {t('uploadCertificate.remove')} </p>
+                                                </button>
                                             </div>
                                         )}
                                     </div>
@@ -278,7 +285,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 <div className="px-[4%] flex justify-center mt-2 my-3">
                                     <button id='certificate_upload_cancel_btn' disabled={uploadSuccess} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-36 h-10 ${uploadSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white' : 'border-[#1447B2] bg-white text-tory-blue'}  border rounded-md text-sm font-semibold relative z-10`} onClick={clickOnCancel}>{t('uploadCertificate.cancel')}</button>
                                     {(!uploading && fileName) ? (
-                                        <button id={uploadSuccess ?  "certificate_upload_close_btn" : "certificate_upload_submit_btn"} className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
+                                        <button id={uploadSuccess ? "certificate_upload_close_btn" : "certificate_upload_submit_btn"} className="w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative z-10" onClick={clickOnSubmit}>{uploadSuccess ? t('uploadCertificate.close') : t('uploadCertificate.submit')}</button>
                                     ) : (
                                         <button disabled className="w-36 h-10 border-[#A5A5A5] border bg-[#A5A5A5] rounded-md text-white text-sm font-semibold">{t('uploadCertificate.submit')}</button>
                                     )}

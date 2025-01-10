@@ -13,7 +13,6 @@ function deleting_pmp_ui() {
       if [ $yn = "Y" ]
         then
           helm -n $NS delete pmp-ui
-          helm -n $NS delete pmp-revamp-ui
           break
         else
           break

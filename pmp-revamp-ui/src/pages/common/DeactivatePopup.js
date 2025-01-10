@@ -52,19 +52,19 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     }
                 });
             } else if (popupData.isDeactivateDevice) {
-                response = await HttpService.post(getPartnerManagerUrl(`/devicedetail/deactivate-device`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.isDeactivateSbi) {
-                response = await HttpService.post(getPartnerManagerUrl(`/securebiometricinterface/deactivate-sbi`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/securebiometricinterface/${popupData.sbiId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.isDeactivateFtm) {
-                response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail/deactivate-ftm`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/ftpchipdetail/${popupData.ftmId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -99,9 +99,9 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[10%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
+                <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-sm h-fit`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles} />
                     )}
@@ -110,13 +110,13 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
-                            <div className={`p-[8%] flex-col text-center justify-center items-center`}>
+                            <div className={`p-[2rem] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
-                                    <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
+                                    <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
                                     </p>
-                                    : <p className="text-base leading-snug font-semibold text-black break-normal px-[6%]">
-                                        {t(headerMsg)} '{(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}'
+                                    : <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
+                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}
                                     </p>
                                 }
                                 <p className="text-sm text-[#666666] break-normal py-[5%]">

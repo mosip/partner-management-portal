@@ -7,6 +7,7 @@ import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
 import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
+import closeIcon from "../../../svg/close_icon.svg";
 
 function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState('');
@@ -120,17 +121,18 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[10%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-lg`}>
+                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles}></LoadingIcon>
                     )}
                     {dataLoaded && (
                         <div className="relative">
-                            <div className="px-6 py-3">
+                            <div className="px-6 py-3 flex justify-between">
                                 <h3 className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
-                            </div>
+                                <button onClick={cancelPopUp}><img className='h-[25px] w-[25px]' src={closeIcon} alt='closeIcon'/></button>
+                            </div> 
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
@@ -158,7 +160,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 </DropdownWithSearchComponent>
                             </div>
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
-                            <div className="px-6 py-3 flex justify-end relative">
+                            <div className="px-6 py-3 flex justify-between relative">
                                 <button disabled={cloneSuccess} className={`w-36 h-10 m-1 ${cloneSuccess ? 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed' : 'border-[#1447B2] text-tory-blue bg-white'}  border rounded-lg  text-sm font-semibold relative z-60`}
                                     onClick={cancelPopUp}
                                     id="clone_policy_cancel">
@@ -177,8 +179,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                         id="clone_policy_close_button">
                                         {t('commons.close')}
                                     </button>
-                                }
-                                
+                                }  
                             </div>
                         </div>
                     )}

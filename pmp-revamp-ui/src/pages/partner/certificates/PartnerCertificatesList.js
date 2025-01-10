@@ -108,7 +108,7 @@ function PartnerCertificatesList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/partner-certificates', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partners/partner-certificates-details', process.env.NODE_ENV));
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
@@ -161,7 +161,7 @@ function PartnerCertificatesList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
-                            <Title title='partnerCertificatesList.partnerCertificate' backLink='/partnermanagement' styleSet={style}></Title>
+                            <Title title='partnerCertificatesList.partnerCertificate' backLink='/partnermanagement' styleSet={style} />
                         </div>
                         <ul className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-[2.5%] pb-[10%]">
                             {certificatesData.length === 0 ?

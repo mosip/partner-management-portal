@@ -89,6 +89,7 @@ export const getGrantTypes = (type, t) => {
 
 export const onPressEnterKey = (e, action) => {
     if (e.key === 'Enter') {
+        e.preventDefault();
         return action();
     }
 }
@@ -347,9 +348,9 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
     return dataArr;
 }
 
-export const getAuthPartnerPolicies = async (HttpService, setErrorCode, setErrorMsg, t) => {
+export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/auth-partners-policies', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/policy-requests`, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
@@ -362,7 +363,27 @@ export const getAuthPartnerPolicies = async (HttpService, setErrorCode, setError
             return null;
         }
     } catch (error) {
-        console.error('Error in getAuthPartnerPolicies:', error);
+        console.error('Error in getPartnerPolicyRequests:', error);
+        return null;
+    }
+};
+
+export const getApprovedAuthPartners = async (HttpService, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v3?status=approved&policyGroupAvailable=true&partnerType=Auth_Partner`, process.env.NODE_ENV));
+        if (response && response.data) {
+            const responseData = response.data;
+            if (responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error in getApprovedAuthPartnes:', error);
         return null;
     }
 };
@@ -412,7 +433,7 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
 
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/original-partner-certificate', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
@@ -710,7 +731,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
 
 export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/download-root-certificate/${certificateId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -723,7 +744,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
 
                 document.body.appendChild(link);
                 link.click();
-                setSuccessMsg(certType === 'root' ? t('uploadRootofTrustCertificate.downloadRootCertSuccessMsg') : t('uploadRootofTrustCertificate.downloadIntermediateCertSuccessMsg'));
+                setSuccessMsg(certType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
 
                 // CleanUP Code
                 window.URL.revokeObjectURL(url);
@@ -741,4 +762,20 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
         console.error('Error fetching certificate Details:', err);
         setErrorMsg(err);
     }
+};
+
+
+
+export const escapeKeyHandler = (closePopup) => {
+    // Define the Escape key handler
+    const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+        closePopup()
+        // Cleanup the event listener
+        return window.removeEventListener('keydown', handleEscape)
+    }
+    };
+    
+    // Add event listener when any handler condition is true
+    window.addEventListener('keydown', handleEscape);
 };

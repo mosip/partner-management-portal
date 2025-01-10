@@ -53,18 +53,18 @@
         "userRegistrationError": "Impossible d'enregistrer l'utilisateur. Essayez de vous connecter à nouveau !",
         "verifyEmailError": "Erreur lors de la vérification de l'e-mail de l'utilisateur. Essayez de vous connecter à nouveau!",
         "rootOfTrustCertificate": "Certificat racine de confiance",
-        "rootOfTrustCertificateDesc": "Télécharger, Télécharger ou Voir la liste des certificats racine et intermédiaires",
+        "rootOfTrustCertificateDesc": "Télécharger, Télécharger ou Voir la liste des certificats de racine et d'intermédiaire",
         "partner": "Partenaire",
-        "partnerDesc": "Voir ou Désactiver les détails du partenaire",
+        "partnerDesc": "Voir ou Désactiver les Détails du Partenaire",
         "policy": "Politique",
-        "policiesadminDesc": "Créer et gérer les groupes de politiques, les politiques d'authentification et les politiques de partage de données",
+        "policiesadminDesc": "Créer et Gérer des Groupes de Politiques, des Politiques d'Authentification et des Politiques de Partage de Données",
         "partnerPolicyMapping": "Partenaire - Liens politiques",
         "partnerPolicyMappingDesc": "Voir, approuver ou rejeter les demandes de liaison de politiques des partenaires",
         "sbiDevice": "SBI - Appareil",
-        "sbiDeviceDesc": "Voir, désactiver, approuver ou rejeter les détails des appareils SBI et liés",
+        "sbiDeviceDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails du Dispositif SBI et des Appareils Liés",
         "ftmChip": "Puce FTM",
-        "ftmChipDesc": "Voir, désactiver, approuver ou rejeter les détails de la puce FTM",
-        "adminAuthenticationServicesDesc": "Voir ou Désactiver les détails des clients OIDC et des clés API",
+        "ftmChipDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails des Puces FTM",
+        "adminAuthenticationServicesDesc": "Voir ou Désactiver les Détails des Clients OIDC et des Clés API",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
@@ -101,7 +101,7 @@
         "submit": "Soumettre",
         "viewLess": "Voir moins",
         "viewMore": "Voir plus",
-        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ?"
+        "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ? "
     },
     "loading": "chargement",
     "partnerCertificatesList": {
@@ -176,8 +176,9 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
+        "policyId":"ID de la politique",
         "policyName": "Nom de la politique",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "status": "Statut",
         "action": "Action",
         "view": "voir",
@@ -186,6 +187,7 @@
         "selectPartnerType": "Sélectionnez le type de partenaire",
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
+        "selectPolicyId": "Sélectionner l'ID de la politique",
         "selectStatus": "Sélectionnez le statut",
         "errorInPoliciesList": "Une erreur s'est produite lors de la récupération des politiques. Réessayez plus tard!"
     },
@@ -201,7 +203,7 @@
         "policyNameDescription": "Nom de la stratégie Description",
         "comments": "commentaires",
         "adminComments": "Commentaires de l'administrateur",
-        "partnerComments": "Commentaires du partenaire",
+        "partnerComment": "Commentaires du partenaire",
         "back": "Dos",
         "createdOn": "Créé sur"
     },
@@ -236,7 +238,7 @@
         "policyName": "Nom de la politique",
         "policyGroup": "Groupe de politiques",
         "oidcClientName": "Nom du client OIDC",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "expiryDate": "Date d'expiration",
         "status": "Statut",
         "oidcClientId": "ID client OIDC",
@@ -284,7 +286,7 @@
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
         "oidcClientName": "Nom du client OIDC",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "status": "Statut",
         "oidcClientId": "ID client OIDC",
         "action": "Action",
@@ -420,7 +422,7 @@
         "device": "appareil",
         "sbiCreatedDate": "Date de création de SBI",
         "sbiExpiryDate": "Date d'expiration du SBI",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "deactivate": "Désactiver SBI",
         "submittedOn": "Soumis le",
         "errorInSbiList": "Lors de la récupération des listes SBI, nous avons rencontré une erreur.",
@@ -439,7 +441,7 @@
         "deviceSubType": "Sous-type d'appareil",
         "make": "Faire",
         "model": "Modèle",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "status": "Statut",
         "action": "Action",
         "errorInViewDevices": "Lors de la récupération de la liste des appareils, nous avons rencontré une erreur.",
@@ -451,7 +453,10 @@
         "selectModelName": "Sélectionnez le nom du modèle",
         "selectStatus": "Sélectionnez le statut",
         "unexpectedError": "Nous avons rencontré une erreur inattendue. Veuillez réessayer.",
-        "searchDeviceId": "Rechercher l'ID de l'appareil"
+        "searchDeviceId": "Rechercher l'ID de l'appareil",
+        "selectDeviceId": "Sélectionner l'ID de l'appareil",
+        "linkedDevicesList": "Liste des appareils liés",
+        "backToSbi": "Retour à la liste des SBI"
     },
     "deactivateDevicePopup": {
         "headerMsg": "Voulez-vous désactiver l'appareil ",
@@ -506,7 +511,7 @@
         "listOfFtm": "Liste des détails de la puce FTM",
         "make": "Faire",
         "model": "Modèle",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "certificateExpiryDate": "Date d'expiration du certificat",
         "certificateUploadDate": "Heure de téléchargement du certificat",
         "certExpiryStatus": "Statut d'expiration du certificat",
@@ -525,7 +530,9 @@
         "searchModel": "Rechercher un modèle",
         "expired": "Expiré",
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
-        "ftmId": "Identifiant FTM"
+        "ftmId": "Identifiant FTM",
+        "selectFtmId": "Sélectionnez l'ID FTM",
+        "searchFtmId": "Rechercher l'identifiant FTM"
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -586,15 +593,14 @@
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
     },
-    "uploadRootofTrustCertificate": {
-        "uploadRootOfTrustCertificate": "Télécharger le certificat racine de confiance",
-        "uploadIntermediateCaCertificate": "Télécharger le certificat d'autorité de certification intermédiaire",
-        "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
-        "intermediateDesc": "Pour télécharger le certificat CA intermédiaire, veuillez vous assurer que le certificat racine correspondant a déjà été téléchargé.",
+    "uploadTrustCertificate": {
+        "uploadTrustCertificate": "Télécharger le certificat de confiance",
+        "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
+        "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
-        "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléchargé avec succès",
+        "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
         "downloadIntermediateCertSuccessMsg": "La chaîne de confiance du certificat pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
@@ -613,9 +619,9 @@
         "viewIntermediateCaCertificateDetails": "Afficher les détails du CA certification intermédiaire",
         "uploadedOn": "Téléchargé le",
         "rootCaCertificate": "CA certification racine",
-        "certificateChainOfTrust": "Chaîne de confiance du certificat",
+        "intermediateCaCertificate": "Certificat CA intermédiaire",
         "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
-        "downloadAll": "Télécharger tout",
+        "downloadCertificateChain": "Télécharger la chaîne de certificats",
         "validTo": "Valable jusqu'aue",
         "certThumbprint": "Empreinte digitale du certificat"
     },
@@ -689,7 +695,7 @@
         "policyGroupId": "ID du groupe de politiques",
         "policyGroupName": "Nom du groupe de politiques",
         "policyGroupDescription": "Description du groupe de politiques",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "status": "Statut",
         "action": "Action",
         "listOfPolicyGroups": "Liste des groupes de politiques",
@@ -705,7 +711,7 @@
         "policyName": "Nom de la politique",
         "policyDescription": "Description de la politique",
         "policyGroup": "Groupe de politiques",
-        "createdDate": "Date de création",
+        "creationDate": "Date de création",
         "status": "Statut",
         "action": "Action",
         "listOfAuthPolicies": "Liste des politiques d'authentification",
@@ -731,11 +737,12 @@
     },
     "draftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en brouillon détectées !",
-        "description": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre."
+        "description1": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre.",
+        "description2": "Il existe un projet de stratégie associé à ce groupe de stratégies. Le groupe de stratégies ne peut pas être désactivé tant que le projet de stratégie associé n’est pas publié, puis désactivé. Veuillez consulter le projet de politique pour continuer."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il y a {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer que les conditions suivantes sont remplies :\n\n1. Désactivez les politiques activées.\n2. Publiez puis désactivez les politiques en brouillon."
+        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -774,6 +781,7 @@
         "upload": "Télécharger",
         "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
         "jsonParseError": "Veuillez fournir des données JSON valides",
+        "policyDatalengthExceedError": "Les données de politique ne doivent pas dépasser 5120 caractères.",
         "uploadPolicyDataFile": "Télécharger les données de la politique",
         "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement",
         "fileUploadSuccessMsg": "Les données de la politique ont été téléchargées avec succès",
@@ -791,11 +799,11 @@
     },
     "clonePolicyPopup": {
         "title": "Politique de clonage",
-        "description1": "Sélectionnez le groupe de politiques dans lequel vous souhaitez imbriquer la politique clonée",
-        "description2": "ainsi que les détails spécifiés. Assurez-vous que le groupe de politiques requis a été créé au préalable, car seuls les groupes de politiques existants apparaîtront dans la liste déroulante pour la sélection.",
+        "description1": "Sélectionnez le groupe de stratégies pour imbriquer la stratégie clonée",
+        "description2": ", y compris ses détails spécifiés. Vous pouvez également modifier les détails de la stratégie clonée avant de la publier.",
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
-        "successMsg": "{{policyName}} a été cloné et associé à {{policyGroupName}} avec succès !",
+        "successMsg": "&quot;{{policyName}}&quot; a été cloné et associé à &quot;{{policyGroupName}}&quot; avec succès !",
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "publishPolicyPopup": {
@@ -814,7 +822,7 @@
         "policyGroupName": "Groupe de Politiques",
         "policyId": "ID de la politique",
         "policyName": "Nom de la Politique",
-        "createdDate": "Date de Création",
+        "creationDate": "Date de Création",
         "partnerType": "Type de Partenaire",
         "status": "Statut",
         "action": "Action",
@@ -846,7 +854,8 @@
         "policyId": "ID de stratégie",
         "policyName": "Nom de la Politique",
         "organisation": "Nom de l'organisation",
-        "policyGroup": "Groupe de politiques"
+        "policyGroup": "Groupe de politiques",
+        "partnerStatus": "Statut de partenaire"
     },
     "deactivatePolicyPopup": {
         "headerMsg": "Voulez-vous désactiver la politique",
@@ -854,11 +863,11 @@
         "dataSharePolicyDescriptionMsg": "En cliquant sur 'Confirmer', la politique de partage de données sélectionnée sera désactivée."
     },
     "activePolicyRequestsDetectedMsg": {
-        "header": "Erreur : association partenaire-stratégie active détectée!",
-        "description": "Des partenaires actifs sont actuellement associés à cette politique. Veuillez désactiver tous les partenaires actifs associés à cette politique avant de tenter de la désactiver."
+        "header": "Erreur : liaison partenaire-politique active détectée!",
+        "description": "Un ou plusieurs partenaires agréés sont liés à cette politique. Par conséquent, la désactivation de la politique n'est pas autorisée."
     },
     "pendingPolicyRequestsDetectedMsg": {
-        "header": "Erreur : Partenaire - Demande de stratégie détectée !",
+        "header": "Erreur : Partenaire - Demande de stratégie détectée!",
         "description": "Les demandes de stratégie en attente sont associées à cette stratégie. Veuillez prendre les mesures appropriées dans l'écran Liste des liens vers les politiques des partenaires."
     },
     "approveRejectPopup": {
@@ -870,7 +879,7 @@
         "commentPlaceholder": "Écrivez votre commentaire ici"
     },
     "partnerPolicyRequestApproveRejectPopup": {
-        "header": "Voulez-vous Approuver/Rejeter la politique",
+        "header": "Voulez-vous Approuver/Rejeter la politique?",
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
     },
     "ftmRequestApproveRejectPopup": {
@@ -911,7 +920,7 @@
         "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
         "checkBoxDesc": "J'ai lu les conditions générales et j'accepte que mes données soient stockées et traitées aux fins indiquées.",
         "proceed": "Procéder",
-        "logoutMsg": "Si vous ne souhaitez pas aller plus loin, vous pouvez",
+        "logoutMsg": "Si vous ne souhaitez pas continuer, vous pouvez cliquer sur",
         "consentFetchError": "Erreur lors de la récupération du consentement de l'utilisateur",
         "consentSaveError": "Erreur lors de l'enregistrement du consentement de l'utilisateur"
     },
@@ -941,7 +950,7 @@
         "PMS_PRT_360": "Page non valide n°",
         "PMS_PRT_361": "Taille de page non valide",
         "KER_PRT_390": "Valeur de filtre non valide",
-        "KER-PCM-008": "Le nom de l'organisation partenaire ne correspond pas.",
+        "KER-PCM-008": "Le nom de l'organisation dans le certificat téléchargé ne correspond pas au nom fourni lors de l'inscription du partenaire.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
         "PMS_PRT_051": " Un partenaire est déjà enregistré avec le même identifiant",
         "PMS_PRT_052": "La longueur maximale du PartnerId doit être 36",
@@ -1086,11 +1095,12 @@
         "PMS_POL_069": "Des politiques actives ou en brouillon sont associées au groupe de politiques.",
         "PMS_POL_070": "Des politiques en brouillon existent dans le groupe de politiques.",
         "PMS_POL_071": "Erreur lors de la désactivation du groupe de politiques.",
+        "PMS_POL_072": "La politique sélectionnée n'est pas en statut activé",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "Les dates du certificat ne sont pas valides.",
-        "KER-PCM-005": "CA certification racine introuvable.",
+        "KER-PCM-005": "Veuillez télécharger le certificat racine correspondant pour continuer",
         "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
@@ -1106,8 +1116,8 @@
         "PMS_CERTIFICATE_ERROR_007": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les certificats de partenaire d'origine",
         "PMS_CERTIFICATE_ERROR_008": "Erreur lors de la récupération du certificat.",
         "PMS_CERTIFICATE_ERROR_009": "Impossible de télécharger le certificat pour un partenaire désactivé",
-        "PMS_CERTIFICATE_ERROR_010": "Erreur lors de la récupération des certificats CA.",
-        "PMS_CERTIFICATE_ERROR_011": "Erreur lors du téléchargement du certificat CA.",
+        "PMS_CERTIFICATE_ERROR_010": "Erreur lors de la récupération des certificats de confiance.",
+        "PMS_CERTIFICATE_ERROR_011": "Erreur lors du téléchargement du certificat de confiance.",
         "PMS_CERTIFICATE_ERROR_012": "L'ID du certificat est nul ou vide",
         "PMS_POLICY_ERROR_001": "Le groupe de stratégies n existe pas.",
         "PMS_POLICY_ERROR_002": "Erreur lors de la récupération des stratégies partenaires.",
@@ -1147,7 +1157,7 @@
         "PMS_DEVICE_ERROR_005": "SBI n'existe pas.",
         "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
         "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
-        "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout du mappage de périphériques inactifs pour sbi.",
+        "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout d'un périphérique pour sbi.",
         "PMS_DEVICE_ERROR_009": "Étant donné que le SBI est soit désactivé, soit pas encore approuvé.",
         "PMS_DEVICE_ERROR_010": "Les détails de l'appareil donné ne sont pas en attente d'approbation.",
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
@@ -1165,6 +1175,8 @@
         "PMS_DEVICE_ERROR_023": "L'appareil sélectionné n'est pas dans un statut approuvé.",
         "PMS_DEVICE_ERROR_024": "Cet appareil ne peut pas être approuvé car il n'a aucun SBI qui lui est associé.",
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
+        "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
+        "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
