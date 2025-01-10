@@ -81,7 +81,7 @@ function ApiKeysList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -112,10 +112,15 @@ function ApiKeysList() {
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
+            setViewApiKeyId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
+    };
+
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
     };
 
     //This part is related to Filter
@@ -152,7 +157,6 @@ function ApiKeysList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setViewApiKeyId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
@@ -161,11 +165,6 @@ function ApiKeysList() {
                 )
             );
         }
-    };
-
-    const closeDeactivatePopup = () => {
-        setViewApiKeyId(-1);
-        setShowDeactivatePopup(false);
     };
 
     //This part related to Pagination Logic
@@ -279,10 +278,10 @@ function ApiKeysList() {
                                                                                 <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
                                                                                 </button>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel}></DeactivatePopup>
-                                                                                )}
                                                                             </div>
+                                                                        )}
+                                                                        {showDeactivatePopup && (
+                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel} />
                                                                         )}
                                                                     </div>
                                                                 </td>

@@ -190,6 +190,7 @@ function PartnersList() {
       });
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
+      setViewPartnersId(-1);
       document.body.style.overflow = "hidden";
     }
   };
@@ -337,18 +338,18 @@ function PartnersList() {
                                                 <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                 <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
-                                              {showDeactivatePopup && (
-                                                < DeactivatePopup
-                                                  onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
-                                                  closePopUp={closeDeactivatePopup}
-                                                  popupData={{ ...partner, isDeactivatePartner: true }}
-                                                  request={deactivateRequest}
-                                                  headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
-                                                  descriptionMsg='deactivatePartner.description'
-                                                  headerKeyName={partner.orgName}
-                                                />
-                                              )}
                                             </div>
+                                          )}
+                                          {showDeactivatePopup && (
+                                            < DeactivatePopup
+                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
+                                              closePopUp={closeDeactivatePopup}
+                                              popupData={{ ...partner, isDeactivatePartner: true }}
+                                              request={deactivateRequest}
+                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
+                                              descriptionMsg='deactivatePartner.description'
+                                              headerKeyName={partner.orgName}
+                                            />
                                           )}
                                         </div>
                                       </td>

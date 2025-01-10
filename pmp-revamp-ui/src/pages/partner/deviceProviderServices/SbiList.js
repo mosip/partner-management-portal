@@ -272,8 +272,8 @@ function SbiList() {
                                                                 <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', false)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.sbiExpiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
+                                                                <p className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
+                                                                <p className={`text-sm text-vulcan ${!(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold text-crimson-red' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
                                                             </div>
                                                         </div>
                                                     </div>

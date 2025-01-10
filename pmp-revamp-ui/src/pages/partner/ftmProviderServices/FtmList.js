@@ -94,7 +94,7 @@ function FtmList() {
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
     { id: "model", headerNameKey: "ftmList.model" },
-    { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
     { id: "certificateUploadDateTime", headerNameKey: "ftmList.certificateUploadDate" },
     { id: "certificateExpiryDateTime", headerNameKey: "ftmList.certificateExpiryDate" },
     { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
@@ -174,8 +174,13 @@ function FtmList() {
       }, "mosip.pms.deactivate.ftm.patch", true);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
+      setViewFtmId(-1);
       document.body.style.overflow = "hidden";
     }
+  };
+
+  const closeDeactivatePopup = () => {
+    setShowDeactivatePopup(false);
   };
 
   const showManageCertificate = (selectedFtmData) => {
@@ -192,7 +197,6 @@ function FtmList() {
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
-      setViewFtmId(-1);
       setShowDeactivatePopup(false);
       // Update the specific row in the state with the new status
       setFtmList((prevList) =>
@@ -203,10 +207,6 @@ function FtmList() {
     }
   };
 
-  const closeDeactivatePopup = () => {
-    setViewFtmId(-1);
-    setShowDeactivatePopup(false);
-  };
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -286,7 +286,7 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', true)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{ftm.certificateExpiryStatus}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
@@ -310,10 +310,10 @@ function FtmList() {
                                         <button id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                           <p> {t('ftmList.deActivate')}</p>
                                         </button>
-                                        {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
-                                        )}
                                       </div>
+                                    )}
+                                    {showDeactivatePopup && (
+                                      <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
                                     )}
                                   </div>
                                 </td>

@@ -5,7 +5,6 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-    onPressEnterKey,
     moveToSbisList, populateDeactivatedStatus,
     createRequest
 } from '../../../utils/AppUtils.js';
@@ -108,7 +107,7 @@ function DevicesList() {
         { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "devicesList.creationDate" },
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
@@ -179,15 +178,19 @@ function DevicesList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
+            setViewDeviceId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
     };
 
+    const closeDeactivatePopup = () => {
+        setShowDeactivatePopup(false);
+    };
+
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setViewDeviceId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
@@ -198,10 +201,6 @@ function DevicesList() {
         }
     };
 
-    const closeDeactivatePopup = () => {
-        setViewDeviceId(-1);
-        setShowDeactivatePopup(false);
-    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -331,11 +330,10 @@ function DevicesList() {
                                                                                         <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                         </button>
-
-                                                                                        {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
-                                                                                        )}
                                                                                     </div>
+                                                                                )}
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                 )}
                                                                             </div>
                                                                         </td>

@@ -361,7 +361,7 @@ function CreatePolicy() {
                                                             ref={policyDataRef}
                                                             value={policyData}
                                                             onChange={(e) => handlePolicyDataChange(e)}
-                                                            className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
+                                                            className={`w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue ${!policyData ? 'bg-gray-100' : 'bg-white'}  leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap`}
                                                             placeholder={t('createPolicy.policyDataDesc')}
                                                             disabled={!policyData}
                                                         />

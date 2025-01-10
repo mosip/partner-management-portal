@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
+import {
+    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+} from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
