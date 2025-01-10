@@ -213,7 +213,7 @@ function ViewAdminFtmChipDetails() {
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
-                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-red-700 font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', false)}
                                             </p>
                                         </div>
