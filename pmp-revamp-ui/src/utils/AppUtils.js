@@ -370,7 +370,7 @@ export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErr
 
 export const getApprovedAuthPartners = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v4?status=approved&policyGroupAvailable=true&partnerType=Auth_Partner`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v3?status=approved&policyGroupAvailable=true&partnerType=Auth_Partner`, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
@@ -731,7 +731,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
 
 export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/download-root-certificate/${certificateId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {

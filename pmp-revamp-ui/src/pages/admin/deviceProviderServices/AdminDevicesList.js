@@ -108,7 +108,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         if (filterAttributes.sbiId || sbiId) queryParams.append('sbiId', filterAttributes.sbiId || sbiId);
         if (filterAttributes.sbiVersion || sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion || sbiVersion);
 
-        const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/devicedetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);

@@ -207,7 +207,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/devicedetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
