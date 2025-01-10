@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -21,7 +18,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.JsonUtil;
 import io.mosip.testrig.pmprevampui.utility.Screenshot;
 
@@ -160,6 +156,31 @@ public class BasePage {
 			executor.executeScript("arguments[0].click();", element);
 
 		}
+	}
+	
+	public static void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
+
+		try {
+			Thread.sleep(50);
+			clickOnElement(element);
+			Thread.sleep(50);
+			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", element);
+
+		}
+	}
+	
+	public static void selectByValueInDropdown(WebElement element, String value) {
+		Select select = new Select(element);
+		select.selectByValue(value);
 	}
 
 	protected static void click(By by) {

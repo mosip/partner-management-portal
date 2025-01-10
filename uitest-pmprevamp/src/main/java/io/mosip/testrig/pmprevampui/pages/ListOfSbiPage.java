@@ -88,7 +88,7 @@ public class ListOfSbiPage extends BasePage {
 				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]"));
 		return isElementEnabled(addDeviceButton);
 	}
-	
+
 	public void clickOnViewDeviceButton(String sbiVersion) {
 		WebElement addDeviceButton = driver.findElement(
 				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]"));
@@ -97,7 +97,7 @@ public class ListOfSbiPage extends BasePage {
 
 	public void clickOnThreeDotsOfSbiListAsAdmin(String sbiVersion) {
 		WebElement threeDotSbiOptionsButton = driver
-				.findElement(By.xpath("//*[text()='" + sbiVersion + "']/..//p[contains(@id, 'sbi_list_action')]"));
+				.findElement(By.xpath("//*[text()='" + sbiVersion + "']/..//button[contains(@id, 'sbi_list_action')]"));
 		clickOnElement(threeDotSbiOptionsButton);
 	}
 

@@ -3,7 +3,7 @@ package io.mosip.testrig.pmprevampui.utility;
 public class GlobalConstants {
 
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
-	public static final String isLoginPageDisplayed = "Verify if login page is displayed after clicking on logout button in dashboard page."; 
+	public static final String isLoginPageDisplayed = "Verify if login page is displayed after clicking on logout button in dashboard page.";
 	public static final String isRegisterPageTitleDisplayed = "Verify if register page is displayed after clicking on register button in login page.";
 	public static final String isFirstNameTextBoxDisplayed = "Verify if first name textbox is displayed in register page.";
 	public static final String isLastNameTextBoxDisplayed = "Verify if last name textbox is displayed in register page.";
@@ -16,7 +16,7 @@ public class GlobalConstants {
 	public static final String isUsernameTextBoxDisplayed = "Verify if username textbox is displayed in register page.";
 	public static final String isPasswordTextBoxDisplayed = "Verify if password textbox is displayed in register page.";
 	public static final String isPasswordConfirmTextBoxDisplayed = "Verify if confirm password textbox is displayed in register page.";
-	public static final String isSubmitButtonDisplayed = "Verify if submit button is displayed";   
+	public static final String isSubmitButtonDisplayed = "Verify if submit button is displayed";
 	public static final String isSelectPolicyGroupPopUpDisplayed = "Verify if select policy group is displayed after click on submit button";
 	public static final String isSubmitButtonSelectPolicyGroupPopUpDisplayed = "Verify if submit button is displayed in select policy group pop up in dashboard page.";
 	public static final String isTermsAndConditionsPopUppDisplayed = "Verify if term and condition pop up displayed";
@@ -38,8 +38,10 @@ public class GlobalConstants {
 	public static final String isAddSbiDetailsSubTitleDisplayed = "Verify if add sbi details sub title is displayed";
 	public static final String isAddSbiDetailsTitleDisplayed = "Verify if add sbi details title is displayed";
 	public static final String isHomeButtonDisplayed = "Verify if home button is displayed";
+	public static final String isListOfSbiButtonDisplayed = "Verify if list of sbi sub title button is displayed";
 	public static final String isDeviceTypeOptionsDisplayed = "Verify if device type option is displayed";
 	public static final String isDeviceSubTypeOptionsDisplayed = "Verify if device sub type option is displayed";
+	public static final String isCreatedTwentyFifthDeviceDisplayed = "Verify if created twenty fifth device is displayed";
 	public static final String isDeviceSubTypeEnabled = "Verify if Device sub type dropdown is enabled";
 	public static final String isAddDeviceButtonEnabled = "Verify if Add Device button is enabled";
 	public static final String isDeleteButtonEnabled = "Verify if Delete button is enabled";
@@ -75,7 +77,7 @@ public class GlobalConstants {
 	public static final String isPolicyNameDescAscIcon = "Verify if policy name Asending decending icon displayed";
 	public static final String isCreatedDateTimeDescAscIcon = "Verify if created date time Asending decending icon displayed";
 	public static final String isSubTitleHomeDisplayed = "Verify if subtitle home displayed";
-	public static final String isSubTitleDisplayed  = "Verify if subtitle displayed";
+	public static final String isSubTitleDisplayed = "Verify if subtitle displayed";
 	public static final String isBackArrow = "Verify if back arrow icon displayed";
 	public static final String isViewPolicyTitle = "Verify if view policy title displayed";
 	public static final String isDeviceApprovedCountDisplayed = "Verify if device approved count is displayed";
@@ -140,11 +142,13 @@ public class GlobalConstants {
 	public static final String LIST_OF_SBI = "/ List of SBI";
 	public static final String LIST_OF_DEVICES = "/ List of Devices";
 	public static final String ADD_DEVICE_MESSAGE = "On clicking of ‘Submit’ button, each device creation request will be sent to admin for approval. You can add more devices associated to this SBI by clicking on ‘Add Device’ button. Once done, you can go back to ‘List of SBIs & Devices’ screen.";
+	public static final String MAXIMUM_DEVICE_ALERT_MESSAGE = "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
+	public static final String LIST_OF_DEVICES_TITLE = "List of Devices (26)";
 	public static final String INITIAL_MAKE = "Enter Make";
 	public static final String INITIAL_MODEL = "Enter Model";
-	
+
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -156,6 +160,8 @@ public class GlobalConstants {
 	public static final String VALUE = "value";
 	public static final String EXCEPTION_STRING_2 = "Exception ";
 	public static final String AUTOMATION = "Automation";
+	public static final String AUTOMATION_2 = "Automation2";
+	public static final String AUTOMATION_25 = "Automation25";
 	public static final String AUTOMATION_UPPERCASE = "AUTOMATION";
 	public static final String AUTOMATION_LOWERCASE = "automation";
 	public static final String CHARACTERS_36 = "Automationnnnnnnnnnnnnnnnnnnnnnnnnnn";
@@ -175,6 +181,5 @@ public class GlobalConstants {
 	public static final String TOUCHLESS = "Touchless";
 	public static final String IRIS = "Iris";
 	public static final String DOUBLE = "Double";
-	
-	
+
 }
