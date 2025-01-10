@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
+import {
+    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+} from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -23,6 +25,7 @@ function ViewPartnerDetails() {
     const [downloadBtnId, setDownloadBtnId] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [partnerDetails, setPartnerDetails] = useState(true);
+    const [certificateExpiryStatus, setcertificateExpiryStatus] = useState('');
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
@@ -73,6 +76,7 @@ function ViewPartnerDetails() {
         if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                setcertificateExpiryStatus(response.isCaSignedCertificateExpired);
             } else {
                 setSuccessMsg(t('viewPartnerDetails.originalCertificateSuccessMsg'));
                 downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
@@ -85,6 +89,7 @@ function ViewPartnerDetails() {
         if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                setcertificateExpiryStatus(response.isCaSignedCertificateExpired);
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
                 downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
@@ -277,7 +282,7 @@ function ViewPartnerDetails() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
-                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
+                                                    <p className={`font-semibold text-md ${certificateExpiryStatus ? ' text-crimson-red' : 'text-charcoal-gray'}`}>{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>

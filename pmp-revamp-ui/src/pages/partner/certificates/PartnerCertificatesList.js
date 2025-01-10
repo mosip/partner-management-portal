@@ -21,7 +21,8 @@ function PartnerCertificatesList() {
     const [downloadBtnId, setDownloadBtnId] = useState(-1);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
-    const [certificatesData, setCertificatesData] = useState([]);
+    const [certificatesData, setCertificatesData] = useState([]);  
+    const [certificateExpiryStatus, setcertificateExpiryStatus] = useState('');
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
@@ -64,6 +65,7 @@ function PartnerCertificatesList() {
         if (response) {
             if (response.isCaSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                setcertificateExpiryStatus(response.isCaSignedCertificateExpired);
             } else {
                 setSuccessMsg(t('partnerCertificatesList.originalCertificateSuccessMsg'));
                 downloadFile(response.caSignedCertificateData, 'ca_signed_partner_certificate.cer', 'application/x-x509-ca-cert')
@@ -76,6 +78,7 @@ function PartnerCertificatesList() {
         if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                setcertificateExpiryStatus(response.isCaSignedCertificateExpired);
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
                 downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
@@ -226,7 +229,7 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime', false)}</p>
+                                                    <p className={`font-semibold text-sm ${certificateExpiryStatus ? ' text-crimson-red' : 'text-charcoal-gray'}`}>{formatDate(partner.certificateExpiryDateTime, 'dateTime', false)}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>

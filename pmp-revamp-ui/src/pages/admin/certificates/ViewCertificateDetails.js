@@ -166,8 +166,8 @@ function ViewCertificateDetails() {
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold ${!viewCertDetails.status ? 'text-crimson-red' : 'text-dim-gray font-semibold'}`}>{t('viewCertificateDetails.validTo')}</p>
-                                            <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray`}>{t('viewCertificateDetails.validTo')}</p>
+                                            <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(viewCertDetails.validTillDate, 'dateTime', true)}
                                             </p>
                                         </div>
