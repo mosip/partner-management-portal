@@ -22,7 +22,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement submitButton;
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
-	private WebElement sucessMessage;
+	private WebElement successMessage;
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
@@ -166,7 +166,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isSucessMessageDisplayed() {
-		return isElementDisplayed(sucessMessage);
+		return isElementDisplayed(successMessage);
 	}
 
 	public void clickOnCloseButton() {
