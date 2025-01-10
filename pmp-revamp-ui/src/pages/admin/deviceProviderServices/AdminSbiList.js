@@ -207,7 +207,6 @@ function AdminSbiList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.sbi.patch", true);
-            setActionId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";

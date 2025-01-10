@@ -179,7 +179,6 @@ function AdminFtmList() {
                 status: "De-Activate",
             }, "mosip.pms.deactivate.ftm.patch", true);
             setDeactivateRequest(request);
-            setActionId(-1);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
