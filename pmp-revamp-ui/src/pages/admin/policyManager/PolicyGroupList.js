@@ -54,6 +54,7 @@ function PolicyGroupList() {
         status: null,
     });
     const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -229,6 +230,10 @@ function PolicyGroupList() {
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
             setActionId(-1);
+            const request = createRequest({
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.policy.group.patch", true);
+            setDeactivateRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -366,6 +371,7 @@ function PolicyGroupList() {
                                                                                     headerKeyName={policyGroup.name}
                                                                                     closePopUp={closePopup}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
+                                                                                    request={deactivateRequest}
                                                                                 />
                                                                             )}
                                                                         </div>

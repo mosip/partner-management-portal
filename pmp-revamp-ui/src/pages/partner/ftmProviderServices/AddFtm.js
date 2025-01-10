@@ -117,7 +117,7 @@ function AddFtm() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/v4?status=approved&partnerType=FTM_Provider', process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl('/partners/v3?status=approved&partnerType=FTM_Provider', process.env.NODE_ENV));
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
