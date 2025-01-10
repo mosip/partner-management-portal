@@ -113,6 +113,7 @@ function ApiKeysList() {
                 status: "De-Active"
             });
             setDeactivateRequest(request);
+            setViewApiKeyId(-1);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
