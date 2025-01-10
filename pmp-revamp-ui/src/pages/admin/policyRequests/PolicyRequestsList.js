@@ -183,6 +183,7 @@ function PolicyRequestsList() {
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
       setShowPopup(false);
+      setViewPartnersId(-1);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
         prevList.map(policyRequest =>
@@ -195,6 +196,7 @@ function PolicyRequestsList() {
 
   const closePolicyRequestPopup = () => {
     setShowPopup(false);
+    setViewPartnersId(-1);
     document.body.style.overflow = 'auto';
   };
 
@@ -205,7 +207,6 @@ function PolicyRequestsList() {
   const approveRejectPolicyRequest = (policyRequest) => {
     if (policyRequest.status === 'InProgress') {
       setShowPopup(true);
-      setViewPartnersId(-1);
       document.body.style.overflow = "hidden";
     }
   };
@@ -329,19 +330,19 @@ function PolicyRequestsList() {
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
+                                              {showPopup &&
+                                                <ApproveRejectPopup
+                                                  popupData={{ ...policyRequest, isPartnerPolicyRequest: true }}
+                                                  closePopUp={closePolicyRequestPopup}
+                                                  approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, policyRequest)}
+                                                  title={policyRequest.policyName}
+                                                  subtitle={`# ${policyRequest.policyId}`}
+                                                  header={t('partnerPolicyRequestApproveRejectPopup.header')}
+                                                  description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                                />
+                                              }
                                             </div>
                                           )}
-                                          {showPopup &&
-                                            <ApproveRejectPopup
-                                              popupData={{ ...policyRequest, isPartnerPolicyRequest: true }}
-                                              closePopUp={closePolicyRequestPopup}
-                                              approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, policyRequest)}
-                                              title={policyRequest.policyName}
-                                              subtitle={`# ${policyRequest.policyId}`}
-                                              header={t('partnerPolicyRequestApproveRejectPopup.header')}
-                                              description={t('partnerPolicyRequestApproveRejectPopup.description')}
-                                            />
-                                          }
                                         </div>
                                       </td>
                                     </tr>

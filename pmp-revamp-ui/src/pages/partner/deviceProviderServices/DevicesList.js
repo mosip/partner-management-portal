@@ -178,7 +178,6 @@ function DevicesList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
-            setViewDeviceId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -186,11 +185,13 @@ function DevicesList() {
     };
 
     const closeDeactivatePopup = () => {
+        setViewDeviceId(-1);
         setShowDeactivatePopup(false);
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
+            setViewDeviceId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
@@ -330,10 +331,10 @@ function DevicesList() {
                                                                                         <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                         </button>
+                                                                                        {showDeactivatePopup && (
+                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
+                                                                                        )}
                                                                                     </div>
-                                                                                )}
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
                                                                                 )}
                                                                             </div>
                                                                         </td>

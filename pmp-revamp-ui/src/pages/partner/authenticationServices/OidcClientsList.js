@@ -132,7 +132,6 @@ function OidcClientsList() {
                 clientAuthMethods: selectedClientdata.clientAuthMethods,
                 clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
             });
-            setViewClientId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -140,6 +139,7 @@ function OidcClientsList() {
     };
 
     const closeDeactivatePopup = () => {
+        setViewClientId(-1);
         setShowDeactivatePopup(false);
     };
 
@@ -189,8 +189,8 @@ function OidcClientsList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
-            setViewClientId(-1);
             setShowDeactivatePopup(false);
+            setViewClientId(-1);
             // Update the specific row in the state with the new status
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
@@ -326,10 +326,10 @@ function OidcClientsList() {
                                                                                 <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </button>
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
+                                                                                )}
                                                                             </div>
-                                                                        )}
-                                                                        {showDeactivatePopup && (
-                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
                                                                         )}
                                                                     </div>
                                                                 </td>

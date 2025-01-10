@@ -178,7 +178,6 @@ function AdminSbiList() {
 
     const approveRejectSbi = (selectedSbi) => {
         if (selectedSbi.status === 'pending_approval') {
-            setActionId(-1);
             setShowSbiApproveRejectPopUp(true);
             document.body.style.overflow = "hidden";
         }
@@ -187,7 +186,7 @@ function AdminSbiList() {
     const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
             setShowSbiApproveRejectPopUp(false);
-            // Update the specific row in the state with the new status
+            setActionId(-1);
             setSbiList((prevList) =>
                 prevList.map(sbi =>
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
@@ -199,6 +198,7 @@ function AdminSbiList() {
 
     const closeApproveRejectPopup = () => {
         setShowSbiApproveRejectPopUp(false);
+        setActionId(-1);
         document.body.style.overflow = "auto";
     };
 
@@ -229,6 +229,7 @@ function AdminSbiList() {
 
     const closeDeactivatePopup = () => {
         setShowDeactivatePopup(false);
+        setActionId(-1);
         document.body.style.overflow = "auto";
     };
 
@@ -351,6 +352,16 @@ function AdminSbiList() {
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={sbi.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
+                                                                                    {showSbiApproveRejectPopUp && (
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...sbi, isSbiRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, sbi)}
+                                                                                            title={sbi.sbiVersion}
+                                                                                            header={t('sbiApproveRejectPopup.header')}
+                                                                                            description={t('sbiApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    )}
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewSbiDetails(sbi)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewSbiDetails(sbi))}>
                                                                                         <p id="sbi_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
@@ -361,20 +372,10 @@ function AdminSbiList() {
                                                                                         <p id="sbi_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${sbi.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={sbi.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
+                                                                                    {showDeactivatePopup && (
+                                                                                        <DeactivatePopup closePopUp={() => closeDeactivatePopup()} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.descriptionForAdmin' headerKeyName={sbi.sbiVersion} />
+                                                                                    )}
                                                                                 </div>
-                                                                            )}
-                                                                            {showSbiApproveRejectPopUp && (
-                                                                                <ApproveRejectPopup
-                                                                                    popupData={{ ...sbi, isSbiRequest: true }}
-                                                                                    closePopUp={closeApproveRejectPopup}
-                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, sbi)}
-                                                                                    title={sbi.sbiVersion}
-                                                                                    header={t('sbiApproveRejectPopup.header')}
-                                                                                    description={t('sbiApproveRejectPopup.description')}
-                                                                                />
-                                                                            )}
-                                                                            {showDeactivatePopup && (
-                                                                                <DeactivatePopup closePopUp={() => closeDeactivatePopup()} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.descriptionForAdmin' headerKeyName={sbi.sbiVersion} />
                                                                             )}
                                                                         </div>
                                                                     </td>
