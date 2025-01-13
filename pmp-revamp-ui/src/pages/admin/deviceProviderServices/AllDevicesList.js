@@ -4,7 +4,7 @@ function AllDevicesList () {
 
     return (
         <AdminDevicesList
-            title='devicesList.listOfDevices'
+            title='dashboard.sbiDevice'
             subTitle='devicesList.listOfDevices'
             isLinkedDevicesList={false} 
         />

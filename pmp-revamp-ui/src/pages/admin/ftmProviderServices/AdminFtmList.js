@@ -248,7 +248,7 @@ function AdminFtmList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
+                            <Title title='dashboard.ftmChip' backLink='/partnermanagement' />
                         </div>
                         {!applyFilter && ftmList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
