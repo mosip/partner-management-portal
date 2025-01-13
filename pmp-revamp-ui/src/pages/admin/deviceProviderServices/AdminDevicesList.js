@@ -62,10 +62,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         sbiId: null,
         sbiVersion: null
     });
-    const [preFilledFilters, setPreFilledFilters] = useState({
-        sbiId: null,
-        sbiVersion: null
-    });
+    const[sbiId, setSbiId] = useState(null);
+    const[sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -140,13 +138,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         const sbiVersion = params.get('sbiVersion');
 
         if (sbiId || sbiVersion) {
-            setExpandFilter(true);
-            setPreFilledFilters((prev) => ({
-                ...prev,
-                sbiId: sbiId,
-                sbiVersion: sbiVersion,
-            }));
-            setApplyFilter(true);
+            setSbiId(sbiId);
+            setSbiVersion(sbiVersion);
         }
         fetchDeviceDetails(sbiId, sbiVersion);
     }, [sortFieldName, sortType, pageNo, pageSize]);
@@ -154,7 +147,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     useEffect(() => {
 
         if (isApplyFilterClicked) {
-            fetchDeviceDetails(null, null);
+            fetchDeviceDetails(sbiId, sbiVersion);
             setIsApplyFilterClicked(false);
         }
     }, [isApplyFilterClicked]);
@@ -273,6 +266,22 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         }
     }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
 
+    const getFilterSubTitle = () => {
+        if (sbiId && sbiVersion) {
+            return t('sbiList.sbiId') + ': ' + sbiId + ' | ' + t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else if (sbiId) {
+            return t('sbiList.sbiId') + ': ' + sbiId;
+        } else if (sbiVersion) {
+            return t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else {
+            return "";
+        }
+    };
+
+    const filteredTableHeaders = tableHeaders.filter(
+        (header) => !(isLinkedDevicesList && (header.id === "sbiId" || header.id === "sbiVersion"))
+    );
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -308,7 +317,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     setFilter={setExpandFilter}
                                     addBackArrow={isLinkedDevicesList ? true : false}
                                     goBack={isLinkedDevicesList && backToSbi}
-                                    backArrowTitle={isLinkedDevicesList && 'devicesList.backToSbi'}
+                                    listSubTitle={isLinkedDevicesList && getFilterSubTitle()}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
@@ -316,7 +325,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                         onApplyFilter={onApplyFilter}
                                         setErrorCode={setErrorCode}
                                         setErrorMsg={setErrorMsg}
-                                        preFilledFilters={preFilledFilters}
+                                        removeSbiFields={isLinkedDevicesList}
                                     />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
@@ -328,7 +337,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {filteredTableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
@@ -355,8 +364,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                 <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                    {!isLinkedDevicesList && (
+                                                                        <>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                        </>
+                                                                    )}
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>

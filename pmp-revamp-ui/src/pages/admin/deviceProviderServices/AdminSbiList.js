@@ -260,7 +260,7 @@ function AdminSbiList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='sbiList.listOfSbis' backLink='/partnermanagement' />
+                            <Title title='dashboard.sbiDevice' backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={true}

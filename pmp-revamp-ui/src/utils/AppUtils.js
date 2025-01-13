@@ -688,7 +688,6 @@ export const fetchDeviceTypeDropdownData = async (setErrorCode, setErrorMsg, t) 
             return [];
         }
     } catch (err) {
-        setErrorMsg(err.message);
         console.log("Error fetching data: ", err);
         return [];
     }
@@ -714,13 +713,12 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
                 return responseData.response.filters;
             } else {
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
-                    setErrorCode(responseData.errors[0].errorCode);
-                    setErrorMsg(responseData.errors[0].message);
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
                 return [];
             }
         } else {
-            setErrorCode(t('addDevices.errorInDeviceSubType'));
+            setErrorMsg(t('addDevices.errorInDeviceSubType'));
             return [];
         }
     } catch (err) {
