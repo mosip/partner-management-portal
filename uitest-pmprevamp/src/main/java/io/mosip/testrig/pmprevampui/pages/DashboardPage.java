@@ -52,7 +52,22 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "dashboard_authentication_clients_list_card")
 	private WebElement AuthenticationServices;
-
+	
+	@FindBy(id = "dashboard_device_provider_service_card")
+	private WebElement deviceProviderServices;
+	
+	@FindBy(id = "welcome_msg")
+	private WebElement welcomeMessage;
+	
+	@FindBy(id = "side_nav_device_provider_service_icon")
+	private WebElement sideNavDeviceProvider;
+	
+	@FindBy(id = "header_hamburger_open_sidenav")
+	private WebElement hamburgerOpen;
+	
+	@FindBy(id = "header_hamburger_close_sidenav")
+	private WebElement hamburgerClose;
+	
 	@FindBy(id = "select_policy_group_view_text")
 	private WebElement selectPolicyGroupViewMoreAndLess;
 
@@ -68,16 +83,24 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
 	private WebElement RootOFTrustCertText;
 	
-	@FindBy(id = "root_certificate_upload_btn")
+	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")
 	private WebElement rootCertificateUploadButton;
-	
 
 	@FindBy(xpath = "//*[text()='Policies']")
 	private WebElement policyButton;
 	
-	
 	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
+	
+	@FindBy(id = "dashboard_partner_certificate_list_header")
+	private WebElement dashboardPartnerCertificateListHeader;
+	
+	@FindBy(xpath = "//*[text()='FTM Chip']")
+	private WebElement FTMChipTab;
+	
+	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
+	private WebElement dashboardFtmChipproviderCardHeader;
+		
 	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -154,6 +177,14 @@ public class DashboardPage extends BasePage {
 	public boolean isAuthenticationServicesTitleDisplayed() {
 		return isElementDisplayed(AuthenticationServices);
 	}
+	
+	public boolean isDeviceProviderServicesTitleDisplayed() {
+		return isElementDisplayed(deviceProviderServices);
+	}
+	
+	public boolean isWelcomeMessageDisplayed() {
+		return isElementDisplayed(welcomeMessage);
+	}
 
 	public PoliciesPage clickOnPoliciesTitle() {
 		clickOnElement(policiesTitle);
@@ -168,6 +199,11 @@ public class DashboardPage extends BasePage {
 	public OidcClientPage clickOnAuthenticationServicesTitle() {
 		clickOnElement(AuthenticationServices);
 		return new OidcClientPage(driver);
+	}
+	
+	public DeviceProviderPage clickOnDeviceProviderServicesTitle() {
+		clickOnElement(deviceProviderServices);
+		return new DeviceProviderPage(driver);
 	}
 
 	public boolean isSelectPolicyGroupViewMoreAndLess() {
@@ -208,6 +244,35 @@ public class DashboardPage extends BasePage {
 	
 	public void clickOnPartnerPolicyMappingTab() {
 		clickOnElement(PartnerPolicyMappingTab);
+	}
+	
+	public void clickOnDashboardPartnerCertificateListHeader() {
+		clickOnElement(dashboardPartnerCertificateListHeader);
+	}
+	
+	public void clickOnFTMChipTab() {
+		clickOnElement(FTMChipTab);
+	}
+	
+	public void clickOnDashboardFtmChipproviderCardHeader() {
+		clickOnElement(dashboardFtmChipproviderCardHeader);
+	}
+
+	public void clickOnHamburgerOpen() {
+		clickOnElement(hamburgerOpen);
+	}
+	
+	public void clickOnHamburgerClose() {
+		clickOnElement(hamburgerClose);
+	}
+	
+	public DeviceProviderPage clickOnSideNavDeviceProvider() {
+		clickOnElement(sideNavDeviceProvider);
+		return new DeviceProviderPage(driver);
+	}
+	
+	public String getSideNavDeviceProviderTitle() {
+		return getTextFromLocator(sideNavDeviceProvider);
 	}
 	
 }

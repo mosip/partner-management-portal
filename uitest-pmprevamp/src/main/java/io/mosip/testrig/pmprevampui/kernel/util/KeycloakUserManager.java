@@ -86,7 +86,16 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("nocert")) {
 				moduleSpecificUser = needsToBeCreatedUser;
+			}else if (needsToBeCreatedUser.equals("device")) {
+				moduleSpecificUser = needsToBeCreatedUser;
 			}
+			else if (needsToBeCreatedUser.equals("ftm")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			}else if (needsToBeCreatedUser.equals("ftmnocert")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			}
+			
+			
 
 			else {
 				moduleSpecificUser = BaseTestCaseFunc.currentModule + "-" + needsToBeCreatedUser;
@@ -138,7 +147,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			}
 			userResource.roles().realmLevel() //
 					.add((availableRoles.isEmpty() ? allRoles : availableRoles));
-
 		}
 	}
 

@@ -62,12 +62,12 @@ jobs:
       ORG_KEY: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       
-  build-dockers-pmp-reactjs-ui:
+  build-dockers-pmp-revamp-ui:
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: 'pmp-reactjs-ui'
-            SERVICE_NAME: 'pmp-reactjs-ui'
+          - SERVICE_LOCATION: 'pmp-revamp-ui'
+            SERVICE_NAME: 'pmp-revamp-ui'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -112,7 +112,7 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}

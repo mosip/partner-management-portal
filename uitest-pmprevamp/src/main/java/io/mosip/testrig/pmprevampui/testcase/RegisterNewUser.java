@@ -87,7 +87,7 @@ public class RegisterNewUser extends BaseClass {
 		registerPage.enterOrganizationName("xyz");
 
 		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
-		registerPage.selectPartnerTypeDropdown();
+		registerPage.selectPartnerTypeDropdown(2);
 
 		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
 		registerPage.enterAddress("0"+ data);

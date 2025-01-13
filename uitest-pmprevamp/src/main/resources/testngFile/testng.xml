@@ -7,9 +7,11 @@
 	
 		<classes>
 			<class name="io.mosip.testrig.pmprevampui.testcase.AuthPartnerTest" />
-<!--			<class name="io.mosip.testrig.pmprevampui.testcase.NewUserPolicy" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.NewUserPolicy" />
 			<class name="io.mosip.testrig.pmprevampui.testcase.CreateOidecClient" />
-			<class name="io.mosip.testrig.pmprevampui.testcase.CreateApiKey" />-->
+			<class name="io.mosip.testrig.pmprevampui.testcase.CreateApiKey" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.DevicePartnerTest" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.FTMDeviceTest" />
 		</classes>
 		
 	</test>

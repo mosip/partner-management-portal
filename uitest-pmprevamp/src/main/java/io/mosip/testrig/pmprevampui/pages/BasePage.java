@@ -7,8 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Random;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -197,11 +199,12 @@ public class BasePage {
 			return false;
 		}
 	}
-
-	protected boolean isElementEnabled(WebElement element) {
+	
+	protected boolean isElementDisabled(WebElement element) {
 		try {
-			waitForElementToBeVisible(element);
-			element.isEnabled();
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			Thread.sleep(2000);
+			waitForElementToBeDisabled(element);
 			return true;
 		} catch (Exception e) {
 			try {
@@ -214,9 +217,29 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementEnabled(WebElement element) {
+		try {
+			waitForElementToBeVisible(element);
+			return element.isEnabled();
+		} catch (Exception e) {
+			try {
+				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
+						+ "' width='900' height='450'/></p>");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
 	private void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	
+	private void waitForElementToBeDisabled(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 
 	public static void wait(int wait) {
@@ -273,6 +296,42 @@ public class BasePage {
 
 	public static String getTestData() {
 		return JsonUtil.readJsonFileText("TestData.json");
+	}
+	
+
+	public void refreshThePage() {
+		driver.navigate().refresh();
+	}
+	
+	public static void NavigateBack() {
+		driver.navigate().back();
+	}
+	
+	public static void NavigateForword() {
+		driver.navigate().forward();
+	}
+
+	public void reload() {
+		driver.navigate().refresh();
+	}
+	
+	public void back() {
+		driver.navigate().back();
+	}
+	
+	public String acceptAlert() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		alert.accept();
+		return alertText;
+	}
+	
+	public String cancelAlert() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		alert.dismiss();
+		return alertText;
+
 	}
 
 }
