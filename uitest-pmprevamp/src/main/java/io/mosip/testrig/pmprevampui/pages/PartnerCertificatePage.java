@@ -23,7 +23,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
 	private WebElement successMessage;
-	
+
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 	
@@ -35,10 +35,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Close']")
 	private WebElement closeButton;
-	
+
 	@FindBy(id = "success_msg_close_icon")
 	private WebElement successMsgCloseButton;
-	
+
 	@FindBy(xpath = "//*[text()='Re-Upload Partner Certificate']")
 	private WebElement ReUploadPartnerCertificateText;
 	
@@ -92,21 +92,22 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "certificate_upload_cancel_btn")
 	private WebElement certificateUploadCancelButton;
-	
+
 	@FindBy(id = "partnerDomain_selector_dropdown")
 	private WebElement partnerDomainSelectorDropdown;
-	
+
+	@FindBy(id = "partnerDomain_selector_dropdown_option3")
+	private WebElement deviceInPartnerDomainSelectorDropdown;
+
 	@FindBy(id = "partnerDomain_selector_dropdown_option1")
 	private WebElement partnerDomainSelectorDropdownOptionAuth;
 	
 	@FindBy(id = "partnerDomain_selector_dropdown_option2")
 	private WebElement partnerDomainSelectorDropdownOptionFtm;
-	@FindBy(id = "partnerDomain_selector_dropdown_option3")
-	private WebElement deviceInPartnerDomainSelectorDropdown3;
 	
 	@FindBy(id = "upload_admin_certificate_btn")
 	private WebElement SubmitButtonForAdmin;
-	
+
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement GoBackButton;
 	
@@ -116,8 +117,6 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "error_close_btn")
 	private WebElement errorCloseButton;
 	
-	@FindBy(id = "partnerDomain_selector_dropdown_option3")
-	private WebElement deviceInPartnerDomainSelectorDropdown;
 	
 	@FindBy(xpath = "//*[text()='Root CA/Intermediate CA Certificates not found.']")
 	private WebElement noRootCert;
@@ -128,6 +127,7 @@ public class PartnerCertificatePage extends BasePage {
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
+	
 	public boolean isDeviceProviderSuccessMessage() {
 		return isElementDisplayed(deviceProviderSuccessMessage);
 	}
@@ -147,9 +147,11 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificateRootCa() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\RootCA.cer");
 	}
+
 	public void uploadCertificateSubCa() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\IntermediateCA.cer");
 	}
+
 	public void uploadCertificate() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Client.cer");
 	}
@@ -239,26 +241,27 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateUploadCancelButton() {
 		clickOnElement(certificateUploadCancelButton);
 	}
-	
+
 	public void clickOnpartnerDomainSelectorDropdown() {
 		clickOnElement(partnerDomainSelectorDropdown);
 	}
-	
+
 	public void clickOnpartnerpartnerDomainSelectorDropdownOptionAuth() {
 		clickOnElement(partnerDomainSelectorDropdownOptionAuth);
 	}
-	
+
 	public void ClickOnDeviceInPartnerDomainSelectorDropdown() {
 		clickOnElement(deviceInPartnerDomainSelectorDropdown);
 	}
+
 	public void ClickonSubmitButtonForAdmin() {
 		clickOnElement(SubmitButtonForAdmin);
 	}
-	
+
 	public void ClickOnGoBackButton() {
 		clickOnElement(GoBackButton);
 	}
-	
+
 	public void ClickOnsuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}
