@@ -39,6 +39,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String todayDate = LocalDate.now().format(dateFormatter);
 	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
 	public static int todayDay = LocalDate.parse(todayDate, dateFormatter).getDayOfMonth();
+	public static String nextMonth24thDate = LocalDate.now().plusMonths(1).withDayOfMonth(24).format(dateFormatter);
 
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())
