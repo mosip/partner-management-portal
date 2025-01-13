@@ -49,7 +49,7 @@ function ViewAdminApiKeyDetails() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/admin/authentication-services/api-keys-list' />
+                            <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink='/partnermanagement/admin/authentication-services/api-keys-list' />
                         </div>
 
                         {unexpectedError && (
@@ -72,8 +72,8 @@ function ViewAdminApiKeyDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="font-bold text-sm text-dark-blue mb-2">
-                                            {apiKeyDetails.apiKeyLabel}
+                                        <p className="text-lg text-dark-blue mb-2">
+                                            {t('apiKeysList.apiKeyName')}: <span className="font-semibold">{apiKeyDetails.apiKeyLabel}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>

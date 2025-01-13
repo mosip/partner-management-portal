@@ -54,6 +54,7 @@ function PolicyGroupList() {
         status: null,
     });
     const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ function PolicyGroupList() {
         { id: "id", headerNameKey: "policyGroupList.policyGroupId" },
         { id: "name", headerNameKey: "policyGroupList.policyGroupName" },
         { id: "desc", headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: "crDtimes", headerNameKey: "policyGroupList.createdDate" },
+        { id: "crDtimes", headerNameKey: "policyGroupList.creationDate" },
         { id: "status", headerNameKey: "policyGroupList.status" },
         { id: "action", headerNameKey: "policyGroupList.action" },
     ];
@@ -229,6 +230,10 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
+            const request = createRequest({
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.policy.group.patch", true);
+            setDeactivateRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -236,8 +241,8 @@ function PolicyGroupList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePolicyGroupPopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setPolicyGroupList((prevList) =>
                 prevList.map(policyGroup =>
@@ -335,7 +340,7 @@ function PolicyGroupList() {
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.id}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.name}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.desc}</td>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-2">{formatDate(policyGroup.crDtimes, "date", true)}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-3">{formatDate(policyGroup.crDtimes, "date", true)}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
                                                                         <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-3 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
@@ -343,10 +348,9 @@ function PolicyGroupList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p role='button' id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <button id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
-                                                                            </p>
+                                                                            </button>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                     <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPolicyGroupDetails(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPolicyGroupDetails(policyGroup))}>
@@ -366,6 +370,7 @@ function PolicyGroupList() {
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
+                                                                                            request={deactivateRequest}
                                                                                         />
                                                                                     )}
                                                                                 </div>

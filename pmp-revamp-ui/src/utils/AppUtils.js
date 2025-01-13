@@ -89,6 +89,7 @@ export const getGrantTypes = (type, t) => {
 
 export const onPressEnterKey = (e, action) => {
     if (e.key === 'Enter') {
+        e.preventDefault();
         return action();
     }
 }
@@ -369,7 +370,7 @@ export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErr
 
 export const getApprovedAuthPartners = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v4?status=approved&policyGroupAvailable=true&partnerType=Auth_Partner`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v3?status=approved&policyGroupAvailable=true&partnerType=Auth_Partner`, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
@@ -687,7 +688,6 @@ export const fetchDeviceTypeDropdownData = async (setErrorCode, setErrorMsg, t) 
             return [];
         }
     } catch (err) {
-        setErrorMsg(err.message);
         console.log("Error fetching data: ", err);
         return [];
     }
@@ -713,13 +713,12 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
                 return responseData.response.filters;
             } else {
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
-                    setErrorCode(responseData.errors[0].errorCode);
-                    setErrorMsg(responseData.errors[0].message);
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
                 return [];
             }
         } else {
-            setErrorCode(t('addDevices.errorInDeviceSubType'));
+            setErrorMsg(t('addDevices.errorInDeviceSubType'));
             return [];
         }
     } catch (err) {
@@ -730,7 +729,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
 
 export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/download-root-certificate/${certificateId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {

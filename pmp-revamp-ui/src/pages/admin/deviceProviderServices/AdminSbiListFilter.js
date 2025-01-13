@@ -23,6 +23,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",
+      sbiId: "",
       sbiVersion: "",
       status: "",
       sbiExpiryStatus: "",
@@ -74,6 +75,14 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+            />
+            <TextInputComponent
+                fieldName="sbiId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="sbiList.sbiId"
+                placeHolderKey="sbiList.searchSbiId"
+                styleSet={styleSet}
+                id="sbi_id_filter"
             />
             <TextInputComponent
                 fieldName="sbiVersion"

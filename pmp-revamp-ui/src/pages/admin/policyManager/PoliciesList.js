@@ -4,7 +4,8 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, getPolicyManagerUrl,
     handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter,
-    getStatusCode, bgOfStatus, escapeKeyHandler
+    getStatusCode, bgOfStatus, escapeKeyHandler,
+    createRequest
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -56,6 +57,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
     const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -76,7 +78,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         { id: "policyName", headerNameKey: "policiesList.policyName" },
         { id: "policyDescription", headerNameKey: "policiesList.policyDescription" },
         { id: "policyGroupName", headerNameKey: "policiesList.policyGroup" },
-        { id: "createdDateTime", headerNameKey: "policiesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "policiesList.creationDate" },
         { id: "status", headerNameKey: "policiesList.status" },
         { id: "action", headerNameKey: "policiesList.action" },
     ];
@@ -100,7 +102,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPolicyManagerUrl('/policies/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPolicyManagerUrl('/policies/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService({
@@ -168,6 +170,10 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             } else if (policyType === 'DataShare') {
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
             }
+            const request = createRequest({
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.policy.patch", true);
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -240,8 +246,8 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const closeDeactivatePopup = () => {
-        setShowDeactivatePopup(false);
         setActionId(-1);
+        setShowDeactivatePopup(false);
         document.body.style.overflow = 'auto';
     };
 
@@ -366,10 +372,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                         </td>
                                                                         <td className="text-center">
                                                                             <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                                <p role='button' id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                                <button id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                     ...
-                                                                                </p>
+                                                                                </button>
                                                                                 {actionId === index && (
                                                                                     <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                         <div role='button' className={`flex justify-between hover:bg-gray-100 ${policy.status === 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickPublish(policy)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickPublish(policy))}>
@@ -417,6 +422,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                                 headerKeyName={policy.policyName}
                                                                                                 closePopUp={closeDeactivatePopup}
                                                                                                 onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policy)}
+                                                                                                request={deactivateRequest}
                                                                                             />
                                                                                         )}
                                                                                     </div>

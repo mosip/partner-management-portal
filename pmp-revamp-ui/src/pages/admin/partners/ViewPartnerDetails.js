@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
+import {
+    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+} from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -42,7 +44,7 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/partners/${selectedPartnerId}/v2`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -165,8 +167,8 @@ function ViewPartnerDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="font-semibold text-lg text-dark-blue mb-2">
-                                            {partnerDetails.partnerId}
+                                        <p className="text-lg text-dark-blue mb-2">
+                                            {t('partnerList.partnerId')}: <span className="font-semibold">{partnerDetails.partnerId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>

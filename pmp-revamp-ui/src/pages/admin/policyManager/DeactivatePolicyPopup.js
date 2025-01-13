@@ -8,7 +8,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import FocusTrap from 'focus-trap-react';
 
-function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm }) {
+function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm, request }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -49,12 +49,14 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
                     method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
                 });
             } else if (popupData.isDeactivatePolicy) {
                 response = await HttpService({
                     url: getPolicyManagerUrl(`/policies/${popupData.policyId}`, process.env.NODE_ENV),
                     method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
                 });
             }
             const responseData = response.data;
@@ -67,9 +69,11 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     if (popupData.isDeactivatePolicyGroup && (errorCode === 'PMS_POL_056' || errorCode === 'PMS_POL_069' || errorCode === 'PMS_POL_070')) {
                         await getAssociatedPolicies(errorCode);
                         setShowAlertErrorMessage(true);
+                        document.body.style.overflow = "hidden";
                     } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
                         setPolicyErrorMessage(errorCode);
                         setShowAlertErrorMessage(true);
+                        document.body.style.overflow = "hidden";
                     } else {
                         setErrorCode(errorCode);
                         setErrorMsg(errorMessage);
@@ -95,7 +99,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                 const resData = responseData.response.policies || [];
                 let activePoliciesCount = 0;
                 let draftPoliciesCount = 0;
-    
+
                 if (errorCode === 'PMS_POL_069') {
                     // Count active and draft policies
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
@@ -106,7 +110,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     // Count draft policies
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('draftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg(t('draftPoliciesDetectedMsg.description', { noOfDraftPolicies: draftPoliciesCount }));
+                    setErrorDescriptionMsg((draftPoliciesCount > 1) ? t('draftPoliciesDetectedMsg.description1', { noOfDraftPolicies: draftPoliciesCount }) : t('draftPoliciesDetectedMsg.description2'));
                 } else if (errorCode === 'PMS_POL_056') {
                     // Count active policies
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
@@ -123,6 +127,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
 
     const closeErrorPopUp = () => {
         setShowAlertErrorMessage(false);
+        document.body.style.overflow = "auto";
         closePopUp();
     };
 
@@ -169,7 +174,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                                 {`'${t(header)} -  ${headerKeyName} ?'`}
                                             </p>
                                             : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
-                                                {t(header)} { ' - ' + headerKeyName}
+                                                {t(header)} {' - ' + headerKeyName}
                                             </p>
                                         }
                                         <p className="text-sm text-[#666666] break-words py-[5%]">

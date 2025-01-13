@@ -237,34 +237,32 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {t('uploadCertificate.selectingFile')}
                                                 </h5>
-                                                <p role='button' className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
-                                                    {t('uploadCertificate.cancel')}
-                                                </p>
+                                                <button className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
+                                                    <p> {t('uploadCertificate.cancel')} </p>
+                                                </button>
                                             </div>
                                         )}
                                         {!uploading && fileName === '' && (
                                             <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
-                                                <label
-                                                    role='button'
-                                                    htmlFor="fileInput"
-                                                    tabIndex="0" onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()}
-                                                    className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer"
-                                                >
-                                                    <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
-                                                    <h5 className="text-charcoal-gray text-base font-normal px-2">
-                                                        {t('uploadCertificate.selectCertificate')}
-                                                    </h5>
-                                                    <p className="text-xs text-light-gray px-2">
-                                                        {t('uploadCertificate.certificateFormat')}
-                                                    </p>
-                                                </label>
+                                                <button onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()}>
+                                                    <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer" >
+                                                        <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
+                                                        <h5 className="text-charcoal-gray text-base font-normal px-2">
+                                                            {t('uploadCertificate.selectCertificate')}
+                                                        </h5>
+                                                        <p className="text-xs text-light-gray px-2">
+                                                            {t('uploadCertificate.certificateFormat')}
+                                                        </p>
+                                                    </label>
+                                                </button>
+
                                                 <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
                                             </div>
                                         )}
                                         {!uploading && fileName && (
                                             <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <label
-                                                    for='fileUpload'
+                                                    type="input"
                                                     htmlFor="fileInput"
                                                     className="flex flex-col items-center justify-center cursor-pointer"
                                                 >
@@ -273,9 +271,9 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold">
                                                     {fileName}
                                                 </h5>
-                                                <p role='button' id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => removeUpload())}>
-                                                    {t('uploadCertificate.remove')}
-                                                </p>
+                                                <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                    <p> {t('uploadCertificate.remove')} </p>
+                                                </button>
                                             </div>
                                         )}
                                     </div>

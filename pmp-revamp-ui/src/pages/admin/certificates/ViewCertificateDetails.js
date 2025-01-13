@@ -82,8 +82,8 @@ function ViewCertificateDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="font-bold text-md text-dark-blue mb-2 break-all">
-                                    {viewCertDetails.certId}
+                                <p className="text-lg text-dark-blue mb-2 break-all">
+                                    {t('certificatesList.certificateId')}: <span className="font-semibold">{viewCertDetails.certId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`font-semibold text-sm text-dark-blue`}>
@@ -146,7 +146,7 @@ function ViewCertificateDetails() {
 
                                         <div className=" flex space-x-2">
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(viewCertDetails.certId))}
+                                                <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                     {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadCertificateChain')}
                                                 </button>
@@ -166,8 +166,8 @@ function ViewCertificateDetails() {
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                            <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold ${!viewCertDetails.status ? 'text-crimson-red' : 'text-dim-gray font-semibold'}`}>{t('viewCertificateDetails.validTo')}</p>
-                                            <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-black font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray`}>{t('viewCertificateDetails.validTo')}</p>
+                                            <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(viewCertDetails.validTillDate, 'dateTime', true)}
                                             </p>
                                         </div>

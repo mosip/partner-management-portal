@@ -97,7 +97,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
     if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
 
-    const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
@@ -167,10 +167,6 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const showUploadCertificate = () => {
     uploadCertRequiredData();
     navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
-  };
-
-  const showDeactivateCertificate = () => {
-
   };
 
   const onClickDownload = (certificate) => {
@@ -292,11 +288,9 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                          <p role='button' id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}
-                                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}
-                                          >
+                                          <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
                                             ...
-                                          </p>
+                                          </button>
                                           {actionId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
@@ -307,7 +301,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                               <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
                                                 onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
                                                 <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={``}/>
+                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={``} />
                                               </div>
                                             </div>
                                           )}

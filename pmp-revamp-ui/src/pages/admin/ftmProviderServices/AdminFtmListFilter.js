@@ -20,6 +20,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     const [filters, setFilters] = useState({
         partnerId: "",
         orgName: "",
+        ftmId: "",
         make: "",
         model: "",
         status: ""
@@ -72,6 +73,14 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+            />
+            <TextInputComponent
+                fieldName="ftmId"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="ftmList.ftmId"
+                placeHolderKey="ftmList.searchFtmId"
+                styleSet={styleSet}
+                id="ftm_id_filter"
             />
             <TextInputComponent
                 fieldName="make"

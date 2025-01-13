@@ -51,6 +51,7 @@ function AdminFtmList() {
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
+        ftmId: null,
         make: null,
         model: null,
         status: null,
@@ -62,12 +63,12 @@ function AdminFtmList() {
     }, [submenuRef]);
 
     const tableHeaders = [
-        { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
         { id: "orgName", headerNameKey: 'ftmList.orgName' },
+        { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "make", headerNameKey: "ftmList.make" },
         { id: "model", headerNameKey: "ftmList.model" },
-        { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
         { id: "status", headerNameKey: "ftmList.status" },
         { id: "action", headerNameKey: 'ftmList.action' }
     ];
@@ -85,6 +86,7 @@ function AdminFtmList() {
 
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
+        if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
         if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
@@ -153,8 +155,8 @@ function AdminFtmList() {
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
         if (responseData) {
-            setActionId(-1);
             setShowFtmApproveRejectPopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -184,8 +186,8 @@ function AdminFtmList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -246,7 +248,7 @@ function AdminFtmList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
+                            <Title title='dashboard.ftmChip' backLink='/partnermanagement' />
                         </div>
                         {!applyFilter && ftmList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -300,9 +302,9 @@ function AdminFtmList() {
                                                         {ftmList.map((ftm, index) => {
                                                             return (
                                                                 <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.ftmId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.partnerId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.orgName}</td>
+                                                                    <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.ftmId}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.make}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{ftm.model}</td>
                                                                     <td onClick={() => ftm.status !== 'deactivated' && viewFtmChipDetails(ftm)} className="px-2">{formatDate(ftm.createdDateTime, 'date', true)}</td>
@@ -313,10 +315,9 @@ function AdminFtmList() {
                                                                     </td>
                                                                     <td className="text-center">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <p role='button' id={"ftm_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
-                                                                                tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setActionId(index === actionId ? null : index))}>
+                                                                            <button id={"ftm_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
-                                                                            </p>
+                                                                            </button>
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                     <div role='button' onClick={() => approveRejectFtmDetails(ftm)} className={`flex justify-between hover:bg-gray-100 ${ftm.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectFtmDetails(ftm))}>

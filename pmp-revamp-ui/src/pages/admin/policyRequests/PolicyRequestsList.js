@@ -79,7 +79,7 @@ function PolicyRequestsList() {
     { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
     { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
     { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
-    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.creationDate" },
     { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
     { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];
@@ -130,15 +130,15 @@ function PolicyRequestsList() {
 
   useEffect(() => {
     fetchPolicyRequestsListData();
-}, [sortFieldName, sortType, pageNo, pageSize]);
+  }, [sortFieldName, sortType, pageNo, pageSize]);
 
-useEffect(() => {
+  useEffect(() => {
 
     if (isApplyFilterClicked) {
-        fetchPolicyRequestsListData();
-        setIsApplyFilterClicked(false);
+      fetchPolicyRequestsListData();
+      setIsApplyFilterClicked(false);
     }
-}, [isApplyFilterClicked]);
+  }, [isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
     onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);
@@ -182,12 +182,12 @@ useEffect(() => {
 
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
-      setViewPartnersId(-1);
       setShowPopup(false);
+      setViewPartnersId(-1);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
         prevList.map(policyRequest =>
-          policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status)  } : policyRequest
+          policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status) } : policyRequest
         )
       );
       document.body.style.overflow = "auto";
@@ -195,8 +195,8 @@ useEffect(() => {
   }
 
   const closePolicyRequestPopup = () => {
-    setViewPartnersId(-1);
     setShowPopup(false);
+    setViewPartnersId(-1);
     document.body.style.overflow = 'auto';
   };
 
@@ -316,11 +316,9 @@ useEffect(() => {
                                       </td>
                                       <td className="text-center">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
-                                          <p role='button' id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}
-                                            tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setViewPartnersId(index === viewPartnerId ? null : index))}
-                                          >
+                                          <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...
-                                          </p>
+                                          </button>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest))}>
@@ -330,11 +328,11 @@ useEffect(() => {
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
-                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}/>
+                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
                                               {showPopup &&
                                                 <ApproveRejectPopup
-                                                  popupData={{ ...policyRequest, isPartnerPolicyRequest: true }} 
+                                                  popupData={{ ...policyRequest, isPartnerPolicyRequest: true }}
                                                   closePopUp={closePolicyRequestPopup}
                                                   approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, policyRequest)}
                                                   title={policyRequest.policyName}

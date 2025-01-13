@@ -19,19 +19,16 @@ function CertificateTab({ activeRootCA, rootCertificatesPath, activeIntermediate
     return (
         <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%] mt-3'>
             <div id='root_of_trust_certificates_tab' className={`flex-col justify-center text-center`}>
-                <h6  role='button' onClick={changeToRootCA}
-                    className={`${activeRootCA ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}
-                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, changeToRootCA)}>
-                    {t('certificatesList.rootCA')}
-                </h6>
+                <button onClick={changeToRootCA} className={`${activeRootCA ? "text-[#1447b2]" : "text-[#031640]"} mb-[0.6rem] cursor-pointer text-sm`}>
+                    <h6> {t('certificatesList.rootCA')} </h6>
+                </button>
+
                 <div className={`h-1 w-24 ${activeRootCA ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
             </div>
             <div id='intermediate_root_of_trust_certificates_tab' className={`flex-col justify-center text-center`}>
-                <h6 role='button' onClick={changeToIntermediateCA}
-                    className={`${activeIntermediateCA ? "text-[#1447b2]" : "text-[#031640]"} mb-[7%] cursor-pointer text-sm`}
-                    tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, changeToIntermediateCA)}>
-                    {t('certificatesList.intermediateCA')}
-                </h6>
+                <button onClick={changeToIntermediateCA} className={`${activeIntermediateCA ? "text-[#1447b2]" : "text-[#031640]"} mb-[0.6rem] cursor-pointer text-sm`}>
+                    <h6> {t('certificatesList.intermediateCA')}</h6>
+                </button>
                 <div className={`h-1 w-32 ${activeIntermediateCA ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
             </div>
         </div>

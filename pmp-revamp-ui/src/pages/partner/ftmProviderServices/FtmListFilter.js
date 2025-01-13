@@ -6,6 +6,7 @@ import { createDropdownData } from "../../../utils/AppUtils.js";
 
 function FtmListFilter({ filteredFtmList, onFilterChange }) {
     const { t } = useTranslation();
+    const [ftmIdData, setFtmIdData] = useState([]);
     const [partnerIdData, setPartnerIdData] = useState([]);
     const [makeData, setMakeData] = useState([]);
     const [modelData, setModelData] = useState([]);
@@ -14,6 +15,7 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            setFtmIdData(createDropdownData('ftmId', '', true, filteredFtmList, t, t('ftmList.selectFtmId')));
             setPartnerIdData(createDropdownData('partnerId', '', true, filteredFtmList, t, t('ftmList.selectPartnerId')));
             setMakeData(createDropdownData('make', '', true, filteredFtmList, t, t('ftmList.selectMakeName')));
             setModelData(createDropdownData('model', '', true, filteredFtmList, t, t('ftmList.selectModelName')));
@@ -33,6 +35,16 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
     return (
         <>
             <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+                <DropdownComponent
+                    fieldName='ftmId'
+                    dropdownDataList={ftmIdData}
+                    onDropDownChangeEvent={onFilterChangeEvent}
+                    fieldNameKey='ftmList.ftmId'
+                    placeHolderKey='ftmList.selectFtmId'
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}
+                    id='ftm_id_filter'>
+                </DropdownComponent>
                 <DropdownComponent
                     fieldName='partnerId'
                     dropdownDataList={partnerIdData}

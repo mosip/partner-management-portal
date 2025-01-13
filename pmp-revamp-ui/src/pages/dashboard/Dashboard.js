@@ -207,7 +207,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/devicedetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -402,7 +402,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && showFtmServices && (
-              <div id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -424,10 +424,10 @@ function Dashboard() {
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.rootOfTrustCertificate')}
+                      {t('dashboard.certificateTrustStore')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.rootOfTrustCertificateDesc')}
+                      {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
                 </div>
