@@ -185,7 +185,7 @@ jobs:
   build-maven-uitest-pmprevamp:
     uses: mosip/kattu/.github/workflows/maven-build.yml@master-java21
     with:
-      SERVICE_LOCATION: uitest-pmprevamp
+      SERVICE_LOCATION: ./uitest-pmprevamp
       BUILD_ARTIFACT: uitest-pmprevamp
     secrets:
       OSSRH_USER: ${{ secrets.OSSRH_USER }}
