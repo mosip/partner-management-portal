@@ -67,7 +67,7 @@ function ViewAdminSbiDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(sbiDetails.createdDateTime, "date", true)}
+                                            formatDate(sbiDetails.createdDateTime, "date", true)}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
@@ -115,15 +115,15 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className={`font-[600] text-sm ${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-suva-gray' }`}>
+                                    <p className={`font-[600] text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
-                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'text-black'} font-[600] text-vulcan text-md`}>
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
+                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>

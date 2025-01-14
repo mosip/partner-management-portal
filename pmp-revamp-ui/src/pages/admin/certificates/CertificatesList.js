@@ -97,7 +97,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
     if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
 
-    const url = `${getPartnerManagerUrl('/partners/root-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
@@ -167,10 +167,6 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const showUploadCertificate = () => {
     uploadCertRequiredData();
     navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
-  };
-
-  const showDeactivateCertificate = () => {
-
   };
 
   const onClickDownload = (certificate) => {

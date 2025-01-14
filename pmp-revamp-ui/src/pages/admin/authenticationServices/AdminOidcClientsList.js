@@ -76,7 +76,7 @@ function AdminOidcClientsList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "clientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -208,7 +208,6 @@ function AdminOidcClientsList() {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
             setActionId(-1);
             setShowDeactivatePopup(false);
-            // Update the specific row in the state with the new status
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client

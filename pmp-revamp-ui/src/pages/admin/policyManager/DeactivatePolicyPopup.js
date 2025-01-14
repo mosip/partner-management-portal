@@ -8,7 +8,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import FocusTrap from 'focus-trap-react';
 
-function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm }) {
+function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm, request }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
@@ -49,12 +49,14 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     url: getPolicyManagerUrl(`/policies/group/${popupData.id}`, process.env.NODE_ENV),
                     method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
                 });
             } else if (popupData.isDeactivatePolicy) {
                 response = await HttpService({
                     url: getPolicyManagerUrl(`/policies/${popupData.policyId}`, process.env.NODE_ENV),
                     method: 'patch',
                     baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
+                    data: request
                 });
             }
             const responseData = response.data;

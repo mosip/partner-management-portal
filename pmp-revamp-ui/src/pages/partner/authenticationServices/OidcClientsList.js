@@ -88,7 +88,7 @@ function OidcClientsList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "clientNameEng", headerNameKey: "oidcClientsList.oidcClientName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
@@ -138,6 +138,11 @@ function OidcClientsList() {
         }
     };
 
+    const closeDeactivatePopup = () => {
+        setViewClientId(-1);
+        setShowDeactivatePopup(false);
+    };
+
     const showCopyPopUp = (client) => {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
@@ -181,15 +186,11 @@ function OidcClientsList() {
     //This part related to Pagination Logic
     let tableRows = filteredOidcClientsList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
-    const closeDeactivatePopup = () => {
-        setViewClientId(-1);
-        setShowDeactivatePopup(false);
-    };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
-            setViewClientId(-1);
             setShowDeactivatePopup(false);
+            setViewClientId(-1);
             // Update the specific row in the state with the new status
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
@@ -313,7 +314,7 @@ function OidcClientsList() {
                                                                             ...
                                                                         </button>
                                                                         {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
                                                                                 <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </button>

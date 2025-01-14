@@ -3,22 +3,26 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 
-function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, backArrowTitle, addBackArrow }) {
+function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, listSubTitle, addBackArrow }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     return (
         <div className="flex items-center w-full p-2">
             <div id={titleId} className="flex-col w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base" >
-                {addBackArrow && (
-                    <div className='flex flex-row'>
-                        <button id='subtitle_back_icon' onClick={goBack} className={`mt-1 cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} >
-                            <img src={backArrow} alt="" />
-                        </button>
-                        <p className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(backArrowTitle)}</p>
+                {addBackArrow ? (
+                    <div className='flex flex-col'>
+                        <div className='flex flex-row'>
+                            <button id='subtitle_back_icon' onClick={goBack} className={`mt-1 cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} >
+                                <img src={backArrow} alt="" />
+                            </button>
+                            <p className={`text-lg ${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(listTitle) + ' (' + dataListLength + ")"}</p>
+                        </div>
+                        <p className='text-sm text-gray-500 pl-7'>{listSubTitle}</p>
                     </div>
-                )}
-                <p>{t(listTitle) + ' (' + dataListLength + ")"}</p>
+                ) : 
+                    <p>{t(listTitle) + ' (' + dataListLength + ")"}</p>
+                }
             </div>
             <div className="w-full flex justify-end relative items-center">
                 {filter &&
