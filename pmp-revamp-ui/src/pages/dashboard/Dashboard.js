@@ -207,7 +207,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/devicedetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -424,10 +424,10 @@ function Dashboard() {
                   </div>
                   <div>
                     <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.rootOfTrustCertificate')}
+                      {t('dashboard.certificateTrustStore')}
                     </h5>
                     <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.rootOfTrustCertificateDesc')}
+                      {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
                 </div>

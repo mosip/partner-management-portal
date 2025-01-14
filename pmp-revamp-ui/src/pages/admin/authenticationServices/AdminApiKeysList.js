@@ -65,7 +65,7 @@ function AdminApiKeysList() {
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -160,11 +160,6 @@ function AdminApiKeysList() {
         }
     };
 
-    const closeDeactivatePopup = () => {
-        setActionId(-1);
-        setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
-    };
 
     const deactivateApiKey = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "activated") {
@@ -176,13 +171,18 @@ function AdminApiKeysList() {
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
-    }
+    };
+
+    const closeDeactivatePopup = () => {
+        setActionId(-1);
+        setShowDeactivatePopup(false);
+        document.body.style.overflow = "auto";
+    };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
             setActionId(-1);
             setShowDeactivatePopup(false);
-            // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey

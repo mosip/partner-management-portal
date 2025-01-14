@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
+import {
+    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+} from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -42,7 +44,7 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/partners/${selectedPartnerId}/v2`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {

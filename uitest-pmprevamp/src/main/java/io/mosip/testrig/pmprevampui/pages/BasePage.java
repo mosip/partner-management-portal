@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
 import java.util.Random;
 
 import org.openqa.selenium.Alert;
@@ -159,6 +158,31 @@ public class BasePage {
 
 		}
 	}
+	
+	public static void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
+
+		try {
+			Thread.sleep(50);
+			clickOnElement(element);
+			Thread.sleep(50);
+			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", element);
+
+		}
+	}
+	
+	public static void selectByValueInDropdown(WebElement element, String value) {
+		Select select = new Select(element);
+		select.selectByValue(value);
+	}
 
 	protected static void click(By by) {
 		try {
@@ -298,7 +322,6 @@ public class BasePage {
 		return JsonUtil.readJsonFileText("TestData.json");
 	}
 	
-
 	public void refreshThePage() {
 		driver.navigate().refresh();
 	}
@@ -319,19 +342,18 @@ public class BasePage {
 		driver.navigate().back();
 	}
 	
-	public String acceptAlert() {
-		Alert alert = driver.switchTo().alert();
-		String alertText = alert.getText();
-		alert.accept();
-		return alertText;
+	public void acceptAlert() {
+		driver.switchTo().alert().accept();
 	}
 	
-	public String cancelAlert() {
+	public void cancelAlert() {
+		driver.switchTo().alert().dismiss();
+	}
+	
+	public String getAlertText() {
 		Alert alert = driver.switchTo().alert();
 		String alertText = alert.getText();
-		alert.dismiss();
 		return alertText;
-
 	}
 
 }

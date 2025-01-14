@@ -102,7 +102,7 @@ function PartnersList() {
       else if (filters.status === 'deactivated') queryParams.append('isActive', false);
     }
 
-    const url = `${getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/admin-partners', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);

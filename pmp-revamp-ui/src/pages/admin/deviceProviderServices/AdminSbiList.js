@@ -73,7 +73,7 @@ function AdminSbiList() {
         { id: "sbiCreatedDateTime", headerNameKey: "sbiList.sbiCreatedDate" },
         { id: "sbiExpiryDateTime", headerNameKey: "sbiList.sbiExpiryDate" },
         { id: "sbiExpiryStatus", headerNameKey: "sbiList.sbiExpiryStatus" },
-        { id: "createdDateTime", headerNameKey: "sbiList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "sbiList.creationDate" },
         { id: "status", headerNameKey: "sbiList.status" },
         { id: "countOfAssociatedDevices", headerNameKey: "sbiList.linkedDevices" },
         { id: "action", headerNameKey: "sbiList.action" }
@@ -185,9 +185,8 @@ function AdminSbiList() {
 
     const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
-            setActionId(-1);
             setShowSbiApproveRejectPopUp(false);
-            // Update the specific row in the state with the new status
+            setActionId(-1);
             setSbiList((prevList) =>
                 prevList.map(sbi =>
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
@@ -198,8 +197,8 @@ function AdminSbiList() {
     }
 
     const closeApproveRejectPopup = () => {
-        setActionId(-1);
         setShowSbiApproveRejectPopUp(false);
+        setActionId(-1);
         document.body.style.overflow = "auto";
     };
 
@@ -228,8 +227,8 @@ function AdminSbiList() {
     };
 
     const closeDeactivatePopup = () => {
-        setActionId(-1);
         setShowDeactivatePopup(false);
+        setActionId(-1);
         document.body.style.overflow = "auto";
     };
 
@@ -261,7 +260,7 @@ function AdminSbiList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='sbiList.listOfSbis' backLink='/partnermanagement' />
+                            <Title title='dashboard.sbiDevice' backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
                             activeSbi={true}

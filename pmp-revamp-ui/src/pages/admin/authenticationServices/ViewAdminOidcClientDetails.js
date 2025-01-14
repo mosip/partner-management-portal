@@ -83,7 +83,7 @@ function ViewAdminOidcClientDetails() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/admin/authentication-services/oidc-clients-list' />
+                            <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='oidcClientsList.listOfOidcClients' backLink='/partnermanagement/admin/authentication-services/oidc-clients-list' />
                         </div>
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

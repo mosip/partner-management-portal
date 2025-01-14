@@ -54,6 +54,7 @@ function PolicyGroupList() {
         status: null,
     });
     const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
+    const [deactivateRequest, setDeactivateRequest] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ function PolicyGroupList() {
         { id: "id", headerNameKey: "policyGroupList.policyGroupId" },
         { id: "name", headerNameKey: "policyGroupList.policyGroupName" },
         { id: "desc", headerNameKey: "policyGroupList.policyGroupDescription" },
-        { id: "crDtimes", headerNameKey: "policyGroupList.createdDate" },
+        { id: "crDtimes", headerNameKey: "policyGroupList.creationDate" },
         { id: "status", headerNameKey: "policyGroupList.status" },
         { id: "action", headerNameKey: "policyGroupList.action" },
     ];
@@ -229,6 +230,10 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
+            const request = createRequest({
+                status: "De-Activate",
+            }, "mosip.pms.deactivate.policy.group.patch", true);
+            setDeactivateRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -236,8 +241,8 @@ function PolicyGroupList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePolicyGroupPopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setPolicyGroupList((prevList) =>
                 prevList.map(policyGroup =>
@@ -365,6 +370,7 @@ function PolicyGroupList() {
                                                                                             headerKeyName={policyGroup.name}
                                                                                             closePopUp={closePopup}
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
+                                                                                            request={deactivateRequest}
                                                                                         />
                                                                                     )}
                                                                                 </div>
