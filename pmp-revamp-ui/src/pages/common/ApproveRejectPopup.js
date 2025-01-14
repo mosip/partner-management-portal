@@ -6,7 +6,6 @@ import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
-import { onPressEnterKey } from '../../utils/AppUtils.js';
 
 function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
     const { t } = useTranslation();

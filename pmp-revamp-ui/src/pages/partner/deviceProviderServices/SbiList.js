@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 import Title from '../../common/Title.js';
 import { HttpService } from '../../../services/HttpService';
 import {
-    isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
+    isLangRTL, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
     handleMouseClickForDropdown, populateDeactivatedStatus,
     createRequest
 } from '../../../utils/AppUtils.js';

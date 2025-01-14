@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";

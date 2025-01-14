@@ -1,8 +1,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { handleMouseClickForDropdown } from '../../../utils/AppUtils';
-import { isLangRTL } from '../../../utils/AppUtils';
+import { isLangRTL, handleMouseClickForDropdown } from '../../../utils/AppUtils';
+import {  } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 
