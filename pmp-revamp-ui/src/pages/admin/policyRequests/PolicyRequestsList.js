@@ -79,7 +79,7 @@ function PolicyRequestsList() {
     { id: "policyId", headerNameKey: "partnerPolicyMappingRequestList.policyId" },
     { id: "policyName", headerNameKey: "partnerPolicyMappingRequestList.policyName" },
     { id: "policyGroupName", headerNameKey: "partnerPolicyMappingRequestList.policyGroupName" },
-    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.createdDate" },
+    { id: "createdDateTime", headerNameKey: "partnerPolicyMappingRequestList.creationDate" },
     { id: "status", headerNameKey: "partnerPolicyMappingRequestList.status" },
     { id: "action", headerNameKey: "partnerPolicyMappingRequestList.action" },
   ];
@@ -103,7 +103,7 @@ function PolicyRequestsList() {
     if (filters.policyName) queryParams.append('policyName', filters.policyName);
     if (filters.status) queryParams.append('status', filters.status);
 
-    const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
@@ -182,8 +182,8 @@ function PolicyRequestsList() {
 
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
-      setViewPartnersId(-1);
       setShowPopup(false);
+      setViewPartnersId(-1);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
         prevList.map(policyRequest =>
@@ -195,8 +195,8 @@ function PolicyRequestsList() {
   }
 
   const closePolicyRequestPopup = () => {
-    setViewPartnersId(-1);
     setShowPopup(false);
+    setViewPartnersId(-1);
     document.body.style.overflow = 'auto';
   };
 

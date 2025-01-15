@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
-import { formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, bgOfStatus } from "../../../utils/AppUtils";
+import { isLangRTL, formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, bgOfStatus } from "../../../utils/AppUtils";
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import Title from "../../common/Title";
@@ -63,8 +62,8 @@ function ViewPolicyDetails() {
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`${isLoginLanguageRTL?"pr-8 ml-8":"pl-8 mr-8"} pt-6 mb-4`}>
-                        <div className="flex flex-wrap">
-                            <div className={`w-[49%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                        <div className="flex flex-wrap justify-between">
+                            <div className={`w-[37rem] max-[600px]:w-full mb-4`}>
                                 <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>
@@ -72,7 +71,7 @@ function ViewPolicyDetails() {
                                     {policyDetails.partnerId}
                                 </p>
                             </div>
-                            <div className="mb-5 w-[50%]">
+                            <div className="mb-4 w-[37rem] max-[600px]:w-full">
                                 <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.partnerType")}
                                 </p>
@@ -82,8 +81,8 @@ function ViewPolicyDetails() {
                             </div>
                         </div>
                         <hr className="h-px w-full bg-gray-200 border-0" />
-                        <div className="flex flex-wrap pt-4">
-                            <div className={`w-[49%] ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
+                        <div className="flex flex-wrap pt-4 justify-between">
+                            <div className={`w-[37rem] max-[600px]:w-full mb-4`}>
                                 <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
@@ -91,7 +90,7 @@ function ViewPolicyDetails() {
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
-                            <div className="w-[50%]">
+                            <div className="w-[37rem] max-[600px]:w-full mb-4">
                                 <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
@@ -99,7 +98,7 @@ function ViewPolicyDetails() {
                                     {policyDetails.policyName}
                                 </p>
                             </div>
-                            <div className={`w-[49%] my-5 ${isLoginLanguageRTL?"ml-[1%]":"mr-[1%]"}`}>
+                            <div className={`w-[37rem] max-[600px]:w-full mb-4`}>
                                 <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
@@ -107,7 +106,7 @@ function ViewPolicyDetails() {
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
-                            <div className="w-[50%]  my-5">
+                            <div className="w-[37rem] max-[600px]:w-full mb-4">
                                 <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-xs">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>

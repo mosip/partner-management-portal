@@ -1,10 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { HttpService } from "../../services/HttpService.js";
-import { logout, onPressEnterKey } from '../../utils/AppUtils.js';
+import { logout, onPressEnterKey, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
-import { getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 import FocusTrap from 'focus-trap-react';
 
 function ConsentPopup() {

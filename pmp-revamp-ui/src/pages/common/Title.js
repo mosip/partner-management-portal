@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, moveToHome, onPressEnterKey, getStatusCode, bgOfStatus } from '../../utils/AppUtils';
+import { isLangRTL, moveToHome, getStatusCode, bgOfStatus } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 
 function Title({ title, subTitle, subTitle2, backLink, backLink2, status, version }) {

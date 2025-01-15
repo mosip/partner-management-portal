@@ -68,7 +68,7 @@ function AdminFtmList() {
         { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
         { id: "make", headerNameKey: "ftmList.make" },
         { id: "model", headerNameKey: "ftmList.model" },
-        { id: "createdDateTime", headerNameKey: "ftmList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "ftmList.creationDate" },
         { id: "status", headerNameKey: "ftmList.status" },
         { id: "action", headerNameKey: 'ftmList.action' }
     ];
@@ -155,8 +155,8 @@ function AdminFtmList() {
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
         if (responseData) {
-            setActionId(-1);
             setShowFtmApproveRejectPopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -186,8 +186,8 @@ function AdminFtmList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePopup(false);
+            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -248,7 +248,7 @@ function AdminFtmList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
+                            <Title title='dashboard.ftmChip' backLink='/partnermanagement' />
                         </div>
                         {!applyFilter && ftmList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">

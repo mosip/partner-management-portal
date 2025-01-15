@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 import Title from '../../common/Title.js';
 import { HttpService } from '../../../services/HttpService';
 import {
-    isLangRTL, onPressEnterKey, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
+    isLangRTL, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
     handleMouseClickForDropdown, populateDeactivatedStatus,
     createRequest
 } from '../../../utils/AppUtils.js';
@@ -231,7 +231,7 @@ function SbiList() {
                                                     </button>
 
                                                     {deactivateBtnId === index && (
-                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
+                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md font-semibold shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
                                                             <button id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
                                                                 <p> {t('sbiList.deactivate')} </p>
                                                             </button>
@@ -272,8 +272,8 @@ function SbiList() {
                                                                 <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', false)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className={`text-xs ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'text-red-700 font-bold' : 'text-suva-gray'} `}>{t('sbiList.sbiExpiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
+                                                                <p className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
+                                                                <p className={`text-sm text-vulcan ${!(sbi.status !== "deactivated" && sbi.sbiExpired) ? 'font-bold text-crimson-red' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
                                                             </div>
                                                         </div>
                                                     </div>

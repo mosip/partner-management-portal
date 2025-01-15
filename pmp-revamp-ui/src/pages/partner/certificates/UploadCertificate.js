@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
-import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -10,7 +9,6 @@ import SuccessMessage from '../../common/SuccessMessage';
 import fileUploadImg from './../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
-import * as asn1js from "asn1js";
 import { Certificate } from "pkijs";
 import { fromBER } from "asn1js";
 

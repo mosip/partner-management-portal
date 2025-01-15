@@ -341,7 +341,7 @@ function CreatePolicy() {
                                                         <div>
                                                             <button onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
                                                                 <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
-                                                                    <span className="px-2">{t('createPolicy.upload')}</span>
+                                                                    <p>{t('createPolicy.upload')}</p>
                                                                 </label>
                                                             </button>
                                                             <input
@@ -361,7 +361,7 @@ function CreatePolicy() {
                                                             ref={policyDataRef}
                                                             value={policyData}
                                                             onChange={(e) => handlePolicyDataChange(e)}
-                                                            className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
+                                                            className={`w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue ${!policyData ? 'bg-gray-100' : 'bg-white'}  leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap`}
                                                             placeholder={t('createPolicy.policyDataDesc')}
                                                             disabled={!policyData}
                                                         />

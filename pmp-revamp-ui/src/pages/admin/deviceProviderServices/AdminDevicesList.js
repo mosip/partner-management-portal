@@ -21,7 +21,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 
-function AdminDevicesList({ title, isLinkedDevicesList }) {
+function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const location = useLocation();
     const navigate = useNavigate('');
     const { t } = useTranslation();
@@ -62,10 +62,8 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         sbiId: null,
         sbiVersion: null
     });
-    const [preFilledFilters, setPreFilledFilters] = useState({
-        sbiId: null,
-        sbiVersion: null
-    });
+    const[sbiId, setSbiId] = useState(null);
+    const[sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -78,7 +76,7 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         { id: "deviceSubType", headerNameKey: "devicesList.deviceSubType" },
         { id: "make", headerNameKey: "devicesList.make" },
         { id: "model", headerNameKey: "devicesList.model" },
-        { id: "createdDateTime", headerNameKey: "devicesList.createdDate" },
+        { id: "createdDateTime", headerNameKey: "devicesList.creationDate" },
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
     ];
@@ -108,7 +106,7 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         if (filterAttributes.sbiId || sbiId) queryParams.append('sbiId', filterAttributes.sbiId || sbiId);
         if (filterAttributes.sbiVersion || sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion || sbiVersion);
 
-        const url = `${getPartnerManagerUrl('/devicedetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/devicedetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -140,13 +138,8 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         const sbiVersion = params.get('sbiVersion');
 
         if (sbiId || sbiVersion) {
-            setExpandFilter(true);
-            setPreFilledFilters((prev) => ({
-                ...prev,
-                sbiId: sbiId,
-                sbiVersion: sbiVersion,
-            }));
-            setApplyFilter(true);
+            setSbiId(sbiId);
+            setSbiVersion(sbiVersion);
         }
         fetchDeviceDetails(sbiId, sbiVersion);
     }, [sortFieldName, sortType, pageNo, pageSize]);
@@ -154,7 +147,7 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
     useEffect(() => {
 
         if (isApplyFilterClicked) {
-            fetchDeviceDetails(null, null);
+            fetchDeviceDetails(sbiId, sbiVersion);
             setIsApplyFilterClicked(false);
         }
     }, [isApplyFilterClicked]);
@@ -178,7 +171,6 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         if (responseData) {
             setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(false);
-            // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
@@ -208,7 +200,6 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setActionId(-1);
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
@@ -275,6 +266,22 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
         }
     }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
 
+    const getFilterSubTitle = () => {
+        if (sbiId && sbiVersion) {
+            return t('sbiList.sbiId') + ': ' + sbiId + ' | ' + t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else if (sbiId) {
+            return t('sbiList.sbiId') + ': ' + sbiId;
+        } else if (sbiVersion) {
+            return t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else {
+            return "";
+        }
+    };
+
+    const filteredTableHeaders = tableHeaders.filter(
+        (header) => !(isLinkedDevicesList && (header.id === "sbiId" || header.id === "sbiVersion"))
+    );
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -287,18 +294,10 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title 
-                                title={title}
-                                backLink='/partnermanagement' 
-                            />
-                            {isLinkedDevicesList && (
-                                <button onClick={backToSbi} className="h-10 w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center">
-                                    Back to SBI List
-                                </button>
-                            )}
+                            <Title title={title} backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
-                            activeSbi={isLinkedDevicesList ? true: false}
+                            activeSbi={isLinkedDevicesList ? true : false}
                             sbiListPath='/partnermanagement/admin/device-provider-services/sbi-list'
                             activeDevice={isLinkedDevicesList ? false : true}
                             devicesListPath='/partnermanagement/admin/device-provider-services/devices-list'
@@ -311,11 +310,14 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
                                     titleId='list_of_device_details'
-                                    listTitle={title}
+                                    listTitle={subTitle}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
                                     setFilter={setExpandFilter}
+                                    addBackArrow={isLinkedDevicesList ? true : false}
+                                    goBack={isLinkedDevicesList && backToSbi}
+                                    listSubTitle={isLinkedDevicesList && getFilterSubTitle()}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
@@ -323,7 +325,7 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                                         onApplyFilter={onApplyFilter}
                                         setErrorCode={setErrorCode}
                                         setErrorMsg={setErrorMsg}
-                                        preFilledFilters={preFilledFilters}
+                                        removeSbiFields={isLinkedDevicesList}
                                     />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
@@ -335,7 +337,7 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {filteredTableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
@@ -362,8 +364,12 @@ function AdminDevicesList({ title, isLinkedDevicesList }) {
                                                                 <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                    {!isLinkedDevicesList && (
+                                                                        <>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                        </>
+                                                                    )}
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>

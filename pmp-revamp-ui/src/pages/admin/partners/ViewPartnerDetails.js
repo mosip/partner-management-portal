@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
-import { downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription } from '../../../utils/AppUtils';
+import {
+    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+} from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -42,7 +44,7 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/partners/${selectedPartnerId}/v2`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -184,8 +186,8 @@ function ViewPartnerDetails() {
                                     </div>
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                                    <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                    <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
+                                        <div className={`mb-3 max-[600px]:w-full w-[37rem]`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
@@ -193,7 +195,7 @@ function ViewPartnerDetails() {
                                                 {getPartnerTypeDescription(partnerDetails.partnerType, t)}
                                             </p>
                                         </div>
-                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                        <div className="w-[37rem] max-[600px]:w-full mb-3">
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.organisationName")}
                                             </p>
@@ -201,7 +203,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
-                                        <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                        <div className={`w-[37rem] max-[600px]:w-full mb-3`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.firstName")}
                                             </p>
@@ -209,7 +211,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.firstName ?? "-"}
                                             </p>
                                         </div>
-                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                        <div className="w-[37rem] max-[600px]:w-full mb-3">
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.lastName")}
                                             </p>
@@ -217,7 +219,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.lastName ?? "-"}
                                             </p>
                                         </div>
-                                        <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                        <div className={`mb-3 max-[600px]:w-full w-[37rem]`}>
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.phoneNumber")}
                                             </p>
@@ -225,7 +227,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.contactNumber ? partnerDetails.contactNumber : '-'}
                                             </p>
                                         </div>
-                                        <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
+                                        <div className="mb-3 max-[600px]:w-full w-[37rem]">
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
@@ -233,7 +235,7 @@ function ViewPartnerDetails() {
                                                 {partnerDetails.emailId}
                                             </p>
                                         </div>
-                                        <div className="mb-3 w-[100%]">
+                                        <div className="mb-3 w-[45rem]">
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>

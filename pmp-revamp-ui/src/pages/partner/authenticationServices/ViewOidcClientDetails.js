@@ -3,8 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, handleMouseClickForDropdown, getGrantTypes, bgOfStatus, onPressEnterKey, copyClientId } from "../../../utils/AppUtils";
-import { formatDate, moveToOidcClientsList, getStatusCode } from "../../../utils/AppUtils";
+import { isLangRTL, formatDate, moveToOidcClientsList, getStatusCode, handleMouseClickForDropdown, getGrantTypes, bgOfStatus, copyClientId } from "../../../utils/AppUtils";
 import content_copy_icon from "../../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import Title from "../../common/Title";
@@ -44,7 +43,7 @@ function ViewOidcClientDetails() {
         <>
             <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
+                    <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='oidcClientsList.listOfOidcClients' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">

@@ -67,7 +67,7 @@ function ViewAdminSbiDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(sbiDetails.createdDateTime, "date", true)}
+                                            formatDate(sbiDetails.createdDateTime, "date", true)}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
@@ -77,8 +77,8 @@ function ViewAdminSbiDetails() {
                             </div>
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerId")}
                                     </p>
@@ -86,7 +86,7 @@ function ViewAdminSbiDetails() {
                                         {sbiDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
@@ -94,7 +94,7 @@ function ViewAdminSbiDetails() {
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.organisation")}
                                     </p>
@@ -102,7 +102,7 @@ function ViewAdminSbiDetails() {
                                         {sbiDetails.orgName}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
@@ -110,23 +110,23 @@ function ViewAdminSbiDetails() {
                                         {sbiDetails.countOfAssociatedDevices}
                                     </button>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">
-                                    {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className={`font-[600] text-sm ${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-suva-gray' }`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                    <p className={`font-[600] text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
-                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') && 'text-black'} font-[600] text-vulcan text-md`}>
-                                    {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
+                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                <div className={`mb-4 w-[42rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiVersion")}
                                     </p>
