@@ -156,9 +156,10 @@ function Dashboard() {
     const fetchPartnerPolicyMappingRequestCount = async () => {
       const queryParams = new URLSearchParams();
       queryParams.append('status', 'InProgress');
-      queryParams.append('pageSize', '1');
+      queryParams.append('pageSize', 1);
+      queryParams.append('pageNo', 0);
 
-      const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {

@@ -103,7 +103,7 @@ function PolicyRequestsList() {
     if (filters.policyName) queryParams.append('policyName', filters.policyName);
     if (filters.status) queryParams.append('status', filters.status);
 
-    const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
