@@ -213,23 +213,23 @@ function ViewOidcClientDetails() {
                                     </div>
                                     <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
                                         <div className="flex-col space-y-1 w-[50%]">
-                                            <p id='oidc_client_details_redirect_uris' className="font-[600] text-suva-gray text-xs">
+                                            <p id="oidc_client_details_redirect_uris" className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.redirectUri")}
                                             </p>
-                                            <div id='oidc_client_redirect_uris' className="flex-col">
-                                                {(oidcClientDetails.redirectUris).map((uri, index) => {
+                                            <div id="oidc_client_redirect_uris" className="flex-col">
+                                                {oidcClientDetails.redirectUris.map((uri) => {
                                                     return (
-                                                        <ul>
-                                                            <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                        <ul key={uri}>
+                                                            <li className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                 <p className="text-sm max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
                                                                     {uri}
                                                                 </p>
-                                                                {(oidcClientDetails.redirectUris).length > 1 &&
-                                                                    (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />)
-                                                                }
+                                                                {oidcClientDetails.redirectUris.length > 1 && (
+                                                                    <hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />
+                                                                )}
                                                             </li>
                                                         </ul>
-                                                    )
+                                                    );
                                                 })}
                                             </div>
                                         </div>
