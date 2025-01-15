@@ -350,11 +350,11 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
 
 export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/policy-requests`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/partner-policy-requests`, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
-                const resData = responseData.response;
+                const resData = responseData.response.data;
                 return resData;
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
