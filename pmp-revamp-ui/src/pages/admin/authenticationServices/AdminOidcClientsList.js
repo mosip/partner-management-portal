@@ -100,7 +100,7 @@ function AdminOidcClientsList() {
         if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);

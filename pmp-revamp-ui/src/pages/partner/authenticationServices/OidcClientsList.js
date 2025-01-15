@@ -59,11 +59,11 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oauth/clients', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
-                        const resData = responseData.response;
+                        const resData = responseData.response.data;
                         const populatedData = populateClientNames(resData);
                         const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setOidcClientsList(sortedData);
