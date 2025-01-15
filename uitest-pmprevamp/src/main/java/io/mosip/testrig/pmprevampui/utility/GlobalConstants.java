@@ -225,6 +225,8 @@ public class GlobalConstants {
 	public static final String isPolicyDetailsCommentsDisplayed = "Verify if policy details comments displayed";
 	public static final String isDuplicateApiKeyNameErrorMessageDisplayed = "Verify if duplicate api key name error message displayed";
 	public static final String isDeviceProviderSuccessMessageDisplayed = "Verify if device provider success message displayed";
+	public static final String isRedirectUri2TextBoxDisplayed = "Verify if authentication services title is displayed";
+	public static final String isLogoUriempty = "Verify if Enter Logo URI is precent";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
