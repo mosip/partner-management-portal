@@ -138,7 +138,7 @@ function ViewAdminFtmChipDetails() {
                                         {ftmDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-3 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-3 max-[600px]:w-full w-[40rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
@@ -146,7 +146,7 @@ function ViewAdminFtmChipDetails() {
                                         {t("viewFtmChipDetails.ftmChipProvider")}
                                     </p>
                                 </div>
-                                <div className={`mb-3 max-[600px]:w-full w-[39rem]`}>
+                                <div className={`mb-2 max-[600px]:w-full w-[39rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.orgName")}
                                     </p>
@@ -164,7 +164,7 @@ function ViewAdminFtmChipDetails() {
                                         {ftmDetails.make}
                                     </p>
                                 </div>
-                                <div className={`mb-5 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-5 max-[600px]:w-full w-[40rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("ftmList.model")}
                                     </p>

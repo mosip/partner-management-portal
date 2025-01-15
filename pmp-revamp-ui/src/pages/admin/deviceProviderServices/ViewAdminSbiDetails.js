@@ -86,7 +86,7 @@ function ViewAdminSbiDetails() {
                                         {sbiDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[38rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
@@ -102,7 +102,7 @@ function ViewAdminSbiDetails() {
                                         {sbiDetails.orgName}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[38rem]`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
@@ -118,8 +118,8 @@ function ViewAdminSbiDetails() {
                                         {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
-                                    <p className={`font-[600] text-sm`}>
+                                <div className={`mb-4 max-[600px]:w-full w-[38rem]`}>
+                                    <p className={`font-[600] text-suva-gray text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
