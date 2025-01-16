@@ -232,7 +232,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/ftpchipdetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
