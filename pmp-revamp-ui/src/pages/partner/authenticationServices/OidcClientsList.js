@@ -123,8 +123,8 @@ function OidcClientsList() {
 
     const showDeactivateOidcClient = async(selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
+            setDataLoaded(false);
             try {
-                setDataLoaded(false);
                 const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
@@ -148,11 +148,11 @@ function OidcClientsList() {
                 } else {
                     setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
                 }
-                setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
             }
+            setDataLoaded(true);
         }
     };
 
