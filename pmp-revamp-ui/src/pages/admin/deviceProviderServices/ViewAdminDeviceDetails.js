@@ -79,8 +79,8 @@ function ViewAdminDeviceDetails() {
                             </div>
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                            <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
-                                <div className={`w-[37rem] max-[600px]:w-full mb-4`}>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`w-[48%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.partnerId")}
                                     </p>
@@ -88,7 +88,7 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.partnerId}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
@@ -96,7 +96,7 @@ function ViewAdminDeviceDetails() {
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-3 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.orgName")}
                                     </p>
@@ -104,7 +104,7 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.orgName}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiId")}
                                     </p>
@@ -113,8 +113,8 @@ function ViewAdminDeviceDetails() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                            <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceType")}
                                     </p>
@@ -122,7 +122,7 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.deviceType}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceSubType")}
                                     </p>
@@ -130,7 +130,7 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.deviceSubType}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                 <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.make")}
                                     </p>
@@ -138,7 +138,7 @@ function ViewAdminDeviceDetails() {
                                         {deviceDetails.make}
                                     </p>
                                 </div>
-                                <div className={`mb-4 max-[600px]:w-full w-[37rem]`}>
+                                <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.model")}
                                     </p>

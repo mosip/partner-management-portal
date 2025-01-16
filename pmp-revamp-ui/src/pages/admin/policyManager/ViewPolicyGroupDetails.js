@@ -72,7 +72,7 @@ function ViewPolicyGroupDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-3`}>
                             <div className="flex flex-wrap py-3 max-[450px]:flex-col">
-                                <div className="w-[38rem] max-[600px]:w-full mb-3">
+                                <div className="w-[50%] max-[600px]:w-[100%] mb-3">
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("policyGroupList.policyGroupName")}
                                     </p>

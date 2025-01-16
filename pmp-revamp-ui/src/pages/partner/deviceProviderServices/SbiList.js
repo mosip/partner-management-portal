@@ -231,7 +231,7 @@ function SbiList() {
                                                     </button>
 
                                                     {deactivateBtnId === index && (
-                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md font-semibold shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
+                                                        <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
                                                             <button id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
                                                                 <p> {t('sbiList.deactivate')} </p>
                                                             </button>
