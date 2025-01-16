@@ -909,7 +909,7 @@
     },
     "sbiApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter le SBI ?",
-        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails du SBI avant de prendre les mesures appropriées."
     },
     "deviceApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter l'appareil ?",
@@ -1152,7 +1152,7 @@
         "KER-AUD-001": "La longueur maximale du PartnerId doit être 36",
         "PMS_DP_FETCH_001": "Impossible de récupérer les identifiants des fournisseurs d'appareils approuvés.",
         "PMS_DEVICE_ERROR_001": "L'identifiant du partenaire n'est pas associé à l'utilisateur.",
-        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_002": "SBI n’est pas associé à l’ID du partenaire.",
         "PMS_DEVICE_ERROR_003": "Type de partenaire invalide.",
         "PMS_DEVICE_ERROR_004": "Le mappage SBI et périphérique existe déjà.",
         "PMS_DEVICE_ERROR_005": "SBI n'existe pas.",

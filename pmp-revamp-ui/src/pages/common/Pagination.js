@@ -80,10 +80,10 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                             }
                         </div>
                     )}
-                    <div role='button' id='pagination_select_record_per_page' className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                    <div role='button' id='pagination_select_record_per_page' className="cursor-pointer flex justify-between w-auto h-6 items-center 
                         text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
                         onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
-                        <p>
+                        <p className='px-1'>
                             {selectedRecordsPerPage}
                         </p>
                         <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
