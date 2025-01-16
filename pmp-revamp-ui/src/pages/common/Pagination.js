@@ -72,7 +72,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                             {itemsPerPageOptions.map((num, i) => {
                                 return (
                                     <p id={'pagination_each_num_option' + (i + 1)} key={i}
-                                        className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
+                                        className={`px-2.5 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                         <button onClick={() => changeItemsPerPage(num)}> {num} </button>
                                     </p>
                                 )
@@ -80,10 +80,10 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                             }
                         </div>
                     )}
-                    <div role='button' id='pagination_select_record_per_page' className="cursor-pointer flex justify-between w-10 h-6 items-center 
+                    <div role='button' id='pagination_select_record_per_page' className="cursor-pointer flex w-auto h-6 items-center 
                         text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
                         onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
-                        <p>
+                        <p className='px-1'>
                             {selectedRecordsPerPage}
                         </p>
                         <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
