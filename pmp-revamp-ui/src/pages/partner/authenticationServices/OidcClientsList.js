@@ -121,20 +121,38 @@ function OidcClientsList() {
         }
     };
 
-    const showDeactivateOidcClient = (selectedClientdata) => {
+    const showDeactivateOidcClient = async(selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            const request = createRequest({
-                logoUri: selectedClientdata.logoUri,
-                redirectUris: selectedClientdata.redirectUris,
-                status: "INACTIVE",
-                grantTypes: selectedClientdata.grantTypes,
-                clientName: selectedClientdata.clientNameEng,
-                clientAuthMethods: selectedClientdata.clientAuthMethods,
-                clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
-            });
-            setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
+            try {
+                setDataLoaded(false);
+                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const clientData = responseData.response;
+                        const request = createRequest({
+                            logoUri: clientData.logoUri,
+                            redirectUris: clientData.redirectUris,
+                            status: "INACTIVE",
+                            grantTypes: clientData.grantTypes,
+                            clientName: selectedClientdata.clientNameEng,
+                            clientAuthMethods: clientData.clientAuthMethods,
+                            clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
+                        });
+                        setDeactivateRequest(request);
+                        setShowDeactivatePopup(true);
+                        document.body.style.overflow = "hidden";
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
+                }
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
         }
     };
 
