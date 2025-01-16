@@ -6,7 +6,7 @@ import { HttpService } from '../../../services/HttpService';
 import {
   isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  onPressEnterKey, createRequest, populateDeactivatedStatus
+  createRequest, populateDeactivatedStatus
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';

@@ -20,7 +20,6 @@ function installing_pmp_revamp_ui() {
 
   echo Copy configmaps
   $COPY_UTIL configmap global default $NS
-  $COPY_UTIL configmap artifactory-share artifactory $NS
   $COPY_UTIL configmap config-server-share config-server $NS
 
   INTERNAL_API_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-api-internal-host})

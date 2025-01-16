@@ -701,13 +701,13 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
 		assertFalse(oidcClientPage.isSecondRedirectUriTextBoxDisplayed(), GlobalConstants.isSecondRedirectUriTextBoxDisplayed);
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
-		oidcClientPage.EntercreateOidcRedirectUrl2(ConfigManager.getRedirectUri()+"a");
+		oidcClientPage.entercreateOidcRedirectUrl2(ConfigManager.getRedirectUri()+"a");
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
-		oidcClientPage.EntercreateOidcRedirectUrl3(ConfigManager.getRedirectUri()+"b");
+		oidcClientPage.entercreateOidcRedirectUrl3(ConfigManager.getRedirectUri()+"b");
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
-		oidcClientPage.EntercreateOidcRedirectUrl4(ConfigManager.getRedirectUri()+"c");
+		oidcClientPage.entercreateOidcRedirectUrl4(ConfigManager.getRedirectUri()+"c");
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
-		oidcClientPage.EntercreateOidcRedirectUrl5(ConfigManager.getRedirectUri()+"d");
+		oidcClientPage.entercreateOidcRedirectUrl5(ConfigManager.getRedirectUri()+"d");
 		
 		oidcClientPage.clickOnCreateOidcClearForm();
 		
@@ -740,5 +740,54 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isnoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 		
 	}
+	
+    @Test (priority = 10)
+    public void deletingSecondRedirectUri() { 
+    DashboardPage dashboardpage = new DashboardPage(driver); 
+    RegisterPage registerPage = new RegisterPage(driver); 
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton(); 
+	  oidcClientPage.clickOnRedirectUriAddNew(); 
+	  assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	  oidcClientPage.clickOnRedirectUri2Delete();
+	  assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	
+    }
+    
+    @Test (priority = 11)
+      public void addingSecondRedirectUri() { 
+	  DashboardPage dashboardpage = new DashboardPage(driver); 
+	  RegisterPage registerPage = new RegisterPage(driver); 
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),
+	  GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(),GlobalConstants.
+	  isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton();
+	  oidcClientPage.clickOnRedirectUriAddNew(); 
+	  assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed); 
+	  }
+    
+	  @Test (priority = 12)
+	  public void ClearFormOidecClient() {
+	  DashboardPage dashboardpage = new DashboardPage(driver);
+	  RegisterPage registerPage = new
+	  RegisterPage(driver);
+	  assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed); 
+	  OidcClientPage oidcClientPage =dashboardpage.clickOnAuthenticationServicesTitle(); 
+	  assertTrue(oidcClientPage.isCreateOidcClientDisplayed(),
+	  GlobalConstants.isCreateOIDCClientDisplayed); 
+	  oidcClientPage.clickOnCreateOidcClientButton(); 
+	  oidcClientPage.enterNameOidcTextBox(data);
+	  oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKey); 
+	  oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri()); 
+	  oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri()); 
+	  oidcClientPage.clickOnClearFormButton(); 
+	  assertTrue(oidcClientPage.isLogoUriempty(), GlobalConstants.isLogoUriempty);
+	  }
+	  
+
 	
 }

@@ -250,7 +250,8 @@ public class GlobalConstants {
 	public static final String isItemsPerPageDropdownAvailable = "Verify if items per page dropdown available";
 	public static final String isSecondRedirectUriTextBoxDisplayed = "Verify if second redirect uri textbox displayed";
 	public static final String isEditSecondRedirectUriTextBoxDisplayed = "Verify if edit second redirect uri textbox displayed";
-	
+	public static final String isRedirectUri2TextBoxDisplayed = "Verify if authentication services title is displayed";
+	public static final String isLogoUriempty = "Verify if Enter Logo URI is precent";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

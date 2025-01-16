@@ -234,7 +234,7 @@ public class OidcClientPage extends BasePage {
 	
 	@FindBy(id = "create_oidc_btn")
 	private WebElement oidcClientListPageCreateOidcClientBtn;
-	
+
 	@FindBy(xpath = "//*[contains(text(), 'Your changes will be lost, are you sure you want to proceed?')]")
 	private WebElement browserConfirmationPopup;
 	
@@ -246,6 +246,21 @@ public class OidcClientPage extends BasePage {
 	
 	@FindBy(id = "title_back_icon")
 	private WebElement backicon;
+
+	@FindBy(id = "add_new_redirect_url")
+	private WebElement redirectUriAddNew;
+	
+	@FindBy(id = "delete_redirect_url2")
+	private WebElement RedirectUri2Delete;
+	
+	@FindBy(id = "create_oidc_redirect_url2")
+	private WebElement RedirectUri2;
+	
+	@FindBy(id = "create_oidc_clear_form")
+	private WebElement clearForm;
+	
+	@FindBy(xpath = "//*[@placeholder='Enter Logo URI']")  
+	private WebElement enterLogoUriTextBoxEmpty;
 	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -523,19 +538,19 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(addNewRedirectUrl);
 	}
 	
-	public void EntercreateOidcRedirectUrl2(String value) {
+	public void entercreateOidcRedirectUrl2(String value) {
 		enter(createOidcRedirectUrl2,value);
 	}
 	
-	public void EntercreateOidcRedirectUrl3(String value) {
+	public void entercreateOidcRedirectUrl3(String value) {
 		enter(createOidcRedirectUrl3,value);
 	}
 	
-	public void EntercreateOidcRedirectUrl4(String value) {
+	public void entercreateOidcRedirectUrl4(String value) {
 		enter(createOidcRedirectUrl4,value);
 	}
 	
-	public void EntercreateOidcRedirectUrl5(String value) {
+	public void entercreateOidcRedirectUrl5(String value) {
 		enter(createOidcRedirectUrl5,value);
 	}
 	
@@ -596,5 +611,25 @@ public class OidcClientPage extends BasePage {
 	
 	public boolean isSecondRedirectUriTextBoxDisplayed() {
 		return isElementDisplayed(createOidcRedirectUrl2);
+	}
+		
+	public void clickOnRedirectUriAddNew() {
+		clickOnElement(redirectUriAddNew);
+	}
+
+	public void clickOnRedirectUri2Delete() {
+		clickOnElement(RedirectUri2Delete);
+	}
+	
+	public boolean isRedirectUri2TextBoxDisplayed() {
+		return isElementDisplayed(RedirectUri2);
+	}
+	
+	public void clickOnClearFormButton() {
+		clickOnElement(clearForm);
+	}
+	
+	public boolean isLogoUriempty() {
+		return isElementDisplayed(enterLogoUriTextBoxEmpty);
 	}
 }

@@ -164,7 +164,7 @@ function ViewPolicyRequestDetails() {
                                                 {t("viewPolicyDetails.partnerComment")}
                                             </h4>
                                             <span className="text-sm mt-3 break-words">
-                                                {policyRequestDetails.requestDetail}
+                                                {policyRequestDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
