@@ -97,7 +97,7 @@ function AdminSbiList() {
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
         if (filterAttributes.sbiExpiryStatus) queryParams.append('sbiExpiryStatus', filterAttributes.sbiExpiryStatus);
 
-        const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/securebiometricinterface', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
