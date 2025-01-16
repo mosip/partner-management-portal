@@ -182,8 +182,9 @@ function Dashboard() {
       const queryParams = new URLSearchParams();
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
 
-      const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/securebiometricinterface', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
