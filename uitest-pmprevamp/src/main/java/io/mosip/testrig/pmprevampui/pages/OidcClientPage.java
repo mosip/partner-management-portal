@@ -10,34 +10,34 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oid_client")
 	private WebElement createOidcClient;
 
-	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[2]")
 	private WebElement PolicyGroupHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[3]")
 	private WebElement PolicyNameHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'OIDC Client Name')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[4]")
 	private WebElement OIDCClientNameHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Created Date')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[5]")
 	private WebElement CreatedDateHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Status')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[6]")
 	private WebElement StatusHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'OIDC Client ID')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[7]")
 	private WebElement OIDCClientIDHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Action')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[8]")
 	private WebElement ActionHeaderText;
 
 	@FindBy(id = "authentication_apikey_tab")
 	private WebElement ApiKeyTab;
 
-	@FindBy(id = "generate_api_key_btn")
+	@FindBy(id = "generate_api_key")
 	private WebElement enerateAPIKey;
 
 	@FindBy(id = "generate_partner_id")
@@ -235,6 +235,18 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oidc_btn")
 	private WebElement oidcClientListPageCreateOidcClientBtn;
 	
+	@FindBy(xpath = "//*[contains(text(), 'Your changes will be lost, are you sure you want to proceed?')]")
+	private WebElement browserConfirmationPopup;
+	
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement browserConfirmationPopupProceedBtn;
+	
+	@FindBy(id = "block_message_cancel")
+	private WebElement browserConfirmationPopupCancelBtn;
+	
+	@FindBy(id = "title_back_icon")
+	private WebElement backicon;
+	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
@@ -332,6 +344,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isActionHeaderTextDisplayed() {
 		return isElementDisplayed(ActionHeaderText);
+	}
+	
+	public boolean isApiKeyTabDisplayed() {
+		return isElementDisplayed(ApiKeyTab);
 	}
 
 	public void clickOnApiKeyTab() {
@@ -540,5 +556,45 @@ public class OidcClientPage extends BasePage {
 	}
 	public void clickOnOidcClientListPageCreateOidcClientBtn() {
 		clickOnElement(oidcClientListPageCreateOidcClientBtn);
+	}
+	
+	public void navigateBackDefaultButton() {
+		driver.navigate().back();
+	}
+	
+	public void navigateRefreshDefaultButton() {
+		driver.navigate().refresh();
+	}
+	
+	public boolean isBrowserConfirmationPopupDisplayed() {
+		return isElementDisplayed(browserConfirmationPopup);
+	}
+	
+	public boolean isBrowserConfirmationPopupProceedBtnDisplayed() {
+		return isElementDisplayed(browserConfirmationPopupProceedBtn);
+	}
+	
+	public void clickOnBrowserConfirmationPopupProceedBtn() {
+		clickOnElement(browserConfirmationPopupProceedBtn);
+	}
+	
+	public boolean isBrowserConfirmationPopupCancelBtnDisplayed() {
+		return isElementDisplayed(browserConfirmationPopupCancelBtn);
+	}
+	
+	public void clickOnBrowserConfirmationPopupCancelBtn() {
+		clickOnElement(browserConfirmationPopupCancelBtn);
+	}
+	
+	public void clickOnTitleBackButton() {
+		clickOnElement(backicon);
+	}
+	
+	public boolean isEditSecondRedirectUriTextBoxDisplayed() {
+		return isElementDisplayed(EnterPublickeyTextBoxSecond);
+	}
+	
+	public boolean isSecondRedirectUriTextBoxDisplayed() {
+		return isElementDisplayed(createOidcRedirectUrl2);
 	}
 }

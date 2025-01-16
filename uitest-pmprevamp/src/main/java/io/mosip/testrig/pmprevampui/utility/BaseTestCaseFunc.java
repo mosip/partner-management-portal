@@ -197,8 +197,8 @@ public class BaseTestCaseFunc {
 		String url = ApplnURI + propsKernel.getProperty("definePolicyGroupUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(definePolicyGroupRequest);
 		JSONObject request = new JSONObject();
-		request.put("desc", "desc automationui policy group");
-		request.put("name", "automationui policy group");		
+		request.put("desc", "desc automationuiauth policy group");
+		request.put("name", "automationuiauth policy group");		
 		actualrequest.put("request", request);
 		logger.info(actualrequest.toJSONString());
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
@@ -225,11 +225,11 @@ public class BaseTestCaseFunc {
 		JSONObject request = new JSONObject();
 		request.put("address", "Bangalore");
 		request.put("contactNumber", "8553967572");
-		request.put("emailId", "automationpmpui-revampui001317281@automationlabs.com");
+		request.put("emailId", "automationpmpui-revampui001317281133@automationlabs.com");
 		request.put("organizationName","AABBCC");
 		request.put("partnerId","pmpui-revamp");
 		request.put("partnerType","Auth_Partner");
-		request.put("policyGroup","automationui policy group");
+		request.put("policyGroup","automationuiauth policy group");
 		
 		actualrequest.put("request", request);
 		logger.info(actualrequest.toJSONString());
