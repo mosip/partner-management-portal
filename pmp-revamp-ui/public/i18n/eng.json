@@ -30,7 +30,9 @@
         "resetFilter": "Reset Filter",
         "itemsPerPage": "Items per page",
         "close": "Close",
-        "unexpectedError": "We have encountered an unexpected error"
+        "unexpectedError": "We have encountered an unexpected error",
+        "undoChanges": "Undo Changes",
+        "clear":"Clear"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

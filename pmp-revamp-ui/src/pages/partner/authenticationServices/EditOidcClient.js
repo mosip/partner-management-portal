@@ -31,7 +31,6 @@ function EditOidcClient() {
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    let isCancelledClicked = false;
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
         policyGroupName: '',
@@ -57,9 +56,8 @@ function EditOidcClient() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || editOidcClientSuccess) {
+            if (isSubmitClicked || editOidcClientSuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -251,7 +249,7 @@ function EditOidcClient() {
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
-    const clearForm = () => {
+    const undoChanges = () => {
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
         setErrorCode("");
@@ -308,7 +306,6 @@ function EditOidcClient() {
     }
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToOidcClientsList(navigate);
     }
 
@@ -487,7 +484,7 @@ function EditOidcClient() {
                                         </div>
                                         <div className="border bg-medium-gray" />
                                         <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                                            <button id="oidc_edit_clear_form_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
+                                            <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                             <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                                 <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                                 <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
