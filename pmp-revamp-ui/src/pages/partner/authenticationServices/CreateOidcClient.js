@@ -49,12 +49,10 @@ function CreateOidcClient() {
   const [createOidcClientSuccess, setCreateOidcClientSuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  let isCancelledClicked = false;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
-      if (isSubmitClicked || isCancelledClicked || createOidcClientSuccess) {
-        isCancelledClicked = false;
+      if (isSubmitClicked || createOidcClientSuccess) {
         setIsSubmitClicked(false);
         return false;
       }
@@ -247,7 +245,6 @@ function CreateOidcClient() {
   };
 
   const clickOnCancel = () => {
-    isCancelledClicked = true;
     moveToOidcClientsList(navigate)
   }
 

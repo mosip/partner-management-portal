@@ -59,11 +59,11 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oauth/clients', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
-                        const resData = responseData.response;
+                        const resData = responseData.response.data;
                         const populatedData = populateClientNames(resData);
                         const sortedData = populatedData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setOidcClientsList(sortedData);
@@ -121,20 +121,38 @@ function OidcClientsList() {
         }
     };
 
-    const showDeactivateOidcClient = (selectedClientdata) => {
+    const showDeactivateOidcClient = async(selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            const request = createRequest({
-                logoUri: selectedClientdata.logoUri,
-                redirectUris: selectedClientdata.redirectUris,
-                status: "INACTIVE",
-                grantTypes: selectedClientdata.grantTypes,
-                clientName: selectedClientdata.clientNameEng,
-                clientAuthMethods: selectedClientdata.clientAuthMethods,
-                clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
-            });
-            setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
+            setDataLoaded(false);
+            try {
+                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const clientData = responseData.response;
+                        const request = createRequest({
+                            logoUri: clientData.logoUri,
+                            redirectUris: clientData.redirectUris,
+                            status: "INACTIVE",
+                            grantTypes: clientData.grantTypes,
+                            clientName: selectedClientdata.clientNameEng,
+                            clientAuthMethods: clientData.clientAuthMethods,
+                            clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
+                        });
+                        setDeactivateRequest(request);
+                        setShowDeactivatePopup(true);
+                        document.body.style.overflow = "hidden";
+                    } else {
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setErrorMsg(err);
+            }
+            setDataLoaded(true);
         }
     };
 
@@ -315,15 +333,15 @@ function OidcClientsList() {
                                                                         </button>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
-                                                                                <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 w-full px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
+                                                                                <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                                                                <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </button>
                                                                                 {showDeactivatePopup && (

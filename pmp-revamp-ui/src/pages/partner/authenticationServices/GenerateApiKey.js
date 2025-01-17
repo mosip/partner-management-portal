@@ -37,15 +37,13 @@ function GenerateApiKey() {
     const [generateApiKeySuccess, setGenerateApiKeySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-    let isCancelledClicked = false;
 
     const navigate = useNavigate();
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || generateApiKeySuccess) {
+            if (isSubmitClicked || generateApiKeySuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -171,7 +169,6 @@ function GenerateApiKey() {
     }, [showPopup, errorMsg]);
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToApiKeysList(navigate);
     }
 

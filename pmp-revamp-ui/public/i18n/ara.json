@@ -30,7 +30,9 @@
         "resetFilter": "تصفية إعادة تعيين",
         "itemsPerPage": "مواد لكل صفحة",
         "close": "يغلق",
-        "unexpectedError": "لقد واجهنا خطأ غير متوقع"
+        "unexpectedError": "لقد واجهنا خطأ غير متوقع",
+        "undoChanges": "التراجع عن التغييرات",
+        "clear":"مسح"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
@@ -343,7 +345,8 @@
         "editOidcClient": "تحرير عميل OIDC",
         "authenticationServiceSection": "خدمات المصادقة",
         "editSuccessHeader": "تم إرسال التفاصيل المعدلة بنجاح!",
-        "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح."
+        "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح.",
+        "errorWhileGettingOidcClientDetails": "أثناء جلب تفاصيل عميل Oidc، واجهنا خطأ."
     },
     "deactivateOidcClient": {
         "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",
@@ -909,7 +912,7 @@
     },
     "sbiApproveRejectPopup": {
         "header": "هل تريد الموافقة أو رفض SBI؟",
-        "description": "يرجى مراجعة تفاصيل SBI والأجهزة المرتبطة بعناية قبل اتخاذ الإجراء المناسب."
+        "description": "يرجى مراجعة تفاصيل الهيئة الفرعية للتنفيذ بعناية قبل اتخاذ الإجراء المناسب"
     },
     "deviceApproveRejectPopup": {
         "header": "هل تريد الموافقة أو رفض الجهاز؟",

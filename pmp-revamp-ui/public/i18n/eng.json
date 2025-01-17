@@ -30,7 +30,9 @@
         "resetFilter": "Reset Filter",
         "itemsPerPage": "Items per page",
         "close": "Close",
-        "unexpectedError": "We have encountered an unexpected error"
+        "unexpectedError": "We have encountered an unexpected error",
+        "undoChanges": "Undo Changes",
+        "clear":"Clear"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -342,7 +344,8 @@
         "editOidcClient": "Edit OIDC Client",
         "authenticationServiceSection": "Authentication Services",
         "editSuccessHeader": "Modified details submitted successfully!",
-        "editSuccessMsg": "OIDC Client details has been successfully modified and submitted."
+        "editSuccessMsg": "OIDC Client details has been successfully modified and submitted.",
+        "errorWhileGettingOidcClientDetails": "While fetching Oidc Client details, we have encountered with an error."
     },
     "deactivateOidcClient": {
         "oidcClientName": "Do you want to Deactivate OIDC Client",
@@ -904,7 +907,7 @@
     },
     "sbiApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the SBI?",
-        "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
+        "description": "Please review the SBI details carefully before taking appropriate action."
     },
     "deviceApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the Device?",
