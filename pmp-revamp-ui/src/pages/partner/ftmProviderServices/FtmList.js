@@ -203,7 +203,7 @@ function FtmList() {
       setSelectedFtm({});
       setShowDeactivatePopup(false);
       // Update the specific row in the state with the new status
-      setFtmList((prevList) =>
+      setFilteredFtmList((prevList) =>
         prevList.map(ftm =>
           ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
         )
