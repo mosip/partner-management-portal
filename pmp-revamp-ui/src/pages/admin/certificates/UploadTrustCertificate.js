@@ -10,7 +10,8 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import Confirmation from "../../common/Confirmation";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useBlocker } from 'react-router-dom';
+import BlockerPrompt from '../../common/BlockerPrompt';
 
 function UploadTrustCertificate() {
     const { t } = useTranslation();
@@ -29,6 +30,7 @@ function UploadTrustCertificate() {
     const [uploadFailure, setUploadFailure] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [uploadCertificateData, setUploadCertificateData] = useState(true);
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     useEffect(() => {
         const data = localStorage.getItem('uploadCertificateAttributes');
@@ -39,6 +41,40 @@ function UploadTrustCertificate() {
         const requiredData = JSON.parse(data);
         setUploadCertificateData(requiredData);
     }, []);
+
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) => {
+            if (isSubmitClicked || uploadSuccess) {
+                setIsSubmitClicked(false);
+                return false;
+            }
+
+            return (
+                (selectedDomain !== "" || certificateData !== "") &&
+                currentLocation.pathname !== nextLocation.pathname
+            );
+        }
+    );
+
+    useEffect(() => {
+        const shouldWarnBeforeUnload = () => {
+            return selectedDomain !== "" ||
+                certificateData !== "";
+        };
+
+        const handleBeforeUnload = (event) => {
+            if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [selectedDomain, certificateData, isSubmitClicked]);
 
     const cancelUpload = () => {
         setFileName("");
@@ -66,6 +102,7 @@ function UploadTrustCertificate() {
     };
 
     const clickOnSubmit = async () => {
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
@@ -102,6 +139,7 @@ function UploadTrustCertificate() {
             setErrorMsg(err);
             console.log("Error while uploading certificate: ", err);
         }
+        setIsSubmitClicked(false);
     }
 
     const handleFileChange = (event) => {
@@ -288,6 +326,7 @@ function UploadTrustCertificate() {
                     </div>
                 </>
             )}
+            <BlockerPrompt blocker={blocker} />
         </div >
     )
 }
