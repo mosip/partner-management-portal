@@ -46,6 +46,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [selectedDevice, setSelectedDevice] = useState({});
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -62,8 +63,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         sbiId: null,
         sbiVersion: null
     });
-    const[sbiId, setSbiId] = useState(null);
-    const[sbiVersion, setSbiVersion] = useState(null);
+    const [sbiId, setSbiId] = useState(null);
+    const [sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -162,15 +163,17 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
 
     const approveRejectDeviceDetails = (device) => {
         if (device.status === 'pending_approval') {
+            setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(true);
+            setSelectedDevice(device);
             document.body.style.overflow = "hidden";
         }
     };
 
     const onClickApproveReject = (responseData, status, selectedDevice) => {
         if (responseData) {
-            setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(false);
+            setSelectedDevice({});
             setDevicesList((prevList) =>
                 prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
@@ -181,7 +184,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeApproveRejectPopup = () => {
-        setActionId(-1);
+        setSelectedDevice({});
         setShowDeviceDetailApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -191,6 +194,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
+            setActionId(-1);
+            setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -201,6 +206,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setShowDeactivatePopup(false);
+            setSelectedDevice({});
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(device =>
@@ -211,7 +217,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeDeactivatePopup = () => {
-        setActionId(-1);
+        setSelectedDevice({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
@@ -392,16 +398,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                                         <p id="device_list_approve_reject_option" className={`py-1.5 px-4 ${device.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={device.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeviceDetailApproveRejectPopup && (
-                                                                                        <ApproveRejectPopup
-                                                                                            popupData={{ ...device, isDeviceRequest: true }}
-                                                                                            closePopUp={closeApproveRejectPopup}
-                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, device)}
-                                                                                            title={`${device.make} | ${device.model}`}
-                                                                                            header={t('deviceApproveRejectPopup.header')}
-                                                                                            description={t('deviceApproveRejectPopup.description')}
-                                                                                        />
-                                                                                    )}
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                         <p id="device_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
@@ -412,10 +408,25 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                                         <p id="device_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
-                                                                                    )}
                                                                                 </div>
+                                                                            )}
+                                                                            {showDeviceDetailApproveRejectPopup && (
+                                                                                <ApproveRejectPopup
+                                                                                    popupData={{ ...selectedDevice, isDeviceRequest: true }}
+                                                                                    closePopUp={closeApproveRejectPopup}
+                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedDevice)}
+                                                                                    title={`${selectedDevice.make} | ${selectedDevice.model}`}
+                                                                                    header={t('deviceApproveRejectPopup.header')}
+                                                                                    description={t('deviceApproveRejectPopup.description')}
+                                                                                />
+                                                                            )}
+                                                                            {showDeactivatePopup && (
+                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
+                                                                                    popupData={{ ...selectedDevice, isDeactivateDevice: true }}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg='deactivateDevicePopup.headerMsg'
+                                                                                    descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
                                                                             )}
                                                                         </div>
                                                                     </td>

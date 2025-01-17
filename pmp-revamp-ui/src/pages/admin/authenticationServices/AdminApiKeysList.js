@@ -48,6 +48,7 @@ function AdminApiKeysList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
@@ -167,6 +168,8 @@ function AdminApiKeysList() {
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
+            setActionId(-1);
+            setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -174,14 +177,14 @@ function AdminApiKeysList() {
     };
 
     const closeDeactivatePopup = () => {
-        setActionId(-1);
+        setSelectedApiKey({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setActionId(-1);
+            setSelectedApiKey({});
             setShowDeactivatePopup(false);
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
@@ -308,18 +311,18 @@ function AdminApiKeysList() {
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeactivatePopup && (
-                                                                                        <DeactivatePopup
-                                                                                            closePopUp={closeDeactivatePopup}
-                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)}
-                                                                                            popupData={apiKey}
-                                                                                            request={deactivateRequest}
-                                                                                            headerMsg="adminDeactivateApiKey.title"
-                                                                                            descriptionMsg="adminDeactivateApiKey.description"
-                                                                                            headerKeyName={apiKey.apiKeyLabel}
-                                                                                        />
-                                                                                    )}
                                                                                 </div>
+                                                                            )}
+                                                                            {showDeactivatePopup && (
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
+                                                                                    popupData={selectedApiKey}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg="adminDeactivateApiKey.title"
+                                                                                    descriptionMsg="adminDeactivateApiKey.description"
+                                                                                    headerKeyName={selectedApiKey.apiKeyLabel}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>

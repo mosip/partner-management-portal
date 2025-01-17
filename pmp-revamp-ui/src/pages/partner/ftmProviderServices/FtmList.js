@@ -35,6 +35,7 @@ function FtmList() {
   const [ftmList, setFtmList] = useState([]);
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
+  const [selectedFtm, setSelectedFtm] = useState({});
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
@@ -172,6 +173,8 @@ function FtmList() {
       const request = createRequest({
         status: "De-Activate",
       }, "mosip.pms.deactivate.ftm.patch", true);
+      setViewFtmId(-1);
+      setSelectedFtm(selectedFtmData);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
@@ -179,7 +182,7 @@ function FtmList() {
   };
 
   const closeDeactivatePopup = () => {
-    setViewFtmId(-1);
+    setSelectedFtm({});
     setShowDeactivatePopup(false);
   };
 
@@ -197,7 +200,7 @@ function FtmList() {
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
-      setViewFtmId(-1);
+      setSelectedFtm({});
       setShowDeactivatePopup(false);
       // Update the specific row in the state with the new status
       setFtmList((prevList) =>
@@ -307,14 +310,21 @@ function FtmList() {
                                         <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                           <p> {t('ftmList.manageCertificate')} </p>
                                         </button>
-                                        {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
-                                        )}
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
                                         <button id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                           <p> {t('ftmList.deActivate')}</p>
                                         </button>
                                       </div>
+                                    )}
+                                    {showDeactivatePopup && (
+                                      <DeactivatePopup
+                                        closePopUp={closeDeactivatePopup}
+                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}
+                                        popupData={{ ...selectedFtm, isDeactivateFtm: true }}
+                                        request={deactivateRequest}
+                                        headerMsg='deactivateFtmPopup.headerMsg'
+                                        descriptionMsg='deactivateFtmPopup.description'
+                                      />
                                     )}
                                   </div>
                                 </td>
