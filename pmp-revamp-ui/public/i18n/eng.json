@@ -1135,7 +1135,7 @@
         "PMS_ESI_004": "Client not exists with given id.",
         "PMS_ESI_005": "Partner has no user claims",
         "PMS_ESI_006": "Partner has no Authentication Context Refrences",
-        "PMS_ESI_007": "Failed to process the Public Key",
+        "PMS_ESI_007": "Enter valid public key",
         "PMS_ESI_008": "Client already deactivated.",
         "PMS_PRT_056": "Given langCode is not supported",
         "PMS_PRT_057": "Policy Type Mismatch. Only Auth policy can be used to create OIDC Client.",

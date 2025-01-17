@@ -340,8 +340,8 @@ function AdminSbiList() {
                                                                     </td>
                                                                     <td className={`text-center px-5`}>
                                                                         <button onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
-                                                                            <img src={sbi.status === 'deactivated' ? deactiveLinkedDevices : activeLinkedDevices} alt='' />
-                                                                            <p className={`${sbi.status === 'deactivated' ? 'text-[#969696]' : 'text-tory-blue'} px-2`}>{sbi.countOfAssociatedDevices}</p>
+                                                                            <img src={sbi.countOfAssociatedDevices > 0 ? activeLinkedDevices : deactiveLinkedDevices} alt='' />
+                                                                            <p className={`${sbi.countOfAssociatedDevices > 0 ? 'text-tory-blue' : 'text-[#969696]'} px-2`}>{sbi.countOfAssociatedDevices}</p>
                                                                         </button>
                                                                     </td>
                                                                     <td className="text-center">
