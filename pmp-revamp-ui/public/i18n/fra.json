@@ -345,7 +345,8 @@
         "editOidcClient": "Modifier le client OIDC",
         "authenticationServiceSection": "Services d'authentification",
         "editSuccessHeader": "Détails modifiés soumis avec succès !",
-        "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès."
+        "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès.",
+        "errorWhileGettingOidcClientDetails": "Lors de la récupération des détails du client Oidc, nous avons rencontré une erreur."
     },
     "deactivateOidcClient": {
         "oidcClientName": "Voulez-vous désactiver le client OIDC",

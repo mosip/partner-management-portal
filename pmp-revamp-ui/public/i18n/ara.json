@@ -345,7 +345,8 @@
         "editOidcClient": "تحرير عميل OIDC",
         "authenticationServiceSection": "خدمات المصادقة",
         "editSuccessHeader": "تم إرسال التفاصيل المعدلة بنجاح!",
-        "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح."
+        "editSuccessMsg": "تم تعديل تفاصيل عميل OIDC وإرسالها بنجاح.",
+        "errorWhileGettingOidcClientDetails": "أثناء جلب تفاصيل عميل Oidc، واجهنا خطأ."
     },
     "deactivateOidcClient": {
         "oidcClientName": "هل تريد إلغاء تنشيط عميل OIDC",

@@ -138,11 +138,13 @@ function EditOidcClient() {
                          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                      }
                  } else {
-                     setErrorMsg(t('viewAdminOidcClientDetails.errorWhileGettingOidcClientDetails'))
+                     setUnexpectedError(true);
+                     setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
                  }
                  setDataLoaded(true);
              } catch (err) {
                  console.error('Error fetching data:', err);
+                 setUnexpectedError(true);
                  setErrorMsg(err);
              }
          };
@@ -324,7 +326,7 @@ function EditOidcClient() {
             )}
             {dataLoaded && (
                 <>
-                    {errorMsg && (
+                    {!unexpectedError && errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
@@ -338,7 +340,7 @@ function EditOidcClient() {
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                         <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
                                         <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToOidcClientsList} type="button"
+                                        <button onClick={() => moveToOidcClientsList(navigate)} type="button"
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
