@@ -31,7 +31,8 @@
         "itemsPerPage": "مواد لكل صفحة",
         "close": "يغلق",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع",
-        "undoChanges": "التراجع عن التغييرات"
+        "undoChanges": "التراجع عن التغييرات",
+        "clear":"مسح"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",

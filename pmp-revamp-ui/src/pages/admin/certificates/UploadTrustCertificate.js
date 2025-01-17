@@ -76,7 +76,7 @@ function UploadTrustCertificate() {
         };
     }, [selectedDomain, certificateData, isSubmitClicked]);
 
-    const cancelUpload = () => {
+    const clear = () => {
         setFileName("");
         setCertificateData("");
         setSelectedDomain("");;
@@ -313,9 +313,12 @@ function UploadTrustCertificate() {
                                                 </div>
                                             </div>
                                             <hr className="border bg-medium-gray mt-[2rem]" />
-                                            <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 max-[650px]:flex-col w-full md:w-auto justify-end p-[1rem]`}>
-                                                <button id="upload_admin_certificate_cancel_btn" onClick={cancelUpload} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-[10%] min-w-20 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
-                                                <button disabled={!isFormValid()} id="upload_admin_certificate_btn" onClick={clickOnSubmit} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-[10%] min-w-20 h-10 ${!isFormValid() ? 'bg-[#a9abae] border-[#b1b3b6] text-[#f9fafa]' : 'border-[#1447B2] bg-tory-blue text-white'}  border rounded-md text-sm font-semibold`}>{t('commons.submit')}</button>
+                                            <div className="flex flex-row max-[450px]:flex-col px-7 py-9 justify-between max-[450px]:space-y-2">
+                                                <button id="upload_trust_certificate_clear" onClick={() => clear()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.clear')}</button>
+                                                <div className="flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end">
+                                                    <button id="upload_trust_certificate_cancel_btn" onClick={moveBackToList} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.cancel')}</button>
+                                                    <button disabled={!isFormValid()} id="upload_trust_certificate_submit_btn" onClick={clickOnSubmit} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 ${!isFormValid() ? 'bg-[#a9abae] border-[#b1b3b6] text-[#f9fafa]' : 'border-[#1447B2] bg-tory-blue text-white'}  border rounded-md text-sm font-semibold`}>{t('commons.submit')}</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
