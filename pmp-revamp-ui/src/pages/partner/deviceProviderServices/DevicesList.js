@@ -197,7 +197,7 @@ function DevicesList() {
             setSelectedDevice({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
-            setDevicesList((prevList) =>
+            setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
                     device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
                 )
