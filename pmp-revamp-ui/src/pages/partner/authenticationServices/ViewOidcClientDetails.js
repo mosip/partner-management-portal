@@ -49,11 +49,13 @@ function ViewOidcClientDetails() {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
                 } else {
-                    setErrorMsg(t('viewAdminOidcClientDetails.errorWhileGettingOidcClientDetails'))
+                    setUnexpectedError(true);
+                    setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
                 }
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
+                setUnexpectedError(true);
                 setErrorMsg(err);
             }
         };
@@ -75,7 +77,7 @@ function ViewOidcClientDetails() {
             )}
             {dataLoaded && (
                 <>
-                    {errorMsg && (
+                    {!unexpectedError && errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex justify-between mb-3">
@@ -88,7 +90,7 @@ function ViewOidcClientDetails() {
                                     <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                     <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
                                     <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                    <button onClick={moveToOidcClientsList} type="button"
+                                    <button onClick={() => moveToOidcClientsList(navigate)} type="button"
                                         className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                         {t('commons.goBack')}
                                     </button>
@@ -241,7 +243,7 @@ function ViewOidcClientDetails() {
                                                 {(oidcClientDetails.grantTypes).map((type, index) => {
                                                     return (
                                                         <ul>
-                                                            <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                            <li key={type} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                 <p className="max-[450px]:text-xs max-[450px]:font-semibold font-[600] text-[#36393E] text-sm py-1">
                                                                     {getGrantTypes(type, t)}
                                                                 </p>

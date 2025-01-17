@@ -300,11 +300,11 @@ function FtmList() {
                                     </button>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
                                           <p>{t('ftmList.view')}</p>
                                         </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                           <p> {t('ftmList.manageCertificate')} </p>
                                         </button>
                                         {showDeactivatePopup && (

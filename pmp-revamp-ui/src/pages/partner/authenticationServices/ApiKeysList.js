@@ -272,7 +272,7 @@ function ApiKeysList() {
                                                                         </button>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
-                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} py-2 w-full px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.view')} </p>
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />

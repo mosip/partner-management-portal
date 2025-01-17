@@ -333,15 +333,15 @@ function OidcClientsList() {
                                                                         </button>
                                                                         {viewClientId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
-                                                                                <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 w-full px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
                                                                                     {t('oidcClientsList.view')}
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
+                                                                                <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
                                                                                     {t('oidcClientsList.edit')}
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                                                                <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                                                                     {t('oidcClientsList.deActivate')}
                                                                                 </button>
                                                                                 {showDeactivatePopup && (
