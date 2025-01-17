@@ -42,16 +42,14 @@ function CreatePolicy() {
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
-    let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-        if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
+        if (isSubmitClicked || createPolicySuccess) {
             setIsSubmitClicked(false);
-            isCancelledClicked = false;
             setCreatePolicySuccess(false);
             return false;
         }
@@ -96,7 +94,6 @@ function CreatePolicy() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         navigate(backLink)
     }
 

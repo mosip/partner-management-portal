@@ -28,13 +28,11 @@ function AddDevices() {
     const [previousPath, setPreviousPath] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    let isCancelledClicked = false;
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked) {
+            if (isSubmitClicked) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             const checkValuesAreEntered = deviceEntries.some(entry => (

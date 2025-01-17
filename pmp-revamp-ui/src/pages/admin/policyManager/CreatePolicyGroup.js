@@ -25,13 +25,10 @@ function CreatePolicyGroup() {
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
 
-    let isCancelledClicked = false;
-
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
+            if (isSubmitClicked || createPolicySuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (

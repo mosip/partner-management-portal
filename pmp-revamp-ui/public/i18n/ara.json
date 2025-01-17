@@ -30,7 +30,8 @@
         "resetFilter": "تصفية إعادة تعيين",
         "itemsPerPage": "مواد لكل صفحة",
         "close": "يغلق",
-        "unexpectedError": "لقد واجهنا خطأ غير متوقع"
+        "unexpectedError": "لقد واجهنا خطأ غير متوقع",
+        "undoChanges": "التراجع عن التغييرات"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",

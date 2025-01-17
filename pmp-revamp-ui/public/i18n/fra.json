@@ -30,7 +30,8 @@
         "resetFilter": "Réinitialiser le filtre",
         "itemsPerPage": "Objets par page",
         "close": "Fermer",
-        "unexpectedError": "Nous avons rencontré une erreur inattendue"
+        "unexpectedError": "Nous avons rencontré une erreur inattendue",
+        "undoChanges": "Annuler les modifications"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
