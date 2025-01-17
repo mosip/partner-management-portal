@@ -95,9 +95,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default mx-1 break-normal">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[5%] z-50 font-inter cursor-default mx-1 break-normal">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-lg h-fit">
+                <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-sm h-fit">
                     {!dataLoaded ? (
                         <LoadingIcon styleSet={{ loadingDiv: '!py-[35%]' }} />
                     ) : (

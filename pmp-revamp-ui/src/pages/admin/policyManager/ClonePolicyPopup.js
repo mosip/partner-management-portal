@@ -121,9 +121,9 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-lg`}>
+                <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles}></LoadingIcon>
                     )}

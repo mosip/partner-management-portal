@@ -48,6 +48,7 @@ function PartnersList() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [selectedPartnerToDeactivate, setSelectedPartnerToDeactivate] = useState([]);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -188,6 +189,8 @@ function PartnersList() {
       const request = createRequest({
         status: "De-Active"
       });
+      setSelectedPartnerToDeactivate(selectedPartnerdata);
+      setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
@@ -195,15 +198,15 @@ function PartnersList() {
   };
 
   const closeDeactivatePopup = () => {
-    setViewPartnersId(-1);
     setShowDeactivatePopup(false);
+    setSelectedPartnerToDeactivate([]);
     document.body.style.overflow = "auto";
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
     if (deactivationResponse && deactivationResponse.message) {
-      setViewPartnersId(-1);
       setShowDeactivatePopup(false);
+      setSelectedPartnerToDeactivate([]);
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
         prevList.map(partner =>
@@ -337,18 +340,18 @@ function PartnersList() {
                                                 <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                 <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
-                                              {showDeactivatePopup && (
-                                                < DeactivatePopup
-                                                  onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
-                                                  closePopUp={closeDeactivatePopup}
-                                                  popupData={{ ...partner, isDeactivatePartner: true }}
-                                                  request={deactivateRequest}
-                                                  headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
-                                                  descriptionMsg='deactivatePartner.description'
-                                                  headerKeyName={partner.orgName}
-                                                />
-                                              )}
                                             </div>
+                                          )}
+                                          {showDeactivatePopup && (
+                                            < DeactivatePopup
+                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartnerToDeactivate)}
+                                              closePopUp={closeDeactivatePopup}
+                                              popupData={{ ...selectedPartnerToDeactivate, isDeactivatePartner: true }}
+                                              request={deactivateRequest}
+                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartnerToDeactivate.partnerId, organisationName: selectedPartnerToDeactivate.orgName })}
+                                              descriptionMsg='deactivatePartner.description'
+                                              headerKeyName={selectedPartnerToDeactivate.orgName}
+                                            />
                                           )}
                                         </div>
                                       </td>
