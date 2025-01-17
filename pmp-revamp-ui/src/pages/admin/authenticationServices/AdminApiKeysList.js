@@ -48,7 +48,7 @@ function AdminApiKeysList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
-    const [selectedApiKey, setSelectedApiKey] = useState([]);
+    const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
@@ -177,14 +177,14 @@ function AdminApiKeysList() {
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedApiKey([]);
+        setSelectedApiKey({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setSelectedApiKey([]);
+            setSelectedApiKey({});
             setShowDeactivatePopup(false);
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>

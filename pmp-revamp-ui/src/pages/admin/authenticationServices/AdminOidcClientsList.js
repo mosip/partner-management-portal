@@ -52,7 +52,7 @@ function AdminOidcClientsList() {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
-    const [selectedOidcClient, setSelectedOidcClient] = useState([]);
+    const [selectedOidcClient, setSelectedOidcClient] = useState({});
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -209,7 +209,7 @@ function AdminOidcClientsList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
-            setSelectedOidcClient([]);
+            setSelectedOidcClient({});
             setShowDeactivatePopup(false);
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
@@ -220,7 +220,7 @@ function AdminOidcClientsList() {
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedOidcClient([]);
+        setSelectedOidcClient({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };

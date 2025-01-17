@@ -46,7 +46,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
-    const [selectedDevice, setSelectedDevice] = useState([]);
+    const [selectedDevice, setSelectedDevice] = useState({});
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -173,7 +173,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const onClickApproveReject = (responseData, status, selectedDevice) => {
         if (responseData) {
             setShowDeviceDetailApproveRejectPopup(false);
-            setSelectedDevice([]);
+            setSelectedDevice({});
             setDevicesList((prevList) =>
                 prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
@@ -184,7 +184,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeApproveRejectPopup = () => {
-        setSelectedDevice([]);
+        setSelectedDevice({});
         setShowDeviceDetailApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -206,7 +206,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setShowDeactivatePopup(false);
-            setSelectedDevice([]);
+            setSelectedDevice({});
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(device =>
@@ -217,7 +217,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedDevice([]);
+        setSelectedDevice({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };

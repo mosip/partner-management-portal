@@ -58,7 +58,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
     const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
     const [deactivateRequest, setDeactivateRequest] = useState({});
-    const [selectedPolicy, setSelectedPolicy] = useState([]);
+    const [selectedPolicy, setSelectedPolicy] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -208,7 +208,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
 
     const publishSuccess = (selectedPolicy) => {
         setShowPublishPolicyPopup(false);
-        setSelectedPolicy([]);
+        setSelectedPolicy({});
         setPoliciesList((prevList) =>
             prevList.map(policy =>
                 policy.policyId === selectedPolicy.policyId ? { ...policy, status: 'activated' } : policy
@@ -218,14 +218,14 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }
 
     const closePublishPolicyPopup = () => {
-        setSelectedPolicy([]);
+        setSelectedPolicy({});
         setShowPublishPolicyPopup(false);
         document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
         setShowClonePopup(false);
-        setSelectedPolicy([]);
+        setSelectedPolicy({});
         document.body.style.overflow = 'auto';
     };
 
@@ -242,6 +242,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setActionId(-1);
+            setSelectedPolicy({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setPoliciesList((prevList) =>
@@ -253,7 +254,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedPolicy([]);
+        setSelectedPolicy({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = 'auto';
     };

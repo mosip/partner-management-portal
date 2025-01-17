@@ -51,7 +51,7 @@ function AdminSbiList() {
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
-    const [selectedSbi, setSelectedSbi] = useState([]);
+    const [selectedSbi, setSelectedSbi] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -189,7 +189,7 @@ function AdminSbiList() {
     const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
             setShowSbiApproveRejectPopUp(false);
-            setSelectedSbi([]);
+            setSelectedSbi({});
             setSbiList((prevList) =>
                 prevList.map(sbi =>
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
@@ -201,7 +201,7 @@ function AdminSbiList() {
 
     const closeApproveRejectPopup = () => {
         setShowSbiApproveRejectPopUp(false);
-        setSelectedSbi([]);
+        setSelectedSbi({});
         document.body.style.overflow = "auto";
     };
 
@@ -220,7 +220,7 @@ function AdminSbiList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setSelectedSbi([]);
+            setSelectedSbi({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setSbiList((prevList) =>
@@ -232,7 +232,7 @@ function AdminSbiList() {
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedSbi([]);
+        setSelectedSbi({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };

@@ -40,7 +40,6 @@ function PolicyRequestsList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [policyRequestsData, setPolicyRequestsData] = useState([]);
-  const [selectedPolicyRequest, setSelectedPolicyRequest] = useState([]);
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -58,6 +57,7 @@ function PolicyRequestsList() {
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
+  const [selectedPolicyRequest, setSelectedPolicyRequest] = useState({});
   const [filters, setFilters] = useState({
     partnerId: null,
     partnerType: null,
@@ -183,7 +183,7 @@ function PolicyRequestsList() {
 
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
-      setSelectedPolicyRequest([]);
+      setSelectedPolicyRequest({});
       setShowPopup(false);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
@@ -197,7 +197,7 @@ function PolicyRequestsList() {
 
   const closePolicyRequestPopup = () => {
     setShowPopup(false);
-    setSelectedPolicyRequest([]);
+    setSelectedPolicyRequest({});
     document.body.style.overflow = 'auto';
   };
 

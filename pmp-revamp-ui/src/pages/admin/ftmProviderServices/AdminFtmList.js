@@ -48,7 +48,7 @@ function AdminFtmList() {
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
-    const [selectedFtm, setSelectedFtm] = useState([]);
+    const [selectedFtm, setSelectedFtm] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -158,7 +158,7 @@ function AdminFtmList() {
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
         if (responseData) {
-            setSelectedFtm([]);
+            setSelectedFtm({});
             setShowFtmApproveRejectPopup(false);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
@@ -171,7 +171,7 @@ function AdminFtmList() {
     };
 
     const closeApproveRejectPopup = () => {
-        setSelectedFtm([]);
+        setSelectedFtm({});
         setShowFtmApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -191,7 +191,7 @@ function AdminFtmList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setSelectedFtm([]);
+            setSelectedFtm({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
@@ -203,7 +203,7 @@ function AdminFtmList() {
     };
 
     const closeDeactivatePopup = () => {
-        setSelectedFtm([]);
+        setSelectedFtm({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };

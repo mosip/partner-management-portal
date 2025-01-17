@@ -48,7 +48,7 @@ function PartnersList() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
-  const [selectedPartnerToDeactivate, setSelectedPartnerToDeactivate] = useState([]);
+  const [selectedPartner, setSelectedPartner] = useState({});
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -189,7 +189,7 @@ function PartnersList() {
       const request = createRequest({
         status: "De-Active"
       });
-      setSelectedPartnerToDeactivate(selectedPartnerdata);
+      setSelectedPartner(selectedPartnerdata);
       setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
@@ -199,14 +199,14 @@ function PartnersList() {
 
   const closeDeactivatePopup = () => {
     setShowDeactivatePopup(false);
-    setSelectedPartnerToDeactivate([]);
+    setSelectedPartner({});
     document.body.style.overflow = "auto";
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
     if (deactivationResponse && deactivationResponse.message) {
       setShowDeactivatePopup(false);
-      setSelectedPartnerToDeactivate([]);
+      setSelectedPartner({});
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
         prevList.map(partner =>
@@ -344,13 +344,13 @@ function PartnersList() {
                                           )}
                                           {showDeactivatePopup && (
                                             < DeactivatePopup
-                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartnerToDeactivate)}
+                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
                                               closePopUp={closeDeactivatePopup}
-                                              popupData={{ ...selectedPartnerToDeactivate, isDeactivatePartner: true }}
+                                              popupData={{ ...selectedPartner, isDeactivatePartner: true }}
                                               request={deactivateRequest}
-                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartnerToDeactivate.partnerId, organisationName: selectedPartnerToDeactivate.orgName })}
+                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
                                               descriptionMsg='deactivatePartner.description'
-                                              headerKeyName={selectedPartnerToDeactivate.orgName}
+                                              headerKeyName={selectedPartner.orgName}
                                             />
                                           )}
                                         </div>
