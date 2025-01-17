@@ -269,7 +269,7 @@ function CreateOidcClient() {
     try {
       const parsedValue = JSON.parse(value);
       // validate the JSON
-      if (typeof parsedValue === "object" && parsedValue !== null && Object.keys(parsedValue).length === 0) {
+      if (Object.keys(parsedValue).length === 0) {
         throw new Error(); // Triggers the catch block
       }
       setPublicKeyInJson(parsedValue);
