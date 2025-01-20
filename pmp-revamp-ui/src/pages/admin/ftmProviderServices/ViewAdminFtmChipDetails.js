@@ -24,7 +24,7 @@ function ViewAdminFtmChipDetails() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [dataLoaded, setDataLoaded] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(true);
 
     useEffect(() => {
         const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
@@ -44,11 +44,13 @@ function ViewAdminFtmChipDetails() {
         
                 if (!response || !response.data) {
                     setErrorMsg(t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
+                    setDataLoaded(true);
                     return;
                 }
         
                 if (response.data.response) {
                     setCertificateDetails(response.data.response);
+                    setDataLoaded(true);
                     return;
                 }
         
