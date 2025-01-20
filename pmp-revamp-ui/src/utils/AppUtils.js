@@ -345,7 +345,18 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
             }
         }
     });
-    return dataArr;
+    // If placeholder is required, remove it from the array, otherwise use the entire array
+    const dataToSort = isBlankEntryRequired ? dataArr.slice(1) : dataArr;
+
+    // Sort the data
+    const sortedData = dataToSort.sort((a, b) => a.fieldCode.localeCompare(b.fieldCode, undefined, { sensitivity: 'base' }));
+
+    // Prepend the placeholder if required
+    if (isBlankEntryRequired) {
+        sortedData.unshift(dataArr[0]);
+    }
+
+    return sortedData;
 }
 
 export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
