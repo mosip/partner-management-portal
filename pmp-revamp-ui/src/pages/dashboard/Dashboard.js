@@ -310,15 +310,15 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  const CountWithHover = ({ count, descriptionKey, descriptionParams, onSelectOption }) => (
-    <div role="button" className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, onSelectOption)}>
-      <div className="relative group flex items-center justify-center w-full">
+  const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
+    <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
+      <div className="relative group flex items-center justify-center w-full" tabIndex="0">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
 
         {count !== null && count !== undefined && (
-          <div className="absolute hidden group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
+          <div className="absolute hidden group-focus:block group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
             {t(descriptionKey, descriptionParams)}
           </div>
         )}
@@ -475,7 +475,6 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={partnerPolicyMappingRequestCount}
-                    onSelectOption={partnerPolicyMappingRequestList}
                     descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
                     descriptionParams={{ partnerPolicyMappingRequestCount }}
                   />
@@ -495,7 +494,6 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}` : null}
-                    onSelectOption={adminDeviceProviderServices}
                     descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
                     descriptionParams={{
                       sbiPendingApprovalRequestCount,
@@ -518,7 +516,6 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={ftmPendingApprovalRequestCount}
-                    onSelectOption={adminftmChipProviderServices}
                     descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
                     descriptionParams={{ ftmPendingApprovalRequestCount }}
                   />
