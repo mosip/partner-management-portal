@@ -345,7 +345,18 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
             }
         }
     });
-    return dataArr;
+    // If placeholder is required, remove it from the array, otherwise use the entire array
+    const dataToSort = isBlankEntryRequired ? dataArr.slice(1) : dataArr;
+
+    // Sort the data
+    const sortedData = dataToSort.sort((a, b) => a.fieldCode.localeCompare(b.fieldCode, undefined, { sensitivity: 'base' }));
+
+    // Prepend the placeholder if required
+    if (isBlankEntryRequired) {
+        sortedData.unshift(dataArr[0]);
+    }
+
+    return sortedData;
 }
 
 export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
@@ -431,15 +442,20 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
     }
 };
 
-export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
                 return responseData;
-            } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            } else if (response.data.errors && response.data.errors.length > 0) {
+                const errorCode = response.data.errors[0].errorCode;
+                if (errorCode === 'PMS_KKS_001') {
+                    setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
             }
         } else {
             return null;

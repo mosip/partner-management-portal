@@ -100,7 +100,7 @@ function ViewPartnerDetails() {
         setSuccessMsg("");
         try {
             if (partnerId) {
-                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
                 if (responseData) {
                     const resData = responseData.response;
                     return resData;

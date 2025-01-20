@@ -88,12 +88,11 @@ function PartnerCertificatesList() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
             if (responseData) {
                 const resData = responseData.response;
                 return resData;
-            }
-            else {
+            } else {
                 setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
                 return null;
             }
