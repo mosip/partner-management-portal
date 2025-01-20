@@ -249,8 +249,8 @@ function CreatePolicy() {
     };
 
     const successcustomStyle = {
-        outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
-        innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
+        outerDiv: `flex justify-end my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
+        innerDiv: "flex justify-between items-center rounded-xl w-96 min-h-14 min-w-80 p-4"
     }
 
     const onFileChangeEvent = (event) => {
@@ -336,20 +336,20 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
-                                                            <button>
-                                                                <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
-                                                                    <p>{t('createPolicy.upload')}</p>
-                                                                </label>
+                                                            <button
+                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
+                                                                onClick={() => document.getElementById('fileInput').click()}
+                                                            >
+                                                                <p>{t('createPolicy.upload')}</p>
+                                                                <input
+                                                                    type="file"
+                                                                    id="fileInput"
+                                                                    accept=".json"
+                                                                    style={{ display: 'none' }}
+                                                                    onChange={onFileChangeEvent}
+                                                                />
                                                             </button>
-                                                            <input
-                                                                type="file"
-                                                                id="fileInput"
-                                                                accept=".json"
-                                                                style={{ display: 'none' }}
-                                                                onChange={onFileChangeEvent}
-                                                            />
                                                         </div>
-
                                                     </div>
                                                     <hr className="border bg-medium-gray h-px" />
                                                     <div className="flex items-center p-5 bg-white rounded-lg">
