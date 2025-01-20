@@ -81,8 +81,12 @@ function FtmList() {
   const populateCertificateExpiryStatus = (data) => {
     // Updating the status based on the condition
     const updatedData = data.map(item => {
-      if (item['isCertificateExpired'] === true) {
-        return { ...item, certificateExpiryStatus: 'expired' };
+      if (item['isCertificateAvailable']) {
+        if ((item['isCertificateExpired'])) {
+          return { ...item, certificateExpiryStatus: 'expired' };
+        } else {
+          return { ...item, certificateExpiryStatus: 'valid' };
+        }
       } else {
         return { ...item, certificateExpiryStatus: '-' };
       }
