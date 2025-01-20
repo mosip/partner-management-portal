@@ -431,15 +431,20 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
     }
 };
 
-export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
                 return responseData;
-            } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            } else if (response.data.errors && response.data.errors.length > 0) {
+                const errorCode = response.data.errors[0].errorCode;
+                if (errorCode === 'PMS_KKS_001') {
+                    setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
             }
         } else {
             return null;

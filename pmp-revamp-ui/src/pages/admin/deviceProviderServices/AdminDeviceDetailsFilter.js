@@ -50,12 +50,17 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
         // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
             //clear deviceSubType dropdown data
-            setDeviceSubTypeDropdownData([])
+            setDeviceSubTypeDropdownData([]);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                deviceSubType: null,
+            }));
+            console.log(filters);
             // return if no deviceType is selected
             if(selectedFilter === ""){
                 setFilters((prevFilters) => ({
                     ...prevFilters,
-                    ['deviceSubType']: "",
+                    deviceSubType: "",
                 }));
                 return;
             }
