@@ -310,8 +310,8 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
-    <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
+  const CountWithHover = ({ count, descriptionKey, descriptionParams, onSelectOption }) => (
+    <div role="button" className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, onSelectOption)}>
       <div className="relative group flex items-center justify-center w-full">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
@@ -475,6 +475,7 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={partnerPolicyMappingRequestCount}
+                    onSelectOption={partnerPolicyMappingRequestList}
                     descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
                     descriptionParams={{ partnerPolicyMappingRequestCount }}
                   />
@@ -494,6 +495,7 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}` : null}
+                    onSelectOption={adminDeviceProviderServices}
                     descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
                     descriptionParams={{
                       sbiPendingApprovalRequestCount,
@@ -516,6 +518,7 @@ function Dashboard() {
                   </div>
                   <CountWithHover
                     count={ftmPendingApprovalRequestCount}
+                    onSelectOption={adminftmChipProviderServices}
                     descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
                     descriptionParams={{ ftmPendingApprovalRequestCount }}
                   />
