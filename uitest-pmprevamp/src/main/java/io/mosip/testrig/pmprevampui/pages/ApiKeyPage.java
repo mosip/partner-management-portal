@@ -28,25 +28,25 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_api_key")
 	private WebElement generateAPIKey;
 
-	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[2]")
 	private WebElement PolicyGroupHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[3]")
 	private WebElement PolicyNameHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'API Key Name')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[4]")
 	private WebElement ApiKeyHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Created Date')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[5]")
 	private WebElement CreatedDateHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Status')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[6]")
 	private WebElement StatusHeaderText;
 
-	@FindBy(xpath = "//*[contains(text(), 'Action')]")
+	@FindBy(xpath = "(//*[@id='columnheaderName'])[7]")
 	private WebElement ActionHeaderText;
 
 	@FindBy(id = "generate_partner_id_option1")
@@ -77,10 +77,10 @@ public class ApiKeyPage extends BasePage {
 	private WebElement partnerId_asc_icon;
 
 	@FindBy(id = "apiKeyLabel_desc_icon")
-	private WebElement apiKeyLabel_desc_icon;
+	private WebElement apiKeyName_desc_icon;
 
 	@FindBy(id = "apiKeyLabel_asc_icon")
-	private WebElement apiKeyLabel_asc_icon;
+	private WebElement apiKeyName_asc_icon;
 
 	@FindBy(id = "policyGroupName_desc_icon")
 	private WebElement policyGroupName_desc_icon;
@@ -142,8 +142,8 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_status_filter")
 	private WebElement apiKeyStatusFilter;
 
-	@FindBy(id = "api_key_status_filter")
-	private WebElement apiKeyStatusFilterOption1;
+	@FindBy(id = "api_key_status_filter_option2")
+	private WebElement apiKeyStatusFilterOption2;
 	
 	@FindBy(id = "title_back_icon")
 	private WebElement backicon;
@@ -216,6 +216,54 @@ public class ApiKeyPage extends BasePage {
 	
 	@FindBy(id = "error_close_btn")
 	private WebElement duplicateApiKeyNameErrorMessageCancelButton;
+	
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement confirmationHomeButton;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Do you want to Deactivate API Key')]")
+	private WebElement apiKeyDeactivateConfirmationText;
+	
+	@FindBy(xpath = "//*[contains(text(), 'On clicking Confirm, you will not be able to use the API Key for authentication anymore.')]")
+	private WebElement apiKeyDeactivationInfoText;
+	
+	@FindBy(id = "deactivate_cancel_btn")
+	private WebElement deactivateCancelButton;
+	
+	@FindBy(id = "deactivate_submit_btn")
+	private WebElement deactivateConfirmButton;
+	
+	@FindBy(id = "api_list_item1")
+	private WebElement deactivatedApiKey;
+	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement breadcomb;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Deactivated')]")
+	private WebElement apiKeyStatus;
+	
+	@FindBy(xpath = "//*[contains(text(), 'No Data Available.')]")
+	private WebElement noDataInApiKeyFilterDropdown;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Items per page')]")
+	private WebElement itemsPerPagePrefix;
+	
+	@FindBy(id = "pagination_select_record_per_page")
+	private WebElement itemsPerPageDropdown;
+	
+	@FindBy(id = "pagination_each_num_option2")
+	private WebElement recordNumber;
+	
+	@FindBy(id = "copy_id_btn")
+	private WebElement copyIdPopup;
+	
+	@FindBy(id = "api_key_status_filter_option1")
+	private WebElement apiKeyStatusFilterOption1;
+	
+	@FindBy(id = "api_key_name_filter_search_input")
+	private WebElement apiKeySearchTextBox;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Select Status')]")
+	private WebElement clearStatus;
 	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
@@ -324,12 +372,12 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(partnerId_asc_icon);
 	}
 
-	public boolean isApiKeyLabelDescIconDisplayed() {
-		return isElementDisplayed(apiKeyLabel_desc_icon);
+	public boolean isApiKeyNameDescIconDisplayed() {
+		return isElementDisplayed(apiKeyName_desc_icon);
 	}
 
-	public boolean isApiKeyLabelAscIconDisplayed() {
-		return isElementDisplayed(apiKeyLabel_asc_icon);
+	public boolean isApiKeyNameAscIconDisplayed() {
+		return isElementDisplayed(apiKeyName_asc_icon);
 	}
 
 	public boolean isPolicyGroupNameDescIconDisplayed() {
@@ -477,7 +525,7 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(apiKeyListPageGenerateApiKeyBtn);
 	}
 	
-	public void clickOnApiKeyListPageGenerateApiKeyBtnDisplayed() {
+	public void clickOnApiKeyListPageGenerateApiKeyBtn() {
 		clickOnElement(apiKeyListPageGenerateApiKeyBtn);
 	}
 	
@@ -505,19 +553,124 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(cancelButton);
 	}
 	
-	public void navigateBackDefaultButton() {
-		driver.navigate().back();
-	}
-	
-	public void navigateRefreshDefaultButton() {
-		driver.navigate().refresh();
-	}
-	
 	public boolean isDuplicateApiKeyNameErrorMessageDisplayed() {
 		return isElementDisplayed(duplicateApiKeyNameErrorMessage);
 	}
 	
 	public void clickOnDuplicateApiKeyNameErrorMessageCancelButton() {
 		clickOnElement(duplicateApiKeyNameErrorMessageCancelButton);
+	}
+	
+	public void clickOnConfirmationHomeButton() {
+		clickOnElement(confirmationHomeButton);
+	}
+	
+	public void clickOnTitleBackButton() {
+		clickOnElement(backicon);
+	}
+	
+	public void clickOnApiKeyDeactivateButton() {
+		clickOnElement(apiKeyDeactivate);
+	}
+	
+	public boolean isApiKeyDeactivateConfirmationTextDisplayed() {
+		return isElementDisplayed(apiKeyDeactivateConfirmationText);
+	}
+	
+	public boolean isApiKeyDeactivationInfoTextDisplayed() {
+		return isElementDisplayed(apiKeyDeactivationInfoText);
+	}
+	
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+	
+	public boolean isDeactivateConfirmButtonDisplayed() {
+		return isElementDisplayed(deactivateConfirmButton);
+	}
+	
+	public void clickOnDeactivateCancelButton() {
+		clickOnElement(deactivateCancelButton);
+	}
+	
+	public void clickOnDeactivateConfirmButton() {
+		clickOnElement(deactivateConfirmButton);
+	}
+	
+	public void clickOnDeactivatedApiKey() {
+		clickOnElement(deactivatedApiKey);
+	}
+	
+	public boolean isDeactivatedApiKeyGreyColored() {
+		return isElementDisplayed(deactivatedApiKey);
+	}
+	
+	public boolean isDeactivatedApiKeyDisabled() {
+		return isElementDisplayed(deactivatedApiKey);
+	}
+	public boolean isBreadcombDisplayed() {
+		return isElementDisplayed(breadcomb);
+	}
+	
+	public void clickOnBreadcomb() {
+		clickOnElement(breadcomb);
+	}
+	
+	public void clickOnApiKeyNameAscIcon() {
+		clickOnElement(apiKeyName_asc_icon);
+	}
+	
+	public void clickOnApiKeyNameDescIcon() {
+		clickOnElement(apiKeyName_desc_icon);
+	}
+	
+	public boolean isApiKeyStatusDeactivatedDisplayed() {
+		return isElementDisplayed(apiKeyStatus);
+	}
+	
+	public void clickOnApiListItem1() {
+		clickOnElement(apiListItem1);
+	}
+	
+	public boolean isSubmitButtonEnabled() {
+		return isElementDisplayed(submitButton);
+	}
+	
+	public void enterInvalidDataInApiKeyNameFilter(String value) {
+		clickOnElement(apiKeyNameFilter);
+		enter(apiKeySearchTextBox, value);
+	}
+	
+	public boolean isNoDataAvailabelDisplayed() {
+		return isElementDisplayed(noDataInApiKeyFilterDropdown);
+	}
+	
+	public void unSelectApiKeyNameFilter() {
+		clickOnElement(apiKeyNameFilter);
+	}
+	
+	public boolean isItemsPerPageDisplayed() {
+		return isElementDisplayed(itemsPerPagePrefix);
+	}
+	
+	public boolean isItemsPerPageDropdownAvailable() {
+		return isElementDisplayed(itemsPerPageDropdown);
+	}
+	
+	public void clickOnItemsPerPageDropdown() {
+		clickOnElement(itemsPerPageDropdown);
+	}
+	
+	public void selectNumberOfRecordPerPage() {
+		clickOnElement(recordNumber);
+	}
+	
+	public boolean isCopyIdPopupDisplayed() {
+		return isElementDisplayed(copyIdPopup);
+	}
+	
+	public void clickOnActivatedStatusApiKeyFilter() {
+		clickOnElement(apiKeyStatusFilter);
+		clickOnElement(apiKeyStatusFilterOption2);
 	}
 }
