@@ -1051,6 +1051,8 @@
         "PMS_AUT_514": "La date de création doit être inférieure ou égale à la date du jour.",
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
         "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
+        "PMS_AUT_517": "Le SBI sélectionné a déjà été approuvé",
+        "PMS_AUT_518": "Le SBI sélectionné a déjà été rejeté",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
         "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",

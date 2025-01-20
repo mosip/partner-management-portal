@@ -1046,6 +1046,8 @@
         "PMS_AUT_514": "The created date should be less than or equal to the current date.",
         "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_AUT_516": "Created date should not be less than 10 years from today",
+        "PMS_AUT_517": "The selected SBI has been already approved",
+        "PMS_AUT_518": "The selected SBI has been already rejected",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
         "PMS_POL_004": "Policy Name already exists in the policy Group.Name",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",
