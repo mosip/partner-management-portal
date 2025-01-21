@@ -228,9 +228,9 @@ function UploadTrustCertificate() {
                                                             fieldNameKey='uploadTrustCertificate.partnerDomain*'
                                                             onDropDownChangeEvent={onDomainChangeEvent}
                                                             dropdownDataList={[
-                                                                { fieldValue: 'AUTH', fieldCode: 'AUTH' },
-                                                                { fieldValue: 'FTM', fieldCode: 'FTM' },
-                                                                { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
+                                                                { fieldValue: 'AUTH', fieldCode: t('uploadTrustCertificate.authenticationPartner') },
+                                                                { fieldValue: 'FTM', fieldCode: t('uploadTrustCertificate.ftmChipProvider') },
+                                                                { fieldValue: 'DEVICE', fieldCode: t('uploadTrustCertificate.deviceProvider') },
                                                             ]}
                                                             placeHolderKey={'uploadTrustCertificate.dropdownPlaceholder'}
                                                             selectedDropdownValue={selectedDomain}
