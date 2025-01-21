@@ -33,6 +33,7 @@ function ApiKeysList() {
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
+    const [selectedApiKey, setSelectedApiKey] = useState({});
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [firstIndex, setFirstIndex] = useState(0);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
@@ -112,6 +113,8 @@ function ApiKeysList() {
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
+            setViewApiKeyId(-1);
+            setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -119,7 +122,7 @@ function ApiKeysList() {
     };
 
     const closeDeactivatePopup = () => {
-        setViewApiKeyId(-1);
+        setSelectedApiKey({});
         setShowDeactivatePopup(false);
     };
 
@@ -158,9 +161,9 @@ function ApiKeysList() {
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
             setShowDeactivatePopup(false);
-            setViewApiKeyId(-1);
+            setSelectedApiKey({});
             // Update the specific row in the state with the new status
-            setApiKeysList((prevList) =>
+            setFilteredApiKeysList((prevList) =>
                 prevList.map(apiKey =>
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
                 )
@@ -279,10 +282,17 @@ function ApiKeysList() {
                                                                                 <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "activated" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
                                                                                 </button>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel} />
-                                                                                )}
                                                                             </div>
+                                                                        )}
+                                                                        {showDeactivatePopup && (
+                                                                            <DeactivatePopup
+                                                                                closePopUp={closeDeactivatePopup}
+                                                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
+                                                                                popupData={selectedApiKey} request={deactivateRequest}
+                                                                                headerMsg='deactivateApiKey.apiKeyName'
+                                                                                descriptionMsg='deactivateApiKey.description'
+                                                                                headerKeyName={selectedApiKey.apiKeyLabel}
+                                                                            />
                                                                         )}
                                                                     </div>
                                                                 </td>

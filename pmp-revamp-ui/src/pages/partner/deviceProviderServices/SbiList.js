@@ -30,6 +30,7 @@ function SbiList() {
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [sbiList, setSbiList] = useState([]);
+    const [selectedSbi, setSelectedSbi] = useState({});
     const submenuRef = useRef([]);
 
     useEffect(() => {
@@ -117,6 +118,8 @@ function SbiList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.sbi.patch", true);
+            setSelectedSbi(sbi);
+            setDeactivateBtnId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -150,6 +153,7 @@ function SbiList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
+            setSelectedSbi({});
             window.location.reload();
         }
     };
@@ -235,10 +239,18 @@ function SbiList() {
                                                             <button id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
                                                                 <p> {t('sbiList.deactivate')} </p>
                                                             </button>
-                                                            {showDeactivatePopup && (
-                                                                <DeactivatePopup closePopUp={() => setShowDeactivatePopup(false)} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, sbi)} popupData={{ ...sbi, isDeactivateSbi: true }} request={deactivateRequest} headerMsg='deactivateSbi.headerMsg' descriptionMsg='deactivateSbi.description' headerKeyName={sbi.sbiVersion} />
-                                                            )}
                                                         </div>
+                                                    )}
+                                                    {showDeactivatePopup && (
+                                                        <DeactivatePopup
+                                                            closePopUp={() => setShowDeactivatePopup(false)}
+                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
+                                                            popupData={{ ...selectedSbi, isDeactivateSbi: true }}
+                                                            request={deactivateRequest}
+                                                            headerMsg='deactivateSbi.headerMsg'
+                                                            descriptionMsg='deactivateSbi.description'
+                                                            headerKeyName={selectedSbi.sbiVersion}
+                                                        />
                                                     )}
                                                 </div>
                                             </div>
@@ -269,11 +281,11 @@ function SbiList() {
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.sbiCreatedDate')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', false)}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', true)}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${!(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', false)}</p>
+                                                                <p className={`text-sm text-vulcan ${!(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', true)}</p>
                                                             </div>
                                                         </div>
                                                     </div>

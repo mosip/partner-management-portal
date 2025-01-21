@@ -141,7 +141,7 @@
         "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
         "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
-        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate",
+        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
         "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
     },
     "partnerTypes": {
@@ -1046,6 +1046,8 @@
         "PMS_AUT_514": "The created date should be less than or equal to the current date.",
         "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_AUT_516": "Created date should not be less than 10 years from today",
+        "PMS_AUT_517": "The selected SBI has been already approved",
+        "PMS_AUT_518": "The selected SBI has been already rejected",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
         "PMS_POL_004": "Policy Name already exists in the policy Group.Name",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",
@@ -1135,7 +1137,7 @@
         "PMS_ESI_004": "Client not exists with given id.",
         "PMS_ESI_005": "Partner has no user claims",
         "PMS_ESI_006": "Partner has no Authentication Context Refrences",
-        "PMS_ESI_007": "Failed to process the Public Key",
+        "PMS_ESI_007": "Enter valid public key",
         "PMS_ESI_008": "Client already deactivated.",
         "PMS_PRT_056": "Given langCode is not supported",
         "PMS_PRT_057": "Policy Type Mismatch. Only Auth policy can be used to create OIDC Client.",
@@ -1204,6 +1206,6 @@
         "KER-PCM-011": "Invalid Partner Domain",
         "KER-PCM-018": "Invalid Certificate Type",
         "KER-PMS-019": "CA Certificate not found for the given ID.",
-        "KER-PMS-020": "Future Dated Certificate not allowed to upload."
+        "KER-PMS-020": "Uploading future-dated certificates is not allowed."
     }
 }

@@ -141,7 +141,7 @@
         "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat",
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
         "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
     },
     "partnerTypes": {
@@ -601,7 +601,7 @@
         "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
         "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
-        "partnerDomain": "Domaine partenaire",
+        "partnerDomain": "Domaine partenaire", 
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
@@ -1051,6 +1051,8 @@
         "PMS_AUT_514": "La date de création doit être inférieure ou égale à la date du jour.",
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
         "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
+        "PMS_AUT_517": "Le SBI sélectionné a déjà été approuvé",
+        "PMS_AUT_518": "Le SBI sélectionné a déjà été rejeté",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
         "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",
@@ -1140,7 +1142,7 @@
         "PMS_ESI_004": "Le client n'existe pas avec l'identifiant donné.",
         "PMS_ESI_005": "Le partenaire n'a aucune revendication d'utilisateur",
         "PMS_ESI_006": "Le partenaire n'a pas de référence de contexte d'authentification",
-        "PMS_ESI_007": "Échec du traitement de la clé publique",
+        "PMS_ESI_007": "Entrez une clé publique valide",
         "PMS_ESI_008": "Client déjà désactivé.",
         "PMS_PRT_056": "Étant donné que langCode n'est pas pris en charge",
         "PMS_PRT_057": "Incompatibilité des types de stratégie. Seule la stratégie d'authentification peut être utilisée pour créer un client OIDC.",
@@ -1209,6 +1211,6 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Il n'est pas autorisé de télécharger un certificat daté ultérieurement."
+        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé."
     }
 }

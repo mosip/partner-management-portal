@@ -1,5 +1,11 @@
 #####  DB queries to be executed to tear down the data used and generated during the test rig run for partnerRevamp APIs
 
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+
+
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa' and partner_domain='FTM';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa' and partner_domain='FTM';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='FTM';

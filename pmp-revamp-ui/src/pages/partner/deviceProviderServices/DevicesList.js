@@ -39,6 +39,7 @@ function DevicesList() {
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
+    const [selectedDevice, setSelectedDevice] = useState({});
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [canAddDevices, setCanAddDevices] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
@@ -178,6 +179,8 @@ function DevicesList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
+            setViewDeviceId(-1);
+            setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -185,16 +188,16 @@ function DevicesList() {
     };
 
     const closeDeactivatePopup = () => {
-        setViewDeviceId(-1);
+        setSelectedDevice({});
         setShowDeactivatePopup(false);
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setViewDeviceId(-1);
+            setSelectedDevice({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
-            setDevicesList((prevList) =>
+            setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
                     device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
                 )
@@ -331,10 +334,17 @@ function DevicesList() {
                                                                                         <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 w-full ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                         </button>
-                                                                                        {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
-                                                                                        )}
                                                                                     </div>
+                                                                                )}
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivatePopup
+                                                                                        closePopUp={closeDeactivatePopup}
+                                                                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
+                                                                                        popupData={{ ...selectedDevice, isDeactivateDevice: true }}
+                                                                                        request={deactivateRequest}
+                                                                                        headerMsg='deactivateDevicePopup.headerMsg'
+                                                                                        descriptionMsg='deactivateDevicePopup.description'
+                                                                                    />
                                                                                 )}
                                                                             </div>
                                                                         </td>

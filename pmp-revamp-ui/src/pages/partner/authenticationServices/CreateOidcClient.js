@@ -268,14 +268,17 @@ function CreateOidcClient() {
     }
     try {
       const parsedValue = JSON.parse(value);
-      // validate the JWK
-      await importJWK(parsedValue);
+      // validate the JSON
+      if (Object.keys(parsedValue).length === 0) {
+        throw new Error(); // Triggers the catch block
+      }
       setPublicKeyInJson(parsedValue);
       setJsonError("");
-    } catch (err) {
-      setJsonError(t('createOidcClient.invalidJwkFormat'));
+    } catch {
+      setJsonError(t("createOidcClient.invalidJwkFormat"));
+      setPublicKeyInJson(null);
     }
-  }
+  };  
 
   const handleLogoUrlChange = (value) => {
     setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
@@ -368,7 +371,7 @@ function CreateOidcClient() {
   };
 
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName.trim() && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes
+    return partnerId && policyName && oidcClientName.trim() && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes
       && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
   };
 

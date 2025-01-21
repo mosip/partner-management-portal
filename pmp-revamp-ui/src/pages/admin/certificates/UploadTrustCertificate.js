@@ -123,7 +123,7 @@ function UploadTrustCertificate() {
                     const resData = responseData.response;
                     const successMessage = t('uploadTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/certificates/root-ca-certificate-list",
+                        backUrl: uploadCertificateData.backLink,
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
@@ -285,7 +285,7 @@ function UploadTrustCertificate() {
                                                                 </div>
                                                             )}
                                                             {!uploading && fileName && (
-                                                                <div id="remove_certificate_card" className="flex flex-col items-center justify-center mb-1 cursor-pointer">
+                                                                <div id="remove_certificate_card" className="flex flex-col items-center justify-center cursor-pointer py-[0.4rem]">
                                                                     <label
                                                                         htmlFor="fileInput"
                                                                         className="flex flex-col items-center justify-center cursor-pointer"
@@ -293,17 +293,10 @@ function UploadTrustCertificate() {
                                                                     >
                                                                         <img src={fileDescription} alt="" className="w-10 h-10 mb-3" />
                                                                     </label>
-                                                                    <h5 className="text-charcoal-gray text-sm font-semibold">
+                                                                    <h5 className="w-[20rem] break-words text-charcoal-gray text-sm font-semibold">
                                                                         {fileName}
                                                                     </h5>
-                                                                    <button
-                                                                        id="remove_certificate_btn"
-                                                                        className="text-sm font-semibold text-tory-blue"
-                                                                        onClick={removeUpload}
-                                                                        onKeyDown={(e) => {
-                                                                            if (e.key === 'Enter' || e.key === ' ') removeUpload();
-                                                                        }}
-                                                                    >
+                                                                    <button id="remove_certificate_btn" className="text-sm font-semibold text-tory-blue pt-[0.45rem]" onClick={removeUpload} onKeyDown={(e) => {if (e.key === 'Enter' || e.key === ' ') removeUpload();}}>
                                                                         {t('uploadCertificate.remove')}
                                                                     </button>
                                                                 </div>
