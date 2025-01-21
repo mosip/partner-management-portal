@@ -1206,6 +1206,6 @@
         "KER-PCM-011": "Invalid Partner Domain",
         "KER-PCM-018": "Invalid Certificate Type",
         "KER-PMS-019": "CA Certificate not found for the given ID.",
-        "KER-PMS-020": "Future Dated Certificate not allowed to upload."
+        "KER-PMS-020": "Uploading future-dated certificates is not allowed."
     }
 }

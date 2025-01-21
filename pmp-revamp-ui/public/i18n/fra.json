@@ -1211,6 +1211,6 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Il n'est pas autorisé de télécharger un certificat daté ultérieurement."
+        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé."
     }
 }
