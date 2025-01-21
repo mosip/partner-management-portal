@@ -55,14 +55,15 @@ function CreatePolicy() {
         }
 
         return (
-            (policyGroup || policyName || policyDescription || policyData) &&
+            (policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
     });
 
     useEffect(() => {
-        const shouldWarnBeforeUnload = () =>
-            policyGroup || policyName || policyDescription || policyData;
+        const shouldWarnBeforeUnload = () => {
+            return policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "";
+        }
 
         const handleBeforeUnload = (event) => {
             if (shouldWarnBeforeUnload() && !isSubmitClicked) {
@@ -76,7 +77,7 @@ function CreatePolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [policyGroup, policyName, policyDescription, policyData]);
+    }, [policyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
 
 
     const onChangePolicyGroup = async (fieldName, selectedValue) => {
@@ -336,10 +337,10 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
-                                                            <button
-                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
-                                                                onClick={() => document.getElementById('fileInput').click()}
-                                                            >
+                                                            <label
+                                                                tabIndex="0"
+                                                                htmlFor="fileInput"
+                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
                                                                 <p>{t('createPolicy.upload')}</p>
                                                                 <input
                                                                     type="file"
@@ -348,7 +349,7 @@ function CreatePolicy() {
                                                                     style={{ display: 'none' }}
                                                                     onChange={onFileChangeEvent}
                                                                 />
-                                                            </button>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                     <hr className="border bg-medium-gray h-px" />
