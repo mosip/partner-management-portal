@@ -310,7 +310,7 @@ function PartnersList() {
                                 {partnersData.map((partner, index) => {
                                   return (
                                     <tr id={"partner_list_item" + (index + 1)} key={index}
-                                      className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                      className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
