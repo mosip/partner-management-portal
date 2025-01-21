@@ -123,7 +123,7 @@ function UploadTrustCertificate() {
                     const resData = responseData.response;
                     const successMessage = t('uploadTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: "/partnermanagement/admin/certificates/root-ca-certificate-list",
+                        backUrl: uploadCertificateData.backLink,
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
