@@ -3,7 +3,10 @@ import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
 export const formatDate = (dateString, format, isTimeInUTC) => {
     if (!dateString) return '-';
-    let date = new Date(dateString);
+
+    const withoutOffset = dateString.replace(/([+-]\d{2}:\d{2})$/, "");
+    let date = new Date(withoutOffset);
+
     if (isTimeInUTC) {
         date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     }
