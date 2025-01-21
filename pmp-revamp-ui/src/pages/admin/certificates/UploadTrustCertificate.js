@@ -293,7 +293,7 @@ function UploadTrustCertificate() {
                                                                     >
                                                                         <img src={fileDescription} alt="" className="w-10 h-10 mb-3" />
                                                                     </label>
-                                                                    <h5 className="break-words text-charcoal-gray text-sm font-semibold">
+                                                                    <h5 className="w-[20rem] break-words text-charcoal-gray text-sm font-semibold">
                                                                         {fileName}
                                                                     </h5>
                                                                     <button id="remove_certificate_btn" className="text-sm font-semibold text-tory-blue pt-[0.45rem]" onClick={removeUpload} onKeyDown={(e) => {if (e.key === 'Enter' || e.key === ' ') removeUpload();}}>
