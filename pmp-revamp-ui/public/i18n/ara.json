@@ -597,7 +597,7 @@
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً."
     },
     "uploadTrustCertificate": {
-        "uploadTrustCertificate": "تحميل شهادة الثقة",
+        "uploadTrustCertificate": "شرفع هادة الثقة",
         "description": "الرجاء تحديد نطاق الشريك وتحميل شهادة CA الجذرية / CA المتوسطة.",
         "uploadSectionDescription": "الرجاء النقر لتحديد شهادة CA الجذرية / CA المتوسطة",
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
