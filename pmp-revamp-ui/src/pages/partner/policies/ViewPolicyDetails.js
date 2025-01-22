@@ -35,7 +35,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-hidden`}>
                 <div className="flex justify-between mb-5">
                     <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
                 </div>
