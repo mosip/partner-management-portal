@@ -796,3 +796,13 @@ export const escapeKeyHandler = (closePopup) => {
     // Add event listener when any handler condition is true
     window.addEventListener('keydown', handleEscape);
 };
+
+export const formatPublicKey = (publicKeyString) => {
+    try {
+        const data = JSON.parse(publicKeyString);
+        const jsonStr = JSON.stringify(data, null, 2);
+        return jsonStr;
+    } catch {
+        return publicKeyString;
+    }
+}
