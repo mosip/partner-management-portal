@@ -260,21 +260,24 @@ function CreateOidcClient() {
   };
 
   const handlePublicKeyChange = async (value) => {
-    setPublicKey(value);
     if (value.trim() === "") {
+      setPublicKey(value);
       setJsonError("");
       setPublicKeyInJson(null);
       return;
     }
     try {
       const parsedValue = JSON.parse(value);
+      
       // validate the JSON
       if (Object.keys(parsedValue).length === 0) {
         throw new Error(); // Triggers the catch block
       }
+      setPublicKey(JSON.stringify(parsedValue, null, 2));
       setPublicKeyInJson(parsedValue);
       setJsonError("");
     } catch {
+      setPublicKey(value);
       setJsonError(t("createOidcClient.invalidJwkFormat"));
       setPublicKeyInJson(null);
     }
