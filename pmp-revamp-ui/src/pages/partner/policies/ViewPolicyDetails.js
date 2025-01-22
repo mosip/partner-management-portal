@@ -35,7 +35,7 @@ function ViewPolicyDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-hidden`}>
+            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
                 <div className="flex justify-between mb-5">
                     <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
                 </div>
@@ -121,7 +121,7 @@ function ViewPolicyDetails() {
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
-                                <div className="flex font-semibold w-full">
+                                <div className="flex font-semibold">
                                     <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
                                         <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
                                         <img src={adminImage} alt="Example" className="w-8 h-8" id='admin_image' />
@@ -152,7 +152,7 @@ function ViewPolicyDetails() {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex font-semibold w-full">
+                                    <div className="flex font-semibold">
                                         <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
                                             <img src={partnerImage} alt="Example" className="w-8 h-8" />
                                         </span>
@@ -161,7 +161,7 @@ function ViewPolicyDetails() {
                                             <h4 className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComment")}
                                             </h4>
-                                            <span className="text-sm mt-3">
+                                            <span className="text-sm mt-3 break-words">
                                                 {policyDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
