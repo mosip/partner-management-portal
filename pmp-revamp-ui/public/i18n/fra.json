@@ -30,7 +30,9 @@
         "resetFilter": "Réinitialiser le filtre",
         "itemsPerPage": "Objets par page",
         "close": "Fermer",
-        "unexpectedError": "Nous avons rencontré une erreur inattendue"
+        "unexpectedError": "Nous avons rencontré une erreur inattendue",
+        "undoChanges": "Annuler les modifications",
+        "clear":"Effacer"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
@@ -139,7 +141,7 @@
         "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat",
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
         "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
     },
     "partnerTypes": {
@@ -343,7 +345,8 @@
         "editOidcClient": "Modifier le client OIDC",
         "authenticationServiceSection": "Services d'authentification",
         "editSuccessHeader": "Détails modifiés soumis avec succès !",
-        "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès."
+        "editSuccessMsg": "Les détails du client OIDC ont été modifiés et soumis avec succès.",
+        "errorWhileGettingOidcClientDetails": "Lors de la récupération des détails du client Oidc, nous avons rencontré une erreur."
     },
     "deactivateOidcClient": {
         "oidcClientName": "Voulez-vous désactiver le client OIDC",
@@ -598,7 +601,7 @@
         "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
         "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
-        "partnerDomain": "Domaine partenaire",
+        "partnerDomain": "Domaine partenaire", 
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
@@ -909,7 +912,7 @@
     },
     "sbiApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter le SBI ?",
-        "description": "Veuillez examiner attentivement les détails du SBI et les appareils associés avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails du SBI avant de prendre les mesures appropriées."
     },
     "deviceApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter l'appareil ?",
@@ -1048,6 +1051,8 @@
         "PMS_AUT_514": "La date de création doit être inférieure ou égale à la date du jour.",
         "PMS_AUT_515": "La date d'expiration ne doit pas être supérieure à 10 ans à compter d'aujourd'hui",
         "PMS_AUT_516": "La date de création ne doit pas être inférieure à 10 ans à compter d'aujourd'hui",
+        "PMS_AUT_517": "Le SBI sélectionné a déjà été approuvé",
+        "PMS_AUT_518": "Le SBI sélectionné a déjà été rejeté",
         "PMS_POL_002": "Non-concordance des informations d'identification de Policy Manager",
         "PMS_POL_004": "Le nom de la stratégie existe déjà dans la stratégie Group.Name",
         "PMS_POL_005": "Attribut KYC non pris en charge dans le fichier de stratégie",
@@ -1137,7 +1142,7 @@
         "PMS_ESI_004": "Le client n'existe pas avec l'identifiant donné.",
         "PMS_ESI_005": "Le partenaire n'a aucune revendication d'utilisateur",
         "PMS_ESI_006": "Le partenaire n'a pas de référence de contexte d'authentification",
-        "PMS_ESI_007": "Échec du traitement de la clé publique",
+        "PMS_ESI_007": "Entrez une clé publique valide",
         "PMS_ESI_008": "Client déjà désactivé.",
         "PMS_PRT_056": "Étant donné que langCode n'est pas pris en charge",
         "PMS_PRT_057": "Incompatibilité des types de stratégie. Seule la stratégie d'authentification peut être utilisée pour créer un client OIDC.",
@@ -1152,14 +1157,14 @@
         "KER-AUD-001": "La longueur maximale du PartnerId doit être 36",
         "PMS_DP_FETCH_001": "Impossible de récupérer les identifiants des fournisseurs d'appareils approuvés.",
         "PMS_DEVICE_ERROR_001": "L'identifiant du partenaire n'est pas associé à l'utilisateur.",
-        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_002": "SBI n’est pas associé à l’ID du partenaire.",
         "PMS_DEVICE_ERROR_003": "Type de partenaire invalide.",
         "PMS_DEVICE_ERROR_004": "Le mappage SBI et périphérique existe déjà.",
         "PMS_DEVICE_ERROR_005": "SBI n'existe pas.",
         "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
         "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
         "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout d'un périphérique pour sbi.",
-        "PMS_DEVICE_ERROR_009": "Étant donné que le SBI est soit désactivé, soit pas encore approuvé.",
+        "PMS_DEVICE_ERROR_009": "Impossible d'ajouter un appareil car le SBI associé n'est pas approuvé.",
         "PMS_DEVICE_ERROR_010": "Les détails de l'appareil donné ne sont pas en attente d'approbation.",
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "Le mappage SBI et périphérique n’existe pas.",
@@ -1178,6 +1183,8 @@
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
         "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
+        "PMS_DEVICE_ERROR_028": "Impossible d'ajouter un périphérique car le SBI associé est déjà rejeté.",
+        "PMS_DEVICE_ERROR_029": "Impossible d'ajouter un appareil car le SBI associé est déjà désactivé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
@@ -1206,6 +1213,6 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Il n'est pas autorisé de télécharger un certificat daté ultérieurement."
+        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé."
     }
 }

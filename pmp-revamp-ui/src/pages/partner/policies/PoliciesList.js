@@ -221,7 +221,7 @@ function PoliciesList() {
                                 </td>
                                 <td className="text-center">
                                   <div ref={el => submenuRef.current[index] = el}>
-                                    <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`${isLoginLanguageRTL ? "ml-9" : "mr-9"} font-semibold mb-0.5 cursor-pointer`}>
+                                    <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`font-semibold mb-0.5 text-center cursor-pointer`}>
                                       ...
                                     </button>
                                     {

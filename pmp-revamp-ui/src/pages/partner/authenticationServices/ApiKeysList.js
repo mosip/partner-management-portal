@@ -33,6 +33,7 @@ function ApiKeysList() {
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [apiKeysList, setApiKeysList] = useState([]);
+    const [selectedApiKey, setSelectedApiKey] = useState({});
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [firstIndex, setFirstIndex] = useState(0);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
@@ -53,11 +54,11 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/auth-partner-api-keys', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partner-api-keys', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
-                        const resData = responseData.response;
+                        const resData = responseData.response.data;
                         const sortedData = resData.sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime));
                         setApiKeysList(sortedData);
                         setFilteredApiKeysList(sortedData);
@@ -95,7 +96,7 @@ function ApiKeysList() {
     };
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
-        if (selectedApiKeyData.status === "ACTIVE") {
+        if (selectedApiKeyData.status === "activated") {
             localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/authentication-services/view-api-key-details')
         }
@@ -107,11 +108,13 @@ function ApiKeysList() {
     };
 
     const onClickDeactivate = (selectedApiKeyData) => {
-        if (selectedApiKeyData.status === "ACTIVE") {
+        if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
+            setViewApiKeyId(-1);
+            setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -119,7 +122,7 @@ function ApiKeysList() {
     };
 
     const closeDeactivatePopup = () => {
-        setViewApiKeyId(-1);
+        setSelectedApiKey({});
         setShowDeactivatePopup(false);
     };
 
@@ -158,11 +161,11 @@ function ApiKeysList() {
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
             setShowDeactivatePopup(false);
-            setViewApiKeyId(-1);
+            setSelectedApiKey({});
             // Update the specific row in the state with the new status
-            setApiKeysList((prevList) =>
+            setFilteredApiKeysList((prevList) =>
                 prevList.map(apiKey =>
-                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "INACTIVE" } : apiKey
+                    (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
                 )
             );
         }
@@ -253,7 +256,7 @@ function ApiKeysList() {
                                                 {
                                                     tableRows.map((apiKey, index, currentArray) => {
                                                         return (
-                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "INACTIVE" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
@@ -272,17 +275,24 @@ function ApiKeysList() {
                                                                         </button>
                                                                         {viewApiKeyId === index && (
                                                                             <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[1.5rem] text-right" : "right-[1.5rem] text-left"}`}>
-                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
+                                                                                <button id='api_key_view' onClick={() => onClickView(apiKey)} className={`${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} py-2 w-full px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.view')} </p>
                                                                                 </button>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                <button id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`${isLoginLanguageRTL ? "pl-10" : "pr-10"} py-2 px-4 ${apiKey.status === "activated" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
                                                                                 </button>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)} popupData={apiKey} request={deactivateRequest} headerMsg='deactivateApiKey.apiKeyName' descriptionMsg='deactivateApiKey.description' headerKeyName={apiKey.apiKeyLabel} />
-                                                                                )}
                                                                             </div>
+                                                                        )}
+                                                                        {showDeactivatePopup && (
+                                                                            <DeactivatePopup
+                                                                                closePopUp={closeDeactivatePopup}
+                                                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
+                                                                                popupData={selectedApiKey} request={deactivateRequest}
+                                                                                headerMsg='deactivateApiKey.apiKeyName'
+                                                                                descriptionMsg='deactivateApiKey.description'
+                                                                                headerKeyName={selectedApiKey.apiKeyLabel}
+                                                                            />
                                                                         )}
                                                                     </div>
                                                                 </td>

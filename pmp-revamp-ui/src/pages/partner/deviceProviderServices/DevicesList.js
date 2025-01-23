@@ -39,6 +39,7 @@ function DevicesList() {
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
     const [filteredDevicesList, setFilteredDevicesList] = useState([]);
+    const [selectedDevice, setSelectedDevice] = useState({});
     const [viewDeviceId, setViewDeviceId] = useState(-1);
     const [canAddDevices, setCanAddDevices] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
@@ -178,6 +179,8 @@ function DevicesList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
+            setViewDeviceId(-1);
+            setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -185,16 +188,16 @@ function DevicesList() {
     };
 
     const closeDeactivatePopup = () => {
-        setViewDeviceId(-1);
+        setSelectedDevice({});
         setShowDeactivatePopup(false);
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setViewDeviceId(-1);
+            setSelectedDevice({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
-            setDevicesList((prevList) =>
+            setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
                     device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
                 )
@@ -324,17 +327,24 @@ function DevicesList() {
                                                                                 </button>
                                                                                 {viewDeviceId === index && (
                                                                                     <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                                                                        <button id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                        <button id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4  w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
                                                                                             <p> {t('devicesList.view')} </p>
                                                                                         </button>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                        <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 w-full ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                         </button>
-                                                                                        {showDeactivatePopup && (
-                                                                                            <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.description' />
-                                                                                        )}
                                                                                     </div>
+                                                                                )}
+                                                                                {showDeactivatePopup && (
+                                                                                    <DeactivatePopup
+                                                                                        closePopUp={closeDeactivatePopup}
+                                                                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
+                                                                                        popupData={{ ...selectedDevice, isDeactivateDevice: true }}
+                                                                                        request={deactivateRequest}
+                                                                                        headerMsg='deactivateDevicePopup.headerMsg'
+                                                                                        descriptionMsg='deactivateDevicePopup.description'
+                                                                                    />
                                                                                 )}
                                                                             </div>
                                                                         </td>

@@ -215,7 +215,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "publish_policy_button")
 	private WebElement publishPolicyButton;
 	
-	@FindBy(id = "success_msg_close")
+	@FindBy(id = "success_msg_close_icon")
 	private WebElement successMsgCloseButton;
 	
 	@FindBy(id = "publish_policy_close_button")

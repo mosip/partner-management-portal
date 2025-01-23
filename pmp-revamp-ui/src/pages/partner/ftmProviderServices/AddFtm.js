@@ -32,13 +32,11 @@ function AddFtm() {
   const [confirmationData, setConfirmationData] = useState({});
   const [ftpChipDetailId, setFtpChipDetailId] = useState("");
   const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
-  let isCancelledClicked = false;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
-      if (isSubmitClicked || isCancelledClicked || addFtmSuccess) {
+      if (isSubmitClicked || addFtmSuccess) {
         setIsSubmitClicked(false);
-        isCancelledClicked = false;
         return false;
       }
       return (
@@ -215,7 +213,6 @@ function AddFtm() {
   };
 
   const clickOnCancel = () => {
-    isCancelledClicked = true;
     navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   }
 

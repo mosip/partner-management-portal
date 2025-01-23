@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, copyClientId, formatDate, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';
@@ -72,7 +72,7 @@ function ViewAdminOidcClientDetails() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-24 ml-5" : "ml-24 mr-5"} font-inter relative`}>
+        <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon />
             )}
@@ -207,13 +207,13 @@ function ViewAdminOidcClientDetails() {
                                     </div>
                                     <hr className="h-px w-full bg-gray-200 border-0" />
                                     <div className="space-y-6">
-                                        <div className="my-3 space-y-2 break-all">
+                                        <div className="my-3 space-y-2">
                                             <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.publicKey")}
                                             </p>
-                                            <p id='oidc_client_details_public_key_context' className="font-[600] text-vulcan text-md text-wrap w-[90%]">
-                                                {oidcClientDetails.publicKey}
-                                            </p>
+                                            <pre id="oidc_client_details_public_key_context" className="font-[600] text-vulcan text-sm w-full bg-snow-white focus:outline-none focus:ring-0 h-fit overflow-x-auto">
+                                                {formatPublicKey(oidcClientDetails.publicKey)}
+                                            </pre>
                                         </div>
                                         <div className="my-4 space-y-1">
                                             <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-sm">

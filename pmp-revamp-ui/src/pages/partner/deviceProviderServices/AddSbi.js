@@ -33,14 +33,11 @@ function AddSbi() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
 
-    let isCancelledClicked = false;
-
     const navigate = useNavigate();
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (IsSubmitClicked || isCancelledClicked) {
-                isCancelledClicked = false;
+            if (IsSubmitClicked) {
                 setIsSubmitClicked(false);
                 return false;
             }
@@ -195,7 +192,6 @@ function AddSbi() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToSbisList(navigate)
     }
 

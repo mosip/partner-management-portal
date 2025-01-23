@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData } from "../../../utils/AppUtils.js";
-import { isLangRTL } from '../../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService.js';
 
 function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
@@ -51,12 +50,17 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
         // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
             //clear deviceSubType dropdown data
-            setDeviceSubTypeDropdownData([])
+            setDeviceSubTypeDropdownData([]);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                deviceSubType: null,
+            }));
+            console.log(filters);
             // return if no deviceType is selected
             if(selectedFilter === ""){
                 setFilters((prevFilters) => ({
                     ...prevFilters,
-                    ['deviceSubType']: "",
+                    deviceSubType: "",
                 }));
                 return;
             }

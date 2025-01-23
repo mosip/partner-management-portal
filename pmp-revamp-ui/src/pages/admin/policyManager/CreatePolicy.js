@@ -42,29 +42,28 @@ function CreatePolicy() {
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
-    let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-        if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
+        if (isSubmitClicked || createPolicySuccess) {
             setIsSubmitClicked(false);
-            isCancelledClicked = false;
             setCreatePolicySuccess(false);
             return false;
         }
 
         return (
-            (policyGroup || policyName || policyDescription || policyData) &&
+            (policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
     });
 
     useEffect(() => {
-        const shouldWarnBeforeUnload = () =>
-            policyGroup || policyName || policyDescription || policyData;
+        const shouldWarnBeforeUnload = () => {
+            return policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "";
+        }
 
         const handleBeforeUnload = (event) => {
             if (shouldWarnBeforeUnload() && !isSubmitClicked) {
@@ -78,7 +77,7 @@ function CreatePolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [policyGroup, policyName, policyDescription, policyData]);
+    }, [policyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
 
 
     const onChangePolicyGroup = async (fieldName, selectedValue) => {
@@ -96,7 +95,6 @@ function CreatePolicy() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         navigate(backLink)
     }
 
@@ -252,8 +250,8 @@ function CreatePolicy() {
     };
 
     const successcustomStyle = {
-        outerDiv: `flex justify-end max-w-7xl my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
-        innerDiv: "flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-80 p-4"
+        outerDiv: `flex justify-end my-5 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`,
+        innerDiv: "flex justify-between items-center rounded-xl w-96 min-h-14 min-w-80 p-4"
     }
 
     const onFileChangeEvent = (event) => {
@@ -338,21 +336,21 @@ function CreatePolicy() {
                                                                 <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <button onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
-                                                                <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
-                                                                    <p>{t('createPolicy.upload')}</p>
-                                                                </label>
-                                                            </button>
-                                                            <input
-                                                                type="file"
-                                                                id="fileInput"
-                                                                accept=".json"
-                                                                style={{ display: 'none' }}
-                                                                onChange={onFileChangeEvent}
-                                                            />
+                                                        <div onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
+                                                            <label
+                                                                tabIndex="0"
+                                                                htmlFor="fileInput"
+                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
+                                                                <p>{t('createPolicy.upload')}</p>
+                                                                <input
+                                                                    type="file"
+                                                                    id="fileInput"
+                                                                    accept=".json"
+                                                                    style={{ display: 'none' }}
+                                                                    onChange={onFileChangeEvent}
+                                                                />
+                                                            </label>
                                                         </div>
-
                                                     </div>
                                                     <hr className="border bg-medium-gray h-px" />
                                                     <div className="flex items-center p-5 bg-white rounded-lg">

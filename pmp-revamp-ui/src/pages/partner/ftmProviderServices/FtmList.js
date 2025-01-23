@@ -6,7 +6,7 @@ import { HttpService } from '../../../services/HttpService';
 import {
   isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  onPressEnterKey, createRequest, populateDeactivatedStatus
+  createRequest, populateDeactivatedStatus
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -35,6 +35,7 @@ function FtmList() {
   const [ftmList, setFtmList] = useState([]);
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
+  const [selectedFtm, setSelectedFtm] = useState({});
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
@@ -80,8 +81,12 @@ function FtmList() {
   const populateCertificateExpiryStatus = (data) => {
     // Updating the status based on the condition
     const updatedData = data.map(item => {
-      if (item['isCertificateExpired'] === true) {
-        return { ...item, certificateExpiryStatus: 'expired' };
+      if (item['isCertificateAvailable']) {
+        if ((item['isCertificateExpired'])) {
+          return { ...item, certificateExpiryStatus: 'expired' };
+        } else {
+          return { ...item, certificateExpiryStatus: 'valid' };
+        }
       } else {
         return { ...item, certificateExpiryStatus: '-' };
       }
@@ -172,6 +177,8 @@ function FtmList() {
       const request = createRequest({
         status: "De-Activate",
       }, "mosip.pms.deactivate.ftm.patch", true);
+      setViewFtmId(-1);
+      setSelectedFtm(selectedFtmData);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
@@ -179,7 +186,7 @@ function FtmList() {
   };
 
   const closeDeactivatePopup = () => {
-    setViewFtmId(-1);
+    setSelectedFtm({});
     setShowDeactivatePopup(false);
   };
 
@@ -197,10 +204,10 @@ function FtmList() {
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
-      setViewFtmId(-1);
+      setSelectedFtm({});
       setShowDeactivatePopup(false);
       // Update the specific row in the state with the new status
-      setFtmList((prevList) =>
+      setFilteredFtmList((prevList) =>
         prevList.map(ftm =>
           ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
         )
@@ -285,8 +292,8 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date', true)}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', false)}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', false)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime', true)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime', true)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
@@ -300,21 +307,28 @@ function FtmList() {
                                     </button>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                        <button id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`py-1 px-4 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
                                           <p>{t('ftmList.view')}</p>
                                         </button>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                        <button id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-1 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                           <p> {t('ftmList.manageCertificate')} </p>
                                         </button>
-                                        {showDeactivatePopup && (
-                                          <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
-                                        )}
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
                                         <button id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`py-1 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                           <p> {t('ftmList.deActivate')}</p>
                                         </button>
                                       </div>
+                                    )}
+                                    {showDeactivatePopup && (
+                                      <DeactivatePopup
+                                        closePopUp={closeDeactivatePopup}
+                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}
+                                        popupData={{ ...selectedFtm, isDeactivateFtm: true }}
+                                        request={deactivateRequest}
+                                        headerMsg='deactivateFtmPopup.headerMsg'
+                                        descriptionMsg='deactivateFtmPopup.description'
+                                      />
                                     )}
                                   </div>
                                 </td>
