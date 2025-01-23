@@ -228,7 +228,7 @@ function PoliciesList() {
                                     {
                                       viewPolicyId === index && (
                                         <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)}
-                                          className={`flex justify-between border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[5.5rem] px-2 py-2 z-20 items-center cursor-pointer ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
+                                          className={`flex justify-between border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[6rem] px-2 py-2 z-20 items-center cursor-pointer ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
                                           <p> {t('policies.view')} </p>
                                           <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
