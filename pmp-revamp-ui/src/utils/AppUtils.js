@@ -768,7 +768,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 document.body.removeChild(link);
             }
             else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
             }
         } else {
             setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
@@ -806,3 +806,17 @@ export const formatPublicKey = (publicKeyString) => {
         return publicKeyString;
     }
 }
+
+export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, t) => {
+    if (responseData && responseData.errors && responseData.errors.length > 0) {
+        const errorCode = responseData.errors[0].errorCode;
+        const errorMessage = responseData.errors[0].message;
+        if (errorCode === "PMS_KKS_001") {
+          setErrorMsg(t('certificatesList.errorAccessingApi'));
+        } else {
+          setErrorCode(errorCode);
+          setErrorMsg(errorMessage);
+        }
+        console.error('Error:', errorMessage);
+    }
+  }
