@@ -211,13 +211,13 @@ function AddDevices() {
                     errorMessage = serverErrors[errorCode];
                 } else {
                     if (serverErrors[errorCode]) {
-                        errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                        errorMessage = serverErrors[errorCode];
                     } else {
-                        errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                        errorMessage = errorMessage;
                     }
                 }
             } else {
-                errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                errorMessage = errorMessage;
             }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);
