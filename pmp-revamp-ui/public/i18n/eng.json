@@ -972,7 +972,7 @@
         "PMS_PRT_013": " Invalid mobile number.Length should be less than .",
         "PMS_ATH_401": "Authentication Failed",
         "PMS_PRT_106": "APIKeyReqID status is In_progress",
-        "PMS_KKS_001": " API not accessible  ",
+        "PMS_KKS_001": "Error while accessing the API.Please check the logs.",
         "PMS_PRT_107": "Response from the api is null",
         "PMS_PRT_500": "Unable to process the request.",
         "PMS_PMP_016": "Your Partner account for given partner type has been deactivated by Admin, due to which you will no longer be able to perform this activity.",
