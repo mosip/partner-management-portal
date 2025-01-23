@@ -8,8 +8,8 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  handleServiceErrors,
-  downloadCaCertificate
+  downloadCaCertificate,
+  handleKeymanagerErrors
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -108,7 +108,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           setTotalRecords(responseData.response.totalResults);
           setCertificatesList(resData);
         } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
         }
       } else {
         setErrorMsg(t('certificatesList.errorInCertificateList'));
