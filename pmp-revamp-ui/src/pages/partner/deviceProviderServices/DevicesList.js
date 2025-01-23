@@ -19,6 +19,9 @@ import DevicesListFilter from './DevicesListFilter.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import EmptyList from '../../common/EmptyList.js';
+import viewIcon from "../../../svg/view_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
 
 function DevicesList() {
     const navigate = useNavigate('');
@@ -326,14 +329,16 @@ function DevicesList() {
                                                                                     ...
                                                                                 </button>
                                                                                 {viewDeviceId === index && (
-                                                                                    <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-6 text-right" : "right-6 text-left"}`}>
-                                                                                        <button id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`py-2 px-4  w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
+                                                                                    <div className={`absolute w-[7rem] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
+                                                                                        <div role='button' id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`flex justify-between py-2 px-2 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                             <p> {t('devicesList.view')} </p>
-                                                                                        </button>
+                                                                                            <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                        </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <button id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`py-2 px-4 w-full ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                        <div role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`flex justify-between py-2 px-2 w-full ${isLoginLanguageRTL ? "text-right" : "text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
-                                                                                        </button>
+                                                                                            <img src={device.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                        </div>
                                                                                     </div>
                                                                                 )}
                                                                                 {showDeactivatePopup && (
