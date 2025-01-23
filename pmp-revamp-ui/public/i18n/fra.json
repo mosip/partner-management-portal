@@ -977,7 +977,7 @@
         "PMS_PRT_013": "Numéro de mobile non valide. La longueur doit être inférieure à .",
         "PMS_ATH_401": "Authentification échouée",
         "PMS_PRT_106": "Le statut APIKeyReqID est en cours",
-        "PMS_KKS_001": " API non accessible",
+        "PMS_KKS_001": "Erreur lors de l'accès à l'API. Veuillez vérifier les journaux.",
         "PMS_PRT_107": "La réponse de l'api est nulle",
         "PMS_PRT_500": "Impossible de traiter la demande.",
         "PMS_PMP_016": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
