@@ -123,17 +123,17 @@ function ViewPolicyRequestDetails() {
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
-                                <div className="flex font-semibold w-full ">
+                                <div className="flex font-semibold">
                                     <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
                                         <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
                                         <img src={adminImage} alt="Example" className="w-8 h-8" />
                                     </span>
-                                    <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md">
+                                    <div className="flex bg-floral-white flex-col p-4 relative rounded-md">
                                         <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                        <h4 className="text-sm  text-[#031640]">
+                                        <h4 className="text-sm text-[#031640]">
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
-                                        <div className="flex items-center justify-start mt-4">
+                                        <div className="flex items-center justify-start mt-4 w-[79rem]">
                                             <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md`}>
                                                 {getStatusCode(policyRequestDetails.status, t)}
                                             </div>
@@ -154,16 +154,16 @@ function ViewPolicyRequestDetails() {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <div className="flex font-semibold w-full">
+                                    <div className="flex font-semibold">
                                         <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
                                             <img src={partnerImage} alt="Example" className="w-8 h-8" />
                                         </span>
-                                        <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md">
+                                        <div className="flex bg-alice-green flex-col p-4 relative rounded-md">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
                                             <h4 className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComment")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-words">
+                                            <span className="text-sm mt-3 w-[79rem]">
                                                 {policyRequestDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />

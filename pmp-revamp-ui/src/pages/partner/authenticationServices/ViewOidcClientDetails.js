@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, copyClientId, formatDate, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, moveToOidcClientsList, getErrorMessage } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, moveToOidcClientsList, getErrorMessage, formatPublicKey } from '../../../utils/AppUtils';
 import content_copy_icon from "../../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import Title from "../../common/Title";
@@ -197,13 +197,13 @@ function ViewOidcClientDetails() {
                                 </div>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className="space-y-6">
-                                    <div className="my-3 space-y-2 break-all">
+                                    <div className="my-3 space-y-2">
                                         <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.publicKey")}
                                         </p>
-                                        <p id='oidc_client_details_public_key_context' className="font-[600] text-vulcan text-sm text-wrap w-[90%]">
-                                            {oidcClientDetails.publicKey}
-                                        </p>
+                                        <pre id="oidc_client_details_public_key_context" className="font-[600] text-vulcan text-sm w-full bg-snow-white focus:outline-none focus:ring-0 h-fit overflow-x-auto">
+                                            {formatPublicKey(oidcClientDetails.publicKey)}
+                                        </pre>
                                     </div>
                                     <div className="my-4 space-y-1">
                                         <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-xs">
