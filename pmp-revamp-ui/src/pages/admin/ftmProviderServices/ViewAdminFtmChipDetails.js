@@ -57,7 +57,7 @@ function ViewAdminFtmChipDetails() {
                 if (response.data.errors && response.data.errors.length > 0) {
                     const errorCode = response.data.errors[0].errorCode;
                     if (errorCode === 'PMS_KKS_001') {
-                        setErrorMsg(t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
+                        setErrorMsg(t('certificatesList.errorAccessingApi'));
                     } else {
                         handleServiceErrors(response.data, setErrorCode, setErrorMsg);
                     }
