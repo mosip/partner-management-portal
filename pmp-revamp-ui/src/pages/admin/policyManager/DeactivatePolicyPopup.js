@@ -17,6 +17,8 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     const [showAlertErrorMessage, setShowAlertErrorMessage] = useState(false);
     const [errorHeaderMsg, setErrorHeaderMsg] = useState('');
     const [errorDescriptionMsg, setErrorDescriptionMsg] = useState('');
+    const [activeDraftPoliciesDescr1, setActiveDraftPoliciesDescr1] = useState('');
+    const [activeDraftPoliciesDescr2, setActiveDraftPoliciesDescr2] = useState('');
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -106,6 +108,8 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
                     setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }));
+                    setActiveDraftPoliciesDescr1(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg1'));
+                    setActiveDraftPoliciesDescr2(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg2'));
                 } else if (errorCode === 'PMS_POL_070') {
                     // Count draft policies
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
@@ -151,14 +155,26 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                         <div className="relative">
                             {showAlertErrorMessage
                                 ? (
-                                    <div className={`flex-col space-y-3 text-center justify-center p-[1rem] items-center place-self-center`}>
+                                    <div className={`flex-col text-center justify-center p-[1rem] items-center place-self-center`}>
                                         <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
                                         <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                             {errorHeaderMsg}
                                         </p>
-                                        <p className="text-sm text-center text-[#666666] break-normal p-2">
-                                            {errorDescriptionMsg}
-                                        </p>
+                                        <div className='p-2'>
+                                            <p className="text-sm text-center text-[#666666] break-normal">
+                                                {errorDescriptionMsg}
+                                            </p>
+                                            {activeDraftPoliciesDescr1 && activeDraftPoliciesDescr2 && (
+                                                <>
+                                                    <p className="text-sm text-center text-[#666666] break-normal">
+                                                        {activeDraftPoliciesDescr1}
+                                                    </p>
+                                                    <p className="text-sm text-center text-[#666666] break-normal">
+                                                        {activeDraftPoliciesDescr2}
+                                                    </p>
+                                                </>
+                                            )}
+                                        </div>
                                         <button id="alert_error_popup_okay_btn" onClick={closeErrorPopUp} type="button" className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold my-1`}>
                                             {t('commons.okay')}
                                         </button>

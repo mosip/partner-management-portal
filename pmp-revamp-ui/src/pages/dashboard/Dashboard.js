@@ -120,19 +120,13 @@ function Dashboard() {
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
               const registerUserResponseData = registerUserResponse.data;
               if (registerUserResponseData && registerUserResponseData.response) {
-                window.location.reload();
+                callUserConsentPopup();
               } else {
                 handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
               }
             }
           }
-          if (!isSelectPolicyPopupVisible) {
-            await fetchUserConsent();
-            if (!isUserConsentGiven) {
-              setShowConsentPopup(true);
-              document.body.style.overflow = "hidden";
-            }
-          }
+          callUserConsentPopup();
           //if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
@@ -151,6 +145,16 @@ function Dashboard() {
     fetchData();
 
   }, []);
+
+  const callUserConsentPopup = async () => {
+    if (!isSelectPolicyPopupVisible) {
+      await fetchUserConsent();
+      if (!isUserConsentGiven) {
+        setShowConsentPopup(true);
+        document.body.style.overflow = "hidden";
+      }
+    }
+  }
 
   useEffect(() => {
     const fetchPartnerPolicyMappingRequestCount = async () => {
