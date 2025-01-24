@@ -581,7 +581,7 @@
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
-        "validTill": "Valable jusqu'à",
+        "validTo": "Valable jusqu'aue",
         "timeOfUpload": "Téléchargé le",
         "validityStatus": "Statut de validité",
         "action": "Action",
