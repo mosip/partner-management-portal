@@ -455,7 +455,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                    setErrorMsg(t('certificatesList.errorAccessingApi'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }

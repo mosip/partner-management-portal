@@ -581,7 +581,7 @@
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
-        "validTill": "Valable jusqu'à",
+        "validTo": "Valable jusqu'aue",
         "timeOfUpload": "Téléchargé le",
         "validityStatus": "Statut de validité",
         "action": "Action",
@@ -746,7 +746,9 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
+        "description": "Il existe {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} projets de politiques associés à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer des points suivants :",
+        "descriptionMsg1": "1. Désactivez toutes les politiques actives.",
+        "descriptionMsg2": "2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -921,7 +923,7 @@
     },
     "consentPopup": {
         "title": "Termes et conditions",
-        "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
+        "description": "Les données fournies lors de l'inscription, notamment votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour réinitialiser votre mot de passe. Ces informations seront utilisées uniquement pour créer vos identifiants, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins susmentionnées.",
         "checkBoxDesc": "J'ai lu les conditions générales et j'accepte que mes données soient stockées et traitées aux fins indiquées.",
         "proceed": "Procéder",
         "logoutMsg": "Si vous ne souhaitez pas continuer, vous pouvez cliquer sur",
