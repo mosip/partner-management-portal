@@ -399,7 +399,7 @@
         "sbiCreatedDate": "تاريخ إنشاء الهيئة الفرعية للتنفيذ",
         "selectDate": "حدد تاريخ",
         "sbiExpiryDate": "تاريخ انتهاء الهيئة الفرعية للتنفيذ",
-        "dateFormatInfoKey": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",
+        "dateFormatInfoKey": "أدخل التاريخ بالصيغة ش ش/ي ي/س س س س",
         "expiryDateInfoKey": "يجب أن يكون تاريخ انتهاء صلاحية SBI أكبر بسنة واحدة على الأقل من تاريخ إنشاء SBI.",
         "saveAndAddDevices": "حفظ وإضافة الأجهزة",
         "errorInAddingSbi": "أثناء إضافة واجهة القياسات الحيوية الآمنة (SBI) واجهنا خطأ."
@@ -887,7 +887,7 @@
         "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
     },
     "ftmRequestApproveRejectPopup": {
-        "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}?",
+        "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",
         "description": "يرجى مراجعة تفاصيل شريحة FTM والشهادة المرتبطة بها بعناية قبل اتخاذ الإجراء المناسب."
     },
     "viewAdminOidcClientDetails": {
