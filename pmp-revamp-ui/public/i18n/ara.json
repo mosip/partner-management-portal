@@ -581,7 +581,7 @@
         "issuedTo": "صدر ل",
         "issuedBy": "صادرة عن",
         "validFrom": "صالح من",
-        "validTill": "صالح حتى",
+        "validTo": "صالح ل",
         "timeOfUpload": "تم التحميل على",
         "validityStatus": "حالة الصلاحية",
         "action": "فعل",

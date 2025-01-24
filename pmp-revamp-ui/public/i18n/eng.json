@@ -576,7 +576,7 @@
         "issuedTo": "Issued To",
         "issuedBy": "Issued By",
         "validFrom": "Valid From",
-        "validTill": "Valid Till",
+        "validTo": "Valid To",
         "timeOfUpload": "Uploaded On",
         "validityStatus": "Validity Status",
         "action": "Action",
