@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
@@ -68,7 +68,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
                         if (errorCode === 'PMS_KKS_001') {
-                            setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
+                            setErrorMsg(t('certificatesList.errorAccessingApi'));
                         } else {
                             setErrorCode(errorCode);
                             setErrorMsg(errorMessage);
