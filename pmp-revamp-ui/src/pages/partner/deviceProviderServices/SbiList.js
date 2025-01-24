@@ -17,6 +17,8 @@ import verifiedIcon from '../../../svg/verified_icon.svg';
 import expiredIcon from '../../../svg/expiry_icon.svg';
 import deactivatedIcon from '../../../svg/deactivated_shield_icon.svg';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 
 function SbiList() {
     const { t } = useTranslation();
@@ -236,9 +238,10 @@ function SbiList() {
 
                                                     {deactivateBtnId === index && (
                                                         <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md font-semibold shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
-                                                            <button id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
-                                                                <p> {t('sbiList.deactivate')} </p>
-                                                            </button>
+                                                            <div role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 flex justify-between text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
+                                                                <p>{t('sbiList.deactivate')}</p>
+                                                                <img src={sbi.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                            </div>
                                                         </div>
                                                     )}
                                                     {showDeactivatePopup && (
