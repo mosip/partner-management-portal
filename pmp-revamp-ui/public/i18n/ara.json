@@ -605,8 +605,8 @@
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
         "successMsg": "تم تحميل شهادة الثقة لـ {{partnerDomain}} بنجاح!",
-        "downloadRootCertSuccessMsg": "تم تنزيل شهادة Root CA بنجاح",
-        "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة الشهادات الخاصة بشهادة CA المتوسطة بنجاح."
+        "downloadRootCertSuccessMsg": "تم تنزيل شهادة الجذر CA بنجاح",
+        "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة شهادات الثقة لشهادة CA الوسيطة المحددة بنجاح."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
