@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from '../../../services/HttpService';
 import {
-  isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
+  isLangRTL, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  createRequest, populateDeactivatedStatus
+  createRequest, populateDeactivatedStatus,
+  handleKeymanagerErrors
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -67,7 +68,7 @@ function FtmList() {
             setFtmList(sortedData);
             setFilteredFtmList(sortedData);
           } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
           }
         } else {
           setErrorMsg(t('ftmList.errorInFtmList'));

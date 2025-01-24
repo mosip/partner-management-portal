@@ -74,7 +74,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     { id: "issuedTo", headerNameKey: "certificatesList.issuedTo" },
     { id: "issuedBy", headerNameKey: "certificatesList.issuedBy" },
     { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
-    { id: "validTill", headerNameKey: "certificatesList.validTill" },
+    { id: "validTill", headerNameKey: "certificatesList.validTo" },
     { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
     { id: "validityStatus", headerNameKey: "certificatesList.validityStatus" },
     { id: "action", headerNameKey: "certificatesList.action" },

@@ -576,7 +576,7 @@
         "issuedTo": "Issued To",
         "issuedBy": "Issued By",
         "validFrom": "Valid From",
-        "validTill": "Valid Till",
+        "validTo": "Valid To",
         "timeOfUpload": "Uploaded On",
         "validityStatus": "Validity Status",
         "action": "Action",
@@ -741,7 +741,9 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following: 1. Deactivate all active policies. 2. Publish and then deactivate all draft policies."
+        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionMsg1": "1. Deactivate all active policies.",
+        "descriptionMsg2": "2. Publish and then deactivate all draft policies."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -916,7 +918,7 @@
     },
     "consentPopup": {
         "title": "Terms and Conditions",
-        "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
+        "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
         "checkBoxDesc": "I have read the terms & conditions and consent to submitting my data to be stored and processed for the stated purpose.",
         "proceed": "Proceed",
         "logoutMsg": "If you do not wish to proceed, you can click on ",
