@@ -17,6 +17,8 @@ import FtmListFilter from './FtmListFilter';
 import SortingIcon from '../../common/SortingIcon';
 import Pagination from '../../common/Pagination';
 import viewIcon from "../../../svg/view_icon.svg";
+import manageCertificate from '../../../svg/manage_certificate_icon.svg';
+import disableManageCertificate from '../../../svg/disabled_manage_certificate_icon.svg';
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup';
@@ -316,8 +318,9 @@ function FtmList() {
                                           <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <div role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`py-2 w-full px-2 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                        <div role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                           <p> {t('ftmList.manageCertificate')} </p>
+                                          <img src={(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? manageCertificate : disableManageCertificate} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
                                         <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
