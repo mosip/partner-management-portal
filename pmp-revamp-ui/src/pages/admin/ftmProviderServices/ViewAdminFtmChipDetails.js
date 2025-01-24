@@ -70,7 +70,9 @@ function ViewAdminFtmChipDetails() {
             }
             setDataLoaded(true);
         }
-        fetchCertificateDetails();
+        if (selectedFtmDetails.status === "approved" || selectedFtmDetails.status === "pending_approval") {
+            fetchCertificateDetails();
+        }
     }, []);
 
     const getOriginalCertificate = async () => {

@@ -605,8 +605,8 @@
         "partnerDomain": "Domaine partenaire", 
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
-        "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
-        "downloadIntermediateCertSuccessMsg": "La chaîne de confiance du certificat pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
+        "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
+        "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
