@@ -882,7 +882,7 @@
         "description": "Please review the policy details carefully before taking appropriate action."
     },
     "ftmRequestApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}",
+        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
         "description": "Please review the FTM Chip details and associated certificate carefully before taking appropriate action."
     },
     "viewAdminOidcClientDetails": {

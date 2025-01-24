@@ -399,7 +399,7 @@
         "sbiCreatedDate": "Date de création du SBI",
         "selectDate": "Sélectionner une date",
         "sbiExpiryDate": "Date d'expiration du SBI",
-        "dateFormatInfoKey": "Entrez la date au format MM/DD/YYYY",
+        "dateFormatInfoKey": "Entrez la date au format MM/JJ/AAAA",
         "expiryDateInfoKey": "La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI.",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils",
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
@@ -887,7 +887,7 @@
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
     },
     "ftmRequestApproveRejectPopup": {
-        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}}",
+        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
         "description": "Veuillez examiner attentivement les détails de la puce FTM et le certificat associé avant de prendre une décision appropriée."
     },
     "viewAdminOidcClientDetails": {
