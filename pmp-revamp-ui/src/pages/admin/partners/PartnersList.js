@@ -48,6 +48,7 @@ function PartnersList() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [selectedPartner, setSelectedPartner] = useState({});
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -188,6 +189,8 @@ function PartnersList() {
       const request = createRequest({
         status: "De-Active"
       });
+      setSelectedPartner(selectedPartnerdata);
+      setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
       document.body.style.overflow = "hidden";
@@ -195,15 +198,15 @@ function PartnersList() {
   };
 
   const closeDeactivatePopup = () => {
-    setViewPartnersId(-1);
     setShowDeactivatePopup(false);
+    setSelectedPartner({});
     document.body.style.overflow = "auto";
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
     if (deactivationResponse && deactivationResponse.message) {
-      setViewPartnersId(-1);
       setShowDeactivatePopup(false);
+      setSelectedPartner({});
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
         prevList.map(partner =>
@@ -307,7 +310,7 @@ function PartnersList() {
                                 {partnersData.map((partner, index) => {
                                   return (
                                     <tr id={"partner_list_item" + (index + 1)} key={index}
-                                      className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919]"}`}>
+                                      className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
                                       <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
@@ -337,18 +340,18 @@ function PartnersList() {
                                                 <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                 <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
-                                              {showDeactivatePopup && (
-                                                < DeactivatePopup
-                                                  onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, partner)}
-                                                  closePopUp={closeDeactivatePopup}
-                                                  popupData={{ ...partner, isDeactivatePartner: true }}
-                                                  request={deactivateRequest}
-                                                  headerMsg={t('deactivatePartner.headerMsg', { partnerId: partner.partnerId, organisationName: partner.orgName })}
-                                                  descriptionMsg='deactivatePartner.description'
-                                                  headerKeyName={partner.orgName}
-                                                />
-                                              )}
                                             </div>
+                                          )}
+                                          {showDeactivatePopup && (
+                                            < DeactivatePopup
+                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
+                                              closePopUp={closeDeactivatePopup}
+                                              popupData={{ ...selectedPartner, isDeactivatePartner: true }}
+                                              request={deactivateRequest}
+                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
+                                              descriptionMsg='deactivatePartner.description'
+                                              headerKeyName={selectedPartner.orgName}
+                                            />
                                           )}
                                         </div>
                                       </td>

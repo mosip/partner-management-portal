@@ -48,6 +48,7 @@ function AdminFtmList() {
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
+    const [selectedFtm, setSelectedFtm] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -149,14 +150,16 @@ function AdminFtmList() {
     const approveRejectFtmDetails = (ftm) => {
         if (ftm.status === 'pending_approval') {
             setShowFtmApproveRejectPopup(true);
+            setActionId(-1);
+            setSelectedFtm(ftm);
             document.body.style.overflow = "hidden";
         }
     };
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
         if (responseData) {
+            setSelectedFtm({});
             setShowFtmApproveRejectPopup(false);
-            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -168,7 +171,7 @@ function AdminFtmList() {
     };
 
     const closeApproveRejectPopup = () => {
-        setActionId(-1);
+        setSelectedFtm({});
         setShowFtmApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -178,7 +181,9 @@ function AdminFtmList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.ftm.patch", true);
+            setActionId(-1);
             setDeactivateRequest(request);
+            setSelectedFtm(ftm);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -186,8 +191,8 @@ function AdminFtmList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
+            setSelectedFtm({});
             setShowDeactivatePopup(false);
-            setActionId(-1);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
                 prevList.map(ftm =>
@@ -198,7 +203,7 @@ function AdminFtmList() {
     };
 
     const closeDeactivatePopup = () => {
-        setActionId(-1);
+        setSelectedFtm({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
@@ -324,16 +329,6 @@ function AdminFtmList() {
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${ftm.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={ftm.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showFtmApproveRejectPopup &&
-                                                                                        <ApproveRejectPopup
-                                                                                            popupData={{ ...ftm, isFtmRequest: true }}
-                                                                                            closePopUp={closeApproveRejectPopup}
-                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, ftm)}
-                                                                                            title={`${ftm.make} | ${ftm.model}`}
-                                                                                            header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
-                                                                                            description={t('ftmRequestApproveRejectPopup.description')}
-                                                                                        />
-                                                                                    }
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                     <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewFtmChipDetails(ftm)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewFtmChipDetails(ftm))}>
                                                                                         <p id="ftm_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
@@ -344,10 +339,27 @@ function AdminFtmList() {
                                                                                         <p id="ftm_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${ftm.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={ftm.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
-                                                                                    {showDeactivatePopup && (
-                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
-                                                                                    )}
                                                                                 </div>
+                                                                            )}
+                                                                            {showFtmApproveRejectPopup &&
+                                                                                <ApproveRejectPopup
+                                                                                    popupData={{ ...selectedFtm, isFtmRequest: true }}
+                                                                                    closePopUp={closeApproveRejectPopup}
+                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedFtm)}
+                                                                                    title={`${selectedFtm.make} | ${selectedFtm.model}`}
+                                                                                    header={t('ftmRequestApproveRejectPopup.header', { make: selectedFtm.make, model: selectedFtm.model })}
+                                                                                    description={t('ftmRequestApproveRejectPopup.description')}
+                                                                                />
+                                                                            }
+                                                                            {showDeactivatePopup && (
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}
+                                                                                    popupData={{ ...selectedFtm, isDeactivateFtm: true }}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg='deactivateFtmPopup.headerMsg'
+                                                                                    descriptionMsg='deactivateFtmPopup.description'
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>
@@ -357,15 +369,15 @@ function AdminFtmList() {
                                                         }
                                                     </tbody>
                                                 </table>
-                                                <Pagination
-                                                    dataListLength={totalRecords}
-                                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                    setFirstIndex={setFirstIndex}
-                                                    isServerSideFilter={true}
-                                                    getPaginationValues={getPaginationValues}
-                                                />
                                             </div>
+                                            <Pagination
+                                                dataListLength={totalRecords}
+                                                selectedRecordsPerPage={selectedRecordsPerPage}
+                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                                setFirstIndex={setFirstIndex}
+                                                isServerSideFilter={true}
+                                                getPaginationValues={getPaginationValues}
+                                            />
                                         </>
                                     )
                                 }

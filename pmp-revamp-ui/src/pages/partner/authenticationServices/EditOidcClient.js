@@ -6,7 +6,8 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
 import {
     moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
-    getClientNameLangMap, getErrorMessage
+    getClientNameLangMap, getErrorMessage,
+    formatPublicKey
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -31,7 +32,6 @@ function EditOidcClient() {
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    let isCancelledClicked = false;
     const [oidcClientDetails, setOidcClientDetails] = useState({
         partnerId: '',
         policyGroupName: '',
@@ -57,9 +57,8 @@ function EditOidcClient() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || editOidcClientSuccess) {
+            if (isSubmitClicked || editOidcClientSuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -140,11 +139,13 @@ function EditOidcClient() {
                          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                      }
                  } else {
-                     setErrorMsg(t('viewAdminOidcClientDetails.errorWhileGettingOidcClientDetails'))
+                     setUnexpectedError(true);
+                     setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
                  }
                  setDataLoaded(true);
              } catch (err) {
                  console.error('Error fetching data:', err);
+                 setUnexpectedError(true);
                  setErrorMsg(err);
              }
          };
@@ -251,7 +252,7 @@ function EditOidcClient() {
             && !invalidLogoUrl && !invalidRedirectUrl;
     }
 
-    const clearForm = () => {
+    const undoChanges = () => {
         setInvalidLogoUrl("");
         setInvalidRedirectUrl("");
         setErrorCode("");
@@ -308,7 +309,6 @@ function EditOidcClient() {
     }
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToOidcClientsList(navigate);
     }
 
@@ -327,7 +327,7 @@ function EditOidcClient() {
             )}
             {dataLoaded && (
                 <>
-                    {errorMsg && (
+                    {!unexpectedError && errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
@@ -341,7 +341,7 @@ function EditOidcClient() {
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
                                         <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
                                         <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToOidcClientsList} type="button"
+                                        <button onClick={() => moveToOidcClientsList(navigate)} type="button"
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -423,9 +423,9 @@ function EditOidcClient() {
                                                                 <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>*</span></p>
                                                                 <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                                                             </label>
-                                                            <textarea value={oidcClientDetails.publicKey} readOnly
-                                                                className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar">
-                                                            </textarea>
+                                                            <pre className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline h-20 overflow-auto no-scrollbar">
+                                                                {formatPublicKey(oidcClientDetails.publicKey)}
+                                                            </pre>
                                                         </div>
                                                     </div>
                                                     <div className="flex my-[1%]">
@@ -487,7 +487,7 @@ function EditOidcClient() {
                                         </div>
                                         <div className="border bg-medium-gray" />
                                         <div className="flex flex-row px-[3%] py-[2%] justify-between">
-                                            <button id="oidc_edit_clear_form_btn" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
+                                            <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                             <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                                 <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                                 <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>

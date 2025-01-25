@@ -30,7 +30,9 @@
         "resetFilter": "Reset Filter",
         "itemsPerPage": "Items per page",
         "close": "Close",
-        "unexpectedError": "We have encountered an unexpected error"
+        "unexpectedError": "We have encountered an unexpected error",
+        "undoChanges": "Undo Changes",
+        "clear":"Clear"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -139,7 +141,7 @@
         "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
         "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
-        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate",
+        "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
         "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
     },
     "partnerTypes": {
@@ -342,7 +344,8 @@
         "editOidcClient": "Edit OIDC Client",
         "authenticationServiceSection": "Authentication Services",
         "editSuccessHeader": "Modified details submitted successfully!",
-        "editSuccessMsg": "OIDC Client details has been successfully modified and submitted."
+        "editSuccessMsg": "OIDC Client details has been successfully modified and submitted.",
+        "errorWhileGettingOidcClientDetails": "While fetching Oidc Client details, we have encountered with an error."
     },
     "deactivateOidcClient": {
         "oidcClientName": "Do you want to Deactivate OIDC Client",
@@ -573,7 +576,7 @@
         "issuedTo": "Issued To",
         "issuedBy": "Issued By",
         "validFrom": "Valid From",
-        "validTill": "Valid Till",
+        "validTo": "Valid To",
         "timeOfUpload": "Uploaded On",
         "validityStatus": "Validity Status",
         "action": "Action",
@@ -586,7 +589,8 @@
         "selectValidityStatus": "Select Validity Status",
         "deActivate": "Deactivate",
         "view": "View",
-        "errorInCertificateList": "While fetching certificates, we have encountered with an error."
+        "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
+        "errorAccessingApi": "Facing an error while accessing the keymanager API."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
@@ -737,7 +741,9 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following: 1. Deactivate all active policies. 2. Publish and then deactivate all draft policies."
+        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionMsg1": "1. Deactivate all active policies.",
+        "descriptionMsg2": "2. Publish and then deactivate all draft policies."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "View Authentication Policy",
@@ -878,7 +884,7 @@
         "description": "Please review the policy details carefully before taking appropriate action."
     },
     "ftmRequestApproveRejectPopup": {
-        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}",
+        "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
         "description": "Please review the FTM Chip details and associated certificate carefully before taking appropriate action."
     },
     "viewAdminOidcClientDetails": {
@@ -904,7 +910,7 @@
     },
     "sbiApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the SBI?",
-        "description": "Please review the SBI details and associated devices carefully before taking appropriate action."
+        "description": "Please review the SBI details carefully before taking appropriate action."
     },
     "deviceApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the Device?",
@@ -912,7 +918,7 @@
     },
     "consentPopup": {
         "title": "Terms and Conditions",
-        "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets, email verification, and notifications in the event of Partner Certificate expiration or similar situations. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
+        "description": "The data provided during registration, including your Name, Phone Number, Email Address, Organisation Name, and Address, will be used by the Partner Management Portal (PMP). Your email address will also be used for password resets. This information will be used solely to create your credentials, facilitating your use of MOSIP. By ticking the box below, you consent to submitting your data to be stored and processed for the above purpose.",
         "checkBoxDesc": "I have read the terms & conditions and consent to submitting my data to be stored and processed for the stated purpose.",
         "proceed": "Proceed",
         "logoutMsg": "If you do not wish to proceed, you can click on ",
@@ -947,7 +953,7 @@
         "KER_PRT_390": " Invalid filter value",
         "KER-PCM-008": "The organization name in the uploaded certificate does not match the name provided during partner registration.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
-        "PMS_PRT_051": " A Partner is already registered with the same Id",
+        "PMS_PRT_051": " A Partner is already registered with the same ID",
         "PMS_PRT_052": "PartnerId max length should be 36",
         "PMS_ATH_053": " IO Exception occured while passing paging request",
         "PMS_ATH_054": " User not found",
@@ -969,8 +975,8 @@
         "PMS_PRT_013": " Invalid mobile number.Length should be less than .",
         "PMS_ATH_401": "Authentication Failed",
         "PMS_PRT_106": "APIKeyReqID status is In_progress",
-        "PMS_KKS_001": " API not accessible  ",
-        "PMS_PRT_107": "Response from the api is null",
+        "PMS_KKS_001": "Facing an error while accessing the API.",
+        "PMS_PRT_107": "Unable to receive response from the requested API.",
         "PMS_PRT_500": "Unable to process the request.",
         "PMS_PMP_016": "Your Partner account for given partner type has been deactivated by Admin, due to which you will no longer be able to perform this activity.",
         "PMS_PRT_098": "Given policy under partner's policy group not exists.",
@@ -1043,6 +1049,8 @@
         "PMS_AUT_514": "The created date should be less than or equal to the current date.",
         "PMS_AUT_515": "Expiry date should not be greater than 10 years from today",
         "PMS_AUT_516": "Created date should not be less than 10 years from today",
+        "PMS_AUT_517": "The selected SBI has been already approved",
+        "PMS_AUT_518": "The selected SBI has been already rejected",
         "PMS_POL_002": "Mismatch of Policy Manager Credentials",
         "PMS_POL_004": "Policy Name already exists in the policy Group.Name",
         "PMS_POL_005": "Unsupported KYC attribute in the Policy File",
@@ -1104,8 +1112,8 @@
         "PMS_PRT_060": "This policy has already been approved against your partner ID.",
         "PMS_AUT_028": "Device details for id $ID are rejected. Can't use same details for mapping.",
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
-        "PMS_CERTIFICATE_ERROR_002": "User Id does not exists.",
-        "PMS_CERTIFICATE_ERROR_003": "Partner Id is null or empty.",
+        "PMS_CERTIFICATE_ERROR_002": "User ID does not exists.",
+        "PMS_CERTIFICATE_ERROR_003": "Partner ID is null or empty.",
         "PMS_CERTIFICATE_ERROR_004": "Partner Type is null or empty",
         "PMS_CERTIFICATE_ERROR_005": "Approval Status is null or empty",
         "PMS_CERTIFICATE_ERROR_006": "Unable to decode the certificate data",
@@ -1117,9 +1125,9 @@
         "PMS_CERTIFICATE_ERROR_012": "Certificate id is null or empty",
         "PMS_POLICY_ERROR_001": "Policy Group does not exists.",
         "PMS_POLICY_ERROR_002": "Error while fetching partner policies.",
-        "PMS_POLICY_ERROR_003": "Error while fetching all approved partner Ids with policy groups.",
+        "PMS_POLICY_ERROR_003": "Error while fetching all approved partner IDs with policy groups.",
         "PMS_POLICY_ERROR_004": "Matching Policy not found.",
-        "PMS_POLICY_ERROR_005": "Policy Group Id is empty.",
+        "PMS_POLICY_ERROR_005": "Policy Group ID is empty.",
         "PMS_POLICY_ERROR_006": "Error while fetching OIDC clients list.",
         "PMS_POLICY_ERROR_007": "Error while fetching API Key requests",
         "PMS_POLICY_ERROR_008": "No matching policy group was found for the provided partner",
@@ -1132,11 +1140,11 @@
         "PMS_ESI_004": "Client not exists with given id.",
         "PMS_ESI_005": "Partner has no user claims",
         "PMS_ESI_006": "Partner has no Authentication Context Refrences",
-        "PMS_ESI_007": "Failed to process the Public Key",
+        "PMS_ESI_007": "Enter valid public key",
         "PMS_ESI_008": "Client already deactivated.",
         "PMS_PRT_056": "Given langCode is not supported",
         "PMS_PRT_057": "Policy Type Mismatch. Only Auth policy can be used to create OIDC Client.",
-        "PMS_PRT_058": "AuthPartner doesn't exists with this Id",
+        "PMS_PRT_058": "AuthPartner doesn't exists with this ID",
         "PMS_PRT_059": "Only Auth_partner can Create OIDC Client. Other partner types are not allowed to create OIDC Client.",
         "PMS_PRT_066": "PartnerId should not have any spaces",
         "PMS_PRT_096": "Json is not valid",
@@ -1145,16 +1153,16 @@
         "PMP-AUT-020": "Parse Error exception",
         "PMP-AUT-021": "Audit Exception from client",
         "KER-AUD-001": "PartnerId max length should be 36",
-        "PMS_DP_FETCH_001": "Unable to fetch approved device provider Ids.",
+        "PMS_DP_FETCH_001": "Unable to fetch approved device provider IDs.",
         "PMS_DEVICE_ERROR_001": "Partner id is not associated with user.",
-        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_002": "SBI is not associated with partner ID.",
         "PMS_DEVICE_ERROR_003": "Invalid partner type.",
         "PMS_DEVICE_ERROR_004": "SBI and Device mapping already exists.",
         "PMS_DEVICE_ERROR_005": "SBI do not exists.",
         "PMS_DEVICE_ERROR_006": "Device do not exists.",
-        "PMS_DEVICE_ERROR_007": "Device is not associated with partner Id.",
+        "PMS_DEVICE_ERROR_007": "Device is not associated with partner ID.",
         "PMS_DEVICE_ERROR_008": "Error while adding device for sbi.",
-        "PMS_DEVICE_ERROR_009": "Given SBI is either deactivated or not approved yet.",
+        "PMS_DEVICE_ERROR_009": "Unable to add device because the associated SBI is not approved.",
         "PMS_DEVICE_ERROR_010": "Given device details are not in pending for approval status.",
         "PMS_DEVICE_ERROR_011": "Error while approving or rejecting device for Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "SBI and Device mapping does not exists.",
@@ -1162,7 +1170,7 @@
         "PMS_DEVICE_ERROR_014": "The selected device has been already deactivated",
         "PMS_DEVICE_ERROR_015": "Error while deactivating the device",
         "PMS_DEVICE_ERROR_016": "Device is not associated with user.",
-        "PMS_DEVICE_ERROR_017": "SBI Id is invalid",
+        "PMS_DEVICE_ERROR_017": "SBI ID is invalid",
         "PMS_DEVICE_ERROR_018": "Error while deactivating the SBI",
         "PMS_DEVICE_ERROR_019": "SBI is not associated with user.",
         "PMS_DEVICE_ERROR_020": "The selected SBI is already deactivated",
@@ -1173,18 +1181,20 @@
         "PMS_DEVICE_ERROR_025": "This device cannot be rejected as it does not have any SBI associated to it.",
         "PMS_DEVICE_ERROR_026": "Request status should be De-Activate",
         "PMS_DEVICE_ERROR_027": "Request status should be either approved or rejected",
+        "PMS_DEVICE_ERROR_028": "Unable to add device because the associated SBI is already rejected.",
+        "PMS_DEVICE_ERROR_029": "Unable to add device because the associated SBI is already deactivated.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",
-        "PMS_REQUEST_ERROR_002": "Invalid Request Id",
+        "PMS_REQUEST_ERROR_002": "Invalid Request ID",
         "PMS_REQUEST_ERROR_003": "Request version is invalid",
         "PMS_REQUEST_ERROR_004": "Invalid request time",
         "PMS_REQUEST_ERROR_005": "Request body is invalid",
         "PMS_REQUEST_ERROR_006": "Request date should be current date",
         "PMS_FTM_ERROR_001": "Error while fetching the FTM chip details",
-        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider Ids.",
+        "PMS_FTM_ERROR_002": "Unable to fetch approved FTM provider IDs.",
         "PMS_FTM_ERROR_003": "Error while deactivating the FTM",
-        "PMS_FTM_ERROR_004": "FTM Id is invalid",
+        "PMS_FTM_ERROR_004": "FTM ID is invalid",
         "PMS_FTM_ERROR_005": "FTM Details do not exists.",
         "PMS_FTM_ERROR_006": "FTM is not associated with user.",
         "PMS_FTM_ERROR_007": "The selected FTM is already deactivated",
@@ -1201,6 +1211,6 @@
         "KER-PCM-011": "Invalid Partner Domain",
         "KER-PCM-018": "Invalid Certificate Type",
         "KER-PMS-019": "CA Certificate not found for the given ID.",
-        "KER-PMS-020": "Future Dated Certificate not allowed to upload."
+        "KER-PMS-020": "Uploading future-dated certificates is not allowed."
     }
 }

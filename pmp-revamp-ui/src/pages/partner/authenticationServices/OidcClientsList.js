@@ -20,7 +20,13 @@ import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
-import EmptyList from '../../common/EmptyList.js';
+import EmptyList from '../../common/EmptyList.js'; 
+import viewIcon from "../../../svg/view_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import editIcon from "../../../svg/edit_policy_icon.svg";
+import disableEditPolicyIcon from "../../../svg/disable_edit_policy_icon.svg";
+
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -29,6 +35,7 @@ function OidcClientsList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [filter, setFilter] = useState(false);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
@@ -36,7 +43,7 @@ function OidcClientsList() {
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-
+    const [selectedOidcClient, setSelectedOidcClient] = useState({});
     const [firstIndex, setFirstIndex] = useState(0);
     const [oidcClientsList, setOidcClientsList] = useState([]);
     const [filteredOidcClientsList, setFilteredOidcClientsList] = useState([]);
@@ -121,9 +128,9 @@ function OidcClientsList() {
         }
     };
 
-    const showDeactivateOidcClient = async(selectedClientdata) => {
+    const showDeactivateOidcClient = async (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            setDataLoaded(false);
+            setTableDataLoaded(false);
             try {
                 const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
                 if (response) {
@@ -140,6 +147,8 @@ function OidcClientsList() {
                             clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
                         });
                         setDeactivateRequest(request);
+                        setViewClientId(-1);
+                        setSelectedOidcClient(selectedClientdata);
                         setShowDeactivatePopup(true);
                         document.body.style.overflow = "hidden";
                     } else {
@@ -152,12 +161,12 @@ function OidcClientsList() {
                 console.error('Error fetching data:', err);
                 setErrorMsg(err);
             }
-            setDataLoaded(true);
+            setTableDataLoaded(true);
         }
     };
 
     const closeDeactivatePopup = () => {
-        setViewClientId(-1);
+        setSelectedOidcClient({});
         setShowDeactivatePopup(false);
     };
 
@@ -208,9 +217,9 @@ function OidcClientsList() {
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
             setShowDeactivatePopup(false);
-            setViewClientId(-1);
+            setSelectedOidcClient({});
             // Update the specific row in the state with the new status
-            setOidcClientsList((prevList) =>
+            setFilteredOidcClientsList((prevList) =>
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
                 )
@@ -220,6 +229,10 @@ function OidcClientsList() {
 
     const styles = {
         outerDiv: "!bg-opacity-[16%]"
+    }
+
+    const LoadingIconStyle = {
+        loadingDiv: "!bg-opacity-[16%] !h-96"
     }
 
 
@@ -272,94 +285,107 @@ function OidcClientsList() {
                                             onFilterChange={onFilterChange}>
                                         </OidcClientsFilter>
                                     }
-                                    <div className="mx-[2%] overflow-x-scroll">
-                                        <table className="table-fixed">
-                                            <thead>
-                                                <tr>
-                                                    {tableHeaders.map((header, index) => {
-                                                        return (
-                                                            <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
-                                                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
-                                                                    {t(header.headerNameKey)}
-                                                                    {(header.id !== "action") && (header.id !== "oidcClientId") && (
-                                                                        <SortingIcon
-                                                                            id={`${header.headerNameKey}_sorting_icon`}
-                                                                            headerId={header.id}
-                                                                            sortDescOrder={sortDescOrder}
-                                                                            sortAscOrder={sortAscOrder}
-                                                                            order={order}
-                                                                            activeSortDesc={activeSortDesc}
-                                                                            activeSortAsc={activeSortAsc}
-                                                                        />
-                                                                    )}
-                                                                </div>
-                                                            </th>
-                                                        )
-                                                    })}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    tableRows.map((client, index, currentArray) => {
-                                                        return (
-                                                            <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
-                                                                <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
-                                                                    <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                        {getStatusCode(client.status, t)}
-                                                                    </div>
-                                                                </td>
-                                                                <td className="px-2 mx-2">
-                                                                    <div className="flex items-center justify-center">
-                                                                        <svg id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => showCopyPopUp(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showCopyPopUp(client))}
-                                                                            xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
-                                                                            <path id="visibility_FILL0_wght400_GRAD0_opsz48"
-                                                                                d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                                transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
-                                                                        </svg>
-                                                                        {showPopup && (
-                                                                            <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                    {!tableDataLoaded && <LoadingIcon styleSet={LoadingIconStyle}></LoadingIcon>}
+                                    {tableDataLoaded &&
+                                        <div className="mx-[2%] overflow-x-scroll">
+                                            <table className="table-fixed">
+                                                <thead>
+                                                    <tr>
+                                                        {tableHeaders.map((header, index) => {
+                                                            return (
+                                                                <th key={index} className={`py-4 text-xs text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                    <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
+                                                                        {t(header.headerNameKey)}
+                                                                        {(header.id !== "action") && (header.id !== "oidcClientId") && (
+                                                                            <SortingIcon
+                                                                                id={`${header.headerNameKey}_sorting_icon`}
+                                                                                headerId={header.id}
+                                                                                sortDescOrder={sortDescOrder}
+                                                                                sortAscOrder={sortAscOrder}
+                                                                                order={order}
+                                                                                activeSortDesc={activeSortDesc}
+                                                                                activeSortAsc={activeSortAsc}
+                                                                            />
                                                                         )}
                                                                     </div>
-                                                                </td>
-                                                                <td className="px-2 mx-2">
-                                                                    <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
-                                                                        <button id={'oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
-                                                                            ...
-                                                                        </button>
-                                                                        {viewClientId === index && (
-                                                                            <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
-                                                                                <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
-                                                                                    {t('oidcClientsList.view')}
-                                                                                </button>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
-                                                                                    {t('oidcClientsList.edit')}
-                                                                                </button>
-                                                                                <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
-                                                                                    {t('oidcClientsList.deActivate')}
-                                                                                </button>
-                                                                                {showDeactivatePopup && (
-                                                                                    <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidcClient.oidcClientName' descriptionMsg='deactivateOidcClient.description' headerKeyName={client.clientNameEng} />
-                                                                                )}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                                </th>
+                                                            )
+                                                        })}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        tableRows.map((client, index, currentArray) => {
+                                                            return (
+                                                                <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
+                                                                        <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                            {getStatusCode(client.status, t)}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-2 mx-2">
+                                                                        <div className="flex items-center justify-center">
+                                                                            <svg id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => showCopyPopUp(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showCopyPopUp(client))}
+                                                                                xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
+                                                                                <path id="visibility_FILL0_wght400_GRAD0_opsz48"
+                                                                                    d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
+                                                                                    transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
+                                                                            </svg>
+                                                                            {showPopup && (
+                                                                                <CopyIdPopUp closePopUp={setShowPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-2 mx-2">
+                                                                        <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                                                            <button id={'oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
+                                                                                ...
+                                                                            </button>
+                                                                            {viewClientId === index && (
+                                                                                <div className={`absolute w-[7rem] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
+                                                                                    <div role='button' id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`flex justify-between py-2 px-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                        <p>{t('oidcClientsList.view')}</p>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
+                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                    <div role='button' id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
+                                                                                        <p>{t('oidcClientsList.edit')}</p>
+                                                                                        <img src={client.status === "ACTIVE" ? editIcon : disableEditPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
+                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                    <div role='button' id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                                                                        <p>{t('oidcClientsList.deActivate')}</p>
+                                                                                        <img src={client.status === "ACTIVE" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                            {showDeactivatePopup && (
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
+                                                                                    popupData={selectedOidcClient} request={deactivateRequest}
+                                                                                    headerMsg='deactivateOidcClient.oidcClientName'
+                                                                                    descriptionMsg='deactivateOidcClient.description'
+                                                                                    headerKeyName={selectedOidcClient.clientNameEng}
+                                                                                />
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                    <Pagination dataListLength={filteredOidcClientsList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                                 </div>
-                                <Pagination dataListLength={filteredOidcClientsList.length} selectedRecordsPerPage={selectedRecordsPerPage} setSelectedRecordsPerPage={setSelectedRecordsPerPage} setFirstIndex={setFirstIndex}></Pagination>
                             </>
                         }
                     </div>

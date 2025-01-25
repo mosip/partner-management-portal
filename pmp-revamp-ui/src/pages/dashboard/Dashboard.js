@@ -120,19 +120,13 @@ function Dashboard() {
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
               const registerUserResponseData = registerUserResponse.data;
               if (registerUserResponseData && registerUserResponseData.response) {
-                window.location.reload();
+                callUserConsentPopup();
               } else {
                 handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
               }
             }
           }
-          if (!isSelectPolicyPopupVisible) {
-            await fetchUserConsent();
-            if (!isUserConsentGiven) {
-              setShowConsentPopup(true);
-              document.body.style.overflow = "hidden";
-            }
-          }
+          callUserConsentPopup();
           //if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
@@ -151,6 +145,16 @@ function Dashboard() {
     fetchData();
 
   }, []);
+
+  const callUserConsentPopup = async () => {
+    if (!isSelectPolicyPopupVisible) {
+      await fetchUserConsent();
+      if (!isUserConsentGiven) {
+        setShowConsentPopup(true);
+        document.body.style.overflow = "hidden";
+      }
+    }
+  }
 
   useEffect(() => {
     const fetchPartnerPolicyMappingRequestCount = async () => {
@@ -312,13 +316,13 @@ function Dashboard() {
 
   const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
     <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
-      <div className="relative group flex items-center justify-center w-full">
+      <div className="relative group flex items-center justify-center w-full" tabIndex="0">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
 
         {count !== null && count !== undefined && (
-          <div className="absolute hidden group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
+          <div className="absolute hidden group-focus:block group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
             {t(descriptionKey, descriptionParams)}
           </div>
         )}

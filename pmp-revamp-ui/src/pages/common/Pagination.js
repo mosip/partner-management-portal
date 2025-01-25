@@ -66,9 +66,10 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
             />
             <div className="flex items-center gap-x-3">
                 <h6 className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
-                <div ref={itemsCountSelectionRef}>
+                <div ref={itemsCountSelectionRef} className='relative min-w-fit w-10'
+                    role='button' id='pagination_select_record_per_page' onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                     {isItemsPerPageOpen && (
-                        <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] -mt-[130px] duration-700`}>
+                        <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] bottom-6 duration-700`}>
                             {itemsPerPageOptions.map((num, i) => {
                                 return (
                                     <p id={'pagination_each_num_option' + (i + 1)} key={i}
@@ -80,10 +81,9 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                             }
                         </div>
                     )}
-                    <div role='button' id='pagination_select_record_per_page' className="cursor-pointer flex justify-between w-10 h-6 items-center 
-                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold"
-                        onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
-                        <p>
+                    <div className="cursor-pointer flex justify-between w-auto h-6 items-center 
+                        text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold">
+                        <p className='px-1'>
                             {selectedRecordsPerPage}
                         </p>
                         <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}

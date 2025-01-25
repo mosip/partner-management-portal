@@ -91,9 +91,12 @@ function ViewFtmChipDetails() {
                 if (responseData.errors && responseData.errors.length > 0) {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
-                    setErrorCode(errorCode);
-                    setErrorMsg(errorMessage);
-                    console.error('Error:', errorMessage);
+                    if (errorCode === 'PMS_KKS_001') {
+                        setErrorMsg(t('certificatesList.errorAccessingApi'));
+                    } else {
+                        setErrorCode(errorCode);
+                        setErrorMsg(errorMessage);
+                    }
                     return null;
                 } else {
                     const resData = responseData.response;
@@ -281,13 +284,13 @@ function ViewFtmChipDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                             <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', false)}
+                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', true)}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className={`font-semibold text-xs text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                             <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${ftmDetails.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', false)}
+                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', true)}
                                             </p>
                                         </div>
                                     </div>

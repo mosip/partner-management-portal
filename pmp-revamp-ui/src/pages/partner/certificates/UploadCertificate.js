@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
@@ -67,8 +67,12 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorCode = response.data.errors[0].errorCode;
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
-                        setErrorCode(errorCode)
-                        setErrorMsg(errorMessage);
+                        if (errorCode === 'PMS_KKS_001') {
+                            setErrorMsg(t('certificatesList.errorAccessingApi'));
+                        } else {
+                            setErrorCode(errorCode);
+                            setErrorMsg(errorMessage);
+                        }
                     } else if (resData === null) {
                         setUploadFailure(true);
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
@@ -174,7 +178,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
             const dateString = popupData.certificateUploadDateTime.toString();
-            const formatted = formatDate(dateString, 'dateTime', false);
+            const formatted = formatDate(dateString, 'dateTime', popupData.isUploadFtmCertificate ? true : false);
             setFormattedDate(formatted);
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);
