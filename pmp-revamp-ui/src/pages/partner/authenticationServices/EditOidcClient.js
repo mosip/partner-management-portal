@@ -6,7 +6,8 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
 import {
     moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
-    getClientNameLangMap, getErrorMessage
+    getClientNameLangMap, getErrorMessage,
+    formatPublicKey
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -422,9 +423,9 @@ function EditOidcClient() {
                                                                 <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>*</span></p>
                                                                 <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                                                             </label>
-                                                            <textarea value={oidcClientDetails.publicKey} readOnly
-                                                                className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar">
-                                                            </textarea>
+                                                            <pre className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline h-20 overflow-auto no-scrollbar">
+                                                                {formatPublicKey(oidcClientDetails.publicKey)}
+                                                            </pre>
                                                         </div>
                                                     </div>
                                                     <div className="flex my-[1%]">

@@ -436,15 +436,15 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                         }
                                                     </tbody>
                                                 </table>
-                                                <Pagination
-                                                    dataListLength={totalRecords}
-                                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                    setFirstIndex={setFirstIndex}
-                                                    isServerSideFilter={true}
-                                                    getPaginationValues={getPaginationValues}
-                                                />
                                             </div>
+                                            <Pagination
+                                                dataListLength={totalRecords}
+                                                selectedRecordsPerPage={selectedRecordsPerPage}
+                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                                setFirstIndex={setFirstIndex}
+                                                isServerSideFilter={true}
+                                                getPaginationValues={getPaginationValues}
+                                            />
                                         </>
                                     )
                                 }

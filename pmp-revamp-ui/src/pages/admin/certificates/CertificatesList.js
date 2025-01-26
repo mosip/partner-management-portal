@@ -8,8 +8,8 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  handleServiceErrors,
-  downloadCaCertificate
+  downloadCaCertificate,
+  handleKeymanagerErrors
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -74,7 +74,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     { id: "issuedTo", headerNameKey: "certificatesList.issuedTo" },
     { id: "issuedBy", headerNameKey: "certificatesList.issuedBy" },
     { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
-    { id: "validTill", headerNameKey: "certificatesList.validTill" },
+    { id: "validTill", headerNameKey: "certificatesList.validTo" },
     { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
     { id: "validityStatus", headerNameKey: "certificatesList.validityStatus" },
     { id: "action", headerNameKey: "certificatesList.action" },
@@ -108,7 +108,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           setTotalRecords(responseData.response.totalResults);
           setCertificatesList(resData);
         } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
         }
       } else {
         setErrorMsg(t('certificatesList.errorInCertificateList'));
@@ -292,16 +292,16 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                             ...
                                           </button>
                                           {actionId === index && (
-                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                            <div className={`absolute w-auto z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                               <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
-                                                <p id="root_certificate_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("certificatesList.view")}</p>
+                                                <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("certificatesList.view")}</p>
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
                                               <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
                                                 onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
-                                                <p id="certificate_list_view_btn" className={`max-w-28 ${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={``} />
+                                                <p id="certificate_list_view_btn" className={`${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
+                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-[1rem]':'pl-[1rem]'}`} />
                                               </div>
                                             </div>
                                           )}

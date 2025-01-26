@@ -455,7 +455,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+                    setErrorMsg(t('certificatesList.errorAccessingApi'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -768,7 +768,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 document.body.removeChild(link);
             }
             else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
             }
         } else {
             setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
@@ -796,3 +796,27 @@ export const escapeKeyHandler = (closePopup) => {
     // Add event listener when any handler condition is true
     window.addEventListener('keydown', handleEscape);
 };
+
+export const formatPublicKey = (publicKeyString) => {
+    try {
+        const data = JSON.parse(publicKeyString);
+        const jsonStr = JSON.stringify(data, null, 2);
+        return jsonStr;
+    } catch {
+        return publicKeyString;
+    }
+}
+
+export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, t) => {
+    if (responseData && responseData.errors && responseData.errors.length > 0) {
+        const errorCode = responseData.errors[0].errorCode;
+        const errorMessage = responseData.errors[0].message;
+        if (errorCode === "PMS_KKS_001") {
+          setErrorMsg(t('certificatesList.errorAccessingApi'));
+        } else {
+          setErrorCode(errorCode);
+          setErrorMsg(errorMessage);
+        }
+        console.error('Error:', errorMessage);
+    }
+  }

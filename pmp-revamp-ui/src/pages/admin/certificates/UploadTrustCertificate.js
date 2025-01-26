@@ -1,6 +1,6 @@
 import React, { useEffect, useState, } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createRequest, getPartnerManagerUrl, isLangRTL, handleServiceErrors, getErrorMessage } from "../../../utils/AppUtils";
+import { createRequest, getPartnerManagerUrl, isLangRTL, getErrorMessage, handleKeymanagerErrors } from "../../../utils/AppUtils";
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title'; import DropdownComponent from "../../common/fields/DropdownComponent";
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
@@ -20,7 +20,6 @@ function UploadTrustCertificate() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [successMsg, setSuccessMsg] = useState("");
     const [uploading, setUploading] = useState(false);
     const [selectedDomain, setSelectedDomain] = useState("");
     const [certificateData, setCertificateData] = useState("");
@@ -129,7 +128,7 @@ function UploadTrustCertificate() {
                     setConfirmationData(requiredData);
                     setUploadSuccess(true);
                 } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
                 }
             } else {
                 setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));

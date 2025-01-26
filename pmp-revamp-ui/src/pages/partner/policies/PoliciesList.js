@@ -13,6 +13,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
 import FilterButtons from '../../common/FilterButtons';
 import SortingIcon from '../../common/SortingIcon';
+import viewIcon from "../../../svg/view_icon.svg";
 import Pagination from '../../common/Pagination';
 import Title from '../../common/Title';
 import EmptyList from '../../common/EmptyList';
@@ -226,10 +227,11 @@ function PoliciesList() {
                                     </button>
                                     {
                                       viewPolicyId === index && (
-                                        <button id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)}
-                                          className={`absolute border bg-white text-xs font-semibold rounded-md shadow-md w-fit p-2 z-20 items-center cursor-pointer mt-5 ${isLoginLanguageRTL ? "mr-16 left-[5.5rem] max-[800px]:left-20 max-[400px]:left-8 text-right" : "right-20 text-left"}`}>
+                                        <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)}
+                                          className={`flex justify-between border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[6rem] px-2 py-2 z-20 items-center cursor-pointer ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
                                           <p> {t('policies.view')} </p>
-                                        </button>
+                                          <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                        </div>
                                       )
                                     }
                                   </div>

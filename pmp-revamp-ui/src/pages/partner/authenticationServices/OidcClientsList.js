@@ -20,7 +20,13 @@ import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
-import EmptyList from '../../common/EmptyList.js';
+import EmptyList from '../../common/EmptyList.js'; 
+import viewIcon from "../../../svg/view_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import editIcon from "../../../svg/edit_policy_icon.svg";
+import disableEditPolicyIcon from "../../../svg/disable_edit_policy_icon.svg";
+
 
 function OidcClientsList() {
     const navigate = useNavigate('');
@@ -341,30 +347,33 @@ function OidcClientsList() {
                                                                                 ...
                                                                             </button>
                                                                             {viewClientId === index && (
-                                                                                <div className={`absolute w-[7%] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
-                                                                                    <button id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`py-1.5 w-full px-4 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"}`}>
-                                                                                        {t('oidcClientsList.view')}
-                                                                                    </button>
+                                                                                <div className={`absolute w-[7rem] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
+                                                                                    <div role='button' id="oidc_details_view_btn" onClick={() => onClickView(client)} className={`flex justify-between py-2 px-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                        <p>{t('oidcClientsList.view')}</p>
+                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <button id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
-                                                                                        {t('oidcClientsList.edit')}
-                                                                                    </button>
+                                                                                    <div role='button' id="oidc_edit_btn" onClick={() => showEditOidcClient(client)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer hover:bg-gray-100' : 'text-[#BEBEBE]'}`}>
+                                                                                        <p>{t('oidcClientsList.edit')}</p>
+                                                                                        <img src={client.status === "ACTIVE" ? editIcon : disableEditPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <button id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`py-1.5 w-full px-4 ${isLoginLanguageRTL ? "pl-10 text-right" : "pr-10 text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
-                                                                                        {t('oidcClientsList.deActivate')}
-                                                                                    </button>
+                                                                                    <div role='button' id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                                                                        <p>{t('oidcClientsList.deActivate')}</p>
+                                                                                        <img src={client.status === "ACTIVE" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    </div>
                                                                                 </div>
                                                                             )}
                                                                             {showDeactivatePopup && (
-                                                                            <DeactivatePopup
-                                                                                closePopUp={closeDeactivatePopup}
-                                                                                onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
-                                                                                popupData={selectedOidcClient} request={deactivateRequest}
-                                                                                headerMsg='deactivateOidcClient.oidcClientName'
-                                                                                descriptionMsg='deactivateOidcClient.description'
-                                                                                headerKeyName={selectedOidcClient.clientNameEng}
-                                                                            />
-                                                                        )}
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
+                                                                                    popupData={selectedOidcClient} request={deactivateRequest}
+                                                                                    headerMsg='deactivateOidcClient.oidcClientName'
+                                                                                    descriptionMsg='deactivateOidcClient.description'
+                                                                                    headerKeyName={selectedOidcClient.clientNameEng}
+                                                                                />
+                                                                            )}
                                                                         </div>
                                                                     </td>
                                                                 </tr>

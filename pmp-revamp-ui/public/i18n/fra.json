@@ -399,7 +399,7 @@
         "sbiCreatedDate": "Date de création du SBI",
         "selectDate": "Sélectionner une date",
         "sbiExpiryDate": "Date d'expiration du SBI",
-        "dateFormatInfoKey": "Entrez la date au format MM/DD/YYYY",
+        "dateFormatInfoKey": "Entrez la date au format MM/JJ/AAAA",
         "expiryDateInfoKey": "La date d'expiration du SBI doit être au moins un an supérieure à la date de création du SBI.",
         "saveAndAddDevices": "Enregistrer et ajouter des appareils",
         "errorInAddingSbi": "Lors de l'ajout de SBI, nous avons rencontré une erreur."
@@ -581,7 +581,7 @@
         "issuedTo": "Délivré à",
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
-        "validTill": "Valable jusqu'à",
+        "validTo": "Valable jusqu'aue",
         "timeOfUpload": "Téléchargé le",
         "validityStatus": "Statut de validité",
         "action": "Action",
@@ -594,7 +594,8 @@
         "selectValidityStatus": "Sélectionnez le statut de validité",
         "deActivate": "Désactiver",
         "view": "Voir",
-        "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur."
+        "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur.",
+        "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Télécharger le certificat de confiance",
@@ -604,8 +605,8 @@
         "partnerDomain": "Domaine partenaire", 
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
-        "downloadRootCertSuccessMsg": "Le certificat Root CA est téléchargé avec succès.",
-        "downloadIntermediateCertSuccessMsg": "La chaîne de confiance du certificat pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
+        "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
+        "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
     "rootCertificateList": {
         "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
@@ -745,7 +746,9 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer de ce qui suit : 1. Désactivez toutes les stratégies actives. 2. Publiez puis désactivez tous les projets de politiques."
+        "description": "Il existe {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} projets de politiques associés à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer des points suivants :",
+        "descriptionMsg1": "1. Désactivez toutes les politiques actives.",
+        "descriptionMsg2": "2. Publiez puis désactivez tous les projets de politiques."
     },
     "viewAuthPoliciesList": {
         "viewAuthPolicy": "Afficher la politique d'authentification",
@@ -886,7 +889,7 @@
         "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
     },
     "ftmRequestApproveRejectPopup": {
-        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}}",
+        "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
         "description": "Veuillez examiner attentivement les détails de la puce FTM et le certificat associé avant de prendre une décision appropriée."
     },
     "viewAdminOidcClientDetails": {
@@ -920,7 +923,7 @@
     },
     "consentPopup": {
         "title": "Termes et conditions",
-        "description": "Les données fournies lors de l'inscription, y compris votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour la réinitialisation du mot de passe, la vérification des e-mails et les notifications en cas d'expiration du certificat partenaire ou de situations similaires. Ces informations seront utilisées uniquement pour créer vos informations d'identification, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins ci-dessus.",
+        "description": "Les données fournies lors de l'inscription, notamment votre nom, votre numéro de téléphone, votre adresse e-mail, le nom de votre organisation et votre adresse, seront utilisées par le portail de gestion des partenaires (PMP). Votre adresse e-mail sera également utilisée pour réinitialiser votre mot de passe. Ces informations seront utilisées uniquement pour créer vos identifiants, facilitant ainsi votre utilisation de MOSIP. En cochant la case ci-dessous, vous consentez à ce que vos données soient stockées et traitées aux fins susmentionnées.",
         "checkBoxDesc": "J'ai lu les conditions générales et j'accepte que mes données soient stockées et traitées aux fins indiquées.",
         "proceed": "Procéder",
         "logoutMsg": "Si vous ne souhaitez pas continuer, vous pouvez cliquer sur",
@@ -977,8 +980,8 @@
         "PMS_PRT_013": "Numéro de mobile non valide. La longueur doit être inférieure à .",
         "PMS_ATH_401": "Authentification échouée",
         "PMS_PRT_106": "Le statut APIKeyReqID est en cours",
-        "PMS_KKS_001": " API non accessible",
-        "PMS_PRT_107": "La réponse de l'api est nulle",
+        "PMS_KKS_001": "Je rencontre une erreur lors de l'accès à l'API.",
+        "PMS_PRT_107": "Impossible de recevoir une réponse de l'API demandée.",
         "PMS_PRT_500": "Impossible de traiter la demande.",
         "PMS_PMP_016": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
         "PMS_PRT_098": "La politique donnée dans le groupe de politiques du partenaire n'existe pas.",
@@ -1164,7 +1167,7 @@
         "PMS_DEVICE_ERROR_006": "L'appareil n'existe pas.",
         "PMS_DEVICE_ERROR_007": "L'appareil n'est pas associé à l'ID du partenaire.",
         "PMS_DEVICE_ERROR_008": "Erreur lors de l'ajout d'un périphérique pour sbi.",
-        "PMS_DEVICE_ERROR_009": "Étant donné que le SBI est soit désactivé, soit pas encore approuvé.",
+        "PMS_DEVICE_ERROR_009": "Impossible d'ajouter un appareil car le SBI associé n'est pas approuvé.",
         "PMS_DEVICE_ERROR_010": "Les détails de l'appareil donné ne sont pas en attente d'approbation.",
         "PMS_DEVICE_ERROR_011": "Erreur lors de l'approbation ou du rejet de l'appareil pour Sbi Mapping.",
         "PMS_DEVICE_ERROR_012": "Le mappage SBI et périphérique n’existe pas.",
@@ -1183,6 +1186,8 @@
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
         "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
+        "PMS_DEVICE_ERROR_028": "Impossible d'ajouter un périphérique car le SBI associé est déjà rejeté.",
+        "PMS_DEVICE_ERROR_029": "Impossible d'ajouter un appareil car le SBI associé est déjà désactivé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, copyClientId, formatDate, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, moveToOidcClientsList, getErrorMessage } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, moveToOidcClientsList, getErrorMessage, formatPublicKey } from '../../../utils/AppUtils';
 import content_copy_icon from "../../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import Title from "../../common/Title";
@@ -118,7 +118,7 @@ function ViewOidcClientDetails() {
                                     </div>
                                 </div>
 
-                                <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
+                                <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
                                     onClick={() => copyClientId(oidcClientDetails, oidcClientDetails.clientId, setCopied)}>
                                     <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                     <div id="oidc_client_details_copy_id_icon" className="flex space-x-1 items-center">
@@ -197,13 +197,13 @@ function ViewOidcClientDetails() {
                                 </div>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className="space-y-6">
-                                    <div className="my-3 space-y-2 break-all">
+                                    <div className="my-3 space-y-2">
                                         <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.publicKey")}
                                         </p>
-                                        <p id='oidc_client_details_public_key_context' className="font-[600] text-vulcan text-sm text-wrap w-[90%]">
-                                            {oidcClientDetails.publicKey}
-                                        </p>
+                                        <pre id="oidc_client_details_public_key_context" className="font-[600] text-vulcan text-sm w-full bg-snow-white focus:outline-none focus:ring-0 h-fit overflow-x-auto">
+                                            {formatPublicKey(oidcClientDetails.publicKey)}
+                                        </pre>
                                     </div>
                                     <div className="my-4 space-y-1">
                                         <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-xs">
