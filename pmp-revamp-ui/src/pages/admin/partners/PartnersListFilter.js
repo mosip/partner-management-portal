@@ -106,7 +106,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   return (
-    <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+    <div className="flex w-full p-2.5 justify-start bg-[#F7F7F7] flex-wrap">
       <TextInputComponent
         fieldName="partnerId"
         onTextChange={onFilterChangeEvent}

@@ -282,7 +282,7 @@ function DevicesList() {
                                                     onFilterChange={onFilterChange}>
                                                 </DevicesListFilter>
                                             }
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.4rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
