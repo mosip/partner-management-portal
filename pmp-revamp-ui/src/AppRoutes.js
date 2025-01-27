@@ -179,47 +179,47 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-policy-group',
+          path: 'policy-manager/create-policy-group',
           element: <GuardedRoute><MainLayout><CreatePolicyGroup /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/policy-group-list',
+          path: 'policy-manager/policy-group-list',
           element: <GuardedRoute><MainLayout><PolicyGroupList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-policy-group-details',
+          path: 'policy-manager/view-policy-group-details',
           element: <GuardedRoute><MainLayout><ViewPolicyGroupDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/auth-policies-list',
+          path: 'policy-manager/auth-policies-list',
           element: <GuardedRoute><MainLayout><AuthPoliciesList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/data-share-policies-list',
+          path: 'policy-manager/data-share-policies-list',
           element: <GuardedRoute><MainLayout><DataSharePoliciesList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-auth-policy',
+          path: 'policy-manager/create-auth-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-data-share-policy',
+          path: 'policy-manager/create-data-share-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-auth-policy',
+          path: 'policy-manager/view-auth-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/edit-auth-policy',
+          path: 'policy-manager/edit-auth-policy',
           element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-data-share-policy',
+          path: 'policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/edit-data-share-policy',
+          path: 'policy-manager/edit-data-share-policy',
           element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {

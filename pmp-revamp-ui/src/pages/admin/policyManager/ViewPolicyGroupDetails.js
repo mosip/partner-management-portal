@@ -14,7 +14,7 @@ function ViewPolicyGroupDetails() {
     const [policyGroupDetails, setPolicyGroupDetails] = useState('');
 
     const moveToPolicyGroupList = () => {
-        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
+        navigate('/partnermanagement/policy-manager/policy-group-list');
     };
 
     useEffect(() => {
@@ -31,7 +31,7 @@ function ViewPolicyGroupDetails() {
         <>
             <div className={`w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter mt-5 overflow-x-scroll`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewPolicyGroupDetails.viewPolicyGroup' subTitle='viewPolicyGroupDetails.listOfPolicyGroups' backLink='/partnermanagement/admin/policy-manager/policy-group-list' />
+                    <Title title='viewPolicyGroupDetails.viewPolicyGroup' subTitle='viewPolicyGroupDetails.listOfPolicyGroups' backLink='/partnermanagement/policy-manager/policy-group-list' />
                 </div>
                 {unexpectedError && (
                     <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
