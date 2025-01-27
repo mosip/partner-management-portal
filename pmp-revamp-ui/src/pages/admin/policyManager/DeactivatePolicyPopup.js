@@ -160,16 +160,16 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                         <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                             {errorHeaderMsg}
                                         </p>
-                                        <div className='p-2'>
-                                            <p className="text-sm text-center text-[#666666] break-normal">
+                                        <div className={`p-3 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                            <p className="text-sm text-[#666666] break-normal">
                                                 {errorDescriptionMsg}
                                             </p>
                                             {activeDraftPoliciesDescr1 && activeDraftPoliciesDescr2 && (
                                                 <>
-                                                    <p className="text-sm text-center text-[#666666] break-normal">
+                                                    <p className="text-sm text-[#666666] break-normal">
                                                         {activeDraftPoliciesDescr1}
                                                     </p>
-                                                    <p className="text-sm text-center text-[#666666] break-normal">
+                                                    <p className="text-sm text-[#666666] break-normal">
                                                         {activeDraftPoliciesDescr2}
                                                     </p>
                                                 </>
