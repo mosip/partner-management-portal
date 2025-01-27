@@ -100,7 +100,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/partners-list');
     };
     const showAdminPolicies = () => {
-        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
+        navigate('/partnermanagement/policy-manager/policy-group-list');
     };
     const showPartnerPolicyMapping = () => {
         navigate('/partnermanagement/admin/policy-requests-list');

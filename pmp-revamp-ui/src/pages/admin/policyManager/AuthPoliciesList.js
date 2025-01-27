@@ -5,7 +5,7 @@ function AuthPoliciesList() {
     const navigate = useNavigate('');
 
     const createAuthPolicy = () => {
-        navigate('/partnermanagement/admin/policy-manager/create-auth-policy');
+        navigate('/partnermanagement/policy-manager/create-auth-policy');
     };
 
     const viewAuthPolicy = (selectedPolicy) => {
@@ -13,15 +13,15 @@ function AuthPoliciesList() {
             policyId: selectedPolicy.policyId,
             header: 'viewAuthPoliciesList.viewAuthPolicy',
             subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
-            backLink: '/partnermanagement/admin/policy-manager/auth-policies-list'
+            backLink: '/partnermanagement/policy-manager/auth-policies-list'
         }
         localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
-        navigate('/partnermanagement/admin/policy-manager/view-auth-policy');
+        navigate('/partnermanagement/policy-manager/view-auth-policy');
     };
 
     const editAuthPolicy = (selectedPolicy) => {
         localStorage.setItem('policyId', selectedPolicy.policyId);
-        navigate('/partnermanagement/admin/policy-manager/edit-auth-policy');
+        navigate('/partnermanagement/policy-manager/edit-auth-policy');
     };
 
     return (
