@@ -120,7 +120,7 @@ function ViewPolicy() {
                                             {t('policiesList.policyId')}: <span className="font-semibold">{viewDetails.policyId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                            <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(getPolicyStatus(viewDetails), t)}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>

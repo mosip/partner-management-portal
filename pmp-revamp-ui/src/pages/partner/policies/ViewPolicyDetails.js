@@ -46,7 +46,7 @@ function ViewPolicyDetails() {
                             <div
                                 className={`${bgOfStatus(
                                     policyDetails.status
-                                )}flex w-fit py-1.5 px-3 text-xs rounded-md`}
+                                )}flex w-fit py-1.5 px-3 text-sm rounded-md font-semibold`}
                             >
                                 {getStatusCode(policyDetails.status, t)}
                             </div>
