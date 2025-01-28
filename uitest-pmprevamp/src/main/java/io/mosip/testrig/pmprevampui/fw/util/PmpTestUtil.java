@@ -7,11 +7,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
@@ -34,7 +33,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String propsHealthCheckURL = TestRunner.getResourcePath() + "/"
 			+ "config/healthCheckEndpoint.properties";
 	public static boolean initialized = false;
-	
+
 	public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 	public static DateTimeFormatter nonZeroPadderDateFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 	public static DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
@@ -43,8 +42,10 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
 	public static int todayDay = LocalDate.parse(todayDate, dateFormatter).getDayOfMonth();
 	public static String nextMonth24thDate = LocalDate.now().plusMonths(1).withDayOfMonth(24).format(dateFormatter);
-	public static String nextMonth24thDateWithoutZeroPadder = LocalDate.now().plusMonths(1).withDayOfMonth(24).format(nonZeroPadderDateFormatter);
-	public static String previousMonth4thDateWithoutZeroPadder = LocalDate.now().minusMonths(1).withDayOfMonth(4).format(nonZeroPadderDateFormatter);
+	public static String nextMonth24thDateWithoutZeroPadder = LocalDate.now().plusMonths(1).withDayOfMonth(24)
+			.format(nonZeroPadderDateFormatter);
+	public static String previousMonth4thDateWithoutZeroPadder = LocalDate.now().minusMonths(1).withDayOfMonth(4)
+			.format(nonZeroPadderDateFormatter);
 	public static String currentMonthAndYear = LocalDate.now().format(monthYearFormatter);
 
 	public static String getServerComponentsDetails() {
@@ -69,7 +70,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 						continue;
 					}
 					stringBuilder.append("\n")
-					.append(getCommitDetails(BaseTestCaseFunc.ApplnURI + parts[1].replace("health", "info")));
+							.append(getCommitDetails(BaseTestCaseFunc.ApplnURI + parts[1].replace("health", "info")));
 				}
 			}
 		} catch (Exception e) {
@@ -110,9 +111,9 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			logger.info(response.getBody().asString());
 			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
 			return "Group: " + jsonResponse.getJSONObject("build").getString("group") + ", Artifact: "
-			+ jsonResponse.getJSONObject("build").getString("artifact") + ", version: "
-			+ jsonResponse.getJSONObject("build").getString("version") + ", Commit ID: "
-			+ jsonResponse.getJSONObject("git").getJSONObject("commit").getString("id");
+					+ jsonResponse.getJSONObject("build").getString("artifact") + ", version: "
+					+ jsonResponse.getJSONObject("build").getString("version") + ", Commit ID: "
+					+ jsonResponse.getJSONObject("git").getJSONObject("commit").getString("id");
 		}
 		return path + "- No Response";
 	}
@@ -125,8 +126,8 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static void initialize() {
 		if (initialized == false) {
 			ConfigManager.init();
-			String admin_userName="admin_userName";
-			String zone="CSB";
+			String admin_userName = "admin_userName";
+			String zone = "CSB";
 			BaseTestCaseFunc.initialize();
 			HashMap<String, List<String>> attrmap = new HashMap<String, List<String>>();
 			List<String> list = new ArrayList<String>();

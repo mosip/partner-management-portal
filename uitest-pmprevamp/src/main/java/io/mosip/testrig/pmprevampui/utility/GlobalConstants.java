@@ -213,7 +213,7 @@ public class GlobalConstants {
 	public static final String INITIAL_MAKE = "Enter Make";
 	public static final String INITIAL_MODEL = "Enter Model";
 	public static final String DEACTIVATED_BACKGROUND = "bg-[#EAECF0] text-[#525252]";
-	
+
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
 	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
@@ -322,7 +322,7 @@ public class GlobalConstants {
 	public static final String DEACTIVATED = "Deactivated";
 	public static final String REJECTED = "Rejected";
 	public static final String PENDING_FOR_APPROVAL = "Pending For Approval";
-	
+
 	public static final String PARTNER_ID = "Partner ID";
 	public static final String PARTNER_TYPE = "Partner Type";
 	public static final String DEVICE_ID = "Device ID";

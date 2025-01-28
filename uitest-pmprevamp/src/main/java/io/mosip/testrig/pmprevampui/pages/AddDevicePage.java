@@ -40,7 +40,7 @@ public class AddDevicePage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement blockProceedButton;
-	
+
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationButton;
 
@@ -118,7 +118,7 @@ public class AddDevicePage extends BasePage {
 
 	@FindBy(xpath = "//input[@value='Automation25']")
 	private WebElement twentyFifthDevice;
-	
+
 	@FindBy(xpath = "//p[contains(text(), 'Device Details already exists')]")
 	private WebElement duplicateDeviceErrorMessage;
 
@@ -294,7 +294,7 @@ public class AddDevicePage extends BasePage {
 	public void clickOnBackToDevices() {
 		clickOnElement(backToViewDevicesButton);
 	}
-	
+
 	public void clickOnProceed() {
 		clickOnElement(blockProceedButton);
 	}
@@ -363,7 +363,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isTwentyFifthDeviceIsDisplayed() {
 		return isElementDisplayed(twentyFifthDevice);
 	}
-	
+
 	public String getDuplicateDeviceErrorMessage() {
 		return getTextFromLocator(duplicateDeviceErrorMessage);
 	}

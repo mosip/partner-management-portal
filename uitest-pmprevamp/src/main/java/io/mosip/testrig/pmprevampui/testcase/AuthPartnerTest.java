@@ -13,7 +13,6 @@ import io.mosip.testrig.pmprevampui.pages.BasePage;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
 import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
-import io.mosip.testrig.pmprevampui.pages.OldPmpPage;
 import io.mosip.testrig.pmprevampui.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmprevampui.pages.PartnerPolicyMappingPage;
 import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
