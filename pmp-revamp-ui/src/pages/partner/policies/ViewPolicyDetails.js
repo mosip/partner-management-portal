@@ -45,10 +45,10 @@ function ViewPolicyDetails() {
                         <div className="flex items-center justify-start">
                             <div
                                 className={`${bgOfStatus(
-                                    'pending_approval'
+                                    policyDetails.status
                                 )}flex w-fit py-1.5 px-3 text-xs rounded-md font-semibold`}
                             >
-                                {getStatusCode('pending_approval', t)}
+                                {getStatusCode(policyDetails.status, t)}
                             </div>
                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-xs text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
