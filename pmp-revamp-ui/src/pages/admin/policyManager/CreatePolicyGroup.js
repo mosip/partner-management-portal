@@ -81,7 +81,7 @@ function CreatePolicyGroup() {
 
     const clickOnSubmit = async () => {
         setDataLoaded(false);
-        setIsSubmitClicked(false);
+        setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
         let request = createRequest({
@@ -113,7 +113,9 @@ function CreatePolicyGroup() {
                 setErrorMsg(t('createPolicyGroup.errorInCreatePolicyGroup'));
             }
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setDataLoaded(true);

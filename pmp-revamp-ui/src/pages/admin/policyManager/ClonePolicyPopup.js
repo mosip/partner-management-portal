@@ -96,9 +96,11 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     setErrorMsg(t('clonePolicyPopup.errorInClonePolicy'));
                 }
             } catch (err) {
-                setDataLoaded(true);
-                setErrorMsg(err);
                 console.log("Error fetching data: ", err);
+                if (err.response.status !== 401) {
+                    setDataLoaded(true);
+                    setErrorMsg(err.toString());
+                }
             }
         } else {
             setDataLoaded(true);

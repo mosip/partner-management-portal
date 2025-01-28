@@ -122,9 +122,12 @@ function PartnersList() {
       triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       setTriggerServerMethod(false);
     } catch (err) {
-      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       console.error('Error fetching data:', err);
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+        setTriggerServerMethod(false);
+        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+        setErrorMsg(err.toString());
+      }
     }
   }
 

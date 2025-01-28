@@ -77,8 +77,10 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         return [];
       }
     } catch (err) {
-      setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
       console.error("Error fetching partner type data: ", err);
+      if (err.response.status !== 401) {
+        setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
+      }
       return [];
     }
   }
