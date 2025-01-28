@@ -62,10 +62,10 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "side_nav_device_provider_service_icon")
 	private WebElement sideNavDeviceProvider;
 
-	@FindBy(id = "header_hamburger_open_sidenav")
+	@FindBy(id = "hamburger_close_icon")
 	private WebElement hamburgerOpen;
 
-	@FindBy(id = "header_hamburger_close_sidenav")
+	@FindBy(id = " hamburger_open_icon")
 	private WebElement hamburgerClose;
 
 	@FindBy(id = "select_policy_group_view_text")
@@ -80,7 +80,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
 
-	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
+	@FindBy(xpath = "//*[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
 
 	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")

@@ -62,11 +62,13 @@ public class GlobalConstants {
 	public static final String isPolicyNameHeaderTextDisplayed = "Verify if policy name header text displayed";
 	public static final String isOIDCClientNameHeaderTextDisplayed = "Verify if oidc client name header text displayed";
 	public static final String isCreatedDateHeaderTextDisplayed = "Verify if create data header text displayed";
+	public static final String isCreatedDateTextDisplayed = "Verify if create data text displayed";
 	public static final String isStatusHeaderTextDisplayed = "Verify if status header text displayed";
 	public static final String isOIDCClientIDHeaderTextDisplayed = "Verify if oidc client header text displayed";
 	public static final String isActionHeaderTextDisplayed = "Verify if action header text displayed";
 	public static final String isRequestPolicyEnabled = "Verify if request policy button enabled";
 	public static final String isGenerateAPIKeyDisplayed = "Verify if generate api key text displayed.";
+	public static final String isListOfDevicesHeadersDisplayed = "Verify if list of device headers are displayed.";
 	public static final String isApiKeyHeaderTextDisplayed = "Verify if api key header Text displayed";
 	public static final String isListOfPolicyRequestedTextDisplayed = "Verify if list of policy requested text displayed";
 	public static final String isNextPageDisplayed = "Verify if next page for policy requested  displayed";
@@ -86,6 +88,8 @@ public class GlobalConstants {
 	public static final String isSbiDetailsAreDisplayed = "Verify if sbi details are displayed";
 	public static final String isDeactivateSbiEnabled = "Verify if deactivate sbi is enabled";
 	public static final String isDeactivateSbiPopupDisplayed = "Verify if deactivate sbi popup is displayed";
+	public static final String isHighlightedConfirmDeactivateSbiDisplayed = "Verify if highlighted confirm button in deactivate sbi is displayed";
+	public static final String isDeactivatedSbiGreyedOut = "Verify if deactivate sbi is greyed out";
 	public static final String isAddDeviceTitleDisplayed = "Verify if add device title is displayed";
 	public static final String isDevicePendingForApprovalCountDisplayed = "Verify if device pending for approval count is displayed";
 	public static final String isSelectPolicyGroupViewMoreAndLess = "Verify if select policy group view more and less is displayed";
@@ -101,6 +105,9 @@ public class GlobalConstants {
 	public static final String ADD_SBI_PARTNER_ID_INFO_MESSAGE = "Only those partner IDs of Device Provider whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first";
 	public static final String ADD_SBI_EXPIRY_DATE_INFO_MESSAGE = "SBI Expiry date should be atleast one year greater than the SBI created date. Enter date in MM/DD/YYYY";
 	public static final String LIST_OF_SBI_PAGE_MESSAGE = "Note: 1. User can add devices only after the SBI is approved by Partner Admin. 2. User cannot add devices anymore after the SBI is expired";
+	public static final String DEACTIVATE_SBI_POPUP_MESSAGE = "On clicking Confirm, your SBI details and the approved devices mapped to it will be deactivated. Pending for approval devices will be auto- rejected.";
+	public static final String DEACTIVATE_SBI_POPUP_TITLE = "Do you want to deactivate SBI Version - 'Automation123'?";
+	public static final String DEACTIVATE_SBI_POPUP_DEVICE_DETAILS = "2 approved devices associated to this SBI will be deactivated | 2 devices pending for approval will be auto-rejected";
 	public static final String TABLE = "</table>";
 	public static final String TR = "</tr>";
 	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
@@ -152,15 +159,18 @@ public class GlobalConstants {
 	public static final String isApproveTextDisplayed = "Verify if approve text displayed";
 	public static final String isRejectedTextDisplayed = "Verify if rejected text displayed";
 	public static final String isDeactivatedTextDisplayed = "Verify if deactivated text displayed";
+	public static final String isDeviceDeactivated = "Verify if device is deactivated";
 	public static final String isDublicateFTMErrorMessageDisplayed = "Verify if dublicate ftm error message displayed";
 	public static final String isErrorCrossButtonDisplayed = "Verify if cross of error message displayed";
 	public static final String isElementIsDisabled = "Verify if element is disabled displayed";
+	public static final String isDeviceDetailsTitleDisplayed = "Verify if device details page title is displayed";
 
 	public static final String isPolicyNameBoxTextDisplayed = "Select policy name";
 	public static final String isListOfSbiTitleDisplayed = "Verify if List SBI title is displayed";
 	public static final String isUserProfileIconDisplayed = "Verify if user profile icon is displayed";
 	public static final String isCreatedSbiDisplayed = "Verify if created SBI is displayed";
 	public static final String isStatusDisplayed = "Verify if correct status is displayed";
+	public static final String isDeviceDisplayed = "Verify if device is displayed";
 	public static final String isMandatoryMessageDisplayed = "Verify if mandatory message is displayed";
 	public static final String isCopyrightsMessageDisplayed = "Verify if copyrights message is displayed";
 	public static final String isLabelsDisplayed = "Verify if labels are displayed";
@@ -170,9 +180,15 @@ public class GlobalConstants {
 	public static final String isAutoPopulatedTextDisplaed = "Verify if auto-populated for partner type text displayed";
 	public static final String isManageFtmChipCertDisplaed = "Verify if manage ftm chip cert text displayed";
 	public static final String isFtmTablHeadersDisplaed = "Verify if ftm table header displayed";
+	public static final String isListOfDevicesHeadingDisplayed = "Verify if list of devices heading displayed";
+	public static final String isViewDevicesEnabled = "Verify if view devices button is enabled";
+	public static final String isDeactivateDeviceEnabled = "Verify if deactivate device button is enabled";
+	public static final String isDeactivateDeviceDisabled = "Verify if deactivate device button is disabled";
+	public static final String isFilterDevicesHeaderDisplayed = "Verify if filter device is displayed";
 	public static final String INITIAL_PARTNER_ID = "Select Partner ID";
 	public static final String INITIAL_PARTNER_TYPE = "Auto-populated based on Partner ID selected";
 	public static final String DEVICE_PROVIDER = "Device Provider";
+	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
@@ -182,11 +198,19 @@ public class GlobalConstants {
 	public static final String LIST_OF_DEVICES = "/ List of Devices";
 	public static final String ADD_DEVICE_MESSAGE = "On clicking of ‘Submit’ button, each device creation request will be sent to admin for approval. You can add more devices associated to this SBI by clicking on ‘Add Device’ button. Once done, you can go back to ‘List of SBIs & Devices’ screen.";
 	public static final String MAXIMUM_DEVICE_ALERT_MESSAGE = "Maximum of 25 devices can be added at a time. Click Confirm to refresh this page and add more devices. Please note that all the previously submitted devices will not be visible upon refreshing but can be viewed in List of Devices Page.";
+	public static final String DUPLICATE_DEVICE_ERROR_MESSAGE = "Device Details already exists for the same make and/or model";
+	public static final String DEVICE_DETAIL_PAGE_BREADCUMB = "Home/ List of SBI/ List of Devices";
+	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBI";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
-	public static final String LIST_OF_DEVICES_TITLE = "List of Devices (26)";
+	public static final String LIST_OF_DEVICES_TITLE = "List of Devices (37)";
+	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
+	public static final String LIST_OF_DEVICES_TITLE_COUNT_27 = "List of Devices (27)";
+	public static final String LIST_OF_DEVICES_TITLE_PENDING_FOR_APPROVAL = "List of Devices (34)";
 	public static final String INITIAL_MAKE = "Enter Make";
 	public static final String INITIAL_MODEL = "Enter Model";
+	public static final String DEACTIVATED_BACKGROUND = "bg-[#EAECF0] text-[#525252]";
+	
 
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
@@ -225,6 +249,7 @@ public class GlobalConstants {
 	public static final String isPolicyDetailsCommentsDisplayed = "Verify if policy details comments displayed";
 	public static final String isDuplicateApiKeyNameErrorMessageDisplayed = "Verify if duplicate api key name error message displayed";
 	public static final String isDeviceProviderSuccessMessageDisplayed = "Verify if device provider success message displayed";
+	public static final String isDeviceStatusDisplayed = "Verify if correct device status is displayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -238,12 +263,18 @@ public class GlobalConstants {
 	public static final String EXCEPTION_STRING_2 = "Exception ";
 	public static final String AUTOMATION = "Automation";
 	public static final String AUTOMATION_2 = "Automation2";
+	public static final String AUTOMATION_TEMP = "AutomationTemp";
 	public static final String AUTOMATION_25 = "Automation25";
 	public static final String AUTOMATION_UPPERCASE = "AUTOMATION";
 	public static final String AUTOMATION_LOWERCASE = "automation";
 	public static final String CHARACTERS_36 = "Automationnnnnnnnnnnnnnnnnnnnnnnnnnn";
 	public static final String CHARACTERS_1 = "A";
 	public static final String ALPHANUMERIC = "Automation123";
+	public static final String AUTOMATION_DEACTIVATING = "AutomationDeactivating";
+	public static final String AUTOMATION_DEACTIVATING_1 = "AutomationDeactivating1";
+	public static final String AUTOMATION_DEACTIVATING_2 = "AutomationDeactivating2";
+	public static final String AUTOMATION_DEACTIVATING_3 = "AutomationDeactivating3";
+	public static final String AUTOMATION_DEACTIVATING_4 = "AutomationDeactivating4";
 	public static final String ALPHANUMERIC_AND_SYMBOLS = "$Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
 	public static final String NUMERIC = "123456789";
@@ -258,4 +289,18 @@ public class GlobalConstants {
 	public static final String TOUCHLESS = "Touchless";
 	public static final String IRIS = "Iris";
 	public static final String DOUBLE = "Double";
+	public static final String APPROVED = "Approved";
+	public static final String DEACTIVATED = "Deactivated";
+	public static final String REJECTED = "Rejected";
+	public static final String PENDING_FOR_APPROVAL = "Pending For Approval";
+	
+	public static final String PARTNER_ID = "Partner ID";
+	public static final String PARTNER_TYPE = "Partner Type";
+	public static final String DEVICE_ID = "Device ID";
+	public static final String DEVICE_TYPE = "Device Type";
+	public static final String DEVICE_SUB_TYPE = "Device Sub Type";
+	public static final String MAKE = "Make";
+	public static final String MODEL = "Model";
+	public static final String STATUS = "Status";
+	public static final String SBI_VERSION = "SBI Version";
 }

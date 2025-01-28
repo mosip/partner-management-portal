@@ -227,7 +227,7 @@ public class BaseTestCaseFunc {
 		request.put("contactNumber", "8553967572");
 		request.put("emailId", "automationpmpui-revampui001317281@automationlabs.com");
 		request.put("organizationName","AABBCC");
-		request.put("partnerId","pmpui-revamp");
+		request.put("partnerId","pmpui-revamp1");
 		request.put("partnerType","Auth_Partner");
 		request.put("policyGroup","automationui policy group");
 		

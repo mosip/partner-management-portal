@@ -44,7 +44,7 @@ public class BaseClass {
 	protected String userid = BaseTestCaseFunc.currentModule + "-" +Alluserid[1];
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
-	private static final Logger logger = Logger.getLogger(BaseClass.class);
+	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
 
 
