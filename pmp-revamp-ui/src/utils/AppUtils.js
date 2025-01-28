@@ -531,7 +531,9 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         }
     } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
     }
 };
 
@@ -554,8 +556,10 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         }
         return null;
     } catch (err) {
-        setErrorMsg(err);
         console.error('Error fetching data:', err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
         return null;
     }
 };
@@ -777,7 +781,9 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
         }
     } catch (err) {
         console.error('Error fetching certificate Details:', err);
-        setErrorMsg(err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
     }
 };
 

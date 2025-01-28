@@ -112,10 +112,12 @@ function AdminApiKeysList() {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
