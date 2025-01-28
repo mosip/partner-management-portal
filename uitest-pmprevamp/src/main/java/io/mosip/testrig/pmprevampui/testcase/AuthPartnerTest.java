@@ -13,7 +13,6 @@ import io.mosip.testrig.pmprevampui.pages.BasePage;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
 import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
-import io.mosip.testrig.pmprevampui.pages.OldPmpPage;
 import io.mosip.testrig.pmprevampui.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmprevampui.pages.PartnerPolicyMappingPage;
 import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
@@ -117,7 +116,7 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -132,7 +131,7 @@ public class AuthPartnerTest extends BaseClass {
 		
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
     	partnerCertificatePage.uploadCertificateInvalidCert();
@@ -787,7 +786,22 @@ public class AuthPartnerTest extends BaseClass {
 	  oidcClientPage.clickOnClearFormButton(); 
 	  assertTrue(oidcClientPage.isLogoUriempty(), GlobalConstants.isLogoUriempty);
 	  }
-	  
 
-	
-}
+	@Test (priority = 10)
+	public void usingInvalidDataToCreateOIDC() {
+		DashboardPage dashboardpage = new DashboardPage(driver);
+		RegisterPage registerPage = new RegisterPage(driver);
+		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed);
+		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServicesTitle();
+		assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed);
+		oidcClientPage.clickOnCreateOidcClientButton();
+		oidcClientPage.enterPublicKeyTextBox("!!!");
+		assertTrue(oidcClientPage.isPublicKeyFormatErrorDisplayed(), GlobalConstants.isPublicKeyFormatErrorDisplayed);
+		oidcClientPage.enterLogoUrTextBox("!!!");
+		assertTrue(oidcClientPage.isInvalidLogoUriErrorDisplayed(), GlobalConstants.isInvalidLogoUriErrorDisplayed);
+		oidcClientPage.enterRedirectUriTextBox("!!!");
+		assertTrue(oidcClientPage.isInvalidRedirectUriErrorDisplayed(), GlobalConstants.isInvalidRedirectUriErrorDisplayed);
+	}
+
+
+	}

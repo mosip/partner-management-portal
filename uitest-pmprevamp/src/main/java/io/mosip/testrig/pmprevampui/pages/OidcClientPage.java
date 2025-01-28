@@ -1,6 +1,5 @@
 package io.mosip.testrig.pmprevampui.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +8,15 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "create_oid_client")
 	private WebElement createOidcClient;
+
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold'])[1]")
+	private WebElement publicKeyFormatErrorDisplayed;
+
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
+	private WebElement invalidLogoUriErrorDisplayed;
+
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
+	private WebElement invalidRedirectUriErrorDisplayed;
 
 	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
@@ -268,6 +276,18 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isCreateOidcClientDisplayed() {
 		return isElementDisplayed(createOidcClient);
+	}
+
+	public boolean isPublicKeyFormatErrorDisplayed() {
+		return isElementDisplayed(publicKeyFormatErrorDisplayed);
+	}
+
+	public boolean isInvalidLogoUriErrorDisplayed() {
+		return isElementDisplayed(invalidLogoUriErrorDisplayed);
+	}
+
+	public boolean isInvalidRedirectUriErrorDisplayed() {
+		return isElementDisplayed(invalidRedirectUriErrorDisplayed);
 	}
 
 	public void clickOnCreateOidcClientButton() {
