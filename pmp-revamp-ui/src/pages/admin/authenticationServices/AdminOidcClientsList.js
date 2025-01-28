@@ -52,6 +52,7 @@ function AdminOidcClientsList() {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
+    const [selectedOidcClient, setSelectedOidcClient] = useState({});
     const [showClientIdPopup, setShowClientIdPopup] = useState(false);
     const [currentClient, setCurrentClient] = useState(null);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -100,7 +101,7 @@ function AdminOidcClientsList() {
         if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/oauth/partners/clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -120,10 +121,12 @@ function AdminOidcClientsList() {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -195,9 +198,10 @@ function AdminOidcClientsList() {
                     clientAuthMethods: oidcClientDetails.clientAuthMethods,
                     clientNameLangMap: getClientNameLangMap(client.clientNameEng, client.clientNameJson)
                 });
+                setActionId(-1);
+                setSelectedOidcClient(client);
                 setDeactivateRequest(request);
                 setShowDeactivatePopup(true);
-                setActionId(-1);
                 document.body.style.overflow = "hidden";
             } else {
                 setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
@@ -207,9 +211,8 @@ function AdminOidcClientsList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
-            setActionId(-1);
+            setSelectedOidcClient({});
             setShowDeactivatePopup(false);
-            // Update the specific row in the state with the new status
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
@@ -219,6 +222,7 @@ function AdminOidcClientsList() {
     };
 
     const closeDeactivatePopup = () => {
+        setSelectedOidcClient({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
@@ -282,7 +286,7 @@ function AdminOidcClientsList() {
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.5rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
@@ -355,7 +359,15 @@ function AdminOidcClientsList() {
                                                                                 </div>
                                                                             )}
                                                                             {showDeactivatePopup && (
-                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, client)} popupData={client} request={deactivateRequest} headerMsg='deactivateOidc.header' descriptionMsg='deactivateOidc.description' headerKeyName={client.clientNameEng} />
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
+                                                                                    popupData={selectedOidcClient}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg='deactivateOidc.header'
+                                                                                    descriptionMsg='deactivateOidc.description'
+                                                                                    headerKeyName={selectedOidcClient.clientNameEng}
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>

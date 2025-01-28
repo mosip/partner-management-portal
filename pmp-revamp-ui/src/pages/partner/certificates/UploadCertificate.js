@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
-import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -10,7 +9,6 @@ import SuccessMessage from '../../common/SuccessMessage';
 import fileUploadImg from './../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
-import * as asn1js from "asn1js";
 import { Certificate } from "pkijs";
 import { fromBER } from "asn1js";
 
@@ -69,8 +67,12 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorCode = response.data.errors[0].errorCode;
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
-                        setErrorCode(errorCode)
-                        setErrorMsg(errorMessage);
+                        if (errorCode === 'PMS_KKS_001') {
+                            setErrorMsg(t('certificatesList.errorAccessingApi'));
+                        } else {
+                            setErrorCode(errorCode);
+                            setErrorMsg(errorMessage);
+                        }
                     } else if (resData === null) {
                         setUploadFailure(true);
                         setErrorMsg(t('uploadCertificate.unableToUploadCertificate'));
@@ -85,8 +87,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 }
                 setDataLoaded(true);
             } catch (err) {
-                setUploadFailure(true);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setUploadFailure(true);
+                    setErrorMsg(err.toString());
+                }
                 console.log("Unable to upload partner certificate: ", err);
             }
         }
@@ -176,7 +180,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
             const dateString = popupData.certificateUploadDateTime.toString();
-            const formatted = formatDate(dateString, 'dateTime', false);
+            const formatted = formatDate(dateString, 'dateTime', popupData.isUploadFtmCertificate ? true : false);
             setFormattedDate(formatted);
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);

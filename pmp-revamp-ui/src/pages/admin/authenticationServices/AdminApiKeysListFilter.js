@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData } from "../../../utils/AppUtils.js";
-import { isLangRTL } from '../../../utils/AppUtils';
+import { createDropdownData, isLangRTL } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 
 function AdminApiKeysListFilter({ onApplyFilter }) {
@@ -54,7 +53,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
     };
 
     return (
-        <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+        <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
                 fieldName="partnerId"
                 onTextChange={onFilterChangeEvent}

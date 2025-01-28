@@ -15,7 +15,7 @@ function CreatePolicyGroup() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
-    const [dataLoaded, setDataLoaded] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState('');
@@ -25,13 +25,10 @@ function CreatePolicyGroup() {
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
 
-    let isCancelledClicked = false;
-
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || createPolicySuccess) {
+            if (isSubmitClicked || createPolicySuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -83,6 +80,7 @@ function CreatePolicyGroup() {
     };
 
     const clickOnSubmit = async () => {
+        setDataLoaded(false);
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
@@ -114,11 +112,13 @@ function CreatePolicyGroup() {
             } else {
                 setErrorMsg(t('createPolicyGroup.errorInCreatePolicyGroup'));
             }
-            setDataLoaded(false);
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
+        setDataLoaded(true);
         setIsSubmitClicked(false);
     }
 
@@ -137,10 +137,10 @@ function CreatePolicyGroup() {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
-            {dataLoaded && (
+            {!dataLoaded && (
                 <LoadingIcon />
             )}
-            {!dataLoaded && (
+            {dataLoaded && (
                 <>
                     {errorMsg && (
                         <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />

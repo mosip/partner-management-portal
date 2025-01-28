@@ -178,7 +178,7 @@ public class DeviceProviderTest extends BaseClass {
 		dashboardpage.clickOnSideNavDeviceProvider();
 		deviceProviderPage.clickOnHome();
 
-		dashboardpage.clickOnDeviceProviderServicesTitle();
+		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
 		deviceProviderPage.clickOnAddSbiButton();
 
 		assertTrue(deviceProviderPage.isAddSbiDetailsTitleDisplayed(), GlobalConstants.isAddSbiDetailsTitleDisplayed);
@@ -671,8 +671,6 @@ public class DeviceProviderTest extends BaseClass {
 		assertEquals(listOfSbiPage.isAddDeviceButtonEnabled(GlobalConstants.SPECIAL_CHARACTERS), false);
 		assertEquals(listOfSbiPage.isAddDeviceButtonEnabled(GlobalConstants.AUTOMATION), true);
 		assertEquals(listOfSbiPage.getSbiListArrowDirection(), GlobalConstants.SBI_DETAIL_ARROW_VALUE);
-
-		
 
 		listOfSbiPage.clickOnThreeDotsOfSbiList(GlobalConstants.ALPHANUMERIC);
 		assertTrue(listOfSbiPage.isDeactivateOptionEnabled(), GlobalConstants.isDeactivateSbiEnabled);

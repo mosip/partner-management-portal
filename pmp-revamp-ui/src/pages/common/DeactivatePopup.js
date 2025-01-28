@@ -84,8 +84,10 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            setDataLoaded(true);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     };
 
@@ -99,7 +101,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[10%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[5%] z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-sm h-fit`}>
                     {!dataLoaded && (
@@ -113,7 +115,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                             <div className={`p-[2rem] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ?
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
-                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}?
+                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + `'${headerKeyName}'`}?
                                     </p>
                                     : <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}

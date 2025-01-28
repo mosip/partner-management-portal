@@ -48,6 +48,7 @@ function AdminFtmList() {
     const [showFtmApproveRejectPopup, setShowFtmApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
     const [deactivateRequest, setDeactivateRequest] = useState({});
+    const [selectedFtm, setSelectedFtm] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -91,7 +92,7 @@ function AdminFtmList() {
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/ftpchipdetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -110,10 +111,12 @@ function AdminFtmList() {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -148,14 +151,16 @@ function AdminFtmList() {
 
     const approveRejectFtmDetails = (ftm) => {
         if (ftm.status === 'pending_approval') {
-            setActionId(-1);
             setShowFtmApproveRejectPopup(true);
+            setActionId(-1);
+            setSelectedFtm(ftm);
             document.body.style.overflow = "hidden";
         }
     };
 
     const onClickApproveReject = (responseData, status, selectedFtm) => {
         if (responseData) {
+            setSelectedFtm({});
             setShowFtmApproveRejectPopup(false);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
@@ -168,6 +173,7 @@ function AdminFtmList() {
     };
 
     const closeApproveRejectPopup = () => {
+        setSelectedFtm({});
         setShowFtmApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -177,8 +183,9 @@ function AdminFtmList() {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.ftm.patch", true);
-            setDeactivateRequest(request);
             setActionId(-1);
+            setDeactivateRequest(request);
+            setSelectedFtm(ftm);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -186,6 +193,7 @@ function AdminFtmList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
+            setSelectedFtm({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setFtmList((prevList) =>
@@ -197,6 +205,7 @@ function AdminFtmList() {
     };
 
     const closeDeactivatePopup = () => {
+        setSelectedFtm({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
@@ -246,7 +255,7 @@ function AdminFtmList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='ftmList.listOfFtm' backLink='/partnermanagement' />
+                            <Title title='dashboard.ftmChip' backLink='/partnermanagement' />
                         </div>
                         {!applyFilter && ftmList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -271,7 +280,7 @@ function AdminFtmList() {
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.5rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
@@ -336,16 +345,23 @@ function AdminFtmList() {
                                                                             )}
                                                                             {showFtmApproveRejectPopup &&
                                                                                 <ApproveRejectPopup
-                                                                                    popupData={{ ...ftm, isFtmRequest: true }}
+                                                                                    popupData={{ ...selectedFtm, isFtmRequest: true }}
                                                                                     closePopUp={closeApproveRejectPopup}
-                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, ftm)}
-                                                                                    title={`${ftm.make} | ${ftm.model}`}
-                                                                                    header={t('ftmRequestApproveRejectPopup.header', { make: ftm.make, model: ftm.model })}
+                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedFtm)}
+                                                                                    title={`${selectedFtm.make} | ${selectedFtm.model}`}
+                                                                                    header={t('ftmRequestApproveRejectPopup.header', { make: selectedFtm.make, model: selectedFtm.model })}
                                                                                     description={t('ftmRequestApproveRejectPopup.description')}
                                                                                 />
                                                                             }
                                                                             {showDeactivatePopup && (
-                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, ftm)} popupData={{ ...ftm, isDeactivateFtm: true }} request={deactivateRequest} headerMsg='deactivateFtmPopup.headerMsg' descriptionMsg='deactivateFtmPopup.description' />
+                                                                                <DeactivatePopup
+                                                                                    closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}
+                                                                                    popupData={{ ...selectedFtm, isDeactivateFtm: true }}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg='deactivateFtmPopup.headerMsg'
+                                                                                    descriptionMsg='deactivateFtmPopup.description'
+                                                                                />
                                                                             )}
                                                                         </div>
                                                                     </td>
@@ -355,15 +371,15 @@ function AdminFtmList() {
                                                         }
                                                     </tbody>
                                                 </table>
-                                                <Pagination
-                                                    dataListLength={totalRecords}
-                                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                    setFirstIndex={setFirstIndex}
-                                                    isServerSideFilter={true}
-                                                    getPaginationValues={getPaginationValues}
-                                                />
                                             </div>
+                                            <Pagination
+                                                dataListLength={totalRecords}
+                                                selectedRecordsPerPage={selectedRecordsPerPage}
+                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                                setFirstIndex={setFirstIndex}
+                                                isServerSideFilter={true}
+                                                getPaginationValues={getPaginationValues}
+                                            />
                                         </>
                                     )
                                 }

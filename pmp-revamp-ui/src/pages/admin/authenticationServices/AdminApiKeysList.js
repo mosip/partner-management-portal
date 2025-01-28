@@ -48,6 +48,7 @@ function AdminApiKeysList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
@@ -92,7 +93,7 @@ function AdminApiKeysList() {
         if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/partners/apikey/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/partner-api-keys', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -111,10 +112,12 @@ function AdminApiKeysList() {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -167,23 +170,24 @@ function AdminApiKeysList() {
                 label: selectedApiKeyData.apiKeyLabel,
                 status: "De-Active"
             });
-            setDeactivateRequest(request);
             setActionId(-1);
+            setSelectedApiKey(selectedApiKeyData);
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
     };
 
     const closeDeactivatePopup = () => {
+        setSelectedApiKey({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setActionId(-1);
+            setSelectedApiKey({});
             setShowDeactivatePopup(false);
-            // Update the specific row in the state with the new status
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
@@ -252,7 +256,7 @@ function AdminApiKeysList() {
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.5rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
@@ -314,12 +318,12 @@ function AdminApiKeysList() {
                                                                             {showDeactivatePopup && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={closeDeactivatePopup}
-                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, apiKey)}
-                                                                                    popupData={apiKey}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
+                                                                                    popupData={selectedApiKey}
                                                                                     request={deactivateRequest}
                                                                                     headerMsg="adminDeactivateApiKey.title"
                                                                                     descriptionMsg="adminDeactivateApiKey.description"
-                                                                                    headerKeyName={apiKey.apiKeyLabel}
+                                                                                    headerKeyName={selectedApiKey.apiKeyLabel}
                                                                                 />
                                                                             )}
                                                                         </div>

@@ -41,6 +41,7 @@ function PolicyGroupList() {
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState({});
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -110,10 +111,12 @@ function PolicyGroupList() {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-            setFetchData(false);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -220,6 +223,7 @@ function PolicyGroupList() {
 
     const closePopup = () => {
         setShowDeactivatePolicyGroupPopup(false);
+        setSelectedPolicyGroup({});
         document.body.style.overflow = 'auto';
     };
 
@@ -229,10 +233,11 @@ function PolicyGroupList() {
 
     const showDeactivatePolicyGroup = (policyGroup) => {
         if (policyGroup.isActive) {
-            setActionId(-1);
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.policy.group.patch", true);
+            setSelectedPolicyGroup(policyGroup);
+            setActionId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
             document.body.style.overflow = "hidden";
@@ -242,6 +247,7 @@ function PolicyGroupList() {
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setShowDeactivatePolicyGroupPopup(false);
+            setSelectedPolicyGroup({});
             // Update the specific row in the state with the new status
             setPolicyGroupList((prevList) =>
                 prevList.map(policyGroup =>
@@ -306,7 +312,7 @@ function PolicyGroupList() {
                                     />
                                     : (
                                         <>
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.3rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
@@ -367,10 +373,10 @@ function PolicyGroupList() {
                                                                                 <DeactivatePolicyPopup
                                                                                     header={'deactivatePolicyGroup.headerMsg'}
                                                                                     description={'deactivatePolicyGroup.description'}
-                                                                                    popupData={{ ...policyGroup, isDeactivatePolicyGroup: true }}
-                                                                                    headerKeyName={policyGroup.name}
+                                                                                    popupData={{ ...selectedPolicyGroup, isDeactivatePolicyGroup: true }}
+                                                                                    headerKeyName={selectedPolicyGroup.name}
                                                                                     closePopUp={closePopup}
-                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policyGroup)}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPolicyGroup)}
                                                                                     request={deactivateRequest}
                                                                                 />
                                                                             )}

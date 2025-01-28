@@ -60,7 +60,9 @@ function ViewPartnerDetails() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -100,7 +102,7 @@ function ViewPartnerDetails() {
         setSuccessMsg("");
         try {
             if (partnerId) {
-                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
                 if (responseData) {
                     const resData = responseData.response;
                     return resData;
@@ -114,7 +116,9 @@ function ViewPartnerDetails() {
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
         }
     }
 

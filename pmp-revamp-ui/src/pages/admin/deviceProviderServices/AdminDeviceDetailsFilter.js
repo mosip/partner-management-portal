@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData } from "../../../utils/AppUtils.js";
-import { isLangRTL } from '../../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService.js';
 
-function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, preFilledFilters}) {
+function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -30,20 +29,8 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
         sbiId: "",
         sbiVersion: ""
     });
-    const [disableSbiId, setDisableSbiId] = useState(false);
-    const [disableSbiVersion, setDisableSbiVersion] = useState(false);
 
     useEffect(() => {
-        if (preFilledFilters) {
-            if(preFilledFilters.sbiId) {
-                setDisableSbiId(true);
-            }
-            if(preFilledFilters.sbiVersion) {
-                setDisableSbiVersion(true);
-            }
-            const newFilters = { ...filters, ...preFilledFilters };
-            setFilters(newFilters);
-        }
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();
             setDeviceTypeDropdownData(createDropdownData("fieldCode", "", true, deviceTypeData, t, t("addDevices.selectDeviceType")));
@@ -63,18 +50,23 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
         // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
             //clear deviceSubType dropdown data
-            setDeviceSubTypeDropdownData([])
+            setDeviceSubTypeDropdownData([]);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                deviceSubType: null,
+            }));
+            console.log(filters);
             // return if no deviceType is selected
             if(selectedFilter === ""){
                 setFilters((prevFilters) => ({
                     ...prevFilters,
-                    ['deviceSubType']: "",
+                    deviceSubType: "",
                 }));
                 return;
             }
             try {
                 // Fetch deviceSubType data 
-                const subtypeData = await fetchDeviceSubTypeDropdownData(selectedFilter, setErrorCode, setErrorMsg);
+                const subtypeData = await fetchDeviceSubTypeDropdownData(selectedFilter, setErrorCode, setErrorMsg, t);
     
                 setDeviceSubTypeDropdownData(
                     createDropdownData('fieldCode', "", true, subtypeData, t,  t('addDevices.selectDeviceSubType'))
@@ -100,7 +92,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
     };
 
     return (
-        <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+        <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
                 fieldName="partnerId"
                 onTextChange={onFilterChangeEvent}
@@ -117,26 +109,26 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, pr
                 styleSet={styleSet}
                 id="org_name_filter"
             />
-            <TextInputComponent
-                fieldName="sbiId"
-                textBoxValue={preFilledFilters.sbiId}
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="sbiList.sbiId"
-                placeHolderKey="sbiList.searchSbiId"
-                styleSet={styleSet}
-                disableField={disableSbiId}
-                id="sbi_id_filter"
-            />
-            <TextInputComponent
-                fieldName="sbiVersion"
-                textBoxValue={preFilledFilters.sbiVersion}
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="sbiList.sbiVersion"
-                placeHolderKey="sbiList.searchVersion"
-                styleSet={styleSet}
-                disableField={disableSbiVersion}
-                id="sbi_version_filter"
-            />
+            { !removeSbiFields && (
+                <>
+                    <TextInputComponent
+                        fieldName="sbiId"
+                        onTextChange={onFilterChangeEvent}
+                        fieldNameKey="sbiList.sbiId"
+                        placeHolderKey="sbiList.searchSbiId"
+                        styleSet={styleSet}
+                        id="sbi_id_filter"
+                    />
+                    <TextInputComponent
+                        fieldName="sbiVersion"
+                        onTextChange={onFilterChangeEvent}
+                        fieldNameKey="sbiList.sbiVersion"
+                        placeHolderKey="sbiList.searchVersion"
+                        styleSet={styleSet}
+                        id="sbi_version_filter"
+                    />
+                </>
+            )}
             <TextInputComponent
                 fieldName="deviceId"
                 onTextChange={onFilterChangeEvent}

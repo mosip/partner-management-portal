@@ -57,6 +57,7 @@ function PolicyRequestsList() {
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
+  const [selectedPolicyRequest, setSelectedPolicyRequest] = useState({});
   const [filters, setFilters] = useState({
     partnerId: null,
     partnerType: null,
@@ -103,7 +104,7 @@ function PolicyRequestsList() {
     if (filters.policyName) queryParams.append('policyName', filters.policyName);
     if (filters.status) queryParams.append('status', filters.status);
 
-    const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
@@ -122,9 +123,12 @@ function PolicyRequestsList() {
       triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       setTriggerServerMethod(false);
     } catch (err) {
-      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       console.error('Error fetching data:', err);
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+          setTriggerServerMethod(false);
+          triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+          setErrorMsg(err.toString());
+      }
     }
   }
 
@@ -182,6 +186,7 @@ function PolicyRequestsList() {
 
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
+      setSelectedPolicyRequest({});
       setShowPopup(false);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
@@ -195,6 +200,7 @@ function PolicyRequestsList() {
 
   const closePolicyRequestPopup = () => {
     setShowPopup(false);
+    setSelectedPolicyRequest({});
     document.body.style.overflow = 'auto';
   };
 
@@ -206,6 +212,7 @@ function PolicyRequestsList() {
     if (policyRequest.status === 'InProgress') {
       setShowPopup(true);
       setViewPartnersId(-1);
+      setSelectedPolicyRequest(policyRequest);
       document.body.style.overflow = "hidden";
     }
   };
@@ -272,7 +279,7 @@ function PolicyRequestsList() {
                       <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                       : (
                         <>
-                          <div className="mx-[2%] overflow-x-scroll">
+                          <div className="mx-[1.4rem] overflow-x-scroll">
                             <table className="table-fixed">
                               <thead>
                                 <tr>
@@ -307,7 +314,7 @@ function PolicyRequestsList() {
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date', false)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date', true)}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1 text-xs font-semibold rounded-md`}>
                                           {getStatusCode(policyRequest.status, t)}
@@ -333,11 +340,11 @@ function PolicyRequestsList() {
                                           )}
                                           {showPopup &&
                                             <ApproveRejectPopup
-                                              popupData={{ ...policyRequest, isPartnerPolicyRequest: true }}
+                                              popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
                                               closePopUp={closePolicyRequestPopup}
-                                              approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, policyRequest)}
-                                              title={policyRequest.policyName}
-                                              subtitle={`# ${policyRequest.policyId}`}
+                                              approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedPolicyRequest)}
+                                              title={selectedPolicyRequest.policyName}
+                                              subtitle={`# ${selectedPolicyRequest.policyId}`}
                                               header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                               description={t('partnerPolicyRequestApproveRejectPopup.description')}
                                             />

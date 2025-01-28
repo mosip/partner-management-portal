@@ -32,13 +32,11 @@ function AddFtm() {
   const [confirmationData, setConfirmationData] = useState({});
   const [ftpChipDetailId, setFtpChipDetailId] = useState("");
   const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
-  let isCancelledClicked = false;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
-      if (isSubmitClicked || isCancelledClicked || addFtmSuccess) {
+      if (isSubmitClicked || addFtmSuccess) {
         setIsSubmitClicked(false);
-        isCancelledClicked = false;
         return false;
       }
       return (
@@ -133,7 +131,9 @@ function AddFtm() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err);
+        if (err.response.status !== 401) {
+          setErrorMsg(err.toString());
+        }
       }
     };
     fetchData();
@@ -197,7 +197,9 @@ function AddFtm() {
       }
       setDataLoaded(true);
     } catch (err) {
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+        setErrorMsg(err.toString());
+      }
       console.log("Error fetching data: ", err);
     }
     setIsSubmitClicked(false);
@@ -215,7 +217,6 @@ function AddFtm() {
   };
 
   const clickOnCancel = () => {
-    isCancelledClicked = true;
     navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   }
 

@@ -49,12 +49,10 @@ function CreateOidcClient() {
   const [createOidcClientSuccess, setCreateOidcClientSuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  let isCancelledClicked = false;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
-      if (isSubmitClicked || isCancelledClicked || createOidcClientSuccess) {
-        isCancelledClicked = false;
+      if (isSubmitClicked || createOidcClientSuccess) {
         setIsSubmitClicked(false);
         return false;
       }
@@ -247,7 +245,6 @@ function CreateOidcClient() {
   };
 
   const clickOnCancel = () => {
-    isCancelledClicked = true;
     moveToOidcClientsList(navigate)
   }
 
@@ -271,14 +268,17 @@ function CreateOidcClient() {
     }
     try {
       const parsedValue = JSON.parse(value);
-      // validate the JWK
-      await importJWK(parsedValue);
+      // validate the JSON
+      if (Object.keys(parsedValue).length === 0) {
+        throw new Error(); // Triggers the catch block
+      }
       setPublicKeyInJson(parsedValue);
       setJsonError("");
-    } catch (err) {
-      setJsonError(t('createOidcClient.invalidJwkFormat'));
+    } catch {
+      setJsonError(t("createOidcClient.invalidJwkFormat"));
+      setPublicKeyInJson(null);
     }
-  }
+  };  
 
   const handleLogoUrlChange = (value) => {
     setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
@@ -337,7 +337,9 @@ function CreateOidcClient() {
       }
       setDataLoaded(true);
     } catch (err) {
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+        setErrorMsg(err);
+      }
       console.log("Error fetching data: ", err);
     }
     setIsSubmitClicked(false);
@@ -371,7 +373,7 @@ function CreateOidcClient() {
   };
 
   const isFormValid = () => {
-    return partnerId && policyName && oidcClientName.trim() && publicKey && logoUrl && redirectUrlsNotEmpty() && grantTypes
+    return partnerId && policyName && oidcClientName.trim() && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes
       && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
   };
 

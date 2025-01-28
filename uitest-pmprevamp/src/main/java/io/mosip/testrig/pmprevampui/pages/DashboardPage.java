@@ -100,6 +100,9 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='FTM Chip']")
 	private WebElement FTMChipTab;
+	
+	@FindBy(id = "admin_partner_certificate_list_icon")
+	private WebElement certificateTrustStore;
 
 	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
 	private WebElement dashboardFtmChipproviderCardHeader;
@@ -279,5 +282,9 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnSbiDevices() {
 		clickOnElement(sbiDevicesButton);
+	}
+	
+	public void clickOnCertificateTrustStore() {
+		clickOnElement(certificateTrustStore);
 	}
 }

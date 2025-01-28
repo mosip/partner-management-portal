@@ -3,7 +3,10 @@ import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
 export const formatDate = (dateString, format, isTimeInUTC) => {
     if (!dateString) return '-';
-    let date = new Date(dateString);
+
+    const withoutOffset = dateString.replace(/([+-]\d{2}:\d{2})$/, "");
+    let date = new Date(withoutOffset);
+
     if (isTimeInUTC) {
         date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     }
@@ -345,16 +348,27 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
             }
         }
     });
-    return dataArr;
+    // If placeholder is required, remove it from the array, otherwise use the entire array
+    const dataToSort = isBlankEntryRequired ? dataArr.slice(1) : dataArr;
+
+    // Sort the data
+    const sortedData = dataToSort.sort((a, b) => a.fieldCode.localeCompare(b.fieldCode, undefined, { sensitivity: 'base' }));
+
+    // Prepend the placeholder if required
+    if (isBlankEntryRequired) {
+        sortedData.unshift(dataArr[0]);
+    }
+
+    return sortedData;
 }
 
 export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/partners/policy-requests`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/partner-policy-requests`, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data;
             if (responseData.response) {
-                const resData = responseData.response;
+                const resData = responseData.response.data;
                 return resData;
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -431,15 +445,20 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
     }
 };
 
-export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg) => {
+export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
                 return responseData;
-            } else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            } else if (response.data.errors && response.data.errors.length > 0) {
+                const errorCode = response.data.errors[0].errorCode;
+                if (errorCode === 'PMS_KKS_001') {
+                    setErrorMsg(t('certificatesList.errorAccessingApi'));
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
             }
         } else {
             return null;
@@ -512,7 +531,9 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         }
     } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
     }
 };
 
@@ -535,8 +556,10 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         }
         return null;
     } catch (err) {
-        setErrorMsg(err);
         console.error('Error fetching data:', err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
         return null;
     }
 };
@@ -688,7 +711,6 @@ export const fetchDeviceTypeDropdownData = async (setErrorCode, setErrorMsg, t) 
             return [];
         }
     } catch (err) {
-        setErrorMsg(err.message);
         console.log("Error fetching data: ", err);
         return [];
     }
@@ -714,13 +736,12 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
                 return responseData.response.filters;
             } else {
                 if (responseData && responseData.errors && responseData.errors.length > 0) {
-                    setErrorCode(responseData.errors[0].errorCode);
-                    setErrorMsg(responseData.errors[0].message);
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
                 return [];
             }
         } else {
-            setErrorCode(t('addDevices.errorInDeviceSubType'));
+            setErrorMsg(t('addDevices.errorInDeviceSubType'));
             return [];
         }
     } catch (err) {
@@ -751,7 +772,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 document.body.removeChild(link);
             }
             else {
-                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
             }
         } else {
             setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
@@ -760,7 +781,9 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
         }
     } catch (err) {
         console.error('Error fetching certificate Details:', err);
-        setErrorMsg(err);
+        if (err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
     }
 };
 
@@ -779,3 +802,27 @@ export const escapeKeyHandler = (closePopup) => {
     // Add event listener when any handler condition is true
     window.addEventListener('keydown', handleEscape);
 };
+
+export const formatPublicKey = (publicKeyString) => {
+    try {
+        const data = JSON.parse(publicKeyString);
+        const jsonStr = JSON.stringify(data, null, 2);
+        return jsonStr;
+    } catch {
+        return publicKeyString;
+    }
+}
+
+export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, t) => {
+    if (responseData && responseData.errors && responseData.errors.length > 0) {
+        const errorCode = responseData.errors[0].errorCode;
+        const errorMessage = responseData.errors[0].message;
+        if (errorCode === "PMS_KKS_001") {
+          setErrorMsg(t('certificatesList.errorAccessingApi'));
+        } else {
+          setErrorCode(errorCode);
+          setErrorMsg(errorMessage);
+        }
+        console.error('Error:', errorMessage);
+    }
+  }

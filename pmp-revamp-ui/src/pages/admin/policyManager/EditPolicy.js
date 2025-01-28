@@ -41,13 +41,11 @@ function EditPolicy() {
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
-    let isCancelledClicked = false;
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || editPolicySuccess) {
+            if (isSubmitClicked || editPolicySuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             return (
@@ -102,7 +100,9 @@ function EditPolicy() {
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
             setDataLoaded(true);
         };
@@ -162,9 +162,11 @@ function EditPolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
-            setErrorMsg(t('createPolicy.jsonParseError'));
-            setIsSubmitClicked(false);
-            setDataLoaded(true);
+            if (error.response.status !== 401) {
+                setErrorMsg(t('createPolicy.jsonParseError'));
+                setIsSubmitClicked(false);
+                setDataLoaded(true);
+            }
             return;
         }
         let request = createRequest({
@@ -199,14 +201,16 @@ function EditPolicy() {
                 setErrorMsg(t('editPolicy.errorInEditPolicy'));
             }
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setDataLoaded(true);
         setIsSubmitClicked(false);
     };
 
-    const clearForm = () => {
+    const undoChanges = () => {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
@@ -216,7 +220,6 @@ function EditPolicy() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         navigate(backLink);
     }
 
@@ -374,7 +377,7 @@ function EditPolicy() {
                                 </div>
                                 <div className="border bg-medium-gray" />
                                 <div className="flex flex-row px-[3%] py-5 justify-between">
-                                    <button id="edit_policy_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
+                                    <button id="edit_policy_undo_changes_btn" onClick={() => undoChanges()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('commons.undoChanges')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="edit_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="edit_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>

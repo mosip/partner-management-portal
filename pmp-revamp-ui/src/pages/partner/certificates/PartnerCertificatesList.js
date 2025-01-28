@@ -2,11 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import UploadCertificate from "./UploadCertificate";
 import { HttpService } from "../../../services/HttpService";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { downloadFile, getCertificate, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
-import { formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleKeymanagerErrors } from "../../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../../svg/rectangle_box.svg';
@@ -89,18 +88,18 @@ function PartnerCertificatesList() {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+            const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
             if (responseData) {
                 const resData = responseData.response;
                 return resData;
-            }
-            else {
-                setErrorMsg(t('partnerCertificatesList.errorWhileDownloadingCertificate'));
+            } else {
                 return null;
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             return null;
         }
     }
@@ -112,7 +111,7 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
@@ -124,7 +123,9 @@ function PartnerCertificatesList() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();

@@ -28,13 +28,11 @@ function AddDevices() {
     const [previousPath, setPreviousPath] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
-    let isCancelledClicked = false;
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked) {
+            if (isSubmitClicked) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
             const checkValuesAreEntered = deviceEntries.some(entry => (
@@ -195,8 +193,10 @@ function AddDevices() {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
-            setDeviceEntries(newEntries);
+            if (err.response.status !== 401) {
+                newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
+                setDeviceEntries(newEntries);
+            }
             console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);
@@ -213,13 +213,13 @@ function AddDevices() {
                     errorMessage = serverErrors[errorCode];
                 } else {
                     if (serverErrors[errorCode]) {
-                        errorMessage = t('addDevices.unableToAddDeviceReason') + serverErrors[errorCode];
+                        errorMessage = serverErrors[errorCode];
                     } else {
-                        errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                        errorMessage = errorMessage;
                     }
                 }
             } else {
-                errorMessage = t('addDevices.unableToAddDeviceReason') + errorMessage;
+                errorMessage = errorMessage;
             }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);

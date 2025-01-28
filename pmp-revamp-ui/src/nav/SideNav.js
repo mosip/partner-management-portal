@@ -151,7 +151,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     {enablePartnerAdminMenu && (
                         <>
                             <button id='side_nav_rootOfTrustCertificate_service_icon' className="duration-700 cursor-pointer" onClick={() => showRootOfTrustCertificate()}>
-                                <SideNavMenuItem title={t('dashboard.rootOfTrustCertificate')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.certificateTrustStore')} id='rootOfTrustCertificate' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>

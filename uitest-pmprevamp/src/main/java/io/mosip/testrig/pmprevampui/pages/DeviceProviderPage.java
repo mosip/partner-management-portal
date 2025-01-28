@@ -184,7 +184,7 @@ public class DeviceProviderPage extends BasePage {
 				"//*[contains(@class, 'react-datepicker__day react-datepicker__day--0" + PmpTestUtil.todayDay + "')]"));
 		clickOnElement(todayDateInCalender);
 	}
-	
+
 	public void enterExpiryDate() {
 		clickOnElement(expiryDate);
 		clickOnElement(nextMonth);

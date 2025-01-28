@@ -58,6 +58,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [deactivatePolicyHeader, setDeactivatePolicyHeader] = useState();
     const [deactivatePolicyDescription, setDeactivatePolicyDescription] = useState();
     const [deactivateRequest, setDeactivateRequest] = useState({});
+    const [selectedPolicy, setSelectedPolicy] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         policyId: null,
         policyName: null,
@@ -130,10 +131,12 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -166,15 +169,15 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         if (policy.status === 'activated') {
             setDeactivatePolicyHeader('deactivatePolicyPopup.headerMsg');
             if (policyType === 'Auth') {
-                setActionId(-1);
                 setDeactivatePolicyDescription('deactivatePolicyPopup.authPolicyDescriptionMsg');
             } else if (policyType === 'DataShare') {
-                setActionId(-1);
                 setDeactivatePolicyDescription('deactivatePolicyPopup.dataSharePolicyDescriptionMsg');
             }
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.policy.patch", true);
+            setActionId(-1);
+            setSelectedPolicy(policy);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
@@ -183,16 +186,18 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
 
     const onClickClone = (selectedPolicy) => {
         if (selectedPolicy.status !== 'draft') {
-            setActionId(-1);
             setShowClonePopup(true);
+            setActionId(-1);
+            setSelectedPolicy(selectedPolicy);
             document.body.style.overflow = "hidden";
         }
     };
 
     const onClickPublish = (selectedPolicy) => {
         if (selectedPolicy.status === "draft") {
-            setActionId(-1);
             setShowPublishPolicyPopup(true);
+            setActionId(-1);
+            setSelectedPolicy(selectedPolicy);
             document.body.style.overflow = "hidden";
         }
     };
@@ -204,8 +209,8 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const publishSuccess = (selectedPolicy) => {
-        setActionId(-1);
         setShowPublishPolicyPopup(false);
+        setSelectedPolicy({});
         setPoliciesList((prevList) =>
             prevList.map(policy =>
                 policy.policyId === selectedPolicy.policyId ? { ...policy, status: 'activated' } : policy
@@ -215,12 +220,14 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }
 
     const closePublishPolicyPopup = () => {
+        setSelectedPolicy({});
         setShowPublishPolicyPopup(false);
         document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
         setShowClonePopup(false);
+        setSelectedPolicy({});
         document.body.style.overflow = 'auto';
     };
 
@@ -237,6 +244,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setActionId(-1);
+            setSelectedPolicy({});
             setShowDeactivatePopup(false);
             // Update the specific row in the state with the new status
             setPoliciesList((prevList) =>
@@ -248,6 +256,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const closeDeactivatePopup = () => {
+        setSelectedPolicy({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = 'auto';
     };
@@ -331,7 +340,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                         />
                                         : (
                                             <>
-                                                <div className="mx-[2%] overflow-x-scroll">
+                                                <div className="mx-[1.4rem] overflow-x-scroll">
                                                     <table className="table-fixed">
                                                         <thead>
                                                             <tr>
@@ -406,14 +415,14 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                 )}
                                                                                 {showPublishPolicyPopup && (
                                                                                     <PublishPolicyPopup
-                                                                                        policyDetails={policy}
+                                                                                        policyDetails={selectedPolicy}
                                                                                         closePopUp={closePublishPolicyPopup}
-                                                                                        onClickPublish={() => publishSuccess(policy)}
+                                                                                        onClickPublish={() => publishSuccess(selectedPolicy)}
                                                                                     />
                                                                                 )}
                                                                                 {showClonePopup && (
                                                                                     <ClonePolicyPopup
-                                                                                        policyDetails={policy}
+                                                                                        policyDetails={selectedPolicy}
                                                                                         closePopUp={closeClonePolicyPopup}
                                                                                     />
                                                                                 )}
@@ -421,10 +430,10 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                     <DeactivatePolicyPopup
                                                                                         header={deactivatePolicyHeader}
                                                                                         description={deactivatePolicyDescription}
-                                                                                        popupData={{ ...policy, isDeactivatePolicy: true }}
-                                                                                        headerKeyName={policy.policyName}
+                                                                                        popupData={{ ...selectedPolicy, isDeactivatePolicy: true }}
+                                                                                        headerKeyName={selectedPolicy.policyName}
                                                                                         closePopUp={closeDeactivatePopup}
-                                                                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, policy)}
+                                                                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPolicy)}
                                                                                         request={deactivateRequest}
                                                                                     />
                                                                                 )}

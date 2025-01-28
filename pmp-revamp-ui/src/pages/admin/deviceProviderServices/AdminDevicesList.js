@@ -46,6 +46,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
+    const [selectedDevice, setSelectedDevice] = useState({});
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showDeviceDetailApproveRejectPopup, setShowDeviceDetailApproveRejectPopup] = useState(false);
     const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
@@ -62,10 +63,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         sbiId: null,
         sbiVersion: null
     });
-    const [preFilledFilters, setPreFilledFilters] = useState({
-        sbiId: null,
-        sbiVersion: null
-    });
+    const [sbiId, setSbiId] = useState(null);
+    const [sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
 
     const tableHeaders = [
@@ -108,7 +107,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         if (filterAttributes.sbiId || sbiId) queryParams.append('sbiId', filterAttributes.sbiId || sbiId);
         if (filterAttributes.sbiVersion || sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion || sbiVersion);
 
-        const url = `${getPartnerManagerUrl('/devicedetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/devicedetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -127,10 +126,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             console.error('Error fetching data:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setFetchData(false);
+                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
     };
 
@@ -140,13 +141,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         const sbiVersion = params.get('sbiVersion');
 
         if (sbiId || sbiVersion) {
-            setExpandFilter(true);
-            setPreFilledFilters((prev) => ({
-                ...prev,
-                sbiId: sbiId,
-                sbiVersion: sbiVersion,
-            }));
-            setApplyFilter(true);
+            setSbiId(sbiId);
+            setSbiVersion(sbiVersion);
         }
         fetchDeviceDetails(sbiId, sbiVersion);
     }, [sortFieldName, sortType, pageNo, pageSize]);
@@ -154,7 +150,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     useEffect(() => {
 
         if (isApplyFilterClicked) {
-            fetchDeviceDetails(null, null);
+            fetchDeviceDetails(sbiId, sbiVersion);
             setIsApplyFilterClicked(false);
         }
     }, [isApplyFilterClicked]);
@@ -171,6 +167,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         if (device.status === 'pending_approval') {
             setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(true);
+            setSelectedDevice(device);
             document.body.style.overflow = "hidden";
         }
     };
@@ -178,7 +175,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const onClickApproveReject = (responseData, status, selectedDevice) => {
         if (responseData) {
             setShowDeviceDetailApproveRejectPopup(false);
-            // Update the specific row in the state with the new status
+            setSelectedDevice({});
             setDevicesList((prevList) =>
                 prevList.map(deviceItem =>
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
@@ -189,6 +186,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeApproveRejectPopup = () => {
+        setSelectedDevice({});
         setShowDeviceDetailApproveRejectPopup(false);
         document.body.style.overflow = "auto";
     };
@@ -198,8 +196,9 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             const request = createRequest({
                 status: "De-Activate",
             }, "mosip.pms.deactivate.device.patch", true);
-            setDeactivateRequest(request);
             setActionId(-1);
+            setSelectedDevice(selectedDevice);
+            setDeactivateRequest(request);
             setShowDeactivatePopup(true);
             document.body.style.overflow = "hidden";
         }
@@ -209,6 +208,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setShowDeactivatePopup(false);
+            setSelectedDevice({});
             // Update the specific row in the state with the new status
             setDevicesList((prevList) =>
                 prevList.map(device =>
@@ -219,6 +219,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     };
 
     const closeDeactivatePopup = () => {
+        setSelectedDevice({});
         setShowDeactivatePopup(false);
         document.body.style.overflow = "auto";
     };
@@ -273,6 +274,22 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         }
     }, [showDeviceDetailApproveRejectPopup, showDeactivatePopup]);
 
+    const getFilterSubTitle = () => {
+        if (sbiId && sbiVersion) {
+            return t('sbiList.sbiId') + ': ' + sbiId + ' | ' + t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else if (sbiId) {
+            return t('sbiList.sbiId') + ': ' + sbiId;
+        } else if (sbiVersion) {
+            return t('sbiList.sbiVersion') + ': ' + sbiVersion;
+        } else {
+            return "";
+        }
+    };
+
+    const filteredTableHeaders = tableHeaders.filter(
+        (header) => !(isLinkedDevicesList && (header.id === "sbiId" || header.id === "sbiVersion"))
+    );
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -285,10 +302,10 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title={title}  backLink='/partnermanagement' />
+                            <Title title={title} backLink='/partnermanagement' />
                         </div>
                         <DeviceProviderServicesTab
-                            activeSbi={isLinkedDevicesList ? true: false}
+                            activeSbi={isLinkedDevicesList ? true : false}
                             sbiListPath='/partnermanagement/admin/device-provider-services/sbi-list'
                             activeDevice={isLinkedDevicesList ? false : true}
                             devicesListPath='/partnermanagement/admin/device-provider-services/devices-list'
@@ -308,7 +325,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     setFilter={setExpandFilter}
                                     addBackArrow={isLinkedDevicesList ? true : false}
                                     goBack={isLinkedDevicesList && backToSbi}
-                                    backArrowTitle={isLinkedDevicesList && 'devicesList.backToSbi'}
+                                    listSubTitle={isLinkedDevicesList && getFilterSubTitle()}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
@@ -316,7 +333,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                         onApplyFilter={onApplyFilter}
                                         setErrorCode={setErrorCode}
                                         setErrorMsg={setErrorMsg}
-                                        preFilledFilters={preFilledFilters}
+                                        removeSbiFields={isLinkedDevicesList}
                                     />
                                 )}
                                 {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
@@ -324,11 +341,11 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     <EmptyList tableHeaders={tableHeaders} />
                                     : (
                                         <>
-                                            <div className="mx-[2%] overflow-x-scroll">
+                                            <div className="mx-[1.4rem] overflow-x-scroll">
                                                 <table className="table-fixed">
                                                     <thead>
                                                         <tr>
-                                                            {tableHeaders.map((header, index) => {
+                                                            {filteredTableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                         <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
@@ -355,8 +372,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                 <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                    {!isLinkedDevicesList && (
+                                                                        <>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                        </>
+                                                                    )}
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
@@ -393,16 +414,21 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                             )}
                                                                             {showDeviceDetailApproveRejectPopup && (
                                                                                 <ApproveRejectPopup
-                                                                                    popupData={{ ...device, isDeviceRequest: true }}
+                                                                                    popupData={{ ...selectedDevice, isDeviceRequest: true }}
                                                                                     closePopUp={closeApproveRejectPopup}
-                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, device)}
-                                                                                    title={`${device.make} | ${device.model}`}
+                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedDevice)}
+                                                                                    title={`${selectedDevice.make} | ${selectedDevice.model}`}
                                                                                     header={t('deviceApproveRejectPopup.header')}
                                                                                     description={t('deviceApproveRejectPopup.description')}
                                                                                 />
                                                                             )}
                                                                             {showDeactivatePopup && (
-                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup} onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, device)} popupData={{ ...device, isDeactivateDevice: true }} request={deactivateRequest} headerMsg='deactivateDevicePopup.headerMsg' descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
+                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup}
+                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
+                                                                                    popupData={{ ...selectedDevice, isDeactivateDevice: true }}
+                                                                                    request={deactivateRequest}
+                                                                                    headerMsg='deactivateDevicePopup.headerMsg'
+                                                                                    descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
                                                                             )}
                                                                         </div>
                                                                     </td>
@@ -412,15 +438,15 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                         }
                                                     </tbody>
                                                 </table>
-                                                <Pagination
-                                                    dataListLength={totalRecords}
-                                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                    setFirstIndex={setFirstIndex}
-                                                    isServerSideFilter={true}
-                                                    getPaginationValues={getPaginationValues}
-                                                />
                                             </div>
+                                            <Pagination
+                                                dataListLength={totalRecords}
+                                                selectedRecordsPerPage={selectedRecordsPerPage}
+                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                                setFirstIndex={setFirstIndex}
+                                                isServerSideFilter={true}
+                                                getPaginationValues={getPaginationValues}
+                                            />
                                         </>
                                     )
                                 }

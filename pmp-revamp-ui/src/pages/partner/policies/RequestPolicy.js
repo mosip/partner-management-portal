@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
-import { getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest } from '../../../utils/AppUtils';
+import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -33,7 +32,6 @@ function RequestPolicy() {
     const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-    let isCancelledClicked = false;
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -41,9 +39,8 @@ function RequestPolicy() {
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (isSubmitClicked || isCancelledClicked || requestPolicySuccess) {
+            if (isSubmitClicked || requestPolicySuccess) {
                 setIsSubmitClicked(false);
-                isCancelledClicked = false;
                 return false;
             }
 
@@ -96,7 +93,9 @@ function RequestPolicy() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -144,7 +143,9 @@ function RequestPolicy() {
             setDataLoaded(true);
         } catch (err) {
             console.error('Error fetching policies:', err);
-            setErrorMsg(err.message);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
         }
     };
 
@@ -158,7 +159,6 @@ function RequestPolicy() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToPolicies(navigate);
     }
     const clickOnSubmit = async () => {
@@ -194,7 +194,9 @@ function RequestPolicy() {
             }
             setDataLoaded(true);
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setIsSubmitClicked(false);

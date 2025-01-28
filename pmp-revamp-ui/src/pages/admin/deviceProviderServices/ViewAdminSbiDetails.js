@@ -115,15 +115,15 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">
-                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", true)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className={`font-[600] text-sm`}>
+                                    <p className={`font-[600] text-suva-gray text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
-                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", true)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
