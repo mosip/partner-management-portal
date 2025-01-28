@@ -62,7 +62,9 @@ function Dashboard() {
       }
       setDataLoaded(true);
     } catch (err) {
-      setErrorMsg(err.toString());
+      if (err.response.status !== 401) {
+        setErrorMsg(err.toString());
+      }
       console.log("Error: ", err);
     }
   }
@@ -138,8 +140,11 @@ function Dashboard() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err.toString());
-        setDataLoaded(true);
+        if (err.response.status !== 401) {
+          setErrorMsg(err.toString());
+          setDataLoaded(true);
+        }
+        
       }
     };
     fetchData();
@@ -177,7 +182,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -202,7 +209,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -226,7 +235,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -250,7 +261,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };

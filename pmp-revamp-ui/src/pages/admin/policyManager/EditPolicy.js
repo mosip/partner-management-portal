@@ -100,7 +100,9 @@ function EditPolicy() {
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
             setDataLoaded(true);
         };
@@ -160,9 +162,11 @@ function EditPolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
-            setErrorMsg(t('createPolicy.jsonParseError'));
-            setIsSubmitClicked(false);
-            setDataLoaded(true);
+            if (error.response.status !== 401) {
+                setErrorMsg(t('createPolicy.jsonParseError'));
+                setIsSubmitClicked(false);
+                setDataLoaded(true);
+            }
             return;
         }
         let request = createRequest({
@@ -197,7 +201,9 @@ function EditPolicy() {
                 setErrorMsg(t('editPolicy.errorInEditPolicy'));
             }
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setDataLoaded(true);

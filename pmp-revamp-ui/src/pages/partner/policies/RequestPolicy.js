@@ -93,7 +93,9 @@ function RequestPolicy() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -141,7 +143,9 @@ function RequestPolicy() {
             setDataLoaded(true);
         } catch (err) {
             console.error('Error fetching policies:', err);
-            setErrorMsg(err.message);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
         }
     };
 
@@ -190,7 +194,9 @@ function RequestPolicy() {
             }
             setDataLoaded(true);
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setIsSubmitClicked(false);

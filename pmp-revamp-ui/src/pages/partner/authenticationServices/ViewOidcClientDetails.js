@@ -55,8 +55,10 @@ function ViewOidcClientDetails() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setUnexpectedError(true);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setUnexpectedError(true);
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();

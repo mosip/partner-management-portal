@@ -627,7 +627,7 @@
         "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
         "downloadCertificateChain": "Télécharger la chaîne de certificats",
         "validTo": "Valable jusqu'aue",
-        "certThumbprint": "Empreinte digitale du certificat"
+        "certThumbprint": "Empreinte numérique du certificat"
     },
     "partnerList": {
         "partnerTitle": "Partenaires",

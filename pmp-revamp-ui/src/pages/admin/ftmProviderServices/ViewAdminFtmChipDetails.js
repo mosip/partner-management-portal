@@ -66,7 +66,9 @@ function ViewAdminFtmChipDetails() {
                 }
             } catch (err) {
                 console.error('Error fetching certificate details:', err);
-                setErrorMsg(err.message || t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.message || t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
+                }
             }
             setDataLoaded(true);
         }

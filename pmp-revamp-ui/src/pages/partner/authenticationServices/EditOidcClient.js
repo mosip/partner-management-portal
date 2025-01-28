@@ -144,9 +144,11 @@ function EditOidcClient() {
                  }
                  setDataLoaded(true);
              } catch (err) {
-                 console.error('Error fetching data:', err);
-                 setUnexpectedError(true);
-                 setErrorMsg(err);
+                console.error('Error fetching data:', err);
+                if (err.response.status !== 401) {
+                    setUnexpectedError(true);
+                    setErrorMsg(err.toString());
+                }
              }
          };
          fetchData();
@@ -302,8 +304,10 @@ function EditOidcClient() {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            setDataLoaded(true);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
         }
         setIsSubmitClicked(false);
     }

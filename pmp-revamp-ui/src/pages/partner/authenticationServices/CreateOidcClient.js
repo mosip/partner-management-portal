@@ -337,7 +337,9 @@ function CreateOidcClient() {
       }
       setDataLoaded(true);
     } catch (err) {
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+        setErrorMsg(err);
+      }
       console.log("Error fetching data: ", err);
     }
     setIsSubmitClicked(false);
