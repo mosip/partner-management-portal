@@ -123,9 +123,12 @@ function PolicyRequestsList() {
       triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       setTriggerServerMethod(false);
     } catch (err) {
-      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
       console.error('Error fetching data:', err);
-      setErrorMsg(err);
+      if (err.response.status !== 401) {
+          setTriggerServerMethod(false);
+          triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+          setErrorMsg(err.toString());
+      }
     }
   }
 
@@ -276,7 +279,7 @@ function PolicyRequestsList() {
                       <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
                       : (
                         <>
-                          <div className="mx-[2%] overflow-x-scroll">
+                          <div className="mx-[1.4rem] overflow-x-scroll">
                             <table className="table-fixed">
                               <thead>
                                 <tr>

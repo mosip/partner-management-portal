@@ -84,8 +84,10 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (error) {
-            setDataLoaded(true);
-            setErrorMsg(error);
+            if (error.response.status !== 401) {
+                setDataLoaded(true);
+                setErrorMsg(error.toString());
+            }
         }
     };
 

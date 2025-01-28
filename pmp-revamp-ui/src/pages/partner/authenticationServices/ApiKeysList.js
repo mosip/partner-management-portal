@@ -74,7 +74,9 @@ function ApiKeysList() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -229,7 +231,7 @@ function ApiKeysList() {
                                             onFilterChange={onFilterChange}>
                                         </ApiKeysFilter>
                                     }
-                                    <div className="mx-[2%] overflow-x-scroll">
+                                    <div className="mx-[1.4rem] overflow-x-scroll">
                                         <table className="table-fixed">
                                             <thead>
                                                 <tr>

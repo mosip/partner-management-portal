@@ -59,8 +59,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                 setErrorMsg(t('publishPolicyPopup.errorInPublishPolicy'));
             }
         } catch (err) {
-            setDataLoaded(true);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setDataLoaded(true);
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
     };

@@ -193,8 +193,10 @@ function AddDevices() {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
-            setDeviceEntries(newEntries);
+            if (err.response.status !== 401) {
+                newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
+                setDeviceEntries(newEntries);
+            }
             console.error("Error fetching data: ", err);
         }
         setDataLoaded(true);

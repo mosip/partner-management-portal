@@ -787,7 +787,22 @@ public class AuthPartnerTest extends BaseClass {
 	  oidcClientPage.clickOnClearFormButton(); 
 	  assertTrue(oidcClientPage.isLogoUriempty(), GlobalConstants.isLogoUriempty);
 	  }
-	  
 
-	
-}
+	@Test (priority = 10)
+	public void usingInvalidDataToCreateOIDC() {
+		DashboardPage dashboardpage = new DashboardPage(driver);
+		RegisterPage registerPage = new RegisterPage(driver);
+		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(), GlobalConstants.isAuthenticationServicesDisplayed);
+		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServicesTitle();
+		assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed);
+		oidcClientPage.clickOnCreateOidcClientButton();
+		oidcClientPage.enterPublicKeyTextBox("!!!");
+		assertTrue(oidcClientPage.isPublicKeyFormatErrorDisplayed(), GlobalConstants.isPublicKeyFormatErrorDisplayed);
+		oidcClientPage.enterLogoUrTextBox("!!!");
+		assertTrue(oidcClientPage.isInvalidLogoUriErrorDisplayed(), GlobalConstants.isInvalidLogoUriErrorDisplayed);
+		oidcClientPage.enterRedirectUriTextBox("!!!");
+		assertTrue(oidcClientPage.isInvalidRedirectUriErrorDisplayed(), GlobalConstants.isInvalidRedirectUriErrorDisplayed);
+	}
+
+
+	}
