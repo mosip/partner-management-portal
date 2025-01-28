@@ -87,8 +87,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 }
                 setDataLoaded(true);
             } catch (err) {
-                setUploadFailure(true);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setUploadFailure(true);
+                    setErrorMsg(err.toString());
+                }
                 console.log("Unable to upload partner certificate: ", err);
             }
         }

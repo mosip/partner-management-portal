@@ -70,7 +70,9 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         return [];
       }
     } catch (err) {
-      setErrorMsg(err.message || t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
+      if (err.response.status !== 401) {
+        setErrorMsg(err.message || t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
+      }
       console.error("Error fetching partner type data: ", err);
       return [];
     }

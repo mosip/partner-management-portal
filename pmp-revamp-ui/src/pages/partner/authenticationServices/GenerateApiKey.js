@@ -211,7 +211,9 @@ function GenerateApiKey() {
             setShowPopup(true);
             setDataLoaded(true);
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setIsSubmitClicked(false);

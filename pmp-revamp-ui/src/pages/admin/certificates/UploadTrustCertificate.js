@@ -135,8 +135,10 @@ function UploadTrustCertificate() {
             }
             setDataLoaded(true);
         } catch (err) {
-            setErrorMsg(err);
             console.log("Error while uploading certificate: ", err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
         }
         setIsSubmitClicked(false);
     }
