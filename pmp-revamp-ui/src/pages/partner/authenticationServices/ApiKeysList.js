@@ -273,7 +273,7 @@ function ApiKeysList() {
                                                                     </div>
                                                                 </td>
 
-                                                                <td className="px-2 mx-2">
+                                                                <td className="px-2 mx-2 cursor-default">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                         <button id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>
                                                                             <p> ... </p>

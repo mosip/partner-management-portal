@@ -351,7 +351,7 @@ function PolicyGroupList() {
                                                                             {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center">
+                                                                    <td className="text-center cursor-default">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"policy_group_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
