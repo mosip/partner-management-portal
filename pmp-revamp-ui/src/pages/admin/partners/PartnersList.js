@@ -327,7 +327,7 @@ function PartnersList() {
                                           {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                         </div>
                                       </td>
-                                      <td className="text-center">
+                                      <td className="text-center cursor-default">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                           <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...
