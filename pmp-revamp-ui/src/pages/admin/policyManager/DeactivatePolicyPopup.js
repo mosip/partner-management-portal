@@ -91,6 +91,21 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         setDataLoaded(true);
     };
 
+     const setActiveDraftPoliciesDescription = async (activePoliciesCount, draftPoliciesCount) => {
+        if(activePoliciesCount === 1 && draftPoliciesCount > 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForSingularActive', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount > 1 && draftPoliciesCount === 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForSingularDraft', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount === 1 && draftPoliciesCount === 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForBothSingular', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount > 1 && draftPoliciesCount > 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+     };
+
     const getAssociatedPolicies = async (errorCode) => {
         try {
             const response = await HttpService({
@@ -109,19 +124,19 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }));
+                    setActiveDraftPoliciesDescription(activePoliciesCount, draftPoliciesCount);
                     setActiveDraftPoliciesDescr1(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg1'));
                     setActiveDraftPoliciesDescr2(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg2'));
                 } else if (errorCode === 'PMS_POL_070') {
                     // Count draft policies
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('draftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg((draftPoliciesCount > 1) ? t('draftPoliciesDetectedMsg.description1', { noOfDraftPolicies: draftPoliciesCount }) : t('draftPoliciesDetectedMsg.description2'));
+                    setErrorDescriptionMsg((draftPoliciesCount > 1) ? t('draftPoliciesDetectedMsg.description1', { noOfDraftPolicies: draftPoliciesCount }) : t('draftPoliciesDetectedMsg.description2', { noOfDraftPolicies: draftPoliciesCount }));
                 } else if (errorCode === 'PMS_POL_056') {
                     // Count active policies
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg((activePoliciesCount > 1) ? t('activePoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount }) : t('activePoliciesDetectedMsg.description2'));
+                    setErrorDescriptionMsg((activePoliciesCount > 1) ? t('activePoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount }) : t('activePoliciesDetectedMsg.description2', { noOfActivePolicies: activePoliciesCount }));
                 }
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
