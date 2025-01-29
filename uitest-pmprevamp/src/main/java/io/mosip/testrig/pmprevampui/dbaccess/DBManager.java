@@ -15,16 +15,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.jdbc.Work;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Environment;
-import org.hibernate.jdbc.Work;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.utility.BaseClass;
