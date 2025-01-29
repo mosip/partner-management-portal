@@ -815,7 +815,7 @@
         "description1": "By clicking ‘Publish,’ the policy - ",
         "description2": "will be published and no longer be editable. It will become available for partner selection only after the policy is published.",
         "errorInPublishPolicy": "While publishing the policy, we have encountered with an error.",
-        "successMsg": "{{policyName}} has been published successfully!",
+        "successMsg": " has been published successfully!",
         "publish": "Publish"
     },
     "partnerPolicyMappingRequestList": {
