@@ -35,7 +35,7 @@ function ViewPolicyRequestDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm overflow-x-scroll mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
+            <div className={`w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm overflow-x-scroll mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewPolicyRequest.viewPolicyRequest' subTitle='viewPolicyRequest.listOfPolicyRequests' backLink='/partnermanagement/admin/policy-requests-list' />
                 </div>
