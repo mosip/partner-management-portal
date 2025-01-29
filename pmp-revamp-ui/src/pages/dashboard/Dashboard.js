@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils.js';
 import { useTranslation } from "react-i18next";
-import { getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -63,7 +62,9 @@ function Dashboard() {
       }
       setDataLoaded(true);
     } catch (err) {
-      setErrorMsg(err.toString());
+      if (err.response.status !== 401) {
+        setErrorMsg(err.toString());
+      }
       console.log("Error: ", err);
     }
   }
@@ -121,19 +122,13 @@ function Dashboard() {
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
               const registerUserResponseData = registerUserResponse.data;
               if (registerUserResponseData && registerUserResponseData.response) {
-                window.location.reload();
+                callUserConsentPopup();
               } else {
                 handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
               }
             }
           }
-          if (!isSelectPolicyPopupVisible) {
-            await fetchUserConsent();
-            if (!isUserConsentGiven) {
-              setShowConsentPopup(true);
-              document.body.style.overflow = "hidden";
-            }
-          }
+          callUserConsentPopup();
           //if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
@@ -145,21 +140,35 @@ function Dashboard() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        setErrorMsg(err.toString());
-        setDataLoaded(true);
+        if (err.response.status !== 401) {
+          setErrorMsg(err.toString());
+          setDataLoaded(true);
+        }
+        
       }
     };
     fetchData();
 
   }, []);
 
+  const callUserConsentPopup = async () => {
+    if (!isSelectPolicyPopupVisible) {
+      await fetchUserConsent();
+      if (!isUserConsentGiven) {
+        setShowConsentPopup(true);
+        document.body.style.overflow = "hidden";
+      }
+    }
+  }
+
   useEffect(() => {
     const fetchPartnerPolicyMappingRequestCount = async () => {
       const queryParams = new URLSearchParams();
       queryParams.append('status', 'InProgress');
-      queryParams.append('pageSize', '1');
+      queryParams.append('pageSize', 1);
+      queryParams.append('pageNo', 0);
 
-      const url = `${getPartnerManagerUrl('/partners/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -173,7 +182,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -182,8 +193,9 @@ function Dashboard() {
       const queryParams = new URLSearchParams();
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
 
-      const url = `${getPartnerManagerUrl('/securebiometricinterface/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/securebiometricinterface', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -197,7 +209,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -207,7 +221,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/devicedetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/devicedetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -221,7 +235,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -231,7 +247,7 @@ function Dashboard() {
       queryParams.append('status', 'pending_approval')
       queryParams.append('pageSize', '1');
 
-      const url = `${getPartnerManagerUrl('/ftpchipdetail/search/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/ftpchipdetail/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
@@ -245,7 +261,9 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        setErrorMsg(t('dashboard.requestCountFetchError'));
+        if (err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
         console.error("Error fetching data:", err);
       }
     };
@@ -311,13 +329,13 @@ function Dashboard() {
 
   const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
     <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
-      <div className="relative group flex items-center justify-center w-full">
+      <div className="relative group flex items-center justify-center w-full" tabIndex="0">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
 
         {count !== null && count !== undefined && (
-          <div className="absolute hidden group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
+          <div className="absolute hidden group-focus:block group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
             {t(descriptionKey, descriptionParams)}
           </div>
         )}

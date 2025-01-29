@@ -34,7 +34,7 @@ function ViewAdminSbiDetails() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
                     <Title title={'viewSbiDetails.viewSbiDetails'} subTitle='sbiList.listOfSbis' backLink='/partnermanagement/admin/device-provider-services/sbi-list' />
@@ -115,15 +115,15 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">
-                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", true)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className={`font-[600] text-sm`}>
+                                    <p className={`font-[600] text-suva-gray text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
-                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", false)}
+                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", true)}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>

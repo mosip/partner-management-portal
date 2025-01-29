@@ -60,7 +60,9 @@ function ViewPartnerDetails() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -100,7 +102,7 @@ function ViewPartnerDetails() {
         setSuccessMsg("");
         try {
             if (partnerId) {
-                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg);
+                const responseData = await getCertificate(HttpService, partnerId, setErrorCode, setErrorMsg, t);
                 if (responseData) {
                     const resData = responseData.response;
                     return resData;
@@ -114,7 +116,9 @@ function ViewPartnerDetails() {
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
         }
     }
 
@@ -131,7 +135,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -171,7 +175,7 @@ function ViewPartnerDetails() {
                                             {t('partnerList.partnerId')}: <span className="font-semibold">{partnerDetails.partnerId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>

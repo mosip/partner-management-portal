@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
-import { isLangRTL } from '../../../utils/AppUtils';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
 
@@ -78,8 +77,10 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         return [];
       }
     } catch (err) {
-      setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
       console.error("Error fetching partner type data: ", err);
+      if (err.response.status !== 401) {
+        setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
+      }
       return [];
     }
   }
@@ -107,7 +108,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   };
 
   return (
-    <div className="flex w-full p-2 justify-start bg-[#F7F7F7] flex-wrap">
+    <div className="flex w-full p-2.5 justify-start bg-[#F7F7F7] flex-wrap">
       <TextInputComponent
         fieldName="partnerId"
         onTextChange={onFilterChangeEvent}

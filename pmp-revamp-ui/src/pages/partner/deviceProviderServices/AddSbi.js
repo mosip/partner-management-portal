@@ -33,14 +33,11 @@ function AddSbi() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [IsSubmitClicked, setIsSubmitClicked] = useState(false);
 
-    let isCancelledClicked = false;
-
     const navigate = useNavigate();
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
-            if (IsSubmitClicked || isCancelledClicked) {
-                isCancelledClicked = false;
+            if (IsSubmitClicked) {
                 setIsSubmitClicked(false);
                 return false;
             }
@@ -94,7 +91,9 @@ function AddSbi() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                setErrorMsg(err);
+                if (err.response.status !== 401) {
+                    setErrorMsg(err.toString());
+                }
             }
         };
         fetchData();
@@ -171,7 +170,9 @@ function AddSbi() {
             }
             setDataLoaded(true);
         } catch (err) {
-            setErrorMsg(err);
+            if (err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
             console.log("Error fetching data: ", err);
         }
         setIsSubmitClicked(false);
@@ -195,7 +196,6 @@ function AddSbi() {
     };
 
     const clickOnCancel = () => {
-        isCancelledClicked = true;
         moveToSbisList(navigate)
     }
 

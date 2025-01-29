@@ -100,7 +100,7 @@ function ViewCertificateDetails() {
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-2 max-[450px]:flex-col">
-                                <div className={`w-[50%] max-[600px]:w-[100%] mb-1 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                <div className={`w-[48%] max-[600px]:w-[100%] mb-1 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("certificatesList.issuedTo")}
                                     </p>
