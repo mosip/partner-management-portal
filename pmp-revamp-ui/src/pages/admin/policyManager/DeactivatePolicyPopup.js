@@ -124,7 +124,6 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
-                    // setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount,  }));
                     setActiveDraftPoliciesDescription(activePoliciesCount, draftPoliciesCount);
                     setActiveDraftPoliciesDescr1(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg1'));
                     setActiveDraftPoliciesDescr2(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg2'));
