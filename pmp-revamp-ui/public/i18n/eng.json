@@ -742,9 +742,9 @@
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
         "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
-        "descriptionForSingularActive": "There are {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForSingularActive": "There is {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
         "descriptionForSingularDraft": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
-        "descriptionForBothSingular": "There are {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForBothSingular": "There is {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
         "descriptionMsg1": "1. Deactivate all active policies.",
         "descriptionMsg2": "2. Publish and then deactivate all draft policies."
     },
