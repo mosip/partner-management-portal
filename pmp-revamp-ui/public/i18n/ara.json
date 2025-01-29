@@ -820,7 +820,7 @@
         "description1": "بالنقر فوق نشر، السياسة -",
         "description2": "سيتم نشرها ولن تكون قابلة للتعديل بعد الآن. ستصبح متاحة لاختيار الشريك فقط بعد نشر السياسة.",
         "errorInPublishPolicy": "أثناء نشر السياسة، واجهنا خطأً.",
-        "successMsg": "تم نشر {{policyName}} بنجاح!",
+        "successMsg": "تم نشر  بنجاح!",
         "publish": "نشر"
     },
     "partnerPolicyMappingRequestList": {

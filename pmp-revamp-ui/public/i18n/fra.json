@@ -820,7 +820,7 @@
         "description1": "En cliquant sur « Publier », la politique - ",
         "description2": "sera publié et ne sera plus modifiable. Il ne sera disponible pour la sélection des partenaires qu'après la publication de la politique.",
         "errorInPublishPolicy": "Lors de la publication de la politique, nous avons rencontré une erreur.",
-        "successMsg": "{{policyName}} a été publié avec succès !",
+        "successMsg": " a été publié avec succès !",
         "publish": "Publier"
     },
     "partnerPolicyMappingRequestList": {
