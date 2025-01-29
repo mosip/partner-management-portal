@@ -143,9 +143,9 @@ public class ConfigManager {
 			propsKernel.setProperty(key, value);
 		}
 	}
-
+	
 	public static String getValueForKey(String key) {
-		String value = System.getenv(key) == null ? propsKernel.getProperty(key) : System.getenv(key);
+		String value = System.getProperty(key) == null ? propsKernel.getProperty(key) : System.getProperty(key);
 		setProperty(key, value);
 
 		return value;
