@@ -737,12 +737,12 @@
     "activePoliciesDetectedMsg": {
         "header": "Erreur : Politiques actives détectées !",
         "description1": "Il y a {{noOfActivePolicies}} politiques actives associées à ce groupe de politiques. Veuillez les désactiver avant de poursuivre.",
-        "description2": "Il existe une stratégie associée à ce groupe de stratégies. Veuillez le désactiver avant de continuer."
+        "description2": "Une stratégie {{noOfActivePolicies}} est associée à ce groupe de stratégies. Veuillez le désactiver avant de continuer."
     },
     "draftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en brouillon détectées !",
         "description1": "Il y a {{noOfDraftPolicies}} politiques en brouillon associées à ce groupe de politiques. Le groupe de politiques ne peut pas être désactivé tant que toutes les politiques en brouillon associées ne sont pas publiées puis désactivées. Veuillez traiter les politiques en brouillon pour poursuivre.",
-        "description2": "Il existe un projet de stratégie associé à ce groupe de stratégies. Le groupe de stratégies ne peut pas être désactivé tant que le projet de stratégie associé n’est pas publié, puis désactivé. Veuillez consulter le projet de politique pour continuer."
+        "description2": "Il existe un projet de stratégie {{noOfDraftPolicies}} associé à ce groupe de stratégies. Le groupe de stratégies ne peut pas être désactivé tant que le projet de stratégie associé n’est pas publié, puis désactivé. Veuillez consulter le projet de politique pour continuer."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
