@@ -60,7 +60,7 @@ function ViewApiKeyDetails() {
                     </div>
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
-                            <div className="w-[36rem] max-[600px]:w-[100%] mb-3">
+                            <div className="w-[49%] max-[600px]:w-[100%] mb-3">
                                 <p id='api_key_details_partner_id_label' className="font-[600] text-suva-gray text-xs">
                                     {t("viewOidcClientDetails.partnerId")}
                                 </p>
