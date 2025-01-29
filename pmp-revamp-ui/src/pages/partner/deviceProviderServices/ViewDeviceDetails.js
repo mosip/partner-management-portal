@@ -84,7 +84,7 @@ function ViewDeviceDetails() {
                             </div>
                             <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                 <div className="flex flex-wrap py-1 justify-between">
-                                    <div className="w-[40rem] max-[600px]:w-[100%] mb-3">
+                                    <div className="w-[49%] max-[600px]:w-[100%] mb-3">
                                         <p id="device_details_partner_id_label" className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.partnerId")}
                                         </p>
@@ -92,7 +92,7 @@ function ViewDeviceDetails() {
                                             {selectedSbidata.partnerId}
                                         </p>
                                     </div>
-                                    <div className="mb-3 max-[600px]:w-[100%] w-[40rem]">
+                                    <div className="mb-3 max-[600px]:w-[100%] w-[49%]">
                                         <p id="device_details_partner_type_label" className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.partnerType")}
                                         </p>
@@ -100,7 +100,7 @@ function ViewDeviceDetails() {
                                             {t("partnerTypes.deviceProvider")}
                                         </p>
                                     </div>
-                                    <div className="w-[40rem] max-[600px]:w-[100%] mb-3">
+                                    <div className="w-[49%] max-[600px]:w-[100%] mb-3">
                                         <p id="device_details_device_type_label" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.deviceType")}
                                         </p>
@@ -108,7 +108,7 @@ function ViewDeviceDetails() {
                                             {deviceDetails.deviceTypeCode}
                                         </p>
                                     </div>
-                                    <div className="mb-3 max-[600px]:w-[100%] w-[40rem]">
+                                    <div className="mb-3 max-[600px]:w-[100%] w-[49%]">
                                         <p id="device_details_device_sub_type_label" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.deviceSubType")}
                                         </p>
@@ -119,7 +119,7 @@ function ViewDeviceDetails() {
                                 </div>
                                 <hr className={`h-px w-full bg-gray-200 border-0`} />
                                 <div className={`flex flex-wrap pt-2 justify-between`}>
-                                    <div className={`w-[40rem] pt-2 max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                    <div className={`w-[49%] pt-2 max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                         <p id="device_details_make_label" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.make")}
                                         </p>
@@ -127,7 +127,7 @@ function ViewDeviceDetails() {
                                             {deviceDetails.make}
                                         </p>
                                     </div>
-                                    <div className={`w-[40rem] pt-2 max-[600px]:w-[100%]`}>
+                                    <div className={`w-[49%] pt-2 max-[600px]:w-[100%]`}>
                                         <p id="device_details_model_label" className="font-[600] text-suva-gray text-xs">
                                             {t("addDevices.model")}
                                         </p>
@@ -135,7 +135,7 @@ function ViewDeviceDetails() {
                                             {deviceDetails.model}
                                         </p>
                                     </div>
-                                    <div className={`w-[40rem] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                    <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
                                         <p id="device_details__sbi_version_label" className="font-[600] text-suva-gray text-xs">
                                             {t("addSbis.sbiVersion")}
                                         </p>

@@ -243,7 +243,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md w-[36rem]">
+                                            <p className="font-[600] text-vulcan text-md">
                                                 {partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-'}
                                             </p>
                                         </div>
