@@ -193,7 +193,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "view_api_key_back_btn")
 	private WebElement viewApiKeyBackButton;
 	
-	@FindBy(xpath = "//*[text()='No Data Available.']")
+	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 	
 	@FindBy(id = "generate_api_key_btn")
@@ -672,5 +672,10 @@ public class ApiKeyPage extends BasePage {
 	public void clickOnActivatedStatusApiKeyFilter() {
 		clickOnElement(apiKeyStatusFilter);
 		clickOnElement(apiKeyStatusFilterOption2);
+	}
+	
+	public void enterPendingPolicyNameDropdown(String value) {
+		clickOnElement(policyNameDropdown);
+		enter(generatePolicyNameSearchInputBox,value);
 	}
 }

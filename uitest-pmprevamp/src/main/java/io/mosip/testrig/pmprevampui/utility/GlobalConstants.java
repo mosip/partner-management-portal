@@ -135,9 +135,6 @@ public class GlobalConstants {
 	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chipe make value displayed";
 	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chipe partner type lable displayed";
 	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chipe partner type value displayed";
-	public static final String isPublicKeyFormatErrorDisplayed = "Verify if Public key format error displayed";
-	public static final String isInvalidLogoUriErrorDisplayed = "Verify if Logo Uri format error displayed";
-	public static final String isInvalidRedirectUriErrorDisplayed = "Verify if Redirect Uri format error displayed";
 
 	public static final String isFtmModelLableDisplayed = "Verify if ftm chipe model lable displayed";
 	public static final String isFtmModelValueDisplayed = "Verify if ftm chipe model value displayed";
@@ -255,6 +252,32 @@ public class GlobalConstants {
 	public static final String isEditSecondRedirectUriTextBoxDisplayed = "Verify if edit second redirect uri textbox displayed";
 	public static final String isRedirectUri2TextBoxDisplayed = "Verify if authentication services title is displayed";
 	public static final String isLogoUriempty = "Verify if Enter Logo URI is precent";
+	public static final String isPolicyViewPageBackButtonEnabled = "Verify if policy view page back button displayed";
+	public static final String isTitleOfPolicyPageDisplayed = "Verify if title of policy page displyed";
+	public static final String isRequestPolicyButtonDisplayed = "Verify if request policy button displyed";
+	public static final String isNoDataAvailableDisplayed = "Verify if no data available displayed";
+	public static final String isPolicyNameDisplayed = "Verify if policy name displayed";
+	public static final String isnoDataAvailableTextDisplayed = "Verify if no data available displayed";
+	public static final String isPolicyDescriptionDisplayed = "Verify if policy description displayed";
+	public static final String isSideNavigationHomeIconDisplayed = "Verify if side navigation home icon displayed";
+	public static final String isAuthenticationServicesTitleDisplayed = "Verify if authentication service title displayed";
+	public static final String isAuthenticationServiceInfoTextDisplayed = "Verify if authentication service info text displayed";
+	public static final String isAuthenticationServiceIconDisplayed = "Verify if authentication service icon displayed";
+	public static final String isHumburgerOptionsExpandable = "Verify if humbburger options expandable";
+	public static final String isHumburgerOptionsCollapse = "Verify if humbburger options collapse";
+	public static final String isOrganizationIconWithNameDisplayed = "Verify if organization icon with name displayed";
+	public static final String isContactusLinkDisplayed = "Verify if contact link displayed";
+	public static final String isPolicyAlreadyApprovedMessageDisplayed = "Verify if policy already approved message displayed";
+	public static final String isPolicyPendingForApprovalMessageDisplayed = "Verify if policy pending for approval message displayed";
+	public static final String isOidcClientTabDisplayed = "Verify if oidc client tab displayed";
+	public static final String isPublicKeyFormatErrorDisplayed = "Verify if Public key format error displayed";
+	public static final String isInvalidLogoUriErrorDisplayed = "Verify if Logo Uri format error displayed";
+	public static final String isInvalidRedirectUriErrorDisplayed = "Verify if Redirect Uri format error displayed";
+	public static final String isThirdRedirectUriTextBoxDisplayed = "Verify if third Redirect Uri text box displayed";
+	public static final String isFourthRedirectUriTextBoxDisplayed = "Verify if fourth Redirect Uri text box displayed";
+	public static final String isFifthRedirectUriTextBoxDisplayed = "Verify if fifth Redirect Uri text box displayed";
+	
+	
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

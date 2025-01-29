@@ -10,7 +10,7 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "title_back_icon")
-	private WebElement partnerCertificateTitle;
+	private WebElement titleBackButton;
 
 	@FindBy(xpath = "//*[text()='Upload']")
 	private WebElement uploadButton;
@@ -105,7 +105,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partnerDomain_selector_dropdown_option2")
 	private WebElement partnerDomainSelectorDropdownOptionFtm;
 	
-	@FindBy(id = "upload_admin_certificate_btn")
+	@FindBy(id = "upload_trust_certificate_submit_btn")
 	private WebElement SubmitButtonForAdmin;
 
 	@FindBy(id = "confirmation_go_back_btn")
@@ -123,6 +123,9 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(xpath = "//*[text()='Self Signed Certificate not allowed as partner.']")
 	private WebElement errorCodeForSelfSignedCer;
+	
+	@FindBy(xpath = "//h1[text()='Partner Certificate']")
+	private WebElement partnerCertificateTitle;
 	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -322,4 +325,7 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(lastUploadTimeAndDate);
 	}
 	
+	public void clickOnTitleBackButton() {
+		 clickOnElement(titleBackButton);
+	}
 }

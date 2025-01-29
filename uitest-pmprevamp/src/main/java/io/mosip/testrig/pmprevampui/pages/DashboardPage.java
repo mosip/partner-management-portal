@@ -20,7 +20,6 @@ public class DashboardPage extends BasePage {
 	private WebElement selectPolicyGroupPopUp;
 
 	@FindBy(xpath = "//div[@class='relative w-full']/button")
-
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(xpath = "//*[text()='No Data Available.']")
@@ -62,10 +61,10 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "side_nav_device_provider_service_icon")
 	private WebElement sideNavDeviceProvider;
 
-	@FindBy(id = "header_hamburger_open_sidenav")
+	@FindBy(id = "hamburger_close_icon")
 	private WebElement hamburgerOpen;
 
-	@FindBy(id = "header_hamburger_close_sidenav")
+	@FindBy(id = "hamburger_open_icon")
 	private WebElement hamburgerClose;
 
 	@FindBy(id = "select_policy_group_view_text")
@@ -106,6 +105,30 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
 	private WebElement dashboardFtmChipproviderCardHeader;
+	
+	@FindBy(id = "dashboard_authentication_clients_list_card_description")
+	private WebElement authenticationServiceInfoText;
+	
+	@FindBy(id = "dashboard_authentication_clients_list_icon")
+	private WebElement authenticationServiceIcon;
+	
+	@FindBy(id = "side_nav_home_icon")
+	private WebElement homeOptionOfHamburger;
+	
+	@FindBy(id = "side_nav_partner_certificate_icon")
+	private WebElement partnerCertificateOfHamburger;
+	
+	@FindBy(id = "side_nav_policies_icon")
+	private WebElement policiesOfHamburger;
+	
+	@FindBy(id = "side_nav_authentication_service_icon")
+	private WebElement authenticationServiceOfHamburger;
+	
+	@FindBy(id = "orgIcon")
+	private WebElement organizationIconWithName;
+	
+	@FindBy(id = "footer_contact_us_link")
+	private WebElement contactusLink;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -125,8 +148,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isSelectPolicyGroupPopUpDisplayed() {
-
-		return isElementDisplayed(selectPolicyGroupPopUp);
+        return isElementDisplayed(selectPolicyGroupPopUp);
 	}
 
 	public boolean isSubmitButtonSelectPolicyGroupPopUpDisplayed() {
@@ -286,5 +308,54 @@ public class DashboardPage extends BasePage {
 	
 	public void clickOnCertificateTrustStore() {
 		clickOnElement(certificateTrustStore);
+	}
+	
+	public boolean isAuthenticationServiceInfoTextDisplayed() {
+		return isElementEnabled(authenticationServiceInfoText);
+	}
+	
+	public boolean isAuthenticationServiceIconDisplayed() {
+		return isElementEnabled(authenticationServiceIcon);
+	}
+	
+	public boolean isHumburgerOptionsExpandable() {
+		return isElementEnabled(homeOptionOfHamburger);
+	}
+	
+	public void clickOnHomeOptionOfHamburger() {
+		clickOnElement(homeOptionOfHamburger);
+	}
+	
+	public void clickOnPartnerCertificateOfHamburger() {
+		clickOnElement(partnerCertificateOfHamburger);
+	}
+	
+	public void clickOnPoliciesOfHamburger() {
+		clickOnElement(policiesOfHamburger);
+	}
+	
+	public void clickOnAuthenticationServiceOfHamburger() {
+		clickOnElement(authenticationServiceOfHamburger);
+	}
+	
+	public boolean isHumburgerOptionsCollapse() {
+		return isElementEnabled(hamburgerOpen);
+	}
+	
+	public boolean isOrganizationIconWithNameDisplayed() {
+		return isElementEnabled(organizationIconWithName);
+	}
+	
+	public boolean isContactusLinkDisplayed() {
+		return isElementEnabled(contactusLink);
+	}
+	
+	public void clickOnContactusLink() {
+		clickOnElement(contactusLink);
+		
+	}
+	public boolean isSideNavigationHomeIconDisplayed() {
+		return isElementEnabled(homeOptionOfHamburger);
+	
 	}
 }

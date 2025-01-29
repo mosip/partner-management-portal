@@ -32,11 +32,14 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'Please review the policy details carefully before taking appropriate action.')]")
 	private WebElement confirmationPopupDetailedMessage;
 	
-	@FindBy(xpath = "(//*[@id='partner_details_view_btn'])[1]")
-	private WebElement approveRejectButton;
-	
-	@FindBy(xpath = "(//*[contains(text(), 'Approve')])[3]")
+	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
+	
+	@FindBy(id = "reject_btn")
+	private WebElement rejectButton;
+	
+	@FindBy(id = "policy_name_filter")
+	private WebElement policyNameFilter;
 	
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
@@ -79,7 +82,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 	
 	public boolean isApproveRejectButtonDisplayed() {
-		return isElementEnabled(approveRejectButton);
+		return isElementEnabled(rejectButton);
 	}
 	
 	public boolean isApproveSubmitButtonDisplayed() {
@@ -87,11 +90,18 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 	
 	public void clickOnApproveRejectButton() {
-		clickOnElement(approveRejectButton);
+		clickOnElement(rejectButton);
 	}
 	
 	public void clickOnApproveSubmitButton() {
 		clickOnElement(approveButton);
 	}
 	
+	public void enterPendingPolicyNameInFilter(String value) {
+		enter(policyNameFilter,value);
+	}
+	
+	public void clickOnRejectButton() {
+		clickOnElement(rejectButton);
+	}
 }
