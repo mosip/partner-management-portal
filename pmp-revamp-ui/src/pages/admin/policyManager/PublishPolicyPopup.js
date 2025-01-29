@@ -49,7 +49,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     setPublishPolicySccesss(true);
-                    setSuccessMsg(t('publishPolicyPopup.successMsg', { policyName: policyDetails.policyName}));
+                    setSuccessMsg(t('publishPolicyPopup.successMsg'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -92,7 +92,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             {successMsg && (
-                                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
+                                <SuccessMessage successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-4 px-6">
                             <p className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 
