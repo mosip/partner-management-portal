@@ -747,9 +747,9 @@
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
         "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associées à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
-        "descriptionForSingularActive": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associées à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
+        "descriptionForSingularActive": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} stratégies en projet associées à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
         "descriptionForSingularDraft": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégie associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
-        "descriptionForBothSingular": "Il existe {{noOfActivePolicies}} stratégie active et {{noOfDraftPolicies}} projet de stratégie associée à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
+        "descriptionForBothSingular": "Il existe {{noOfActivePolicies}} stratégie active et {{noOfDraftPolicies}} projet de stratégie associée à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants:",
         "descriptionMsg1": "1. Désactivez toutes les politiques actives.",
         "descriptionMsg2": "2. Publiez puis désactivez tous les projets de politiques."
     },
