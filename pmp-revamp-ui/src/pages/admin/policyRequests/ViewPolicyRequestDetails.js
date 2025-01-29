@@ -85,7 +85,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md break-normal">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>

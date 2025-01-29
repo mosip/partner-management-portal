@@ -144,8 +144,8 @@ function ViewOidcClientDetails() {
                             </div>
 
                             <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                                <div className="flex flex-wrap py-1 max-[450px]:flex-col">
-                                    <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                <div className="flex flex-wrap py-1 max-[450px]:flex-col justify-between">
+                                    <div className="w-[36.5em] max-[600px]:w-[100%] mb-3">
                                         <p id='oidc_client_details_partner_id_label' className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.partnerId")}
                                         </p>
@@ -207,7 +207,7 @@ function ViewOidcClientDetails() {
                                             {formatPublicKey(oidcClientDetails.publicKey)}
                                         </pre>
                                     </div>
-                                    <div className="my-4 space-y-1">
+                                    <div className="my-4 space-y-1 w-[36rem]">
                                         <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-xs">
                                             {t("viewOidcClientDetails.logoUri")}
                                         </p>
@@ -215,8 +215,8 @@ function ViewOidcClientDetails() {
                                             {oidcClientDetails.logoUri}
                                         </p>
                                     </div>
-                                    <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
-                                        <div className="flex-col space-y-1 w-[50%]">
+                                    <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col justify-between">
+                                        <div className="flex-col space-y-1 w-[36rem]">
                                             <p id="oidc_client_details_redirect_uris" className="font-[600] text-suva-gray text-xs">
                                                 {t("viewOidcClientDetails.redirectUri")}
                                             </p>
