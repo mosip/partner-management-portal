@@ -746,7 +746,10 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "خطأ: تم اكتشاف سياسات في حالة مفعلة ومسودة!",
-        "description": "توجهناك {{noOfActivePolicies}} سياسة نشطة و{{noOfDraftPolicies}} سياسة مسودة مرتبطة بمجموعة السياسات هذه. للمتابعة في إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي:" ,
+        "description": "توجد {{noOfActivePolicies}} سياسات نشطة و{{noOfDraftPolicies}} مسودة سياسات مرتبطة بمجموعة السياسات هذه. لمتابعة إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي:",
+        "descriptionForSingularActive": "هناك {{noOfActivePolicies}} سياسة نشطة و{{noOfDraftPolicies}} مسودة سياسات مرتبطة بمجموعة السياسات هذه. لمتابعة إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي:",
+        "descriptionForSingularDraft": "هناك {{noOfActivePolicies}} سياسات نشطة و{{noOfActivePolicies}} مسودة سياسة مرتبطة بمجموعة السياسات هذه. لمتابعة إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي:",
+        "descriptionForBothSingular": "توجد {{noOfActivePolicies}} سياسة نشطة و{{noOfDraftPolicies}} مسودة سياسة مرتبطة بمجموعة السياسات هذه. لمتابعة إلغاء تنشيط مجموعة السياسات، يرجى التأكد مما يلي:",
         "descriptionMsg1": "1. قم بإلغاء تنشيط جميع السياسات النشطة.",
         "descriptionMsg2": "2. نشر كافة مسودات السياسات ثم إلغاء تنشيطها."
     },
@@ -814,7 +817,7 @@
     },
     "publishPolicyPopup": {
         "title": "سياسة النشر",
-        "description1": "بالنقر فوق نشر السياسة",
+        "description1": "بالنقر فوق نشر، السياسة -",
         "description2": "سيتم نشرها ولن تكون قابلة للتعديل بعد الآن. ستصبح متاحة لاختيار الشريك فقط بعد نشر السياسة.",
         "errorInPublishPolicy": "أثناء نشر السياسة، واجهنا خطأً.",
         "successMsg": "تم نشر {{policyName}} بنجاح!",

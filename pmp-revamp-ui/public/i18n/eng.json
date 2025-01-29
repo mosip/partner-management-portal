@@ -32,7 +32,7 @@
         "close": "Close",
         "unexpectedError": "We have encountered an unexpected error",
         "undoChanges": "Undo Changes",
-        "clear":"Clear"
+        "clear": "Clear"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -178,7 +178,7 @@
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroupName": "Policy Group",
-        "policyId":"Policy ID",
+        "policyId": "Policy ID",
         "policyName": "Policy Name",
         "creationDate": "Creation Date",
         "status": "Status",
@@ -732,16 +732,19 @@
     "activePoliciesDetectedMsg": {
         "header": "Error: Active Policies Detected!",
         "description1": "There are {{noOfActivePolicies}} active policies associated with this policy group. Please deactivate them before proceeding further",
-        "description2": "There is one policy associated with this policy group. Please deactivate that before proceeding further."
+        "description2": "There is {{noOfActivePolicies}} policy associated with this policy group. Please deactivate that before proceeding further."
     },
     "draftPoliciesDetectedMsg": {
         "header": "Error: Policies detected in Draft status!",
         "description1": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed.",
-        "description2": "There is one draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
+        "description2": "There is {{noOfDraftPolicies}} draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForSingularActive": "There are {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForSingularDraft": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForBothSingular": "There are {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
         "descriptionMsg1": "1. Deactivate all active policies.",
         "descriptionMsg2": "2. Publish and then deactivate all draft policies."
     },
@@ -809,7 +812,7 @@
     },
     "publishPolicyPopup": {
         "title": "Publish Policy",
-        "description1": "By clicking ‘Publish,’ the policy",
+        "description1": "By clicking ‘Publish,’ the policy - ",
         "description2": "will be published and no longer be editable. It will become available for partner selection only after the policy is published.",
         "errorInPublishPolicy": "While publishing the policy, we have encountered with an error.",
         "successMsg": "{{policyName}} has been published successfully!",

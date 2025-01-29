@@ -746,7 +746,10 @@
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Erreur : Politiques en statut activé et brouillon détectées !",
-        "description": "Il existe {{noOfActivePolicies}} politiques actives et {{noOfDraftPolicies}} projets de politiques associés à ce groupe de politiques. Pour procéder à la désactivation du groupe de politiques, veuillez vous assurer des points suivants :",
+        "description": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associées à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
+        "descriptionForSingularActive": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégies associées à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
+        "descriptionForSingularDraft": "Il existe {{noOfActivePolicies}} stratégies actives et {{noOfDraftPolicies}} projets de stratégie associés à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
+        "descriptionForBothSingular": "Il existe {{noOfActivePolicies}} stratégie active et {{noOfDraftPolicies}} projet de stratégie associée à ce groupe de stratégies. Pour procéder à la désactivation du groupe de stratégies, veuillez vous assurer des points suivants :",
         "descriptionMsg1": "1. Désactivez toutes les politiques actives.",
         "descriptionMsg2": "2. Publiez puis désactivez tous les projets de politiques."
     },
@@ -814,7 +817,7 @@
     },
     "publishPolicyPopup": {
         "title": "Politique de publication",
-        "description1": "En cliquant sur « Publier », la politique",
+        "description1": "En cliquant sur « Publier », la politique - ",
         "description2": "sera publié et ne sera plus modifiable. Il ne sera disponible pour la sélection des partenaires qu'après la publication de la politique.",
         "errorInPublishPolicy": "Lors de la publication de la politique, nous avons rencontré une erreur.",
         "successMsg": "{{policyName}} a été publié avec succès !",
