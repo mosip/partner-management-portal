@@ -49,11 +49,11 @@ function ViewApiKeyDetails() {
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(apiKeyDetails.createdDateTime, "date", true)}
+                                        formatDate(apiKeyDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate(apiKeyDetails.createdDateTime, "time", true)}
+                                    {formatDate(apiKeyDetails.createdDateTime, "time")}
                                 </div>
                             </div>
                         </div>

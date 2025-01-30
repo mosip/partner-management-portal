@@ -88,12 +88,12 @@ function ViewCertificateDetails() {
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`font-semibold text-sm text-dark-blue`}>
                                         {t("viewCertificateDetails.uploadedOn") + ' ' +
-                                            formatDate(viewCertDetails.uploadTime, "date", true)
+                                            formatDate(viewCertDetails.uploadTime, "date")
                                         }
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(viewCertDetails.uploadTime, "time", true)}
+                                        {formatDate(viewCertDetails.uploadTime, "time")}
                                     </div>
                                 </div>
                             </div>
@@ -162,13 +162,13 @@ function ViewCertificateDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="trust_certificate_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('certificatesList.validFrom')}</p>
                                             <p id="trust_certificate_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
-                                                {formatDate(viewCertDetails.validFromDate, 'dateTime', true)}
+                                                {formatDate(viewCertDetails.validFromDate, 'dateTime')}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray`}>{t('viewCertificateDetails.validTo')}</p>
                                             <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(viewCertDetails.validTillDate, 'dateTime', true)}
+                                                {formatDate(viewCertDetails.validTillDate, 'dateTime')}
                                             </p>
                                         </div>
                                     </div>

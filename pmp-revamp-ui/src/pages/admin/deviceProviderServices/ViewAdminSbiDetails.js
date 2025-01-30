@@ -67,11 +67,11 @@ function ViewAdminSbiDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                            formatDate(sbiDetails.createdDateTime, "date", true)}
+                                            formatDate(sbiDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(sbiDetails.createdDateTime, "time", true)}
+                                        {formatDate(sbiDetails.createdDateTime, "time")}
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">
-                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date", true)}
+                                        {formatDate(sbiDetails.sbiCreatedDateTime, "date")}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -123,7 +123,7 @@ function ViewAdminSbiDetails() {
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
                                     <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
-                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date", true)}
+                                        {formatDate(sbiDetails.sbiExpiryDateTime, "date")}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>

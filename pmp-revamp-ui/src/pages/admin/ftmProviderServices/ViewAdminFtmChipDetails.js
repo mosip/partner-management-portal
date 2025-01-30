@@ -150,11 +150,11 @@ function ViewAdminFtmChipDetails() {
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
-                                                    formatDate(ftmDetails.createdDateTime, "date", true)}
+                                                    formatDate(ftmDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(ftmDetails.createdDateTime, "time", true)}
+                                                {formatDate(ftmDetails.createdDateTime, "time")}
                                             </div>
                                         </div>
                                     </div>
@@ -239,13 +239,13 @@ function ViewAdminFtmChipDetails() {
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
-                                                        {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime', true)}
+                                                        {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                        {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', true)}
+                                                        {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                             </div>

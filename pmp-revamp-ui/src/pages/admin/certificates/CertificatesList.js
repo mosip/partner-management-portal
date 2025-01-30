@@ -284,9 +284,9 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", true)}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", true)}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", true)}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime")}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime")}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime")}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                       <td className="text-center cursor-default">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
