@@ -52,11 +52,11 @@ function ViewPolicyDetails() {
                             </div>
                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-xs text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
-                                    formatDate(policyDetails.createdDateTime, "date", true)}
+                                    formatDate(policyDetails.createdDateTime, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
                             <div className="font-semibold text-xs text-dark-blue">
-                                {formatDate(policyDetails.createdDateTime, "time", true)}
+                                {formatDate(policyDetails.createdDateTime, "time")}
                             </div>
                         </div>
                     </div>
@@ -139,11 +139,11 @@ function ViewPolicyDetails() {
                                                 {policyDetails.updatedDateTime && (
                                                     <div className="flex">
                                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(policyDetails.updatedDateTime, "date", true)}
+                                                            {formatDate(policyDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
                                                         <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate(policyDetails.updatedDateTime, "time", true)}
+                                                            {formatDate(policyDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
                                                 )}
@@ -168,11 +168,11 @@ function ViewPolicyDetails() {
                                             <div className="flex items-center justify-start">
                                                 <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
-                                                        formatDate(policyDetails.createdDateTime, "date", true)}
+                                                        formatDate(policyDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-semibold text-xs text-dark-blue">
-                                                    {formatDate(policyDetails.createdDateTime, "time", true)}
+                                                    {formatDate(policyDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>
                                         </div>

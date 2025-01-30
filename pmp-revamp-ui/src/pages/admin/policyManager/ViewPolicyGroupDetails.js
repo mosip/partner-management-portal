@@ -60,12 +60,12 @@ function ViewPolicyGroupDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(policyGroupDetails.crDtimes, "date", true)
+                                            formatDate(policyGroupDetails.crDtimes, "date")
                                         }
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(policyGroupDetails.crDtimes, "time", true)}
+                                        {formatDate(policyGroupDetails.crDtimes, "time")}
                                     </div>
                                 </div>
                             </div>
