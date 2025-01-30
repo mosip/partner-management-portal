@@ -19,6 +19,14 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const changePolicyGroupSelection = (fieldName, selectedValue) => {
         setSelectedPolicyGroup(selectedValue);
     };
@@ -41,12 +49,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }, []);
 
     const cancelPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp();
     };
 
     const clickOnClose = () => {
-        document.body.style.overflow = "auto"
         window.location.reload();
     };
 

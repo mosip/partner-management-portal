@@ -196,14 +196,12 @@ function PartnersList() {
       setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
-      document.body.style.overflow = "hidden";
     }
   };
 
   const closeDeactivatePopup = () => {
     setShowDeactivatePopup(false);
     setSelectedPartner({});
-    document.body.style.overflow = "auto";
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {

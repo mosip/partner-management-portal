@@ -122,7 +122,6 @@ function ApiKeysList() {
             setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 

@@ -168,7 +168,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(true);
             setSelectedDevice(device);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -181,14 +180,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
                 )
             );
-            document.body.style.overflow = "auto";
         }
     };
 
     const closeApproveRejectPopup = () => {
         setSelectedDevice({});
         setShowDeviceDetailApproveRejectPopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const deactivateDevice = (selectedDevice) => {
@@ -200,7 +197,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
 
     };
@@ -221,7 +217,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const closeDeactivatePopup = () => {
         setSelectedDevice({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {

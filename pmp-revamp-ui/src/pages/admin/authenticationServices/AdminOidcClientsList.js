@@ -176,7 +176,6 @@ function AdminOidcClientsList() {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
             setShowClientIdPopup(true);
-            document.body.style.overflow = "hidden"
         }
     };
 
@@ -202,7 +201,6 @@ function AdminOidcClientsList() {
                 setSelectedOidcClient(client);
                 setDeactivateRequest(request);
                 setShowDeactivatePopup(true);
-                document.body.style.overflow = "hidden";
             } else {
                 setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
             }
@@ -224,7 +222,6 @@ function AdminOidcClientsList() {
     const closeDeactivatePopup = () => {
         setSelectedOidcClient({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const cancelErrorMsg = () => {

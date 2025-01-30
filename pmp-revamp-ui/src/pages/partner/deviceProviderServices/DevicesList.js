@@ -188,7 +188,6 @@ function DevicesList() {
             setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
