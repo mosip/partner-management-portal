@@ -326,10 +326,10 @@ function AdminSbiList() {
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiId}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date", true)}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date", true)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date")}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date")}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date", true)}</td>
+                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date")}</td>
                                                                     <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
                                                                         <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(sbi.status, t)}
