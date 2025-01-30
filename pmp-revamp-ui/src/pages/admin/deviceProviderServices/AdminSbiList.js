@@ -184,7 +184,6 @@ function AdminSbiList() {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
             setShowSbiApproveRejectPopUp(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -197,14 +196,12 @@ function AdminSbiList() {
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
                 )
             );
-            document.body.style.overflow = "auto";
         }
     }
 
     const closeApproveRejectPopup = () => {
         setShowSbiApproveRejectPopUp(false);
         setSelectedSbi({});
-        document.body.style.overflow = "auto";
     };
 
     const deactivateSbi = (selectedSbi) => {
@@ -216,7 +213,6 @@ function AdminSbiList() {
             setActionId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -236,7 +232,6 @@ function AdminSbiList() {
     const closeDeactivatePopup = () => {
         setSelectedSbi({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const cancelErrorMsg = () => {
@@ -346,7 +341,7 @@ function AdminSbiList() {
                                                                             <p className={`${sbi.countOfAssociatedDevices > 0 ? 'text-tory-blue' : 'text-[#969696]'} px-2`}>{sbi.countOfAssociatedDevices}</p>
                                                                         </button>
                                                                     </td>
-                                                                    <td className="text-center">
+                                                                    <td className="text-center cursor-default">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...

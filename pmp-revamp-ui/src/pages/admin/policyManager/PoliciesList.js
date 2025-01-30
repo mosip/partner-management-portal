@@ -180,7 +180,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setSelectedPolicy(policy);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -189,7 +188,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setShowClonePopup(true);
             setActionId(-1);
             setSelectedPolicy(selectedPolicy);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -198,7 +196,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setShowPublishPolicyPopup(true);
             setActionId(-1);
             setSelectedPolicy(selectedPolicy);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -216,19 +213,16 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                 policy.policyId === selectedPolicy.policyId ? { ...policy, status: 'activated' } : policy
             )
         );
-        document.body.style.overflow = 'auto';
     }
 
     const closePublishPolicyPopup = () => {
         setSelectedPolicy({});
         setShowPublishPolicyPopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
         setShowClonePopup(false);
         setSelectedPolicy({});
-        document.body.style.overflow = 'auto';
     };
 
     useEffect(() => {
@@ -258,7 +252,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const closeDeactivatePopup = () => {
         setSelectedPolicy({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const sortAscOrder = (header) => {
@@ -380,7 +373,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                 {getStatusCode(policy.status, t)}
                                                                             </div>
                                                                         </td>
-                                                                        <td className="text-center">
+                                                                        <td className="text-center cursor-default">
                                                                             <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                                 <button id={"policies_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                     ...

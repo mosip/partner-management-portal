@@ -38,6 +38,9 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "add_device_back_view_devices_btn")
 	private WebElement backToViewDevicesButton;
 
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement blockProceedButton;
+
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationButton;
 
@@ -115,6 +118,9 @@ public class AddDevicePage extends BasePage {
 
 	@FindBy(xpath = "//input[@value='Automation25']")
 	private WebElement twentyFifthDevice;
+
+	@FindBy(xpath = "//p[contains(text(), 'Device Details already exists')]")
+	private WebElement duplicateDeviceErrorMessage;
 
 	public AddDevicePage(WebDriver driver) {
 		super(driver);
@@ -289,6 +295,10 @@ public class AddDevicePage extends BasePage {
 		clickOnElement(backToViewDevicesButton);
 	}
 
+	public void clickOnProceed() {
+		clickOnElement(blockProceedButton);
+	}
+
 	public boolean isSuccessMessageDisplayed() {
 		return isElementDisplayed(successMessage);
 	}
@@ -352,6 +362,10 @@ public class AddDevicePage extends BasePage {
 
 	public boolean isTwentyFifthDeviceIsDisplayed() {
 		return isElementDisplayed(twentyFifthDevice);
+	}
+
+	public String getDuplicateDeviceErrorMessage() {
+		return getTextFromLocator(duplicateDeviceErrorMessage);
 	}
 
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getPartnerManagerUrl, handleServiceErrors, createRequest } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
@@ -13,9 +13,16 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     const [errorMsg, setErrorMsg] = useState('');
     const [dataLoaded, setDataLoaded] = useState(true);
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => setErrorMsg("");
     const closingPopUp = () => {
-        document.body.style.overflow = 'auto';
         closePopUp();
     };
 

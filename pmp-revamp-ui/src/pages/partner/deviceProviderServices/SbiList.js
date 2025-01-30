@@ -126,7 +126,6 @@ function SbiList() {
             setDeactivateBtnId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 

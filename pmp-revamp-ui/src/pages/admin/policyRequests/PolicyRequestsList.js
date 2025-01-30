@@ -194,14 +194,12 @@ function PolicyRequestsList() {
           policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status) } : policyRequest
         )
       );
-      document.body.style.overflow = "auto";
     }
   }
 
   const closePolicyRequestPopup = () => {
     setShowPopup(false);
     setSelectedPolicyRequest({});
-    document.body.style.overflow = 'auto';
   };
 
   useEffect(() => {
@@ -213,7 +211,6 @@ function PolicyRequestsList() {
       setShowPopup(true);
       setViewPartnersId(-1);
       setSelectedPolicyRequest(policyRequest);
-      document.body.style.overflow = "hidden";
     }
   };
 
@@ -320,7 +317,7 @@ function PolicyRequestsList() {
                                           {getStatusCode(policyRequest.status, t)}
                                         </div>
                                       </td>
-                                      <td className="text-center">
+                                      <td className="text-center cursor-default">
                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                           <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...

@@ -76,6 +76,8 @@ function UploadTrustCertificate() {
     }, [selectedDomain, certificateData, isSubmitClicked]);
 
     const clear = () => {
+        setErrorCode("");
+        setErrorMsg("");
         setFileName("");
         setCertificateData("");
         setSelectedDomain("");;
