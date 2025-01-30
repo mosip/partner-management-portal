@@ -111,11 +111,11 @@ function ViewOidcClientDetails() {
                                         </div>
                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                             {t("viewOidcClientDetails.createdOn") + ' ' +
-                                                formatDate(oidcClientDetails.createdDateTime, "date", true)}
+                                                formatDate(oidcClientDetails.createdDateTime, "date")}
                                         </div>
                                         <div className="mx-1 text-gray-300">|</div>
                                         <div className="font-semibold text-sm text-dark-blue">
-                                            {formatDate(oidcClientDetails.createdDateTime, "time", true)}
+                                            {formatDate(oidcClientDetails.createdDateTime, "time")}
                                         </div>
                                     </div>
                                 </div>

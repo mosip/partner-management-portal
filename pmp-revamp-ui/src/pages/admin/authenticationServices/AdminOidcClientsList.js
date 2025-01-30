@@ -318,7 +318,7 @@ function AdminOidcClientsList() {
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyGroupName ? client.policyGroupName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyName ? client.policyName : '-'}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.clientNameEng}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{formatDate(client.createdDateTime, "date", true)}</td>
+                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{formatDate(client.createdDateTime, "date")}</td>
                                                                     <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
                                                                         <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(client.status, t)}

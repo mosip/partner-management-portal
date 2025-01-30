@@ -343,7 +343,7 @@ function PolicyGroupList() {
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.id}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.name}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className={`px-2`}>{policyGroup.desc}</td>
-                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-3">{formatDate(policyGroup.crDtimes, "date", true)}</td>
+                                                                    <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)} className="px-3">{formatDate(policyGroup.crDtimes, "date")}</td>
                                                                     <td onClick={() => policyGroup.isActive && viewPolicyGroupDetails(policyGroup)}>
                                                                         <div className={`${policyGroup.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-3 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {policyGroup.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}

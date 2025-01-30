@@ -311,7 +311,7 @@ function PolicyRequestsList() {
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date', true)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date')}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1 text-xs font-semibold rounded-md`}>
                                           {getStatusCode(policyRequest.status, t)}
