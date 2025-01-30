@@ -25,6 +25,13 @@ function SelectPolicyPopup() {
     const maxWords = 20;
     const displayText = isExpanded ? descriptionText : `${descriptionText.split(' ').slice(0, maxWords).join(' ')}...`;
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
 
     const expandDescription = () => {
         setIsExpanded(!isExpanded);
@@ -48,7 +55,6 @@ function SelectPolicyPopup() {
 
     const clickOnSubmit = async () => {
         setDataLoaded(false);
-        document.body.style.overflow = "auto";
         const userProfile = getUserProfile();
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,

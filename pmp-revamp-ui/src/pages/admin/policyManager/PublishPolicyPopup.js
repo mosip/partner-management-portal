@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
@@ -15,6 +15,14 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -24,12 +32,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     };
 
     const cancelPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp();
     };
 
     const clickOnClose = () => {
-        document.body.style.overflow = "auto"
         onClickPublish();
     };
 

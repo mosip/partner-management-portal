@@ -38,7 +38,6 @@ function ViewFtmChipDetails() {
     }, []);
 
     const clickOnUpload = () => {
-        document.body.style.overflow = "hidden";
         const requiredDataForCertUpload = {
             partnerType: "FTM_Provider",
             uploadHeader: 'addFtm.uploadFtmCertHeader',
@@ -61,7 +60,6 @@ function ViewFtmChipDetails() {
     };
 
     const closePopup = (state, btnName) => {
-        document.body.style.overflow = "auto";
         if (state && btnName === 'cancel') {
             setShowPopup(false);
         } else if (state && btnName === 'close') {

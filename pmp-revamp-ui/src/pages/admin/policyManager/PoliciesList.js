@@ -180,7 +180,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setSelectedPolicy(policy);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -189,7 +188,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setShowClonePopup(true);
             setActionId(-1);
             setSelectedPolicy(selectedPolicy);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -198,7 +196,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             setShowPublishPolicyPopup(true);
             setActionId(-1);
             setSelectedPolicy(selectedPolicy);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -216,19 +213,16 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                 policy.policyId === selectedPolicy.policyId ? { ...policy, status: 'activated' } : policy
             )
         );
-        document.body.style.overflow = 'auto';
     }
 
     const closePublishPolicyPopup = () => {
         setSelectedPolicy({});
         setShowPublishPolicyPopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const closeClonePolicyPopup = () => {
         setShowClonePopup(false);
         setSelectedPolicy({});
-        document.body.style.overflow = 'auto';
     };
 
     useEffect(() => {
@@ -258,7 +252,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const closeDeactivatePopup = () => {
         setSelectedPolicy({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const sortAscOrder = (header) => {

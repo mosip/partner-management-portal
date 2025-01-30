@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
@@ -20,12 +20,19 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     const [activeDraftPoliciesDescr1, setActiveDraftPoliciesDescr1] = useState('');
     const [activeDraftPoliciesDescr2, setActiveDraftPoliciesDescr2] = useState('');
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const closingPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp()
     };
 
@@ -43,7 +50,6 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow = "auto"
         try {
             let response;
             if (popupData.isDeactivatePolicyGroup) {
@@ -71,11 +77,9 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     if (popupData.isDeactivatePolicyGroup && (errorCode === 'PMS_POL_056' || errorCode === 'PMS_POL_069' || errorCode === 'PMS_POL_070')) {
                         await getAssociatedPolicies(errorCode);
                         setShowAlertErrorMessage(true);
-                        document.body.style.overflow = "hidden";
                     } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
                         setPolicyErrorMessage(errorCode);
                         setShowAlertErrorMessage(true);
-                        document.body.style.overflow = "hidden";
                     } else {
                         setErrorCode(errorCode);
                         setErrorMsg(errorMessage);
@@ -150,7 +154,6 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
 
     const closeErrorPopUp = () => {
         setShowAlertErrorMessage(false);
-        document.body.style.overflow = "auto";
         closePopUp();
     };
 
