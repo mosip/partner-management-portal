@@ -184,7 +184,6 @@ function AdminSbiList() {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
             setShowSbiApproveRejectPopUp(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -197,14 +196,12 @@ function AdminSbiList() {
                     sbi.sbiId === selectedSbi.sbiId ? { ...sbi, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : sbi
                 )
             );
-            document.body.style.overflow = "auto";
         }
     }
 
     const closeApproveRejectPopup = () => {
         setShowSbiApproveRejectPopUp(false);
         setSelectedSbi({});
-        document.body.style.overflow = "auto";
     };
 
     const deactivateSbi = (selectedSbi) => {
@@ -216,7 +213,6 @@ function AdminSbiList() {
             setActionId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -236,7 +232,6 @@ function AdminSbiList() {
     const closeDeactivatePopup = () => {
         setSelectedSbi({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const cancelErrorMsg = () => {

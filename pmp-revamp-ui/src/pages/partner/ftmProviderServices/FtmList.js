@@ -189,7 +189,6 @@ function FtmList() {
       setSelectedFtm(selectedFtmData);
       setDeactivateRequest(request);
       setShowDeactivatePopup(true);
-      document.body.style.overflow = "hidden";
     }
   };
 

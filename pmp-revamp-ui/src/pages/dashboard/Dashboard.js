@@ -106,7 +106,6 @@ function Dashboard() {
               //3. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
-              document.body.style.overflow = "hidden";
               isSelectPolicyPopupVisible = true;
             } else {
               //4. register the new user in PMS
@@ -156,7 +155,6 @@ function Dashboard() {
       await fetchUserConsent();
       if (!isUserConsentGiven) {
         setShowConsentPopup(true);
-        document.body.style.overflow = "hidden";
       }
     }
   }

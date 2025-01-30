@@ -33,7 +33,6 @@ function PartnerCertificatesList() {
     }, [dropdownRefs]);
 
     const clickOnUpload = (partner) => {
-        document.body.style.overflow = "hidden";
         const request = {
             partnerId: partner.partnerId,
             partnerDomain: getPartnerDomainType(partner.partnerType),
@@ -46,7 +45,6 @@ function PartnerCertificatesList() {
     const closePopup = (state, btnName) => {
         if (state) {
             setShowPopup(false);
-            document.body.style.overflow = "auto";
             window.location.reload();
         }
     };

@@ -194,14 +194,12 @@ function PolicyRequestsList() {
           policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status) } : policyRequest
         )
       );
-      document.body.style.overflow = "auto";
     }
   }
 
   const closePolicyRequestPopup = () => {
     setShowPopup(false);
     setSelectedPolicyRequest({});
-    document.body.style.overflow = 'auto';
   };
 
   useEffect(() => {
@@ -213,7 +211,6 @@ function PolicyRequestsList() {
       setShowPopup(true);
       setViewPartnersId(-1);
       setSelectedPolicyRequest(policyRequest);
-      document.body.style.overflow = "hidden";
     }
   };
 

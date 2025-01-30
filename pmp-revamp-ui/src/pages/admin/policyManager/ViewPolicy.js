@@ -65,7 +65,6 @@ function ViewPolicy() {
 
     const showUploadedJsonData = () => {
         setPreviewJsonPopup(true);
-        document.body.style.overflow = 'hidden';
     };
 
     const downloadPolicyData = (policyJsonData) => {
@@ -74,7 +73,6 @@ function ViewPolicy() {
 
     const closePopUp = () => {
         setPreviewJsonPopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const getPolicyStatus = (policy) => {

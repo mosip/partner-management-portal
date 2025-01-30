@@ -154,7 +154,6 @@ function AdminFtmList() {
             setShowFtmApproveRejectPopup(true);
             setActionId(-1);
             setSelectedFtm(ftm);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -168,14 +167,12 @@ function AdminFtmList() {
                     ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : ftm
                 )
             );
-            document.body.style.overflow = "auto";
         }
     };
 
     const closeApproveRejectPopup = () => {
         setSelectedFtm({});
         setShowFtmApproveRejectPopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const deactivateFtmDetails = (ftm) => {
@@ -187,7 +184,6 @@ function AdminFtmList() {
             setDeactivateRequest(request);
             setSelectedFtm(ftm);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -207,7 +203,6 @@ function AdminFtmList() {
     const closeDeactivatePopup = () => {
         setSelectedFtm({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {
