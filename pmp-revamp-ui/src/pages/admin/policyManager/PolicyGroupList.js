@@ -224,7 +224,6 @@ function PolicyGroupList() {
     const closePopup = () => {
         setShowDeactivatePolicyGroupPopup(false);
         setSelectedPolicyGroup({});
-        document.body.style.overflow = 'auto';
     };
 
     useEffect(() => {
@@ -240,7 +239,6 @@ function PolicyGroupList() {
             setActionId(-1);
             setDeactivateRequest(request);
             setShowDeactivatePolicyGroupPopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 

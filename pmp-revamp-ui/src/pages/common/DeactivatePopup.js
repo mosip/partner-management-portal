@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
@@ -14,12 +14,20 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const closingPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp()
     };
 
@@ -36,7 +44,6 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow = "auto"
         try {
             let response;
             if (popupData.apiKeyLabel) {

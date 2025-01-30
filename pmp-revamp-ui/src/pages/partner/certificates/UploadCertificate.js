@@ -29,6 +29,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const clickOnCancel = () => {
         closePopup(true, 'cancel');
     };

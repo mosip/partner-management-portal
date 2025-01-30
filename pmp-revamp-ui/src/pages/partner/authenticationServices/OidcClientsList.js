@@ -152,7 +152,6 @@ function OidcClientsList() {
                         setViewClientId(-1);
                         setSelectedOidcClient(selectedClientdata);
                         setShowDeactivatePopup(true);
-                        document.body.style.overflow = "hidden";
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -178,7 +177,6 @@ function OidcClientsList() {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
             setShowPopup(true);
-            document.body.style.overflow = "hidden"
         }
     };
 
