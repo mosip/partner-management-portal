@@ -132,7 +132,6 @@ public class DBManager extends BaseClass {
 			DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
 					ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
 					TestRunner.getResourcePath() + "\\" + "config\\partnerRevampDataDeleteQueries.txt");
-			System.exit(0);
 	 }
 }
 
