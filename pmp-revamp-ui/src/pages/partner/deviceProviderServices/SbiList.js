@@ -281,15 +281,15 @@ function SbiList() {
                                                         <div className="flex flex-row justify-evenly font-semibold pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.createdDateTime, 'date', true)}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.createdDateTime, 'date')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className="text-xs text-suva-gray">{t('sbiList.sbiCreatedDate')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date', true)}</p>
+                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
                                                                 <p className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
-                                                                <p className={`text-sm text-vulcan ${!(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : ''} `}>{formatDate(sbi.sbiExpiryDateTime, 'date', true)}</p>
+                                                                <p className={`text-sm ${(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : 'text-vulcan'} `}>{formatDate(sbi.sbiExpiryDateTime, 'date')}</p>
                                                             </div>
                                                         </div>
                                                     </div>

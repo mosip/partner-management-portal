@@ -1,15 +1,12 @@
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
-export const formatDate = (dateString, format, isTimeInUTC) => {
+export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
 
     const withoutOffset = dateString.replace(/([+-]\d{2}:\d{2})$/, "");
     let date = new Date(withoutOffset);
-
-    if (isTimeInUTC) {
-        date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
-    }
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     switch (format) {
         case 'dateTime':
             return date.toLocaleString();

@@ -378,7 +378,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.make}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.model}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date', true)}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date')}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2 mx-2">
                                                                         <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(device.status, t)}

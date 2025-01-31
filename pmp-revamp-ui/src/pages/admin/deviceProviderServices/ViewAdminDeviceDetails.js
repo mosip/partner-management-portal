@@ -69,11 +69,11 @@ function ViewAdminDeviceDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
-                                            formatDate(deviceDetails.createdDateTime, "date", true)}
+                                            formatDate(deviceDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(deviceDetails.createdDateTime, "time", true)}
+                                        {formatDate(deviceDetails.createdDateTime, "time")}
                                     </div>
                                 </div>
                             </div>

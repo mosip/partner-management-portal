@@ -324,7 +324,7 @@ function OidcClientsList() {
                                                                     <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
-                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date', true)}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date')}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
                                                                         <div className={`${bgOfStatus(client.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(client.status, t)}
