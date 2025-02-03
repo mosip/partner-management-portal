@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import io.mosip.testrig.pmpui.authentication.fw.precon.JsonPrecondtion;
 import io.mosip.testrig.pmpui.authentication.fw.util.RestClient;
+import io.mosip.testrig.pmpui.dbaccess.DBManager;
 import io.mosip.testrig.pmpui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpui.kernel.util.KernelAuthentication;
 import io.mosip.testrig.pmpui.kernel.util.KeycloakUserManager;
@@ -302,6 +303,7 @@ public class AdminTestUtil extends BaseTestCaseFunc  {
 //			
 //	    	return "";
 //	    }
+	 
 	 public static void initialize() {
 		 String adminuser="";
 	    	if (initialized == false) {
