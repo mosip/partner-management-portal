@@ -291,13 +291,13 @@ function AdminApiKeysList() {
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>
-                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date", true)}</td>
+                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date")}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)}>
                                                                         <div className={`${bgOfStatus(apiKey.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(apiKey.status, t)}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center">
+                                                                    <td className="text-center cursor-default">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...

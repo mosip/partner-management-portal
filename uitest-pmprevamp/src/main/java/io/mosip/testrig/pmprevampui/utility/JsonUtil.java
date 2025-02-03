@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.mosip.testrig.pmprevampui.pages.BasePage;
-import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 
 public class JsonUtil {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(JsonUtil.class);

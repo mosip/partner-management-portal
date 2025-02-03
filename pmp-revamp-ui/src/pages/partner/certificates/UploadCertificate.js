@@ -29,6 +29,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const clickOnCancel = () => {
         closePopup(true, 'cancel');
     };
@@ -180,7 +188,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setPartnerDomainType(getPartnerDomainType(popupData.partnerType));
         if (popupData.isCertificateAvailable) {
             const dateString = popupData.certificateUploadDateTime.toString();
-            const formatted = formatDate(dateString, 'dateTime', popupData.isUploadFtmCertificate ? true : false);
+            const formatted = formatDate(dateString, 'dateTime');
             setFormattedDate(formatted);
         }
     }, [popupData.isCertificateAvailable, popupData.certificateUploadDateTime, popupData, getPartnerType]);

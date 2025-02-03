@@ -135,7 +135,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -180,11 +180,11 @@ function ViewPartnerDetails() {
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
-                                                    formatDate(partnerDetails.createdDateTime, "date", true)}
+                                                    formatDate(partnerDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(partnerDetails.createdDateTime, "time", true)}
+                                                {formatDate(partnerDetails.createdDateTime, "time")}
                                             </div>
                                         </div>
                                     </div>
@@ -283,11 +283,11 @@ function ViewPartnerDetails() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
-                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime", false)}</p>
+                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime")}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime", false)}</p>
+                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime")}</p>
                                                 </div>
                                             </div>
                                         </div>

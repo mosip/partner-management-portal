@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import io.mosip.testrig.pmprevampui.authentication.fw.util.RestClient;
 import io.mosip.testrig.pmprevampui.dbaccess.DBManager;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmprevampui.kernel.util.KernelAuthentication;
 import io.mosip.testrig.pmprevampui.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmprevampui.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;

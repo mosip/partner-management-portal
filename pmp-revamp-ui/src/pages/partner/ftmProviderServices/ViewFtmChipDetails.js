@@ -38,7 +38,6 @@ function ViewFtmChipDetails() {
     }, []);
 
     const clickOnUpload = () => {
-        document.body.style.overflow = "hidden";
         const requiredDataForCertUpload = {
             partnerType: "FTM_Provider",
             uploadHeader: 'addFtm.uploadFtmCertHeader',
@@ -61,7 +60,6 @@ function ViewFtmChipDetails() {
     };
 
     const closePopup = (state, btnName) => {
-        document.body.style.overflow = "auto";
         if (state && btnName === 'cancel') {
             setShowPopup(false);
         } else if (state && btnName === 'close') {
@@ -174,11 +172,11 @@ function ViewFtmChipDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(ftmDetails.createdDateTime, "date", true)}
+                                            formatDate(ftmDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(ftmDetails.createdDateTime, "time", true
+                                        {formatDate(ftmDetails.createdDateTime, "time"
                                         )}
                                     </div>
                                 </div>
@@ -286,13 +284,13 @@ function ViewFtmChipDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                             <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', true)}
+                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime')}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className={`font-semibold text-xs text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                             <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${ftmDetails.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', true)}
+                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}
                                             </p>
                                         </div>
                                     </div>

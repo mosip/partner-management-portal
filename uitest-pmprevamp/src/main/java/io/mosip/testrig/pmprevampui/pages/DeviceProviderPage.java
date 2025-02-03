@@ -58,6 +58,9 @@ public class DeviceProviderPage extends BasePage {
 	@FindBy(id = "block_message_cancel")
 	private WebElement navigationAlertCancel;
 
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement navigationAlertProceed;
+
 	@FindBy(xpath = "//*[contains(@class, 'w-full break-words')]")
 	private WebElement partnerType;
 
@@ -279,6 +282,10 @@ public class DeviceProviderPage extends BasePage {
 		return isElementDisplayed(listOfSbiTitleButton);
 	}
 
+	public void clickOnListOfSbiTitleButton() {
+		clickOnElement(listOfSbiTitleButton);
+	}
+
 	public boolean isAddSbiDetailsInfoMessageDisplayed() {
 		return isElementDisplayed(addSbiDetailsInfoMessage);
 	}
@@ -345,6 +352,10 @@ public class DeviceProviderPage extends BasePage {
 
 	public boolean isExpiryDateLabelDisplayed() {
 		return isElementDisplayed(sbiExpiryDateLabel);
+	}
+
+	public void clickOnAlertProceed() {
+		clickOnElement(navigationAlertProceed);
 	}
 
 }

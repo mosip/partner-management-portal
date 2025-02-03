@@ -33,7 +33,6 @@ function PartnerCertificatesList() {
     }, [dropdownRefs]);
 
     const clickOnUpload = (partner) => {
-        document.body.style.overflow = "hidden";
         const request = {
             partnerId: partner.partnerId,
             partnerDomain: getPartnerDomainType(partner.partnerType),
@@ -46,7 +45,6 @@ function PartnerCertificatesList() {
     const closePopup = (state, btnName) => {
         if (state) {
             setShowPopup(false);
-            document.body.style.overflow = "auto";
             window.location.reload();
         }
     };
@@ -227,11 +225,11 @@ function PartnerCertificatesList() {
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime', false)}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime')}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
                                                     <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDateTime, 'dateTime', false)}</p>
+                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDateTime, 'dateTime')}</p>
                                                 </div>
                                             </div>
                                         </li>
