@@ -128,7 +128,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                         </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
-                                    <div className="px-[1.5rem] py-3 text-center">
+                                    <div className="px-[1.5rem] py-3 text-center break-words">
                                         <p className="text-base font-semibold text-black">{header}</p>
                                         <p className="text-sm text-[#666666] py-3">{description}</p>
                                     </div>
