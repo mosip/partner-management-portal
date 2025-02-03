@@ -186,7 +186,7 @@ function PartnerCertificatesList() {
                                                     </div>
                                                 </div>
                                                 {partner.isCertificateAvailable
-                                                    ? <div className="flex">
+                                                    ? <div className="flex space-x-6">
                                                         <DownloadCertificateButton
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
@@ -199,12 +199,12 @@ function PartnerCertificatesList() {
                                                             disabledBtnHoverMsg="partnerCertificatesList.disabledBtnHoverMsg"
                                                             id={'download_btn' + (index + 1)}
                                                         />
-                                                        <div className="relative group">
+                                                        <div className="relative group" tabIndex="0">
                                                             <button disabled={!partner.isPartnerActive} id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className={`h-10 w-28 relative text-xs p-3 py-2 ${partner.isPartnerActive ? "text-tory-blue bg-white border border-blue-800" : "bg-white border border-gray-300 text-[#6f7070]"}  font-semibold rounded-md text-center`}>
                                                                 {t('partnerCertificatesList.reUpload')}
                                                             </button>
                                                             {!partner.isPartnerActive && (
-                                                                <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+                                                                <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
                                                                     {t('partnerCertificatesList.disabledBtnHoverMsg')}
                                                                 </div>
                                                             )}
