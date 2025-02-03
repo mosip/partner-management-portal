@@ -1,0 +1,5 @@
+window._env_ = {
+    REACT_APP_PARTNER_MANAGER_API_BASE_URL: "",
+    REACT_APP_POLICY_MANAGER_API_BASE_URL: ""
+};
+  
