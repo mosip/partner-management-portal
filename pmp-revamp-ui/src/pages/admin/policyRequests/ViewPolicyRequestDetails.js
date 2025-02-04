@@ -35,7 +35,7 @@ function ViewPolicyRequestDetails() {
 
     return (
         <>
-            <div className={`flex-col w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm overflow-x-scroll mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
+            <div className={`w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm overflow-x-scroll mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
                 <div className="flex justify-between mb-3">
                     <Title title='viewPolicyRequest.viewPolicyRequest' subTitle='viewPolicyRequest.listOfPolicyRequests' backLink='/partnermanagement/admin/policy-requests-list' />
                 </div>
@@ -51,11 +51,11 @@ function ViewPolicyRequestDetails() {
                                 </div>
                                 <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
-                                        formatDate(policyRequestDetails.createdDateTime, "date", true)}
+                                        formatDate(policyRequestDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-2 text-gray-300">|</div>
                                 <div className="font-semibold text-sm text-dark-blue">
-                                    {formatDate(policyRequestDetails.createdDateTime, "time", true)}
+                                    {formatDate(policyRequestDetails.createdDateTime, "time")}
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md break-normal">
+                                <p className="font-[600] text-vulcan text-md">
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
@@ -141,11 +141,11 @@ function ViewPolicyRequestDetails() {
                                                 {policyRequestDetails.updatedDateTime && (
                                                     <div className="flex">
                                                         <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-                                                            {formatDate(policyRequestDetails.updatedDateTime, "date", true)}
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
                                                         <div className="font-semibold text-sm text-dark-blue">
-                                                            {formatDate(policyRequestDetails.updatedDateTime, "time", true)}
+                                                            {formatDate(policyRequestDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
                                                 )}
@@ -170,11 +170,11 @@ function ViewPolicyRequestDetails() {
                                             <div className="flex items-center justify-start">
                                                 <div className="font-semibold text-xs text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
-                                                        formatDate(policyRequestDetails.createdDateTime, "date", true)}
+                                                        formatDate(policyRequestDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
                                                 <div className="font-semibold text-xs text-dark-blue">
-                                                    {formatDate(policyRequestDetails.createdDateTime, "time", true)}
+                                                    {formatDate(policyRequestDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>
                                         </div>

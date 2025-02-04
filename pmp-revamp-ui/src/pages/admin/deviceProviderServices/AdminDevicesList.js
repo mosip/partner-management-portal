@@ -168,7 +168,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             setActionId(-1);
             setShowDeviceDetailApproveRejectPopup(true);
             setSelectedDevice(device);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -181,14 +180,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                     deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: getApproveRejectStatus(status), isActive: updateActiveState(status) } : deviceItem
                 )
             );
-            document.body.style.overflow = "auto";
         }
     };
 
     const closeApproveRejectPopup = () => {
         setSelectedDevice({});
         setShowDeviceDetailApproveRejectPopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const deactivateDevice = (selectedDevice) => {
@@ -200,7 +197,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
 
     };
@@ -221,7 +217,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const closeDeactivatePopup = () => {
         setSelectedDevice({});
         setShowDeactivatePopup(false);
-        document.body.style.overflow = "auto";
     };
 
     const sortAscOrder = (header) => {
@@ -383,13 +378,13 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.make}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.model}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date', true)}</td>
+                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date')}</td>
                                                                     <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2 mx-2">
                                                                         <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(device.status, t)}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center">
+                                                                    <td className="text-center cursor-default">
                                                                         <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...

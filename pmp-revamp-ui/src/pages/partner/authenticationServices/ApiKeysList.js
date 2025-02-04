@@ -122,7 +122,6 @@ function ApiKeysList() {
             setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -266,14 +265,14 @@ function ApiKeysList() {
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
-                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date', true)}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date')}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(apiKey.status, t)}
                                                                     </div>
                                                                 </td>
 
-                                                                <td className="px-2 mx-2">
+                                                                <td className="px-2 mx-2 cursor-default">
                                                                     <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                         <button id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>
                                                                             <p> ... </p>

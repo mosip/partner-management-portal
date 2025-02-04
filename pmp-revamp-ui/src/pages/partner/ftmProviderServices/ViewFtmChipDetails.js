@@ -38,7 +38,6 @@ function ViewFtmChipDetails() {
     }, []);
 
     const clickOnUpload = () => {
-        document.body.style.overflow = "hidden";
         const requiredDataForCertUpload = {
             partnerType: "FTM_Provider",
             uploadHeader: 'addFtm.uploadFtmCertHeader',
@@ -61,7 +60,6 @@ function ViewFtmChipDetails() {
     };
 
     const closePopup = (state, btnName) => {
-        document.body.style.overflow = "auto";
         if (state && btnName === 'cancel') {
             setShowPopup(false);
         } else if (state && btnName === 'close') {
@@ -128,7 +126,7 @@ function ViewFtmChipDetails() {
 
     const showHoverMsg = () => {
         return (
-            <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+            <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
                 {t('partnerCertificatesList.disabledBtnHoverMsg')}
             </div>
         );
@@ -174,11 +172,11 @@ function ViewFtmChipDetails() {
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(ftmDetails.createdDateTime, "date", true)}
+                                            formatDate(ftmDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-1 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(ftmDetails.createdDateTime, "time", true
+                                        {formatDate(ftmDetails.createdDateTime, "time"
                                         )}
                                     </div>
                                 </div>
@@ -241,9 +239,9 @@ function ViewFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
-                                                <div className="relative group">
+                                                <div className="relative group" tabIndex="0">
                                                     <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                        className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                        className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                         {t('commons.download')}
                                                     </button>
                                                     {ftmDetails.partnerStatus === 'deactivated' && (
@@ -252,17 +250,17 @@ function ViewFtmChipDetails() {
                                                 </div>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                    <div className="relative group">
+                                                <div className="flex space-x-6 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
+                                                    <div className="relative group" tabIndex="0">
                                                         <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                            className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                            className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                             {t('commons.download')}
                                                         </button>
                                                         {ftmDetails.partnerStatus === 'deactivated' && (
                                                             showHoverMsg()
                                                         )}
                                                     </div>
-                                                    <div className="relative group">
+                                                    <div className="relative group" tabIndex="0">
                                                         <button id="certificate_reupload_btn" disabled={ftmDetails.partnerStatus === 'deactivated'} onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.partnerStatus === 'deactivated' ? 'text-[#6f7070] border-gray-300 bg-white': ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                             {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                         </button>
@@ -286,13 +284,13 @@ function ViewFtmChipDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                             <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-sm text-charcoal-gray">
-                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime', true)}
+                                                {formatDate(ftmDetails.certificateUploadDateTime, 'dateTime')}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className={`font-semibold text-xs text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                             <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-sm ${ftmDetails.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime', true)}
+                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}
                                             </p>
                                         </div>
                                     </div>

@@ -216,13 +216,13 @@ function PoliciesList() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyGroupName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
-                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date', true)}</td>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date')}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="">
                                   <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(partner.status, t)}
                                   </div>
                                 </td>
-                                <td className="text-center">
+                                <td className="text-center cursor-default">
                                   <div ref={el => submenuRef.current[index] = el}>
                                     <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`font-semibold mb-0.5 text-center cursor-pointer`}>
                                       ...

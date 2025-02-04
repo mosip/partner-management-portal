@@ -188,7 +188,6 @@ function DevicesList() {
             setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
             setShowDeactivatePopup(true);
-            document.body.style.overflow = "hidden";
         }
     };
 
@@ -319,13 +318,13 @@ function DevicesList() {
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.deviceSubTypeCode}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.make}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{device.model}</td>
-                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date', true)}</td>
+                                                                        <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">{formatDate(device.createdDateTime, 'date')}</td>
                                                                         <td onClick={() => showDeviceDetails(device)} className="px-2 mx-2">
                                                                             <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                 {getStatusCode(device.status, t)}
                                                                             </div>
                                                                         </td>
-                                                                        <td className="px-2 mx-2">
+                                                                        <td className="px-2 mx-2 cursor-default">
                                                                             <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                                 <button id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                                                                     ...

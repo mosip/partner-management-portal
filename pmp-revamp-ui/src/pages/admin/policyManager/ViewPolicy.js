@@ -65,7 +65,6 @@ function ViewPolicy() {
 
     const showUploadedJsonData = () => {
         setPreviewJsonPopup(true);
-        document.body.style.overflow = 'hidden';
     };
 
     const downloadPolicyData = (policyJsonData) => {
@@ -74,7 +73,6 @@ function ViewPolicy() {
 
     const closePopUp = () => {
         setPreviewJsonPopup(false);
-        document.body.style.overflow = 'auto';
     };
 
     const getPolicyStatus = (policy) => {
@@ -120,17 +118,17 @@ function ViewPolicy() {
                                             {t('policiesList.policyId')}: <span className="font-semibold">{viewDetails.policyId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                            <div className={`${bgOfStatus(getPolicyStatus(viewDetails), t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(getPolicyStatus(viewDetails), t)}
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
-                                                    formatDate(viewDetails.cr_dtimes, "date", true)
+                                                    formatDate(viewDetails.cr_dtimes, "date")
                                                 }
                                             </div>
                                             <div className="mx-2 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(viewDetails.cr_dtimes, "time", true)}
+                                                {formatDate(viewDetails.cr_dtimes, "time")}
                                             </div>
                                         </div>
                                     </div>

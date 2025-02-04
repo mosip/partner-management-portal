@@ -15,9 +15,9 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
     return (
         <div ref={downloadDropdownRef} className={`flex-col`}>
-            <div className='relative'>
+            <div className='relative group' tabIndex="0">
                 <button id={id} disabled={disableBtn} onClick={() => setShowDropDown()}
-                    className={`flex group items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${disableBtn ? 'text-[#6f7070] border-gray-300 bg-white' : showDropDown ? 'bg-blue-800 text-white border-blue-800' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                    className={`flex items-center text-center w-fit h-10 ${disableBtn ? 'text-[#6f7070] border-gray-300 bg-white' : showDropDown ? 'bg-blue-800 text-white border-blue-800' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                     {t('commons.download')}
                     {!disableBtn &&
                         (showDropDown ?
@@ -26,7 +26,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                         )
                     }
                     {disableBtn && disabledBtnHoverMsg && (
-                        <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
+                        <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
                             {t(disabledBtnHoverMsg)}
                         </div>
                     )}

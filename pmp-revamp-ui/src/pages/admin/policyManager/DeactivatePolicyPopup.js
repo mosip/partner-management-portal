@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
@@ -20,12 +20,19 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     const [activeDraftPoliciesDescr1, setActiveDraftPoliciesDescr1] = useState('');
     const [activeDraftPoliciesDescr2, setActiveDraftPoliciesDescr2] = useState('');
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
     const closingPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp()
     };
 
@@ -43,7 +50,6 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow = "auto"
         try {
             let response;
             if (popupData.isDeactivatePolicyGroup) {
@@ -71,11 +77,9 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     if (popupData.isDeactivatePolicyGroup && (errorCode === 'PMS_POL_056' || errorCode === 'PMS_POL_069' || errorCode === 'PMS_POL_070')) {
                         await getAssociatedPolicies(errorCode);
                         setShowAlertErrorMessage(true);
-                        document.body.style.overflow = "hidden";
                     } else if (popupData.isDeactivatePolicy && (errorCode === 'PMS_POL_063' || errorCode === 'PMS_POL_064')) {
                         setPolicyErrorMessage(errorCode);
                         setShowAlertErrorMessage(true);
-                        document.body.style.overflow = "hidden";
                     } else {
                         setErrorCode(errorCode);
                         setErrorMsg(errorMessage);
@@ -90,6 +94,21 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         }
         setDataLoaded(true);
     };
+
+     const setActiveDraftPoliciesDescription = async (activePoliciesCount, draftPoliciesCount) => {
+        if(activePoliciesCount === 1 && draftPoliciesCount > 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForSingularActive', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount > 1 && draftPoliciesCount === 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForSingularDraft', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount === 1 && draftPoliciesCount === 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.descriptionForBothSingular', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+        else if(activePoliciesCount > 1 && draftPoliciesCount > 1) {
+            setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', {noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount}));
+        }
+     };
 
     const getAssociatedPolicies = async (errorCode) => {
         try {
@@ -109,19 +128,19 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('activeAndDraftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg(t('activeAndDraftPoliciesDetectedMsg.description', { noOfActivePolicies: activePoliciesCount, noOfDraftPolicies: draftPoliciesCount }));
+                    setActiveDraftPoliciesDescription(activePoliciesCount, draftPoliciesCount);
                     setActiveDraftPoliciesDescr1(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg1'));
                     setActiveDraftPoliciesDescr2(t('activeAndDraftPoliciesDetectedMsg.descriptionMsg2'));
                 } else if (errorCode === 'PMS_POL_070') {
                     // Count draft policies
                     draftPoliciesCount = resData.filter(policy => !policy.is_Active && !policy.schema).length;
                     setErrorHeaderMsg(t('draftPoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg((draftPoliciesCount > 1) ? t('draftPoliciesDetectedMsg.description1', { noOfDraftPolicies: draftPoliciesCount }) : t('draftPoliciesDetectedMsg.description2'));
+                    setErrorDescriptionMsg((draftPoliciesCount > 1) ? t('draftPoliciesDetectedMsg.description1', { noOfDraftPolicies: draftPoliciesCount }) : t('draftPoliciesDetectedMsg.description2', { noOfDraftPolicies: draftPoliciesCount }));
                 } else if (errorCode === 'PMS_POL_056') {
                     // Count active policies
                     activePoliciesCount = resData.filter(policy => policy.is_Active && policy.schema).length;
                     setErrorHeaderMsg(t('activePoliciesDetectedMsg.header'));
-                    setErrorDescriptionMsg((activePoliciesCount > 1) ? t('activePoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount }) : t('activePoliciesDetectedMsg.description2'));
+                    setErrorDescriptionMsg((activePoliciesCount > 1) ? t('activePoliciesDetectedMsg.description1', { noOfActivePolicies: activePoliciesCount }) : t('activePoliciesDetectedMsg.description2', { noOfActivePolicies: activePoliciesCount }));
                 }
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -135,7 +154,6 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
 
     const closeErrorPopUp = () => {
         setShowAlertErrorMessage(false);
-        document.body.style.overflow = "auto";
         closePopUp();
     };
 

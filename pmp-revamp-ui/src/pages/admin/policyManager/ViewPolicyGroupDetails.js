@@ -55,17 +55,17 @@ function ViewPolicyGroupDetails() {
                                     {t('policyGroupList.policyGroupId')}: <span className="font-semibold">{policyGroupDetails.id}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`${bgOfStatus(policyGroupDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-xs rounded-md my-2 font-semibold`}>
+                                    <div className={`${bgOfStatus(policyGroupDetails.isActive ? 'ACTIVE' : 'INACTIVE', t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                         {getStatusCode(policyGroupDetails.isActive ? 'active' : 'inactive', t)}
                                     </div>
                                     <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewDeviceDetails.createdOn") + ' ' +
-                                            formatDate(policyGroupDetails.crDtimes, "date", true)
+                                            formatDate(policyGroupDetails.crDtimes, "date")
                                         }
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
                                     <div className="font-semibold text-sm text-dark-blue">
-                                        {formatDate(policyGroupDetails.crDtimes, "time", true)}
+                                        {formatDate(policyGroupDetails.crDtimes, "time")}
                                     </div>
                                 </div>
                             </div>
