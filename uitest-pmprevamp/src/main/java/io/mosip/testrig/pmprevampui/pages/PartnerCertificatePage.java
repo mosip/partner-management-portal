@@ -168,7 +168,7 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(submitButton);
 	}
 
-	public boolean isSucessMessageDisplayed() {
+	public boolean isSuccessMessageDisplayed() {
 		return isElementDisplayed(successMessage);
 	}
 
