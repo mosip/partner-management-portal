@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 <groupId>io.mosip.testrig.pmpui</groupId>
   <artifactId>uitest-pmp</artifactId>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.2.0-SNAPSHOT</version>
   <name>uitest-automation</name>
   <description>Parent project of uitest-automation</description>
   <url>https://github.com/mosip/Partner-management-portal</url>
@@ -43,14 +43,14 @@
 		<rest.assured.version>3.0.7</rest.assured.version>
 		<testng.version>6.11</testng.version>
 		<zt.zip.version>1.13</zt.zip.version>
-		<fileName>pmpui-1.2.1-SNAPSHOT-jar-with-dependencies</fileName>
+		<fileName>pmpui-1.2.2.0-SNAPSHOT-jar-with-dependencies</fileName>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>io.mosip.kernel</groupId>
 				<artifactId>kernel-bom</artifactId>
-				<version>1.2.1-java21-SNAPSHOT</version>
+				<version>1.3.0-beta.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
