@@ -9,37 +9,28 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oid_client")
 	private WebElement createOidcClient;
 
-	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold'])[1]")
-	private WebElement publicKeyFormatErrorDisplayed;
-
-	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
-	private WebElement invalidLogoUriErrorDisplayed;
-
-	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
-	private WebElement invalidRedirectUriErrorDisplayed;
-
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
+	@FindBy(id = "partnerId")
 	private WebElement partnerIDHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[2]")
+	@FindBy(id = "policyGroupName")
 	private WebElement PolicyGroupHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[3]")
+	@FindBy(id = "policyName")
 	private WebElement PolicyNameHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[4]")
+	@FindBy(id = "clientNameEng")
 	private WebElement OIDCClientNameHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[5]")
+	@FindBy(id = "createdDateTime")
 	private WebElement CreatedDateHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[6]")
+	@FindBy(id = "status")
 	private WebElement StatusHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[7]")
+	@FindBy(id = "oidcClientId")
 	private WebElement OIDCClientIDHeaderText;
 
-	@FindBy(xpath = "(//*[@id='columnheaderName'])[8]")
+	@FindBy(id = "action")
 	private WebElement ActionHeaderText;
 
 	@FindBy(id = "authentication_apikey_tab")
@@ -270,24 +261,25 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//*[@placeholder='Enter Logo URI']")  
 	private WebElement enterLogoUriTextBoxEmpty;
 	
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold'])[1]")
+	private WebElement publicKeyFormatErrorDisplayed;
+	
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
+	private WebElement invalidLogoUriErrorDisplayed;
+	
+	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
+	private WebElement invalidRedirectUriErrorDisplayed;
+
+	
+	@FindBy(id = "authentication_oidc_tab")
+	private WebElement oidcClientTab;
+	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public boolean isCreateOidcClientDisplayed() {
 		return isElementDisplayed(createOidcClient);
-	}
-
-	public boolean isPublicKeyFormatErrorDisplayed() {
-		return isElementDisplayed(publicKeyFormatErrorDisplayed);
-	}
-
-	public boolean isInvalidLogoUriErrorDisplayed() {
-		return isElementDisplayed(invalidLogoUriErrorDisplayed);
-	}
-
-	public boolean isInvalidRedirectUriErrorDisplayed() {
-		return isElementDisplayed(invalidRedirectUriErrorDisplayed);
 	}
 
 	public void clickOnCreateOidcClientButton() {
@@ -651,5 +643,33 @@ public class OidcClientPage extends BasePage {
 	
 	public boolean isLogoUriempty() {
 		return isElementDisplayed(enterLogoUriTextBoxEmpty);
+	}
+	
+	public boolean isOidcClientTabDisplayed() {
+		return isElementDisplayed(oidcClientTab);
+	}
+	
+	public boolean isPublicKeyFormatErrorDisplayed() {
+		return isElementDisplayed(publicKeyFormatErrorDisplayed);
+	}
+	
+	public boolean isInvalidLogoUriErrorDisplayed() {
+		return isElementDisplayed(invalidLogoUriErrorDisplayed);
+	}
+	
+	public boolean isInvalidRedirectUriErrorDisplayed() {
+		return isElementDisplayed(invalidRedirectUriErrorDisplayed);
+	}
+	
+	public boolean isThirdRedirectUriTextBoxDisplayed() {
+		return isElementDisplayed(createOidcRedirectUrl3);
+	}
+	
+	public boolean isFourthRedirectUriTextBoxDisplayed() {
+		return isElementDisplayed(createOidcRedirectUrl4);
+	}
+	
+	public boolean isFifthRedirectUriTextBoxDisplayed() {
+		return isElementDisplayed(createOidcRedirectUrl5);
 	}
 }
