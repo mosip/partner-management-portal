@@ -9,7 +9,8 @@ import {
   resetPageNumber,
   getPartnerManagerUrl,
   downloadCaCertificate,
-  handleKeymanagerErrors
+  handleKeymanagerErrors,
+  setSubmenuRef
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -289,7 +290,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime")}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                       <td className="text-center cursor-default">
-                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                           <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
                                             ...
                                           </button>

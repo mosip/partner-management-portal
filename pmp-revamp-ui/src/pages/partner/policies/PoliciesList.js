@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL } from '../../../utils/AppUtils';
 import {
   formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests
+  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests, setSubmenuRef
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -223,7 +223,7 @@ function PoliciesList() {
                                   </div>
                                 </td>
                                 <td className="text-center cursor-default">
-                                  <div ref={el => submenuRef.current[index] = el}>
+                                  <div ref={setSubmenuRef(submenuRef, index)}>
                                     <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`font-semibold mb-0.5 text-center cursor-pointer`}>
                                       ...
                                     </button>
