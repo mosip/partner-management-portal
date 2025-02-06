@@ -7,7 +7,7 @@ import {
   isLangRTL, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
   createRequest, populateDeactivatedStatus,
-  handleKeymanagerErrors
+  handleKeymanagerErrors, setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -308,7 +308,7 @@ function FtmList() {
                                   </div>
                                 </td>
                                 <td className="px-2 mx-2 cursor-default">
-                                  <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                  <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
                                     <button id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                       ...
                                     </button>

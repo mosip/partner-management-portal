@@ -7,7 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
 import Title from '../../common/Title.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler, setSubmenuRef } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService.js';
 import AdminDeviceDetailsFilter from './AdminDeviceDetailsFilter.js';
 import FilterButtons from '../../common/FilterButtons.js';
@@ -385,7 +385,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                         </div>
                                                                     </td>
                                                                     <td className="text-center cursor-default">
-                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                                                             <button id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
                                                                             </button>

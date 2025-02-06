@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     moveToSbisList, populateDeactivatedStatus,
-    createRequest
+    createRequest, setSubmenuRef
 } from '../../../utils/AppUtils.js';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -325,7 +325,7 @@ function DevicesList() {
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2 cursor-default">
-                                                                            <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                                                            <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
                                                                                 <button id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                                                                     ...
                                                                                 </button>
