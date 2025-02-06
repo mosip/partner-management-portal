@@ -72,10 +72,10 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                         <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] bottom-6 duration-700`}>
                             {itemsPerPageOptions.map((num, i) => {
                                 return (
-                                    <p role='button' id={'pagination_each_num_option' + (i + 1)} key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => changeItemsPerPage(num))}
-                                        className={`px-3 py-2 cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
+                                    <button id={'pagination_each_num_option' + (i + 1)} key={i} onClick={() => changeItemsPerPage(num)}
+                                        className={`px-3 py-2 w-full cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                         {num}
-                                    </p>
+                                    </button>
                                 )
                             })
                             }
