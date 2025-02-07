@@ -245,18 +245,18 @@ function SbiList() {
                                                             </div>
                                                         </div>
                                                     )}
-                                                    {showActiveIndexDeactivatePopup === index && (
-                                                        <DeactivatePopup
-                                                            closePopUp={() => setShowActiveIndexDeactivatePopup(null)}
-                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
-                                                            popupData={{ ...selectedSbi, isDeactivateSbi: true }}
-                                                            request={deactivateRequest}
-                                                            headerMsg='deactivateSbi.headerMsg'
-                                                            descriptionMsg='deactivateSbi.description'
-                                                            headerKeyName={selectedSbi.sbiVersion}
-                                                        />
-                                                    )}
                                                 </div>
+                                                {showActiveIndexDeactivatePopup === index && (
+                                                    <DeactivatePopup
+                                                        closePopUp={() => setShowActiveIndexDeactivatePopup(null)}
+                                                        onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
+                                                        popupData={{ ...selectedSbi, isDeactivateSbi: true }}
+                                                        request={deactivateRequest}
+                                                        headerMsg='deactivateSbi.headerMsg'
+                                                        descriptionMsg='deactivateSbi.description'
+                                                        headerKeyName={selectedSbi.sbiVersion}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                         {open === index && (

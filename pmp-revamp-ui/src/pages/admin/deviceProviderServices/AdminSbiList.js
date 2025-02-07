@@ -365,7 +365,7 @@ function AdminSbiList() {
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showActiveIndexSbiApproveRejectPopUp && (
+                                                                            {showActiveIndexSbiApproveRejectPopUp === index && (
                                                                                 <ApproveRejectPopup
                                                                                     popupData={{ ...selectedSbi, isSbiRequest: true }}
                                                                                     closePopUp={closeApproveRejectPopup}
@@ -375,7 +375,7 @@ function AdminSbiList() {
                                                                                     description={t('sbiApproveRejectPopup.description')}
                                                                                 />
                                                                             )}
-                                                                            {showActiveIndexDeactivatePopup && (
+                                                                            {showActiveIndexDeactivatePopup === index && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={() => closeDeactivatePopup()}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}

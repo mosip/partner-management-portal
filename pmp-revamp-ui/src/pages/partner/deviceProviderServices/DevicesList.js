@@ -37,7 +37,7 @@ function DevicesList() {
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
     const [isDescending, setIsDescending] = useState(false);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [firstIndex, setFirstIndex] = useState(0);
     const [devicesList, setDevicesList] = useState([]);
@@ -179,7 +179,7 @@ function DevicesList() {
     //This part related to Pagination Logic
     let tableRows = filteredDevicesList.slice(firstIndex, firstIndex + (selectedRecordsPerPage));
 
-    const showDeactivateDevice = (selectedDevice) => {
+    const showDeactivateDevice = (selectedDevice, index) => {
         if (selectedDevice.status === "approved") {
             const request = createRequest({
                 status: "De-Activate",
@@ -187,19 +187,19 @@ function DevicesList() {
             setViewDeviceId(-1);
             setSelectedDevice(selectedDevice);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
     const closeDeactivatePopup = () => {
         setSelectedDevice({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedDevice) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setSelectedDevice({});
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             // Update the specific row in the state with the new status
             setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
@@ -336,13 +336,13 @@ function DevicesList() {
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device)} className={`flex justify-between py-2 px-2 w-full ${isLoginLanguageRTL ? "text-right" : "text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                        <div role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device, index)} className={`flex justify-between py-2 px-2 w-full ${isLoginLanguageRTL ? "text-right" : "text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                             <img src={device.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                     </div>
                                                                                 )}
-                                                                                {showDeactivatePopup && (
+                                                                                {showActiveIndexDeactivatePopup === index && (
                                                                                     <DeactivatePopup
                                                                                         closePopUp={closeDeactivatePopup}
                                                                                         onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
