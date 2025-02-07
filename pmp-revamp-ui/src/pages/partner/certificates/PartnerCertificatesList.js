@@ -186,7 +186,7 @@ function PartnerCertificatesList() {
                                                     </div>
                                                 </div>
                                                 {partner.isCertificateAvailable
-                                                    ? <div className="flex space-x-6">
+                                                    ? <div className="flex gap-x-6">
                                                         <DownloadCertificateButton
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
