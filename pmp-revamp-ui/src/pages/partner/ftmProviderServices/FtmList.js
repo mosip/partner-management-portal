@@ -42,7 +42,7 @@ function FtmList() {
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
   const [selectedFtm, setSelectedFtm] = useState({});
-  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     partnerId: "",
@@ -180,7 +180,7 @@ function FtmList() {
     navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
 
-  const showDeactivateFtm = (selectedFtmData) => {
+  const showDeactivateFtm = (selectedFtmData, index) => {
     if (selectedFtmData.status === "approved") {
       const request = createRequest({
         status: "De-Activate",
@@ -188,13 +188,13 @@ function FtmList() {
       setViewFtmId(-1);
       setSelectedFtm(selectedFtmData);
       setDeactivateRequest(request);
-      setShowDeactivatePopup(true);
+      setShowActiveIndexDeactivatePopup(index);
     }
   };
 
   const closeDeactivatePopup = () => {
     setSelectedFtm({});
-    setShowDeactivatePopup(false);
+    setShowActiveIndexDeactivatePopup(null);
   };
 
   const showManageCertificate = (selectedFtmData) => {
@@ -212,7 +212,7 @@ function FtmList() {
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
       setSelectedFtm({});
-      setShowDeactivatePopup(false);
+      setShowActiveIndexDeactivatePopup(null);
       // Update the specific row in the state with the new status
       setFilteredFtmList((prevList) =>
         prevList.map(ftm =>
@@ -324,13 +324,13 @@ function FtmList() {
                                           <img src={(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? manageCertificate : disableManageCertificate} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm, index)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                           <p> {t('ftmList.deActivate')}</p>
                                           <img src={ftm.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                       </div>
                                     )}
-                                    {showDeactivatePopup && (
+                                    {showActiveIndexDeactivatePopup === index && (
                                       <DeactivatePopup
                                         closePopUp={closeDeactivatePopup}
                                         onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}

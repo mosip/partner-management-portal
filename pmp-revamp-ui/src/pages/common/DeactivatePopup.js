@@ -23,6 +23,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
         };
     }, []);
 
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -108,7 +109,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-sm h-fit`}>
                     {!dataLoaded && (

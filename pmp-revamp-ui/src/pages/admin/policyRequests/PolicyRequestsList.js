@@ -56,7 +56,7 @@ function PolicyRequestsList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showActiveIndexPopup, setShowActiveIndexPopup] = useState(null);
   const [resetPageNo, setResetPageNo] = useState(false);
   const [selectedPolicyRequest, setSelectedPolicyRequest] = useState({});
   const [filters, setFilters] = useState({
@@ -188,7 +188,7 @@ function PolicyRequestsList() {
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
       setSelectedPolicyRequest({});
-      setShowPopup(false);
+      setShowActiveIndexPopup(null);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
         prevList.map(policyRequest =>
@@ -199,17 +199,17 @@ function PolicyRequestsList() {
   }
 
   const closePolicyRequestPopup = () => {
-    setShowPopup(false);
+    setShowActiveIndexPopup(null);
     setSelectedPolicyRequest({});
   };
 
   useEffect(() => {
     escapeKeyHandler(closePolicyRequestPopup);
-  }, [showPopup]);
+  }, [showActiveIndexPopup]);
 
-  const approveRejectPolicyRequest = (policyRequest) => {
+  const approveRejectPolicyRequest = (policyRequest, index) => {
     if (policyRequest.status === 'InProgress') {
-      setShowPopup(true);
+      setShowActiveIndexPopup(index);
       setViewPartnersId(-1);
       setSelectedPolicyRequest(policyRequest);
     }
@@ -325,7 +325,7 @@ function PolicyRequestsList() {
                                           </button>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest))}>
+                                              <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                 <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
@@ -336,7 +336,7 @@ function PolicyRequestsList() {
                                               </div>
                                             </div>
                                           )}
-                                          {showPopup &&
+                                          {showActiveIndexPopup === index &&
                                             <ApproveRejectPopup
                                               popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
                                               closePopUp={closePolicyRequestPopup}
