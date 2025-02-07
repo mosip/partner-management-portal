@@ -115,9 +115,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                 {errorMsg && (
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
-                                <div>
-                                    <div className="flex justify-between px-[1.5rem] my-4 w-full">
-                                        <div className="flex-col space-y-2 break-words w-[96%]">
+                                <>
+                                    <div className="flex justify-between px-[1.2rem] my-4 w-full">
+                                        <div className="flex-col space-y-2 break-words w-[19.5rem]">
                                             <p className="text-sm font-bold">{title}</p>
                                             {subtitle && (
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
@@ -141,7 +141,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                             {t('approveRejectPopup.approve')}
                                         </button>
                                     </div>
-                                </div>
+                                </>
                             </div>
                         </>
                     )}
