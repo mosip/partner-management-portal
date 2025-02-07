@@ -47,7 +47,7 @@ function PartnersList() {
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
-  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
   const [selectedPartner, setSelectedPartner] = useState({});
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
@@ -187,7 +187,7 @@ function PartnersList() {
     backArrowIcon: "!mt-[9%]",
   };
 
-  const showDeactivatePartner = (selectedPartnerdata) => {
+  const showDeactivatePartner = (selectedPartnerdata, index) => {
     if (selectedPartnerdata.isActive === true) {
       const request = createRequest({
         status: "De-Active"
@@ -195,18 +195,18 @@ function PartnersList() {
       setSelectedPartner(selectedPartnerdata);
       setViewPartnersId(-1);
       setDeactivateRequest(request);
-      setShowDeactivatePopup(true);
+      setShowActiveIndexDeactivatePopup(index);
     }
   };
 
   const closeDeactivatePopup = () => {
-    setShowDeactivatePopup(false);
+    setShowActiveIndexDeactivatePopup(null);
     setSelectedPartner({});
   }
 
   const onClickConfirmDeactivate = (deactivationResponse, selectedPartnerData) => {
     if (deactivationResponse && deactivationResponse.message) {
-      setShowDeactivatePopup(false);
+      setShowActiveIndexDeactivatePopup(null);
       setSelectedPartner({});
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
@@ -219,7 +219,7 @@ function PartnersList() {
 
   useEffect(() => {
     escapeKeyHandler(closeDeactivatePopup);
-  }, [showDeactivatePopup]);
+  }, [showActiveIndexDeactivatePopup]);
 
   const styles = {
     loadingDiv: "!py-[20%]"
@@ -337,14 +337,14 @@ function PartnersList() {
                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
                                               <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner))}>
+                                              <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
                                                 <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                 <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
                                             </div>
                                           )}
-                                          {showDeactivatePopup && (
-                                            < DeactivatePopup
+                                          {showActiveIndexDeactivatePopup === index && (
+                                            <DeactivatePopup
                                               onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
                                               closePopUp={closeDeactivatePopup}
                                               popupData={{ ...selectedPartner, isDeactivatePartner: true }}

@@ -50,7 +50,7 @@ function OidcClientsList() {
     const [filteredOidcClientsList, setFilteredOidcClientsList] = useState([]);
     const [currentClient, setCurrentClient] = useState(null);
     const [viewClientId, setViewClientId] = useState(-1);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const defaultFilterQuery = {
         partnerId: "",
@@ -131,7 +131,7 @@ function OidcClientsList() {
         }
     };
 
-    const showDeactivateOidcClient = async (selectedClientdata) => {
+    const showDeactivateOidcClient = async (selectedClientdata, index) => {
         if (selectedClientdata.status === "ACTIVE") {
             setTableDataLoaded(false);
             try {
@@ -152,7 +152,7 @@ function OidcClientsList() {
                         setDeactivateRequest(request);
                         setViewClientId(-1);
                         setSelectedOidcClient(selectedClientdata);
-                        setShowDeactivatePopup(true);
+                        setShowActiveIndexDeactivatePopup(index);
                     } else {
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                     }
@@ -171,7 +171,7 @@ function OidcClientsList() {
 
     const closeDeactivatePopup = () => {
         setSelectedOidcClient({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     const showCopyPopUp = (client) => {
@@ -219,7 +219,7 @@ function OidcClientsList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             setSelectedOidcClient({});
             // Update the specific row in the state with the new status
             setFilteredOidcClientsList((prevList) =>
@@ -361,13 +361,13 @@ function OidcClientsList() {
                                                                                         <img src={client.status === "ACTIVE" ? editIcon : disableEditPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                                                                    <div role='button' id="oidc_deactive_btn" onClick={() => showDeactivateOidcClient(client, index)} className={`flex justify-between py-2 px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${client.status === "ACTIVE" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                                                                         <p>{t('oidcClientsList.deActivate')}</p>
                                                                                         <img src={client.status === "ACTIVE" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showDeactivatePopup && (
+                                                                            {showActiveIndexDeactivatePopup === index && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={closeDeactivatePopup}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}

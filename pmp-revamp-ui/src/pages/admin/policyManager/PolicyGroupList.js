@@ -54,7 +54,7 @@ function PolicyGroupList() {
         desc: null,
         status: null,
     });
-    const [showDeactivatePolicyGroupPopup, setShowDeactivatePolicyGroupPopup] = useState(false);
+    const [showActiveIndexDeactivatePolicyGroupPopup, setShowActiveIndexDeactivatePolicyGroupPopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const submenuRef = useRef([]);
 
@@ -222,15 +222,15 @@ function PolicyGroupList() {
     };
 
     const closePopup = () => {
-        setShowDeactivatePolicyGroupPopup(false);
+        setShowActiveIndexDeactivatePolicyGroupPopup(null);
         setSelectedPolicyGroup({});
     };
 
     useEffect(() => {
         escapeKeyHandler(closePopup);
-    }, [showDeactivatePolicyGroupPopup]);
+    }, [showActiveIndexDeactivatePolicyGroupPopup]);
 
-    const showDeactivatePolicyGroup = (policyGroup) => {
+    const showDeactivatePolicyGroup = (policyGroup, index) => {
         if (policyGroup.isActive) {
             const request = createRequest({
                 status: "De-Activate",
@@ -238,13 +238,13 @@ function PolicyGroupList() {
             setSelectedPolicyGroup(policyGroup);
             setActionId(-1);
             setDeactivateRequest(request);
-            setShowDeactivatePolicyGroupPopup(true);
+            setShowActiveIndexDeactivatePolicyGroupPopup(index);
         }
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicyGroup) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
-            setShowDeactivatePolicyGroupPopup(false);
+            setShowActiveIndexDeactivatePolicyGroupPopup(null);
             setSelectedPolicyGroup({});
             // Update the specific row in the state with the new status
             setPolicyGroupList((prevList) =>
@@ -361,13 +361,13 @@ function PolicyGroupList() {
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${policyGroup.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicyGroup(policyGroup, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePolicyGroup(policyGroup, index))}>
                                                                                         <p id="policy_group_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policyGroup.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={policyGroup.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showDeactivatePolicyGroupPopup && (
+                                                                            {showActiveIndexDeactivatePolicyGroupPopup === index && (
                                                                                 <DeactivatePolicyPopup
                                                                                     header={'deactivatePolicyGroup.headerMsg'}
                                                                                     description={'deactivatePolicyGroup.description'}

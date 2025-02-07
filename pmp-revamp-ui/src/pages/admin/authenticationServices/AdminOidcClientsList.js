@@ -54,9 +54,9 @@ function AdminOidcClientsList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [selectedOidcClient, setSelectedOidcClient] = useState({});
-    const [showClientIdPopup, setShowClientIdPopup] = useState(false);
+    const [showActiveIndexClientIdPopup, setShowActiveIndexClientIdPopup] = useState(null);
     const [currentClient, setCurrentClient] = useState(null);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
@@ -173,10 +173,10 @@ function AdminOidcClientsList() {
         }
     };
 
-    const openClientIdPopUp = (client) => {
+    const openClientIdPopUp = (client, index) => {
         if (client.status.toLowerCase() === "active") {
             setCurrentClient(client);
-            setShowClientIdPopup(true);
+            setShowActiveIndexClientIdPopup(index);
         }
     };
 
@@ -185,7 +185,7 @@ function AdminOidcClientsList() {
         navigate('/partnermanagement/admin/authentication-services/view-oidc-client-details');
     };
 
-    const deactivateOidcClient = async (client) => {
+    const deactivateOidcClient = async (client, index) => {
         if (client.status === "ACTIVE") {
             const oidcClientDetails = await getOidcClientDetails(HttpService, client.clientId, setErrorCode, setErrorMsg);
             if (oidcClientDetails !== null) {
@@ -201,7 +201,7 @@ function AdminOidcClientsList() {
                 setActionId(-1);
                 setSelectedOidcClient(client);
                 setDeactivateRequest(request);
-                setShowDeactivatePopup(true);
+                setShowActiveIndexDeactivatePopup(index);
             } else {
                 setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
             }
@@ -211,7 +211,7 @@ function AdminOidcClientsList() {
     const onClickConfirmDeactivate = (deactivationResponse, selectedClient) => {
         if (deactivationResponse && deactivationResponse.status === "INACTIVE") {
             setSelectedOidcClient({});
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             setOidcClientsList((prevList) =>
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
@@ -222,7 +222,7 @@ function AdminOidcClientsList() {
 
     const closeDeactivatePopup = () => {
         setSelectedOidcClient({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     const cancelErrorMsg = () => {
@@ -235,12 +235,12 @@ function AdminOidcClientsList() {
     }
 
     useEffect(() => {
-        if (showDeactivatePopup) {
+        if (showActiveIndexDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
-        } else if (showClientIdPopup) {
-            escapeKeyHandler(() => setShowClientIdPopup(false));
+        } else if (showActiveIndexClientIdPopup) {
+            escapeKeyHandler(() => setShowActiveIndexClientIdPopup(null));
         }
-    }, [showDeactivatePopup, showClientIdPopup]);
+    }, [showActiveIndexDeactivatePopup, showActiveIndexClientIdPopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -327,14 +327,14 @@ function AdminOidcClientsList() {
                                                                     </td>
                                                                     <td className="px-2 mx-2 cursor-default">
                                                                         <div className="flex items-center justify-center">
-                                                                            <svg className={`${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client))}
+                                                                            <svg className={`${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}
                                                                                 xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
                                                                                 <path id="visibility_FILL0_wght400_GRAD0_opsz48"
                                                                                     d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
                                                                                     transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
                                                                             </svg>
-                                                                            {showClientIdPopup && (
-                                                                                <CopyIdPopUp closePopUp={setShowClientIdPopup} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                            {showActiveIndexClientIdPopup === index && (
+                                                                                <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
                                                                             )}
                                                                         </div>
                                                                     </td>
@@ -350,13 +350,13 @@ function AdminOidcClientsList() {
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client, index))}>
                                                                                         <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={client.status === 'ACTIVE' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showDeactivatePopup && (
+                                                                            {showActiveIndexDeactivatePopup === index && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={closeDeactivatePopup}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}

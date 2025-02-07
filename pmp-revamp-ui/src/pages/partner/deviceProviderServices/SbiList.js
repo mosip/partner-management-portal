@@ -29,7 +29,7 @@ function SbiList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [open, setOpen] = useState(-1);
     const [deactivateBtnId, setDeactivateBtnId] = useState(-1);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [sbiList, setSbiList] = useState([]);
     const [selectedSbi, setSelectedSbi] = useState({});
@@ -117,7 +117,7 @@ function SbiList() {
         setDeactivateBtnId(deactivateBtnId === index ? null : index);
     };
 
-    const onClickDeactivate = (sbi) => {
+    const onClickDeactivate = (sbi, index) => {
         if (sbi.status === "approved") {
             const request = createRequest({
                 status: "De-Activate",
@@ -125,7 +125,7 @@ function SbiList() {
             setSelectedSbi(sbi);
             setDeactivateBtnId(-1);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
@@ -239,15 +239,15 @@ function SbiList() {
 
                                                     {deactivateBtnId === index && (
                                                         <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md font-semibold shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
-                                                            <div role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 flex justify-between text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
+                                                            <div role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi, index)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 flex justify-between text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
                                                                 <p>{t('sbiList.deactivate')}</p>
                                                                 <img src={sbi.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                             </div>
                                                         </div>
                                                     )}
-                                                    {showDeactivatePopup && (
+                                                    {showActiveIndexDeactivatePopup === index && (
                                                         <DeactivatePopup
-                                                            closePopUp={() => setShowDeactivatePopup(false)}
+                                                            closePopUp={() => setShowActiveIndexDeactivatePopup(null)}
                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
                                                             popupData={{ ...selectedSbi, isDeactivateSbi: true }}
                                                             request={deactivateRequest}
