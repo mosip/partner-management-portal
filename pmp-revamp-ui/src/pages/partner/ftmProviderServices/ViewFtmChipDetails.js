@@ -6,13 +6,13 @@ import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType,
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import UploadCertificate from "./../certificates/UploadCertificate";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import { HttpService } from "../../../services/HttpService";
+import UnExpectedErrorScreen from "../../common/UnExpectedErrorScreen";
 
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
@@ -146,18 +146,7 @@ function ViewFtmChipDetails() {
                 </div>
 
                 {unexpectedError && (
-                    <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                        <div className="flex items-center justify-center p-24">
-                            <div className="flex flex-col justify-center items-center">
-                                <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={moveToFtmList} type="button"
-                                    className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                    {t('commons.goBack')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={moveToFtmList} />
                 )}
                 {!unexpectedError && (
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
@@ -261,7 +250,7 @@ function ViewFtmChipDetails() {
                                                         )}
                                                     </div>
                                                     <div className="relative group" tabIndex="0">
-                                                        <button id="certificate_reupload_btn" disabled={ftmDetails.partnerStatus === 'deactivated'} onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.partnerStatus === 'deactivated' ? 'text-[#6f7070] border-gray-300 bg-white': ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
+                                                        <button id="certificate_reupload_btn" disabled={ftmDetails.partnerStatus === 'deactivated'} onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.partnerStatus === 'deactivated' ? 'text-[#6f7070] border-gray-300 bg-white' : ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                             {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                         </button>
                                                         {ftmDetails.partnerStatus === 'deactivated' && (

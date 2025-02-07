@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile, setUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, formatDate, getErrorMessage, getPartnerManagerUrl, getStatusCode, handleFileChange, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import LoadingIcon from '../../common/LoadingIcon';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
-import { HttpService } from '../../../services/HttpService';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();
@@ -25,9 +24,9 @@ function ViewAdminApiKeyDetails() {
 
     useEffect(() => {
         const data = localStorage.getItem('selectedApiKeyAttributes');
-        if(!data){
+        if (!data) {
             setUnexpectedError(true);
-            return ;
+            return;
         }
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
@@ -53,19 +52,7 @@ function ViewAdminApiKeyDetails() {
                         </div>
 
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToApiClientsList} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={moveToApiClientsList} />
                         )}
 
                         {!unexpectedError && (

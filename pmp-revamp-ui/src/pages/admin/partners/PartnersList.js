@@ -9,7 +9,7 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
-  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -326,7 +326,7 @@ function PartnersList() {
                                         </div>
                                       </td>
                                       <td className="text-center cursor-default">
-                                        <div ref={setSubmenuRef(submenuRef, index)}>
+                                        <div ref={(el) => (submenuRef.current[index] = el)}>
                                           <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...
                                           </button>

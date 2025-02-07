@@ -17,6 +17,7 @@ import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import UnExpectedErrorScreen from "../../common/UnExpectedErrorScreen";
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -110,49 +111,49 @@ function EditOidcClient() {
         console.log(dataArr);
         return dataArr;
     }, [t]);
-    
-  useEffect(() => {
-         const clientData = localStorage.getItem('selectedClientData');
-         if (!clientData) {
-             setUnexpectedError(true);
-             return;
-         }
+
+    useEffect(() => {
+        const clientData = localStorage.getItem('selectedClientData');
+        if (!clientData) {
+            setUnexpectedError(true);
+            return;
+        }
         const config = localStorage.getItem('appConfig');
         if (config) {
             const configData = JSON.parse(config);
             const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
             setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
         }
-         const fetchData = async () => {
-             try {
-                 setDataLoaded(false);
-                 const selectedOidcClientData = JSON.parse(clientData);
-                 const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedOidcClientData.clientId}`, process.env.NODE_ENV));
-                 if (response) {
-                     const responseData = response.data;
-                     if (responseData && responseData.response) {
-                         const resData = responseData.response;
-                         setSelectedClientDetails({ ...selectedOidcClientData, ...resData });
-                         setOidcClientDetails({ ...selectedOidcClientData, ...resData });
-                     } else {
-                         setUnexpectedError(true);
-                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                     }
-                 } else {
-                     setUnexpectedError(true);
-                     setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
-                 }
-                 setDataLoaded(true);
-             } catch (err) {
+        const fetchData = async () => {
+            try {
+                setDataLoaded(false);
+                const selectedOidcClientData = JSON.parse(clientData);
+                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedOidcClientData.clientId}`, process.env.NODE_ENV));
+                if (response) {
+                    const responseData = response.data;
+                    if (responseData && responseData.response) {
+                        const resData = responseData.response;
+                        setSelectedClientDetails({ ...selectedOidcClientData, ...resData });
+                        setOidcClientDetails({ ...selectedOidcClientData, ...resData });
+                    } else {
+                        setUnexpectedError(true);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setUnexpectedError(true);
+                    setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
+                }
+                setDataLoaded(true);
+            } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response.status !== 401) {
                     setUnexpectedError(true);
                     setErrorMsg(err.toString());
                 }
-             }
-         };
-         fetchData();
-     }, []);
+            }
+        };
+        fetchData();
+    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -339,19 +340,7 @@ function EditOidcClient() {
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                         </div>
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={() => moveToOidcClientsList(navigate)} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={() => moveToOidcClientsList(navigate)} />
                         )}
                         {!unexpectedError && (
                             <>

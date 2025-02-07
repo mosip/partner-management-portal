@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Title from '../../common/Title';
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewPolicyGroupDetails() {
     const { t } = useTranslation();
@@ -34,18 +34,7 @@ function ViewPolicyGroupDetails() {
                     <Title title='viewPolicyGroupDetails.viewPolicyGroup' subTitle='viewPolicyGroupDetails.listOfPolicyGroups' backLink='/partnermanagement/admin/policy-manager/policy-group-list' />
                 </div>
                 {unexpectedError && (
-                    <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                        <div className="flex items-center justify-center p-24">
-                            <div className="flex flex-col justify-center items-center">
-                                <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={moveToPolicyGroupList} type="button"
-                                    className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                    {t('commons.goBack')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <UnExpectedErrorScreen backLink={moveToPolicyGroupList} />
                 )}
                 {!unexpectedError && (
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">

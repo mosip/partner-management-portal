@@ -4,7 +4,7 @@ import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } fro
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewAdminDeviceDetails() {
     const { t } = useTranslation();
@@ -15,7 +15,7 @@ function ViewAdminDeviceDetails() {
 
     useEffect(() => {
         const selectedDeviceAttributes = localStorage.getItem('selectedDeviceAttributes');
-        if(!selectedDeviceAttributes) {
+        if (!selectedDeviceAttributes) {
             setUnexpectedError(true);
             return;
         }
@@ -23,8 +23,8 @@ function ViewAdminDeviceDetails() {
         setDeviceDetails(selectedDevice);
     }, []);
 
-    const  backToDevicesList = () => {
-        if(deviceDetails.isViewLinkedDevices) {
+    const backToDevicesList = () => {
+        if (deviceDetails.isViewLinkedDevices) {
             return `/partnermanagement/admin/device-provider-services/linked-devices-list?sbiId=${deviceDetails.sbiId}&sbiVersion=${deviceDetails.sbiVersion}`;
         } else {
             return '/partnermanagement/admin/device-provider-services/devices-list';
@@ -39,22 +39,12 @@ function ViewAdminDeviceDetails() {
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             <div className={`flex-col mt-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' backLink={backToDevicesList()}/>
+                    <Title title={'viewDeviceDetails.viewDeviceDetails'} subTitle='devicesList.listOfDevices' backLink={backToDevicesList()} />
                 </div>
 
                 {unexpectedError && (
-                    <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                        <div className="flex items-center justify-center p-24">
-                            <div className="flex flex-col justify-center items-center">
-                                <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={moveToDevicesList} type="button"
-                                    className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                    {t('commons.goBack')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <UnExpectedErrorScreen backLink={moveToDevicesList} />
+
                 )}
                 {!unexpectedError && (
                     <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
@@ -131,7 +121,7 @@ function ViewAdminDeviceDetails() {
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                    <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.make")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md">

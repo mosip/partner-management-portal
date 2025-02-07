@@ -7,7 +7,7 @@ import { HttpService } from '../../../services/HttpService';
 import {
     isLangRTL, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
     handleMouseClickForDropdown, populateDeactivatedStatus,
-    createRequest, setSubmenuRef
+    createRequest
 } from '../../../utils/AppUtils.js';
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from '../../common/ErrorMessage.js';
@@ -229,7 +229,7 @@ function SbiList() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div ref={setSubmenuRef(submenuRef, index)} className="flex flex-row justify-between items-center relative space-x-3">
+                                                <div ref={el => submenuRef.current[index] = el} className="flex flex-row justify-between items-center relative space-x-3">
                                                     <button id={'sbi_list_add_Devices' + (index + 1)} disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && sbi.sbiExpiryStatus === 'valid' ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button id={'sbi_list_view_Devices' + (index + 1)} onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                     <button id={'sbi_list_hamburger' + (index + 1)} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>

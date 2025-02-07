@@ -4,7 +4,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest,
-    escapeKeyHandler, setSubmenuRef
+    escapeKeyHandler
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -298,7 +298,7 @@ function AdminApiKeysList() {
                                                                         </div>
                                                                     </td>
                                                                     <td className="text-center cursor-default">
-                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
+                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
                                                                             </button>

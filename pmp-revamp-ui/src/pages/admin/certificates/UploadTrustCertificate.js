@@ -6,12 +6,12 @@ import Title from '../../common/Title'; import DropdownComponent from "../../com
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
 import fileDescription from '../../../svg/file_description.svg';
 import LoadingIcon from "../../common/LoadingIcon";
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import Confirmation from "../../common/Confirmation";
 import { useNavigate, useBlocker } from 'react-router-dom';
 import BlockerPrompt from '../../common/BlockerPrompt';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function UploadTrustCertificate() {
     const { t } = useTranslation();
@@ -200,19 +200,7 @@ function UploadTrustCertificate() {
                             <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
                         </div>
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveBackToList} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={moveBackToList} />
                         )}
                         {!unexpectedError && (
                             <div className="flex-col justify-center mt-3 h-full">
@@ -299,7 +287,7 @@ function UploadTrustCertificate() {
                                                                     <h5 className="w-[20rem] break-words text-charcoal-gray text-sm font-semibold">
                                                                         {fileName}
                                                                     </h5>
-                                                                    <button id="remove_certificate_btn" className="text-sm font-semibold text-tory-blue pt-[0.45rem]" onClick={removeUpload} onKeyDown={(e) => {if (e.key === 'Enter' || e.key === ' ') removeUpload();}}>
+                                                                    <button id="remove_certificate_btn" className="text-sm font-semibold text-tory-blue pt-[0.45rem]" onClick={removeUpload} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') removeUpload(); }}>
                                                                         {t('uploadCertificate.remove')}
                                                                     </button>
                                                                 </div>

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
-import { getUserProfile } from '../../../services/UserProfileService';
+import { createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
 import { HttpService } from "../../../services/HttpService.js";
+import ApplyFilterButton from "../../common/ApplyFilterButton.js";
 
 function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
@@ -12,7 +12,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
@@ -175,18 +174,11 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         isPlaceHolderPresent={true}
         id="status_filter"
       />
-      <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
-        <button
-          id="apply_filter__btn"
-          onClick={() => onApplyFilter(filters)}
-          type="button"
-          disabled={areFiltersEmpty()}
-          className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-          ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
-        >
-          {t("partnerList.applyFilter")}
-        </button>
-      </div>
+      <ApplyFilterButton
+        filters={filters}
+        onApplyFilter={onApplyFilter}
+        areFiltersEmpty={areFiltersEmpty}
+      />
     </div>
   );
 }

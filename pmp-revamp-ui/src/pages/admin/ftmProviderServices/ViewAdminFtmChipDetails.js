@@ -8,11 +8,11 @@ import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from '../../common/LoadingIcon';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
@@ -41,19 +41,19 @@ function ViewAdminFtmChipDetails() {
             setDataLoaded(false);
             try {
                 const response = await HttpService.get(getPartnerManagerUrl(`/ftpchipdetail/${selectedFtmDetails.ftmId}/certificate-data`, process.env.NODE_ENV));
-        
+
                 if (!response || !response.data) {
                     setErrorMsg(t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
                     setDataLoaded(true);
                     return;
                 }
-        
+
                 if (response.data.response) {
                     setCertificateDetails(response.data.response);
                     setDataLoaded(true);
                     return;
                 }
-        
+
                 if (response.data.errors && response.data.errors.length > 0) {
                     const errorCode = response.data.errors[0].errorCode;
                     if (errorCode === 'PMS_KKS_001') {
@@ -82,16 +82,16 @@ function ViewAdminFtmChipDetails() {
             setErrorMsg(t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
             return;
         }
-    
+
         if (certificateDetails.isCaSignedCertificateExpired) {
             setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             return;
         }
-    
+
         setSuccessMsg(t('viewFtmChipDetails.originalCertSuccessMsg'));
-        downloadFile(certificateDetails.caSignedCertificateData,'ca_signed_ftm_certificate.cer','application/x-x509-ca-cert' );
+        downloadFile(certificateDetails.caSignedCertificateData, 'ca_signed_ftm_certificate.cer', 'application/x-x509-ca-cert');
     };
-    
+
 
     const moveToAdminFtmList = () => {
         navigate('/partnermanagement/admin/ftm-chip-provider-services/ftm-list');
@@ -124,18 +124,7 @@ function ViewAdminFtmChipDetails() {
                         </div>
 
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                        <button onClick={moveToAdminFtmList} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={moveToAdminFtmList} />
                         )}
                         {!unexpectedError && (
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">

@@ -4,7 +4,7 @@ import { bgOfStatus, formatDate, getStatusCode, isLangRTL, moveToSbisList } from
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewDeviceDetails() {
     const { t } = useTranslation();
@@ -47,18 +47,7 @@ function ViewDeviceDetails() {
                         <Title title='viewDeviceDetails.viewDeviceDetails' subTitle='sbiList.listOfSbi' subTitle2='devicesList.listOfDevices' backLink='/partnermanagement/device-provider-services/sbi-list' backLink2='/partnermanagement/device-provider-services/devices-list' />
                     </div>
                     {unexpectedError && (
-                        <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                            <div className="flex items-center justify-center p-24">
-                                <div className="flex flex-col justify-center items-center">
-                                    <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                    <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                    <button onClick={() => moveToSbisList(navigate)} type="button"
-                                        className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                        {t('commons.goBack')}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <UnExpectedErrorScreen backLink={() => moveToSbisList(navigate)} />
                     )}
                     {!unexpectedError && (
                         <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">

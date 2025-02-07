@@ -7,8 +7,7 @@ import {
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
     onPressEnterKey,
     populateClientNames,
-    getClientNameLangMap,
-    setSubmenuRef
+    getClientNameLangMap
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -345,7 +344,7 @@ function OidcClientsList() {
                                                                         </div>
                                                                     </td>
                                                                     <td className="px-2 mx-2 cursor-default">
-                                                                        <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
+                                                                        <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                             <button id={'oidc_details' + (index + 1)} onClick={() => setViewClientId(index === viewClientId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                                                                 ...
                                                                             </button>

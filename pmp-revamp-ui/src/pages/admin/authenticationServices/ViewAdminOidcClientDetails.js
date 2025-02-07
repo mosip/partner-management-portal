@@ -4,12 +4,12 @@ import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage,
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
 import content_copy_icon from "../../../svg/content_copy_icon.svg";
 import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import { HttpService } from '../../../services/HttpService';
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen';
 
 function ViewAdminOidcClientDetails() {
     const { t } = useTranslation();
@@ -88,19 +88,8 @@ function ViewAdminOidcClientDetails() {
                             <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='oidcClientsList.listOfOidcClients' backLink='/partnermanagement/admin/authentication-services/oidc-clients-list' />
                         </div>
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToOidcClientsList} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={moveToOidcClientsList} />
+
                         )}
                         {!unexpectedError && (
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
@@ -123,14 +112,14 @@ function ViewAdminOidcClientDetails() {
                                     </div>
 
                                     <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                                         onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
+                                        onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
                                         <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
                                             <p className={`text-md font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.clientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
-                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt=""/>
+                                                <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" />
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
                                             )}

@@ -6,7 +6,7 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     moveToSbisList, populateDeactivatedStatus,
-    createRequest, setSubmenuRef
+    createRequest
 } from '../../../utils/AppUtils.js';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -17,11 +17,11 @@ import Pagination from '../../common/Pagination.js';
 import Title from '../../common/Title.js';
 import DevicesListFilter from './DevicesListFilter.js';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import EmptyList from '../../common/EmptyList.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import UnExpectedErrorScreen from '../../common/UnExpectedErrorScreen.js';
 
 function DevicesList() {
     const navigate = useNavigate('');
@@ -238,18 +238,7 @@ function DevicesList() {
                             }
                         </div>
                         {unexpectedError && (
-                            <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                                <div className="flex items-center justify-center p-24">
-                                    <div className="flex flex-col justify-center items-center">
-                                        <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                        <button onClick={() => moveToSbisList(navigate)} type="button"
-                                            className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                            {t('commons.goBack')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink={() => moveToSbisList(navigate)} />
                         )}
                         {!unexpectedError && (
                             <>
@@ -325,7 +314,7 @@ function DevicesList() {
                                                                             </div>
                                                                         </td>
                                                                         <td className="px-2 mx-2 cursor-default">
-                                                                            <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
+                                                                            <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
                                                                                 <button id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                                                                     ...
                                                                                 </button>

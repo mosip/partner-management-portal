@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, createDropdownData } from "../../../utils/AppUtils";
+import { createDropdownData } from "../../../utils/AppUtils";
+import ApplyFilterButton from "../../common/ApplyFilterButton";
 
 function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
@@ -112,18 +111,11 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
-            <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
-                <button
-                id="apply_filter__btn"
-                onClick={() => onApplyFilter(filters)}
-                type="button"
-                disabled={areFiltersEmpty()}
-                className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-                ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
-                >
-                {t("partnerList.applyFilter")}
-                </button>
-            </div>
+            <ApplyFilterButton 
+                filters={filters} 
+                onApplyFilter={onApplyFilter} 
+                areFiltersEmpty={areFiltersEmpty} 
+            />
         </div>
     );
 

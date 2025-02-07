@@ -16,7 +16,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler, setSubmenuRef } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
@@ -342,7 +342,7 @@ function AdminSbiList() {
                                                                         </button>
                                                                     </td>
                                                                     <td className="text-center cursor-default">
-                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
+                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
                                                                             <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
                                                                             </button>

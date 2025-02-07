@@ -823,7 +823,3 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         console.error('Error:', errorMessage);
     }
   }
-
-  export const setSubmenuRef = (refArray, index) => (el) => {
-    if (el) refArray.current[index] = el;
-  };

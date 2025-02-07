@@ -9,8 +9,8 @@ import disabled_copy_icon from "../../../svg/disabled_copy_icon.svg";
 import Title from "../../common/Title";
 import { HttpService } from "../../../services/HttpService";
 import ErrorMessage from "../../common/ErrorMessage";
-import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import LoadingIcon from "../../common/LoadingIcon";
+import UnExpectedErrorScreen from "../../common/UnExpectedErrorScreen";
 
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
@@ -86,19 +86,7 @@ function ViewOidcClientDetails() {
                         <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='oidcClientsList.listOfOidcClients' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                     </div>
                     {unexpectedError && (
-                        <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
-                            <div className="flex items-center justify-center p-24">
-                                <div className="flex flex-col justify-center items-center">
-                                    <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                    <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                    <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                    <button onClick={() => moveToOidcClientsList(navigate)} type="button"
-                                        className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
-                                        {t('commons.goBack')}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <UnExpectedErrorScreen errCode={errorCode} errMsg={errorMsg} backLink= {() => moveToOidcClientsList(navigate)} />
                     )}
                     {!unexpectedError && (
                         <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">

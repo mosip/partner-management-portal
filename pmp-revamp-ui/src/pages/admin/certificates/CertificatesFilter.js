@@ -2,13 +2,12 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
+import { createDropdownData } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
-import { getUserProfile } from '../../../services/UserProfileService.js';
+import ApplyFilterButton from '../../common/ApplyFilterButton.js';
 
 function CertificatesFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
         { partnerDomain: 'AUTH' },
@@ -89,18 +88,11 @@ function CertificatesFilter({ onApplyFilter }) {
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
                 />
-                <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
-                    <button
-                    id="apply_filter__btn"
-                    onClick={() => onApplyFilter(filters)}
-                    type="button"
-                    disabled={areFiltersEmpty()}
-                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-                    ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
-                    >
-                    {t("partnerList.applyFilter")}
-                    </button>
-                </div>
+                <ApplyFilterButton 
+                    filters={filters} 
+                    onApplyFilter={onApplyFilter} 
+                    areFiltersEmpty={areFiltersEmpty} 
+                />
             </div>
         </>
     );
