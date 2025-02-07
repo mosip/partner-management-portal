@@ -231,7 +231,7 @@ function AdminOidcClientsList() {
 
     const styles = {
         loadingDiv: "!py-[20%]",
-        outerDiv: "!bg-opacity-[16%]"
+        outerDiv: "!bg-opacity-35"
     }
 
     useEffect(() => {
