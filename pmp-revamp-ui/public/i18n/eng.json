@@ -1108,7 +1108,7 @@
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Dates are not valid.",
         "KER-PCM-005": "Please upload corresponding Root Certificate to proceed further",
-        "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
+        "KER-KMS-013": "Certificate Parsing Error. Upload a valid certificate.",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",
