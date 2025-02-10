@@ -1116,7 +1116,7 @@
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "Les dates du certificat ne sont pas valides.",
         "KER-PCM-005": "Veuillez télécharger le certificat racine correspondant pour continuer",
-        "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
+        "KER-KMS-013": "Erreur d'analyse du certificat. Téléchargez un certificat valide.",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
