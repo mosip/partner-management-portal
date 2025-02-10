@@ -127,11 +127,11 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             setFetchData(false);
         } catch (err) {
             console.error('Error fetching data:', err);
-            if (err.response.status !== 401) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
         }
     };
 

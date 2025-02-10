@@ -145,7 +145,7 @@ function EditOidcClient() {
                  setDataLoaded(true);
              } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setUnexpectedError(true);
                     setErrorMsg(err.toString());
                 }
@@ -304,7 +304,7 @@ function EditOidcClient() {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setDataLoaded(true);
                 setErrorMsg(err.toString());
             }

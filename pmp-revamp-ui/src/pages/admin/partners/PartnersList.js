@@ -123,11 +123,11 @@ function PartnersList() {
       setTriggerServerMethod(false);
     } catch (err) {
       console.error('Error fetching data:', err);
-      if (err.response.status !== 401) {
-        setTriggerServerMethod(false);
-        triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
+      setTriggerServerMethod(false);
+      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
     }
   }
 
