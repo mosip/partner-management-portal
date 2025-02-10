@@ -76,7 +76,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
                         if (errorCode === 'PMS_KKS_001') {
-                            setErrorMsg(t('certificatesList.errorAccessingApi'));
+                            setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
                         } else {
                             setErrorCode(errorCode);
                             setErrorMsg(errorMessage);

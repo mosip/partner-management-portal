@@ -5,7 +5,7 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
-import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleKeymanagerErrors } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleServiceErrors } from "../../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../../svg/rectangle_box.svg';
@@ -109,7 +109,12 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+                        const errorCode = response.data.errors[0].errorCode;
+                        if (errorCode === 'PMS_KKS_001') {
+                            setErrorMsg(t('partnerCertificatesList.errorWhileFetchingCertificateList'));
+                        } else {
+                            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        }
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
