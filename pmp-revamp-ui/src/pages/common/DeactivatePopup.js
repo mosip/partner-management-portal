@@ -121,21 +121,41 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className={`p-[2rem] flex-col text-center justify-center items-center`}>
-                                {!isLoginLanguageRTL ?
+                                {!isLoginLanguageRTL ? (
                                     <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
-                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + `'${popupData.make}` + ' - ' + `${popupData.model}'` : (popupData.isDeactivatePartner) ? '' : ' - ' + `'${headerKeyName}'`}?
+                                        {t(headerMsg)}
+                                        {(popupData.isDeactivateDevice || popupData.isDeactivateFtm)
+                                            ? ` - '${popupData.make} - ${popupData.model}'`
+                                            : popupData.isDeactivatePartner
+                                                ? ''
+                                                : ` - '${headerKeyName}'`}?
                                     </p>
-                                    : <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
-                                        {t(headerMsg)} {(popupData.isDeactivateDevice || popupData.isDeactivateFtm) ? ' - ' + popupData.make + ' - ' + popupData.model : (popupData.isDeactivatePartner) ? '' : ' - ' + headerKeyName}
+                                ) : (
+                                    <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
+                                        {t(headerMsg)}
+                                        {(popupData.isDeactivateDevice || popupData.isDeactivateFtm)
+                                            ? ` - ${popupData.make} - ${popupData.model}`
+                                            : popupData.isDeactivatePartner
+                                                ? ''
+                                                : ` - ${headerKeyName}`}
                                     </p>
-                                }
+                                )}
                                 <p className="text-sm font-semibold text-[#666666] break-normal py-[5%]">
                                     {t(descriptionMsg)}
                                 </p>
                                 {popupData.isDeactivateSbi &&
                                     (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] font-semibold rounded-md w-full p-[2%] mb-2">
-                                        <p className="text-sm font-inter text-[#8B6105]">{t(formatDeviceCountMessage(popupData.countOfApprovedDevices, t('deactivateSbi.deactivateApprovedDevicesSingular'), t('deactivateSbi.deactivateApprovedDevicesPlural')), { devicesCount: popupData.countOfApprovedDevices })}
-                                            | {t(formatDeviceCountMessage(popupData.countOfPendingDevices, t('deactivateSbi.deactivatePendingDevicesSingular'), t('deactivateSbi.deactivatePendingDevicesPlural')), { devicesCount: popupData.countOfPendingDevices })}
+                                        <p className="text-sm font-inter text-[#8B6105]">
+                                            {t(formatDeviceCountMessage(
+                                                popupData.countOfApprovedDevices,
+                                                'deactivateSbi.deactivateApprovedDevicesSingular',
+                                                'deactivateSbi.deactivateApprovedDevicesPlural'
+                                            ), { devicesCount: popupData.countOfApprovedDevices })}
+                                            | {t(formatDeviceCountMessage(
+                                                popupData.countOfPendingDevices,
+                                                'deactivateSbi.deactivatePendingDevicesSingular',
+                                                'deactivateSbi.deactivatePendingDevicesPlural'
+                                            ), { devicesCount: popupData.countOfPendingDevices })}
                                         </p>
                                     </div>)
                                 }
