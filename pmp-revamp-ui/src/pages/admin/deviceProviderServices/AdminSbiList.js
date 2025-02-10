@@ -16,7 +16,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler, setSubmenuRef } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
@@ -44,12 +44,12 @@ function AdminSbiList() {
     const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
-    const [showSbiApproveRejectPopUp, setShowSbiApproveRejectPopUp] = useState(false);
+    const [showActiveIndexSbiApproveRejectPopUp, setShowActiveIndexSbiApproveRejectPopUp] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [selectedSbi, setSelectedSbi] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -179,17 +179,17 @@ function AdminSbiList() {
         }
     };
 
-    const approveRejectSbi = (selectedSbi) => {
+    const approveRejectSbi = (selectedSbi, index) => {
         if (selectedSbi.status === 'pending_approval') {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
-            setShowSbiApproveRejectPopUp(true);
+            setShowActiveIndexSbiApproveRejectPopUp(index);
         }
     };
 
     const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
-            setShowSbiApproveRejectPopUp(false);
+            setShowActiveIndexSbiApproveRejectPopUp(null);
             setSelectedSbi({});
             setSbiList((prevList) =>
                 prevList.map(sbi =>
@@ -200,11 +200,11 @@ function AdminSbiList() {
     }
 
     const closeApproveRejectPopup = () => {
-        setShowSbiApproveRejectPopUp(false);
+        setShowActiveIndexSbiApproveRejectPopUp(null);
         setSelectedSbi({});
     };
 
-    const deactivateSbi = (selectedSbi) => {
+    const deactivateSbi = (selectedSbi, index) => {
         if (selectedSbi.status === "approved") {
             const request = createRequest({
                 status: "De-Activate",
@@ -212,14 +212,14 @@ function AdminSbiList() {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setSelectedSbi({});
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             // Update the specific row in the state with the new status
             setSbiList((prevList) =>
                 prevList.map(sbi =>
@@ -231,7 +231,7 @@ function AdminSbiList() {
 
     const closeDeactivatePopup = () => {
         setSelectedSbi({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     const cancelErrorMsg = () => {
@@ -243,12 +243,12 @@ function AdminSbiList() {
     }
 
     useEffect(() => {
-        if (showSbiApproveRejectPopUp) {
+        if (showActiveIndexSbiApproveRejectPopUp) {
             escapeKeyHandler(closeApproveRejectPopup);
-        } else if (showDeactivatePopup) {
+        } else if (showActiveIndexDeactivatePopup) {
             escapeKeyHandler(closeDeactivatePopup);
         }
-    }, [showSbiApproveRejectPopUp, showDeactivatePopup]);
+    }, [showActiveIndexSbiApproveRejectPopUp, showActiveIndexDeactivatePopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -342,14 +342,14 @@ function AdminSbiList() {
                                                                         </button>
                                                                     </td>
                                                                     <td className="text-center cursor-default">
-                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                                                             <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
                                                                             </button>
 
                                                                             {actionId === index && (
                                                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div role='button' onClick={() => approveRejectSbi(sbi)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi))}>
+                                                                                    <div role='button' onClick={() => approveRejectSbi(sbi, index)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi, index))}>
                                                                                         <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                                                         <img src={sbi.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
@@ -359,13 +359,13 @@ function AdminSbiList() {
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateSbi(sbi)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateSbi(sbi))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateSbi(sbi, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateSbi(sbi, index))}>
                                                                                         <p id="sbi_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${sbi.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={sbi.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showSbiApproveRejectPopUp && (
+                                                                            {showActiveIndexSbiApproveRejectPopUp === index && (
                                                                                 <ApproveRejectPopup
                                                                                     popupData={{ ...selectedSbi, isSbiRequest: true }}
                                                                                     closePopUp={closeApproveRejectPopup}
@@ -375,7 +375,7 @@ function AdminSbiList() {
                                                                                     description={t('sbiApproveRejectPopup.description')}
                                                                                 />
                                                                             )}
-                                                                            {showDeactivatePopup && (
+                                                                            {showActiveIndexDeactivatePopup === index && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={() => closeDeactivatePopup()}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}

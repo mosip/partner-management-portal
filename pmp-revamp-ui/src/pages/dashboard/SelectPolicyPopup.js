@@ -91,7 +91,7 @@ function SelectPolicyPopup() {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter -mt-[2rem]">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter -mt-[2rem]">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
                     {!dataLoaded && (
