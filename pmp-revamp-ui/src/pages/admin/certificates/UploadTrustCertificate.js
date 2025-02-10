@@ -1,6 +1,6 @@
 import React, { useEffect, useState, } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createRequest, getPartnerManagerUrl, isLangRTL, getErrorMessage, handleKeymanagerErrors } from "../../../utils/AppUtils";
+import { createRequest, getPartnerManagerUrl, isLangRTL, getErrorMessage, handleServiceErrors } from "../../../utils/AppUtils";
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title'; import DropdownComponent from "../../common/fields/DropdownComponent";
 import fileUploadImg from '../../../svg/file_upload_certificate.svg';
@@ -130,7 +130,14 @@ function UploadTrustCertificate() {
                     setConfirmationData(requiredData);
                     setUploadSuccess(true);
                 } else {
-                    handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+                    if (responseData.errors && responseData.errors.length > 0) {
+                        const errorCode = response.data.errors[0].errorCode;
+                        if (errorCode === 'PMS_KKS_001') {
+                            setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
+                        } else {
+                            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        }
+                    }
                 }
             } else {
                 setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
@@ -197,7 +204,7 @@ function UploadTrustCertificate() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
-                            <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={t(uploadCertificateData.breadcrumb)} backLink={uploadCertificateData.backLink} />
+                            <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={uploadCertificateData.breadcrumb} backLink={uploadCertificateData.backLink} />
                         </div>
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

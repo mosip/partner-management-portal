@@ -104,7 +104,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[5%] z-50 font-inter cursor-default mx-1 break-normal">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-sm h-fit">
                     {!dataLoaded ? (
@@ -115,15 +115,15 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                 {errorMsg && (
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
-                                <div>
-                                    <div className="flex justify-between px-[1.5rem] my-4 w-full">
-                                        <div className="flex-col space-y-2 break-words w-[96%]">
+                                <>
+                                    <div className="flex justify-between px-[1rem] my-4 w-full">
+                                        <div className="flex-col space-y-2 break-words w-[19.5rem]">
                                             <p className="text-sm font-bold">{title}</p>
                                             {subtitle && (
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer mx-1">
+                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer">
                                             <img src={close_icon} alt="close" />
                                         </button>
                                     </div>
@@ -141,7 +141,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                             {t('approveRejectPopup.approve')}
                                         </button>
                                     </div>
-                                </div>
+                                </>
                             </div>
                         </>
                     )}

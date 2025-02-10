@@ -76,7 +76,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
                         if (errorCode === 'PMS_KKS_001') {
-                            setErrorMsg(t('certificatesList.errorAccessingApi'));
+                            setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
                         } else {
                             setErrorCode(errorCode);
                             setErrorMsg(errorMessage);
@@ -204,7 +204,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50 !mx-0">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 !mx-0">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white break-normal md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (

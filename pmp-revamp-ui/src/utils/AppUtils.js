@@ -452,7 +452,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('certificatesList.errorAccessingApi'));
+                    setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -815,7 +815,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('certificatesList.errorAccessingApi'));
+          setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
         } else {
           setErrorCode(errorCode);
           setErrorMsg(errorMessage);
@@ -823,3 +823,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         console.error('Error:', errorMessage);
     }
   }
+
+  export const setSubmenuRef = (refArray, index) => (el) => {
+    if (el) refArray.current[index] = el;
+  };

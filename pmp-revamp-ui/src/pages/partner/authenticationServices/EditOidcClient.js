@@ -468,10 +468,16 @@ function EditOidcClient() {
                                                             ))}
                                                             {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                             {oidcClientDetails.redirectUris.length < 5 && (
-                                                                <button id="oidc_edit_add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                                                                    <button onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</button>
-                                                                    <button onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</button>
-                                                                </button>
+                                                                <div
+                                                                    id="oidc_edit_add_new_redirect_url"
+                                                                    className="text-[#1447b2] font-bold text-xs w-fit flex items-center space-x-1 cursor-pointer"
+                                                                    tabIndex="0"
+                                                                    onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}
+                                                                    onClick={addNewRedirectUrl}
+                                                                >
+                                                                    <span className="text-lg text-center">+</span>
+                                                                    <span>{t('createOidcClient.addNew')}</span>
+                                                                </div>
                                                             )}
                                                         </div>
                                                         <div className="flex flex-col w-[48%]">

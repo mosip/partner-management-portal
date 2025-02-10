@@ -5,7 +5,7 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
-import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleKeymanagerErrors } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleServiceErrors } from "../../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../../svg/rectangle_box.svg';
@@ -18,7 +18,7 @@ function PartnerCertificatesList() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [downloadBtnId, setDownloadBtnId] = useState(-1);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showActiveIndexUploadCertifcatePopup, setShowActiveIndexUploadCertifcatePopup] = useState(null);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);
     const [certificatesData, setCertificatesData] = useState([]);
     const [errorCode, setErrorCode] = useState("");
@@ -32,21 +32,19 @@ function PartnerCertificatesList() {
         handleMouseClickForDropdown(dropdownRefs, () => setDownloadBtnId(-1));
     }, [dropdownRefs]);
 
-    const clickOnUpload = (partner) => {
+    const clickOnUpload = (partner, index) => {
         const request = {
             partnerId: partner.partnerId,
             partnerDomain: getPartnerDomainType(partner.partnerType),
         };
         setUploadCertificateRequest(request);
-        setShowPopup(!showPopup);
+        setShowActiveIndexUploadCertifcatePopup(index);
         setSelectedPartnerData(partner);
     };
 
-    const closePopup = (state, btnName) => {
-        if (state) {
-            setShowPopup(false);
+    const closePopup = () => {
+            setShowActiveIndexUploadCertifcatePopup(null);
             window.location.reload();
-        }
     };
 
     const getPartnerType = (partnerTypeCode) => {
@@ -109,7 +107,12 @@ function PartnerCertificatesList() {
                 if (response != null) {
                     const responseData = response.data;
                     if (responseData.errors && responseData.errors.length > 0) {
-                        handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+                        const errorCode = response.data.errors[0].errorCode;
+                        if (errorCode === 'PMS_KKS_001') {
+                            setErrorMsg(t('partnerCertificatesList.errorWhileFetchingCertificateList'));
+                        } else {
+                            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        }
                     } else {
                         const resData = responseData.response;
                         setCertificatesData(resData);
@@ -186,7 +189,7 @@ function PartnerCertificatesList() {
                                                     </div>
                                                 </div>
                                                 {partner.isCertificateAvailable
-                                                    ? <div className="flex space-x-6">
+                                                    ? <div className="flex gap-x-6">
                                                         <DownloadCertificateButton
                                                             downloadDropdownRef={el => dropdownRefs.current[index] = el}
                                                             setShowDropDown={() => setDownloadBtnId(downloadBtnId === index ? null : index)}
@@ -200,7 +203,7 @@ function PartnerCertificatesList() {
                                                             id={'download_btn' + (index + 1)}
                                                         />
                                                         <div className="relative group" tabIndex="0">
-                                                            <button disabled={!partner.isPartnerActive} id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className={`h-10 w-28 relative text-xs p-3 py-2 ${partner.isPartnerActive ? "text-tory-blue bg-white border border-blue-800" : "bg-white border border-gray-300 text-[#6f7070]"}  font-semibold rounded-md text-center`}>
+                                                            <button disabled={!partner.isPartnerActive} id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner, index)} className={`h-10 w-28 relative text-xs p-3 py-2 ${partner.isPartnerActive ? "text-tory-blue bg-white border border-blue-800" : "bg-white border border-gray-300 text-[#6f7070]"}  font-semibold rounded-md text-center`}>
                                                                 {t('partnerCertificatesList.reUpload')}
                                                             </button>
                                                             {!partner.isPartnerActive && (
@@ -210,10 +213,10 @@ function PartnerCertificatesList() {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    : <button id={"partner_certificate_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
+                                                    : <button id={"partner_certificate_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner, index)} className="bg-tory-blue h-10 w-28 text-snow-white text-xs font-semibold rounded-md">
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
-                                                {showPopup && (
+                                                {showActiveIndexUploadCertifcatePopup === index && (
                                                     <UploadCertificate closePopup={closePopup} popupData={{ ...selectedPartnerData, isUploadPartnerCertificate: true, uploadHeader: 'uploadCertificate.uploadPartnerCertificate', reUploadHeader: 'uploadCertificate.reUploadPartnerCertificate' }} request={uploadCertificateRequest} />
                                                 )}
                                             </div>
