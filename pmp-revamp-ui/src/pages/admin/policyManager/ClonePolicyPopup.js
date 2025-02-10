@@ -103,10 +103,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                 }
             } catch (err) {
                 console.log("Error fetching data: ", err);
-                if (err.response.status !== 401) {
-                    setDataLoaded(true);
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         } else {
             setDataLoaded(true);

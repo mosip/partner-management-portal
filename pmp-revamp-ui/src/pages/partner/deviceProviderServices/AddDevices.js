@@ -193,7 +193,7 @@ function AddDevices() {
                 handleError(response.data, index, newEntries);
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 newEntries[index].errorMsg = t('addDevices.unableToAddDevice');
                 setDeviceEntries(newEntries);
             }
