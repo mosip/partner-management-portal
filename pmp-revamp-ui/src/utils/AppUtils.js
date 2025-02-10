@@ -321,12 +321,12 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
         if (!alreadyAdded) {
             if (fieldName === "partnerType") {
                 dataArr.push({
-                    fieldCode: getPartnerTypeDescription(item[fieldName], t),
+                    fieldCode: getPartnerTypeDescription(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
                 dataArr.push({
-                    fieldCode: getStatusCode(item[fieldName], t),
+                    fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else {
