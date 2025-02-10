@@ -78,7 +78,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       }
     } catch (err) {
       console.error("Error fetching partner type data: ", err);
-      if (err.response.status !== 401) {
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
       }
       return [];

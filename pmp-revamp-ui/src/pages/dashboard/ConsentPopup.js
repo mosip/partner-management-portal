@@ -51,7 +51,7 @@ function ConsentPopup() {
                 setErrorMsg(t('consentPopup.consentSaveError'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error: ", err);

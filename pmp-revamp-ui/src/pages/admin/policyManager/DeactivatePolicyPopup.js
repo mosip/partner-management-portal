@@ -88,7 +88,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                 }
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }
@@ -146,7 +146,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }

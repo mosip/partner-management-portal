@@ -93,7 +93,7 @@ function RequestPolicy() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
@@ -143,7 +143,7 @@ function RequestPolicy() {
             setDataLoaded(true);
         } catch (err) {
             console.error('Error fetching policies:', err);
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }
@@ -194,7 +194,7 @@ function RequestPolicy() {
             }
             setDataLoaded(true);
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error fetching data: ", err);

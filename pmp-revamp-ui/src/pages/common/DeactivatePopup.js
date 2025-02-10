@@ -92,10 +92,10 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            if (err.response.status !== 401) {
-                setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setDataLoaded(true);
         }
     };
 
