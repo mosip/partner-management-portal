@@ -6,8 +6,8 @@ import { HttpService } from '../../../services/HttpService';
 import {
   isLangRTL, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  createRequest, populateDeactivatedStatus,
-  handleKeymanagerErrors, setSubmenuRef
+  createRequest, populateDeactivatedStatus, setSubmenuRef,
+  handleServiceErrors
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -70,7 +70,14 @@ function FtmList() {
             setFtmList(sortedData);
             setFilteredFtmList(sortedData);
           } else {
-            handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+            if (responseData.errors && responseData.errors.length > 0) {
+              const errorCode = response.data.errors[0].errorCode;
+              if (errorCode === 'PMS_KKS_001') {
+                  setErrorMsg(t('ftmList.errorWhileFetchingFtmList'));
+              } else {
+                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+              }
+            }
           }
         } else {
           setErrorMsg(t('ftmList.errorInFtmList'));

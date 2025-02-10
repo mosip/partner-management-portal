@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
         "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
         "certificateExpired": "Certificate has expired. Please upload a valid certificate",
-        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled"
+        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled",
+        "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -530,7 +531,8 @@
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
         "ftmId": "FTM ID",
         "selectFtmId": "Select FTM ID",
-        "searchFtmId": "Search FTM ID"
+        "searchFtmId": "Search FTM ID",
+        "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -590,7 +592,8 @@
         "deActivate": "Deactivate",
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
-        "errorAccessingApi": "Facing an error while accessing the keymanager API."
+        "errorAccessingApi": "Facing an error while accessing the keymanager API.",
+        "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",

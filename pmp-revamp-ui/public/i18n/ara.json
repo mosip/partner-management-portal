@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "تم تنزيل الشهادة الموقعة من CA التي تم تحميلها في الأصل بنجاح.",
         "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
         "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
-        "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'"
+        "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'",
+        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -535,7 +536,8 @@
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً.",
         "ftmId": "معرف FTM",
         "selectFtmId": "حدد معرف FTM",
-        "searchFtmId": "البحث عن معرف FTM"
+        "searchFtmId": "البحث عن معرف FTM",
+        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -595,7 +597,8 @@
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً.",
-        "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح."
+        "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح.",
+        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "شرفع هادة الثقة",

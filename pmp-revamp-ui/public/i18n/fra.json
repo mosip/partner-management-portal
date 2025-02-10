@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "Le certificat signé par l'autorité de certification initialement téléchargé a été téléchargé avec succès.",
         "mosipSignedCertificateSuccessMsg": "Certificat signé MOSIP téléchargé avec succès.",
         "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide",
-        "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action."
+        "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action.",
+        "errorWhileFetchingCertificateList": "En raison d'une erreur, nous n'avons pas pu récupérer la liste des certificats. Veuillez réessayer."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
@@ -535,7 +536,8 @@
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
         "ftmId": "Identifiant FTM",
         "selectFtmId": "Sélectionnez l'ID FTM",
-        "searchFtmId": "Rechercher l'identifiant FTM"
+        "searchFtmId": "Rechercher l'identifiant FTM",
+        "errorWhileFetchingFtmList": "En raison d'une erreur, nous n'avons pas pu récupérer les informations de la puce FTM. Veuillez réessayer."
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -595,7 +597,8 @@
         "deActivate": "Désactiver",
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur.",
-        "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés."
+        "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés.",
+        "errorWhileDownloadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Télécharger le certificat de confiance",
