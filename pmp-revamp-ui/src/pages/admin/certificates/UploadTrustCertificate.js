@@ -145,7 +145,7 @@ function UploadTrustCertificate() {
             setDataLoaded(true);
         } catch (err) {
             console.log("Error while uploading certificate: ", err);
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }

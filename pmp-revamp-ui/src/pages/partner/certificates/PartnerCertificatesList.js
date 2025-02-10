@@ -93,7 +93,7 @@ function PartnerCertificatesList() {
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             return null;
@@ -124,7 +124,7 @@ function PartnerCertificatesList() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
