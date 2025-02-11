@@ -64,7 +64,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "hamburger_close_icon")
 	private WebElement hamburgerOpen;
 
-	@FindBy(id = "hamburger_open_icon")
+	@FindBy(id = " hamburger_open_icon")
 	private WebElement hamburgerClose;
 
 	@FindBy(id = "select_policy_group_view_text")
