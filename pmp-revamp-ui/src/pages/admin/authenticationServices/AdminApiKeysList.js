@@ -4,7 +4,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest,
-    escapeKeyHandler
+    escapeKeyHandler, setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -47,7 +47,7 @@ function AdminApiKeysList() {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -113,11 +113,11 @@ function AdminApiKeysList() {
             setFetchData(false);
         } catch (err) {
             console.error('Error fetching data:', err);
-            if (err.response.status !== 401) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
         }
     }
 
@@ -164,7 +164,7 @@ function AdminApiKeysList() {
     };
 
 
-    const deactivateApiKey = (selectedApiKeyData) => {
+    const deactivateApiKey = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
                 label: selectedApiKeyData.apiKeyLabel,
@@ -173,21 +173,21 @@ function AdminApiKeysList() {
             setActionId(-1);
             setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
             document.body.style.overflow = "hidden";
         }
     };
 
     const closeDeactivatePopup = () => {
         setSelectedApiKey({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
         document.body.style.overflow = "auto";
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
             setSelectedApiKey({});
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             setApiKeysList((prevList) =>
                 prevList.map(apiKey =>
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
@@ -207,7 +207,7 @@ function AdminApiKeysList() {
 
     useEffect(() => {
         escapeKeyHandler(closeDeactivatePopup)
-    }, [showDeactivatePopup]);
+    }, [showActiveIndexDeactivatePopup]);
 
     const styles = {
         loadingDiv: "!py-[20%]",
@@ -291,14 +291,14 @@ function AdminApiKeysList() {
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>
-                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date", true)}</td>
+                                                                    <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date")}</td>
                                                                     <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)}>
                                                                         <div className={`${bgOfStatus(apiKey.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                             {getStatusCode(apiKey.status, t)}
                                                                         </div>
                                                                     </td>
-                                                                    <td className="text-center">
-                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                                                    <td className="text-center cursor-default">
+                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                                                             <button id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                                                 ...
                                                                             </button>
@@ -309,13 +309,13 @@ function AdminApiKeysList() {
                                                                                         <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey))}>
+                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
                                                                                         <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                         <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                     </div>
                                                                                 </div>
                                                                             )}
-                                                                            {showDeactivatePopup && (
+                                                                            {showActiveIndexDeactivatePopup === index && (
                                                                                 <DeactivatePopup
                                                                                     closePopUp={closeDeactivatePopup}
                                                                                     onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}

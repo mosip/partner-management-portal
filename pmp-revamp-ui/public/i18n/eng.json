@@ -32,7 +32,7 @@
         "close": "Close",
         "unexpectedError": "We have encountered an unexpected error",
         "undoChanges": "Undo Changes",
-        "clear":"Clear"
+        "clear": "Clear"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
         "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
         "certificateExpired": "Certificate has expired. Please upload a valid certificate",
-        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled"
+        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled",
+        "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -178,7 +179,7 @@
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroupName": "Policy Group",
-        "policyId":"Policy ID",
+        "policyId": "Policy ID",
         "policyName": "Policy Name",
         "creationDate": "Creation Date",
         "status": "Status",
@@ -530,7 +531,8 @@
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
         "ftmId": "FTM ID",
         "selectFtmId": "Select FTM ID",
-        "searchFtmId": "Search FTM ID"
+        "searchFtmId": "Search FTM ID",
+        "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -590,7 +592,8 @@
         "deActivate": "Deactivate",
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
-        "errorAccessingApi": "Facing an error while accessing the keymanager API."
+        "errorAccessingApi": "Facing an error while accessing the keymanager API.",
+        "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
@@ -732,16 +735,19 @@
     "activePoliciesDetectedMsg": {
         "header": "Error: Active Policies Detected!",
         "description1": "There are {{noOfActivePolicies}} active policies associated with this policy group. Please deactivate them before proceeding further",
-        "description2": "There is one policy associated with this policy group. Please deactivate that before proceeding further."
+        "description2": "There is {{noOfActivePolicies}} policy associated with this policy group. Please deactivate that before proceeding further."
     },
     "draftPoliciesDetectedMsg": {
         "header": "Error: Policies detected in Draft status!",
         "description1": "There are {{noOfDraftPolicies}} draft policies associated with this policy group. Policy Group cannot be deactivated until all associated draft policies are published and then deactivated. Please address the draft policies to proceed.",
-        "description2": "There is one draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
+        "description2": "There is {{noOfDraftPolicies}} draft policy associated with this policy group. Policy Group cannot be deactivated until the associated draft policy is published and then deactivated. Please address the draft policy to proceed."
     },
     "activeAndDraftPoliciesDetectedMsg": {
         "header": "Error: Policies in Activated and Draft Status Detected!",
-        "description": "There are {{noOfActivePolicies}} active and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "description": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForSingularActive": "There is {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policies associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForSingularDraft": "There are {{noOfActivePolicies}} active policies and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
+        "descriptionForBothSingular": "There is {{noOfActivePolicies}} active policy and {{noOfDraftPolicies}} draft policy associated with this policy group. To proceed with deactivating the policy group, please ensure the following:",
         "descriptionMsg1": "1. Deactivate all active policies.",
         "descriptionMsg2": "2. Publish and then deactivate all draft policies."
     },
@@ -809,10 +815,10 @@
     },
     "publishPolicyPopup": {
         "title": "Publish Policy",
-        "description1": "By clicking ‘Publish,’ the policy",
+        "description1": "By clicking ‘Publish,’ the policy - ",
         "description2": "will be published and no longer be editable. It will become available for partner selection only after the policy is published.",
         "errorInPublishPolicy": "While publishing the policy, we have encountered with an error.",
-        "successMsg": "{{policyName}} has been published successfully!",
+        "successMsg": " has been published successfully!",
         "publish": "Publish"
     },
     "partnerPolicyMappingRequestList": {
@@ -1105,7 +1111,7 @@
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Dates are not valid.",
         "KER-PCM-005": "Please upload corresponding Root Certificate to proceed further",
-        "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
+        "KER-KMS-013": "Certificate Parsing Error. Upload a valid certificate.",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",

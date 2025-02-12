@@ -9,7 +9,8 @@ import {
   resetPageNumber,
   getPartnerManagerUrl,
   downloadCaCertificate,
-  handleKeymanagerErrors
+  setSubmenuRef,
+  handleServiceErrors
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -108,7 +109,14 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           setTotalRecords(responseData.response.totalResults);
           setCertificatesList(resData);
         } else {
-          handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+          if (responseData.errors && responseData.errors.length > 0) {
+            const errorCode = response.data.errors[0].errorCode;
+            if (errorCode === 'PMS_KKS_001') {
+                setErrorMsg(t('partnerCertificatesList.errorWhileFetchingCertificateList'));
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+          }
         }
       } else {
         setErrorMsg(t('certificatesList.errorInCertificateList'));
@@ -117,11 +125,11 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
       setFetchData(false);
     } catch (err) {
       console.error('Error fetching data:', err);
-      if (err.response.status !== 401) {
-        setFetchData(false);
-        fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
+      setFetchData(false);
+      fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
     }
   }
 
@@ -284,12 +292,12 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime", true)}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime", true)}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime", true)}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime")}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime")}</td>
+                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime")}</td>
                                       <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
-                                      <td className="text-center">
-                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                      <td className="text-center cursor-default">
+                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                           <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
                                             ...
                                           </button>

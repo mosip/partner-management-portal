@@ -1,11 +1,18 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { onPressEnterKey } from '../../../utils/AppUtils';
 import FocusTrap from 'focus-trap-react';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
     const previewData = JSON.stringify(jsonData, null, 2);
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">

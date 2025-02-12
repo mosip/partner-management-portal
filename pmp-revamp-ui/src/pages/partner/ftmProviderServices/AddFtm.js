@@ -87,7 +87,6 @@ function AddFtm() {
   }
 
   const clickOnUpload = () => {
-    document.body.style.overflow = "hidden";
     const request = {
       ftpProviderId: partnerId,
       ftpChipDeatilId: ftpChipDetailId,
@@ -101,7 +100,6 @@ function AddFtm() {
   const closePopup = (state, btnName) => {
     if (state && btnName === 'cancel') {
       setShowPopup(false);
-      document.body.style.overflow = "auto";
     } else if (state && btnName === 'close') {
       navigate('/partnermanagement/ftm-chip-provider-services/ftm-list');
     }
@@ -131,7 +129,7 @@ function AddFtm() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(err.toString());
         }
       }
@@ -197,7 +195,7 @@ function AddFtm() {
       }
       setDataLoaded(true);
     } catch (err) {
-      if (err.response.status !== 401) {
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
       console.log("Error fetching data: ", err);

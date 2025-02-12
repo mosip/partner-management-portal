@@ -62,7 +62,7 @@ function Dashboard() {
       }
       setDataLoaded(true);
     } catch (err) {
-      if (err.response.status !== 401) {
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
       console.log("Error: ", err);
@@ -106,7 +106,6 @@ function Dashboard() {
               //3. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
-              document.body.style.overflow = "hidden";
               isSelectPolicyPopupVisible = true;
             } else {
               //4. register the new user in PMS
@@ -140,7 +139,7 @@ function Dashboard() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(err.toString());
           setDataLoaded(true);
         }
@@ -156,7 +155,6 @@ function Dashboard() {
       await fetchUserConsent();
       if (!isUserConsentGiven) {
         setShowConsentPopup(true);
-        document.body.style.overflow = "hidden";
       }
     }
   }
@@ -182,7 +180,7 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
@@ -209,7 +207,7 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
@@ -235,7 +233,7 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
@@ -261,7 +259,7 @@ function Dashboard() {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
       } catch (err) {
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);

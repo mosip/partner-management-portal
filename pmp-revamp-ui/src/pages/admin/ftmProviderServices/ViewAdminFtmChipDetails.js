@@ -57,7 +57,7 @@ function ViewAdminFtmChipDetails() {
                 if (response.data.errors && response.data.errors.length > 0) {
                     const errorCode = response.data.errors[0].errorCode;
                     if (errorCode === 'PMS_KKS_001') {
-                        setErrorMsg(t('certificatesList.errorAccessingApi'));
+                        setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
                     } else {
                         handleServiceErrors(response.data, setErrorCode, setErrorMsg);
                     }
@@ -66,7 +66,7 @@ function ViewAdminFtmChipDetails() {
                 }
             } catch (err) {
                 console.error('Error fetching certificate details:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.message || t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
                 }
             }
@@ -106,9 +106,9 @@ function ViewAdminFtmChipDetails() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
+                <LoadingIcon />
             )}
             {dataLoaded && (
                 <>
@@ -150,11 +150,11 @@ function ViewAdminFtmChipDetails() {
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
-                                                    formatDate(ftmDetails.createdDateTime, "date", true)}
+                                                    formatDate(ftmDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(ftmDetails.createdDateTime, "time", true)}
+                                                {formatDate(ftmDetails.createdDateTime, "time")}
                                             </div>
                                         </div>
                                     </div>
@@ -239,13 +239,13 @@ function ViewAdminFtmChipDetails() {
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
-                                                        {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime', true)}
+                                                        {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                        {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime', true)}
+                                                        {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                             </div>

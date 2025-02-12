@@ -28,8 +28,11 @@ function ViewAdminOidcClientDetails() {
     const copyToolTipRef = useRef(null);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedOidcClientAttributes');
         handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
+    }, [copyToolTipRef]);
+
+    useEffect(() => {
+        const data = localStorage.getItem('selectedOidcClientAttributes');
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -46,7 +49,6 @@ function ViewAdminOidcClientDetails() {
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setOidcClientDetails(resData);
-                        console.log(oidcClientDetails);
                     } else {
                         setUnexpectedError(true);
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -57,13 +59,13 @@ function ViewAdminOidcClientDetails() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
         };
         fetchData();
-    }, [copyToolTipRef]);
+    }, []);
 
     const moveToOidcClientsList = () => {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
@@ -74,7 +76,7 @@ function ViewAdminOidcClientDetails() {
     };
 
     return (
-        <div className={`flex-col w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon />
             )}
@@ -113,11 +115,11 @@ function ViewAdminOidcClientDetails() {
                                             </div>
                                             <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewOidcClientDetails.createdOn") + ' ' +
-                                                    formatDate(selectedClientData.createdDateTime, "date", true)}
+                                                    formatDate(selectedClientData.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
                                             <div className="font-semibold text-sm text-dark-blue">
-                                                {formatDate(selectedClientData.createdDateTime, "time", true)}
+                                                {formatDate(selectedClientData.createdDateTime, "time")}
                                             </div>
                                         </div>
                                     </div>
@@ -226,25 +228,23 @@ function ViewAdminOidcClientDetails() {
                                             </p>
                                         </div>
                                         <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
-                                            <div className={`flex-col space-y-1 w-[50%]  ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
+                                            <div className={`flex-col space-y-1 w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
                                                 <p id='oidc_client_details_redirect_uris' className="font-[600] text-suva-gray text-sm">
                                                     {t("viewOidcClientDetails.redirectUri")}
                                                 </p>
                                                 <div id='oidc_client_redirect_uris' className="flex-col">
-                                                    {(oidcClientDetails.redirectUris).map((uri, index) => {
-                                                        return (
-                                                            <ul>
-                                                                <li key={index} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                    <p className="text-md max-[450px]:text-sm max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
-                                                                        {uri}
-                                                                    </p>
-                                                                    {(oidcClientDetails.redirectUris).length > 1 &&
-                                                                        (<hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />)
-                                                                    }
-                                                                </li>
-                                                            </ul>
-                                                        )
-                                                    })}
+                                                    <ul>
+                                                        {oidcClientDetails.redirectUris.map((uri, index) => (
+                                                            <li key={index + uri} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                <p className="text-md  font-[600] text-[#36393E] py-1">
+                                                                    {uri}
+                                                                </p>
+                                                                {oidcClientDetails.redirectUris.length > 1 && (
+                                                                    <hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
                                             </div>
                                             <div className="flex-col space-y-1 w-[50%]">
@@ -252,20 +252,18 @@ function ViewAdminOidcClientDetails() {
                                                     {t("viewOidcClientDetails.grantTypes")}
                                                 </p>
                                                 <div id='oidc_client_grant_types' className="flex-col">
-                                                    {(oidcClientDetails.grantTypes).map((type, index) => {
-                                                        return (
-                                                            <ul>
-                                                                <li key={index} className={`space-y-4 text-sm ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                    <p className="text-md max-[450px]:text-sm max-[450px]:font-semibold font-[600] text-[#36393E] py-1">
-                                                                        {getGrantTypes(type, t)}
-                                                                    </p>
-                                                                    {(oidcClientDetails.grantTypes).length > 1 &&
-                                                                        (<hr className="h-px w-[72%] bg-[#707070] border-[1px]" />)
-                                                                    }
-                                                                </li>
-                                                            </ul>
-                                                        )
-                                                    })}
+                                                    <ul>
+                                                        {oidcClientDetails.grantTypes.map((type, index) => (
+                                                            <li key={index + type} className={`space-y-4 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                <p className="text-md font-[600] text-[#36393E] py-1">
+                                                                    {getGrantTypes(type, t)}
+                                                                </p>
+                                                                {oidcClientDetails.grantTypes.length > 1 && (
+                                                                    <hr className="h-px w-[72%] bg-[#707070] border-[1px]" />
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

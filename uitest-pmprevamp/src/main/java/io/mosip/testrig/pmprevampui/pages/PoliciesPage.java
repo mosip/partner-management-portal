@@ -1,8 +1,5 @@
 package io.mosip.testrig.pmprevampui.pages;
 
-import java.io.IOException;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -254,6 +251,9 @@ public class PoliciesPage extends BasePage {
 	
 	@FindBy(id = "policy_name_filter")
 	private WebElement policyNameFilter;
+
+	@FindBy(id = "deactivate_policy_group__confirm_btn")
+	private WebElement deactivateConfirmButton;
 	
 	@FindBy(xpath = "//h1[text()='Policies']")
 	private WebElement titleOfPolicyPage;
@@ -281,6 +281,9 @@ public class PoliciesPage extends BasePage {
 	
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement goBackButton;
+	
+	@FindBy(id = "create_auth_policy_btn")
+	private WebElement createAuthPolicyButton;
 	
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -407,10 +410,6 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policyGroupFilterOption1);
 	}
 
-	public void clickOnGoBackButton() {
-		clickOnElement(goBackButton);
-	}
-
 	public void clickOnPolicyStatusFilter() {
 		clickOnElement(policyStatusFilter);
 		clickOnElement(policy_status_filter_option1);
@@ -504,10 +503,15 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policiesAuthPolicyTab);
 	}
 	
+
 	public boolean isFilterButtonButtonEnabled() {
 		return isElementEnabled(filterButton);
+    }
+
+	public void clickOnCreateAuthPolicyButton() {
+		clickOnElement(createAuthPolicyButton);
 	}
-	
+
 	public boolean isPolicyDetailsPartnerIdLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPartnerIdLabel);
 	}
@@ -576,6 +580,10 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(subTitleHomeButton);
 	}
 	
+	public void enterPendingPolicyNameInFilter(String value) {
+		enter(policyNameFilter,value);
+	}
+	
 	public void enterPendingPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(searchBoxForPolicyName,value);
@@ -600,6 +608,14 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyNameFilter() {
 		clickOnElement(policyNameFilter);
 		clickOnElement(policyNameFilterOption1);
+	}
+
+	public void clickOnDeactivateButton() {
+		clickOnElement(policyDeactivateButton);
+	}
+	
+	public void clickOnDeactivateConfirmButton() {
+		clickOnElement(deactivateConfirmButton);
 	}
 	
 	public boolean isNoDataAvailableDisplayed() {
@@ -659,8 +675,12 @@ public class PoliciesPage extends BasePage {
 	public void clickOnTitleBackIcon() {
 		clickOnElement(titleBackIcon);
 	}
-	
+
 	public boolean isPoliciesPolicyGroupTabDisplayed() {
 		return isElementDisplayed(policiesPolicyGroupTab);
+	}
+	
+	public void clickOnGoBackButton() {
+		clickOnElement(goBackButton);
 	}
 }

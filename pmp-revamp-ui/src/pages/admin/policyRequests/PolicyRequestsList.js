@@ -16,6 +16,7 @@ import {
   resetPageNumber, setPageNumberAndPageSize, onResetFilter,
   getApproveRejectStatus,
   escapeKeyHandler,
+  setSubmenuRef
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -55,7 +56,7 @@ function PolicyRequestsList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showActiveIndexPopup, setShowActiveIndexPopup] = useState(null);
   const [resetPageNo, setResetPageNo] = useState(false);
   const [selectedPolicyRequest, setSelectedPolicyRequest] = useState({});
   const [filters, setFilters] = useState({
@@ -124,11 +125,11 @@ function PolicyRequestsList() {
       setTriggerServerMethod(false);
     } catch (err) {
       console.error('Error fetching data:', err);
-      if (err.response.status !== 401) {
-          setTriggerServerMethod(false);
-          triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
+      if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(err.toString());
       }
+      setTriggerServerMethod(false);
+      triggerServerMethod ? setTableDataLoaded(true) : setDataLoaded(true);
     }
   }
 
@@ -187,33 +188,30 @@ function PolicyRequestsList() {
   const onClickApproveReject = (responseData, status, selectedPolicyRequest) => {
     if (responseData !== "") {
       setSelectedPolicyRequest({});
-      setShowPopup(false);
+      setShowActiveIndexPopup(null);
       // Update the specific row in the state with the new status
       setPolicyRequestsData((prevList) =>
         prevList.map(policyRequest =>
           policyRequest.id === selectedPolicyRequest.id ? { ...policyRequest, status: getApproveRejectStatus(status) } : policyRequest
         )
       );
-      document.body.style.overflow = "auto";
     }
   }
 
   const closePolicyRequestPopup = () => {
-    setShowPopup(false);
+    setShowActiveIndexPopup(null);
     setSelectedPolicyRequest({});
-    document.body.style.overflow = 'auto';
   };
 
   useEffect(() => {
     escapeKeyHandler(closePolicyRequestPopup);
-  }, [showPopup]);
+  }, [showActiveIndexPopup]);
 
-  const approveRejectPolicyRequest = (policyRequest) => {
+  const approveRejectPolicyRequest = (policyRequest, index) => {
     if (policyRequest.status === 'InProgress') {
-      setShowPopup(true);
+      setShowActiveIndexPopup(index);
       setViewPartnersId(-1);
       setSelectedPolicyRequest(policyRequest);
-      document.body.style.overflow = "hidden";
     }
   };
 
@@ -314,20 +312,20 @@ function PolicyRequestsList() {
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyId}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date', true)}</td>
+                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date')}</td>
                                       <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
                                         <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1 text-xs font-semibold rounded-md`}>
                                           {getStatusCode(policyRequest.status, t)}
                                         </div>
                                       </td>
-                                      <td className="text-center">
-                                        <div ref={(el) => (submenuRef.current[index] = el)}>
+                                      <td className="text-center cursor-default">
+                                        <div ref={setSubmenuRef(submenuRef, index)}>
                                           <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                             ...
                                           </button>
                                           {viewPartnerId === index && (
                                             <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest))}>
+                                              <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
                                                 <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                 <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                               </div>
@@ -338,7 +336,7 @@ function PolicyRequestsList() {
                                               </div>
                                             </div>
                                           )}
-                                          {showPopup &&
+                                          {showActiveIndexPopup === index &&
                                             <ApproveRejectPopup
                                               popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
                                               closePopUp={closePolicyRequestPopup}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import { logout, onPressEnterKey, getPartnerManagerUrl, handleServiceErrors } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
@@ -16,11 +16,19 @@ function ConsentPopup() {
     const consentText = t('consentPopup.description');
 
     const styles = {
-        loadingDiv: "!py-[50%]"
+        loadingDiv: "!py-[20%]"
     }
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
@@ -30,7 +38,6 @@ function ConsentPopup() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        document.body.style.overflow = "auto";
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
             if (response) {
@@ -44,7 +51,7 @@ function ConsentPopup() {
                 setErrorMsg(t('consentPopup.consentSaveError'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error: ", err);
@@ -58,7 +65,7 @@ function ConsentPopup() {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-3/5 mx-auto rounded-xl shadow-lg -mt-3`}>
                     {!dataLoaded && (

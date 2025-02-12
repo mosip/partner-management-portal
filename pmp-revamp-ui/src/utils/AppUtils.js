@@ -1,15 +1,12 @@
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
-export const formatDate = (dateString, format, isTimeInUTC) => {
+export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
 
     const withoutOffset = dateString.replace(/([+-]\d{2}:\d{2})$/, "");
     let date = new Date(withoutOffset);
-
-    if (isTimeInUTC) {
-        date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
-    }
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     switch (format) {
         case 'dateTime':
             return date.toLocaleString();
@@ -324,12 +321,12 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
         if (!alreadyAdded) {
             if (fieldName === "partnerType") {
                 dataArr.push({
-                    fieldCode: getPartnerTypeDescription(item[fieldName], t),
+                    fieldCode: getPartnerTypeDescription(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
                 dataArr.push({
-                    fieldCode: getStatusCode(item[fieldName], t),
+                    fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else {
@@ -455,7 +452,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('certificatesList.errorAccessingApi'));
+                    setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -531,7 +528,7 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         }
     } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
     }
@@ -557,7 +554,7 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         return null;
     } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
         return null;
@@ -781,7 +778,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
         }
     } catch (err) {
         console.error('Error fetching certificate Details:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
     }
@@ -818,7 +815,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('certificatesList.errorAccessingApi'));
+          setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
         } else {
           setErrorCode(errorCode);
           setErrorMsg(errorMessage);
@@ -826,3 +823,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         console.error('Error:', errorMessage);
     }
   }
+
+  export const setSubmenuRef = (refArray, index) => (el) => {
+    if (el) refArray.current[index] = el;
+  };

@@ -1,6 +1,5 @@
 package io.mosip.testrig.pmprevampui.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -79,7 +78,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
 
-	@FindBy(xpath = "//*[text()='Root of Trust Certificate']")
+	@FindBy(xpath = "//*[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
 
 	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")
@@ -99,7 +98,7 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='FTM Chip']")
 	private WebElement FTMChipTab;
-	
+
 	@FindBy(id = "admin_partner_certificate_list_icon")
 	private WebElement certificateTrustStore;
 
@@ -305,7 +304,7 @@ public class DashboardPage extends BasePage {
 	public void clickOnSbiDevices() {
 		clickOnElement(sbiDevicesButton);
 	}
-	
+
 	public void clickOnCertificateTrustStore() {
 		clickOnElement(certificateTrustStore);
 	}

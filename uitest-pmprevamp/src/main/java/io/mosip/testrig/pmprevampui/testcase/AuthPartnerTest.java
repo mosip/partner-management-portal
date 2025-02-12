@@ -14,7 +14,6 @@ import io.mosip.testrig.pmprevampui.pages.BasePage;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
 import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
-import io.mosip.testrig.pmprevampui.pages.OldPmpPage;
 import io.mosip.testrig.pmprevampui.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmprevampui.pages.PartnerPolicyMappingPage;
 import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
@@ -136,7 +135,7 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(),GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -151,7 +150,9 @@ public class AuthPartnerTest extends BaseClass {
 
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(),GlobalConstants.isSucessMessageDisplayed);
+
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		partnerCertificatePage.uploadCertificateInvalidCert();
@@ -349,7 +350,6 @@ public class AuthPartnerTest extends BaseClass {
 		policiesPage.enterComments(data);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
-		
 		
 		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
@@ -857,7 +857,7 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterEmail(data + "nocert" + "@gmail.com");
 
 		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(),GlobalConstants.isPhoneNumberTextboxDisplayed);
-		registerPage.enterPhone("  ");
+        registerPage.enterPhone("  ");
 
 		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),GlobalConstants.isNotificationLanguageDropdownDisplayed);
 		registerPage.selectNotificationLanguageDropdown();
@@ -879,6 +879,7 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterPhone("8098768903");
 		registerPage.enterPassword("mosip123");
 	    registerPage.enterPasswordConfirm("mosip123");
+
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isSelectPolicyGroupPopUpDisplayed(),GlobalConstants.isSelectPolicyGroupPopUpDisplayed);
@@ -945,6 +946,7 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
+
 		oidcClientPage.entercreateOidcRedirectUrl2(ConfigManager.getRedirectUri() + "a");
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
 		oidcClientPage.entercreateOidcRedirectUrl3(ConfigManager.getRedirectUri() + "b");
@@ -952,9 +954,7 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.entercreateOidcRedirectUrl4(ConfigManager.getRedirectUri() + "c");
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
 		oidcClientPage.entercreateOidcRedirectUrl5(ConfigManager.getRedirectUri() + "d");
-
 		oidcClientPage.clickOnCreateOidcClearForm();
-
 		assertFalse(oidcClientPage.isCreateOidcRedirectUrl5Displayed(),GlobalConstants.isNoDataAvailableTextDisplayed);
 
 	}
@@ -1000,7 +1000,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed);
 		oidcClientPage.clickOnRedirectUri2Delete();
 		assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayed(),GlobalConstants.isRedirectUri2TextBoxDisplayed);
-
 	}
 
 	@Test(priority = 12, description = "Adding second redirect uri")
@@ -1036,7 +1035,7 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnClearFormButton();
 		assertTrue(oidcClientPage.isLogoUriempty(),GlobalConstants.isLogoUriempty);
 	}
-	
+
 	@Test (priority = 14, description = "Using invalid data to create oidc")
 	public void usingInvalidDataToCreateOIDC() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
@@ -1073,7 +1072,18 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnOidcEditSubmitButton();
 		assertTrue(oidcClientPage.isModifiedSuccessfullTextMessageDisplayed(),GlobalConstants.isAutherisationCodeTextDisplayed);
 		oidcClientPage.clickConfirmationGoBackButton();
-		
+		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(),GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(),GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(),GlobalConstants.isOidcClientNameDescIcon);
+		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(),GlobalConstants.isOidcClientNameAscIcon);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(),GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(),GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescISconDisplayed(),GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(oidcClientPage.isFilterButtonButtonEnabled(),GlobalConstants.isFilterButtonButtonEnabled);
+		assertTrue(oidcClientPage.isSubTitleHomeButtonDisplayed(),GlobalConstants.isHomeButtonInAuthenticationDisplayed);
 		
 	}
 	@Test(priority = 17, description = "Deactivate OIDC client")
@@ -1183,5 +1193,5 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardpage.isWelcomeMessageDisplayed(),GlobalConstants.isWelcomeMessageDisplayed);
 
 		}
-}
 
+}

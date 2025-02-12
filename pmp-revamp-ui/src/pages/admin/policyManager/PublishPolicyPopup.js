@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
@@ -15,6 +15,14 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -24,12 +32,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     };
 
     const cancelPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp();
     };
 
     const clickOnClose = () => {
-        document.body.style.overflow = "auto"
         onClickPublish();
     };
 
@@ -49,7 +55,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     setPublishPolicySccesss(true);
-                    setSuccessMsg(t('publishPolicyPopup.successMsg', { policyName: policyDetails.policyName}));
+                    setSuccessMsg(t('publishPolicyPopup.successMsg'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -59,10 +65,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                 setErrorMsg(t('publishPolicyPopup.errorInPublishPolicy'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
-                setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setDataLoaded(true);
             console.log("Error fetching data: ", err);
         }
     };
@@ -76,7 +82,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
         cancelIcon: "!top-4 !mt-[3.25rem]"
     }
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[50%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (
@@ -92,7 +98,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             {successMsg && (
-                                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
+                                <SuccessMessage successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-4 px-6">
                             <p className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 

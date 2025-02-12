@@ -38,7 +38,7 @@ public class TestRunner {
 
 		
 		AdminTestUtil.initialize();
-		DBManager.clearPMSDbData();
+		DBManager.ClearPmsDbData();
 		
 		startTestRunner();
 	}
@@ -193,7 +193,7 @@ public class TestRunner {
 				+ "-run-" + System.currentTimeMillis() + "-report.html");
 
 		runner.run();
-		DBManager.clearPMSDbData();
+		DBManager.ClearPmsDbData();
 		System.exit(0);
 	}
 

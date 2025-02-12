@@ -34,12 +34,16 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
                     <header className={`flex justify-between p-[5%]`}>
-                        <div className={`flex-col`}>
-                            <h1 className={`font-bold text-base text-[#333333] break-normal break-words`}>{policyName}</h1>
+                        <div className={`flex-col w-[19rem]`}>
+                            <h1 className={`font-bold text-base text-[#333333] break-words`}>{policyName}</h1>
                             <p className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
-                        <button id='copy_id_close_btn' onClick={dismiss} className={`h-7 cursor-pointer max-[450px]:h-4 ${isLoginLanguageRTL ? "pr-2 " : "pl-2"}`}>
-                            <img src={close_icon} alt="" />
+                        <button id='copy_id_close_btn' onClick={dismiss} className={`flex items-start min-w-fit cursor-pointer ${isLoginLanguageRTL ? "mr-2 " : "ml-2"}`}>
+                            <img
+                                src={close_icon}
+                                alt="Close"
+                                className='h-7 w-7 block'
+                            />
                         </button>
                     </header>
                     <hr className={`py-[3.5%]`} />

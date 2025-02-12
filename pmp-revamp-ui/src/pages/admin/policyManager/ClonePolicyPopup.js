@@ -19,6 +19,14 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+
     const changePolicyGroupSelection = (fieldName, selectedValue) => {
         setSelectedPolicyGroup(selectedValue);
     };
@@ -41,12 +49,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }, []);
 
     const cancelPopUp = () => {
-        document.body.style.overflow = "auto"
         closePopUp();
     };
 
     const clickOnClose = () => {
-        document.body.style.overflow = "auto"
         window.location.reload();
     };
 
@@ -97,10 +103,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                 }
             } catch (err) {
                 console.log("Error fetching data: ", err);
-                if (err.response.status !== 401) {
-                    setDataLoaded(true);
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         } else {
             setDataLoaded(true);
@@ -123,7 +129,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (
