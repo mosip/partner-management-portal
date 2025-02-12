@@ -483,7 +483,7 @@ export const downloadFile = (data, fileName, fileType) => {
 
 export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => {
     const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
+    const effectivePageNo = pageNo >= totalNumberOfPages || resetPageNo ? 0 : pageNo;
     return effectivePageNo;
 };
 
