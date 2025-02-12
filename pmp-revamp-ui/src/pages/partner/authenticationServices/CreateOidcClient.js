@@ -18,6 +18,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import JSON5 from 'json5';
 
 function CreateOidcClient() {
   const [oidcClientName, setOidcClientName] = useState("");
@@ -267,7 +268,7 @@ function CreateOidcClient() {
       return;
     }
     try {
-      const parsedValue = JSON.parse(value);
+      const parsedValue = JSON5.parse(value);
       // validate the JSON
       if (Object.keys(parsedValue).length === 0) {
         throw new Error(); // Triggers the catch block
