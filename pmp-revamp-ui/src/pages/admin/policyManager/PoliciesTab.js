@@ -12,17 +12,17 @@ function PoliciesTab() {
 
     const changeToPolicyGroup = () => {
         localStorage.setItem('activeTab', 'policyGroup');
-        navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+        navigate('/partnermanagement/policy-manager/policy-group-list')
     };
 
     const changeToAuthPolicy = () => {
         localStorage.setItem('activeTab', 'Auth');
-        navigate('/partnermanagement/admin/policy-manager/auth-policies-list')
+        navigate('/partnermanagement/policy-manager/auth-policies-list')
     };
 
     const changeToDataSharePolicy = () => {
         localStorage.setItem('activeTab', 'DataShare');
-        navigate('/partnermanagement/admin/policy-manager/data-share-policies-list')
+        navigate('/partnermanagement/policy-manager/data-share-policies-list')
     };
 
     return (

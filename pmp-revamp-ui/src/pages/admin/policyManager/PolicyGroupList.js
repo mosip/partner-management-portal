@@ -188,7 +188,7 @@ function PolicyGroupList() {
     }
 
     const createPolicyGroup = () => {
-        navigate('/partnermanagement/admin/policy-manager/create-policy-group');
+        navigate('/partnermanagement/policy-manager/create-policy-group');
     };
 
     const cancelErrorMsg = () => {
@@ -197,7 +197,7 @@ function PolicyGroupList() {
 
     const viewPolicyGroupDetails = (selectedPolicyGroup) => {
         localStorage.setItem('selectedPolicyGroupAttributes', JSON.stringify(selectedPolicyGroup));
-        navigate('/partnermanagement/admin/policy-manager/view-policy-group-details');
+        navigate('/partnermanagement/policy-manager/view-policy-group-details');
     };
 
     const sortAscOrder = (header) => {
