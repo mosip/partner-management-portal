@@ -1,5 +1,13 @@
 # PMP Automation
 
+This folder contains the code for automated UI testing of the Partner Management Portal. 
+
+Since release 1.2.2.0, this is now deprecated. Instead refer to 
+
+> **Latest** PMS Revamp Portal built in React JS is avaialble in the folder [pmp-revamp-ui](https://github.com/mosip/partner-management-portal/tree/release-1.2.2.x/pmp-revamp-ui)
+
+> Corresponding automated UI Testing is available in the [uitest-pmprevamp](https://github.com/mosip/partner-management-portal/tree/release-1.2.2.x/uitest-pmprevamp)
+
 ## Overview
 Selenium webdriver based Admin Portal Automation covers CRUD(create, read, update and delete) operation performed via UI with Chrome driver
 
