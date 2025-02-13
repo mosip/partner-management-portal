@@ -31,7 +31,7 @@ function ViewCertificateDetails() {
             return;
         }
         const viewData = JSON.parse(data);
-        setViewCertDetails(viewData.certificateData);
+        setViewCertDetails(viewData.certData);
         setViewCertPageHeaders(viewData);
     }, []);
 
