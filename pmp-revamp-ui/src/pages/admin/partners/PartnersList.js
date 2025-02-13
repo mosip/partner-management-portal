@@ -264,116 +264,121 @@ function PartnersList() {
                 <>
                   <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
-                      listTitle="partnerList.listOfPartnerTitle"
-                      dataListLength={totalRecords}
-                      filter={filter}
-                      onResetFilter={onResetFilter}
-                      setFilter={setFilter}
-                    />
-                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                    {filter && (
-                      <PartnerListFilter
-                        onApplyFilter={onApplyFilter}
-                        setErrorCode={setErrorCode}
-                        setErrorMsg={setErrorMsg}
+                        listTitle="partnerList.listOfPartnerTitle"
+                        dataListLength={totalRecords}
+                        filter={filter}
+                        onResetFilter={onResetFilter}
+                        setFilter={setFilter}
                       />
-                    )}
-                    {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                    {tableDataLoaded && isFilterApplied && partnersData.length === 0 ?
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
-                      : (
+                      <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                      {filter && (
+                        <PartnerListFilter
+                          onApplyFilter={onApplyFilter}
+                          setErrorCode={setErrorCode}
+                          setErrorMsg={setErrorMsg}
+                        />
+                      )}
+                      {!tableDataLoaded ? (
+                        <LoadingIcon styleSet={styles} />
+                      ) : (
                         <>
-                          <div className="mx-[1.4rem] overflow-x-scroll">
-                            <table className="table-fixed">
-                              <thead>
-                                <tr>
-                                  {tableHeaders.map((header, index) => {
-                                    return (
-                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                          {t(header.headerNameKey)}
-                                          {header.id !== "action" && (
-                                            <SortingIcon
-                                              headerId={header.id}
-                                              sortDescOrder={sortDescOrder}
-                                              sortAscOrder={sortAscOrder}
-                                              order={order}
-                                              activeSortDesc={activeSortDesc}
-                                              activeSortAsc={activeSortAsc}
-                                            />
-                                          )}
-                                        </div>
-                                      </th>);
-                                  })}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {partnersData.map((partner, index) => {
-                                  return (
-                                    <tr id={"partner_list_item" + (index + 1)} key={index}
-                                      className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
-                                        {getStatusCode(partner.certificateUploadStatus, t)}
-                                      </td>
-                                      <td onClick={() => partner.isActive && viewPartnerDetails(partner)}>
-                                        <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                          {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
-                                        </div>
-                                      </td>
-                                      <td className="text-center cursor-default">
-                                        <div ref={setSubmenuRef(submenuRef, index)}>
-                                          <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
-                                            ...
-                                          </button>
-                                          {viewPartnerId === index && (
-                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                          {isFilterApplied && partnersData.length === 0 ?
+                            <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                            : (
+                              <>
+                                <div className="mx-[1.4rem] overflow-x-scroll">
+                                  <table className="table-fixed">
+                                    <thead>
+                                      <tr>
+                                        {tableHeaders.map((header, index) => {
+                                          return (
+                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                              <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                {t(header.headerNameKey)}
+                                                {header.id !== "action" && (
+                                                  <SortingIcon
+                                                    headerId={header.id}
+                                                    sortDescOrder={sortDescOrder}
+                                                    sortAscOrder={sortAscOrder}
+                                                    order={order}
+                                                    activeSortDesc={activeSortDesc}
+                                                    activeSortAsc={activeSortAsc}
+                                                  />
+                                                )}
                                               </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
-                                                <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                            </th>);
+                                        })}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {partnersData.map((partner, index) => {
+                                        return (
+                                          <tr id={"partner_list_item" + (index + 1)} key={index}
+                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                              {getStatusCode(partner.certificateUploadStatus, t)}
+                                            </td>
+                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)}>
+                                              <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                               </div>
-                                            </div>
-                                          )}
-                                          {showActiveIndexDeactivatePopup === index && (
-                                            <DeactivatePopup
-                                              onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
-                                              closePopUp={closeDeactivatePopup}
-                                              popupData={{ ...selectedPartner, isDeactivatePartner: true }}
-                                              request={deactivateRequest}
-                                              headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
-                                              descriptionMsg='deactivatePartner.description'
-                                              headerKeyName={selectedPartner.orgName}
-                                            />
-                                          )}
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-                          <Pagination
-                            dataListLength={totalRecords}
-                            selectedRecordsPerPage={selectedRecordsPerPage}
-                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                            setFirstIndex={setFirstIndex}
-                            isServerSideFilter={true}
-                            getPaginationValues={getPaginationValues}
-                          />
+                                            </td>
+                                            <td className="text-center cursor-default">
+                                              <div ref={setSubmenuRef(submenuRef, index)}>
+                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                  ...
+                                                </button>
+                                                {viewPartnerId === index && (
+                                                  <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
+                                                      <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                      <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
+                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                      <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                  </div>
+                                                )}
+                                                {showActiveIndexDeactivatePopup === index && (
+                                                  <DeactivatePopup
+                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
+                                                    closePopUp={closeDeactivatePopup}
+                                                    popupData={{ ...selectedPartner, isDeactivatePartner: true }}
+                                                    request={deactivateRequest}
+                                                    headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
+                                                    descriptionMsg='deactivatePartner.description'
+                                                    headerKeyName={selectedPartner.orgName}
+                                                  />
+                                                )}
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        );
+                                      })}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </>
+                            )}
                         </>
                       )}
-                  </div>
-                </>
+                      <Pagination
+                        dataListLength={totalRecords}
+                        selectedRecordsPerPage={selectedRecordsPerPage}
+                        setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                        setFirstIndex={setFirstIndex}
+                        isServerSideFilter={true}
+                        getPaginationValues={getPaginationValues}
+                      />
+                    </div>
+                  </>
               )}
             </div>
           </div>

@@ -11,6 +11,7 @@ on:
     branches:
       - '!release-branch'
       - release*
+      - mydev115
       - master
       - 1.0.*
       - develop*

@@ -25,13 +25,13 @@ function ViewCertificateDetails() {
     const [viewCertDetails, setViewCertDetails] = useState(true);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedCertificateAttributes')
+        const data = localStorage.getItem('selectedCertAttributes')
         if (!data) {
             setUnexpectedError(true);
             return;
         }
         const viewData = JSON.parse(data);
-        setViewCertDetails(viewData.certificateData);
+        setViewCertDetails(viewData.certData);
         setViewCertPageHeaders(viewData);
     }, []);
 

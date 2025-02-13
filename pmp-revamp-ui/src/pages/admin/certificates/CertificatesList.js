@@ -27,7 +27,7 @@ import downloadIcon from "../../../svg/download.svg";
 import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 
-function CertificatesList({ certificateType, viewCertificateDetails, uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName }) {
+function CertificatesList({ certificateType, uploadCertificateBtnName, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
-  const [certificatesList, setCertificatesList] = useState([]);
+  const [certDataList, setCertDataList] = useState([]);
   const [order, setOrder] = useState("DESC");
   const [activeAscIcon, setActiveAscIcon] = useState("");
   const [activeDescIcon, setActiveDescIcon] = useState("uploadedDateTime");
@@ -107,7 +107,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
         if (responseData && responseData.response) {
           const resData = responseData.response.data;
           setTotalRecords(responseData.response.totalResults);
-          setCertificatesList(resData);
+          setCertDataList(resData);
         } else {
           if (responseData.errors && responseData.errors.length > 0) {
             const errorCode = response.data.errors[0].errorCode;
@@ -151,6 +151,54 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const getPaginationValues = (recordsPerPage, pageIndex) => {
     setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
   };
+  const uploadCertRequiredData = () => {
+    let breadcrumb = '';
+    let backLink = '';
+
+    if (certificateType === 'root') {
+      breadcrumb = 'rootCertificateList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
+    } else if (certificateType === 'intermediate') {
+      breadcrumb = 'intermediateCertificateList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
+    }
+
+    const requiredData = { breadcrumb, backLink };
+    localStorage.setItem('uploadCertificateAttributes', JSON.stringify(requiredData));
+  };
+
+  const viewCertificateDetails = (selectedData) => {
+    let certType = '';
+    let header = '';
+    let subTitle = '';
+    let backLink = '';
+    let navigateUrl = '';
+
+    if (certificateType === 'root') {
+      certType = 'root';
+      header = 'viewCertificateDetails.viewRootCaCertificateDetails';
+      subTitle = 'rootCertificateList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
+      navigateUrl = '/partnermanagement/admin/certificates/view-root-ca-certificate-details';
+    } else if (certificateType === 'intermediate') {
+      certType = 'intermediate';
+      header = 'viewCertificateDetails.viewIntermediateCaCertificateDetails';
+      subTitle = 'intermediateCertificateList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
+      navigateUrl = '/partnermanagement/admin/certificates/view-intermediate-ca-certificate-details';
+    }
+
+    const requiredData = {
+      certData: selectedData,
+      certType,
+      header,
+      subTitle,
+      backLink
+    };
+
+    localStorage.setItem('selectedCertificateAttributes', JSON.stringify(requiredData));
+    navigate(navigateUrl);
+  };
 
   const sortAscOrder = (header) => {
     if (order !== 'ASC' || activeAscIcon !== header) {
@@ -179,9 +227,9 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
   };
 
-  const onClickDownload = (certificate) => {
-    if (certificate.status === true) {
-      downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+  const onClickDownload = (certData) => {
+    if (certData.status === true) {
+      downloadCaCertificate(HttpService, certData.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
     }
   };
 
@@ -214,7 +262,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
                 <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
-                {certificatesList.length !== 0 ?
+                {certDataList.length !== 0 ?
                   <button onClick={showUploadCertificate} id={uploadCertificateBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
@@ -228,7 +276,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                 activeIntermediateCA={certificateType === 'intermediate' ? true : false}
                 intermediateCertificatesPath={'/partnermanagement/admin/certificates/intermediate-ca-certificate-list'}
               />
-              {!applyFilter && certificatesList.length === 0 ? (
+              {!applyFilter && certDataList.length === 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <EmptyList
                     tableHeaders={tableHeaders}
@@ -252,88 +300,91 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                     {expandFilter && (
                       <CertificatesFilter onApplyFilter={onApplyFilter} />
                     )}
-                    {!tableDataLoaded && <LoadingIcon styleSet={styles} />}
-                    {tableDataLoaded && applyFilter && certificatesList.length === 0 ?
-                      <EmptyList
-                        tableHeaders={tableHeaders}
-                      />
-                      : (
-                        <>
-                          <div className="mx-[1.4rem] overflow-x-scroll">
-                            <table className="table-fixed">
-                              <thead>
-                                <tr>
-                                  {tableHeaders.map((header, index) => {
-                                    return (
-                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
-                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                          {t(header.headerNameKey)}
-                                          {header.id !== "action" && header.id !== "validityStatus" && (
-                                            <SortingIcon
-                                              headerId={header.id}
-                                              sortDescOrder={sortDescOrder}
-                                              sortAscOrder={sortAscOrder}
-                                              order={order}
-                                              activeSortDesc={activeDescIcon}
-                                              activeSortAsc={activeAscIcon}
-                                            />
-                                          )}
-                                        </div>
-                                      </th>
-                                    );
-                                  })}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {certificatesList.map((certificate, index) => {
-                                  return (
-                                    <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime")}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime")}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime")}</td>
-                                      <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
-                                      <td className="text-center cursor-default">
-                                        <div ref={setSubmenuRef(submenuRef, index)}>
-                                          <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
-                                            ...
-                                          </button>
-                                          {actionId === index && (
-                                            <div className={`absolute w-auto z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
-                                                <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("certificatesList.view")}</p>
-                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                              </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
-                                                onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
-                                                <p id="certificate_list_view_btn" className={`${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-[1rem]':'pl-[1rem]'}`} />
-                                              </div>
+                    {!tableDataLoaded ? (
+                      <LoadingIcon styleSet={styles} />
+                    ) : (
+                      <>
+                        {applyFilter && certDataList.length === 0 ?
+                          <EmptyList tableHeaders={tableHeaders}/>
+                          : (
+                            <>
+                              <div className="mx-[1.4rem] overflow-x-scroll">
+                                <table className="table-fixed">
+                                  <thead>
+                                    <tr>
+                                      {tableHeaders.map((header, index) => {
+                                        return (
+                                          <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
+                                            <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                              {t(header.headerNameKey)}
+                                              {header.id !== "action" && header.id !== "validityStatus" && (
+                                                <SortingIcon
+                                                  headerId={header.id}
+                                                  sortDescOrder={sortDescOrder}
+                                                  sortAscOrder={sortAscOrder}
+                                                  order={order}
+                                                  activeSortDesc={activeDescIcon}
+                                                  activeSortAsc={activeAscIcon}
+                                                />
+                                              )}
                                             </div>
-                                          )}
-                                        </div>
-                                      </td>
+                                          </th>
+                                        );
+                                      })}
                                     </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-                          <Pagination
-                            dataListLength={totalRecords}
-                            selectedRecordsPerPage={selectedRecordsPerPage}
-                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                            setFirstIndex={setFirstIndex}
-                            isServerSideFilter={true}
-                            getPaginationValues={getPaginationValues}
-                          />
-                        </>
-                      )
-                    }
+                                  </thead>
+                                  <tbody>
+                                    {certDataList.map((certData, index) => {
+                                      return (
+                                        <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2`}>{certData.certId}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2`}>{certData.partnerDomain}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2 break-all`}>{certData.issuedTo}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2 break-all`}>{certData.issuedBy}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2`}>{formatDate(certData.validFromDate, "dateTime")}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2`}>{formatDate(certData.validTillDate, "dateTime")}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2`}>{formatDate(certData.uploadTime, "dateTime")}</td>
+                                          <td onClick={() => viewCertificateDetails(certData)} className={`px-2 ${certData.status === false && 'text-crimson-red'}`}>{certData.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
+                                          <td className="text-center cursor-default">
+                                            <div ref={setSubmenuRef(submenuRef, index)}>
+                                              <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
+                                                ...
+                                              </button>
+                                              {actionId === index && (
+                                                <div className={`absolute w-auto z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certData)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewCertificateDetails(certData))}>
+                                                    <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("certificatesList.view")}</p>
+                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certData.status === true ? 'cursor-pointer' : 'cursor-default'}`}
+                                                    onClick={() => onClickDownload(certData)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(certData))}>
+                                                    <p id="certificate_list_view_btn" className={`${certData.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
+                                                    <img src={certData.status === true ? downloadIcon : disableDownloadIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-[1rem]' : 'pl-[1rem]'}`} />
+                                                  </div>
+                                                </div>
+                                              )}
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          )
+                        }
+                      </>
+                    )}
+                    <Pagination
+                      dataListLength={totalRecords}
+                      selectedRecordsPerPage={selectedRecordsPerPage}
+                      setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                      setFirstIndex={setFirstIndex}
+                      isServerSideFilter={true}
+                      getPaginationValues={getPaginationValues}
+                    />
                   </div>
                 </>
               )}
