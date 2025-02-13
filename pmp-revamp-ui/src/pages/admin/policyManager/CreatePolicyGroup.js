@@ -76,7 +76,7 @@ function CreatePolicyGroup() {
     };
 
     const clickOnCancel = () => {
-        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
+        navigate('/partnermanagement/policy-manager/policy-group-list');
     };
 
     const clickOnSubmit = async () => {
@@ -101,7 +101,7 @@ function CreatePolicyGroup() {
                     const resData = responseData.response;
                     console.log(resData);
                     const requireData = {
-                        backUrl: "/partnermanagement/admin/policy-manager/policy-group-list",
+                        backUrl: "/partnermanagement/policy-manager/policy-group-list",
                         header: "createPolicyGroup.creatPolicyGroupSuccessHeader",
                     }
                     setConfirmationData(requireData);
@@ -147,7 +147,7 @@ function CreatePolicyGroup() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
-                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.listOfPolicyGroups' backLink={'/partnermanagement/admin/policy-manager/policy-group-list'} style={style} />
+                            <Title title='createPolicyGroup.createPolicyGroup' subTitle='createPolicyGroup.listOfPolicyGroups' backLink={'/partnermanagement/policy-manager/policy-group-list'} style={style} />
                         </div>
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">

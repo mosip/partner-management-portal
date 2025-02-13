@@ -100,7 +100,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         navigate('/partnermanagement/admin/partners-list');
     };
     const showAdminPolicies = () => {
-        navigate('/partnermanagement/admin/policy-manager/policy-group-list');
+        navigate('/partnermanagement/policy-manager/policy-group-list');
     };
     const showPartnerPolicyMapping = () => {
         navigate('/partnermanagement/admin/policy-requests-list');
@@ -123,27 +123,27 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                     <button id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </button>
-                    {!enablePartnerAdminMenu &&
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu &&
                         <button id='side_nav_partner_certificate_icon' className="duration-700 cursor-pointer" onClick={() => showPartnerCertificatesList()}>
                             <SideNavMenuItem title={t('dashboard.partnerCertificate')} id='partnerCertificate' isExpanded={open} activeIcon={activeIcon} />
                         </button>
                     }
-                    {!enablePartnerAdminMenu && enablePoliciesMenu &&
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enablePoliciesMenu &&
                         <button id='side_nav_policies_icon' className="duration-700 cursor-pointer" onClick={() => showPolicies()}>
                             <SideNavMenuItem title={t('dashboard.policies')} id='policies' isExpanded={open} activeIcon={activeIcon} />
                         </button>
                     }
-                    {!enablePartnerAdminMenu && enableAuthenticationServicesMenu &&
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableAuthenticationServicesMenu &&
                         <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
                             <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                         </button>
                     }
-                    {!enablePartnerAdminMenu && enableDeviceProviderServicesMenu &&
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableDeviceProviderServicesMenu &&
                         <button id='side_nav_device_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showDeviceProviderServices()}>
                             <SideNavMenuItem title={t('dashboard.deviceProviderServices')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
                         </button>
                     }
-                    {!enablePartnerAdminMenu && enableFtmServicesMenu &&
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableFtmServicesMenu &&
                         <button id='side_nav_ftmchip_provider_service_icon' className="duration-700 cursor-pointer" onClick={() => showFtmServices()}>
                             <SideNavMenuItem title={t('dashboard.ftmChipProviderServices')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                         </button>
@@ -157,12 +157,15 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
                             <button id='side_nav_partner_icon' className="duration-700 cursor-pointer" onClick={() => showPartner()}>
                                 <SideNavMenuItem title={t('dashboard.partner')} id='partner' isExpanded={open} activeIcon={activeIcon} />
                             </button>
-
-                            {enablePolicyManagerMenu && (
-                                <button id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
-                                    <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
-                                </button>
-                            )}
+                        </>
+                    )}
+                    {(enablePolicyManagerMenu || enablePartnerAdminMenu) && (
+                        <button id='side_nav_policy_icon' className="duration-700 cursor-pointer" onClick={() => showAdminPolicies()}>
+                            <SideNavMenuItem title={t('dashboard.policies')} id='admin_policies' isExpanded={open} activeIcon={activeIcon} />
+                        </button>
+                    )}
+                    {enablePartnerAdminMenu && (
+                        <>
                             <button id='side_nav_partnerPolicyMapping_icon' className={`duration-700 cursor-pointer ${isLoginLanguageRTL ? 'pl-1' : 'pr-1'}`} onClick={() => showPartnerPolicyMapping()}>
                                 <SideNavMenuItem title={t('dashboard.partnerPolicyMapping')} id='partnerPolicyMapping' isExpanded={open} activeIcon={activeIcon} />
                             </button>

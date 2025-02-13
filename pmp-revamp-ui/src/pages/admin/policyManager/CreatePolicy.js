@@ -105,7 +105,7 @@ function CreatePolicy() {
                 const storedPolicyType = localStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
-                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+                    navigate('/partnermanagement/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
                 setConfirmationHeader('createPolicy.policyConfirmationHeader');
@@ -115,14 +115,14 @@ function CreatePolicy() {
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/data-share-policies-list');
                 } else if (storedPolicyType === 'Auth') {
                     setTitle('createPolicy.createAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
                     setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/auth-policies-list');
                 }
                 await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {
