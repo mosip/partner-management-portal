@@ -8,5 +8,5 @@ This repository contains the code for the Partner Management Portal and the code
 
 > **Deprecated** PMS Revamp Portal built in Angular JS is avaialble in the folder [pmp-ui](https://github.com/mosip/partner-management-portal/tree/release-1.2.2.x/pmp-ui)
 
-> Corresponding **deprecated** automated UI Testing is available in the [uitest](https://github.com/mosip/partner-management-portal/tree/release-1.2.2.x/uitest)
+> Corresponding **deprecated** automated UI Testing is available in the [uitest-pmp](https://github.com/mosip/partner-management-portal/tree/release-1.2.2.x/uitest-pmp)
   
