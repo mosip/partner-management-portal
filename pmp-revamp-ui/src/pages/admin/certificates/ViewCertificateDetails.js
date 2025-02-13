@@ -25,7 +25,7 @@ function ViewCertificateDetails() {
     const [viewCertDetails, setViewCertDetails] = useState(true);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedCertificateAttributes')
+        const data = localStorage.getItem('selectedCertAttributes')
         if (!data) {
             setUnexpectedError(true);
             return;
