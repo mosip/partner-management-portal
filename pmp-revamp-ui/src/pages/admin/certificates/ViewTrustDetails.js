@@ -36,7 +36,7 @@ function ViewTrustDetails() {
     }, []);
 
     const onClickDownload = (certificateId) => {
-        downloadCaTrust(HttpService, certificateId, viewCertPageHeaders.certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t );
+        downloadCaTrust(HttpService, certificateId, viewCertPageHeaders.trustType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t );
     };
 
     const moveBackToList = () => {
@@ -83,7 +83,7 @@ function ViewTrustDetails() {
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="text-lg text-dark-blue mb-2 break-all">
-                                    {t('TrustList.certificateId')}: <span className="font-semibold">{viewCertDetails.certId}</span>
+                                    {t('trustList.certificateId')}: <span className="font-semibold">{viewCertDetails.certId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                     <div className={`font-semibold text-sm text-dark-blue`}>
@@ -102,7 +102,7 @@ function ViewTrustDetails() {
                             <div className="flex flex-wrap py-2 max-[450px]:flex-col">
                                 <div className={`w-[48%] max-[600px]:w-[100%] mb-1 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                     <p className="font-[600] text-suva-gray text-sm">
-                                        {t("TrustList.issuedTo")}
+                                        {t("trustList.issuedTo")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md break-all">
                                         {viewCertDetails.issuedTo}
@@ -110,7 +110,7 @@ function ViewTrustDetails() {
                                 </div>
                                 <div className="w-[48%] max-[600px]:w-[100%] mb-1">
                                     <p className="font-[600] text-suva-gray text-sm">
-                                        {t("TrustList.issuedBy")}
+                                        {t("trustList.issuedBy")}
                                     </p>
                                     <p className="font-[600] text-vulcan text-md break-all">
                                         {viewCertDetails.issuedBy}
@@ -139,7 +139,7 @@ function ViewTrustDetails() {
                                             }
                                             <div className="flex-col p-3 items-center">
                                                 <h6 className={`text-sm ${(viewCertDetails.status === true) ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
-                                                    {viewCertPageHeaders.certType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.intermediateCaCertificate')}
+                                                    {viewCertPageHeaders.trustType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.intermediateCaCertificate')}
                                                 </h6>
                                             </div>
                                         </div>
@@ -148,7 +148,7 @@ function ViewTrustDetails() {
                                             <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
                                                 <button id='certificate_download_btn' disabled={viewCertDetails.status !== true} onClick={() => onClickDownload(viewCertDetails.certId)}
                                                     className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${viewCertDetails.status !== true ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
-                                                    {viewCertPageHeaders.certType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadTrustChain')}
+                                                    {viewCertPageHeaders.trustType === 'root' ? t('commons.download') : t('viewCertificateDetails.downloadTrustChain')}
                                                 </button>
                                             </div>
                                         </div>
@@ -156,11 +156,11 @@ function ViewTrustDetails() {
                                     <hr className="border bg-medium-gray h-px" />
                                     <div className="flex items-center p-5 bg-white rounded-lg">
                                         <div className="flex-col space-y-1">
-                                            <p id="trust_certificate_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('TrustList.partnerDomain')}</p>
+                                            <p id="trust_certificate_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('trustList.partnerDomain')}</p>
                                             <p id="trust_certificate_partner_type_context" className="font-semibold text-md text-charcoal-gray">{viewCertDetails.partnerDomain}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                            <p id="trust_certificate_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('TrustList.validFrom')}</p>
+                                            <p id="trust_certificate_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('trustList.validFrom')}</p>
                                             <p id="trust_certificate_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
                                                 {formatDate(viewCertDetails.validFromDate, 'dateTime')}
                                             </p>

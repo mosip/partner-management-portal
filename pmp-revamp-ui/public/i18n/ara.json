@@ -572,7 +572,7 @@
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
-    "TrustList": {
+    "trustList": {
         "rootCA": "CA جذر",
         "intermediateCA": "CA متوسط",
         "certificateTrustStore": "مخزن شهادات الثقة",

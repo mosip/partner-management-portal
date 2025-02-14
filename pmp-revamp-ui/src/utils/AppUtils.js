@@ -452,7 +452,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('TrustList.errorWhileDownloadingCertificate'));
+                    setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -747,7 +747,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
     }
 }
 
-export const downloadCaTrust = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
+export const downloadCaTrust = async (HttpService, certificateId, trustType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
@@ -758,11 +758,11 @@ export const downloadCaTrust = async (HttpService, certificateId, certType, setE
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement("a");
                 link.href = url;
-                link.download = (certType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
+                link.download = (trustType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
 
                 document.body.appendChild(link);
                 link.click();
-                setSuccessMsg(certType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
+                setSuccessMsg(trustType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
 
                 // CleanUP Code
                 window.URL.revokeObjectURL(url);
@@ -815,7 +815,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('TrustList.errorWhileDownloadingCertificate'));
+          setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
         } else {
           setErrorCode(errorCode);
           setErrorMsg(errorMessage);

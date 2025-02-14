@@ -90,7 +90,7 @@ function ViewFtmChipDetails() {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
                     if (errorCode === 'PMS_KKS_001') {
-                        setErrorMsg(t('TrustList.errorWhileDownloadingCertificate'));
+                        setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
                     } else {
                         setErrorCode(errorCode);
                         setErrorMsg(errorMessage);

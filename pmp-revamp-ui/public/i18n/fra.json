@@ -572,7 +572,7 @@
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
-    "TrustList": {
+    "trustList": {
         "rootCA": "CA racine",
         "intermediateCA": "CA intermédiaire",
         "certificateTrustStore": "Magasin de certificats de confiance",

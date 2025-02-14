@@ -25,7 +25,7 @@ function TrustFilter({ onApplyFilter }) {
     useEffect(() => {
         const fetchData = async () => {
             setPartnerDomainData(
-                createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("TrustList.selectPartnerDomain"))
+                createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("trustList.selectPartnerDomain"))
             );
         };
         fetchData();
@@ -58,8 +58,8 @@ function TrustFilter({ onApplyFilter }) {
                 <TextInputComponent
                     fieldName="certificateId"
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey="TrustList.certificateId"
-                    placeHolderKey="TrustList.searchCertificateId"
+                    fieldNameKey="trustList.certificateId"
+                    placeHolderKey="trustList.searchCertificateId"
                     styleSet={styleSet}
                     id="cert_id_filter"
                 />
@@ -67,8 +67,8 @@ function TrustFilter({ onApplyFilter }) {
                     fieldName="partnerDomain"
                     dropdownDataList={partnerDomainData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey="TrustList.partnerDomain"
-                    placeHolderKey="TrustList.selectPartnerDomain"
+                    fieldNameKey="trustList.partnerDomain"
+                    placeHolderKey="trustList.selectPartnerDomain"
                     styleSet={styles}
                     isPlaceHolderPresent={true}
                     id="cert_partner_domain_filter"
@@ -76,16 +76,16 @@ function TrustFilter({ onApplyFilter }) {
                 <TextInputComponent
                     fieldName='issuedTo'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='TrustList.issuedTo'
-                    placeHolderKey='TrustList.searchIssuedTo'
+                    fieldNameKey='trustList.issuedTo'
+                    placeHolderKey='trustList.searchIssuedTo'
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
                 />
                 <TextInputComponent
                     fieldName='issuedBy'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='TrustList.issuedBy'
-                    placeHolderKey='TrustList.searchIssuedBy'
+                    fieldNameKey='trustList.issuedBy'
+                    placeHolderKey='trustList.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
                 />

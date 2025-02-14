@@ -567,7 +567,7 @@
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
-    "TrustList": {
+    "trustList": {
         "rootCA": "Root CA",
         "intermediateCA": "Intermediate CA",
         "certificateTrustStore": "Certificate Trust Store",

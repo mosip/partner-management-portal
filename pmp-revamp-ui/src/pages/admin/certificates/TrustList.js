@@ -70,15 +70,15 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "certificateId", headerNameKey: "TrustList.certificateId" },
-    { id: "partnerDomain", headerNameKey: "TrustList.partnerDomain", },
-    { id: "issuedTo", headerNameKey: "TrustList.issuedTo" },
-    { id: "issuedBy", headerNameKey: "TrustList.issuedBy" },
-    { id: "validFrom", headerNameKey: "TrustList.validFrom" },
-    { id: "validTill", headerNameKey: "TrustList.validTo" },
-    { id: "uploadedDateTime", headerNameKey: "TrustList.timeOfUpload" },
-    { id: "validityStatus", headerNameKey: "TrustList.validityStatus" },
-    { id: "action", headerNameKey: "TrustList.action" },
+    { id: "certificateId", headerNameKey: "trustList.certificateId" },
+    { id: "partnerDomain", headerNameKey: "trustList.partnerDomain", },
+    { id: "issuedTo", headerNameKey: "trustList.issuedTo" },
+    { id: "issuedBy", headerNameKey: "trustList.issuedBy" },
+    { id: "validFrom", headerNameKey: "trustList.validFrom" },
+    { id: "validTill", headerNameKey: "trustList.validTo" },
+    { id: "uploadedDateTime", headerNameKey: "trustList.timeOfUpload" },
+    { id: "validityStatus", headerNameKey: "trustList.validityStatus" },
+    { id: "action", headerNameKey: "trustList.action" },
   ];
 
   const fetchTrustList = async () => {
@@ -119,7 +119,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
           }
         }
       } else {
-        setErrorMsg(t('TrustList.errorInCertificateList'));
+        setErrorMsg(t('trustList.errorInCertificateList'));
       }
       fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
       setFetchData(false);
@@ -168,20 +168,20 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
   };
 
   const viewTrustDetails = (selectedData) => {
-    let certType = '';
+    let trustType = '';
     let header = '';
     let subTitle = '';
     let backLink = '';
     let navigateUrl = '';
 
     if (trustType === 'root') {
-      certType = 'root';
+      trustType = 'root';
       header = 'viewCertificateDetails.viewRootCaCertificateDetails';
       subTitle = 'rootTrustList.subTitle';
       backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
       navigateUrl = '/partnermanagement/admin/certificates/view-root-ca-certificate-details';
     } else if (trustType === 'intermediate') {
-      certType = 'intermediate';
+      trustType = 'intermediate';
       header = 'viewCertificateDetails.viewIntermediateCaCertificateDetails';
       subTitle = 'intermediateTrustList.subTitle';
       backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
@@ -190,7 +190,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
 
     const requiredData = {
       trustData: selectedData,
-      certType,
+      trustType,
       header,
       subTitle,
       backLink
@@ -261,7 +261,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
           <div className="flex-col mt-5">
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
-                <Title title="TrustList.certificateTrustStore" backLink="/partnermanagement" />
+                <Title title="trustList.certificateTrustStore" backLink="/partnermanagement" />
                 {trustDataList.length !== 0 ?
                   <button onClick={showUploadTrust} id={uploadTrustBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
@@ -353,7 +353,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
                                               {actionId === index && (
                                                 <div className={`absolute w-auto z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                                   <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewTrustDetails(trustData)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewTrustDetails(trustData))}>
-                                                    <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("TrustList.view")}</p>
+                                                    <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("trustList.view")}</p>
                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                   </div>
                                                   <hr className="h-px bg-gray-100 border-0 mx-1" />
