@@ -46,9 +46,9 @@ import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
 import LinkedDevicesList from './pages/admin/deviceProviderServices/LinkedDevicesList.js';
 import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
-import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
-import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
-import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
+import RootTrustList from './pages/admin/certificates/RootTrustList.js';
+import IntermediateTrustList from './pages/admin/certificates/IntermediateTrustList.js';
+import ViewTrustDetails from './pages/admin/certificates/ViewTrustDetails.js';
 import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.js';
 
 function AppRoutes() {
@@ -152,19 +152,19 @@ function AppRoutes() {
         },
         {
           path: 'admin/certificates/root-ca-certificate-list',
-          element: <GuardedRoute><MainLayout><RootCertificatesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><RootTrustList /></MainLayout></GuardedRoute>
         },  
         {
           path: 'admin/certificates/view-root-ca-certificate-details',
-          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/intermediate-ca-certificate-list',
-          element: <GuardedRoute><MainLayout><IntermediateCertificatesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><IntermediateTrustList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/view-intermediate-ca-certificate-details',
-          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/upload-trust-certificate',

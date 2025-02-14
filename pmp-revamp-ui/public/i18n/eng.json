@@ -567,7 +567,7 @@
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
-    "certificatesList": {
+    "TrustList": {
         "rootCA": "Root CA",
         "intermediateCA": "Intermediate CA",
         "certificateTrustStore": "Certificate Trust Store",
@@ -606,15 +606,15 @@
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
         "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "Upload Root CA Certificate",
+    "rootTrustList": {
+        "uploadRootCaTrust": "Upload Root CA Certificate",
         "subTitle": "List of Root CA Certificates",
-        "downloadCertificate": "Download"
+        "downloadTrust": "Download"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "Upload Intermediate CA Certificate",
         "subTitle": "List of Intermediate CA Certificates",
-        "downloadCertificate": "Download Certificate Chain"
+        "downloadTrust": "Download Certificate Chain"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "View Root CA Certificate Details",
@@ -623,7 +623,7 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "errorWhileGettingRootCertDetails": "While fetching Certificate details, we have encountered with an error",
-        "downloadCertificateChain": "Download Certificate Chain",
+        "downloadTrustChain": "Download Certificate Chain",
         "validTo": "Valid To",
         "certThumbprint": "Certificate Thumbprint"
     },

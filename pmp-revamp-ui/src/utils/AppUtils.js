@@ -452,7 +452,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
+                    setErrorMsg(t('TrustList.errorWhileDownloadingCertificate'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -747,7 +747,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
     }
 }
 
-export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
+export const downloadCaTrust = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
@@ -772,7 +772,7 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
             }
         } else {
-            setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
+            setErrorMsg(t('viewCertificateDetails.errorIndownloadTrust'));
             console.log(errorMsg);
 
         }
@@ -815,7 +815,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('certificatesList.errorWhileDownloadingCertificate'));
+          setErrorMsg(t('TrustList.errorWhileDownloadingCertificate'));
         } else {
           setErrorCode(errorCode);
           setErrorMsg(errorMessage);

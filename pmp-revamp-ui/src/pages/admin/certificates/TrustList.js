@@ -8,7 +8,7 @@ import {
   onResetFilter,
   resetPageNumber,
   getPartnerManagerUrl,
-  downloadCaCertificate,
+  downloadCaTrust,
   setSubmenuRef,
   handleServiceErrors
 } from "../../../utils/AppUtils";
@@ -16,18 +16,18 @@ import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import Title from "../../common/Title";
 import FilterButtons from "../../common/FilterButtons";
-import CertificatesFilter from "./CertificatesFilter";
+import TrustFilter from "./TrustFilter";
 import SortingIcon from "../../common/SortingIcon";
 import viewIcon from "../../../svg/view_icon.svg";
 import Pagination from "../../common/Pagination";
-import CertificateTab from "./CertificateTab";
+import TrustTab from "./TrustTab";
 import EmptyList from "../../common/EmptyList";
 import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
 import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 
-function CertificatesList({ certificateType, viewCertificateDetails, uploadCertificateBtnName, uploadCertRequiredData, subTitle, downloadBtnName }) {
+function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
-  const [certificatesList, setCertificatesList] = useState([]);
+  const [trustDataList, setTrustDataList] = useState([]);
   const [order, setOrder] = useState("DESC");
   const [activeAscIcon, setActiveAscIcon] = useState("");
   const [activeDescIcon, setActiveDescIcon] = useState("uploadedDateTime");
@@ -70,20 +70,20 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   }, [submenuRef]);
 
   const tableHeaders = [
-    { id: "certificateId", headerNameKey: "certificatesList.certificateId" },
-    { id: "partnerDomain", headerNameKey: "certificatesList.partnerDomain", },
-    { id: "issuedTo", headerNameKey: "certificatesList.issuedTo" },
-    { id: "issuedBy", headerNameKey: "certificatesList.issuedBy" },
-    { id: "validFrom", headerNameKey: "certificatesList.validFrom" },
-    { id: "validTill", headerNameKey: "certificatesList.validTo" },
-    { id: "uploadedDateTime", headerNameKey: "certificatesList.timeOfUpload" },
-    { id: "validityStatus", headerNameKey: "certificatesList.validityStatus" },
-    { id: "action", headerNameKey: "certificatesList.action" },
+    { id: "certificateId", headerNameKey: "TrustList.certificateId" },
+    { id: "partnerDomain", headerNameKey: "TrustList.partnerDomain", },
+    { id: "issuedTo", headerNameKey: "TrustList.issuedTo" },
+    { id: "issuedBy", headerNameKey: "TrustList.issuedBy" },
+    { id: "validFrom", headerNameKey: "TrustList.validFrom" },
+    { id: "validTill", headerNameKey: "TrustList.validTo" },
+    { id: "uploadedDateTime", headerNameKey: "TrustList.timeOfUpload" },
+    { id: "validityStatus", headerNameKey: "TrustList.validityStatus" },
+    { id: "action", headerNameKey: "TrustList.action" },
   ];
 
-  const fetchCertificatesList = async () => {
+  const fetchTrustList = async () => {
     const queryParams = new URLSearchParams();
-    queryParams.append('caCertificateType', certificateType)
+    queryParams.append('caCertificateType', trustType)
     queryParams.append('sortFieldName', sortFieldName);
     queryParams.append('sortType', sortType);
     queryParams.append('pageSize', pageSize);
@@ -107,7 +107,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
         if (responseData && responseData.response) {
           const resData = responseData.response.data;
           setTotalRecords(responseData.response.totalResults);
-          setCertificatesList(resData);
+          setTrustDataList(resData);
         } else {
           if (responseData.errors && responseData.errors.length > 0) {
             const errorCode = response.data.errors[0].errorCode;
@@ -119,7 +119,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           }
         }
       } else {
-        setErrorMsg(t('certificatesList.errorInCertificateList'));
+        setErrorMsg(t('TrustList.errorInCertificateList'));
       }
       fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
       setFetchData(false);
@@ -134,12 +134,12 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   }
 
   useEffect(() => {
-    fetchCertificatesList();
+    fetchTrustList();
   }, [sortFieldName, sortType, pageNo, pageSize]);
 
   useEffect(() => {
     if (isApplyFilterClicked) {
-      fetchCertificatesList();
+      fetchTrustList();
       setIsApplyFilterClicked(false);
     }
   }, [isApplyFilterClicked]);
@@ -150,6 +150,54 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
     setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
+  };
+  const uploadTrustRequiredData = () => {
+    let breadcrumb = '';
+    let backLink = '';
+
+    if (trustType === 'root') {
+      breadcrumb = 'rootTrustList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
+    } else if (trustType === 'intermediate') {
+      breadcrumb = 'intermediateTrustList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
+    }
+
+    const requiredData = { breadcrumb, backLink };
+    localStorage.setItem('uploadTrustAttributes', JSON.stringify(requiredData));
+  };
+
+  const viewTrustDetails = (selectedData) => {
+    let certType = '';
+    let header = '';
+    let subTitle = '';
+    let backLink = '';
+    let navigateUrl = '';
+
+    if (trustType === 'root') {
+      certType = 'root';
+      header = 'viewCertificateDetails.viewRootCaCertificateDetails';
+      subTitle = 'rootTrustList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
+      navigateUrl = '/partnermanagement/admin/certificates/view-root-ca-certificate-details';
+    } else if (trustType === 'intermediate') {
+      certType = 'intermediate';
+      header = 'viewCertificateDetails.viewIntermediateCaCertificateDetails';
+      subTitle = 'intermediateTrustList.subTitle';
+      backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
+      navigateUrl = '/partnermanagement/admin/certificates/view-intermediate-ca-certificate-details';
+    }
+
+    const requiredData = {
+      trustData: selectedData,
+      certType,
+      header,
+      subTitle,
+      backLink
+    };
+
+    localStorage.setItem('selectedTrustAttributes', JSON.stringify(requiredData));
+    navigate(navigateUrl);
   };
 
   const sortAscOrder = (header) => {
@@ -174,14 +222,14 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
     }
   };
 
-  const showUploadCertificate = () => {
-    uploadCertRequiredData();
+  const showUploadTrust = () => {
+    uploadTrustRequiredData();
     navigate('/partnermanagement/admin/certificates/upload-trust-certificate')
   };
 
-  const onClickDownload = (certificate) => {
-    if (certificate.status === true) {
-      downloadCaCertificate(HttpService, certificate.certId, certificateType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+  const onClickDownload = (trustData) => {
+    if (trustData.status === true) {
+      downloadCaTrust(HttpService, trustData.certId, trustType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
     }
   };
 
@@ -213,29 +261,29 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
           <div className="flex-col mt-5">
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
-                <Title title="certificatesList.certificateTrustStore" backLink="/partnermanagement" />
-                {certificatesList.length !== 0 ?
-                  <button onClick={showUploadCertificate} id={uploadCertificateBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
+                <Title title="TrustList.certificateTrustStore" backLink="/partnermanagement" />
+                {trustDataList.length !== 0 ?
+                  <button onClick={showUploadTrust} id={uploadTrustBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
                   : null
                 }
               </div>
 
-              <CertificateTab
-                activeRootCA={certificateType === 'root' ? true : false}
+              <TrustTab
+                activeRootCA={trustType === 'root' ? true : false}
                 rootCertificatesPath={'/partnermanagement/admin/certificates/root-ca-certificate-list'}
-                activeIntermediateCA={certificateType === 'intermediate' ? true : false}
+                activeIntermediateCA={trustType === 'intermediate' ? true : false}
                 intermediateCertificatesPath={'/partnermanagement/admin/certificates/intermediate-ca-certificate-list'}
               />
-              {!applyFilter && certificatesList.length === 0 ? (
+              {!applyFilter && trustDataList.length === 0 ? (
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <EmptyList
                     tableHeaders={tableHeaders}
                     showCustomButton={!applyFilter}
                     customButtonName='uploadTrustCertificate.uploadTrustCertificate'
                     buttonId='upload_certificate_btn'
-                    onClickButton={showUploadCertificate}
+                    onClickButton={showUploadTrust}
                   />
                 </div>
               ) : (
@@ -250,13 +298,13 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                     />
                     <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                     {expandFilter && (
-                      <CertificatesFilter onApplyFilter={onApplyFilter} />
+                      <TrustFilter onApplyFilter={onApplyFilter} />
                     )}
                     {!tableDataLoaded ? (
                       <LoadingIcon styleSet={styles} />
                     ) : (
                       <>
-                        {applyFilter && certificatesList.length === 0 ?
+                        {applyFilter && trustDataList.length === 0 ?
                           <EmptyList tableHeaders={tableHeaders}/>
                           : (
                             <>
@@ -286,17 +334,17 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    {certificatesList.map((certificate, index) => {
+                                    {trustDataList.map((trustData, index) => {
                                       return (
                                         <tr id={"certificate_list_item" + (index + 1)} key={index} className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.certId}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{certificate.partnerDomain}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedTo}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 break-all`}>{certificate.issuedBy}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validFromDate, "dateTime")}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.validTillDate, "dateTime")}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2`}>{formatDate(certificate.uploadTime, "dateTime")}</td>
-                                          <td onClick={() => viewCertificateDetails(certificate)} className={`px-2 ${certificate.status === false && 'text-crimson-red'}`}>{certificate.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2`}>{trustData.certId}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2`}>{trustData.partnerDomain}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2 break-all`}>{trustData.issuedTo}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2 break-all`}>{trustData.issuedBy}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2`}>{formatDate(trustData.validFromDate, "dateTime")}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2`}>{formatDate(trustData.validTillDate, "dateTime")}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2`}>{formatDate(trustData.uploadTime, "dateTime")}</td>
+                                          <td onClick={() => viewTrustDetails(trustData)} className={`px-2 ${trustData.status === false && 'text-crimson-red'}`}>{trustData.status === true ? t('statusCodes.valid') : t('statusCodes.expired')}</td>
                                           <td className="text-center cursor-default">
                                             <div ref={setSubmenuRef(submenuRef, index)}>
                                               <button id={"certificate_list_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center`}>
@@ -304,15 +352,15 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                                               </button>
                                               {actionId === index && (
                                                 <div className={`absolute w-auto z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewCertificateDetails(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewCertificateDetails(certificate))}>
-                                                    <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("certificatesList.view")}</p>
+                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewTrustDetails(trustData)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewTrustDetails(trustData))}>
+                                                    <p id="root_certificate_details_view_btn" className={`py-1.5 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10 pr-2" : "pr-10 pl-2"}`}>{t("TrustList.view")}</p>
                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                   </div>
                                                   <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${certificate.status === true ? 'cursor-pointer' : 'cursor-default'}`}
-                                                    onClick={() => onClickDownload(certificate)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(certificate))}>
-                                                    <p id="certificate_list_view_btn" className={`${certificate.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
-                                                    <img src={certificate.status === true ? downloadIcon : disableDownloadIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-[1rem]' : 'pl-[1rem]'}`} />
+                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 px-2 py-2 ${trustData.status === true ? 'cursor-pointer' : 'cursor-default'}`}
+                                                    onClick={() => onClickDownload(trustData)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDownload(trustData))}>
+                                                    <p id="certificate_list_view_btn" className={`${trustData.status === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t(downloadBtnName)}</p>
+                                                    <img src={trustData.status === true ? downloadIcon : disableDownloadIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-[1rem]' : 'pl-[1rem]'}`} />
                                                   </div>
                                                 </div>
                                               )}
@@ -348,4 +396,4 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   )
 }
 
-export default CertificatesList;
+export default TrustList;

@@ -572,7 +572,7 @@
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
-    "certificatesList": {
+    "TrustList": {
         "rootCA": "CA racine",
         "intermediateCA": "CA intermédiaire",
         "certificateTrustStore": "Magasin de certificats de confiance",
@@ -611,15 +611,15 @@
         "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
         "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
+    "rootTrustList": {
+        "uploadRootCaTrust": "Télécharger le certificat d'autorité de certification racine",
         "subTitle": "Liste des certificats d'autorité de certification racine",
-        "downloadCertificate": "Télécharger"
+        "downloadTrust": "Télécharger"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "Télécharger le CA certification intermédiaire",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "Télécharger le CA certification intermédiaire",
         "subTitle": "Liste des certificats CA intermédiaires",
-        "downloadCertificate": "Télécharger la chaîne de certificats"
+        "downloadTrust": "Télécharger la chaîne de certificats"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "Afficher les détails du CA certification racine",
@@ -628,7 +628,7 @@
         "rootCaCertificate": "CA certification racine",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
         "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
-        "downloadCertificateChain": "Télécharger la chaîne de certificats",
+        "downloadTrustChain": "Télécharger la chaîne de certificats",
         "validTo": "Valable jusqu'aue",
         "certThumbprint": "Empreinte numérique du certificat"
     },
