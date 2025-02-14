@@ -6,7 +6,7 @@ import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 
-function CertificatesFilter({ onApplyFilter }) {
+function TrustFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
@@ -25,7 +25,7 @@ function CertificatesFilter({ onApplyFilter }) {
     useEffect(() => {
         const fetchData = async () => {
             setPartnerDomainData(
-                createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("certificatesList.selectPartnerDomain"))
+                createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("trustList.selectPartnerDomain"))
             );
         };
         fetchData();
@@ -58,8 +58,8 @@ function CertificatesFilter({ onApplyFilter }) {
                 <TextInputComponent
                     fieldName="certificateId"
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey="certificatesList.certificateId"
-                    placeHolderKey="certificatesList.searchCertificateId"
+                    fieldNameKey="trustList.certificateId"
+                    placeHolderKey="trustList.searchCertificateId"
                     styleSet={styleSet}
                     id="cert_id_filter"
                 />
@@ -67,8 +67,8 @@ function CertificatesFilter({ onApplyFilter }) {
                     fieldName="partnerDomain"
                     dropdownDataList={partnerDomainData}
                     onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey="certificatesList.partnerDomain"
-                    placeHolderKey="certificatesList.selectPartnerDomain"
+                    fieldNameKey="trustList.partnerDomain"
+                    placeHolderKey="trustList.selectPartnerDomain"
                     styleSet={styles}
                     isPlaceHolderPresent={true}
                     id="cert_partner_domain_filter"
@@ -76,16 +76,16 @@ function CertificatesFilter({ onApplyFilter }) {
                 <TextInputComponent
                     fieldName='issuedTo'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='certificatesList.issuedTo'
-                    placeHolderKey='certificatesList.searchIssuedTo'
+                    fieldNameKey='trustList.issuedTo'
+                    placeHolderKey='trustList.searchIssuedTo'
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
                 />
                 <TextInputComponent
                     fieldName='issuedBy'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='certificatesList.issuedBy'
-                    placeHolderKey='certificatesList.searchIssuedBy'
+                    fieldNameKey='trustList.issuedBy'
+                    placeHolderKey='trustList.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
                 />
@@ -106,4 +106,4 @@ function CertificatesFilter({ onApplyFilter }) {
     );
 }
 
-export default CertificatesFilter;
+export default TrustFilter;

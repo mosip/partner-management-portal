@@ -331,120 +331,125 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                         removeSbiFields={isLinkedDevicesList}
                                     />
                                 )}
-                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && applyFilter && devicesList.length === 0 ?
-                                    <EmptyList tableHeaders={tableHeaders} />
-                                    : (
-                                        <>
-                                            <div className="mx-[1.4rem] overflow-x-scroll">
-                                                <table className="table-fixed">
-                                                    <thead>
-                                                        <tr>
-                                                            {filteredTableHeaders.map((header, index) => {
-                                                                return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
-                                                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                            {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (
-                                                                                <SortingIcon
-                                                                                    headerId={header.id}
-                                                                                    sortDescOrder={sortDescOrder}
-                                                                                    sortAscOrder={sortAscOrder}
-                                                                                    order={order}
-                                                                                    activeSortDesc={activeDescIcon}
-                                                                                    activeSortAsc={activeAscIcon}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                    </th>
-                                                                );
-                                                            })}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {devicesList.map((device, index) => {
-                                                            return (
-                                                                <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
-                                                                    {!isLinkedDevicesList && (
-                                                                        <>
-                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
-                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
-                                                                        </>
-                                                                    )}
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.make}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.model}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date')}</td>
-                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2 mx-2">
-                                                                        <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                            {getStatusCode(device.status, t)}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td className="text-center cursor-default">
-                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
-                                                                            <button id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
-                                                                                ...
-                                                                            </button>
-                                                                            {actionId === index && (
-                                                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div role='button' onClick={() => approveRejectDeviceDetails(device, index)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectDeviceDetails(device, index))}>
-                                                                                        <p id="device_list_approve_reject_option" className={`py-1.5 px-4 ${device.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                                                        <img src={device.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
-                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
-                                                                                        <p id="device_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
-                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' onClick={() => deactivateDevice(device, index)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateDevice(device, index))}>
-                                                                                        <p id="device_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
+                                {!tableDataLoaded ? (
+                                    <LoadingIcon styleSet={styles} />
+                                ) : (
+                                    <>
+                                        {applyFilter && devicesList.length === 0 ?
+                                            <EmptyList tableHeaders={tableHeaders} />
+                                            : (
+                                                <>
+                                                    <div className="mx-[1.4rem] overflow-x-scroll">
+                                                        <table className="table-fixed">
+                                                            <thead>
+                                                                <tr>
+                                                                    {filteredTableHeaders.map((header, index) => {
+                                                                        return (
+                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
+                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                    {t(header.headerNameKey)}
+                                                                                    {(header.id !== "action") && (
+                                                                                        <SortingIcon
+                                                                                            headerId={header.id}
+                                                                                            sortDescOrder={sortDescOrder}
+                                                                                            sortAscOrder={sortAscOrder}
+                                                                                            order={order}
+                                                                                            activeSortDesc={activeDescIcon}
+                                                                                            activeSortAsc={activeAscIcon}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
-                                                                            )}
-                                                                            {showActiveIndexDeviceDetailApproveRejectPopup === index && (
-                                                                                <ApproveRejectPopup
-                                                                                    popupData={{ ...selectedDevice, isDeviceRequest: true }}
-                                                                                    closePopUp={closeApproveRejectPopup}
-                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedDevice)}
-                                                                                    title={`${selectedDevice.make} | ${selectedDevice.model}`}
-                                                                                    header={t('deviceApproveRejectPopup.header')}
-                                                                                    description={t('deviceApproveRejectPopup.description')}
-                                                                                />
-                                                                            )}
-                                                                            {showActiveIndexDeactivatePopup === index && (
-                                                                                <DeactivatePopup closePopUp={closeDeactivatePopup}
-                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
-                                                                                    popupData={{ ...selectedDevice, isDeactivateDevice: true }}
-                                                                                    request={deactivateRequest}
-                                                                                    headerMsg='deactivateDevicePopup.headerMsg'
-                                                                                    descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
-                                                                            )}
-                                                                        </div>
-                                                                    </td>
+                                                                            </th>
+                                                                        );
+                                                                    })}
                                                                 </tr>
-                                                            )
-                                                        })
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <Pagination
-                                                dataListLength={totalRecords}
-                                                selectedRecordsPerPage={selectedRecordsPerPage}
-                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                setFirstIndex={setFirstIndex}
-                                                isServerSideFilter={true}
-                                                getPaginationValues={getPaginationValues}
-                                            />
-                                        </>
-                                    )
-                                }
+                                                            </thead>
+                                                            <tbody>
+                                                                {devicesList.map((device, index) => {
+                                                                    return (
+                                                                        <tr id={'device_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(device.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.partnerId}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.orgName}</td>
+                                                                            {!isLinkedDevicesList && (
+                                                                                <>
+                                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiId ?? '-'}</td>
+                                                                                    <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.sbiVersion ?? '-'}</td>
+                                                                                </>
+                                                                            )}
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceId}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceType}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.deviceSubType}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.make}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{device.model}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2">{formatDate(device.createdDateTime, 'date')}</td>
+                                                                            <td onClick={() => device.status !== 'deactivated' && viewDeviceDetails(device)} className="px-2 mx-2">
+                                                                                <div className={`${bgOfStatus(device.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                    {getStatusCode(device.status, t)}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td className="text-center cursor-default">
+                                                                                <div ref={setSubmenuRef(submenuRef, index)}>
+                                                                                    <button id={"device_list_action_menu" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
+                                                                                        ...
+                                                                                    </button>
+                                                                                    {actionId === index && (
+                                                                                        <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                                                                            <div role='button' onClick={() => approveRejectDeviceDetails(device, index)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectDeviceDetails(device, index))}>
+                                                                                                <p id="device_list_approve_reject_option" className={`py-1.5 px-4 ${device.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                                                                <img src={device.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewDeviceDetails(device)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
+                                                                                                <p id="device_list_view_option" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' onClick={() => deactivateDevice(device, index)} className={`flex justify-between hover:bg-gray-100 ${device.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateDevice(device, index))}>
+                                                                                                <p id="device_list_deactivate_option" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${device.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                    {showActiveIndexDeviceDetailApproveRejectPopup === index && (
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...selectedDevice, isDeviceRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedDevice)}
+                                                                                            title={`${selectedDevice.make} | ${selectedDevice.model}`}
+                                                                                            header={t('deviceApproveRejectPopup.header')}
+                                                                                            description={t('deviceApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    )}
+                                                                                    {showActiveIndexDeactivatePopup === index && (
+                                                                                        <DeactivatePopup closePopUp={closeDeactivatePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedDevice)}
+                                                                                            popupData={{ ...selectedDevice, isDeactivateDevice: true }}
+                                                                                            request={deactivateRequest}
+                                                                                            headerMsg='deactivateDevicePopup.headerMsg'
+                                                                                            descriptionMsg='deactivateDevicePopup.descriptionForAdmin' />
+                                                                                    )}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </>
+                                            )
+                                        }
+                                    </>
+                                )}
+                                <Pagination
+                                    dataListLength={totalRecords}
+                                    selectedRecordsPerPage={selectedRecordsPerPage}
+                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                    setFirstIndex={setFirstIndex}
+                                    isServerSideFilter={true}
+                                    getPaginationValues={getPaginationValues}
+                                />
                             </div>
                         )}
                     </div>

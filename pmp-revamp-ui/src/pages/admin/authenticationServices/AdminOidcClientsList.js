@@ -279,112 +279,117 @@ function AdminOidcClientsList() {
                                 {expandFilter && (
                                     <AdminOidcClientsFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && applyFilter && oidcClientsList.length === 0 ?
-                                    <EmptyList tableHeaders={tableHeaders} />
-                                    : (
-                                        <>
-                                            <div className="mx-[1.5rem] overflow-x-scroll">
-                                                <table className="table-fixed">
-                                                    <thead>
-                                                        <tr>
-                                                            {tableHeaders.map((header, index) => {
-                                                                return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                            {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (header.id !== "clientId") && (header.id !== "clientNameEng") && (
-                                                                                <SortingIcon
-                                                                                    headerId={header.id}
-                                                                                    sortDescOrder={sortDescOrder}
-                                                                                    sortAscOrder={sortAscOrder}
-                                                                                    order={order}
-                                                                                    activeSortDesc={activeDescIcon}
-                                                                                    activeSortAsc={activeAscIcon}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                    </th>
-                                                                );
-                                                            })}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {oidcClientsList.map((client, index) => {
-                                                            return (
-                                                                <tr id={"oidc_client_list_item" + (index + 1)} key={index}
-                                                                    className={`border-t border-[#E5EBFA] ${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === 'INACTIVE' ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.orgName ? client.orgName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyGroupName ? client.policyGroupName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyName ? client.policyName : '-'}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.clientNameEng}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{formatDate(client.createdDateTime, "date")}</td>
-                                                                    <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
-                                                                        <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                            {getStatusCode(client.status, t)}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td className="px-2 mx-2 cursor-default">
-                                                                        <div className="flex items-center justify-center">
-                                                                            <svg className={`${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}
-                                                                                xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
-                                                                                <path id="visibility_FILL0_wght400_GRAD0_opsz48"
-                                                                                    d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                                    transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
-                                                                            </svg>
-                                                                            {showActiveIndexClientIdPopup === index && (
-                                                                                <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
-                                                                            )}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td className="text-center cursor-default">
-                                                                        <div ref={setSubmenuRef(submenuRef, index)}>
-                                                                            <button id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
-                                                                                ...
-                                                                            </button>
-                                                                            {actionId === index && (
-                                                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewOidcClientDetails(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewOidcClientDetails(client))}>
-                                                                                        <p id="oidc_clients_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
-                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client, index))}>
-                                                                                        <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={client.status === 'ACTIVE' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
+                                {!tableDataLoaded ? (
+                                    <LoadingIcon styleSet={styles} />
+                                ) : (
+                                    <>
+                                        {applyFilter && oidcClientsList.length === 0 ?
+                                            <EmptyList tableHeaders={tableHeaders} />
+                                            : (
+                                                <>
+                                                    <div className="mx-[1.5rem] overflow-x-scroll">
+                                                        <table className="table-fixed">
+                                                            <thead>
+                                                                <tr>
+                                                                    {tableHeaders.map((header, index) => {
+                                                                        return (
+                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                    {t(header.headerNameKey)}
+                                                                                    {(header.id !== "action") && (header.id !== "clientId") && (header.id !== "clientNameEng") && (
+                                                                                        <SortingIcon
+                                                                                            headerId={header.id}
+                                                                                            sortDescOrder={sortDescOrder}
+                                                                                            sortAscOrder={sortAscOrder}
+                                                                                            order={order}
+                                                                                            activeSortDesc={activeDescIcon}
+                                                                                            activeSortAsc={activeAscIcon}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
-                                                                            )}
-                                                                            {showActiveIndexDeactivatePopup === index && (
-                                                                                <DeactivatePopup
-                                                                                    closePopUp={closeDeactivatePopup}
-                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
-                                                                                    popupData={selectedOidcClient}
-                                                                                    request={deactivateRequest}
-                                                                                    headerMsg='deactivateOidc.header'
-                                                                                    descriptionMsg='deactivateOidc.description'
-                                                                                    headerKeyName={selectedOidcClient.clientNameEng}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                    </td>
+                                                                            </th>
+                                                                        );
+                                                                    })}
                                                                 </tr>
-                                                            );
-                                                        })}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <Pagination
-                                                dataListLength={totalRecords}
-                                                selectedRecordsPerPage={selectedRecordsPerPage}
-                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                setFirstIndex={setFirstIndex}
-                                                isServerSideFilter={true}
-                                                getPaginationValues={getPaginationValues}
-                                            />
-                                        </>
-                                    )}
+                                                            </thead>
+                                                            <tbody>
+                                                                {oidcClientsList.map((client, index) => {
+                                                                    return (
+                                                                        <tr id={"oidc_client_list_item" + (index + 1)} key={index}
+                                                                            className={`border-t border-[#E5EBFA] ${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${client.status === 'INACTIVE' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.partnerId}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.orgName ? client.orgName : '-'}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyGroupName ? client.policyGroupName : '-'}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.policyName ? client.policyName : '-'}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{client.clientNameEng}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)} className="px-2">{formatDate(client.createdDateTime, "date")}</td>
+                                                                            <td onClick={() => client.status !== 'INACTIVE' && viewOidcClientDetails(client)}>
+                                                                                <div className={`${bgOfStatus(client.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                    {getStatusCode(client.status, t)}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td className="px-2 mx-2 cursor-default">
+                                                                                <div className="flex items-center justify-center">
+                                                                                    <svg className={`${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}
+                                                                                        xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
+                                                                                        <path id="visibility_FILL0_wght400_GRAD0_opsz48"
+                                                                                            d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
+                                                                                            transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
+                                                                                    </svg>
+                                                                                    {showActiveIndexClientIdPopup === index && (
+                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                                    )}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td className="text-center cursor-default">
+                                                                                <div ref={setSubmenuRef(submenuRef, index)}>
+                                                                                    <button id={"oidc_client_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
+                                                                                        ...
+                                                                                    </button>
+                                                                                    {actionId === index && (
+                                                                                        <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewOidcClientDetails(client)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewOidcClientDetails(client))}>
+                                                                                                <p id="oidc_clients_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${client.status === 'ACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateOidcClient(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateOidcClient(client, index))}>
+                                                                                                <p id="oidc_clients_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${client.status === 'ACTIVE' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={client.status === 'ACTIVE' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                    {showActiveIndexDeactivatePopup === index && (
+                                                                                        <DeactivatePopup
+                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedOidcClient)}
+                                                                                            popupData={selectedOidcClient}
+                                                                                            request={deactivateRequest}
+                                                                                            headerMsg='deactivateOidc.header'
+                                                                                            descriptionMsg='deactivateOidc.description'
+                                                                                            headerKeyName={selectedOidcClient.clientNameEng}
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    );
+                                                                })}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </>
+                                            )}
+                                    </>
+                                )}
+                                <Pagination
+                                    dataListLength={totalRecords}
+                                    selectedRecordsPerPage={selectedRecordsPerPage}
+                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                    setFirstIndex={setFirstIndex}
+                                    isServerSideFilter={true}
+                                    getPaginationValues={getPaginationValues}
+                                />
                             </div>
                         )}
                     </div>
