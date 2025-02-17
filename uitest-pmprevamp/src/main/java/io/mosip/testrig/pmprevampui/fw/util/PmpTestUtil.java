@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
-import com.nimbusds.jose.*;
 import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import io.mosip.testrig.pmprevampui.authentication.fw.util.RestClient;
@@ -148,11 +147,11 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			initialized = true;
 		}
 	}
-	
+
 	public static String generateJWKPublicKey() {
 		try {
 			KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
-		    SecureRandom secureRandom = new SecureRandom();
+			SecureRandom secureRandom = new SecureRandom();
 			keyGenerator.initialize(2048, secureRandom);
 			final KeyPair keypair = keyGenerator.generateKeyPair();
 			RSAKey jwk = new RSAKey.Builder((RSAPublicKey) keypair.getPublic()).keyID("RSAKeyID")

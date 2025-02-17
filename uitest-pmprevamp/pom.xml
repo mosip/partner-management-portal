@@ -229,9 +229,10 @@
 			<version>${httpcore5.version}</version>
 		</dependency>
 		<dependency>
-    <groupId>com.nimbusds</groupId>
-    <artifactId>nimbus-jose-jwt</artifactId>
-    <version>9.37.2</version> </dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.37.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
