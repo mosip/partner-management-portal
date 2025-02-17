@@ -179,6 +179,8 @@ function AddSbi() {
     };
 
     const clearForm = () => {
+        setErrorMsg("");
+        setErrorCode("");
         setPartnerId("");
         setPartnerType("");
         setSbiVersion("");

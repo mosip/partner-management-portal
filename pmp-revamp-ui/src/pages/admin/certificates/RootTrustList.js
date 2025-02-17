@@ -4,7 +4,7 @@ function RootTrustList() {
 
     return (
         <TrustList
-            trustType='root'
+            trustListType='root'
             uploadTrustBtnName='rootTrustList.uploadRootCaTrust'
             subTitle='rootTrustList.subTitle'
             downloadBtnName='rootTrustList.downloadTrust'

@@ -27,7 +27,7 @@ import downloadIcon from "../../../svg/download.svg";
 import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 
-function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName }) {
+function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
 
   const fetchTrustList = async () => {
     const queryParams = new URLSearchParams();
-    queryParams.append('caCertificateType', trustType)
+    queryParams.append('caCertificateType', trustListType)
     queryParams.append('sortFieldName', sortFieldName);
     queryParams.append('sortType', sortType);
     queryParams.append('pageSize', pageSize);
@@ -155,10 +155,10 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
     let breadcrumb = '';
     let backLink = '';
 
-    if (trustType === 'root') {
+    if (trustListType === 'root') {
       breadcrumb = 'rootTrustList.subTitle';
       backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
-    } else if (trustType === 'intermediate') {
+    } else if (trustListType === 'intermediate') {
       breadcrumb = 'intermediateTrustList.subTitle';
       backLink = '/partnermanagement/admin/certificates/intermediate-ca-certificate-list';
     }
@@ -174,13 +174,13 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
     let backLink = '';
     let navigateUrl = '';
 
-    if (trustType === 'root') {
+    if (trustListType === 'root') {
       trustType = 'root';
       header = 'viewCertificateDetails.viewRootCaCertificateDetails';
       subTitle = 'rootTrustList.subTitle';
       backLink = '/partnermanagement/admin/certificates/root-ca-certificate-list';
       navigateUrl = '/partnermanagement/admin/certificates/view-root-ca-certificate-details';
-    } else if (trustType === 'intermediate') {
+    } else if (trustListType === 'intermediate') {
       trustType = 'intermediate';
       header = 'viewCertificateDetails.viewIntermediateCaCertificateDetails';
       subTitle = 'intermediateTrustList.subTitle';
@@ -229,7 +229,7 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
 
   const onClickDownload = (trustData) => {
     if (trustData.status === true) {
-      downloadCaTrust(HttpService, trustData.certId, trustType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
+      downloadCaTrust(HttpService, trustData.certId, trustListType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t);
     }
   };
 
@@ -271,9 +271,9 @@ function TrustList({ trustType, uploadTrustBtnName, subTitle, downloadBtnName })
               </div>
 
               <TrustTab
-                activeRootCA={trustType === 'root' ? true : false}
+                activeRootCA={trustListType === 'root' ? true : false}
                 rootCertificatesPath={'/partnermanagement/admin/certificates/root-ca-certificate-list'}
-                activeIntermediateCA={trustType === 'intermediate' ? true : false}
+                activeIntermediateCA={trustListType === 'intermediate' ? true : false}
                 intermediateCertificatesPath={'/partnermanagement/admin/certificates/intermediate-ca-certificate-list'}
               />
               {!applyFilter && trustDataList.length === 0 ? (

@@ -150,6 +150,8 @@ function RequestPolicy() {
     };
 
     const clearForm = () => {
+        setErrorMsg("");
+        setErrorCode("");
         setPartnerId("");
         setPartnerType("");
         setPolicyGroupName("");

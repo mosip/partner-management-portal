@@ -4,7 +4,7 @@ function IntermediateTrustList() {
 
   return (
     <TrustList
-      trustType='intermediate'
+      trustListType='intermediate'
       uploadTrustBtnName='intermediateTrustList.uploadIntermediateCaTrust'
       subTitle='intermediateTrustList.subTitle'
       downloadBtnName='intermediateTrustList.downloadTrust'
