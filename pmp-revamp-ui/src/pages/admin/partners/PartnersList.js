@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, escapeKeyHandler, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { createRequest, isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
 import {
   getPartnerManagerUrl,
   handleServiceErrors,
@@ -216,10 +216,6 @@ function PartnersList() {
       );
     }
   };
-
-  useEffect(() => {
-    escapeKeyHandler(closeDeactivatePopup);
-  }, [showActiveIndexDeactivatePopup]);
 
   const styles = {
     loadingDiv: "!py-[20%]"

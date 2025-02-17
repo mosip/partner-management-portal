@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
+import { isLangRTL, handleEscapeKey } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
 
@@ -18,6 +18,12 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
             console.error('Failed to copy text: ', err);
         });
     };
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp(false));
+        return removeListener;
+    }, []);
+
     const dismiss = () => {
         closePopUp(false);
     }

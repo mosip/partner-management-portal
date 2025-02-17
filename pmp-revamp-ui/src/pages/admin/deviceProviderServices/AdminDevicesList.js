@@ -7,7 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import EmptyList from '../../common/EmptyList';
 import Title from '../../common/Title.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
-import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, escapeKeyHandler, setSubmenuRef } from '../../../utils/AppUtils';
+import { handleMouseClickForDropdown, isLangRTL, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, bgOfStatus, getStatusCode, onPressEnterKey, formatDate, resetPageNumber, getPartnerManagerUrl, handleServiceErrors, createRequest, getApproveRejectStatus, updateActiveState, setSubmenuRef } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService.js';
 import AdminDeviceDetailsFilter from './AdminDeviceDetailsFilter.js';
 import FilterButtons from '../../common/FilterButtons.js';
@@ -260,14 +260,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const backToSbi = () => {
         navigate('/partnermanagement/admin/device-provider-services/sbi-list')
     }
-
-    useEffect(() => {
-        if (showActiveIndexDeviceDetailApproveRejectPopup) {
-            escapeKeyHandler(closeApproveRejectPopup);
-        } else if (showActiveIndexDeactivatePopup) {
-            escapeKeyHandler(closeDeactivatePopup);
-        }
-    }, [showActiveIndexDeviceDetailApproveRejectPopup, showActiveIndexDeactivatePopup]);
 
     const getFilterSubTitle = () => {
         if (sbiId && sbiVersion) {
