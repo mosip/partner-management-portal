@@ -272,99 +272,104 @@ function PolicyRequestsList() {
                         setErrorMsg={setErrorMsg}
                       />
                     )}
-                    {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                    {tableDataLoaded && isFilterApplied && policyRequestsData.length === 0 ?
-                      <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
-                      : (
-                        <>
-                          <div className="mx-[1.4rem] overflow-x-scroll">
-                            <table className="table-fixed">
-                              <thead>
-                                <tr>
-                                  {tableHeaders.map((header, index) => {
-                                    return (
-                                      <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                          {t(header.headerNameKey)}
-                                          {header.id !== "action" && (
-                                            <SortingIcon
-                                              headerId={header.id}
-                                              sortDescOrder={sortDescOrder}
-                                              sortAscOrder={sortAscOrder}
-                                              order={order}
-                                              activeSortDesc={activeSortDesc}
-                                              activeSortAsc={activeSortAsc}
-                                            />
-                                          )}
-                                        </div>
-                                      </th>);
-                                  })}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {policyRequestsData.map((policyRequest, index) => {
-                                  return (
-                                    <tr id={"partner_list_item" + (index + 1)} key={index}
-                                      className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.partnerId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.orgName}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyId}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date')}</td>
-                                      <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
-                                        <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1 text-xs font-semibold rounded-md`}>
-                                          {getStatusCode(policyRequest.status, t)}
-                                        </div>
-                                      </td>
-                                      <td className="text-center cursor-default">
-                                        <div ref={setSubmenuRef(submenuRef, index)}>
-                                          <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
-                                            ...
-                                          </button>
-                                          {viewPartnerId === index && (
-                                            <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                              <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                              </div>
-                                              <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                              <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
-                                                <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
-                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                              </div>
+                    {!tableDataLoaded ? (
+                      <LoadingIcon styleSet={styles} />
+                    ) : (
+                      <>
+                        {isFilterApplied && policyRequestsData.length === 0 ?
+                          <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                          : (
+                            <>
+                              <div className="mx-[1.4rem] overflow-x-scroll">
+                                <table className="table-fixed">
+                                  <thead>
+                                    <tr>
+                                      {tableHeaders.map((header, index) => {
+                                        return (
+                                          <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                            <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                              {t(header.headerNameKey)}
+                                              {header.id !== "action" && (
+                                                <SortingIcon
+                                                  headerId={header.id}
+                                                  sortDescOrder={sortDescOrder}
+                                                  sortAscOrder={sortAscOrder}
+                                                  order={order}
+                                                  activeSortDesc={activeSortDesc}
+                                                  activeSortAsc={activeSortAsc}
+                                                />
+                                              )}
                                             </div>
-                                          )}
-                                          {showActiveIndexPopup === index &&
-                                            <ApproveRejectPopup
-                                              popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
-                                              closePopUp={closePolicyRequestPopup}
-                                              approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedPolicyRequest)}
-                                              title={selectedPolicyRequest.policyName}
-                                              subtitle={`# ${selectedPolicyRequest.policyId}`}
-                                              header={t('partnerPolicyRequestApproveRejectPopup.header')}
-                                              description={t('partnerPolicyRequestApproveRejectPopup.description')}
-                                            />
-                                          }
-                                        </div>
-                                      </td>
+                                          </th>);
+                                      })}
                                     </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-                          <Pagination
-                            dataListLength={totalRecords}
-                            selectedRecordsPerPage={selectedRecordsPerPage}
-                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                            setFirstIndex={setFirstIndex}
-                            isServerSideFilter={true}
-                            getPaginationValues={getPaginationValues}
-                          />
-                        </>
-                      )}
+                                  </thead>
+                                  <tbody>
+                                    {policyRequestsData.map((policyRequest, index) => {
+                                      return (
+                                        <tr id={"partner_list_item" + (index + 1)} key={index}
+                                          className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words "text-[#191919]`}>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.partnerId}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{getPartnerTypeDescription(policyRequest.partnerType, t)}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.orgName}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyId}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyName ? policyRequest.policyName : '-'}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{policyRequest.policyGroupName ? policyRequest.policyGroupName : '-'}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="px-2">{formatDate(policyRequest.createdDateTime, 'date')}</td>
+                                          <td onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} className="whitespace-nowrap">
+                                            <div className={`${bgOfStatus(policyRequest.status)} flex w-fit py-1.5 px-2 my-3 mx-1 text-xs font-semibold rounded-md`}>
+                                              {getStatusCode(policyRequest.status, t)}
+                                            </div>
+                                          </td>
+                                          <td className="text-center cursor-default">
+                                            <div ref={setSubmenuRef(submenuRef, index)}>
+                                              <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                ...
+                                              </button>
+                                              {viewPartnerId === index && (
+                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                  <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
+                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                    <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
+                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
+                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                </div>
+                                              )}
+                                              {showActiveIndexPopup === index &&
+                                                <ApproveRejectPopup
+                                                  popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
+                                                  closePopUp={closePolicyRequestPopup}
+                                                  approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedPolicyRequest)}
+                                                  title={selectedPolicyRequest.policyName}
+                                                  subtitle={`# ${selectedPolicyRequest.policyId}`}
+                                                  header={t('partnerPolicyRequestApproveRejectPopup.header')}
+                                                  description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                                />
+                                              }
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          )}
+                      </>
+                    )}
+                    <Pagination
+                      dataListLength={totalRecords}
+                      selectedRecordsPerPage={selectedRecordsPerPage}
+                      setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                      setFirstIndex={setFirstIndex}
+                      isServerSideFilter={true}
+                      getPaginationValues={getPaginationValues}
+                    />
                   </div>
                 </>
               )}

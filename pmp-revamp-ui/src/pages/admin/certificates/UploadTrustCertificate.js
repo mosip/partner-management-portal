@@ -22,23 +22,23 @@ function UploadTrustCertificate() {
     const [errorMsg, setErrorMsg] = useState("");
     const [uploading, setUploading] = useState(false);
     const [selectedDomain, setSelectedDomain] = useState("");
-    const [certificateData, setCertificateData] = useState("");
+    const [trustData, setTrustData] = useState("");
     const [fileName, setFileName] = useState('');
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadFailure, setUploadFailure] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
-    const [uploadCertificateData, setUploadCertificateData] = useState(true);
+    const [uploadTrustData, setUploadTrustData] = useState(true);
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem('uploadCertificateAttributes');
+        const data = localStorage.getItem('uploadTrustAttributes');
         if (!data) {
             setUnexpectedError(true);
             return;
         }
         const requiredData = JSON.parse(data);
-        setUploadCertificateData(requiredData);
+        setUploadTrustData(requiredData);
     }, []);
 
     const blocker = useBlocker(
@@ -49,7 +49,7 @@ function UploadTrustCertificate() {
             }
 
             return (
-                (selectedDomain !== "" || certificateData !== "") &&
+                (selectedDomain !== "" || trustData !== "") &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
@@ -58,7 +58,7 @@ function UploadTrustCertificate() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return selectedDomain !== "" ||
-                certificateData !== "";
+                trustData !== "";
         };
 
         const handleBeforeUnload = (event) => {
@@ -73,23 +73,23 @@ function UploadTrustCertificate() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [selectedDomain, certificateData, isSubmitClicked]);
+    }, [selectedDomain, trustData, isSubmitClicked]);
 
     const clear = () => {
         setErrorCode("");
         setErrorMsg("");
         setFileName("");
-        setCertificateData("");
+        setTrustData("");
         setSelectedDomain("");;
     };
 
     const moveBackToList = () => {
-        navigate(uploadCertificateData.backLink);
+        navigate(uploadTrustData.backLink);
     };
 
     const removeUpload = () => {
         setFileName("");
-        setCertificateData("");
+        setTrustData("");
         setUploading(false);
     };
 
@@ -99,7 +99,7 @@ function UploadTrustCertificate() {
     };
 
     const isFormValid = () => {
-        return selectedDomain !== "" && certificateData !== "" && !uploading;
+        return selectedDomain !== "" && trustData !== "" && !uploading;
     };
 
     const clickOnSubmit = async () => {
@@ -108,7 +108,7 @@ function UploadTrustCertificate() {
         setErrorMsg("");
         setDataLoaded(false);
         let request = createRequest({
-            certificateData: certificateData,
+            certificateData: trustData,
             partnerDomain: selectedDomain
         });
         try {
@@ -119,12 +119,11 @@ function UploadTrustCertificate() {
             });
             if (response) {
                 const responseData = response.data;
-                console.log(responseData)
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     const successMessage = t('uploadTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
-                        backUrl: uploadCertificateData.backLink,
+                        backUrl: uploadTrustData.backLink,
                         header: successMessage,
                     }
                     setConfirmationData(requiredData);
@@ -165,7 +164,7 @@ function UploadTrustCertificate() {
                     const fileData = e.target.result;
                     setUploading(true);
                     setFileName(fileName);
-                    setCertificateData(fileData);
+                    setTrustData(fileData);
                     setTimeout(() => {
                         setUploading(false);
                     }, 2000);
@@ -204,7 +203,7 @@ function UploadTrustCertificate() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
-                            <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={uploadCertificateData.breadcrumb} backLink={uploadCertificateData.backLink} />
+                            <Title title="uploadTrustCertificate.uploadTrustCertificate" subTitle={uploadTrustData.breadcrumb} backLink={uploadTrustData.backLink} />
                         </div>
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>

@@ -149,6 +149,8 @@ function GenerateApiKey() {
     }
 
     const clearForm = () => {
+        setErrorCode("");
+        setErrorMsg("");
         setPartnerId("");
         setPartnerType("");
         setPolicyGroupName("");

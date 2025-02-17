@@ -139,7 +139,7 @@
         "close": "يغلق",
         "submit": "يُقدِّم",
         "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
-        "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
+        "lastcertificateUploadDate": "تم تحميل آخر شهادة في",
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
         "errorWhileUploadingCertificate": "بسبب حدوث خطأ، لم نتمكن من تحميل الشهادة. يرجى المحاولة مرة أخرى.",
@@ -572,7 +572,7 @@
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
-    "certificatesList": {
+    "trustList": {
         "rootCA": "CA جذر",
         "intermediateCA": "CA متوسط",
         "certificateTrustStore": "مخزن شهادات الثقة",
@@ -611,15 +611,15 @@
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة الجذر CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة شهادات الثقة لشهادة CA الوسيطة المحددة بنجاح."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
+    "rootTrustList": {
+        "uploadRootCaTrust": "تحميل شهادة CA الجذرية",
         "subTitle": "قائمة شهادات CA الجذرية",
-        "downloadCertificate": "تحميل"
+        "downloadTrust": "تحميل"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "تحميل شهادة CA المتوسطة",
         "subTitle": "قائمة شهادات CA المتوسطة",
-        "downloadCertificate": "تنزيل سلسلة الشهادات"
+        "downloadTrust": "تنزيل سلسلة الشهادات"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "عرض تفاصيل شهادة CA الجذر",
@@ -628,7 +628,7 @@
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
         "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
         "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
-        "downloadCertificateChain": "تنزيل سلسلة الشهادات",
+        "downloadTrustChain": "تنزيل سلسلة الشهادات",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
     },

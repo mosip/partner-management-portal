@@ -302,7 +302,7 @@ function Dashboard() {
   }
 
   const policiesInAdmin = () => {
-    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+    navigate('/partnermanagement/policy-manager/policy-group-list')
   }
 
   const partnerPolicyMappingRequestList = () => {
@@ -357,7 +357,7 @@ function Dashboard() {
             </p>
           </div>
           <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
-            {!isPartnerAdmin &&
+            {!isPartnerAdmin && !isPolicyManager &&
               < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
@@ -372,7 +372,7 @@ function Dashboard() {
                 </div>
               </div>
             }
-            {!isPartnerAdmin && showPolicies && (
+            {!isPartnerAdmin && !isPolicyManager && showPolicies && (
               <div role='button' id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => policies())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_policies_card_icon' src={policiesIcon} alt="" className="w-8 h-8" />
@@ -387,7 +387,7 @@ function Dashboard() {
                 </div>
               </div>
             )}
-            {!isPartnerAdmin && showAuthenticationServices && (
+            {!isPartnerAdmin && !isPolicyManager && showAuthenticationServices && (
               <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
@@ -402,7 +402,7 @@ function Dashboard() {
                 </div>
               </div>
             )}
-            {!isPartnerAdmin && showDeviceProviderServices && (
+            {!isPartnerAdmin && !isPolicyManager && showDeviceProviderServices && (
               <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_device_provider_service_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
@@ -417,7 +417,7 @@ function Dashboard() {
                 </div>
               </div>
             )}
-            {!isPartnerAdmin && showFtmServices && (
+            {!isPartnerAdmin && !isPolicyManager && showFtmServices && (
               <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
@@ -461,96 +461,100 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
-                {isPolicyManager && (
-                  <div role='button' onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
+                </>
+              )}
+              {(isPolicyManager || isPartnerAdmin) && (
+                <div role='button' onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
+                  <div className="flex justify-center mb-5">
+                    <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.policies')}
+                    </h5>
+                    <p className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.policiesadminDesc')}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {isPartnerAdmin && (
+                <>
+                  <div role='button' onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
                     <div className="flex justify-center mb-5">
-                      <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
+                      <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
                     </div>
                     <div>
                       <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                        {t('dashboard.policies')}
+                        {t('dashboard.partnerPolicyMapping')}
                       </h5>
                       <p className="mb-3 text-xs font-normal text-gray-400">
-                        {t('dashboard.policiesadminDesc')}
+                        {t('dashboard.partnerPolicyMappingDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      count={partnerPolicyMappingRequestCount}
+                      descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
+                      descriptionParams={{ partnerPolicyMappingRequestCount }}
+                    />
+                  </div>
+
+                  <div role='button' onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.sbiDevice')}
+                      </h5>
+                      <p className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.sbiDeviceDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      count={sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}` : null}
+                      descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
+                      descriptionParams={{
+                        sbiPendingApprovalRequestCount,
+                        devicePendingApprovalRequestCount
+                      }}
+                    />
+                  </div>
+
+                  <div role='button' onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.ftmChip')}
+                      </h5>
+                      <p className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.ftmChipDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      count={ftmPendingApprovalRequestCount}
+                      descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
+                      descriptionParams={{ ftmPendingApprovalRequestCount }}
+                    />
+                  </div>
+
+                  <div role='button' onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                        {t('dashboard.authenticationServices')}
+                      </h5>
+                      <p className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.adminAuthenticationServicesDesc')}
                       </p>
                     </div>
                   </div>
-                )}
-                <div role='button' onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.partnerPolicyMapping')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.partnerPolicyMappingDesc')}
-                    </p>
-                  </div>
-                  <CountWithHover
-                    count={partnerPolicyMappingRequestCount}
-                    descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
-                    descriptionParams={{ partnerPolicyMappingRequestCount }}
-                  />
-                </div>
-
-                <div role='button' onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.sbiDevice')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.sbiDeviceDesc')}
-                    </p>
-                  </div>
-                  <CountWithHover
-                    count={sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}` : null}
-                    descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
-                    descriptionParams={{
-                      sbiPendingApprovalRequestCount,
-                      devicePendingApprovalRequestCount
-                    }}
-                  />
-                </div>
-
-                <div role='button' onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.ftmChip')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.ftmChipDesc')}
-                    </p>
-                  </div>
-                  <CountWithHover
-                    count={ftmPendingApprovalRequestCount}
-                    descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
-                    descriptionParams={{ ftmPendingApprovalRequestCount }}
-                  />
-                </div>
-
-                <div role='button' onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                      {t('dashboard.authenticationServices')}
-                    </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.adminAuthenticationServicesDesc')}
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
           </div>
           {showPopup && (
             <SelectPolicyPopup />
