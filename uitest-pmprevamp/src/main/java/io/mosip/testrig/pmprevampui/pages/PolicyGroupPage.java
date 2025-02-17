@@ -68,6 +68,75 @@ public class PolicyGroupPage extends BasePage{
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement browserBackProceedButton;
 	
+	@FindBy(id = "policies_auth_policy_tab")
+	private WebElement authPolicyTab;
+	
+	@FindBy(id = "policies_data_share_policy_tab")
+	private WebElement dataSharePolicyTab;
+	
+	@FindBy(xpath = "//h1[text()='Policies']")
+	private WebElement titleOfPage;
+	
+	@FindBy(id = "title_back_icon")
+	private WebElement titleBackIcon;
+	
+	@FindBy(xpath = "//p[text()='List of Policy Groups']")
+	private WebElement subtitleOfPage;
+	
+	@FindBy(xpath = "//div[text()='Policy Group ID']")
+	private WebElement policyGroupIdHeader;
+	
+	@FindBy(xpath = "//div[text()='Policy Group Name']")
+	private WebElement policyGroupNameHeader;
+	
+	@FindBy(xpath = "//div[text()='Policy Group Description']")
+	private WebElement policyGroupDescriptionHeader;
+	
+	@FindBy(xpath = "//div[text()='Creation Date']")
+	private WebElement creationDateHeader;
+	
+	@FindBy(xpath = "//div[text()='Status']")
+	private WebElement statusHeader;
+	
+	@FindBy(xpath = "//div[text()='Action']")
+	private WebElement actionHeader;
+	
+	@FindBy(id = "filter_btn")
+	private WebElement filterButton;
+	
+	@FindBy(id = "pagination_card")
+	private WebElement pagination;
+	
+	@FindBy(id = "policy_group_id_filter")
+	private WebElement policyGroupIdFilter;
+	
+	@FindBy(id = "policy_group_name_filter")
+	private WebElement policyGroupNameFilter;
+	
+	@FindBy(id = "policy_group_description_filter")
+	private WebElement policyGroupDescriptionFilter;
+	
+	@FindBy(id = "status_filter")
+	private WebElement statusFilter;
+	
+	@FindBy(id = "policy_group_list_item1")
+	private WebElement policyGroupList1;
+	
+	@FindBy(id = "policy_group_view_back_btn")
+	private WebElement policyGroupViewBackButton;
+	
+	@FindBy(xpath = "//h1[text()='View Policy Group']")
+	private WebElement viewPolicyGroupPageTitle;
+	
+	@FindBy(id = "status_filter_option1")
+	private WebElement activatedOption;
+	
+	@FindBy(id = "status_filter_option2")
+	private WebElement deActivatedOption;
+	
+	@FindBy(id = "policy_group_list_view1")
+	private WebElement policyGroupActionButton;
+	
 	public PolicyGroupPage(WebDriver driver) {
 		super(driver);
 	}
@@ -191,5 +260,92 @@ public class PolicyGroupPage extends BasePage{
 	public void clickOnBrowserBackProceedButton() {
 		clickOnElement(browserBackProceedButton);
 	}
-
+	
+	public boolean isAuthPolicyTabDisplayed() {
+		return isElementDisplayed(authPolicyTab);
+	}
+	
+	public boolean isDataSharePolicyTabDisplayed() {
+		return isElementDisplayed(dataSharePolicyTab);
+	}
+	
+	public boolean isTitleOfPageDisplayed() {
+		return isElementDisplayed(titleOfPage);
+	}
+	
+	public boolean isBackiconDisplayed() {
+		return isElementDisplayed(titleBackIcon);
+	}
+	
+	public boolean isSubTitleOfPageDisplayed() {
+		return isElementDisplayed(subtitleOfPage);
+	}
+	
+	public boolean isPolicyGroupHeaderTextDisplayed() {
+		return isElementDisplayed(policyGroupIdHeader);
+	}
+	
+	public boolean isPolicyGroupNameHeaderDisplayed() {
+		return isElementDisplayed(policyGroupNameHeader);
+	}
+	
+	public boolean isPolicyGroupDescriptionHeaderDisplayed() {
+		return isElementDisplayed(policyGroupDescriptionHeader);
+	}
+	
+	public boolean isCreatedDateHeaderTextDisplayed() {
+		return isElementDisplayed(creationDateHeader);
+	}
+	
+	public boolean isStatusHeaderTextDisplayed() {
+		return isElementDisplayed(statusHeader);
+	}
+	
+	public boolean isActionHeaderTextDisplayed() {
+		return isElementDisplayed(actionHeader);
+	}
+	
+	public boolean isFiletrButtonDisplayedOrEnabled() {
+		return isElementDisplayed(filterButton);
+	}
+	
+	public boolean isPaginationDisplayed() {
+		return isElementDisplayed(pagination);
+	}
+	
+	public void clickOnFilterButton() {
+		clickOnElement(filterButton);
+		
+	}
+	
+	public void clickOnPolicyGroupIdFilter(String value) {
+		clickOnElement(policyGroupIdFilter);
+	}
+	
+	public void clickOnPolicyGroupNameFilter(String value) {
+		clickOnElement(policyGroupNameFilter);
+	}
+	
+	public void clickOnPolicyGroupDescriptionFilter(String value) {
+		clickOnElement(policyGroupDescriptionFilter);
+	}
+	
+	public void clickOnStatusFilter() {
+		clickOnElement(statusFilter);
+		clickOnElement(activatedOption);
+	}
+	
+	public void clickOnPolicyGroupList1() {
+		clickOnElement(policyGroupList1);
+	}
+	
+	public void clickOnPolicyGroupViewBackButton() {
+		clickOnElement(policyGroupViewBackButton);
+	}
+	
+	public boolean isViewPolicyGroupPageTitleDisplayed() {
+		return isElementDisplayed(viewPolicyGroupPageTitle);
+	}
+	
+	
 }

@@ -6,6 +6,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.interfaces.RSAPublicKey;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,7 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
-
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.RSAKey;
 import io.mosip.testrig.pmprevampui.authentication.fw.util.RestClient;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.kernel.util.KeycloakUserManager;
@@ -139,6 +146,22 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName), zone);
 			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName));
 			initialized = true;
+		}
+	}
+	
+	public static String generateJWKPublicKey() {
+		try {
+			KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
+		    SecureRandom secureRandom = new SecureRandom();
+			keyGenerator.initialize(2048, secureRandom);
+			final KeyPair keypair = keyGenerator.generateKeyPair();
+			RSAKey jwk = new RSAKey.Builder((RSAPublicKey) keypair.getPublic()).keyID("RSAKeyID")
+					.keyUse(KeyUse.SIGNATURE).privateKey(keypair.getPrivate()).build();
+
+			return jwk.toJSONString();
+		} catch (NoSuchAlgorithmException e) {
+			logger.error(e.getMessage());
+			return null;
 		}
 	}
 }

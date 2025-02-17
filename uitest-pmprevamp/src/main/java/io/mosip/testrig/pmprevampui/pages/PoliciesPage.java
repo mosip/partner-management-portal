@@ -164,39 +164,8 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policies_auth_policy_tab")
 	private WebElement policiesAuthPolicyTab;
 	
-	
-	
-	
-	
-	
-	
 	@FindBy(id = "policy_data_box")
 	private WebElement policyDataBox;
-	
-		
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@FindBy(id = "policy_details_partner_id_label")
 	private WebElement policyDetailsPartnerIdLabel;

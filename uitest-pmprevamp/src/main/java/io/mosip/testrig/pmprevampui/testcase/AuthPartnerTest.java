@@ -6,6 +6,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmprevampui.pages.ApiKeyPage;
@@ -435,10 +436,9 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.selectPolicyNameDropdown(data);
 
 		oidcClientPage.enterNameOidcTextBox(data);
-
-		String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/" + "/publicKey.json").toString();
-
-		oidcClientPage.enterPublicKeyTextBox(publicKey);
+		
+		String publicKeytemp=PmpTestUtil.generateJWKPublicKey();
+		oidcClientPage.enterPublicKeyTextBox(publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnSubmitButton();
@@ -940,8 +940,8 @@ public class AuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnPartnerIdDropdown();
 		assertTrue(oidcClientPage.isNoDataAvailableTextDisplayed(),GlobalConstants.isNoDataAvailableTextDisplayed);
 
-		String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/" + "/publicKey.json").toString();
-		oidcClientPage.enterPublicKeyTextBox(publicKey);
+		String publicKeytemp=PmpTestUtil.generateJWKPublicKey();
+		oidcClientPage.enterPublicKeyTextBox(publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
@@ -1028,7 +1028,7 @@ public class AuthPartnerTest extends BaseClass {
 		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnOidcClientListPageCreateOidcClientBtn();
 		oidcClientPage.enterNameOidcTextBox(data);
-		oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKey);
+		oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		oidcClientPage.clickOnClearFormButton();
@@ -1093,7 +1093,8 @@ public class AuthPartnerTest extends BaseClass {
 		loginpage.enterUserName("pmpui-auth");
 		loginpage.enterPassword(password);
 		loginpage.ClickOnLoginButton();
-		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),GlobalConstants.isAuthenticationServicesDisplayed);			OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServicesTitle();
+		assertTrue(dashboardpage.isAuthenticationServicesTitleDisplayed(),GlobalConstants.isAuthenticationServicesDisplayed);
+		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOidcDetailsElipsisButton();
 		oidcClientPage.clickOnOidcDeactivateButton();
 		assertTrue(oidcClientPage.isdeactivateOidcPopupDisplayed(),GlobalConstants.isdeactivateOidcPopupDisplayed);
