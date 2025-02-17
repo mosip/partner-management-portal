@@ -204,6 +204,8 @@ function AddFtm() {
   };
 
   const clearForm = () => {
+    setErrorCode("");
+    setErrorMsg("");
     setPartnerId("");
     setPartnerType("");
     setMake("");

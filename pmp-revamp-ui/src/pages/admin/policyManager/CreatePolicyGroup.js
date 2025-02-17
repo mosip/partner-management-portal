@@ -58,6 +58,8 @@ function CreatePolicyGroup() {
     }, [policyGroupName, policyGroupDesc, isSubmitClicked]);
 
     const clearForm = () => {
+        setErrorCode("");
+        setErrorMsg("");
         setPolicyGroupName("");
         setPolicyGroupDesc("");
         setValidationError("");

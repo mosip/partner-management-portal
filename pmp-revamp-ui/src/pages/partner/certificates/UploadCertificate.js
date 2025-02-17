@@ -204,7 +204,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 !mx-0">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 !mx-0 break-words">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white break-normal md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
@@ -239,7 +239,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 value={partnerDomainType} disabled />
                                         </div>
                                     </form>
-                                    <div className="flex items-center justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
+                                    <div className="flex items-center p-3 justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
                                         {uploading && (
                                             <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,7 +280,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 >
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>
-                                                <h5 className="text-charcoal-gray text-sm font-semibold">
+                                                <h5 className="text-charcoal-gray text-sm font-semibold break-all">
                                                     {fileName}
                                                 </h5>
                                                 <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
