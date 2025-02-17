@@ -277,7 +277,7 @@ function FtmList() {
                           {tableHeaders.map((header, index) => {
                             return (
                               <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E]`}>
-                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center text-left gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
                                     <SortingIcon

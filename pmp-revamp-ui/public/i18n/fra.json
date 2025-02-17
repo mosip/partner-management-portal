@@ -139,7 +139,7 @@
         "close": "Fermer",
         "submit": "Soumettre",
         "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléchargé avec succès.",
-        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
+        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
         "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",

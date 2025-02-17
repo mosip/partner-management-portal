@@ -139,7 +139,7 @@
         "close": "Close",
         "submit": "Submit",
         "successMsg": "Partner certificate for {{partnerType}} is uploaded successfully.",
-        "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
+        "lastcertificateUploadDate": "Last certificate was uploaded on",
         "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
