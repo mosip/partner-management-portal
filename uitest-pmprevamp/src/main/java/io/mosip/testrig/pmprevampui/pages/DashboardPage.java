@@ -81,7 +81,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
 
-	@FindBy(id = "rootCertificateList.uploadRootCaCertificate")
+	@FindBy(id = "rootTrustList.uploadRootCaTrust")
 	private WebElement rootCertificateUploadButton;
 
 	@FindBy(xpath = "//*[text()='Policies']")

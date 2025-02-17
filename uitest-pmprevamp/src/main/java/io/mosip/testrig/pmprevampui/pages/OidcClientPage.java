@@ -270,9 +270,116 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
 	private WebElement invalidRedirectUriErrorDisplayed;
 
-	
 	@FindBy(id = "authentication_oidc_tab")
 	private WebElement oidcClientTab;
+	
+	@FindBy(id = "oidc_edit_enter_client_name_input")
+	private WebElement editOidcClientName;
+	
+	@FindBy(id = "oidc_deactive_btn")
+	private WebElement oidcDeactivateButton;
+	
+	@FindBy(id = "deactivate_submit_btn")
+	private WebElement deactivateSubmitButton;
+	
+	@FindBy(id = "deactivate_cancel_btn")
+	private WebElement deactivateCancelButton;
+	
+	@FindBy(xpath = "//P[text()='Do you want to Deactivate OIDC Client']")
+	private WebElement deactivateOidcPopup;
+	
+	@FindBy(xpath = "//P[text()='On clicking Confirm, you will not be able to use the OIDC Client ID for authentication anymore.']")
+	private WebElement deactivateOidcInfoMessage;
+	
+	@FindBy(xpath = "//div[text()='Deactivated']")
+	private WebElement deactivatedStatus;
+	
+	@FindBy(id = "oidc_show_copy_popup_btn1")
+	private WebElement deactivatedEyeIcon;
+	
+	@FindBy(id = "oidc_details1")
+	private WebElement deactivatedOidcActionButton;
+	
+	@FindBy(id = "oidc_client_list_item1")
+	private WebElement deactivatedOidcRow;
+	
+	@FindBy(xpath = "//h1[text()='View OIDC Client Details']")
+	private WebElement oidcClientTitle;
+	
+	@FindBy(xpath = "//div[text()='Deactivated']")
+	private WebElement statusOfDeactivatedOIDCDetailsPage;
+	
+	@FindBy(id = "oidc_client_details_partner_id_label")
+	private WebElement oidcClientDetailsPartnerIdLabel;
+	
+	@FindBy(id = "oidc_client_details_partner_id_context")
+	private WebElement oidcClientDetailsPartnerIdContext;
+	
+	@FindBy(id = "oidc_client_details_policy_group_label")
+	private WebElement oidcClientDetailsPolicyGroupLabel;
+	
+	@FindBy(id = "oidc_client_details_policy_group_name_context")
+	private WebElement oidcClientDetailsPolicyGroupNameContext;
+	
+	@FindBy(id = "oidc_client_details_policy_name_label")
+	private WebElement oidcClientDetailsPolicyNameLabel;
+	
+	@FindBy(id = "oidc_client_details_policy_name_context")
+	private WebElement oidcClientDetailsPolicyNameContext;
+	
+	@FindBy(id = "oidc_client_details_policy_group_description_label")
+	private WebElement oidcClientDetailsPolicyGoupDescriptionLabel;
+	
+	@FindBy(id = "oidc_client_details_policy_group_description_context")
+	private WebElement oidcClientDetailsPolicyGroupDescriptionContext;
+	
+	@FindBy(id = "oidc_client_details_policy_name_description_label")
+	private WebElement oidcClientDetailsPolicyNameDescriptionLabel;
+	
+	@FindBy(id = "oidc_client_details_policy_description_context")
+	private WebElement oidcClientDetailsPolicyDescriptionContext;
+	
+	@FindBy(id = "oidc_client_details_partner_type_label")
+	private WebElement oidcClientDetailsPartnerTypeLabel;
+	
+	@FindBy(id = "oidc_client_details_auth_partner_context")
+	private WebElement oidcClientDetailsPartnerTypeContext;
+	
+	@FindBy(id = "oidc_client_details_public_key_label")
+	private WebElement oidcClientDetailsPublicKeyLabel;
+	
+	@FindBy(id = "oidc_client_details_public_key_context")
+	private WebElement oidcClientDetailsPublicKeyContext;
+	
+	@FindBy(id = "oidc_client_details_logo_uri_label")
+	private WebElement oidcClientDetailsLogoUriLabel;
+	
+	@FindBy(id = "oidc_client_details_logo_uri_context")
+	private WebElement oidcClientDetailsLogoUriContext;
+	
+	@FindBy(id = "oidc_client_details_redirect_uris")
+	private WebElement oidcClientDetailsRedirectUrisLabel;
+	
+	@FindBy(id = "oidc_client_redirect_uris")
+	private WebElement oidcClientDetailsRedirectUrisContext;
+	
+	@FindBy(id = "oidc_client_details_grant_types")
+	private WebElement oidcClientDetailsGrantTypesLabel;
+	
+	@FindBy(id = "oidc_client_grant_types")
+	private WebElement oidcClientDetailsGrantTypesContext;
+	
+	@FindBy(xpath = "//div[text()='Activated']")
+	private WebElement activatedStatus;
+	
+	@FindBy(xpath = "//p[text()='OIDC Client Name']")
+	private WebElement oidcClientNameLabel;
+	
+	@FindBy(xpath = "//span[text()='abcdcd']")
+	private WebElement oidcClientNameContext;
+	
+	@FindBy(id = "oidc_client_details_copy_id")
+	private WebElement oidcClientDetailsCopyId;
 	
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -593,11 +700,11 @@ public class OidcClientPage extends BasePage {
 		driver.navigate().refresh();
 	}
 	
-	public boolean isBrowserConfirmationPopupDisplayed() {
+	public boolean isBrowserBackConfirmationPopupDisplayed() {
 		return isElementDisplayed(browserConfirmationPopup);
 	}
 	
-	public boolean isBrowserConfirmationPopupProceedBtnDisplayed() {
+	public boolean isBrowserBackProceedButtonAvailable() {
 		return isElementDisplayed(browserConfirmationPopupProceedBtn);
 	}
 	
@@ -605,7 +712,7 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(browserConfirmationPopupProceedBtn);
 	}
 	
-	public boolean isBrowserConfirmationPopupCancelBtnDisplayed() {
+	public boolean isBrowserBackCancelButtonAvailable() {
 		return isElementDisplayed(browserConfirmationPopupCancelBtn);
 	}
 	
@@ -672,4 +779,177 @@ public class OidcClientPage extends BasePage {
 	public boolean isFifthRedirectUriTextBoxDisplayed() {
 		return isElementDisplayed(createOidcRedirectUrl5);
 	}
+	
+	public void clickOnOidcDeactivateButton() {
+		clickOnElement(oidcDeactivateButton);
+	}
+	
+	public boolean isdeactivateOidcPopupDisplayed() {
+		return isElementDisplayed(deactivateOidcPopup);
+	}
+	
+	public boolean isDeactivateOidcInfoMessageDisplayed() {
+		return isElementDisplayed(deactivateOidcInfoMessage);
+	}
+	
+	public boolean isDeactivateCancelButtonAvailable() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+	
+	public boolean isDeactivateSubmitButtonAvailable() {
+		return isElementDisplayed(deactivateSubmitButton);
+	}
+	
+	public boolean isStatusDeavtivatedDisplayed() {
+		return isElementDisplayed(deactivatedStatus);
+	}
+	
+	public void clickOnDeactivateCancelButton() {
+		clickOnElement(deactivateCancelButton);
+	}
+	
+	public void clickOnDeactivateSubmitButtonButton() {
+		clickOnElement(deactivateSubmitButton);
+	}
+	
+	public boolean isDeactivatedEyeIconDisplayed() {
+		return isElementDisplayed(deactivatedEyeIcon);
+	}
+	
+	public void clickOnDeactivatedEyeIcon() {
+		clickOnElement(deactivatedEyeIcon);
+	}
+	
+	public boolean iscopyIdButtonDisplayed() {
+		return isElementDisplayed(copyIdButton);
+	}
+	
+	public void clickOnDeactivatedOidcActionButton() {
+		clickOnElement(deactivatedOidcActionButton);
+	}
+	
+	public void clickOnDeactivatedOidcRow() {
+		clickOnElement(deactivatedOidcRow);
+	}
+	
+	public boolean isOidcClientDetailsPageDisplayed() {
+		return isElementDisplayed(oidcClientTitle);
+	}
+	
+	public void clickOnOidcDetailsViewButton() {
+		clickOnElement(oidcDetailsViewButton);
+	}
+	
+	public boolean isOidcDetailsPageStatusDeactivatedDisplayed() {
+		return isElementDisplayed(statusOfDeactivatedOIDCDetailsPage);
+	}
+	
+	public boolean isOidcDeactivateButtonDisplayed() {
+		return isElementDisplayed(oidcDeactivateButton);
+	}
+	
+	public boolean isOidcEditButtonDisplayed() {
+		return isElementDisplayed(oidcEditButton);
+	}
+	
+	public boolean isOidcClientDetailsPartnerIdLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPartnerIdLabel);
+	}
+	
+	public boolean isOidcClientDetailsPartnerIdContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPartnerIdContext);
+	}
+	
+	public boolean isOidcClientDetailsPolicyGroupLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyGroupLabel);
+	}
+	
+	public boolean isOidcClientDetailsPolicyGroupNameContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyGroupNameContext);
+	}
+	
+	public boolean isOidcClientDetailsPolicyNameLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyNameLabel);
+	}
+	
+	public boolean isOidcClientDetailsPolicyNameContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyNameContext);
+	}
+	
+	public boolean isOidcClientDetailsPolicyGoupDescriptionLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyGoupDescriptionLabel);
+	}
+	
+	public boolean isOidcClientDetailsPolicyGroupDescriptionContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyGroupDescriptionContext);
+	}
+	
+	public boolean isOidcClientDetailsPolicyNameDescriptionLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyNameDescriptionLabel);
+	}
+	
+	public boolean isOidcClientDetailsPolicyDescriptionContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPolicyDescriptionContext);
+	}
+	
+	public boolean isOidcClientDetailsPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPartnerTypeLabel);
+	}
+	
+	public boolean isOidcClientDetailsPartnerTypeContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPartnerTypeContext);
+	}
+	
+	public boolean isOidcClientDetailsPublicKeyLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPublicKeyLabel);
+	}
+	
+	public boolean isOidcClientDetailsPublicKeyContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsPublicKeyContext);
+	}
+	
+	public boolean isOidcClientDetailsLogoUriLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsLogoUriLabel);
+	}
+	
+	public boolean isOidcClientDetailsLogoUriContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsLogoUriContext);
+	}
+	
+	public boolean isOidcClientDetailsRedirectUrisLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsRedirectUrisLabel);
+	}
+	
+	public boolean isOidcClientDetailsRedirectUrisContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsRedirectUrisContext);
+	}
+	
+	public boolean isOidcClientDetailsGrantTypesLabelDisplayed() {
+		return isElementDisplayed(oidcClientDetailsGrantTypesLabel);
+	}
+	
+	public boolean isOidcClientDetailsGrantTypesContextDisplayed() {
+		return isElementDisplayed(oidcClientDetailsGrantTypesContext);
+	}
+	
+	public boolean isOidcClientDetailsActivatedStatusDisplayed() {
+		return isElementDisplayed(activatedStatus);
+	}
+	
+	public boolean isOidcClientDetailsCopyIdDisplayed() {
+		return isElementDisplayed(oidcClientDetailsCopyId);
+	}
+	
+	public boolean isOidcClientDetailsBackButtonDisplayed() {
+		return isElementDisplayed(oidcClientDetailsBackButton);
+	}
+	
+	public boolean isOidcClientNameLabelDisplayed() {
+		return isElementDisplayed(oidcClientNameLabel);
+	}
+	
+	public boolean isOidcClientNameContextDisplayed() {
+		return isElementDisplayed(oidcClientNameContext);
+	}
+	
 }
