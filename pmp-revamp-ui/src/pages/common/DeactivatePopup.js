@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingIcon from "../common/LoadingIcon";
 import ErrorMessage from "../common/ErrorMessage";
-import { getPartnerManagerUrl, isLangRTL, handleServiceErrors} from "../../utils/AppUtils";
+import { getPartnerManagerUrl, isLangRTL, handleServiceErrors, handleEscapeKey} from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
@@ -23,6 +23,10 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
         };
     }, []);
 
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
+    }, []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");

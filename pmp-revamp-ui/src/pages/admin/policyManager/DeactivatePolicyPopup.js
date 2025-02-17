@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, isLangRTL, handleEscapeKey } from '../../../utils/AppUtils';
 import errorIcon from '../../../svg/error_icon.svg';
 import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -26,6 +26,11 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => {

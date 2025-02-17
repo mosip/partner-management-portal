@@ -4,7 +4,7 @@ import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyManagerUrl, handleServiceErrors } from '../../../utils/AppUtils.js';
+import { getPolicyManagerUrl, handleServiceErrors, handleEscapeKey } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 
 function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
@@ -21,6 +21,11 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => {

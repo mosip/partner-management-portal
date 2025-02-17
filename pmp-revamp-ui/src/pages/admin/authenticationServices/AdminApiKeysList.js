@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest,
-    escapeKeyHandler, setSubmenuRef
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest, setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -204,10 +203,6 @@ function AdminApiKeysList() {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
-
-    useEffect(() => {
-        escapeKeyHandler(closeDeactivatePopup)
-    }, [showActiveIndexDeactivatePopup]);
 
     const styles = {
         loadingDiv: "!py-[20%]",

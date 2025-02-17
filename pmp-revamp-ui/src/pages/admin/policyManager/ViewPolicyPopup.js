@@ -1,6 +1,7 @@
 import { React, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
+import { handleEscapeKey } from '../../../utils/AppUtils';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
@@ -12,6 +13,11 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     return (

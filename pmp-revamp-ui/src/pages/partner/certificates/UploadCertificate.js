@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, handleEscapeKey } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
@@ -35,6 +35,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopup(true, 'cancel'));
+        return removeListener;
     }, []);
 
     const clickOnCancel = () => {
@@ -239,7 +244,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 value={partnerDomainType} disabled />
                                         </div>
                                     </form>
-                                    <div className="flex items-center p-3 justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
+                                    <div className={`flex items-center p-2 justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center  ${uploadSuccess ? 'pointer-events-none' : 'cursor-pointer'} relative`}>
                                         {uploading && (
                                             <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -272,11 +277,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName && (
-                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
+                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1`}>
                                                 <label
                                                     type="input"
                                                     htmlFor="fileInput"
-                                                    className="flex flex-col items-center justify-center cursor-pointer"
+                                                    className="flex flex-col items-center justify-center"
                                                 >
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>

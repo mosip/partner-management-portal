@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getPartnerManagerUrl, handleServiceErrors, createRequest } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, createRequest, handleEscapeKey } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
@@ -19,6 +19,11 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => setErrorMsg("");
