@@ -9,7 +9,6 @@ import {
     createRequest,
     populateClientNames,
     getClientNameLangMap,
-    escapeKeyHandler,
     setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -233,14 +232,6 @@ function AdminOidcClientsList() {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-35"
     }
-
-    useEffect(() => {
-        if (showActiveIndexDeactivatePopup) {
-            escapeKeyHandler(closeDeactivatePopup);
-        } else if (showActiveIndexClientIdPopup) {
-            escapeKeyHandler(() => setShowActiveIndexClientIdPopup(null));
-        }
-    }, [showActiveIndexDeactivatePopup, showActiveIndexClientIdPopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>

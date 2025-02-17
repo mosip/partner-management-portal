@@ -4,7 +4,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, getPolicyManagerUrl,
     handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter,
-    getStatusCode, bgOfStatus, escapeKeyHandler,
+    getStatusCode, bgOfStatus,
     createRequest, setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -224,16 +224,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         setActiveIndexShowClonePopup(null);
         setSelectedPolicy({});
     };
-
-    useEffect(() => {
-        if (showActiveIndexClonePopup) {
-            escapeKeyHandler(closeClonePolicyPopup);
-        } else if (showActiveIndexDeactivatePopup) {
-            escapeKeyHandler(closeDeactivatePopup);
-        } else if (showActiveIndexPublishPolicyPopup) {
-            escapeKeyHandler(closePublishPolicyPopup);
-        }
-    }, [showActiveIndexClonePopup, showActiveIndexDeactivatePopup, showActiveIndexPublishPolicyPopup]);
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedPolicy) => {
         if (deactivationResponse && !deactivationResponse.isActive) {

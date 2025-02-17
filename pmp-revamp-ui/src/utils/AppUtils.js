@@ -786,18 +786,18 @@ export const downloadCaTrust = async (HttpService, certificateId, trustType, set
 
 
 
-export const escapeKeyHandler = (closePopup) => {
-    // Define the Escape key handler
-    const handleEscape = (e) => {
-    if (e.key === 'Escape') {
-        closePopup()
-        // Cleanup the event listener
-        return window.removeEventListener('keydown', handleEscape)
-    }
+export const handleEscapeKey = (closePopup) => {
+    const handleEscape = (event) => {
+        if (event.key === 'Escape') {
+            closePopup();
+        }
     };
-    
-    // Add event listener when any handler condition is true
-    window.addEventListener('keydown', handleEscape);
+
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+        document.removeEventListener('keydown', handleEscape);
+    };
 };
 
 export const formatPublicKey = (publicKeyString) => {

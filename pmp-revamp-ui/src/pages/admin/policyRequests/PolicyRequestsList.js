@@ -15,7 +15,6 @@ import {
   onClickApplyFilter,
   resetPageNumber, setPageNumberAndPageSize, onResetFilter,
   getApproveRejectStatus,
-  escapeKeyHandler,
   setSubmenuRef
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -202,10 +201,6 @@ function PolicyRequestsList() {
     setShowActiveIndexPopup(null);
     setSelectedPolicyRequest({});
   };
-
-  useEffect(() => {
-    escapeKeyHandler(closePolicyRequestPopup);
-  }, [showActiveIndexPopup]);
 
   const approveRejectPolicyRequest = (policyRequest, index) => {
     if (policyRequest.status === 'InProgress') {

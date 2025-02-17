@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, formatDate, handleMouseClickForDropdown, onPressEnterKey, createRequest, getPolicyManagerUrl,
-    handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter,
-    escapeKeyHandler, setSubmenuRef
+    handleServiceErrors, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -225,10 +224,6 @@ function PolicyGroupList() {
         setShowActiveIndexDeactivatePolicyGroupPopup(null);
         setSelectedPolicyGroup({});
     };
-
-    useEffect(() => {
-        escapeKeyHandler(closePopup);
-    }, [showActiveIndexDeactivatePolicyGroupPopup]);
 
     const showDeactivatePolicyGroup = (policyGroup, index) => {
         if (policyGroup.isActive) {
