@@ -283,14 +283,19 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 <h5 className="text-charcoal-gray text-sm font-semibold break-all">
                                                     {fileName}
                                                 </h5>
-                                                <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
-                                                    <p> {t('uploadCertificate.remove')} </p>
-                                                </button>
+                                                {!uploadSuccess && (
+                                                    <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                        <p>{t('uploadCertificate.remove')}</p>
+                                                    </button>
+                                                )}
                                             </div>
                                         )}
                                     </div>
                                     {popupData.isCertificateAvailable && !removeLastUploadDate && (
-                                        <p className="text-sm text-gray-800 text-center mt-1">{t('uploadCertificate.lastcertificateUploadDate', { date: formattedDate })}</p>
+                                       <p className="text-sm text-gray-800 text-center mt-1">
+                                       {t('uploadCertificate.lastcertificateUploadDate')}{' '}
+                                       <span className="whitespace-nowrap">{formattedDate}</span>
+                                     </p>
                                     )}
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>

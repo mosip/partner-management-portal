@@ -139,7 +139,7 @@
         "close": "يغلق",
         "submit": "يُقدِّم",
         "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
-        "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
+        "lastcertificateUploadDate": "تم تحميل آخر شهادة في",
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
         "errorWhileUploadingCertificate": "بسبب حدوث خطأ، لم نتمكن من تحميل الشهادة. يرجى المحاولة مرة أخرى.",
