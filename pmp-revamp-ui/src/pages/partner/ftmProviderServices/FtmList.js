@@ -6,8 +6,8 @@ import { HttpService } from '../../../services/HttpService';
 import {
   isLangRTL, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
-  createRequest, populateDeactivatedStatus,
-  handleKeymanagerErrors
+  createRequest, populateDeactivatedStatus, setSubmenuRef,
+  handleServiceErrors
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -42,7 +42,7 @@ function FtmList() {
   const [filteredftmList, setFilteredFtmList] = useState([]);
   const [viewFtmId, setViewFtmId] = useState(-1);
   const [selectedFtm, setSelectedFtm] = useState({});
-  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
   const [deactivateRequest, setDeactivateRequest] = useState({});
   const defaultFilterQuery = {
     partnerId: "",
@@ -70,7 +70,14 @@ function FtmList() {
             setFtmList(sortedData);
             setFilteredFtmList(sortedData);
           } else {
-            handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
+            if (responseData.errors && responseData.errors.length > 0) {
+              const errorCode = response.data.errors[0].errorCode;
+              if (errorCode === 'PMS_KKS_001') {
+                  setErrorMsg(t('ftmList.errorWhileFetchingFtmList'));
+              } else {
+                  handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+              }
+            }
           }
         } else {
           setErrorMsg(t('ftmList.errorInFtmList'));
@@ -78,7 +85,7 @@ function FtmList() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(err.toString());
         }
       }
@@ -180,7 +187,7 @@ function FtmList() {
     navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
 
-  const showDeactivateFtm = (selectedFtmData) => {
+  const showDeactivateFtm = (selectedFtmData, index) => {
     if (selectedFtmData.status === "approved") {
       const request = createRequest({
         status: "De-Activate",
@@ -188,13 +195,13 @@ function FtmList() {
       setViewFtmId(-1);
       setSelectedFtm(selectedFtmData);
       setDeactivateRequest(request);
-      setShowDeactivatePopup(true);
+      setShowActiveIndexDeactivatePopup(index);
     }
   };
 
   const closeDeactivatePopup = () => {
     setSelectedFtm({});
-    setShowDeactivatePopup(false);
+    setShowActiveIndexDeactivatePopup(null);
   };
 
   const showManageCertificate = (selectedFtmData) => {
@@ -212,7 +219,7 @@ function FtmList() {
   const onClickConfirmDeactivate = (deactivationResponse, selectedFtm) => {
     if (deactivationResponse && !deactivationResponse.isActive) {
       setSelectedFtm({});
-      setShowDeactivatePopup(false);
+      setShowActiveIndexDeactivatePopup(null);
       // Update the specific row in the state with the new status
       setFilteredFtmList((prevList) =>
         prevList.map(ftm =>
@@ -264,13 +271,13 @@ function FtmList() {
                     </FtmListFilter>
                   }
                   <div className="mx-[1.5rem] overflow-x-scroll">
-                    <table className="table-fixed">
+                    <table className="table-auto w-full">
                       <thead>
                         <tr>
                           {tableHeaders.map((header, index) => {
                             return (
-                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[12%]`}>
-                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                              <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E]`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center text-left gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
                                     <SortingIcon
@@ -298,17 +305,17 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1350:px-4  ${isLoginLanguageRTL ? "max-1350:text-right" : "max-1355:pl-7 max-1200:pl-5"}`}>{formatDate(ftm.createdDateTime, 'date')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2 max-1530:text-center max-1530:px-4">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{formatDate(ftm.createdDateTime, 'date')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
                                   </div>
                                 </td>
                                 <td className="px-2 mx-2 cursor-default">
-                                  <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                  <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
                                     <button id={'ftm_list_action' + (index + 1)} onClick={() => setViewFtmId(index === viewFtmId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                       ...
                                     </button>
@@ -324,13 +331,13 @@ function FtmList() {
                                           <img src={(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? manageCertificate : disableManageCertificate} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm, index)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
                                           <p> {t('ftmList.deActivate')}</p>
                                           <img src={ftm.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                       </div>
                                     )}
-                                    {showDeactivatePopup && (
+                                    {showActiveIndexDeactivatePopup === index && (
                                       <DeactivatePopup
                                         closePopUp={closeDeactivatePopup}
                                         onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedFtm)}

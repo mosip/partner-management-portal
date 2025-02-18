@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "Originally uploaded CA signed certificate downloaded successfully.",
         "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
         "certificateExpired": "Certificate has expired. Please upload a valid certificate",
-        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled"
+        "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled",
+        "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -138,7 +139,7 @@
         "close": "Close",
         "submit": "Submit",
         "successMsg": "Partner certificate for {{partnerType}} is uploaded successfully.",
-        "lastcertificateUploadDate": "Last certificate was uploaded on {{date}}",
+        "lastcertificateUploadDate": "Last certificate was uploaded on",
         "fileUploadError": "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload",
         "unableToUploadCertificate": "Unable to upload partner certificate",
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
@@ -530,7 +531,8 @@
         "errorInFtmList": "While fetching FTM chip details, we have encountered with an error.",
         "ftmId": "FTM ID",
         "selectFtmId": "Select FTM ID",
-        "searchFtmId": "Search FTM ID"
+        "searchFtmId": "Search FTM ID",
+        "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -565,7 +567,7 @@
         "headerMsg": "Do you want to deactivate FTM Chip ",
         "description": "On clicking Confirm, your FTM Chip details will be deactivated."
     },
-    "certificatesList": {
+    "trustList": {
         "rootCA": "Root CA",
         "intermediateCA": "Intermediate CA",
         "certificateTrustStore": "Certificate Trust Store",
@@ -590,7 +592,8 @@
         "deActivate": "Deactivate",
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
-        "errorAccessingApi": "Facing an error while accessing the keymanager API."
+        "errorAccessingApi": "Facing an error while accessing the keymanager API.",
+        "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
@@ -603,15 +606,15 @@
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
         "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "Upload Root CA Certificate",
+    "rootTrustList": {
+        "uploadRootCaTrust": "Upload Root CA Certificate",
         "subTitle": "List of Root CA Certificates",
-        "downloadCertificate": "Download"
+        "downloadTrust": "Download"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "Upload Intermediate CA Certificate",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "Upload Intermediate CA Certificate",
         "subTitle": "List of Intermediate CA Certificates",
-        "downloadCertificate": "Download Certificate Chain"
+        "downloadTrust": "Download Certificate Chain"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "View Root CA Certificate Details",
@@ -620,7 +623,7 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "errorWhileGettingRootCertDetails": "While fetching Certificate details, we have encountered with an error",
-        "downloadCertificateChain": "Download Certificate Chain",
+        "downloadTrustChain": "Download Certificate Chain",
         "validTo": "Valid To",
         "certThumbprint": "Certificate Thumbprint"
     },
@@ -1108,7 +1111,7 @@
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
         "KER-PCM-004": "Certificate Dates are not valid.",
         "KER-PCM-005": "Please upload corresponding Root Certificate to proceed further",
-        "KER-KMS-013": "Certificate Parsing Error.signed overrun, bytes = 917",
+        "KER-KMS-013": "Certificate Parsing Error. Upload a valid certificate.",
         "KER-KMS-015": "Upload of certificate will not be allowed to update other domain certificate.",
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",
@@ -1214,6 +1217,7 @@
         "KER-PCM-011": "Invalid Partner Domain",
         "KER-PCM-018": "Invalid Certificate Type",
         "KER-PMS-019": "CA Certificate not found for the given ID.",
-        "KER-PMS-020": "Uploading future-dated certificates is not allowed."
+        "KER-PMS-020": "Uploading future-dated certificates is not allowed.",
+        "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again."
     }
 }

@@ -18,6 +18,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import JSON5 from 'json5';
 
 function CreateOidcClient() {
   const [oidcClientName, setOidcClientName] = useState("");
@@ -267,7 +268,7 @@ function CreateOidcClient() {
       return;
     }
     try {
-      const parsedValue = JSON.parse(value);
+      const parsedValue = JSON5.parse(value);
       // validate the JSON
       if (Object.keys(parsedValue).length === 0) {
         throw new Error(); // Triggers the catch block
@@ -337,7 +338,7 @@ function CreateOidcClient() {
       }
       setDataLoaded(true);
     } catch (err) {
-      if (err.response.status !== 401) {
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err);
       }
       console.log("Error fetching data: ", err);
@@ -520,13 +521,18 @@ function CreateOidcClient() {
                           ))}
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
-                            <button id="add_new_redirect_url" className="text-[#1447b2] font-bold text-xs w-fit" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}>
-                              <button onClick={addNewRedirectUrl} className="text-lg text-center cursor-pointer">+</button>
-                              <button onClick={addNewRedirectUrl} className="cursor-pointer">{t('createOidcClient.addNew')}</button>
-                            </button>
+                            <div
+                              id="add_new_redirect_url"
+                              className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
+                              tabIndex="0"
+                              onKeyDown={(e) => onPressEnterKey(e, addNewRedirectUrl)}
+                              onClick={addNewRedirectUrl}
+                            >
+                              <span className="text-lg text-center">+</span>
+                              <span>{t('createOidcClient.addNew')}</span>
+                            </div>
                           )}
                         </div>
-
                         <div className="flex flex-col w-[48%]">
                           <DropdownComponent
                             fieldName='grantTypes'

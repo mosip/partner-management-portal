@@ -63,7 +63,7 @@ function EditPolicy() {
                 const storedPolicyType = localStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
-                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+                    navigate('/partnermanagement/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
                 if (storedPolicyType === 'DataShare') {
@@ -73,7 +73,7 @@ function EditPolicy() {
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationHeader('editPolicy.dataSharePolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.dataSharePolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/data-share-policies-list');
                 } else if (storedPolicyType === 'Auth') {
                     setTitle('editPolicy.editAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
@@ -81,7 +81,7 @@ function EditPolicy() {
                     setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
                     setConfirmationHeader('editPolicy.authPolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.authPolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/auth-policies-list');
                 }
                 const selectedPolicyId = localStorage.getItem('policyId');
                 if (selectedPolicyId) {
@@ -100,7 +100,7 @@ function EditPolicy() {
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
@@ -162,11 +162,9 @@ function EditPolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
-            if (error.response.status !== 401) {
-                setErrorMsg(t('createPolicy.jsonParseError'));
-                setIsSubmitClicked(false);
-                setDataLoaded(true);
-            }
+            setErrorMsg(t('createPolicy.jsonParseError'));
+            setIsSubmitClicked(false);
+            setDataLoaded(true);
             return;
         }
         let request = createRequest({
@@ -201,7 +199,7 @@ function EditPolicy() {
                 setErrorMsg(t('editPolicy.errorInEditPolicy'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error fetching data: ", err);

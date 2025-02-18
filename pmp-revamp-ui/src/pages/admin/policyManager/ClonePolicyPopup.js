@@ -5,7 +5,7 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import DropdownWithSearchComponent from '../../common/fields/DropdownWithSearchComponent.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails } from '../../../utils/AppUtils.js';
+import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 import closeIcon from "../../../svg/close_icon.svg";
 
@@ -25,6 +25,11 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const changePolicyGroupSelection = (fieldName, selectedValue) => {
@@ -103,10 +108,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                 }
             } catch (err) {
                 console.log("Error fetching data: ", err);
-                if (err.response.status !== 401) {
-                    setDataLoaded(true);
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         } else {
             setDataLoaded(true);
@@ -129,7 +134,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[60%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (

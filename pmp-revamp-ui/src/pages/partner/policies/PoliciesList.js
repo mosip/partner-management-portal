@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL } from '../../../utils/AppUtils';
 import {
   formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
-  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests
+  toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests, setSubmenuRef
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import PoliciesFilter from './PoliciesFilter';
@@ -73,7 +73,7 @@ function PoliciesList() {
         setDataLoaded(true);
       } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(err.toString());
         }
       }
@@ -187,8 +187,8 @@ function PoliciesList() {
                           <tr>
                             {tableHeaders.map((header, index) => {
                               return (
-                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[16%]">
-                                  <div id={`${header.headerNameKey}_header`} className="mx-2 flex gap-x-0 items-center">
+                                <th key={index} className="py-4 px-2 text-sm text-left font-semibold text-[#6F6E6E]">
+                                  <div id={`${header.headerNameKey}_header`} className="flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
                                       <SortingIcon
@@ -217,13 +217,13 @@ function PoliciesList() {
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyId}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{partner.policyName}</td>
                                 <td onClick={() => showViewPolicyDetails(partner)} className="px-2">{formatDate(partner.createdDateTime, 'date')}</td>
-                                <td onClick={() => showViewPolicyDetails(partner)} className="">
-                                  <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2 m-3 text-xs font-semibold rounded-md`}>
+                                <td onClick={() => showViewPolicyDetails(partner)} className="px-2">
+                                  <div className={`${bgOfStatus(partner.status)} flex w-fit py-1.5 px-2  my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(partner.status, t)}
                                   </div>
                                 </td>
                                 <td className="text-center cursor-default">
-                                  <div ref={el => submenuRef.current[index] = el}>
+                                  <div ref={setSubmenuRef(submenuRef, index)}>
                                     <button id={'policy_list_view' + (index + 1)} onClick={() => setViewPolicyId(index === viewPolicyId ? null : index)} className={`font-semibold mb-0.5 text-center cursor-pointer`}>
                                       ...
                                     </button>

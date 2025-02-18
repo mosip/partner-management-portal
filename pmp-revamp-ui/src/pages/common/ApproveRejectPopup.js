@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getPartnerManagerUrl, handleServiceErrors, createRequest } from '../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, createRequest, handleEscapeKey } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
 import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
@@ -19,6 +19,11 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => setErrorMsg("");
@@ -104,7 +109,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[5%] z-50 font-inter cursor-default mx-1 break-normal">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className="bg-white md:w-[24rem] w-[55%] mx-auto rounded-lg shadow-sm h-fit">
                     {!dataLoaded ? (
@@ -115,20 +120,20 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                 {errorMsg && (
                                     <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
-                                <div>
-                                    <div className="flex justify-between px-[1.5rem] my-4 w-full">
-                                        <div className="flex-col space-y-2 break-words w-[96%]">
+                                <>
+                                    <div className="flex justify-between px-[1rem] my-4 w-full">
+                                        <div className="flex-col space-y-2 break-words w-[19.5rem]">
                                             <p className="text-sm font-bold">{title}</p>
                                             {subtitle && (
                                                 <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer mx-1">
+                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer">
                                             <img src={close_icon} alt="close" />
                                         </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
-                                    <div className="px-[1.5rem] py-3 text-center">
+                                    <div className="px-[1.5rem] py-3 text-center break-words">
                                         <p className="text-base font-semibold text-black">{header}</p>
                                         <p className="text-sm text-[#666666] py-3">{description}</p>
                                     </div>
@@ -141,7 +146,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                             {t('approveRejectPopup.approve')}
                                         </button>
                                     </div>
-                                </div>
+                                </>
                             </div>
                         </>
                     )}

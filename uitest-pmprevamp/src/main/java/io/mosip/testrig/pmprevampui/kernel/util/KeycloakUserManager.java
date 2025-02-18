@@ -26,6 +26,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
@@ -33,14 +34,14 @@ import io.mosip.testrig.pmprevampui.utility.TestRunner;
 public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;
 	public static String passwordCred;
-	public static String publicKey = KeycloakUserManager.readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json").toString();
+	public static String publicKeytemp=PmpTestUtil.generateJWKPublicKey();
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
 	public static Properties propsKernel = getproperty(
 			TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
 
-//	public static JSONObject  propsPublicKey = readJsonData(TestRunner.getResourcePath() + "/" + "config/"+"/publicKey.json");
+
 
 	private static Keycloak getKeycloakInstance() {
 		Keycloak key = null;

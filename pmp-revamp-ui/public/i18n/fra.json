@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "Le certificat signé par l'autorité de certification initialement téléchargé a été téléchargé avec succès.",
         "mosipSignedCertificateSuccessMsg": "Certificat signé MOSIP téléchargé avec succès.",
         "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide",
-        "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action."
+        "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action.",
+        "errorWhileFetchingCertificateList": "En raison d'une erreur, nous n'avons pas pu récupérer la liste des certificats. Veuillez réessayer."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
@@ -138,7 +139,7 @@
         "close": "Fermer",
         "submit": "Soumettre",
         "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléchargé avec succès.",
-        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le {{date}}",
+        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le",
         "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
         "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
         "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
@@ -535,7 +536,8 @@
         "errorInFtmList": "Lors de la récupération des détails de la puce FTM, nous avons rencontré une erreur.",
         "ftmId": "Identifiant FTM",
         "selectFtmId": "Sélectionnez l'ID FTM",
-        "searchFtmId": "Rechercher l'identifiant FTM"
+        "searchFtmId": "Rechercher l'identifiant FTM",
+        "errorWhileFetchingFtmList": "En raison d'une erreur, nous n'avons pas pu récupérer les informations de la puce FTM. Veuillez réessayer."
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -570,7 +572,7 @@
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
         "description": "En cliquant sur Confirmer, les détails de votre puce FTM seront désactivés."
     },
-    "certificatesList": {
+    "trustList": {
         "rootCA": "CA racine",
         "intermediateCA": "CA intermédiaire",
         "certificateTrustStore": "Magasin de certificats de confiance",
@@ -595,7 +597,8 @@
         "deActivate": "Désactiver",
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur.",
-        "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés."
+        "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés.",
+        "errorWhileDownloadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Télécharger le certificat de confiance",
@@ -608,15 +611,15 @@
         "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
         "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "Télécharger le certificat d'autorité de certification racine",
+    "rootTrustList": {
+        "uploadRootCaTrust": "Télécharger le certificat d'autorité de certification racine",
         "subTitle": "Liste des certificats d'autorité de certification racine",
-        "downloadCertificate": "Télécharger"
+        "downloadTrust": "Télécharger"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "Télécharger le CA certification intermédiaire",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "Télécharger le CA certification intermédiaire",
         "subTitle": "Liste des certificats CA intermédiaires",
-        "downloadCertificate": "Télécharger la chaîne de certificats"
+        "downloadTrust": "Télécharger la chaîne de certificats"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "Afficher les détails du CA certification racine",
@@ -625,7 +628,7 @@
         "rootCaCertificate": "CA certification racine",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
         "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
-        "downloadCertificateChain": "Télécharger la chaîne de certificats",
+        "downloadTrustChain": "Télécharger la chaîne de certificats",
         "validTo": "Valable jusqu'aue",
         "certThumbprint": "Empreinte numérique du certificat"
     },
@@ -1113,7 +1116,7 @@
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
         "KER-PCM-004": "Les dates du certificat ne sont pas valides.",
         "KER-PCM-005": "Veuillez télécharger le certificat racine correspondant pour continuer",
-        "KER-KMS-013": "Erreur d'analyse du certificat. dépassement de signature, octets = 917",
+        "KER-KMS-013": "Erreur d'analyse du certificat. Téléchargez un certificat valide.",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
@@ -1219,6 +1222,7 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé."
+        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
+        "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez."
     }
 }

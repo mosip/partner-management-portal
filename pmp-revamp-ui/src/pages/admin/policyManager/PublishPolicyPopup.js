@@ -4,7 +4,7 @@ import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyManagerUrl, handleServiceErrors } from '../../../utils/AppUtils.js';
+import { getPolicyManagerUrl, handleServiceErrors, handleEscapeKey } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 
 function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
@@ -21,6 +21,11 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => {
@@ -65,10 +70,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                 setErrorMsg(t('publishPolicyPopup.errorInPublishPolicy'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
-                setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setDataLoaded(true);
             console.log("Error fetching data: ", err);
         }
     };
@@ -82,7 +87,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
         cancelIcon: "!top-4 !mt-[3.25rem]"
     }
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[25rem] w-[50%] h-fit rounded-xl shadow-sm`}>
                     {!dataLoaded && (

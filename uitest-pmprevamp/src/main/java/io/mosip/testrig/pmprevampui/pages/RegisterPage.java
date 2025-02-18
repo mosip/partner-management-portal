@@ -50,6 +50,9 @@ public class RegisterPage extends BasePage {
 	
 	@FindBy(xpath = "//*[@value='FTM_PROVIDER']")
 	private WebElement FtmProvider;
+	
+	@FindBy(xpath = "//span[text()='Please specify phoneNumber']")
+	private WebElement enterPhoneNumberWarningMessage;
 
 	public RegisterPage(WebDriver driver) {
 		super(driver);
@@ -197,8 +200,12 @@ public class RegisterPage extends BasePage {
 		driver.navigate().refresh();
 	}
 
-
 	public void CloseTheTab() {
 		driver.close();
 	}
+	
+	public boolean isPhoneNumberWarningMessageDisplayed() {
+		return isElementDisplayed(enterPhoneNumberWarningMessage);
+	}
+
 }

@@ -90,7 +90,7 @@ function ViewFtmChipDetails() {
                     const errorCode = responseData.errors[0].errorCode;
                     const errorMessage = responseData.errors[0].message;
                     if (errorCode === 'PMS_KKS_001') {
-                        setErrorMsg(t('certificatesList.errorAccessingApi'));
+                        setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
                     } else {
                         setErrorCode(errorCode);
                         setErrorMsg(errorMessage);
@@ -106,7 +106,7 @@ function ViewFtmChipDetails() {
             }
         } catch (err) {
             console.error('Error fetching certificate:', err);
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }
@@ -126,7 +126,7 @@ function ViewFtmChipDetails() {
 
     const showHoverMsg = () => {
         return (
-            <div className={`absolute hidden group-hover:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+            <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
                 {t('partnerCertificatesList.disabledBtnHoverMsg')}
             </div>
         );
@@ -239,9 +239,9 @@ function ViewFtmChipDetails() {
 
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
-                                                <div className="relative group">
+                                                <div className="relative group" tabIndex="0">
                                                     <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                        className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                        className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                         {t('commons.download')}
                                                     </button>
                                                     {ftmDetails.partnerStatus === 'deactivated' && (
@@ -250,17 +250,17 @@ function ViewFtmChipDetails() {
                                                 </div>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                    <div className="relative group">
+                                                <div className="flex justify-between max-640:flex-col max-640:space-y-3">
+                                                    <div className="mx-2" tabIndex="0">
                                                         <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                            className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                            className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                             {t('commons.download')}
                                                         </button>
                                                         {ftmDetails.partnerStatus === 'deactivated' && (
                                                             showHoverMsg()
                                                         )}
                                                     </div>
-                                                    <div className="relative group">
+                                                    <div className="mx-2" tabIndex="0">
                                                         <button id="certificate_reupload_btn" disabled={ftmDetails.partnerStatus === 'deactivated'} onClick={clickOnUpload} className={`h-10 w-28 text-xs p-3 py-2 ${ftmDetails.partnerStatus === 'deactivated' ? 'text-[#6f7070] border-gray-300 bg-white': ftmDetails.isCertificateAvailable ? 'text-tory-blue bg-white border-blue-800' : 'bg-tory-blue text-snow-white'} border font-semibold rounded-md text-center`}>
                                                             {ftmDetails.isCertificateAvailable ? t('partnerCertificatesList.reUpload') : t('partnerCertificatesList.upload')}
                                                         </button>

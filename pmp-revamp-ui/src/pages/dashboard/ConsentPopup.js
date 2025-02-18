@@ -51,7 +51,7 @@ function ConsentPopup() {
                 setErrorMsg(t('consentPopup.consentSaveError'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error: ", err);
@@ -65,7 +65,7 @@ function ConsentPopup() {
     }
 
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter">
+        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-3/5 mx-auto rounded-xl shadow-lg -mt-3`}>
                     {!dataLoaded && (

@@ -16,7 +16,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, escapeKeyHandler } from '../../../utils/AppUtils.js';
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getApproveRejectStatus, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onClickApplyFilter, onPressEnterKey, onResetFilter, resetPageNumber, setPageNumberAndPageSize, updateActiveState, createRequest, setSubmenuRef } from '../../../utils/AppUtils.js';
 import DeviceProviderServicesTab from './DeviceProviderServicesTab.js';
 import AdminSbiListFilter from './AdminSbiListFilter.js';
 import { HttpService } from '../../../services/HttpService.js';
@@ -44,12 +44,12 @@ function AdminSbiList() {
     const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
-    const [showSbiApproveRejectPopUp, setShowSbiApproveRejectPopUp] = useState(false);
+    const [showActiveIndexSbiApproveRejectPopUp, setShowActiveIndexSbiApproveRejectPopUp] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [selectedSbi, setSelectedSbi] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -118,11 +118,11 @@ function AdminSbiList() {
             setFetchData(false);
         } catch (err) {
             console.error('Error fetching data:', err);
-            if (err.response.status !== 401) {
-                setFetchData(false);
-                fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setFetchData(false);
+            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
         }
     }
 
@@ -179,17 +179,17 @@ function AdminSbiList() {
         }
     };
 
-    const approveRejectSbi = (selectedSbi) => {
+    const approveRejectSbi = (selectedSbi, index) => {
         if (selectedSbi.status === 'pending_approval') {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
-            setShowSbiApproveRejectPopUp(true);
+            setShowActiveIndexSbiApproveRejectPopUp(index);
         }
     };
 
     const onClickApproveReject = (responseData, status, selectedSbi) => {
         if (responseData) {
-            setShowSbiApproveRejectPopUp(false);
+            setShowActiveIndexSbiApproveRejectPopUp(null);
             setSelectedSbi({});
             setSbiList((prevList) =>
                 prevList.map(sbi =>
@@ -200,11 +200,11 @@ function AdminSbiList() {
     }
 
     const closeApproveRejectPopup = () => {
-        setShowSbiApproveRejectPopUp(false);
+        setShowActiveIndexSbiApproveRejectPopUp(null);
         setSelectedSbi({});
     };
 
-    const deactivateSbi = (selectedSbi) => {
+    const deactivateSbi = (selectedSbi, index) => {
         if (selectedSbi.status === "approved") {
             const request = createRequest({
                 status: "De-Activate",
@@ -212,14 +212,14 @@ function AdminSbiList() {
             setSelectedSbi(selectedSbi);
             setActionId(-1);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedSbiData) => {
         if (deactivationResponse && !deactivationResponse.isActive) {
             setSelectedSbi({});
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             // Update the specific row in the state with the new status
             setSbiList((prevList) =>
                 prevList.map(sbi =>
@@ -231,7 +231,7 @@ function AdminSbiList() {
 
     const closeDeactivatePopup = () => {
         setSelectedSbi({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     const cancelErrorMsg = () => {
@@ -241,14 +241,6 @@ function AdminSbiList() {
     const styles = {
         loadingDiv: "!py-[20%]",
     }
-
-    useEffect(() => {
-        if (showSbiApproveRejectPopUp) {
-            escapeKeyHandler(closeApproveRejectPopup);
-        } else if (showDeactivatePopup) {
-            escapeKeyHandler(closeDeactivatePopup);
-        }
-    }, [showSbiApproveRejectPopUp, showDeactivatePopup]);
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -287,123 +279,129 @@ function AdminSbiList() {
                                 {expandFilter && (
                                     <AdminSbiListFilter onApplyFilter={onApplyFilter} />
                                 )}
-                                {!tableDataLoaded && <LoadingIcon styleSet={styles}></LoadingIcon>}
-                                {tableDataLoaded && applyFilter && sbiList.length === 0 ?
-                                    <EmptyList tableHeaders={tableHeaders} />
-                                    : (
-                                        <>
-                                            <div className="mx-[1.4rem] overflow-x-scroll">
-                                                <table className="table-fixed">
-                                                    <thead>
-                                                        <tr>
-                                                            {tableHeaders.map((header, index) => {
-                                                                return (
-                                                                    <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                                                        <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                            {t(header.headerNameKey)}
-                                                                            {(header.id !== "action") && (
-                                                                                <SortingIcon
-                                                                                    headerId={header.id}
-                                                                                    sortDescOrder={sortDescOrder}
-                                                                                    sortAscOrder={sortAscOrder}
-                                                                                    order={order}
-                                                                                    activeSortDesc={activeDescIcon}
-                                                                                    activeSortAsc={activeAscIcon}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                    </th>
-                                                                );
-                                                            })}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {sbiList.map((sbi, index) => {
-                                                            return (
-                                                                <tr id={"sbi_list_item" + (index + 1)} key={index}
-                                                                    className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.partnerId}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiId}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date")}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date")}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date")}</td>
-                                                                    <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
-                                                                        <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                                            {getStatusCode(sbi.status, t)}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td className={`text-center px-5`}>
-                                                                        <button onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
-                                                                            <img src={sbi.countOfAssociatedDevices > 0 ? activeLinkedDevices : deactiveLinkedDevices} alt='' />
-                                                                            <p className={`${sbi.countOfAssociatedDevices > 0 ? 'text-tory-blue' : 'text-[#969696]'} px-2`}>{sbi.countOfAssociatedDevices}</p>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td className="text-center cursor-default">
-                                                                        <div ref={(el) => (submenuRef.current[index] = el)}>
-                                                                            <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
-                                                                                ...
-                                                                            </button>
-
-                                                                            {actionId === index && (
-                                                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                    <div role='button' onClick={() => approveRejectSbi(sbi)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi))}>
-                                                                                        <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                                                        <img src={sbi.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
-                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewSbiDetails(sbi)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewSbiDetails(sbi))}>
-                                                                                        <p id="sbi_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
-                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateSbi(sbi)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateSbi(sbi))}>
-                                                                                        <p id="sbi_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${sbi.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                        <img src={sbi.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                    </div>
+                                {!tableDataLoaded ? (
+                                    <LoadingIcon styleSet={styles} />
+                                ) : (
+                                    <>
+                                        {applyFilter && sbiList.length === 0 ?
+                                            <EmptyList tableHeaders={tableHeaders} />
+                                            : (
+                                                <>
+                                                    <div className="mx-[1.4rem] overflow-x-scroll">
+                                                        <table className="table-fixed">
+                                                            <thead>
+                                                                <tr>
+                                                                    {tableHeaders.map((header, index) => {
+                                                                        return (
+                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                    {t(header.headerNameKey)}
+                                                                                    {(header.id !== "action") && (
+                                                                                        <SortingIcon
+                                                                                            headerId={header.id}
+                                                                                            sortDescOrder={sortDescOrder}
+                                                                                            sortAscOrder={sortAscOrder}
+                                                                                            order={order}
+                                                                                            activeSortDesc={activeDescIcon}
+                                                                                            activeSortAsc={activeAscIcon}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
-                                                                            )}
-                                                                            {showSbiApproveRejectPopUp && (
-                                                                                <ApproveRejectPopup
-                                                                                    popupData={{ ...selectedSbi, isSbiRequest: true }}
-                                                                                    closePopUp={closeApproveRejectPopup}
-                                                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedSbi)}
-                                                                                    title={selectedSbi.sbiVersion}
-                                                                                    header={t('sbiApproveRejectPopup.header')}
-                                                                                    description={t('sbiApproveRejectPopup.description')}
-                                                                                />
-                                                                            )}
-                                                                            {showDeactivatePopup && (
-                                                                                <DeactivatePopup
-                                                                                    closePopUp={() => closeDeactivatePopup()}
-                                                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
-                                                                                    popupData={{ ...selectedSbi, isDeactivateSbi: true }}
-                                                                                    request={deactivateRequest} headerMsg='deactivateSbi.headerMsg'
-                                                                                    descriptionMsg='deactivateSbi.descriptionForAdmin'
-                                                                                    headerKeyName={selectedSbi.sbiVersion}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                    </td>
+                                                                            </th>
+                                                                        );
+                                                                    })}
                                                                 </tr>
-                                                            );
-                                                        })}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <Pagination
-                                                dataListLength={totalRecords}
-                                                selectedRecordsPerPage={selectedRecordsPerPage}
-                                                setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                setFirstIndex={setFirstIndex}
-                                                isServerSideFilter={true}
-                                                getPaginationValues={getPaginationValues}
-                                            />
-                                        </>
-                                    )
-                                }
+                                                            </thead>
+                                                            <tbody>
+                                                                {sbiList.map((sbi, index) => {
+                                                                    return (
+                                                                        <tr id={"sbi_list_item" + (index + 1)} key={index}
+                                                                            className={`border-t border-[#E5EBFA] ${sbi.status !== 'deactivated' ? 'cursor-pointer text-[#191919]' : 'cursor-default text-[#969696]'} text-[0.8rem] text-[#191919] font-semibold break-words`}>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.partnerId}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.orgName}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiId}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{sbi.sbiVersion}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiCreatedDateTime, "date")}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.sbiExpiryDateTime, "date")}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date")}</td>
+                                                                            <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
+                                                                                <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                    {getStatusCode(sbi.status, t)}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td className={`text-center px-5`}>
+                                                                                <button onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
+                                                                                    <img src={sbi.countOfAssociatedDevices > 0 ? activeLinkedDevices : deactiveLinkedDevices} alt='' />
+                                                                                    <p className={`${sbi.countOfAssociatedDevices > 0 ? 'text-tory-blue' : 'text-[#969696]'} px-2`}>{sbi.countOfAssociatedDevices}</p>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td className="text-center cursor-default">
+                                                                                <div ref={setSubmenuRef(submenuRef, index)}>
+                                                                                    <button id={"sbi_list_action" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
+                                                                                        ...
+                                                                                    </button>
+
+                                                                                    {actionId === index && (
+                                                                                        <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                                                                            <div role='button' onClick={() => approveRejectSbi(sbi, index)} className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'pending_approval' ? 'cursor-pointer' : 'cursor-default'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectSbi(sbi, index))}>
+                                                                                                <p id="ftm_list_approve_reject_option" className={`py-1.5 px-4 ${sbi.status === 'pending_approval' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                                                                <img src={sbi.status === 'pending_approval' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewSbiDetails(sbi)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewSbiDetails(sbi))}>
+                                                                                                <p id="sbi_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${sbi.status === 'approved' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateSbi(sbi, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateSbi(sbi, index))}>
+                                                                                                <p id="sbi_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${sbi.status === 'approved' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={sbi.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                    {showActiveIndexSbiApproveRejectPopUp === index && (
+                                                                                        <ApproveRejectPopup
+                                                                                            popupData={{ ...selectedSbi, isSbiRequest: true }}
+                                                                                            closePopUp={closeApproveRejectPopup}
+                                                                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedSbi)}
+                                                                                            title={selectedSbi.sbiVersion}
+                                                                                            header={t('sbiApproveRejectPopup.header')}
+                                                                                            description={t('sbiApproveRejectPopup.description')}
+                                                                                        />
+                                                                                    )}
+                                                                                    {showActiveIndexDeactivatePopup === index && (
+                                                                                        <DeactivatePopup
+                                                                                            closePopUp={() => closeDeactivatePopup()}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedSbi)}
+                                                                                            popupData={{ ...selectedSbi, isDeactivateSbi: true }}
+                                                                                            request={deactivateRequest} headerMsg='deactivateSbi.headerMsg'
+                                                                                            descriptionMsg='deactivateSbi.descriptionForAdmin'
+                                                                                            headerKeyName={selectedSbi.sbiVersion}
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    );
+                                                                })}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </>
+                                            )
+                                        }
+                                    </>
+                                )}
+                                <Pagination
+                                    dataListLength={totalRecords}
+                                    selectedRecordsPerPage={selectedRecordsPerPage}
+                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                    setFirstIndex={setFirstIndex}
+                                    isServerSideFilter={true}
+                                    getPaginationValues={getPaginationValues}
+                                />
                             </div>
                         )}
                     </div>

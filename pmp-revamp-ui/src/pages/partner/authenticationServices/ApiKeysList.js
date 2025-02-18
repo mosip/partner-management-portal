@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
-    onPressEnterKey
+    onPressEnterKey, setSubmenuRef
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -40,7 +40,7 @@ function ApiKeysList() {
     const [filteredApiKeysList, setFilteredApiKeysList] = useState([]);
     const [firstIndex, setFirstIndex] = useState(0);
     const [viewApiKeyId, setViewApiKeyId] = useState(-1);
-    const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const defaultFilterQuery = {
         partnerId: "",
@@ -74,7 +74,7 @@ function ApiKeysList() {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
@@ -112,7 +112,7 @@ function ApiKeysList() {
         navigate('/partnermanagement/authentication-services/view-api-key-details')
     };
 
-    const onClickDeactivate = (selectedApiKeyData) => {
+    const onClickDeactivate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
                 label: selectedApiKeyData.apiKeyLabel,
@@ -121,13 +121,13 @@ function ApiKeysList() {
             setViewApiKeyId(-1);
             setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
-            setShowDeactivatePopup(true);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
     const closeDeactivatePopup = () => {
         setSelectedApiKey({});
-        setShowDeactivatePopup(false);
+        setShowActiveIndexDeactivatePopup(null);
     };
 
     //This part is related to Filter
@@ -164,7 +164,7 @@ function ApiKeysList() {
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
-            setShowDeactivatePopup(false);
+            setShowActiveIndexDeactivatePopup(null);
             setSelectedApiKey({});
             // Update the specific row in the state with the new status
             setFilteredApiKeysList((prevList) =>
@@ -273,7 +273,7 @@ function ApiKeysList() {
                                                                 </td>
 
                                                                 <td className="px-2 mx-2 cursor-default">
-                                                                    <div className="flex items-center justify-center relative" ref={el => submenuRef.current[index] = el}>
+                                                                    <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
                                                                         <button id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>
                                                                             <p> ... </p>
                                                                         </button>
@@ -284,13 +284,13 @@ function ApiKeysList() {
                                                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                 </div>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <div role='button' id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${apiKey.status === "activated" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                <div role='button' id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey, index)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${apiKey.status === "activated" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
                                                                                     <img src={apiKey.status === "activated" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                 </div>
                                                                             </div>
                                                                         )}
-                                                                        {showDeactivatePopup && (
+                                                                        {showActiveIndexDeactivatePopup === index && (
                                                                             <DeactivatePopup
                                                                                 closePopUp={closeDeactivatePopup}
                                                                                 onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}

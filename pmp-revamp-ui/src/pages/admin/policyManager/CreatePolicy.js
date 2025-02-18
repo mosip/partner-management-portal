@@ -105,7 +105,7 @@ function CreatePolicy() {
                 const storedPolicyType = localStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
-                    navigate('/partnermanagement/admin/policy-manager/policy-group-list')
+                    navigate('/partnermanagement/policy-manager/policy-group-list')
                 }
                 setPolicyType(storedPolicyType);
                 setConfirmationHeader('createPolicy.policyConfirmationHeader');
@@ -115,19 +115,19 @@ function CreatePolicy() {
                     setPolicyNamePlaceHolderKey('createPolicy.enterDataSharePolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.dataSharePolicyDescription');
                     setConfirmationMessage('createPolicy.dataSharePolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/data-share-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/data-share-policies-list');
                 } else if (storedPolicyType === 'Auth') {
                     setTitle('createPolicy.createAuthPolicyTitle');
                     setSubTitle('policiesList.listOfAuthPolicies');
                     setPolicyNamePlaceHolderKey('createPolicy.enterAuthPolicyName');
                     setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
                     setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
-                    setBackLink('/partnermanagement/admin/policy-manager/auth-policies-list');
+                    setBackLink('/partnermanagement/policy-manager/auth-policies-list');
                 }
                 await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {
                 console.error('Error fetching data:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
             }
@@ -157,11 +157,9 @@ function CreatePolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
-            if (error.response.status !== 401) {
-                setErrorMsg(t('createPolicy.jsonParseError'));
-                setIsSubmitClicked(false);
-                setDataLoaded(true);
-            }
+            setErrorMsg(t('createPolicy.jsonParseError'));
+            setIsSubmitClicked(false);
+            setDataLoaded(true);
             return;
         }
         let request = createRequest({
@@ -196,7 +194,7 @@ function CreatePolicy() {
                 setErrorMsg(t('createPolicy.errorInCreatePolicy'));
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
             console.log("Error fetching data: ", err);
@@ -365,7 +363,7 @@ function CreatePolicy() {
                                                             ref={policyDataRef}
                                                             value={policyData}
                                                             onChange={(e) => handlePolicyDataChange(e)}
-                                                            className={`w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue ${!policyData ? 'bg-gray-100' : 'bg-white'}  leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap`}
+                                                            className={`w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue ${!policyData ? 'bg-gray-100 resize-none' : 'bg-white resize'}  leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap`}
                                                             placeholder={t('createPolicy.policyDataDesc')}
                                                             disabled={!policyData}
                                                         />
@@ -381,7 +379,7 @@ function CreatePolicy() {
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="create_policy_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="create_policy_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()}
-                                            className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}
+                                            className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 min-w-fit px-2 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}
                                             tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => clickOnSubmit())}
                                         >
                                             {t('createPolicy.saveAsDraft')}

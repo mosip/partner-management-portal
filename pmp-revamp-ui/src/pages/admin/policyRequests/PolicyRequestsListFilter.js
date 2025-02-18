@@ -70,7 +70,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         return [];
       }
     } catch (err) {
-      if (err.response.status !== 401) {
+      if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.message || t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
       }
       console.error("Error fetching partner type data: ", err);

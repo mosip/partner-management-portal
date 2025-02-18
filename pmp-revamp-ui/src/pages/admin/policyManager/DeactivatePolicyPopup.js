@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { getPolicyManagerUrl, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, isLangRTL, handleEscapeKey } from '../../../utils/AppUtils';
 import errorIcon from '../../../svg/error_icon.svg';
 import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -26,6 +26,11 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopUp());
+        return removeListener;
     }, []);
 
     const cancelErrorMsg = () => {
@@ -88,7 +93,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                 }
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }
@@ -146,7 +151,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }
         } catch (err) {
-            if (err.response.status !== 401) {
+            if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
         }
@@ -167,7 +172,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[4%] z-50 font-inter cursor-default">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px]  ${showAlertErrorMessage ? 'w-[22rem] h-[30rem]' : 'w-[55%]'} mx-auto rounded-lg shadow-sm h-fit`}>
                     {!dataLoaded && (

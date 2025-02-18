@@ -321,12 +321,12 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
         if (!alreadyAdded) {
             if (fieldName === "partnerType") {
                 dataArr.push({
-                    fieldCode: getPartnerTypeDescription(item[fieldName], t),
+                    fieldCode: getPartnerTypeDescription(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
                 dataArr.push({
-                    fieldCode: getStatusCode(item[fieldName], t),
+                    fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
             } else {
@@ -452,7 +452,7 @@ export const getCertificate = async (HttpService, partnerId, setErrorCode, setEr
             } else if (response.data.errors && response.data.errors.length > 0) {
                 const errorCode = response.data.errors[0].errorCode;
                 if (errorCode === 'PMS_KKS_001') {
-                    setErrorMsg(t('certificatesList.errorAccessingApi'));
+                    setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -483,7 +483,7 @@ export const downloadFile = (data, fileName, fileType) => {
 
 export const resetPageNumber = (totalRecords, pageNo, pageSize, resetPageNo) => {
     const totalNumberOfPages = Math.ceil(totalRecords / pageSize);
-    const effectivePageNo = pageNo > totalNumberOfPages || resetPageNo ? 0 : pageNo;
+    const effectivePageNo = pageNo >= totalNumberOfPages || resetPageNo ? 0 : pageNo;
     return effectivePageNo;
 };
 
@@ -528,7 +528,7 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         }
     } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
     }
@@ -554,7 +554,7 @@ export const getPolicyDetails = async (HttpService, policyId, setErrorCode, setE
         return null;
     } catch (err) {
         console.error('Error fetching data:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
         return null;
@@ -747,7 +747,7 @@ export const fetchDeviceSubTypeDropdownData = async (type, setErrorCode, setErro
     }
 }
 
-export const downloadCaCertificate = async (HttpService, certificateId, certType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
+export const downloadCaTrust = async (HttpService, certificateId, trustType, setErrorCode, setErrorMsg, errorMsg, setSuccessMsg, t) => {
     try {
         const response = await HttpService.get(getPartnerManagerUrl(`/trust-chain-certificates/${certificateId}/certificateFile`, process.env.NODE_ENV));
         if (response) {
@@ -758,11 +758,11 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement("a");
                 link.href = url;
-                link.download = (certType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
+                link.download = (trustType === 'root' ? "root-certificate.p7b" : "intermediate-certificate.p7b");
 
                 document.body.appendChild(link);
                 link.click();
-                setSuccessMsg(certType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
+                setSuccessMsg(trustType === 'root' ? t('uploadTrustCertificate.downloadRootCertSuccessMsg') : t('uploadTrustCertificate.downloadIntermediateCertSuccessMsg'));
 
                 // CleanUP Code
                 window.URL.revokeObjectURL(url);
@@ -772,13 +772,13 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
                 handleKeymanagerErrors(responseData, setErrorCode, setErrorMsg, t);
             }
         } else {
-            setErrorMsg(t('viewCertificateDetails.errorIndownloadCertificate'));
+            setErrorMsg(t('viewCertificateDetails.errorIndownloadTrust'));
             console.log(errorMsg);
 
         }
     } catch (err) {
         console.error('Error fetching certificate Details:', err);
-        if (err.response.status !== 401) {
+        if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
     }
@@ -786,18 +786,18 @@ export const downloadCaCertificate = async (HttpService, certificateId, certType
 
 
 
-export const escapeKeyHandler = (closePopup) => {
-    // Define the Escape key handler
-    const handleEscape = (e) => {
-    if (e.key === 'Escape') {
-        closePopup()
-        // Cleanup the event listener
-        return window.removeEventListener('keydown', handleEscape)
-    }
+export const handleEscapeKey = (closePopup) => {
+    const handleEscape = (event) => {
+        if (event.key === 'Escape') {
+            closePopup();
+        }
     };
-    
-    // Add event listener when any handler condition is true
-    window.addEventListener('keydown', handleEscape);
+
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+        document.removeEventListener('keydown', handleEscape);
+    };
 };
 
 export const formatPublicKey = (publicKeyString) => {
@@ -815,7 +815,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('certificatesList.errorAccessingApi'));
+          setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
         } else {
           setErrorCode(errorCode);
           setErrorMsg(errorMessage);
@@ -823,3 +823,7 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         console.error('Error:', errorMessage);
     }
   }
+
+  export const setSubmenuRef = (refArray, index) => (el) => {
+    if (el) refArray.current[index] = el;
+  };

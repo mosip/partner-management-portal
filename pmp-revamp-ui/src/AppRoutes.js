@@ -46,9 +46,9 @@ import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
 import LinkedDevicesList from './pages/admin/deviceProviderServices/LinkedDevicesList.js';
 import ViewAdminSbiDetails from './pages/admin/deviceProviderServices/ViewAdminSbiDetails.js';
 import ViewAdminDeviceDetails from './pages/admin/deviceProviderServices/ViewAdminDeviceDetails.js';
-import RootCertificatesList from './pages/admin/certificates/RootCertificatesList.js';
-import IntermediateCertificatesList from './pages/admin/certificates/IntermediateCertificatesList.js';
-import ViewCertificateDetails from './pages/admin/certificates/ViewCertificateDetails.js';
+import RootTrustList from './pages/admin/certificates/RootTrustList.js';
+import IntermediateTrustList from './pages/admin/certificates/IntermediateTrustList.js';
+import ViewTrustDetails from './pages/admin/certificates/ViewTrustDetails.js';
 import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.js';
 
 function AppRoutes() {
@@ -152,19 +152,19 @@ function AppRoutes() {
         },
         {
           path: 'admin/certificates/root-ca-certificate-list',
-          element: <GuardedRoute><MainLayout><RootCertificatesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><RootTrustList /></MainLayout></GuardedRoute>
         },  
         {
           path: 'admin/certificates/view-root-ca-certificate-details',
-          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/intermediate-ca-certificate-list',
-          element: <GuardedRoute><MainLayout><IntermediateCertificatesList /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><IntermediateTrustList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/view-intermediate-ca-certificate-details',
-          element: <GuardedRoute><MainLayout><ViewCertificateDetails /></MainLayout></GuardedRoute>
+          element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/certificates/upload-trust-certificate',
@@ -179,47 +179,47 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-policy-group',
+          path: 'policy-manager/create-policy-group',
           element: <GuardedRoute><MainLayout><CreatePolicyGroup /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/policy-group-list',
+          path: 'policy-manager/policy-group-list',
           element: <GuardedRoute><MainLayout><PolicyGroupList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-policy-group-details',
+          path: 'policy-manager/view-policy-group-details',
           element: <GuardedRoute><MainLayout><ViewPolicyGroupDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/auth-policies-list',
+          path: 'policy-manager/auth-policies-list',
           element: <GuardedRoute><MainLayout><AuthPoliciesList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/data-share-policies-list',
+          path: 'policy-manager/data-share-policies-list',
           element: <GuardedRoute><MainLayout><DataSharePoliciesList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-auth-policy',
+          path: 'policy-manager/create-auth-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/create-data-share-policy',
+          path: 'policy-manager/create-data-share-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-auth-policy',
+          path: 'policy-manager/view-auth-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/edit-auth-policy',
+          path: 'policy-manager/edit-auth-policy',
           element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/view-data-share-policy',
+          path: 'policy-manager/view-data-share-policy',
           element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/policy-manager/edit-data-share-policy',
+          path: 'policy-manager/edit-data-share-policy',
           element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {

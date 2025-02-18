@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../../services/HttpService";
-import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest } from '../../../utils/AppUtils';
+import { isLangRTL, formatDate, getPartnerTypeDescription, getPartnerManagerUrl, getPartnerDomainType, createRequest, handleEscapeKey } from '../../../utils/AppUtils';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import ErrorMessage from "../../common/ErrorMessage";
@@ -35,6 +35,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
         return () => {
             document.body.style.overflow = "auto";
         };
+    }, []);
+
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closePopup(true, 'cancel'));
+        return removeListener;
     }, []);
 
     const clickOnCancel = () => {
@@ -76,7 +81,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         const errorMessage = response.data.errors[0].message;
                         setUploadFailure(true);
                         if (errorCode === 'PMS_KKS_001') {
-                            setErrorMsg(t('certificatesList.errorAccessingApi'));
+                            setErrorMsg(t('uploadCertificate.errorWhileUploadingCertificate'));
                         } else {
                             setErrorCode(errorCode);
                             setErrorMsg(errorMessage);
@@ -95,7 +100,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                 }
                 setDataLoaded(true);
             } catch (err) {
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setUploadFailure(true);
                     setErrorMsg(err.toString());
                 }
@@ -204,7 +209,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[30%] z-50 !mx-0">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 !mx-0 break-words">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white break-normal md:w-[25rem] w-[60%] mx-auto ${popupData.isCertificateAvailable ? 'min-h-[28rem]' : 'min-h-[27rem]'} rounded-lg shadow-lg h-fit`}>
                     {!dataLoaded && (
@@ -239,7 +244,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 value={partnerDomainType} disabled />
                                         </div>
                                     </form>
-                                    <div className="flex items-center justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center cursor-pointer relative">
+                                    <div className={`flex items-center p-2 justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center  ${uploadSuccess ? 'pointer-events-none' : 'cursor-pointer'} relative`}>
                                         {uploading && (
                                             <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
                                                 <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin fill-blue-800" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -272,25 +277,30 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                             </div>
                                         )}
                                         {!uploading && fileName && (
-                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
+                                            <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1`}>
                                                 <label
                                                     type="input"
                                                     htmlFor="fileInput"
-                                                    className="flex flex-col items-center justify-center cursor-pointer"
+                                                    className="flex flex-col items-center justify-center"
                                                 >
                                                     <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 </label>
-                                                <h5 className="text-charcoal-gray text-sm font-semibold">
+                                                <h5 className="text-charcoal-gray text-sm font-semibold break-all">
                                                     {fileName}
                                                 </h5>
-                                                <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
-                                                    <p> {t('uploadCertificate.remove')} </p>
-                                                </button>
+                                                {!uploadSuccess && (
+                                                    <button id='remove_certificate_btn' className="text-sm font-semibold text-tory-blue" onClick={removeUpload}>
+                                                        <p>{t('uploadCertificate.remove')}</p>
+                                                    </button>
+                                                )}
                                             </div>
                                         )}
                                     </div>
                                     {popupData.isCertificateAvailable && !removeLastUploadDate && (
-                                        <p className="text-sm text-gray-800 text-center mt-1">{t('uploadCertificate.lastcertificateUploadDate', { date: formattedDate })}</p>
+                                       <p className="text-sm text-gray-800 text-center mt-1">
+                                       {t('uploadCertificate.lastcertificateUploadDate')}{' '}
+                                       <span className="whitespace-nowrap">{formattedDate}</span>
+                                     </p>
                                     )}
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>

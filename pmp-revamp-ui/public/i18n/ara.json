@@ -122,7 +122,8 @@
         "originalCertificateSuccessMsg": "تم تنزيل الشهادة الموقعة من CA التي تم تحميلها في الأصل بنجاح.",
         "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
         "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
-        "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'"
+        "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'",
+        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -138,7 +139,7 @@
         "close": "يغلق",
         "submit": "يُقدِّم",
         "successMsg": "تم تحميل شهادة الشريك لـ {{partnerType}} بنجاح.",
-        "lastcertificateUploadDate": "تم تحميل آخر شهادة في {{date}}",
+        "lastcertificateUploadDate": "تم تحميل آخر شهادة في",
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
         "errorWhileUploadingCertificate": "بسبب حدوث خطأ، لم نتمكن من تحميل الشهادة. يرجى المحاولة مرة أخرى.",
@@ -535,7 +536,8 @@
         "errorInFtmList": "أثناء جلب تفاصيل شريحة FTM، واجهنا خطأً.",
         "ftmId": "معرف FTM",
         "selectFtmId": "حدد معرف FTM",
-        "searchFtmId": "البحث عن معرف FTM"
+        "searchFtmId": "البحث عن معرف FTM",
+        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -570,7 +572,7 @@
         "headerMsg": "هل تريد إلغاء تنشيط شريحة FTM؟",
         "description": "عند النقر فوق تأكيد، سيتم إلغاء تنشيط تفاصيل شريحة FTM الخاصة بك."
     },
-    "certificatesList": {
+    "trustList": {
         "rootCA": "CA جذر",
         "intermediateCA": "CA متوسط",
         "certificateTrustStore": "مخزن شهادات الثقة",
@@ -595,7 +597,8 @@
         "deActivate": "إلغاء التنشيط",
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً.",
-        "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح."
+        "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح.",
+        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "شرفع هادة الثقة",
@@ -608,15 +611,15 @@
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة الجذر CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة شهادات الثقة لشهادة CA الوسيطة المحددة بنجاح."
     },
-    "rootCertificateList": {
-        "uploadRootCaCertificate": "تحميل شهادة CA الجذرية",
+    "rootTrustList": {
+        "uploadRootCaTrust": "تحميل شهادة CA الجذرية",
         "subTitle": "قائمة شهادات CA الجذرية",
-        "downloadCertificate": "تحميل"
+        "downloadTrust": "تحميل"
     },
-    "intermediateCertificateList": {
-        "uploadIntermediateCaCertificate": "تحميل شهادة CA المتوسطة",
+    "intermediateTrustList": {
+        "uploadIntermediateCaTrust": "تحميل شهادة CA المتوسطة",
         "subTitle": "قائمة شهادات CA المتوسطة",
-        "downloadCertificate": "تنزيل سلسلة الشهادات"
+        "downloadTrust": "تنزيل سلسلة الشهادات"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "عرض تفاصيل شهادة CA الجذر",
@@ -625,7 +628,7 @@
         "rootCaCertificate": "شهادة المرجع المصدق الجذر",
         "intermediateCaCertificate": "شهادة المحاسب القانوني المتوسط",
         "errorWhileGettingRootCertDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
-        "downloadCertificateChain": "تنزيل سلسلة الشهادات",
+        "downloadTrustChain": "تنزيل سلسلة الشهادات",
         "validTo": "صالح ل",
         "certThumbprint": "شهادة بصمة الابهام"
     },
@@ -1113,7 +1116,7 @@
         "KER-PCM-003": "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى",
         "KER-PCM-004": "تواريخ الشهادة غير صالحة.",
         "KER-PCM-005": "يرجى تحميل شهادة الجذر المقابلة للمتابعة",
-        "KER-KMS-013": "خطأ في تحليل الشهادة. تم تجاوز التجاوز، البايتات = 917",
+        "KER-KMS-013": "خطأ في تحليل الشهادة. قم بتحميل شهادة صالحة.",
         "KER-KMS-015": "لن يُسمح بتحميل الشهادة لتحديث شهادة المجال الأخرى.",
         "PMS_AUT_001": "لم يتم العثور على جهاز تسجيل رمز النوع الفرعي للجهاز المسجل في قائمة أنواع USB",
         "PMS_PRT_053": "هذه السياسة معلقة بالفعل للموافقة عليها مقابل معرف الشريك الخاص بك.",
@@ -1219,6 +1222,7 @@
         "KER-PCM-011": "مجال الشريك غير صالح",
         "KER-PCM-018": "نوع الشهادة غير صالح",
         "KER-PMS-019": "لم يتم العثور على شهادة CA للمعرف المحدد.",
-        "KER-PMS-020": "لا يُسمح بتحميل شهادات مؤرخة في المستقبل."
+        "KER-PMS-020": "لا يُسمح بتحميل شهادات مؤرخة في المستقبل.",
+        "KER-CRY-003": "شهادة غير صالحة: من المحتمل تلف الملف أو التلاعب به أو التنسيق غير المدعوم. تأكد من ترميز Base64 بشكل صحيح وحاول مرة أخرى."
     }
 }

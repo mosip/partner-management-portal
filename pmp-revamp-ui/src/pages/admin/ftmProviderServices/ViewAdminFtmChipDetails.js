@@ -57,7 +57,7 @@ function ViewAdminFtmChipDetails() {
                 if (response.data.errors && response.data.errors.length > 0) {
                     const errorCode = response.data.errors[0].errorCode;
                     if (errorCode === 'PMS_KKS_001') {
-                        setErrorMsg(t('certificatesList.errorAccessingApi'));
+                        setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
                     } else {
                         handleServiceErrors(response.data, setErrorCode, setErrorMsg);
                     }
@@ -66,7 +66,7 @@ function ViewAdminFtmChipDetails() {
                 }
             } catch (err) {
                 console.error('Error fetching certificate details:', err);
-                if (err.response.status !== 401) {
+                if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.message || t('viewAdminFtmDetails.errorWhileGettingFtmDetails'));
                 }
             }
