@@ -512,7 +512,14 @@ function Dashboard() {
                       </p>
                     </div>
                     <CountWithHover
-                      count={sbiPendingApprovalRequestCount && devicePendingApprovalRequestCount ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}` : null}
+                      count={
+                        sbiPendingApprovalRequestCount !== null &&
+                        sbiPendingApprovalRequestCount !== undefined &&
+                        devicePendingApprovalRequestCount !== null &&
+                        devicePendingApprovalRequestCount !== undefined
+                          ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}`
+                          : null
+                      }
                       descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
                       descriptionParams={{
                         sbiPendingApprovalRequestCount,

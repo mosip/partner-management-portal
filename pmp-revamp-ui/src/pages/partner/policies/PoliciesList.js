@@ -187,7 +187,7 @@ function PoliciesList() {
                           <tr>
                             {tableHeaders.map((header, index) => {
                               return (
-                                <th key={index} className="py-4 px-2 text-sm text-left font-semibold text-[#6F6E6E]">
+                                <th key={index} className="py-4 px-2 text-sm text-left font-semibold text-[#6F6E6E] w-[15%]">
                                   <div id={`${header.headerNameKey}_header`} className="flex gap-x-0 items-center">
                                     {t(header.headerNameKey)}
                                     {header.id !== "action" && (
