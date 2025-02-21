@@ -4,11 +4,15 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
+import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmprevampui.pages.ApiKeyPage;
 import io.mosip.testrig.pmprevampui.pages.BasePage;
 import io.mosip.testrig.pmprevampui.pages.DashboardPage;
 import io.mosip.testrig.pmprevampui.pages.FtmPage;
 import io.mosip.testrig.pmprevampui.pages.LoginPage;
+import io.mosip.testrig.pmprevampui.pages.OidcClientPage;
 import io.mosip.testrig.pmprevampui.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmprevampui.pages.PoliciesPage;
 import io.mosip.testrig.pmprevampui.pages.RegisterPage;
 import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
@@ -16,7 +20,7 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 public class FTMDeviceTest extends BaseClass {
 	
 	
-	@Test(priority = 1)
+	@Test(priority = 19)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -94,7 +98,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		
 		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmButton();
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		
 		ftmPage.clickOnAddFtmPartnerIdForNoCert();
 		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
@@ -121,7 +125,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnBlockMesssageProceed();
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
 		
-		ftmPage.clickOnAddFtmButton();
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.EnterInAddFtmMakeBox(data);
 		ftmPage.EnterInAddFtmModelBox(data);
 		
@@ -131,25 +135,42 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isProceedButtonDisplayed);	
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 20)
 	public void registerNewUserForFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-		dashboardpage.clickOnCheckbox();
-
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardpage.clickOnProceedButton();
+//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+//		dashboardpage.clickOnCheckbox();
+//
+//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+//		dashboardpage.clickOnProceedButton();
 		
 		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardpage.clickOnRootCertificateUploadButton();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleHomeButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleButtonButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		
+		assertTrue(partnerCertificatePage.isAdminCertUploadCancelButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateTextDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerPageSubTitleTextDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadBoxHeaderTextDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(), GlobalConstants.isSubmitButtonEnabled);
+		
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		
+		assertTrue(partnerCertificatePage.isFtmCertUploadSuccessMessageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isGoBackButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isConfirmationHomeButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		
 		partnerCertificatePage.ClickOnGoBackButton();
 		dashboardpage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
@@ -215,7 +236,7 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
 		partnerCertificatePage.certifiCateUploadCancelButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
@@ -235,7 +256,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
 		partnerCertificatePage.uploadCertificateInvalidCert();
@@ -245,239 +266,293 @@ public class FTMDeviceTest extends BaseClass {
 	}
 	
 	
-	@Test(priority = 3)
-	public void AddFtm() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//	@Test(priority = 21)
+//	public void AddFtm() throws InterruptedException {
+//		DashboardPage dashboardpage = new DashboardPage(driver);
+//		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
+//		RegisterPage registerPage = new RegisterPage(driver);
+//		FtmPage ftmPage = new FtmPage(driver);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-ftm");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		
+//		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
+//		partnerCertificatePage.clickOnFtmChipProviderCard();
+//		
+//		assertTrue(ftmPage.isPartnerIdCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isMakeCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isModelCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isCreatedDateCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.iscertTimeofUploadCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isCertExpiryCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isCertExpiryStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		assertTrue(ftmPage.isActionCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+//		
+//		
+//		ftmPage.clickOnAddFtmButtonWioutRecord();
+//		
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data);
+//		ftmPage.EnterInAddFtmModelBox(data);
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		ftmPage.clickOnConfirmationCustomButton();
+//		ftmPage.uploadCertificateConfrmationForFtm();
+//		ftmPage.clickOnCertificateUploadSubmitButton();
+//		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//		partnerCertificatePage.clickOncertificateUploadCloseButton();
+//		
+//		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
+//		ftmPage.clickOnFtmListAction1Button();
+//		ftmPage.clickOnFtmListViewButton();
+//		
+//		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+//		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextFtmChipProviderDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateValueDisplayed);
+//		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
+//		assertTrue(ftmPage.isFtmViewBackButtonDisplayed(), GlobalConstants.isBackButton);
+//		
+//		ftmPage.clickOnFtmViewBackButton();
+//		ftmPage.clickOnFilterButton();
+//		
+//		ftmPage.clickOnFtmStatusFilter();
+//		ftmPage.clickOnFtmStatusFilterOption1();
+//		
+//		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName(userid);
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		dashboardpage.clickOnFTMChipTab();
+//		ftmPage.clickOnFilterButton();
+//		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
+//		
+//		assertTrue(ftmPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
+//		assertTrue(ftmPage.isListofFtmChipDetailsDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+//		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+//
+//		assertTrue(ftmPage.isPartneridFilterDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
+//		assertTrue(ftmPage.isOrgNameFilterDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
+////		assertTrue(ftmPage.isFtmIdFilterDisplayed(), GlobalConstants.isFtmTextBoxDisplayed);
+//		assertTrue(ftmPage.isMakeFilterDisplayed(), GlobalConstants.isMakeTextBoxDisplayed);
+//		assertTrue(ftmPage.isModelFilterDisplayed(), GlobalConstants.isModelTextBoxDisplayed);
+//		assertTrue(ftmPage.isStatusFilterDisplayed(), GlobalConstants.isStatusDisplayed);
+//		
+//		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+//		ftmPage.enterPartnerIdFilterBox("pmpui-ftm");
+//		ftmPage.SelectValueFromStatusFilter();
+//		
+//		ftmPage.clickOnApplyFilterButton();
+//		
+//		ftmPage.clickOnFtmListActionMenuEllipsisButton();
+//		ftmPage.clickOnFtmListApproveRejectOption();
+//		
+//		ftmPage.clickOnApproveButton();
+//		ftmPage.clickOnApprovedButton();
+//		
+//		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+//		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
+////		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextFtmChipProviderDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+////		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
+////		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateValueDisplayed);
+//		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
+//		assertTrue(ftmPage.isFtmViewBackButtonDisplayed(), GlobalConstants.isBackButton);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-ftm");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		
+//		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
+//		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
+//		ftmPage.clickOnAddFtmChipButton();
+//		
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data+"1");
+//		ftmPage.EnterInAddFtmModelBox(data+"1");
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		ftmPage.clickOnConfirmationCustomButton();
+//		ftmPage.uploadCertificateConfrmationForFtm();
+//		ftmPage.clickOnCertificateUploadSubmitButton();
+//		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//		partnerCertificatePage.clickOncertificateUploadCloseButton();
+//		
+//		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
+//		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//		
+//		ftmPage.clickOnStatusAscIcon();
+//		assertTrue(partnerCertificatePage.VerifyTheStatusWithAsendingOrder(), GlobalConstants.isApproveTextDisplayed);
+//		
+//		ftmPage.clickOnStatusDescIcon();
+//		assertTrue(partnerCertificatePage.VerifyTheStatusWithDesendingOrder(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//
+//		ftmPage.clickOnAddFtmChipButton();
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data+"1");
+//		ftmPage.EnterInAddFtmModelBox(data+"1");
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		assertTrue(ftmPage.isDublicateFtmChipErrorMessageDisplayed(), GlobalConstants.isDublicateFTMErrorMessageDisplayed);
+//		
+//		assertTrue(ftmPage.isErrorCloseButtonDisplayed(), GlobalConstants.isErrorCrossButtonDisplayed);
+//		
+//		ftmPage.clickOnAddFtmClearForm();
+////		assertFalse(partnerCertificatePage.isAddFtmSubmitButtonDisabled(), GlobalConstants.isElementIsDisabled);
+//		
+//	}
+//	
+//	@Test(priority = 22)
+//	public void AddFtmAndreject() throws InterruptedException {
+//		DashboardPage dashboardpage = new DashboardPage(driver);
+//		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
+//		RegisterPage registerPage = new RegisterPage(driver);
+//		FtmPage ftmPage = new FtmPage(driver);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-ftm");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		
+//		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
+//		partnerCertificatePage.clickOnFtmChipProviderCard();
+//		ftmPage.clickOnAddFtmChipButton();
+//		
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data+"reject");
+//		ftmPage.EnterInAddFtmModelBox(data+"reject");
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		ftmPage.clickOnConfirmationCustomButton();
+//		ftmPage.uploadCertificateConfrmationForFtm();
+//		ftmPage.clickOnCertificateUploadSubmitButton();
+//		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//		partnerCertificatePage.clickOncertificateUploadCloseButton();
+//		
+//		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
+//		ftmPage.clickOnFtmListAction1Button();
+//		ftmPage.clickOnFtmListViewButton();
+//		
+//		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+//		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
+//		ftmPage.clickOnFtmViewBackButton();
+//		ftmPage.clickOnFilterButton();
+//		
+//		ftmPage.clickOnFtmStatusFilter();
+//		ftmPage.clickOnFtmStatusFilterOption1();
+//		
+//		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName(userid);
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		dashboardpage.clickOnFTMChipTab();
+//		ftmPage.clickOnFilterButton();
+//		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+//		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
+//		
+//		assertTrue(ftmPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
+//		assertTrue(ftmPage.isListofFtmChipDetailsDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+//		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+//		ftmPage.enterOrgNameFilterBox("AABBCC");
+//		ftmPage.clickOnApplyFilterButton();
+//		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//		ftmPage.ClickOnFilterResetButton();
+//		ftmPage.clickOnFilterButton();
+//		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+//		ftmPage.enterMakeFilterBox(data+"reject");
+//		ftmPage.clickOnApplyFilterButton();
+//		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
+//		ftmPage.ClickOnFilterResetButton();
+//		ftmPage.clickOnApplyFilterButton();
+//		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+//		
+//		ftmPage.clickOnFilterButton();
+//		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+//		ftmPage.enterModelFilterBox(data+"reject");
+//		
+//		ftmPage.clickOnFtmListActionMenuEllipsisButton();
+//		ftmPage.clickOnFtmListApproveRejectOption();
+//		
+//		assertTrue(ftmPage.isMakAndModeTitelForPopupDisplayed(), GlobalConstants.isMakeAndModelTitleDisplayed);
+//		assertTrue(ftmPage.isDoYouWantToApproveAndRejecPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
+//		assertTrue(ftmPage.isPleaseReviewTheFtmChipPopupSubHeaderDisplayed(), GlobalConstants.isApproveRejectPopupSubHeaderDisplayed);
+//		
+//		ftmPage.clickOnRejectButton();
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-ftm");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		
+//		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
+//		assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
+//		
+//		ftmPage.clickOnAddFtmChipButton();
+//		
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data+"reject");
+//		ftmPage.EnterInAddFtmModelBox(data+"reject");
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		ftmPage.clickOnConfirmationCustomButton();
+//		ftmPage.uploadCertificateConfrmationForFtm();
+//		ftmPage.clickOnCertificateUploadSubmitButton();
+//		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+//	}
 
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		
-		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
-		partnerCertificatePage.clickOnFtmChipProviderCard();
-		
-		assertTrue(ftmPage.isPartnerIdCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isMakeCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isModelCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCreatedDateCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.iscertTimeofUploadCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCertExpiryCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCertExpiryStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isActionCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		
-		
-		ftmPage.clickOnAddFtmButton();
-		
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
-		ftmPage.clickOnAddFtmSubmitButton();
-		ftmPage.clickOnConfirmationCustomButton();
-		ftmPage.uploadCertificateConfrmationForFtm();
-		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOncertificateUploadCloseButton();
-		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
-		ftmPage.clickOnFtmListAction1Button();
-		ftmPage.clickOnFtmListViewButton();
-		
-		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
-		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextFtmChipProviderDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
-		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateValueDisplayed);
-		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
-		assertTrue(ftmPage.isFtmViewBackButtonDisplayed(), GlobalConstants.isBackButton);
-		
-		ftmPage.clickOnFtmViewBackButton();
-		ftmPage.clickOnFilterButton();
-		
-		ftmPage.clickOnFtmStatusFilter();
-		ftmPage.clickOnFtmStatusFilterOption1();
-		
-		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName(userid);
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		dashboardpage.clickOnFTMChipTab();
-		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
-		ftmPage.enterPartnerIdFilterBox("pmpui-ftm");
-		
-		ftmPage.clickOnApplyFilterButton();
-		
-		ftmPage.clickOnFtmListActionMenuEllipsisButton();
-		ftmPage.clickOnFtmListApproveRejectOption();
-		
-		ftmPage.clickOnApproveButton();
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		
-		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
-		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
-		ftmPage.clickOnAddFtmChipButton();
-		
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data+"1");
-		ftmPage.EnterInAddFtmModelBox(data+"1");
-		ftmPage.clickOnAddFtmSubmitButton();
-		ftmPage.clickOnConfirmationCustomButton();
-		ftmPage.uploadCertificateConfrmationForFtm();
-		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOncertificateUploadCloseButton();
-		
-		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
-		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
-		
-		ftmPage.clickOnStatusAscIcon();
-		assertTrue(partnerCertificatePage.VerifyTheStatusWithAsendingOrder(), GlobalConstants.isApproveTextDisplayed);
-		
-		ftmPage.clickOnStatusDescIcon();
-		assertTrue(partnerCertificatePage.VerifyTheStatusWithDesendingOrder(), GlobalConstants.isPendingForApprovalTextDisplayed);
-
-		ftmPage.clickOnAddFtmChipButton();
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data+"1");
-		ftmPage.EnterInAddFtmModelBox(data+"1");
-		ftmPage.clickOnAddFtmSubmitButton();
-		assertTrue(ftmPage.isDublicateFtmChipErrorMessageDisplayed(), GlobalConstants.isDublicateFTMErrorMessageDisplayed);
-		
-		assertTrue(ftmPage.isErrorCloseButtonDisplayed(), GlobalConstants.isErrorCrossButtonDisplayed);
-		
-		ftmPage.clickOnAddFtmClearForm();
-//		assertFalse(partnerCertificatePage.isAddFtmSubmitButtonDisabled(), GlobalConstants.isElementIsDisabled);
-		
-	}
-	
-	@Test(priority = 4)
-	public void AddFtmAndreject() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		
-		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
-		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmChipButton();
-		
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data+"reject");
-		ftmPage.EnterInAddFtmModelBox(data+"reject");
-		ftmPage.clickOnAddFtmSubmitButton();
-		ftmPage.clickOnConfirmationCustomButton();
-		ftmPage.uploadCertificateConfrmationForFtm();
-		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOncertificateUploadCloseButton();
-		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
-		ftmPage.clickOnFtmListAction1Button();
-		ftmPage.clickOnFtmListViewButton();
-		
-		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
-		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
-		ftmPage.clickOnFtmViewBackButton();
-		ftmPage.clickOnFilterButton();
-		
-		ftmPage.clickOnFtmStatusFilter();
-		ftmPage.clickOnFtmStatusFilterOption1();
-		
-		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName(userid);
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		dashboardpage.clickOnFTMChipTab();
-		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
-		ftmPage.enterPartnerIdFilterBox("pmpui-ftm");
-		
-		ftmPage.clickOnApplyFilterButton();
-		
-		ftmPage.clickOnFtmListActionMenuEllipsisButton();
-		ftmPage.clickOnFtmListApproveRejectOption();
-		
-		assertTrue(ftmPage.isMakAndModeTitelForPopupDisplayed(), GlobalConstants.isMakeAndModelTitleDisplayed);
-		assertTrue(ftmPage.isDoYouWantToApproveAndRejecPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
-		assertTrue(ftmPage.isPleaseReviewTheFtmChipPopupSubHeaderDisplayed(), GlobalConstants.isApproveRejectPopupSubHeaderDisplayed);
-		
-		ftmPage.clickOnRejectButton();
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		
-		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
-		assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
-		
-		ftmPage.clickOnAddFtmChipButton();
-		
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data+"reject");
-		ftmPage.EnterInAddFtmModelBox(data+"reject");
-		ftmPage.clickOnAddFtmSubmitButton();
-		ftmPage.clickOnConfirmationCustomButton();
-		ftmPage.uploadCertificateConfrmationForFtm();
-		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-	}
-
-	@Test(priority = 5)
+	@Test(priority = 23)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -495,20 +570,20 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		
-		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"deactivate");
 		ftmPage.EnterInAddFtmModelBox(data+"deactivate");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
 		ftmPage.clickOnFtmListAction1Button();
 		ftmPage.clickOnFtmListViewButton();
 		
@@ -547,6 +622,11 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivateSubmitButtonDisplayed(), GlobalConstants.isElementIsDisabled);
 		ftmPage.clickOnDeactivateSubmitButton();
 		
+		ftmPage.clickOnStatusFilter();
+		ftmPage.clickOnFtmStatusFilterOption2();
+		ftmPage.clickOnApplyFilterButton();
+		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
+		
 		BasePage.NavigateBack();
 		BasePage.NavigateForword();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
@@ -576,7 +656,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		ftmPage.clickOnCertificateUploadCloseButton();
 		ftmPage.clickOnFilterButton();
 		ftmPage.clickOnFtmStatusFilter();
@@ -584,64 +664,64 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 	
-	@Test(priority = 6)
-	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		
-		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
-		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmChipButton();
-		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data+"withoutcertUpload");
-		ftmPage.EnterInAddFtmModelBox(data+"withoutcertUpload");
-		ftmPage.clickOnAddFtmSubmitButton();
-		ftmPage.clickOnConfirmationCustomButton();
-		
-		ftmPage.clickOnSubTitleFtmButton();
-		assertTrue(ftmPage.isPendingForCertificateUploadTextDisplayed(), GlobalConstants.isPendingForUploadCertTextDisplayed);
-		
-		ftmPage.clickOnFtmListAction1Button();
-		ftmPage.clickOnFtmListManageCertificate();
-		assertTrue(ftmPage.isDownloadButtonViewPageDisabled(), GlobalConstants.isElementIsDisabled);
-		
-		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsCertificateContextDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
-		assertTrue(ftmPage.isManageFtmChipCertTextDisplayed(), GlobalConstants.isManageFtmChipCertDisplaed);
-		
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateValueDisplayed);
-		
-		assertTrue(ftmPage.isCertificateReuploadButtonDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-	    dashboardpage.clickOnLogoutButton();
-		
-		loginpage.enterUserName("pmpui-revamp");
-		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
-		dashboardpage.clickOnFTMChipTab();
-		
-		ftmPage.clickOnFtmListActionMenuEllipsisButton();
-		ftmPage.clickOnFtmListApproveRejectOption();
-		
-		assertTrue(ftmPage.isFtmListApproveRejectOptionIsEnabled(), GlobalConstants.isElementIsDisabled);
-		
-	}	
+//	@Test(priority = 24)
+//	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
+//		DashboardPage dashboardpage = new DashboardPage(driver);
+//		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
+//		RegisterPage registerPage = new RegisterPage(driver);
+//		FtmPage ftmPage = new FtmPage(driver);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//
+//		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-ftm");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		
+//		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
+//		partnerCertificatePage.clickOnFtmChipProviderCard();
+//		ftmPage.clickOnAddFtmChipButton();
+//		ftmPage.clickOnAddFtmPartnerId();
+//		ftmPage.EnterInAddFtmMakeBox(data+"withoutcertUpload");
+//		ftmPage.EnterInAddFtmModelBox(data+"withoutcertUpload");
+//		ftmPage.clickOnAddFtmSubmitButton();
+//		ftmPage.clickOnConfirmationCustomButton();
+//		
+//		ftmPage.clickOnSubTitleFtmButton();
+//		assertTrue(ftmPage.isPendingForCertificateUploadTextDisplayed(), GlobalConstants.isPendingForUploadCertTextDisplayed);
+//		
+//		ftmPage.clickOnFtmListAction1Button();
+//		ftmPage.clickOnFtmListManageCertificate();
+////		assertTrue(ftmPage.isDownloadButtonViewPageDisabled(), GlobalConstants.isElementIsDisabled);
+//		
+//		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsCertificateContextDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
+//		assertTrue(ftmPage.isManageFtmChipCertTextDisplayed(), GlobalConstants.isManageFtmChipCertDisplaed);
+//		
+//		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(), GlobalConstants.isTimeOfUploadValueDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+//		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateValueDisplayed);
+//		
+//		assertTrue(ftmPage.isCertificateReuploadButtonDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+//		
+//		dashboardpage.clickOnProfileDropdown();
+//		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+//	    dashboardpage.clickOnLogoutButton();
+//		
+//		loginpage.enterUserName("pmpui-revamp");
+//		loginpage.enterPassword(password);
+//		loginpage.ClickOnLoginButton();
+//		dashboardpage.clickOnFTMChipTab();
+//		
+//		ftmPage.clickOnFtmListActionMenuEllipsisButton();
+//		ftmPage.clickOnFtmListApproveRejectOption();
+//		
+//		assertTrue(ftmPage.isFtmListApproveRejectOptionIsEnabled(), GlobalConstants.isElementIsDisabled);
+//		
+//	}	
 	
 }

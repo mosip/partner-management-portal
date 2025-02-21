@@ -26,6 +26,7 @@ public class GlobalConstants {
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
+	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";

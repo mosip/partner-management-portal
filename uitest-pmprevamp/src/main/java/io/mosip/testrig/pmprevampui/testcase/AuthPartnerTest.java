@@ -165,8 +165,9 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+		
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 		partnerCertificatePage.uploadCertificateInvalidCert();
 		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(),
 				GlobalConstants.isInvalidCertFormatePopupDisplayed);
