@@ -324,13 +324,13 @@ function DevicesList() {
                                                                                 {getStatusCode(device.status, t)}
                                                                             </div>
                                                                         </td>
-                                                                        <td className="px-2 mx-2 cursor-default">
-                                                                            <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
+                                                                        <td className="text-center cursor-default">
+                                                                            <div ref={setSubmenuRef(submenuRef, index)}>
                                                                                 <button id={'device_list_action' + (index + 1)} onClick={() => setViewDeviceId(index === viewDeviceId ? null : index)} className="font-semibold mb-0.5 cursor-pointer text-[#1447B2]">
                                                                                     ...
                                                                                 </button>
                                                                                 {viewDeviceId === index && (
-                                                                                    <div className={`absolute w-[7rem] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
+                                                                                    <div className={`absolute w-[7rem] z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-[3.5rem] text-right" : "right-[3.5rem] text-left"}`}>
                                                                                         <div role='button' id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`flex justify-between py-2 px-2 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                             <p> {t('devicesList.view')} </p>
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
