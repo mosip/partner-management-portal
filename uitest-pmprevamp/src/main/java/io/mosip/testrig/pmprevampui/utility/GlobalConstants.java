@@ -230,6 +230,9 @@ public class GlobalConstants {
 	public static final String isApiKeyDetailsApiKeyLabelContextDisplayed = "Verify if api key details api key label context displayed";
 	public static final String isViewApiKeyBackButtonDisplayed = "Verify if view api key button displayed";
 	public static final String isBackiconDisplayed = "Verify if back icon displayed";
+	public static final String isListOfFtmChipTextDisplayed = "Verify if list of ftm chip requested text displayed";
+	public static final String isMakeTextBoxDisplayed = "Verify if make box message displayed";
+	public static final String isModelTextBoxDisplayed = "Verify if model id box message displayed";
 	public static final String isConfirmationPopupDisplayed = "Verify if confirmation popup displayed";
 	public static final String isConfirmationPopupDetailedMessageDisplayed = "Verify if confirmation popup detailed message displayed";
 	public static final String isApproveRejectButtonDisplayed = "Verify if approve reject button displayed";
