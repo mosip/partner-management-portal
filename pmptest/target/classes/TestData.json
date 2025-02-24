@@ -1,0 +1,69 @@
+{
+	"identity": {
+		"BELOW_ARE_KEYWORDS_FOR_HELP": "Below Keys use to put in setExcludedGroups to exclude scenarios eg BL for blocklistedwordsCRUD to ignore this execution",
+		"ALL": "AP,DSP,DD,FD,PPM,PG,SD,UFCC,PLAC,RAC,RFTM,RSD,API",
+		"1AdminAuthPolicyTest.class": "groups = AP, dependsOnGroups = PG , Parameters = DSP,DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
+		"2AdminDataSharePolicyTest.class":"groups = DSP, dependsOnGroups = AP, Parameters= DD,FD,PPM,SD,PLAC,RAC,RFTM,RSD",
+		"3AdminDeviceDetailsTest.class":"groups = DD, dependsOnGroups = SD,AP Parameters= FD,PPM,PLAC,RAC,RFTM ",
+		"4AdminFtmDetailsTest.class":"groups = FD, dependsOnGroups = RFTM ",
+		"5AdminPartnerPolicyMappingTest.class":"groups = PPM, dependsOnGroups = RAC ",
+		"6AdminPolicyGroupTest.class":"groups = PG, dependsOnGroups = UFCC ",
+		"7AdminSbiDetailsTest.class":"groups = SD, dependsOnGroups = RSD ",
+		"8AdminUploadCaCertTest.class":"groups = UFCC, dependsOnGroups =  ",
+		"9PartnerLoginAuthCredTest.class":"groups = PLAC, dependsOnGroups = PPM ",
+		"10PartnerRegisterAuthCredTest.class":"groups = RAC, dependsOnGroups = UFCC,DSP ",
+		"11PartnerRegisterFTMTest.class":"groups = RFTM, dependsOnGroups = UFCC ",
+		"12PartnerRegisterSbiDeviceTest.class":"groups = RSD, dependsOnGroups = UFCC,DSP ",
+		
+		"Kill Chrome exe": "taskkill /F /IM chrome.exe",
+		"Kill driver exe":"taskkill /F /IM chromedriver.exe",
+		
+		
+		"BELOW_ARE_STATIC_KEYWORDS": "We are using this setExcludedGroups to exclude scenarios",
+		"setExcludedGroups": "",
+		"holidayDateCenter": "27/12/2022",
+		"holidayDate": "12/27/2022",
+		"loginlang": "sin",
+		"preappend" :"00",
+		"splitdigit":"7",
+		"jsonObjName": "identity",
+		"bulkwait": "10000",
+	    "sbivalidDate":"12/27/2022",
+	    "sbiexpiryDate":"12/27/2024",
+		"policyData": "{\"authTokenType\":\"policy\",\"allowedKycAttributes\":[{\"attributeName\":\"fullName\"},{\"attributeName\":\"gender\"},{\"attributeName\":\"residenceStatus\"},{\"attributeName\":\"dateOfBirth\"},{\"attributeName\":\"photo\"},{\"attributeName\":\"civilRegistryNumber\"},{\"attributeName\":\"birthCertificateNumber\"},{\"attributeName\":\"flagidcs\"},{\"attributeName\":\"listCountry\"},{\"attributeName\":\"placeOfBirth\"},{\"attributeName\":\"flagb\"},{\"attributeName\":\"passportNumber\"},{\"attributeName\":\"referenceResidencyNumber\"},{\"attributeName\":\"resOuPass\"}],\"allowedAuthTypes\":[{\"authSubType\":\"IRIS\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"FINGER\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"otp\",\"mandatory\":false},{\"authSubType\":\"FACE\",\"authType\":\"bio\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"otp-request\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"kyc\",\"mandatory\":false},{\"authSubType\":\"\",\"authType\":\"demo\",\"mandatory\":false}]}",
+		"dataSharepolicyData":"{\"shareableAttributes\":[{\"attributeName\":\"fullName\",\"source\":[{\"attribute\":\"fullName\"}],\"encrypted\":true},{\"attributeName\":\"dateOfBirth\",\"source\":[{\"attribute\":\"dateOfBirth\"}],\"encrypted\":true},{\"attributeName\":\"gender\",\"source\":[{\"attribute\":\"gender\"}],\"encrypted\":true},{\"attributeName\":\"residenceStatus\",\"source\":[{\"attribute\":\"residenceStatus\"}],\"encrypted\":true},{\"attributeName\":\"phone\",\"source\":[{\"attribute\":\"phone\"}],\"encrypted\":true},{\"attributeName\":\"email\",\"source\":[{\"attribute\":\"email\"}],\"encrypted\":true},{\"attributeName\":\"dualCitizenshipAvailability\",\"source\":[{\"attribute\":\"dualCitizenshipAvailability\"}],\"encrypted\":true},{\"attributeName\":\"fatherName\",\"source\":[{\"attribute\":\"fatherName\"}],\"encrypted\":true},{\"attributeName\":\"shortenedPrintedName\",\"source\":[{\"attribute\":\"shortenedPrintedName\"}],\"encrypted\":true},{\"attributeName\":\"layName\",\"source\":[{\"attribute\":\"layName\"}],\"encrypted\":true},{\"attributeName\":\"nationalIdentityNumber\",\"source\":[{\"attribute\":\"nationalIdentityNumber\"}],\"encrypted\":true},{\"attributeName\":\"permanentAddress\",\"source\":[{\"attribute\":\"permanentAddress\"}],\"encrypted\":true},{\"attributeName\":\"temporaryAddress\",\"source\":[{\"attribute\":\"temporaryAddress\"}],\"encrypted\":true},{\"attributeName\":\"addressLine1\",\"source\":[{\"attribute\":\"addressLine1\"}],\"encrypted\":true},{\"attributeName\":\"addressLine2\",\"source\":[{\"attribute\":\"addressLine2\"}],\"encrypted\":true},{\"attributeName\":\"addressLine3\",\"source\":[{\"attribute\":\"addressLine3\"}],\"encrypted\":true},{\"attributeName\":\"region\",\"source\":[{\"attribute\":\"region\"}],\"encrypted\":true},{\"attributeName\":\"province\",\"source\":[{\"attribute\":\"province\"}],\"encrypted\":true},{\"attributeName\":\"profession\",\"source\":[{\"attribute\":\"profession\"}],\"encrypted\":true},{\"attributeName\":\"city\",\"source\":[{\"attribute\":\"city\"}],\"encrypted\":true},{\"attributeName\":\"postalCode\",\"source\":[{\"attribute\":\"postalCode\"}],\"encrypted\":true},{\"attributeName\":\"zone\",\"source\":[{\"attribute\":\"zone\"}],\"encrypted\":true},{\"attributeName\":\"preferredLang\",\"source\":[{\"attribute\":\"preferredLang\"}],\"encrypted\":false},{\"attributeName\":\"individualBiometrics\",\"group\":\"CBEFF\",\"source\":[{\"attribute\":\"individualBiometrics\"}],\"encrypted\":true,\"format\":\"extraction\"}],\"dataSharePolicies\":{\"typeOfShare\":\"Data Share\",\"validForInMinutes\":\"30\",\"transactionsAllowed\":\"2\",\"encryptionType\":\"Partner Based\",\"shareDomain\":\"datashare.datashare\",\"source\":\"IDRepository\"}}",
+		"publicKey": "ZAEACwACAHIAIINxl2dEhLP4GpDMjUal1yT9UtduBlILZPKh2hszFGmqABAAFwALCAAAAQABAQDCHegKJ3vRn__8h1knXKiLA8qfO5LebzBlRO2tAcI3HvLyL9rPkVrXWYQ6wAn4VQk015C1hViU-7k752dYE5WUAUbgsxOHvvDPH1t72CNHNj9dyE86wGqR9AtK3yz0yf1IP_xgtWpiaQ2V9t2d3LtgPYWnRuPJbcl97nLXXL6PGfh1mRwsQUi94coEBPMZ9YLLOAFckPuDZt-lEcXIMkj8r0uNwAZUSEvGifTNWbLjC5BRlJBmvScIlptXqIwBaq2kSMVK2X1KbQ6TM8zkA_co4LEAIZfcpMgPn6RdW0yFtcx24HqrCY8v0DHregwoCPPpw8HvB-r5aR09mXG64zsJ",
+		"signPublicKey": "AAZABAAEAHIAAAAQABQACwgAAAEAAQEAr93rKokeZGIzcCtFX3iyCvwpmfnd9jz0nF__0bxWr0mH8Zs0rhlG6vKRagx31I4CdrLAECOwMZ0r7Y3utTqHqelQE3MJLtboKITOqYRpBkqHSm1jGaEb8a1E9yoJri3tZrBCrAShimrN_SbtS1uKbJUG3cuVuE0gtGLI1d5wMfS_4PSz3RwvZtGHisEb3zbV6SLcJkgcDeMbUD7P25SVJd1xrJybuGIgyeSZxOgLzy1P-qHCiOXiAO9o06fwyIhIYbeZYz5th4rq7Rb6mRK9EWFpLrLvBL0F6USiidl8qNCxxZZFUp3W5xFANVYfRvgLKI33zBYniZ7aTE8PgrYa2w",
+		"headless": "yes",
+		"langcode": [
+			{
+				"language": "tam",
+				"value": "à®¤à®®à®¿à®´à¯�"
+			},
+			{
+				"language": "kan",
+				"value": "à²•à²¨à³�à²¨à²¡"
+			},
+			{
+				"language": "hin",
+				"value": "hin"
+			},
+			{
+				"language": "eng1",
+				"value": "English"
+			},
+			{
+				"language": "eng",
+				"value": "English"
+			},
+			{
+				"language": "fra",
+				"value": "FranÃ§ais"
+			},
+			{
+				"language": "ara",
+				"value": "Arabic"
+			}
+		]
+	}
+}
