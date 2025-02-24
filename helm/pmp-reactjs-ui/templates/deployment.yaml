@@ -21,15 +21,15 @@ spec:
     metadata:
       annotations:
         {{- if or .Values.podAnnotations .Values.metrics.enabled }}
-        {{- include "pmp-ui.podAnnotations" . | nindent 8 }}
+        {{- include "pmp-reactjs-ui.podAnnotations" . | nindent 8 }}
         {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         {{- if .Values.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ template "pmp-ui.serviceAccountName" . }}
-      {{- include "pmp-ui.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ template "pmp-reactjs-ui.serviceAccountName" . }}
+      {{- include "pmp-reactjs-ui.imagePullSecrets" . | nindent 6 }}
       {{- if .Values.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.hostAliases "context" $) | nindent 8 }}
       {{- end }}
@@ -56,7 +56,7 @@ spec:
       initContainers:
         {{- if and .Values.volumePermissions.enabled .Values.persistence.enabled }}
         - name: volume-permissions
-          image: {{ include "pmp-ui.volumePermissions.image" . }}
+          image: {{ include "pmp-reactjs-ui.volumePermissions.image" . }}
           imagePullPolicy: {{ .Values.volumePermissions.image.pullPolicy | quote }}
           command:
             - %%commands%%
@@ -73,8 +73,8 @@ spec:
           {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
         {{- end }}
       containers:
-        - name: pmp-ui
-          image: {{ template "pmp-ui.image" . }}
+        - name: pmp-reactjs-ui
+          image: {{ template "pmp-reactjs-ui.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.lifecycleHooks }}
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
@@ -93,6 +93,10 @@ spec:
               value: {{ .Values.containerSecurityContext.runAsUser }}
             - name: JDK_JAVA_OPTIONS
               value: {{ .Values.additionalResources.javaOpts }}
+            - name: REACT_APP_PARTNER_MANAGER_API_BASE_URL
+              value: {{ .Values.pmp_new.react_app_partner_manager_api_base_url }}
+            - name: REACT_APP_POLICY_MANAGER_API_BASE_URL
+              value: {{ .Values.pmp_new.react_app_policy_manager_api_base_url }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -108,12 +112,9 @@ spec:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
             {{- end }}
           volumeMounts:
-            - name: ui-config
-              mountPath: /usr/share/nginx/html/assets/config.json
-              subPath: config.json
             - name: nginx-config
-              mountPath: /etc/nginx/conf.d/default.conf
-              subPath: default.conf
+              mountPath: {{ .Values.nginx.volume_mount_path }}
+              subPath: {{ .Values.nginx.sub_path }}
           ports:
             - name: spring-service
               containerPort: {{ .Values.springServicePort }}
@@ -139,15 +140,9 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
-        - name: ui-config
-          configMap:
-            name: {{ template "common.names.fullname" . }}
-            items:
-              - key: config.json
-                path: config.json
         - name: nginx-config
           configMap:
             name: {{ template "common.names.fullname" . }}
             items:
-              - key: default.conf
-                path: default.conf
+              - key: nginx.conf
+                path: nginx.conf
