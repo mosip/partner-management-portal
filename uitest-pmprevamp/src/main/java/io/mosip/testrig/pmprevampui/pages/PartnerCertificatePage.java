@@ -23,7 +23,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
 	private WebElement successMessage;
-
+	
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 	
@@ -35,10 +35,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Close']")
 	private WebElement closeButton;
-
+	
 	@FindBy(id = "success_msg_close_icon")
 	private WebElement successMsgCloseButton;
-
+	
 	@FindBy(xpath = "//*[text()='Re-Upload Partner Certificate']")
 	private WebElement ReUploadPartnerCertificateText;
 	
@@ -92,24 +92,26 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "certificate_upload_cancel_btn")
 	private WebElement certificateUploadCancelButton;
-
+	
 	@FindBy(id = "partnerDomain_selector_dropdown")
 	private WebElement partnerDomainSelectorDropdown;
-
-	@FindBy(id = "partnerDomain_selector_dropdown_option3")
-	private WebElement deviceInPartnerDomainSelectorDropdown;
-
+	
 	@FindBy(id = "partnerDomain_selector_dropdown_option1")
 	private WebElement partnerDomainSelectorDropdownOptionAuth;
 	
 	@FindBy(id = "partnerDomain_selector_dropdown_option2")
 	private WebElement partnerDomainSelectorDropdownOptionFtm;
+	@FindBy(id = "partnerDomain_selector_dropdown_option3")
+	private WebElement deviceInPartnerDomainSelectorDropdown3;
 	
 	@FindBy(id = "upload_trust_certificate_submit_btn")
 	private WebElement SubmitButtonForAdmin;
-
+	
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement GoBackButton;
+	
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement confirmationHomeButton;
 	
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCard;
@@ -117,6 +119,8 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "error_close_btn")
 	private WebElement errorCloseButton;
 	
+	@FindBy(id = "partnerDomain_selector_dropdown_option3")
+	private WebElement deviceInPartnerDomainSelectorDropdown;
 	
 	@FindBy(xpath = "//*[text()='Root CA/Intermediate CA Certificates not found.']")
 	private WebElement noRootCert;
@@ -124,19 +128,75 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Self Signed Certificate not allowed as partner.']")
 	private WebElement errorCodeForSelfSignedCer;
 	
-	@FindBy(xpath = "//h1[text()='Partner Certificate']")
-	private WebElement partnerCertificateTitle;
+	@FindBy(id = "sub_title_btn")
+	private WebElement subTitelButton;
+	
+	
+	@FindBy(xpath = "//*[contains(text(), \"Upload Trust Certificate\")]")
+	private WebElement uploadTrustCertificateText;
+	
+	@FindBy(xpath = "//*[text()='Please select the partner domain and upload Root CA / Intermediate CA Certificate.']")
+	private WebElement partnerPageSubTitleText;
+	
+	@FindBy(xpath = "//*[text()='Please tap to select the Root CA / Intermediate CA Certificate']")
+	private WebElement uploadBoxHeader;
+	
+	@FindBy(id = "upload_trust_certificate_cancel_btn")
+	private WebElement adminCertUploadCancelButton;
+	
+	@FindBy(xpath = "//*[text()='Trust Certificate for FTM is uploaded successfully!']")
+	private WebElement  ftmCertUploadSuccessMessage;
+	
+	@FindBy(id = "certificate_list_view1")
+	private WebElement certificatelistview1;
+	
+	@FindBy(id = "root_certificate_details_view_btn")
+	private WebElement rootCertificateDetailsViewButton;
+	
+	
+	@FindBy(id = "file_upload_blue")
+	private WebElement fileIcon;
+	
+	@FindBy(id = "certificate_download_btn")
+	private WebElement certificateDownloadButton;
+	
+	@FindBy(id = "trust_certificate_partner_type_label")
+	private WebElement trustCertificatePartnerTypeLabel;
+	
+	@FindBy(id = "trust_certificate_partner_type_context")
+	private WebElement trustCertificatePartnerTypeContext;
+	
+	@FindBy(id = "trust_certificate_label_upload_date_time")
+	private WebElement trustCertificateLabelUploadDateTime;
+	
+	@FindBy(id = "trust_certificate_context_upload_date_time")
+	private WebElement trustCertificateContextUploadDateTime;
+	
+	@FindBy(id = "trust_certificate_label_expiry_date_time")
+	private WebElement trustCertificateLabelExpiryDateTime;
+	
+	@FindBy(id = "trust_certificate_context_expiry_date_time")
+	private WebElement trustCertificateContextExpiryDateTime;
+	
+	@FindBy(id = "view_trust_certificate_back_btn")
+	private WebElement viewTrustCertificateBackButton;
+	
+	@FindBy(id = "success_msg_close_icon")
+	private WebElement successMeassageCloseIcon;
+	
+	@FindBy(id = "certificate_list_view_btn")
+	private WebElement certificateListViewButton;
+	
 	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
-	
 	public boolean isDeviceProviderSuccessMessage() {
 		return isElementDisplayed(deviceProviderSuccessMessage);
 	}
 	
 	public boolean isPartnerCertificatePageDisplayed() {
-		return isElementDisplayed(partnerCertificateTitle);
+		return isElementDisplayed(titleBackButton);
 	}
 
 	public void clickOnUploadButton() {
@@ -150,11 +210,9 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificateRootCa() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\RootCA.cer");
 	}
-
 	public void uploadCertificateSubCa() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\IntermediateCA.cer");
 	}
-
 	public void uploadCertificate() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Client.cer");
 	}
@@ -244,27 +302,26 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateUploadCancelButton() {
 		clickOnElement(certificateUploadCancelButton);
 	}
-
+	
 	public void clickOnpartnerDomainSelectorDropdown() {
 		clickOnElement(partnerDomainSelectorDropdown);
 	}
-
+	
 	public void clickOnpartnerpartnerDomainSelectorDropdownOptionAuth() {
 		clickOnElement(partnerDomainSelectorDropdownOptionAuth);
 	}
-
+	
 	public void ClickOnDeviceInPartnerDomainSelectorDropdown() {
 		clickOnElement(deviceInPartnerDomainSelectorDropdown);
 	}
-
 	public void ClickonSubmitButtonForAdmin() {
 		clickOnElement(SubmitButtonForAdmin);
 	}
-
+	
 	public void ClickOnGoBackButton() {
 		clickOnElement(GoBackButton);
 	}
-
+	
 	public void ClickOnsuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}
@@ -325,7 +382,111 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(lastUploadTimeAndDate);
 	}
 	
+	public boolean isSubtitleHomeButtonDisplayed() {
+		return isElementDisplayed(homeButton);
+	}
+	
+	public boolean isSubtitleButtonButtonDisplayed() {
+		return isElementDisplayed(subTitelButton);
+	}
+	
+	
+	public boolean isUploadTrustCertificateTextDisplayed() {
+		return isElementDisplayed(uploadTrustCertificateText);
+	}
+	
+	public boolean isPartnerPageSubTitleTextDisplayed() {
+		return isElementDisplayed(partnerPageSubTitleText);
+	}
+	
+	public boolean isUploadBoxHeaderTextDisplayed() {
+		return isElementDisplayed(uploadBoxHeader);
+	}
+	
+	public boolean isAdminCertUploadCancelButtonDisplayed() {
+		return isElementDisplayed(adminCertUploadCancelButton);
+	}
+	
+	public boolean isFtmCertUploadSuccessMessageDisplayed() {
+		return isElementDisplayed(ftmCertUploadSuccessMessage);
+	}
+	
+	public boolean isGoBackButtonDisplayed() {
+		return isElementDisplayed(GoBackButton);
+	}
+	
+	public boolean isConfirmationHomeButtonDisplayed() {
+		return isElementDisplayed(confirmationHomeButton);
+	}
+	
+	public void clickOncertificatelistview1() {
+		 clickOnElement(certificatelistview1);
+	}
+	
+	public void clickOnrootCertificateDetailsViewButton() {
+		 clickOnElement(rootCertificateDetailsViewButton);
+	}
+	
+	
+	public boolean isFileIconDisplayed() {
+		return isElementDisplayed(fileIcon);
+	}
+	
+	public boolean isCertificateDownloadButtonDisplayed() {
+		return isElementDisplayed(certificateDownloadButton);
+	}
+	
+	public boolean isTrustCertificatePartnerTypeLabelDisplayed() {
+		return isElementDisplayed(trustCertificatePartnerTypeLabel);
+	}
+	
+	public boolean isTrustCertificatePartnerTypeContextDisplayed() {
+		return isElementDisplayed(trustCertificatePartnerTypeContext);
+	}
+	
+	public boolean isTrustCertificateLabelUploadDateTimeDisplayed() {
+		return isElementDisplayed(trustCertificateLabelUploadDateTime);
+	}
+	
+	public boolean isTrustCertificateContextUploadDateTimeDisplayed() {
+		return isElementDisplayed(trustCertificateContextUploadDateTime);
+	}
+	
+	public boolean isTrustCertificateLabelExpiryDateTimeDisplayed() {
+		return isElementDisplayed(trustCertificateLabelExpiryDateTime);
+	}
+	
+	public boolean isTrustCertificateContextExpiryDateTimeDisplayed() {
+		return isElementDisplayed(trustCertificateContextExpiryDateTime);
+	}
+	
+	public boolean isViewTrustCertificateBackButtonDisplayed() {
+		return isElementDisplayed(viewTrustCertificateBackButton);
+	}
+	
+	public void clickOnViewTrustCertificateBackButton() {
+		 clickOnElement(viewTrustCertificateBackButton);
+	}
+	
+	public void clickOnCertificateDownloadButton() {
+		 clickOnElement(certificateDownloadButton);
+	}
+	
+	public boolean isSuccessMeassageCloseIconDisplayed() {
+		return isElementDisplayed(successMeassageCloseIcon);
+	}
+	
+	public void clickOnCertificateListViewButton() {
+		 clickOnElement(certificateListViewButton);
+	}
+	
+	public boolean isSubmitButtonForAdminDisplayed() {
+		return isElementDisplayed(SubmitButtonForAdmin);
+	}
+	
 	public void clickOnTitleBackButton() {
 		 clickOnElement(titleBackButton);
 	}
+	
+	
 }
