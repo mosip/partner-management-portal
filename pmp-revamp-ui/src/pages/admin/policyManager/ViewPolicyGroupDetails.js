@@ -76,7 +76,7 @@ function ViewPolicyGroupDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("policyGroupList.policyGroupName")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md break-all">
+                                    <p className="font-[600] text-vulcan text-base break-all">
                                         {policyGroupDetails.name}
                                     </p>
                                 </div>
@@ -86,7 +86,7 @@ function ViewPolicyGroupDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyGroupDetails.policyGroupDesc")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md break-all">
+                                    <p className="font-[600] text-vulcan text-base break-all">
                                         {policyGroupDetails.desc}
                                     </p>
                                 </div>
