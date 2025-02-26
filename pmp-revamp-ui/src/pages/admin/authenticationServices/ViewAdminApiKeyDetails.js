@@ -96,7 +96,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_partner_id_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
-                                            <p id='api_key_details_partner_id_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_partner_id_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.partnerId}
                                             </p>
                                         </div>
@@ -104,7 +104,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
-                                            <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-base">
                                                 {t("partnerTypes.authPartner")}
                                             </p>
                                         </div>
@@ -112,7 +112,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAdminOidcClientDetails.organisation")}
                                             </p>
-                                            <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.orgName}
                                             </p>
                                         </div>
@@ -123,7 +123,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_policy_group_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p id='api_key_details_policy_group_name_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_policy_group_name_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.policyGroupName}
                                             </p>
                                         </div>
@@ -131,7 +131,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_policy_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyName")}
                                             </p>
-                                            <p id='api_key_details_policy_name_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_policy_name_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.policyName}
                                             </p>
                                         </div>
@@ -139,7 +139,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_policy_group_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroupDescription")}
                                             </p>
-                                            <p id='api_key_details_policy_group_description_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_policy_group_description_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.policyGroupDescription}
                                             </p>
                                         </div>
@@ -147,7 +147,7 @@ function ViewAdminApiKeyDetails() {
                                             <p id='api_key_details_policy_name_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyNameDescription")}
                                             </p>
-                                            <p id='api_key_details_policy_description_context' className="font-[600] text-vulcan text-md">
+                                            <p id='api_key_details_policy_description_context' className="font-[600] text-vulcan text-base">
                                                 {apiKeyDetails.policyDescription}
                                             </p>
                                         </div>

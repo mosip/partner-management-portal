@@ -127,7 +127,7 @@ function ViewPolicy() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("policiesList.policyName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md break-all">
+                                            <p className="font-[600] text-vulcan text-base break-all">
                                                 {viewDetails.policyName}
                                             </p>
                                         </div>
@@ -135,7 +135,7 @@ function ViewPolicy() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyGroup")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md break-all">
+                                            <p className="font-[600] text-vulcan text-base break-all">
                                                 {viewDetails.policyGroupName}
                                             </p>
                                         </div>
@@ -145,7 +145,7 @@ function ViewPolicy() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyDescription")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md break-all">
+                                            <p className="font-[600] text-vulcan text-base break-all">
                                                 {viewDetails.policyDesc}
                                             </p>
                                         </div>
@@ -153,7 +153,7 @@ function ViewPolicy() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyGroupDescription")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md break-all">
+                                            <p className="font-[600] text-vulcan text-base break-all">
                                                 {viewDetails.policyGroupDesc}
                                             </p>
                                         </div>

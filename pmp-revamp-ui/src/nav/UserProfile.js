@@ -14,7 +14,7 @@ function UserProfile() {
             <Title title='userProfile.myProfile' backLink='/partnermanagement' />
             <div className="bg-snow-white h-fit my-0.5 rounded-t-lg shadow-sm font-inter">
                 <div className="flex justify-between px-7 py-2 border-b max-[450px]:flex-col">
-                    <p className="font-semibold text-md text-[#031640] my-2 text-left">
+                    <p className="font-semibold text-base text-[#031640] my-2 text-left">
                         {t('userProfile.profileInformation')}
                     </p>
                 </div>
@@ -22,72 +22,72 @@ function UserProfile() {
             <div className={`bg-white w-[100%] ${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2 rounded-b-lg`}>
                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                     <div className="w-[49%] max-[600px]:w-[100%] mb-3">
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.firstName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.firstName}
                         </p>
                     </div>
                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-[1%]": "ml-[1%]"}`}>
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.lastName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.lastName}
                         </p>
                     </div>
                 </div>
                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                     <div className="w-[49%] max-[600px]:w-[100%] mb-3">
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.organisationName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.orgName}
                         </p>
                     </div>
                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-[1%]": "ml-[1%]"}`}>
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.address")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.address}
                         </p>
                     </div>
                 </div>
                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                     <div className="w-[49%] max-[600px]:w-[100%] mb-3">
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.partnerType")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                         {getPartnerTypeDescription(userData.partnerType, t)}
                         </p>
                     </div>
                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-[1%]": "ml-[1%]"}`}>
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.phoneNumber")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.phoneNumber}
                         </p>
                     </div>
                 </div>
                 <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                     <div className="w-[49%] max-[600px]:w-[100%] mb-3">
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.emailAddress")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.email}
                         </p>
                     </div>
                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-[1%]": "ml-[1%]"}`}>
-                        <p className="font-[600] text-suva-gray text-xs">
+                        <p className="font-[600] text-suva-gray text-sm">
                             {t("userProfile.userName")}
                         </p>
-                        <p className="font-[600] text-vulcan text-sm break-normal break-words">
+                        <p className="font-[600] text-vulcan text-base break-normal break-words">
                             {userData.userName}
                         </p>
                     </div>

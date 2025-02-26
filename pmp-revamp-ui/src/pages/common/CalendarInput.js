@@ -43,7 +43,7 @@ function CalendarInput({ showCalendar, addInfoIcon, infoKey, infoKey1, setShowCa
           selected={selectedDateStr === "" ? new Date() : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           dateFormat="MM/dd/yyyy"
-          className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+          className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
           wrapperClassName="w-full" 
         />
       </div>

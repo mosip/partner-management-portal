@@ -128,7 +128,7 @@ function ViewAdminOidcClientDetails() {
                                          onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
                                         <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
-                                            <p className={`text-md font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
+                                            <p className={`text-base font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.clientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
@@ -139,7 +139,7 @@ function ViewAdminOidcClientDetails() {
                                             {copied &&
                                                 (
                                                     <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[3.5rem] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "left-10" : "right-10"} shadow-lg bg-white border border-gray-300 rounded-md`}>
-                                                        <p className="text-[#36393E] text-md font-inter">{t('viewOidcClientDetails.copied!')}</p>
+                                                        <p className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                                     </div>
                                                 )
                                             }
@@ -153,7 +153,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_partner_id_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
-                                            <p id='oidc_client_details_partner_id_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_partner_id_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.partnerId}
                                             </p>
                                         </div>
@@ -161,7 +161,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
-                                            <p id='oidc_client_details_auth_partner_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_auth_partner_context' className="font-[600] text-vulcan text-base">
                                                 {t("partnerTypes.authPartner")}
                                             </p>
                                         </div>
@@ -169,7 +169,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAdminOidcClientDetails.organisation")}
                                             </p>
-                                            <p id='oidc_client_details_auth_partner_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_auth_partner_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.orgName}
                                             </p>
                                         </div>
@@ -180,7 +180,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_group_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.policyGroupName}
                                             </p>
                                         </div>
@@ -188,7 +188,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyName")}
                                             </p>
-                                            <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.policyName ? selectedClientData.policyName : ' - '}
                                             </p>
                                         </div>
@@ -196,7 +196,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_group_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroupDescription")}
                                             </p>
-                                            <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.policyGroupDescription}
                                             </p>
                                         </div>
@@ -204,7 +204,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_policy_name_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyNameDescription")}
                                             </p>
-                                            <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.policyDescription ? selectedClientData.policyDescription : ' - '}
                                             </p>
                                         </div>
@@ -223,7 +223,7 @@ function ViewAdminOidcClientDetails() {
                                             <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.logoUri")}
                                             </p>
-                                            <p id='oidc_client_details_logo_uri_context' className="font-[600] text-vulcan text-md">
+                                            <p id='oidc_client_details_logo_uri_context' className="font-[600] text-vulcan text-base">
                                                 {oidcClientDetails.logoUri}
                                             </p>
                                         </div>
@@ -236,7 +236,7 @@ function ViewAdminOidcClientDetails() {
                                                     <ul>
                                                         {oidcClientDetails.redirectUris.map((uri, index) => (
                                                             <li key={index + uri} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                <p className="text-md  font-[600] text-[#36393E] py-1">
+                                                                <p className="text-base  font-[600] text-[#36393E] py-1">
                                                                     {uri}
                                                                 </p>
                                                                 {oidcClientDetails.redirectUris.length > 1 && (
@@ -255,7 +255,7 @@ function ViewAdminOidcClientDetails() {
                                                     <ul>
                                                         {oidcClientDetails.grantTypes.map((type, index) => (
                                                             <li key={index + type} className={`space-y-4 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                <p className="text-md font-[600] text-[#36393E] py-1">
+                                                                <p className="text-base font-[600] text-[#36393E] py-1">
                                                                     {getGrantTypes(type, t)}
                                                                 </p>
                                                                 {oidcClientDetails.grantTypes.length > 1 && (
