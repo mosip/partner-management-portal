@@ -950,6 +950,9 @@
         "viewAllNotification": "View all notifications",
         "expiringItems": "Expiring Items",
         "partnerCertificates": " - {{partnerCertCount}} Partner Certificates",
+        "ftmCertificates": " - {{ftmCertCount}} FTM Certificates",
+        "sbiDevices": " - {{sbiCount}} SBI Devices",
+        "apiKeys": " - {{apiKeyCount}} API Keys",
         "to": " to ",
         "noNotification": "No Notifications Yet",
         "noNotificationDescr": "You have no notifications at the moment."

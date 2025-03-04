@@ -955,6 +955,9 @@
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Articles expirés",
         "partnerCertificates": " - {{partnerCertCount}} Certificats partenaires",
+        "ftmCertificates": " - {{ftmCertCount}} Certificats FTM",
+        "sbiDevices": " - {{sbiCount}} Appareils SBI",
+        "apiKeys": " - {{apiKeyCount}} Clés API",
         "to": " Taha ",
         "noNotification": "Nous n'allons pas parler",
         "noNotificationDescr": "Vous n'avez aucune notification pour le moment."

@@ -22,6 +22,11 @@ export const formatDate = (dateString, format) => {
                 day: "2-digit",
                 year: "numeric",
             });
+        case 'dateMonthInWords':
+            return date.toLocaleDateString(navigator.language, {
+                month: "long",
+                day: "2-digit",
+            });
         default:
             return '-';
     }

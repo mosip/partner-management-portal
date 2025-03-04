@@ -11,77 +11,114 @@ function NotificationPopup({ closeNotification }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [notifications, setNotifications] = useState([
         {
-            id: 1,
-            notificationType: "ROOT_CERT_EXPIRY",
-            notificationDetailsJson: {
-                certificateId: "123456",
-                issuedBy: "",
-                issuedTo: "",
-                partnerId: "",
-                partnerDomain: "AUTH",
-                expiryDateTime: "2025-03-03T03:03:28",
-                expiryPeriod: ""
+            "notificationId": "1",
+            "notificationType": "ROOT_CERT_EXPIRY",
+            "notificationStatus": "ACTIVE",
+            "notificationPartnerId": "",
+            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
+            "notificationDetails": {
+                "certificateDetails": [
+                    {
+                        "certificateId": "123456789",
+                        "issuedBy": "",
+                        "issuedTo": "",
+                        "partnerId": "",
+                        "partnerDomain": "AUTH",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": "",
+                        "certificateType": "root"
+                    }
+                ],
+                "sbiDetails": null,
+                "apiKeyDetails": null
             }
         },
         {
-            id: 2,
-            notificationType: "INTERMEDIATE_CERT_EXPIRY",
-            notificationDetailsJson: {
-                certificateId: "123456",
-                issuedBy: "",
-                issuedTo: "",
-                partnerId: "",
-                partnerDomain: "AUTH",
-                expiryDateTime: "2025-03-03T03:03:28",
-                expiryPeriod: ""
+            "notificationId": "2",
+            "notificationType": "INTERMEDIATE_CERT_EXPIRY",
+            "notificationStatus": "ACTIVE",
+            "notificationPartnerId": "",
+            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
+            "notificationDetails": {
+                "certificateDetails": [
+                    {
+                        "certificateId": "123456789",
+                        "issuedBy": "",
+                        "issuedTo": "",
+                        "partnerId": "",
+                        "partnerDomain": "AUTH",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": "",
+                        "certificateType": "intermediate"
+                    }
+                ],
+                "sbiDetails": null,
+                "apiKeyDetails": null
             }
         },
         {
-            id: 3,
-            notificationType: "WEEKLY_SUMMARY",
-            notificationDetailsJson: {
-                partnerCertificates: {
-                    expiringCount: "2",
-                    expiringDetails: [
-                        {
-                            certificateId: "123456",
-                            issuedBy: "",
-                            issuedTo: "",
-                            partnerId: "",
-                            partnerDomain: "AUTH",
-                            expiryDateTime: "2025-03-03T03:03:28",
-                            expiryPeriod: ""
-                        },
-                        {
-                            certificateId: "123456",
-                            issuedBy: "",
-                            issuedTo: "",
-                            partnerId: "",
-                            partnerDomain: "AUTH",
-                            expiryDateTime: "2025-03-03T03:03:28",
-                            expiryPeriod: ""
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            id: 4,
-            notificationType: "ROOT_CERT_EXPIRY",
-            notificationDetailsJson: {
-                certificateId: "123456",
-                issuedBy: "",
-                issuedTo: "",
-                partnerId: "",
-                partnerDomain: "AUTH",
-                expiryDateTime: "2025-03-03T03:03:28",
-                expiryPeriod: ""
+            "notificationId": "3",
+            "notificationType": "WEEKLY_SUMMARY",
+            "notificationStatus": "ACTIVE",
+            "notificationPartnerId": "",
+            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
+            "notificationDetails": {
+                "certificateDetails": [
+                    {
+                        "certificateId": "123456789",
+                        "issuedBy": "",
+                        "issuedTo": "",
+                        "partnerId": "",
+                        "partnerDomain": "AUTH",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": "",
+                        "certificateType": "partner"
+                    },
+                    {
+                        "certificateId": "123456789",
+                        "issuedBy": "",
+                        "issuedTo": "",
+                        "partnerId": "",
+                        "partnerDomain": "FTM",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": "",
+                        "certificateType": "ftm"
+                    }
+                ],
+                "sbiDetails": [
+                    {
+                        "sbiId": "",
+                        "partnerId": "",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": ""
+                    },
+                    {
+                        "sbiId": "",
+                        "partnerId": "",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": ""
+                    }
+                ],
+                "apiKeyDetails": [
+                    {
+                        "apiKeyId": "",
+                        "partnerId": "",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": ""
+                    },
+                    {
+                        "apiKeyId": "",
+                        "partnerId": "",
+                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
+                        "expiryPeriod": ""
+                    }
+                ]
             }
         }
     ]);
 
     const dismissNotification = (id) => {
-        setNotifications(notifications.filter(notification => notification.id !== id));
+        setNotifications(notifications.filter(notification => notification.notificationId !== id));
     };
 
     const getNoticationTitle = (notification) => {
@@ -90,19 +127,39 @@ function NotificationPopup({ closeNotification }) {
         } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
             return t('notificationPopup.intermediateCertExpiry');
         } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-            return t('notificationPopup.expiringItems') + ': Mar 03 ' + t('notificationPopup.to') + 'Mar 07';
+            return t('notificationPopup.expiringItems') + ": " + formatDate(notification.createdDateTime, 'dateMonthInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateMonthInWords');
         }
     };
 
+    const getWeeklySummaryDate = (notification) => {
+        const date = new Date(notification.createdDateTime);
+        date.setDate(date.getDate() + 7);
+        return date.toString();
+    };
+
+    const getWeeklySummaryDescription = (notification) => {
+        const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails;
+        const partnerCertCount = certificateDetails.filter((cert) => cert.certificateType === "partner").length;
+        const ftmCertCount = certificateDetails.filter((cert) => cert.certificateType === "ftm").length;
+        const sbiCount = sbiDetails.length;
+        const apiKeyCount = apiKeyDetails.length;
+        
+        const description = [
+            partnerCertCount > 0 && t('notificationPopup.partnerCertificates', {partnerCertCount: partnerCertCount}),
+            ftmCertCount > 0 && t('notificationPopup.ftmCertificates', {ftmCertCount: ftmCertCount}),
+            sbiCount > 0 && t('notificationPopup.sbiDevices', {sbiCount: sbiCount}),
+            apiKeyCount > 0 && t('notificationPopup.apiKeys', {apiKeyCount: apiKeyCount}),
+        ].filter(Boolean) .join("\n");
+        return description;
+    }
+
     const getDescription = (notification) => {
         if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
-            return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatDate(notification.notificationDetailsJson.expiryDateTime, 'dateInWords') });
+            return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
         } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
-            return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatDate(notification.notificationDetailsJson.expiryDateTime, 'dateInWords') });
+            return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
         } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-           if (notification.notificationDetailsJson.partnerCertificates.expiringCount > 0) {
-                return t('notificationPopup.partnerCertificates', {partnerCertCount: notification.notificationDetailsJson.partnerCertificates.expiringCount});
-           }
+            return getWeeklySummaryDescription (notification);
         }
     };
 
@@ -117,17 +174,17 @@ function NotificationPopup({ closeNotification }) {
                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
                     <div className="max-h-96 overflow-y-auto">
                         {notifications.map(notification => (
-                            <div key={notification.id} className="flex justify-between items-start p-4 border-b border-gray-200">
+                            <div key={notification.notificationId} className="flex justify-between items-start p-4 border-b border-gray-200">
                                 <img src={featuredIcon} alt='' id='featuredIcon' className="mx-2" />
                                 <div>
                                     <div className="flex justify-between space-x-2">
                                         <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification)}</p>
-                                        <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate('2025-03-03T03:03:28', 'dateTime')}</p>
+                                        <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                     </div>
                                     <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getDescription(notification)}</p>
                                     <button 
                                         className="text-[#475467] text-sm mt-2"
-                                        onClick={() => dismissNotification(notification.id)}
+                                        onClick={() => dismissNotification(notification.notificationId)}
                                     >
                                         {t('notificationPopup.dismiss')}
                                     </button>

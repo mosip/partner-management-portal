@@ -955,6 +955,9 @@
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "العناصر منتهية الصلاحية",
         "partnerCertificates": " - {{partnerCertCount}} شهادة شريك",
+        "ftmCertificates": " - {{ftmCertCount}} شهادات FTM",
+        "sbiDevices": " - {{sbiCount}} أجهزة SBI",
+        "apiKeys": " - {{apiKeyCount}} مفاتيح API",
         "to": " ل ",
         "noNotification": "لا يوجد إشعارات حتى الآن",
         "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي."
