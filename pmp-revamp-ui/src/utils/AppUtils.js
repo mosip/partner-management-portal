@@ -16,6 +16,12 @@ export const formatDate = (dateString, format) => {
             return date.toLocaleTimeString();
         case 'iso':
             return date.toISOString();
+        case 'dateInWords':
+            return date.toLocaleDateString(navigator.language, {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+            });
         default:
             return '-';
     }

@@ -96,23 +96,14 @@ function NotificationPopup({ closeNotification }) {
 
     const getDescription = (notification) => {
         if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
-            return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatExpiryDate(notification.notificationDetailsJson.expiryDateTime) });
+            return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatDate(notification.notificationDetailsJson.expiryDateTime, 'dateInWords') });
         } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
-            return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatExpiryDate(notification.notificationDetailsJson.expiryDateTime) });
+            return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetailsJson.certificateId, partnerDomain: notification.notificationDetailsJson.partnerDomain, expiryDateTime: formatDate(notification.notificationDetailsJson.expiryDateTime, 'dateInWords') });
         } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
            if (notification.notificationDetailsJson.partnerCertificates.expiringCount > 0) {
                 return t('notificationPopup.partnerCertificates', {partnerCertCount: notification.notificationDetailsJson.partnerCertificates.expiringCount});
            }
         }
-    };
-
-    const formatExpiryDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", {
-          month: "long",
-          day: "2-digit",
-          year: "numeric",
-        });
     };
 
     return (
