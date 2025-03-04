@@ -940,6 +940,20 @@
         "title": "Are you sure you want to Deactivate API Key",
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
+    "notificationPopup": {
+        "notification": "Notification",
+        "rootCertExpiry": "Root CA Certificate Expiration",
+        "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
+        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificatee [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "dismiss": "Dismiss",
+        "viewAllNotification": "View all notifications",
+        "expiringItems": "Expiring Items",
+        "partnerCertificates": " - {{partnerCertCount}} Partner Certificates",
+        "to": " to ",
+        "noNotification": "No Notifications Yet",
+        "noNotificationDescr": "You have no notifications at the moment."
+    },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",

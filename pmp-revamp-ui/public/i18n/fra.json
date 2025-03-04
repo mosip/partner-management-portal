@@ -945,6 +945,20 @@
         "title": "Êtes-vous sûr de vouloir désactiver la clé API",
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
     },
+    "notificationPopup": {
+        "notification": "Notification",
+        "rootCertExpiry": "Expiration du certificat CA racine",
+        "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
+        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CAA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter les interruptions.",
+        "dismiss": "Rejeter",
+        "viewAllNotification": "Afficher toutes les notifications",
+        "expiringItems": "Articles expirés",
+        "partnerCertificates": " - {{partnerCertCount}} Certificats partenaires",
+        "to": " Taha ",
+        "noNotification": "Nous n'allons pas parler",
+        "noNotificationDescr": "Vous n'avez aucune notification pour le moment."
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",
