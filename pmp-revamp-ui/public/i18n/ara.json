@@ -945,6 +945,23 @@
         "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
     },
+    "notificationPopup": {
+        "notification": "إشعار",
+        "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
+        "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
+        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة الجذر CA [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
+        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CAA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
+        "dismiss": "رفض",
+        "viewAllNotification": "عرض جميع الإشعارات",
+        "expiringItems": "العناصر منتهية الصلاحية",
+        "partnerCertificates": " - {{partnerCertCount}} شهادة شريك",
+        "ftmCertificates": " - {{ftmCertCount}} شهادات FTM",
+        "sbiDevices": " - {{sbiCount}} أجهزة SBI",
+        "apiKeys": " - {{apiKeyCount}} مفاتيح API",
+        "to": " ل ",
+        "noNotification": "لا يوجد إشعارات حتى الآن",
+        "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي."
+    },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
