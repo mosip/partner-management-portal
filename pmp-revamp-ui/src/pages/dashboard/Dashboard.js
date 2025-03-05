@@ -128,7 +128,7 @@ function Dashboard() {
             }
           }
           callUserConsentPopup();
-          //if email exists then do nothing
+          // if email exists then do nothing
           if (
             resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
             setShowPolicies(true);
