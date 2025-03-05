@@ -962,6 +962,15 @@
         "noNotification": "Nous n'allons pas parler",
         "noNotificationDescr": "Vous n'avez aucune notification pour le moment."
     },
+    "notificationsTab": {
+        "rootCaCertificate": "Certificat racine CA",
+        "intermediateCaCertificate": "Certificat CA intermédiaire",
+        "partner": "Partenaire"
+    },
+    "viewAllNotifications": {
+        "listOfNotifications": "Liste des notifications",
+        "searchDescription": "Recherchez n'importe quelle notification à l'aide de l'ID du certificat, de la date d'expiration, du titre/de la description de la notification, de la date et de l'heure de génération de la notification, etc."
+    },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
         "PMS_PRT_002": "Le groupe de stratégies n'existe pas",

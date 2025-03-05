@@ -962,6 +962,15 @@
         "noNotification": "لا يوجد إشعارات حتى الآن",
         "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي."
     },
+    "notificationsTab": {
+        "rootCaCertificate": "شهادة CA الجذرية",
+        "intermediateCaCertificate": "شهادة CA متوسطة",
+        "partner": "شريك"
+    },
+    "viewAllNotifications": {
+        "listOfNotifications": "قائمة الإشعارات",
+        "searchDescription": "ابحث عن أي إشعار باستخدام معرف الشهادة وتاريخ انتهاء الصلاحية وعنوان / وصف الإشعار وتاريخ ووقت إنشاء الإشعار وما إلى ذلك."
+    },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
