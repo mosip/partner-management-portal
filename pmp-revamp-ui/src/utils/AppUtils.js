@@ -835,6 +835,48 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
     }
   }
 
-  export const setSubmenuRef = (refArray, index) => (el) => {
+export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
-  };
+};
+
+export const getWeeklySummaryDescription = (notification, t) => {
+    const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails;
+    const partnerCertCount = certificateDetails.filter((cert) => cert.certificateType === "partner").length;
+    const ftmCertCount = certificateDetails.filter((cert) => cert.certificateType === "ftm").length;
+    const sbiCount = sbiDetails.length;
+    const apiKeyCount = apiKeyDetails.length;
+    
+    const description = [
+        partnerCertCount > 0 && t('notificationPopup.partnerCertificates', {partnerCertCount: partnerCertCount}),
+        ftmCertCount > 0 && t('notificationPopup.ftmCertificates', {ftmCertCount: ftmCertCount}),
+        sbiCount > 0 && t('notificationPopup.sbiDevices', {sbiCount: sbiCount}),
+        apiKeyCount > 0 && t('notificationPopup.apiKeys', {apiKeyCount: apiKeyCount}),
+    ].filter(Boolean) .join("\n");
+    return description;
+}
+
+export const getNotificationDescription = (notification, t) => {
+    if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
+        return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+    } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
+        return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+    } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
+        return getWeeklySummaryDescription (notification, t);
+    }
+};
+
+export const getNoticationTitle = (notification, t) => {
+    if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
+        return t('notificationPopup.rootCertExpiry');
+    } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
+        return t('notificationPopup.intermediateCertExpiry');
+    } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
+        return t('notificationPopup.expiringItems') + ": " + formatDate(notification.createdDateTime, 'dateMonthInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateMonthInWords');
+    }
+};
+
+export const getWeeklySummaryDate = (notification) => {
+    const date = new Date(notification.createdDateTime);
+    date.setDate(date.getDate() + 7);
+    return date.toString();
+};
