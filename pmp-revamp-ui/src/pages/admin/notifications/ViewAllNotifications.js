@@ -8,6 +8,7 @@ import NotificationsTab from "./NotificationsTab.js";
 import { useTranslation } from "react-i18next";
 import searchIcon from "../../../svg/search_icon.svg";
 import featuredIcon from "../../../svg/featured_icon.svg";
+import noNotificationIcon from "../../../svg/frame.svg";
 import Pagination from "../../common/Pagination.js";
 
 function ViewNotifications({ notificationType }) {
@@ -190,31 +191,41 @@ function ViewNotifications({ notificationType }) {
                             </div>
                         </div>
                         <hr className="h-0.5 bg-gray-200 border-0" />
-                        <div className="p-6">
-                        {notificationsList.map((notification) => (
-                            <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                <img src={featuredIcon} alt='' id='featuredIcon' className="mr-3 mt-2" />
-                                <div className="mt-0.5 w-full">
-                                    <div className="flex justify-between">
-                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                        <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
-                                    </div>
-                                    <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
-                                    <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
-                                    <button className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
-                                </div>
+                        {notificationsList.length === 0 ? (
+                            <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
+                                <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                             </div>
-                        ))}
-                        </div>
-                        <hr className="h-0.5 bg-gray-200 border-0" />
-                        <Pagination
-                            dataListLength={notificationsList.length}
-                            selectedRecordsPerPage={selectedRecordsPerPage}
-                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                            setFirstIndex={setFirstIndex}
-                            isServerSideFilter={true}
-                            getPaginationValues={getPaginationValues}
-                        />
+                            ) : (
+                            <>
+                                <div className="p-6">
+                                    {notificationsList.map((notification) => (
+                                        <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                            <img src={featuredIcon} alt='' id='featuredIcon' className="mr-3 mt-2" />
+                                            <div className="mt-0.5 w-full">
+                                                <div className="flex justify-between">
+                                                    <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
+                                                    <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                </div>
+                                                <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
+                                                <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
+                                                <button className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <hr className="h-0.5 bg-gray-200 border-0" />
+                                <Pagination
+                                    dataListLength={notificationsList.length}
+                                    selectedRecordsPerPage={selectedRecordsPerPage}
+                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                    setFirstIndex={setFirstIndex}
+                                    isServerSideFilter={true}
+                                    getPaginationValues={getPaginationValues}
+                                />
+                            </>
+                        )}
                     </div>
                 </>
             )}
